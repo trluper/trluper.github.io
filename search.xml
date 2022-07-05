@@ -112,6 +112,81 @@
       </tags>
   </entry>
   <entry>
+    <title>python面向对象</title>
+    <url>/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
+    <content><![CDATA[<h4 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h4><h5 id="1-类对象提供的默认行为"><a href="#1-类对象提供的默认行为" class="headerlink" title="1. 类对象提供的默认行为"></a>1. 类对象提供的默认行为</h5><p>在python的面向对象模型种，要分清<strong>类对象</strong>和<strong>实例对象</strong>。类对象就是<code>class</code>定义了一个类只会，该类提供些行为就是类对象.而实例对象就是该类的示例。每次调用类，就会生成一个示例。<br>类对象提供的默认行为：</p>
+<ul>
+<li><code>class</code>语句创建类对象并将其赋值给变量名。就像<code>def</code>一样，class语句也是可执行语句，执行时会产生类对象，并赋值变量名</li>
+<li>class语句的赋值语句会创建类属性，像模块文件一样，class语句内的顶层的赋值语句（不在<code>def</code>内）会成为类对象的属性。</li>
+<li>类属性提供对象的状态（变量）和行为（函数）</li>
+<li>类仍然时模块内的属性。当<code>class</code>执行时，只是赋值语句而已，赋值了一个类对象</li>
+</ul>
+<h5 id="2-实例对象是具体对象"><a href="#2-实例对象是具体对象" class="headerlink" title="2.实例对象是具体对象"></a>2.实例对象是具体对象</h5><p>每当调用类对象时，就会生成示例对象：</p>
+<ul>
+<li>调用类对象会创建新的示例对象</li>
+<li>每个示例对象有类的属性并且有自己的命名空间</li>
+<li><em><strong>在方法内对self属性做赋值会产生每个实例自己的属性</strong></em>：在类函数内，第一个参数总是接受方法调用的隐形主体，通常用<code>self</code>会引用正处理的示例对象（相当于C&#x2F;C++的<code>this指针</code>)。对<code>self</code>的属性做赋值运算，会创建或修改示例内的数据，而不是类的数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">firstClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">setdata</span>(<span class="params">self,value</span>):</span><br><span class="line">        self.data=value;</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">printdata</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(self.data);</span><br><span class="line">    data=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">s=firstClass();</span><br><span class="line">s.printdata();	<span class="comment">#0</span></span><br><span class="line">s.setdata(<span class="number">10</span>);</span><br><span class="line">s.printdata();	<span class="comment">#10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><code>self</code>会自动引用正在处理的示例对象，所以赋值语句会把值村储到实例的命名空间。因为<strong>类对象</strong>会产生多个实例，函数必须经过<code>self</code>参数才能识别获取正在处理的实例（就看出时c&#x2F;c++中隐藏的<code>this指针</code>就行了)</p>
+<h5 id="3-继承"><a href="#3-继承" class="headerlink" title="3. 继承"></a>3. 继承</h5><p>面向对象的一大特性就是继承，以下时python中继承的核心观点：</p>
+<ul>
+<li>父类列在类开头的括号处</li>
+<li>子类从父类中继承了函数和属性</li>
+<li>实例会继承所有可读取类的属性：每个实例会从创建它的类中获取变量名，此外还有该类的父类</li>
+<li>每个<code>object.attribute</code>都会开启新的独立搜索：python会对每个属性取出表达式进行对类树的独立搜索，包括self</li>
+<li>一般来说逻辑的修改都是通过继承的子类修改，而不是直接修改父类</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">secondClass</span>(<span class="title class_ inherited__">firstClass</span>):</span><br><span class="line">	data=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">printdata</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;这是第二个类&quot;</span>，sefl.data);</span><br><span class="line"></span><br><span class="line">a=secondClass();</span><br><span class="line">a.setdata(<span class="number">20</span>)</span><br><span class="line">a.printdata();		<span class="comment">#这是第二个类 20</span></span><br></pre></td></tr></table></figure>
+<p>子类对属性的搜索会从下往上，即从子类到父类，直到所找属性名首次出现为止。上面的<code>printdata</code>函数覆盖了父类的<code>printdata</code>函数，这中覆盖叫做<code>重载</code>。</p>
+<h5 id="4-类的运算符重载初识"><a href="#4-类的运算符重载初识" class="headerlink" title="4.类的运算符重载初识"></a>4.类的运算符重载初识</h5><p><strong>运算符重载</strong>就是让类写成的对象可以截获并响应内置类型上的运算，如加法、切片和打印等等，在这里我们只是片面性的列举了一些重载以做了解，更加具体的将在后面介绍。运算符重载的主要注意点：</p>
+<ul>
+<li>运算符重载的命名方式为<code>__x__</code></li>
+<li>当实例出现内置运算时，这类方法会自动调用。比如实例有<code>__add__</code>方法，当对象出现<code>+</code>表达式时，该方法就会调用</li>
+<li>类可覆盖多数内置类型运算</li>
+<li>运算符重载让类变得更趋像python的对象模型<br><em><strong>注意</strong></em>：我们必须关心一个方法，那就是<code>__init__</code>方法，也称为<strong>构造函数</strong>,它用于初始化对象的状态的，***<code>__init__</code>和<code>self</code>是我们理解python面向对象特性的关键***</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ThirdClass</span>(<span class="title class_ inherited__">secondClass</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,value</span>):</span><br><span class="line">        self.data=value;</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__add__</span>(<span class="params">self,other</span>):</span><br><span class="line">        <span class="keyword">return</span> ThirdClass(self.data+other);</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;[ThirdClass:%s]&#x27;</span>% self.data;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">printdata</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;这是ThirdClass&quot;</span>,self.data);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a=ThirdClass(<span class="string">&#x27;abc&#x27;</span>);</span><br><span class="line">a.printdata();</span><br><span class="line">a=a+<span class="string">&#x27;123&#x27;</span>;</span><br><span class="line">a.printdata();</span><br><span class="line"><span class="built_in">print</span>(a);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">这是ThirdClass abc</span><br><span class="line">这是ThirdClass abc123</span><br><span class="line">[ThirdClass:abc123]</span><br></pre></td></tr></table></figure>
+<p>从上面可以知道几点：</p>
+<ol>
+<li><code>ThirdClass</code>调用传入一个参数，这是传给<code>__init__</code>构造函数的参数，即在在构建实例时自动调用<code>__init__</code>构造函数来初始化属性</li>
+<li>有<code>__add__</code>函数后，即<code>+</code>运算符重载，<code>ThirdClass</code>的实例对象就可出现在<code>+</code>处，对与<code>+</code>，它把左侧的对象传给<code>self</code>，右侧的给<code>other</code>。执行完后，<strong>对于<code>__add__</code>来说要返回一个新的对象实例</strong></li>
+<li>重载了<code>__str__</code>方法后，可以直接调用<code>print</code>打印对象</li>
+</ol>
+<h5 id="5-以实例介绍类的细节"><a href="#5-以实例介绍类的细节" class="headerlink" title="5.以实例介绍类的细节"></a>5.以实例介绍类的细节</h5><p><strong>1.person和manager</strong><br>在本节，将会两个类<code>person</code>和<code>manager</code>来介绍类实现的一些细节。顺带一提oython的%字符串格式为<code>&quot;%s,%d&quot; %(&quot;2222&quot;,10)</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#person类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,job=<span class="literal">None</span>,pay=<span class="number">0</span></span>):</span><br><span class="line">		self.name=name;</span><br><span class="line">		self.job=jon;</span><br><span class="line">		self.pay=pay;</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">lastName</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span>  self.name.split()[-<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">giveRaise</span>(<span class="params">self,percent</span>):</span><br><span class="line">		self.pay=<span class="built_in">int</span>(self.pay*(<span class="number">1</span>+percent))</span><br><span class="line">	<span class="comment">#print重载</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&#x27;[Person:%s,%s]&#x27;</span> % (self.name,self.pay)</span><br><span class="line"><span class="comment">#manager类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Manager</span>(<span class="title class_ inherited__">Person</span>):</span><br><span class="line">	<span class="comment">#定制自己的构造函数，使用父类（超类）的构造函数构造</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,pay</span>):</span><br><span class="line">		self.person=Person.__init__(self,name,<span class="string">&#x27;mgr&#x27;</span>,pay);</span><br><span class="line">	<span class="comment">#重载函数，内部仍然使用超类的函数</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">giveRaise</span>(<span class="params">self,percent,bonus=<span class="number">1.0</span></span>):</span><br><span class="line">		person.giveRaise(self,percent+bonus);</span><br><span class="line">	<span class="comment">#改进点：</span></span><br><span class="line">	<span class="comment">#1. 使用内置的`Instance.__class__.__name__`,避免重复修改前部分的名称</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span><span class="string">&#x27;[%s:%s,%s]&#x27;</span> % (self.__class__.__name__,self.name,self.pay)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>2. 对象持久化</strong><br>在上面我们创建的不是真正的数据库记录，如果关闭python，实例也将消失，因为它们是内存中的临时对象，这时可以使用python中<code>对象持久化</code>的功能，让对象在退出程序时依然存在。<strong>对象持久化</strong>通过3个标准库模块实现：</p>
+<ul>
+<li><code>pickle</code>:任意python对象和字节串之间的转化</li>
+<li><code>dbm</code>：实现一个可通过键访问的文件系统，以存储字符串</li>
+<li><code>shelve</code>:使用上面两个模块按照键把python对象存储到一个文件</li>
+</ul>
+<p>即<code>shelve</code>通过使用<code>pickle</code>将对象转为字符串，然后存储到一个<code>dbm</code>文件中键值对下，<code>shelve</code>通过键获取<code>pinkle</code>化的字符串，并用<code>pickle</code>在内存中重新创建最初对象。<code>shelve</code>就像字典一样，但是<code>shelve</code>一开始必须打开，并且在修改后关闭它</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> shelve</span><br><span class="line">a=Person(<span class="string">&quot;小红&quot;</span>);</span><br><span class="line">b=Manager(<span class="string">&quot;小路&quot;</span>，<span class="number">1000</span>)</span><br><span class="line">db=shelve.<span class="built_in">open</span>(<span class="string">&#x27;persondb&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">object</span> <span class="keyword">in</span>(a,b)</span><br><span class="line">	db[objecct.name]=<span class="built_in">object</span></span><br><span class="line">db.close();</span><br></pre></td></tr></table></figure>
+<p>此时，当前目录下会生成一个或多个名为<code>persondb</code>的文件</p>
+<h5 id="6-抽象类"><a href="#6-抽象类" class="headerlink" title="6.抽象类"></a>6.抽象类</h5><p>抽象类只是实现给继承者的一些接口，继承者类将接口实现什么功能完全由继承类决定，因此抽象接口类不能产生实例,只要类中有一个抽象方法，我们就不能创建该类的实例对象。在python3中，在<code>class</code>的头部使用一个关键字参数，以及特殊的**@装饰器**语法</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> abc <span class="keyword">import</span> ABCmeta,abstractmethod</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Super</span>(metaclass=ABCmeta):</span><br><span class="line"><span class="meta">	@abstractmethod</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">method_1</span>(<span class="params">self,*args</span>):</span><br><span class="line">		<span class="keyword">pass</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="7-命名空间"><a href="#7-命名空间" class="headerlink" title="7.命名空间"></a>7.命名空间</h5><p>我们知道点号和无点号的变量名，会用不同方式进行访问，还有一些作用域是用于对对象命名空间做初始而设定的（如模块和类），总结如下：</p>
+<ul>
+<li>无点号运算的变量民与作用域相对应（如普通的全局和局部赋值）</li>
+<li>点号的属性名<code>object.x</code>使用的是对象的命名空间</li>
+<li>有些作用域会对对象的命名空间初始化（模块和类）</li>
+</ul>
+<h5 id="8-运算符重载详解"><a href="#8-运算符重载详解" class="headerlink" title="8.运算符重载详解"></a>8.运算符重载详解</h5><p>运算符重载是意味着给自定义类增加操作，在类方法中拦截内置操作，当类的实例出现内置操作时，python自动调用你的方法。</p>
+]]></content>
+      <categories>
+        <category>python</category>
+        <category>python面向对象</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>python面向对象</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python基础知识</title>
     <url>/2022/06/24/python%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h4 id="python的运行过程"><a href="#python的运行过程" class="headerlink" title="python的运行过程"></a>python的运行过程</h4><p><img src="https://img-blog.csdnimg.cn/9f0f1b3db22d4c1e8a5bdd455e7702a7.jpeg#pic_center"><br><strong>1. 字节码编译</strong><br>    当程序运行时,Python内部会将源代码(.py文件中的程序)编译成所谓的字节码的形式,就是将每一行源代码语句从上到下翻译过来,翻译成一组字节码的指令.这些字节码可以提高执行速度;比起源代码语句,字节码要执行快的多。<br>    它会将字节码保存为一个以pyc为扩展名的文件，Python这样保存字节码是一种作为启动速度的优化.下一次运行程序时,如果你还停留在上一次修改记录的话,就会直接跳过编译直接加载.pyc文件.</p>
@@ -859,81 +934,6 @@
       </categories>
       <tags>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python面向对象</title>
-    <url>/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
-    <content><![CDATA[<h4 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h4><h5 id="1-类对象提供的默认行为"><a href="#1-类对象提供的默认行为" class="headerlink" title="1. 类对象提供的默认行为"></a>1. 类对象提供的默认行为</h5><p>在python的面向对象模型种，要分清<strong>类对象</strong>和<strong>实例对象</strong>。类对象就是<code>class</code>定义了一个类只会，该类提供些行为就是类对象.而实例对象就是该类的示例。每次调用类，就会生成一个示例。<br>类对象提供的默认行为：</p>
-<ul>
-<li><code>class</code>语句创建类对象并将其赋值给变量名。就像<code>def</code>一样，class语句也是可执行语句，执行时会产生类对象，并赋值变量名</li>
-<li>class语句的赋值语句会创建类属性，像模块文件一样，class语句内的顶层的赋值语句（不在<code>def</code>内）会成为类对象的属性。</li>
-<li>类属性提供对象的状态（变量）和行为（函数）</li>
-<li>类仍然时模块内的属性。当<code>class</code>执行时，只是赋值语句而已，赋值了一个类对象</li>
-</ul>
-<h5 id="2-实例对象是具体对象"><a href="#2-实例对象是具体对象" class="headerlink" title="2.实例对象是具体对象"></a>2.实例对象是具体对象</h5><p>每当调用类对象时，就会生成示例对象：</p>
-<ul>
-<li>调用类对象会创建新的示例对象</li>
-<li>每个示例对象有类的属性并且有自己的命名空间</li>
-<li><em><strong>在方法内对self属性做赋值会产生每个实例自己的属性</strong></em>：在类函数内，第一个参数总是接受方法调用的隐形主体，通常用<code>self</code>会引用正处理的示例对象（相当于C&#x2F;C++的<code>this指针</code>)。对<code>self</code>的属性做赋值运算，会创建或修改示例内的数据，而不是类的数据</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">firstClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">setdata</span>(<span class="params">self,value</span>):</span><br><span class="line">        self.data=value;</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">printdata</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(self.data);</span><br><span class="line">    data=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">s=firstClass();</span><br><span class="line">s.printdata();	<span class="comment">#0</span></span><br><span class="line">s.setdata(<span class="number">10</span>);</span><br><span class="line">s.printdata();	<span class="comment">#10</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><code>self</code>会自动引用正在处理的示例对象，所以赋值语句会把值村储到实例的命名空间。因为<strong>类对象</strong>会产生多个实例，函数必须经过<code>self</code>参数才能识别获取正在处理的实例（就看出时c&#x2F;c++中隐藏的<code>this指针</code>就行了)</p>
-<h5 id="3-继承"><a href="#3-继承" class="headerlink" title="3. 继承"></a>3. 继承</h5><p>面向对象的一大特性就是继承，以下时python中继承的核心观点：</p>
-<ul>
-<li>父类列在类开头的括号处</li>
-<li>子类从父类中继承了函数和属性</li>
-<li>实例会继承所有可读取类的属性：每个实例会从创建它的类中获取变量名，此外还有该类的父类</li>
-<li>每个<code>object.attribute</code>都会开启新的独立搜索：python会对每个属性取出表达式进行对类树的独立搜索，包括self</li>
-<li>一般来说逻辑的修改都是通过继承的子类修改，而不是直接修改父类</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">secondClass</span>(<span class="title class_ inherited__">firstClass</span>):</span><br><span class="line">	data=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">printdata</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;这是第二个类&quot;</span>，sefl.data);</span><br><span class="line"></span><br><span class="line">a=secondClass();</span><br><span class="line">a.setdata(<span class="number">20</span>)</span><br><span class="line">a.printdata();		<span class="comment">#这是第二个类 20</span></span><br></pre></td></tr></table></figure>
-<p>子类对属性的搜索会从下往上，即从子类到父类，直到所找属性名首次出现为止。上面的<code>printdata</code>函数覆盖了父类的<code>printdata</code>函数，这中覆盖叫做<code>重载</code>。</p>
-<h5 id="4-类的运算符重载初识"><a href="#4-类的运算符重载初识" class="headerlink" title="4.类的运算符重载初识"></a>4.类的运算符重载初识</h5><p><strong>运算符重载</strong>就是让类写成的对象可以截获并响应内置类型上的运算，如加法、切片和打印等等，在这里我们只是片面性的列举了一些重载以做了解，更加具体的将在后面介绍。运算符重载的主要注意点：</p>
-<ul>
-<li>运算符重载的命名方式为<code>__x__</code></li>
-<li>当实例出现内置运算时，这类方法会自动调用。比如实例有<code>__add__</code>方法，当对象出现<code>+</code>表达式时，该方法就会调用</li>
-<li>类可覆盖多数内置类型运算</li>
-<li>运算符重载让类变得更趋像python的对象模型<br><em><strong>注意</strong></em>：我们必须关心一个方法，那就是<code>__init__</code>方法，也称为<strong>构造函数</strong>,它用于初始化对象的状态的，***<code>__init__</code>和<code>self</code>是我们理解python面向对象特性的关键***</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ThirdClass</span>(<span class="title class_ inherited__">secondClass</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,value</span>):</span><br><span class="line">        self.data=value;</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__add__</span>(<span class="params">self,other</span>):</span><br><span class="line">        <span class="keyword">return</span> ThirdClass(self.data+other);</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;[ThirdClass:%s]&#x27;</span>% self.data;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">printdata</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;这是ThirdClass&quot;</span>,self.data);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a=ThirdClass(<span class="string">&#x27;abc&#x27;</span>);</span><br><span class="line">a.printdata();</span><br><span class="line">a=a+<span class="string">&#x27;123&#x27;</span>;</span><br><span class="line">a.printdata();</span><br><span class="line"><span class="built_in">print</span>(a);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">这是ThirdClass abc</span><br><span class="line">这是ThirdClass abc123</span><br><span class="line">[ThirdClass:abc123]</span><br></pre></td></tr></table></figure>
-<p>从上面可以知道几点：</p>
-<ol>
-<li><code>ThirdClass</code>调用传入一个参数，这是传给<code>__init__</code>构造函数的参数，即在在构建实例时自动调用<code>__init__</code>构造函数来初始化属性</li>
-<li>有<code>__add__</code>函数后，即<code>+</code>运算符重载，<code>ThirdClass</code>的实例对象就可出现在<code>+</code>处，对与<code>+</code>，它把左侧的对象传给<code>self</code>，右侧的给<code>other</code>。执行完后，<strong>对于<code>__add__</code>来说要返回一个新的对象实例</strong></li>
-<li>重载了<code>__str__</code>方法后，可以直接调用<code>print</code>打印对象</li>
-</ol>
-<h5 id="5-以实例介绍类的细节"><a href="#5-以实例介绍类的细节" class="headerlink" title="5.以实例介绍类的细节"></a>5.以实例介绍类的细节</h5><p><strong>1.person和manager</strong><br>在本节，将会两个类<code>person</code>和<code>manager</code>来介绍类实现的一些细节。顺带一提oython的%字符串格式为<code>&quot;%s,%d&quot; %(&quot;2222&quot;,10)</code></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#person类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,job=<span class="literal">None</span>,pay=<span class="number">0</span></span>):</span><br><span class="line">		self.name=name;</span><br><span class="line">		self.job=jon;</span><br><span class="line">		self.pay=pay;</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">lastName</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span>  self.name.split()[-<span class="number">1</span>];</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">giveRaise</span>(<span class="params">self,percent</span>):</span><br><span class="line">		self.pay=<span class="built_in">int</span>(self.pay*(<span class="number">1</span>+percent))</span><br><span class="line">	<span class="comment">#print重载</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&#x27;[Person:%s,%s]&#x27;</span> % (self.name,self.pay)</span><br><span class="line"><span class="comment">#manager类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Manager</span>(<span class="title class_ inherited__">Person</span>):</span><br><span class="line">	<span class="comment">#定制自己的构造函数，使用父类（超类）的构造函数构造</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self,name,pay</span>):</span><br><span class="line">		self.person=Person.__init__(self,name,<span class="string">&#x27;mgr&#x27;</span>,pay);</span><br><span class="line">	<span class="comment">#重载函数，内部仍然使用超类的函数</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">giveRaise</span>(<span class="params">self,percent,bonus=<span class="number">1.0</span></span>):</span><br><span class="line">		person.giveRaise(self,percent+bonus);</span><br><span class="line">	<span class="comment">#改进点：</span></span><br><span class="line">	<span class="comment">#1. 使用内置的`Instance.__class__.__name__`,避免重复修改前部分的名称</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">		<span class="keyword">return</span><span class="string">&#x27;[%s:%s,%s]&#x27;</span> % (self.__class__.__name__,self.name,self.pay)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><strong>2. 对象持久化</strong><br>在上面我们创建的不是真正的数据库记录，如果关闭python，实例也将消失，因为它们是内存中的临时对象，这时可以使用python中<code>对象持久化</code>的功能，让对象在退出程序时依然存在。<strong>对象持久化</strong>通过3个标准库模块实现：</p>
-<ul>
-<li><code>pickle</code>:任意python对象和字节串之间的转化</li>
-<li><code>dbm</code>：实现一个可通过键访问的文件系统，以存储字符串</li>
-<li><code>shelve</code>:使用上面两个模块按照键把python对象存储到一个文件</li>
-</ul>
-<p>即<code>shelve</code>通过使用<code>pickle</code>将对象转为字符串，然后存储到一个<code>dbm</code>文件中键值对下，<code>shelve</code>通过键获取<code>pinkle</code>化的字符串，并用<code>pickle</code>在内存中重新创建最初对象。<code>shelve</code>就像字典一样，但是<code>shelve</code>一开始必须打开，并且在修改后关闭它</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> shelve</span><br><span class="line">a=Person(<span class="string">&quot;小红&quot;</span>);</span><br><span class="line">b=Manager(<span class="string">&quot;小路&quot;</span>，<span class="number">1000</span>)</span><br><span class="line">db=shelve.<span class="built_in">open</span>(<span class="string">&#x27;persondb&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">object</span> <span class="keyword">in</span>(a,b)</span><br><span class="line">	db[objecct.name]=<span class="built_in">object</span></span><br><span class="line">db.close();</span><br></pre></td></tr></table></figure>
-<p>此时，当前目录下会生成一个或多个名为<code>persondb</code>的文件</p>
-<h5 id="6-抽象类"><a href="#6-抽象类" class="headerlink" title="6.抽象类"></a>6.抽象类</h5><p>抽象类只是实现给继承者的一些接口，继承者类将接口实现什么功能完全由继承类决定，因此抽象接口类不能产生实例,只要类中有一个抽象方法，我们就不能创建该类的实例对象。在python3中，在<code>class</code>的头部使用一个关键字参数，以及特殊的**@装饰器**语法</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> abc <span class="keyword">import</span> ABCmeta,abstractmethod</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Super</span>(metaclass=ABCmeta):</span><br><span class="line"><span class="meta">	@abstractmethod</span></span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">method_1</span>(<span class="params">self,*args</span>):</span><br><span class="line">		<span class="keyword">pass</span>;</span><br></pre></td></tr></table></figure>
-
-<h5 id="7-命名空间"><a href="#7-命名空间" class="headerlink" title="7.命名空间"></a>7.命名空间</h5><p>我们知道点号和无点号的变量名，会用不同方式进行访问，还有一些作用域是用于对对象命名空间做初始而设定的（如模块和类），总结如下：</p>
-<ul>
-<li>无点号运算的变量民与作用域相对应（如普通的全局和局部赋值）</li>
-<li>点号的属性名<code>object.x</code>使用的是对象的命名空间</li>
-<li>有些作用域会对对象的命名空间初始化（模块和类）</li>
-</ul>
-<h5 id="8-运算符重载详解"><a href="#8-运算符重载详解" class="headerlink" title="8.运算符重载详解"></a>8.运算符重载详解</h5><p>运算符重载是意味着给自定义类增加操作，在类方法中拦截内置操作，当类的实例出现内置操作时，python自动调用你的方法。</p>
-]]></content>
-      <categories>
-        <category>python</category>
-        <category>python面向对象</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>python面向对象</tag>
       </tags>
   </entry>
 </search>
