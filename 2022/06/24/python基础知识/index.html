@@ -29,9 +29,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/9f0f1b3db22d4c1e8a5bdd455e7702a7.jpeg#pic_center">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/57b3415f38e34a2a96c5b56f1dd1bffa.jpeg#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/fb33f1b6f62d49ba909022afa0c14a69.jpeg#pic_center">
+<meta property="og:image" content="http://example.com/数据库的隔离级别/文件操作.jpg">
 <meta property="article:published_time" content="2022-06-24T01:07:58.000Z">
-<meta property="article:modified_time" content="2022-06-30T10:21:28.950Z">
+<meta property="article:modified_time" content="2022-07-07T01:57:27.166Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-06-30 18:21:28" itemprop="dateModified" datetime="2022-06-30T18:21:28+08:00">2022-06-30</time>
+                <time title="修改时间：2022-07-07 09:57:27" itemprop="dateModified" datetime="2022-07-07T09:57:27+08:00">2022-07-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -359,7 +359,7 @@
 <td>十进制转为十六进制</td>
 </tr>
 </tbody></table>
-<p>** 2. 表达式操作符**</p>
+<p><strong>2. 表达式操作符</strong></p>
 <p>与C&#x2F;C++有些不同：<br><img src="https://img-blog.csdnimg.cn/57b3415f38e34a2a96c5b56f1dd1bffa.jpeg#pic_center"></p>
 <h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p><strong>1. raw字符串抑制转义</strong><br>转义序列用来处理嵌入在自符串中的特殊字节编码很合适，但有些场合我们希望不要发生转义，如文件路径中<code>myfile=open(&#39;C:\new\test.txt&#39;,&#39;w&#39;)。</code>本意想打开这个文件，但是因为转义字符<code>\n</code>的存在。如果字母<code>r</code>出现在字符串第一个引号钱，意味着关闭转义：&#96;myfile&#x3D;open(R’C:\new\test.txt’,’w’)’</p>
 <p><strong>2. 常见操作</strong><br>对于python的字符串，无论是<code>&quot;&quot;</code>还是<code>&#39;&#39;</code>都一样,支持串与串的相加，支持串与数的相乘，但不允许串与数的相加。同时支持负偏移和分片操作：</p>
@@ -721,7 +721,7 @@
 <h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><p>文件对象提供了python编程对外部文件操作的接口，要创建一个文件对象，就必须调用内置的<code>open</code>函数打开问文件：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file_object=<span class="built_in">open</span>(<span class="string">&quot;*.txt&quot;</span>,<span class="string">&#x27;r&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <p>除了<code>open</code>这个函数，python还有额外的类文件工具：管道、FIFO、套接字、通过键访问文件、对象吃久、基于描述符的文件、关系数据库等.</p>
-<p><strong>文件常用函数接口：</strong><br><img src="https://img-blog.csdnimg.cn/fb33f1b6f62d49ba909022afa0c14a69.jpeg#pic_center"></p>
+<p><strong>文件常用函数接口：</strong><br><img src="\数据库的隔离级别\文件操作.jpg" width="500"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">file_name=<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>,<span class="string">&#x27;r&#x27;</span>);</span><br><span class="line">lines=file_name.readlines();	<span class="comment">#读取整个文件到列表</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><em><strong>注意：</strong></em>在写入时，我们必须将对象转换成字符串，同样在读出时，我们也必须用转换工具将文本文件中的字符串转换乘python对象</p>
 <h4 id="python的动态类型"><a href="#python的动态类型" class="headerlink" title="python的动态类型"></a>python的动态类型</h4><p><strong>1. 动态类型是什么</strong><br>python的动态类型是为什么在python不必声明变量的存在和类型的缘由。** python使用动态类型和他提供的多态性来提供python语言的简洁灵活的基础。在python中我们是不会声明所使用对象的确切类型的。所谓的python动态类型，就是在程序运行的过程中自动决定对象的类型。**</p>
@@ -759,7 +759,7 @@
 <li>copy方法产生一份拷贝</li>
 <li>一些内置函数，如list(L)产生一份拷贝</li>
 </ul>
-<h4 id="python语句"><a href="#python语句" class="headerlink" title="python语句"></a>python语句</h4><p>**1.与C&#x2F;C++**完全不同点：</p>
+<h4 id="python语句"><a href="#python语句" class="headerlink" title="python语句"></a>python语句</h4><p><strong>1. 与C&#x2F;C++完全不同点:</strong></p>
 <ul>
 <li>python中所有的嵌套语句的首行以<code>:</code>结尾</li>
 <li>python中不像C&#x2F;C++,可省略嵌套语句的<code>()</code>，如<code>if x&gt;y:</code>,如果单条if\for\while语句超过，则必须加<code>()</code></li>
@@ -822,10 +822,11 @@
 <li>传两个参数时，第一个为起始值，第二个为最大不包括值</li>
 <li>传三个参数时，第三个为步进值</li>
 </ul>
-<p><strong>4.3.2 并行遍历zip和map</strong><br><strong><code>zip</code>函数</strong>：传入一个或多个序列对象为参数，然后返回一个元组列表（可迭代对象），该元组列表将传入的列表并排元素组成一个元组。当传入序列长度不同时，**<code>zip</code>会以最短序列长度为准截断得到元组列表。**</p>
+<p><strong>4.3.2 并行遍历zip和map</strong></p>
+<p><strong><code>zip</code>函数</strong>：传入一个或多个序列对象为参数，然后返回一个元组列表（可迭代对象），该元组列表将传入的列表并排元素组成一个元组。当传入序列长度不同时，**<code>zip</code>会以最短序列长度为准截断得到元组列表。**</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">L1=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">L2=[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>];</span><br><span class="line">L3=<span class="built_in">zip</span>(L1,L2);	<span class="comment">#L3=[(1,5),(2,6),(3,7),(4,8)]</span></span><br><span class="line"><span class="comment">#并行遍历</span></span><br><span class="line"><span class="keyword">for</span> (x,y) <span class="keyword">in</span> L3:</span><br><span class="line">	<span class="built_in">print</span>(x,y,<span class="string">&quot;x+y=&quot;</span>,x+y);</span><br></pre></td></tr></table></figure>
 <p>事实上，<code>zip()</code>可以接受任何类型的序列（就是任何可迭代对象）。</p>
-<p>**<code>map函数</code>:**与<code>zip</code>不同只在于不会截断，会用None补齐，python3.0不再支持该函数。一般来讲，map会带一个函数以及一个到多个序列参数，然后从序列中取出并行元素并调用函数后将结果收集：</p>
+<p><strong><code>map函数</code>:</strong> 与<code>zip</code>不同只在于不会截断，会用None补齐，python3.0不再支持该函数。一般来讲，map会带一个函数以及一个到多个序列参数，然后从序列中取出并行元素并调用函数后将结果收集：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="built_in">ord</span>,<span class="string">&#x27;spam&#x27;</span>);	<span class="comment">#ord为ascii转换为数字，结果为115，112，97，109</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>4.3.3 filter和reduce</strong><br><code>filter</code>和<code>reduce</code>都会返回可迭代对象。在python3.0,需要用<code>list</code>调用来显示其所有结果。<code>filter</code>的作用是基于某一函数的过滤器。<code>reduce</code>是没对元素都应用函数得到最后结果</p>
@@ -865,7 +866,7 @@
 </ul>
 <p><strong>1. def</strong><br><code>def</code>语句将创建一个函数对象并将其赋值给一个变量名，格式如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> &lt;name&gt;(arg1,arg2,arg3,...):</span><br><span class="line">	functions-body;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>python中所有语句都是实时运行的，没有像独立编译时间这样的流程。***python函数在程序运行之前并不需要全部定义，因为<code>def</code>在运行时评估，而<code>def</code>里面的函数体调用时才评估（与C&#x2F;C++不同)***。一个<code>def</code>语句可以出现在任何地方，比如<code>if</code>,<code>while</code>甚至是<code>def</code>嵌套也是合法的：</p>
+<p>python中所有语句都是实时运行的，没有像独立编译时间这样的流程。*** python函数在程序运行之前并不需要全部定义，因为<code>def</code>在运行时评估，而<code>def</code>里面的函数体调用时才评估（与C&#x2F;C++不同) ***。一个<code>def</code>语句可以出现在任何地方，比如<code>if</code>,<code>while</code>甚至是<code>def</code>嵌套也是合法的：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> test:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">_func</span>():</span><br><span class="line">		....</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">_func1</span>():</span><br><span class="line">		....</span><br><span class="line"></span><br><span class="line"><span class="comment">#嵌套</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f1</span>():</span><br><span class="line">	x=<span class="number">99</span>;</span><br><span class="line">	<span class="keyword">def</span> <span class="title function_">f2</span>():</span><br><span class="line">		<span class="keyword">def</span> <span class="title function_">f3</span>():</span><br><span class="line">			<span class="built_in">print</span>(x);</span><br><span class="line">		f3();	<span class="comment">#调用</span></span><br><span class="line">	f2();		<span class="comment">#调用</span></span><br><span class="line"></span><br><span class="line">f1();</span><br></pre></td></tr></table></figure>
 <p><em><strong>注意</strong></em>：当我<code>def</code>嵌套时，必须在上一层函数调用嵌套函数</p>
 <p><strong>2. python中的多态</strong><br>对于python中函数的作用，会根据传入参数的不同而有些许不同：</p>
@@ -1186,12 +1187,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">34k</span>
+    <span title="站点总字数">44k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">31 分钟</span>
+    <span title="站点阅读时长">40 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
