@@ -34,9 +34,11 @@
 <meta property="og:image" content="http://example.com/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/kuohao.gif">
 <meta property="og:image" content="http://example.com/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/listqueue.png">
 <meta property="og:image" content="http://example.com/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/jiaqueque.png">
-<meta property="og:image" content="http://example.com/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/xunqueue.png">
+<meta property="og:image" content="http://example.com/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/xunqueue.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/skiplist.gif">
+<meta property="og:image" content="http://example.com/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/skiplist.png">
 <meta property="article:published_time" content="2022-07-12T14:05:56.000Z">
-<meta property="article:modified_time" content="2022-07-14T13:22:45.176Z">
+<meta property="article:modified_time" content="2022-07-15T06:52:45.352Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
@@ -237,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-14 21:22:45" itemprop="dateModified" datetime="2022-07-14T21:22:45+08:00">2022-07-14</time>
+                <time title="修改时间：2022-07-15 14:52:45" itemprop="dateModified" datetime="2022-07-15T14:52:45+08:00">2022-07-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -262,14 +264,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>21k</span>
+              <span>24k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>19 分钟</span>
+              <span>22 分钟</span>
             </span>
 
         </div>
@@ -433,11 +435,95 @@
 </ol>
 </li>
 </ul>
-<p><strong>这里采用空闲单元法解决二义性问题。</strong><br><img src="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/xunqueue.png" width="500"></p>
+<p><strong>这里采用空闲单元法解决二义性问题。</strong><br><img src="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/xunqueue.gif" width="500"></p>
 <h5 id="5-3-实现"><a href="#5-3-实现" class="headerlink" title="5.3 实现"></a>5.3 实现</h5><p>这里我们均采用C来实现链队列和循环队列</p>
 <h6 id="5-3-1-链队列实现"><a href="#5-3-1-链队列实现" class="headerlink" title="5.3.1 链队列实现"></a>5.3.1 链队列实现</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//链队列的存储结构：</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span>  <span class="title class_">QNode</span></span><br><span class="line">&#123;</span><br><span class="line">	ElemType	data;</span><br><span class="line">	<span class="keyword">struct</span>  <span class="title class_">QNode</span>  *next;</span><br><span class="line">&#125;QNode,*QueuePtr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span>  <span class="keyword">struct</span></span><br><span class="line">&#123;</span><br><span class="line">	QueuePtr front;	<span class="comment">//队头指针（指向头结点）</span></span><br><span class="line">	QueuePtr  rear;	<span class="comment">//队尾指针（指向尾结点）</span></span><br><span class="line">&#125;LinkQueue</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建链队列：</span></span><br><span class="line"><span class="function">Status <span class="title">InitQueue</span><span class="params">(LinkQueue &amp;Q)</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="comment">//构造一空队列</span></span><br><span class="line">	Q.rear=(QueuePtr)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(QNode));</span><br><span class="line">	Q.front=Q.rear;	<span class="comment">//队头队尾指针均指向头结点。</span></span><br><span class="line">	<span class="keyword">if</span>(Q.front==<span class="literal">NULL</span>)<span class="built_in">exit</span>(OVERFLOW);</span><br><span class="line">	Q.front-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//销毁队列：</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyQueue</span><span class="params">(LinkQueue &amp;Q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(Q.front!=<span class="literal">NULL</span>)&#123;		<span class="comment">//从队头开始一步步free队头</span></span><br><span class="line">		Q.rear=Q.front-&gt;next;     <span class="comment">//队尾移至队头结点的下一个结点（结构体）</span></span><br><span class="line">		<span class="built_in">free</span>(Q.front);			<span class="comment">//释放动态内存</span></span><br><span class="line">		Q.front=Q.rear;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//插入操作：从队尾插入</span></span><br><span class="line"><span class="function">Status <span class="title">EnQueue</span><span class="params">(LinkQueue &amp;Q,ElemType e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	QNode *p=(QueuePtr)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(QNode));</span><br><span class="line">	<span class="comment">//QNode *p=(QNode*)malloc(sizeof(QNode));</span></span><br><span class="line">	<span class="keyword">if</span>(p==<span class="literal">NULL</span>)<span class="built_in">exit</span>(OVERFLOW);</span><br><span class="line">	p-&gt;data=e;</span><br><span class="line">	p-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	Q.rear-&gt;next=p;</span><br><span class="line">	Q.rear=p;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line"><span class="function">Status <span class="title">DeletQueue</span><span class="params">(LinkQueue &amp;Q,ElemType &amp;e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(Q.front==Q.rear)<span class="keyword">return</span> ERROR;</span><br><span class="line">	QNode *p=Q.front-&gt;next;</span><br><span class="line">	e=p-&gt;data;</span><br><span class="line">	Q.front-&gt;next=p-&gt;next;</span><br><span class="line">	<span class="keyword">if</span>(Q.rear==p)<span class="comment">//判断是否为空了，若空了，则队头和队尾指向头结点（相等）。</span></span><br><span class="line">		Q.rear=Q.front;</span><br><span class="line">	<span class="built_in">free</span>(p)</span><br><span class="line">	<span class="keyword">return</span> OK</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="6-跳表和散列"><a href="#6-跳表和散列" class="headerlink" title="6. 跳表和散列"></a>6. 跳表和散列</h4>
+<h4 id="6-跳表和哈希散列"><a href="#6-跳表和哈希散列" class="headerlink" title="6. 跳表和哈希散列"></a>6. 跳表和哈希散列</h4><p>有序链表、有序数组、跳表和哈希表的渐进性能如下：</p>
+<table>
+<thead>
+<tr>
+<th>数据结构</th>
+<th>最坏情况</th>
+<th>平均情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有序数组</td>
+<td>查找<code>O(lngn)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+<td>查找<code>O(lngn)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+</tr>
+<tr>
+<td>有序链表</td>
+<td>查找<code>O(n)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+<td>查找<code>O(n)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+</tr>
+<tr>
+<td>跳表</td>
+<td>查找<code>O(n)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+<td>查找<code>O(logn)</code>、插入<code>O(logn)</code>、删除<code>O(logn)</code></td>
+</tr>
+<tr>
+<td>哈希表</td>
+<td>查找<code>O(n)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+<td>查找<code>O(1)</code>、插入<code>O(1)</code>、删除<code>O(1)</code></td>
+</tr>
+</tbody></table>
+<p>在C+的STL中适用了哈希散列的容器有：<code>unordered_map、unordered_set、hash_map、hash_multimap、hash_multiset、hash_set</code></p>
+<h5 id="6-1-跳表"><a href="#6-1-跳表" class="headerlink" title="6.1 跳表"></a>6.1 跳表</h5><p>对于有序数组，我们进行二分查找所需要的时间为<code>O(logn)</code>。但是在有序链表上仍然需要的时间为<code>O(n)</code>，<strong>为了提高有序链表的查找性能，可以在全部或者部分节点增加额外的指针，在查找时，通过这些指针，可以跳过链表的若干个点，不必查看所有节点来寻找</strong><br><strong>调表</strong>采用<strong>随机技术</strong>来决定链表的哪些节点应增加额外的指针，以及增加多少个指针，基于这种技术，跳表的查找、插入、删除的<strong>平均时间复杂度为<code>O(logn)</code></strong>,最坏情况为<code>O(n)</code>.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//结构skipNOde</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">K</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">skipNode</span>&#123;</span><br><span class="line">	K element;</span><br><span class="line">	skipNode&lt;K&gt; **next;			<span class="comment">//指针数组</span></span><br><span class="line">	<span class="built_in">skipNode</span>(<span class="type">const</span> K&amp; ele,<span class="type">int</span> size):</span><br><span class="line">		<span class="built_in">element</span>(ele)&#123;next=<span class="keyword">new</span> skipNode&lt;K&gt;* [size];&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结构体的指针域有next数组统一管理，next[i]表示i级链表的指针，元素存储在element内</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="6-1-1-实现原理"><a href="#6-1-1-实现原理" class="headerlink" title="6.1.1 实现原理"></a>6.1.1 实现原理</h6><p>在一个用有序链表中查找指定值，至多需要N次值的比较。如果链表的中部节点加一个指针，则比较次数可以减少到<code>N/2+1</code>。这个时候我们在查找一个数时，首先是与中部的这个节点进行值比较，如果查找的数对关键字小，则只在左半部分继续查找，若大，则在右半部分查找。如下图所示:<br><img src="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/skiplist.gif" width="500"><br>上图非常形象的展现了跳表的查找操作：如果跳表有多级索引，如图建立了一级索引，则从一级索引出发.</p>
+<p><strong>1. 索引级数的分配</strong></p>
+<ul>
+<li>在跳表中对<code>n</code>个元素而言，以均等分<code>p=0.5</code>,则最多可有链表级数为<code>maxLevel=logn-1</code>。</li>
+<li>对于第<code>i</code>级链表，每<code>2^i</code>个元素取一个进行连接<img src="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/skiplist.png" width="500"></li>
+</ul>
+<p><strong>2. 插入和删除</strong><br>在插入和删除的时候，如果要保持索引级数分配的规则结构，要耗时<code>O(n)</code>，我们指定i级链表有<code>n/(2^i)</code>个元素，在插入的时候新数据属于<code>i</code>级链表的概率为<code>1/(2^i)</code>。<br><strong>插入步骤：</strong></p>
+<ul>
+<li>进行查找<code>O(logn)</code>，找到要插入的位置</li>
+<li>插入时，要为新数据分配一个级，分配过程就是我们之前说的<strong>随机数生成器</strong>完成（随机数只是尽可能的维护这种结构规则，不是严格意义上的）</li>
+<li>当新数据插入<code>i</code>级链表的时候，只会对<code>0~i</code>级链表产生影响，因此要记住这些链表的前驱</li>
+<li>然后只需对next[0~i]进行重新next指针指向</li>
+</ul>
+<p>对于删除，我们无法控制结构即没有生成随机数操作来中和，<strong>删除操作：</strong></p>
+<ul>
+<li>要删除指定节点，就必须先找到该节点所在处</li>
+<li>知道节点的所找链表级数<code>i</code>，则只会影响<code>0~i</code>级的链表</li>
+<li>对<code>0~i</code>级进行<code>next</code>指针重指向</li>
+</ul>
+<p><strong>为什么插入要随机数：</strong>试想一下，如果插入一直指定一个级数去插入，那么极端情况下将会使跳表退化成单链表，也就失去了跳表的作用，作为一种动态数据结构，我们需要某种手段来维护级数与元素个数之间的平衡。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="type">int</span> skipList&lt;T&gt;::<span class="built_in">level</span>()<span class="type">const</span>&#123;</span><br><span class="line">	<span class="comment">//返回一个链表级数随机数</span></span><br><span class="line">	<span class="type">int</span> lev=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">rand</span>()&lt;=cutoff)</span><br><span class="line">		lev++;</span><br><span class="line">	<span class="keyword">return</span> (lev&lt;maxLevel)?lev:maxLevel;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-2-哈希表（散列表）"><a href="#6-2-哈希表（散列表）" class="headerlink" title="6.2 哈希表（散列表）"></a>6.2 哈希表（散列表）</h5><p><strong>哈希表就是根据设定的哈希函数和处理冲突的方法将关键字映射到一个有限的连续的地址集（哈希数组）</strong>。当关键字的范围太大，不能用理想方法表示时，可以采用并不理想的哈希表和哈希函数：哈希表的位置的数量比关键字少，哈希函数把若干个不同关键字映射到哈希表的同一个位置（哈希表的每一个位置叫一个桶），桶的数量等于哈希表的长度。</p>
+<p>构造哈希表，最常遇到的问题无非就是：</p>
+<ul>
+<li><strong>冲突</strong>：当两个不同关键字经哈希函数计算后的桶相同时，冲突就发生了。但这对于一个桶可以容纳多个数对的桶来说，并没有什么影响</li>
+<li><strong>溢出</strong>：桶没有位置可以存储新的数对，就会溢出</li>
+</ul>
+<h6 id="6-2-1-实现原理"><a href="#6-2-1-实现原理" class="headerlink" title="6.2.1 实现原理"></a>6.2.1 实现原理</h6><p><strong>哈希表的建立会适用特定的哈希函数将关键字进行计算转化生成我们访问的下标</strong>，这样就能够建立起<strong>访问、插入、删除</strong>的<code>O(1)</code>操作。因此最重要的是哈希函数的选择和对下标的实现。构造哈希函数的原则是：</p>
+<ul>
+<li><strong>①函数本身便于计算；</strong></li>
+<li><strong>②计算出来的地址分布均匀，即对任一关键字k，f(k) 对应不同地址的概率相等，目的是尽可能减少冲突。</strong></li>
+</ul>
+<p>以下是对哈希函数的常用思想：</p>
+<ul>
+<li><strong>直接定址法</strong>：<strong>取关键字某个线性函数值为哈希地址</strong>，即<code>H(key)=a*key+b</code></li>
+<li><strong>数字分析法</strong>：<strong>前提关键字都是知道的，在此基础上分析数据，依数据选择取哪些位作为<code>key</code>值</strong>。例子：比如现有<code>80</code>个<code>8</code>位的十进制数，只能分配长为<code>100</code>的哈希表供你使用，此时就要依据这<code>8</code>位中哪些位取值分散而从中选取2位为哈希地址来尽可能避免冲突。</li>
+<li><strong>平方取中法</strong>：<strong>取关键字平方后的中间几位为哈希地址</strong>，平方取中法比较适用于不清楚关键字的分布，且位数也不是很大的情况。</li>
+<li><strong>折叠法</strong>：<strong>将关键字分成位数相同的几部分（最后一部分的位数可以不同），然后取这些部分叠加和作为哈希地址</strong>。折叠法比较适用于不清楚关键字的分布，但是关键字位数较多 的情况</li>
+<li><strong>除留余数法</strong>：<strong>取关键字被某个不大于哈希表长m的数<code>p</code>除后所得余数为哈希地址</strong>，即<code>h（k）=k  %  p</code> ，其中<code>%</code>为模p取余运算。一般<code>p</code>选为质数</li>
+<li><strong>位与法</strong>：哈希数组的长度一般选择2的幂，在C&#x2F;C++中位运算相对较为高效，选择2的幂作为数组长度，可以将取模运算转换成<strong>二进制位与</strong></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//专业版hash&lt;string&gt;</span></span><br><span class="line"><span class="comment">//将string关键字转换为size_t的整型哈希值</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">hash</span>&lt;string&gt;</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">size_t</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> string thekey)</span><span class="type">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="type">unsigned</span> <span class="type">long</span> hashValue=<span class="number">0</span>;</span><br><span class="line">		<span class="type">int</span> length=(<span class="type">int</span>) theKey.<span class="built_in">length</span>();</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;length;i++)</span><br><span class="line">			hashValue=<span class="number">5</span>*hashValue+thekey.<span class="built_in">at</span>(i);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">size_t</span>(hashValue);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="6-2-2-解决hash冲突方案"><a href="#6-2-2-解决hash冲突方案" class="headerlink" title="6.2.2 解决hash冲突方案"></a>6.2.2 解决hash冲突方案</h6><ul>
+<li><strong>开放定址法</strong>: 当发生地址冲突时，按照某种方法继续探测哈希表中的其他存储单元，直到找到空位置为止。</li>
+<li><strong>再哈希法</strong>：当发生哈希冲突时使用另一个哈希函数计算地址值，直到冲突不再发生。这种方法不易产生聚集，但是增加计算时间，同时需要准备许多哈希函数。</li>
+<li><strong>链地址法：将所有哈希值相同的Key通过链表存储。key按顺序插入到链表中</strong></li>
+<li><strong>建立公共溢出区</strong>：采用一个溢出表存储产生冲突的关键字。如果公共溢出区还产生冲突，再采用处理冲突方法处理。</li>
+</ul>
+
     </div>
 
     
@@ -540,7 +626,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AF%B4%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">1.说在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E7%BB%84"><span class="nav-number">2.</span> <span class="nav-text">2. 数组</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-%E6%95%B0%E7%BB%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数组介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-1-linerList%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 linerList抽象类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-2-C-%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 C++实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-3-C%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 C实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%93%BE%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">3. 链表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-%E5%8D%95%E9%93%BE%E8%A1%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 单链表介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-1-C-%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 C++实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-2-C%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 C实现</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 双向链表介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-%E5%BA%94%E7%94%A8"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-4-1-%E7%AE%B1%E5%AD%90%E6%8E%92%E5%BA%8F-%E9%93%BE%E8%A1%A8%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 箱子排序(链表形式)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-4-2-%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F%EF%BC%88%E6%95%B0%E7%BB%84%E5%BD%A2%E5%BC%8F%EF%BC%89"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 基数排序（数组形式）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-4-3-%E5%B9%B6%E6%9F%A5%E9%9B%86"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 并查集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%A0%88"><span class="nav-number">4.</span> <span class="nav-text">4. 栈</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-%E6%A0%88%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 栈的介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-1-C-%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 C++实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-2-C%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 C实现</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-%E5%BA%94%E7%94%A8"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-3-1-%E5%81%A5%E5%A3%AE%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 健壮四则运算</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-3-2-%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 括号匹配</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E9%98%9F%E5%88%97"><span class="nav-number">5.</span> <span class="nav-text">5. 队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-%E9%93%BE%E9%98%9F%E5%88%97"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 链队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 循环队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-3-%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-3-1-%E9%93%BE%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.3.1.</span> <span class="nav-text">5.3.1 链队列实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E8%B7%B3%E8%A1%A8%E5%92%8C%E6%95%A3%E5%88%97"><span class="nav-number">6.</span> <span class="nav-text">6. 跳表和散列</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AF%B4%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">1.说在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E7%BB%84"><span class="nav-number">2.</span> <span class="nav-text">2. 数组</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-%E6%95%B0%E7%BB%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数组介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-1-linerList%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 linerList抽象类</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-2-C-%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 C++实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-2-3-C%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 C实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%93%BE%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">3. 链表</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-%E5%8D%95%E9%93%BE%E8%A1%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 单链表介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2-%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-1-C-%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 C++实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-2-2-C%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 C实现</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 双向链表介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-%E5%BA%94%E7%94%A8"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#3-4-1-%E7%AE%B1%E5%AD%90%E6%8E%92%E5%BA%8F-%E9%93%BE%E8%A1%A8%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 箱子排序(链表形式)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-4-2-%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F%EF%BC%88%E6%95%B0%E7%BB%84%E5%BD%A2%E5%BC%8F%EF%BC%89"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 基数排序（数组形式）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-4-3-%E5%B9%B6%E6%9F%A5%E9%9B%86"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 并查集</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%A0%88"><span class="nav-number">4.</span> <span class="nav-text">4. 栈</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1-%E6%A0%88%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 栈的介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-1-C-%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 C++实现</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-2-C%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 C实现</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-%E5%BA%94%E7%94%A8"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 应用</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-3-1-%E5%81%A5%E5%A3%AE%E5%9B%9B%E5%88%99%E8%BF%90%E7%AE%97"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 健壮四则运算</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-3-2-%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 括号匹配</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E9%98%9F%E5%88%97"><span class="nav-number">5.</span> <span class="nav-text">5. 队列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-%E9%93%BE%E9%98%9F%E5%88%97"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 链队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-%E5%BE%AA%E7%8E%AF%E9%98%9F%E5%88%97"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 循环队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-3-%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-3-1-%E9%93%BE%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.3.1.</span> <span class="nav-text">5.3.1 链队列实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E8%B7%B3%E8%A1%A8%E5%92%8C%E5%93%88%E5%B8%8C%E6%95%A3%E5%88%97"><span class="nav-number">6.</span> <span class="nav-text">6. 跳表和哈希散列</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-%E8%B7%B3%E8%A1%A8"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 跳表</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#6-1-1-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">6.1.1.</span> <span class="nav-text">6.1.1 实现原理</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-2-%E5%93%88%E5%B8%8C%E8%A1%A8%EF%BC%88%E6%95%A3%E5%88%97%E8%A1%A8%EF%BC%89"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 哈希表（散列表）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#6-2-1-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">6.2.1.</span> <span class="nav-text">6.2.1 实现原理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#6-2-2-%E8%A7%A3%E5%86%B3hash%E5%86%B2%E7%AA%81%E6%96%B9%E6%A1%88"><span class="nav-number">6.2.2.</span> <span class="nav-text">6.2.2 解决hash冲突方案</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -554,7 +640,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -567,7 +653,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -608,12 +694,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">187k</span>
+    <span title="站点总字数">196k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:50</span>
+    <span title="站点阅读时长">2:58</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

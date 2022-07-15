@@ -192,6 +192,491 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Linux操作系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-15 17:26:07 / 修改时间：21:15:23" itemprop="dateCreated datePublished" datetime="2022-07-15T17:26:07+08:00">2022-07-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">Linux操作系统</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="1-shell"><a href="#1-shell" class="headerlink" title="1. shell"></a>1. shell</h4><p><code>shell</code>是<code>Linux</code>系统中运行的一种特殊程序。在用户和内核之间之间充当“翻译官”，用户登陆<code>Linux</code>系统时，自动加载一个<code>Shell</code>程序，<code>Bash</code>是<code>Linux</code>系统中默认使用的<code>Shell</code>程序。</p>
+<ul>
+<li>内核：用于调用计算机硬件资源</li>
+<li>shell：将用户指令转换成计算机语言让内核去调用计算机硬件资源<img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/shell.png" width="500"></li>
+</ul>
+<h4 id="2-Bash解析器常用快捷键-Teminal"><a href="#2-Bash解析器常用快捷键-Teminal" class="headerlink" title="2. Bash解析器常用快捷键(Teminal)"></a>2. Bash解析器常用快捷键(Teminal)</h4><p><code>bash</code>是一个文件，linux系统中万物皆文件，<code>bash</code>文件位于<code>/bin/bash</code>，<code>bash</code>使用的快捷键：</p>
+<ul>
+<li><code>Tab</code>键:补齐命令，补齐路径，显示当前目录下的所有目录</li>
+<li>使用快捷键<code>Ctrl + L</code> 清除终端上的显示(类似于DOS的cls清屏功能)，也可用<code>clear</code>指令</li>
+<li><code>ctlr+c</code>的作用是中断终端的操作。</li>
+<li>遍历输入的历史命令：从当前位置向上遍历<code>ctrl + p </code>或<code>↑</code>；从当前位置向下遍历<code>ctrl + n（↓）</code></li>
+<li>光标相关操作</li>
+<li>光标左移： <code>ctrl + b （←）</code></li>
+<li>坐标右移： <code>ctrl + f （→）</code></li>
+<li>移动到头部：<code> ctrl + a（Home）</code></li>
+<li>移动到尾部：<code> ctlr + e（End）</code></li>
+<li>字符删除</li>
+<li>删除光标前边的字符：ctrl + h（Backspace）</li>
+<li>删除光标后边的字符：ctrl + d</li>
+<li>删除光标前所有内容：ctrl + u</li>
+<li>删除光标后所有内容：ctrl + k</li>
+</ul>
+<h4 id="3-系统目录"><a href="#3-系统目录" class="headerlink" title="3. 系统目录"></a>3. 系统目录</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">oot@trluper-<span class="keyword">virtual</span>-machine:/home/trluper<span class="meta"># cd /</span></span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:/<span class="meta"># ls</span></span><br><span class="line">bin    dev   lib    libx32      mnt   root  snap      sys  var</span><br><span class="line">boot   etc   lib32  lost+found  opt   run   srv       tmp</span><br><span class="line">cdrom  home  lib64  media       proc  sbin  swapfile  usr</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>/</code>：根目录，一般根目录下只存放目录，<strong>在<code>Linux</code>下有且只有一个根目录</strong>。所有的东西都是从这里开始。当你在终端里输入<code>/home</code>，你其实是在告诉电脑，先从&#x2F;（根目录）开始，再进入到home目录。</li>
+<li><code>/bin</code>: <strong>这一目录中存放了供超级用户和一般用户都可以使用的命令，常用的命令<code>ls、tar、mv、cat</code>等</strong></li>
+<li><code>/usr/bin</code>: <strong>安装的外部的命令，<code>usr</code>表示的是<code>unix software source</code>，不是user。</strong></li>
+<li><code>/boot</code>：放置<code>linux</code>系统启动时用到的一些文件，如<code>Linux</code>的内核文件<code>/boot/vmlinuz</code>，系统引导管理器<code>/boot/grub</code>。</li>
+<li><code>/dev</code>：存放<code>linux</code>系统下的设备文件，访问该目录下某个文件，相当于访问某个设备，</li>
+<li><code>/etc</code>：<strong>系统配置文件存放的目录，不建议在此目录下存放可执行文件</strong>，重要的配置文件有 <code>/etc/inittab、/etc/fstab、/etc/init.d、/etc/X11、/etc/sysconfig、/etc/xinetd.d。</code></li>
+<li><code>/home</code>：<strong>系统默认的用户家目录，新增用户账号时，用户的家目录都存放在此目录下，<del>表示当前用户的家目录，&#96;</del>edu<code>表示用户</code>edu&#96;的家目录。</strong></li>
+<li><code>/lib</code>：<strong>内核级别</strong>,系统使用的函数库的目录，包含许多被<code>/bin/</code>和<code>/sbin/</code>中的程序使用的库文件。</li>
+<li><code>/usr/lib</code>: <strong>系统级别</strong>，目标库文件，包括动态连接库加上一些通常不是直接调用的可执行文件的存放位置。这个目录功能类似&#x2F;lib目录</li>
+<li><code>/usr/local/lib</code>：<strong>用户级别</strong>，包含许多被<code>/bin/</code>和<code>/sbin/</code>中的程序使用的库文件。</li>
+<li><code>/usr/include</code>：<strong>C程序语言编译使用的头文件。<code>linux</code>下开发和编译应用程序所需要的头文件一般都存放在这里，通过头文件来使用某些库函数</strong></li>
+<li><code>/lost+fount</code>：系统异常产生错误时，会将一些遗失的片段放置于此目录下。</li>
+<li><code>/mnt、/media</code>:光盘默认挂载点，通常光盘挂载<code> /mnt/cdrom</code>下，也不一定，可以选择任意位置进行挂载。</li>
+<li><code>/opt</code>：给主机额外安装软件所摆放的目录。</li>
+<li><code>/proc</code>：此目录的数据都在内存中，如系统核心，外部设备，网络状态，由于数据都存放于内存中，所以不占用磁盘空间，比较重要的目录有 <code>/proc/cpuinfo、/proc/interrupts、/proc/dma、/proc/ioports、/proc/net/*</code> 等。</li>
+<li><code>/root</code>：系统管理员root的家目录。</li>
+<li><code>/sbin、/usr/sbin、/usr/local/sbin</code>：<strong>放置系统管理员使用的可执行命令</strong>，如<code>fdisk、shutdown、mount</code>等。<strong>与<code>/bin</code>不同的是，这几个目录是给系统管理员root使用的命令，</strong>一般用户只能”查看”而不能设置和使用。</li>
+<li><code>/tmp</code>：<strong>一般用户或正在执行的程序临时存放文件的目录，任何人都可以访问，重要数据不可放置在此目录下。</strong></li>
+<li><code>/srv</code>：服务启动之后需要访问的数据目录，如<code>www</code>服务需要访问的网页数据存放在<code>/srv/www</code>内。</li>
+<li><code>/usr</code>：<strong>应用程序存放目录，<code>/usr/bin</code>存放应用程序，<code>/usr/share</code>存放共享数据，<code>/usr/lib</code>存放不能直接运行的，却是许多程序运行所必需的一些函数库文件。<code>/usr/local</code>:存放软件升级包。<code>/usr/share/doc:</code>系统说明文件存放目录。<code>/usr/share/man:</code>程序说明文件存放目录。</strong></li>
+<li><code>/var</code>：放置系统执行过程中经常变化的文件，如随时更改的日志文件 <code>/var/log，/var/log/message</code>所有的登录文件存放目录，<code>/var/spool/mail</code>邮件存放的目录，<code>/var/run</code>程序或服务启动后，其PID存放在该目录</li>
+</ul>
+<h4 id="4-Linux的文件"><a href="#4-Linux的文件" class="headerlink" title="4. Linux的文件"></a>4. Linux的文件</h4><p>在Linux世界里，一切皆文件。在Linux中，文件可分为以下几种：<strong>普通文件（普通文件、可执行文件、压缩文件）、目录文件、设备文件、链接文件和套接字</strong><br><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linuxFile.png" width="400"></p>
+<p><strong>文件符号标识：</strong></p>
+<ul>
+<li>普通文件:<code>-</code></li>
+<li>目录：<code>d</code></li>
+<li>字符设备：<code>c</code></li>
+<li>管道：<code>p</code></li>
+<li>符号链接：<code>l</code></li>
+<li>套接字：<code>s</code></li>
+</ul>
+<h4 id="5-Linux常用命令"><a href="#5-Linux常用命令" class="headerlink" title="5. Linux常用命令"></a>5. Linux常用命令</h4><p>Linux的命令分为内建命令和外部命令。<code>shell</code>内建命令是指<code>bash</code>工具中集成的命令，一般有一些都会有一个与之同名的系统函数。外部命令是安装外部软件所带的命令。</p>
+<h5 id="5-1-内建命令和外部命令的区别"><a href="#5-1-内建命令和外部命令的区别" class="headerlink" title="5.1 内建命令和外部命令的区别"></a>5.1 内建命令和外部命令的区别</h5><ul>
+<li><p><strong>内部命令</strong>：实际上是<code>shell</code>程序的一部分，其中包含的是一些比较简单的<code>linux</code>系统命令，这些命令由<code>shell</code>程序识别并在<code>shell</code>程序内部完成运行，通常在<code>linux</code>系统加载运行<code>shell</code>时就被加载并驻留在系统内存中。内部命令是写在bashy源码里面的，<strong>其执行速度比外部命令快，因为解析内部命令shell不需要创建子进程</strong>。<code>exit，history，cd，echo</code>等就是内建命令</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help 内建命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>外部命令</strong>：<strong>外部命令是<code>linux</code>系统中的实用程序部分，因为实用程序的功能通常都比较强大，所以其包含的程序量也会很大，在系统加载时并不随系统一起被加载到内存中，而是在需要时才将其调用内存</strong>。通常外部命令的实体并不包含在<code>shell</code>中，但是其命令执行过程是由<code>shell</code>程序控制的。<code>shell</code>程序管理外部命令执行的路径查找、加载存放，并控制命令的执行。外部命令是在<code>bash</code>之外额外安装的，通常放在<code>/bin，/sbin，/usr/bin，/usr/sbin，/usr/local/sbin</code>等等。可通过<code>echo $PATH</code>命令查看外部命令的存储路径</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">外部命令 --help</span><br></pre></td></tr></table></figure></li>
+<li><p><strong><code>type</code>命令可以分辨内部命令与外部命令</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//常用的三个参数：-t对应-type，-a对应-all，-p对应-path，</span></span><br><span class="line">type [-a | -t | -p] name</span><br><span class="line"><span class="comment">//或</span></span><br><span class="line">type [-all | -type | -path] name</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="5-2-内建命令使用"><a href="#5-2-内建命令使用" class="headerlink" title="5.2 内建命令使用"></a>5.2 内建命令使用</h5><p>所有内建命令如下：加星号的为常用项</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+<th align="center">重要程度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>：</code></td>
+<td>扩展参数列表，执行重定向操作</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>读取并执行指定文件中的命令（在当前shell环境中）</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>alias</code></td>
+<td>为指定命令定义一个别名</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>bg</code></td>
+<td>将作业以后台模式运行</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>bind</code></td>
+<td>将键盘序列绑定到一个<code>readline</code>函数或宏</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>break</code></td>
+<td>退出<code>for、while、selec</code>t或<code>until</code>循环</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>builtin</code></td>
+<td>执行指定的<code>shell</code>内建命令</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>caller</code></td>
+<td>返回活动子函数调用的上下文</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>cd</code></td>
+<td>将当前目录切换为指定目录</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td>执行指定的命令，无需进行通常的shell查找</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>compgen</code></td>
+<td>为指定单词生成可能的补全匹配</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>complete</code></td>
+<td>显示指定的单词是如何补全的</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>compopt</code></td>
+<td>修改指定单词的补全选项</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>继续执行<code>for、while、select或until</code>循环的下一次迭代</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>declare</code></td>
+<td>声明一个变量或者变量类型</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>dirs</code></td>
+<td>显示当前存储目录的列表</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>disown</code>	从进程作业表中删除指定的作业</td>
+<td></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>echo</code></td>
+<td>将指定字符串输出到<code>STDOUT</code></td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>enable</code></td>
+<td>启用或禁止指定的内建<code>shell</code>命令</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>eval</code></td>
+<td>将指定的参数拼接成一个命令，然后执行该命令</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>exec</code></td>
+<td>用指定命令替换<code>shell</code>进程</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>exit</code></td>
+<td>强制<code>shell</code>以指定的退出状态码退出</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>export</code></td>
+<td>设置子<code>shell</code>进程可用的变量</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>fc</code></td>
+<td>从历史记录中选择命令列表</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>fg</code></td>
+<td>将作业以前台模式运行</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>getopts</code></td>
+<td>分析指定的位置参数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>hash</code></td>
+<td>查找并记住指定命令的全路径名</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td>显示帮助文件</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>history</code></td>
+<td>显示命令历史记录</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>jobs</code></td>
+<td>列出活动作业</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>kill</code></td>
+<td>向指定的进程ID发送一个系统信号</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>let</code></td>
+<td>计算一个数学表达式中的每个参数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>local</code></td>
+<td>在函数中创建一个作用域受限的变量</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>logout</code></td>
+<td>退出登录<code>shell</code></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>mapfile</code></td>
+<td>从<code>STDIN</code>读取数据行，并将其加入索引数组</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>popd</code></td>
+<td>从目录栈中删除记录</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>printf</code></td>
+<td>使用格式化字符串显示文本</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>pushd</code></td>
+<td>向目录栈添加一个目录</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>pwd</code></td>
+<td>显示当前工作目录的路径名</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>read</code></td>
+<td>从<code>STDIN</code>读取一行数据并将其赋值给一个变量</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>readarray</code></td>
+<td>从<code>STDIN</code>读取数据行并将其放入索引数组</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>readonly</code></td>
+<td>从<code>STDIN</code>读取一行数据并将其赋值给一个不可修改的变量</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>return</code></td>
+<td>强制函数以某个值退出，这个值可以被调用脚本提取</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>set</code></td>
+<td>设置并显示环境变量的值和shell属性</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>shift</code></td>
+<td>将位置参数依次向下降一个位置</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>shopt</code></td>
+<td>打开&#x2F;关闭控制<code>shell</code>可选行为的变量值</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td>读取并执行指定文件中的命令（在当前<code>shell</code>环境中）</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>suspend</code></td>
+<td>暂停<code>shell</code>的执行，直到收到一个<code>SIGCONT</code>信号</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>基于指定条件返回退出状态码0或1</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>times	</code></td>
+<td>显示累计的用户和系统时间</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>trap</code></td>
+<td>如果收到了指定的系统信号，执行指定的命令</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>显示指定的单词如果作为命令将会如何被解释</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>typeset</code></td>
+<td>声明一个变量或变量类型</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>ulimit</code></td>
+<td>为系统用户设置指定的资源的上限</td>
+<td align="center">*</td>
+</tr>
+<tr>
+<td><code>umask</code></td>
+<td>为新建的文件和目录设置默认权限</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>unalias</code></td>
+<td>删除指定的别名</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>unset</code></td>
+<td>删除指定的环境变量或<code>shell</code>属性</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td><code>wait</code></td>
+<td>等待指定的进程完成，并返回退出状态码</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h6 id="5-2-1-cd命令"><a href="#5-2-1-cd命令" class="headerlink" title="5.2.1 cd命令"></a>5.2.1 cd命令</h6><p><code>cd</code>命令是改变当前工作目录</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ../	返回上一级目录</span><br><span class="line">cd /  进入根目录</span><br><span class="line">cd ~	进入用户主目录</span><br></pre></td></tr></table></figure>
+
+<h6 id="5-2-2-dirs命令"><a href="#5-2-2-dirs命令" class="headerlink" title="5.2.2 dirs命令"></a>5.2.2 dirs命令</h6><h5 id="5-3-外部命令"><a href="#5-3-外部命令" class="headerlink" title="5.3 外部命令"></a>5.3 外部命令</h5><h6 id="5-3-1-sudo命令"><a href="#5-3-1-sudo命令" class="headerlink" title="5.3.1 sudo命令"></a>5.3.1 sudo命令</h6><p><code>sudo</code>命令以系统管理者的身份执行指令，也就是说，经由<code>sudo</code>所执行的外部指令就好像是<code>root</code>亲自执行。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ sudo --help</span><br><span class="line">sudo - execute a command as another user</span><br><span class="line"></span><br><span class="line">usage: sudo -h | -K | -k | -V</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>V</code> 显示版本编号</li>
+<li><code>h</code> 会显示版本编号及指令的使用方式说明</li>
+<li><code>l</code> 显示出自己（执行<code>sudo</code>的使用者）的权限</li>
+<li><code>k</code> 将会强迫使用者在下一次执行<code>sudo</code>时问密码（不论有没有超过 N 分钟）</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ sudo cd /</span><br><span class="line">sudo: cd: command <span class="keyword">not</span> found</span><br><span class="line"><span class="comment">//注意，shell是一个命令解析器，sudo cd是错误的，因为cd是shell内置的，不是系统里面的，</span></span><br><span class="line"><span class="comment">//要进入root用户，先获取root权限 然后进入/root</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ sudo -sH</span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:/home/trluper<span class="meta"># cd /root</span></span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:~# </span><br></pre></td></tr></table></figure>
+
+<h6 id="5-3-2-su命令"><a href="#5-3-2-su命令" class="headerlink" title="5.3.2 su命令"></a>5.3.2 su命令</h6><p><code>su</code>（英文全拼：<code>switch user</code>）命令用于变更为其他使用者的身份，除<code>root</code>外，需要键入该使用者的密码。使用权限：所有使用者。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:~<span class="meta"># su trluper	<span class="comment">//切回用户身份</span></span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:/root$ sudo su	<span class="comment">//切回root</span></span><br><span class="line">[sudo] password <span class="keyword">for</span> trluper: </span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:~# </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/13/ubuntu%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -215,21 +700,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-13 16:44:21 / 修改时间：18:25:12" itemprop="dateCreated datePublished" datetime="2022-07-13T16:44:21+08:00">2022-07-13</time>
+              <time title="创建时间：2022-07-13 16:44:21" itemprop="dateCreated datePublished" datetime="2022-07-13T16:44:21+08:00">2022-07-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-15 17:25:09" itemprop="dateModified" datetime="2022-07-15T17:25:09+08:00">2022-07-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/ubuntu/" itemprop="url" rel="index"><span itemprop="name">ubuntu</span></a>
+                  <a href="/categories/ubuntu/" itemprop="url" rel="index"><span itemprop="name">ubuntu</span></a>
                 </span>
             </span>
 
@@ -444,7 +931,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-14 21:22:45" itemprop="dateModified" datetime="2022-07-14T21:22:45+08:00">2022-07-14</time>
+                <time title="修改时间：2022-07-15 14:52:45" itemprop="dateModified" datetime="2022-07-15T14:52:45+08:00">2022-07-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -462,14 +949,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>21k</span>
+              <span>24k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>19 分钟</span>
+              <span>22 分钟</span>
             </span>
 
         </div>
@@ -633,11 +1120,95 @@
 </ol>
 </li>
 </ul>
-<p><strong>这里采用空闲单元法解决二义性问题。</strong><br><img src="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/xunqueue.png" width="500"></p>
+<p><strong>这里采用空闲单元法解决二义性问题。</strong><br><img src="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/xunqueue.gif" width="500"></p>
 <h5 id="5-3-实现"><a href="#5-3-实现" class="headerlink" title="5.3 实现"></a>5.3 实现</h5><p>这里我们均采用C来实现链队列和循环队列</p>
 <h6 id="5-3-1-链队列实现"><a href="#5-3-1-链队列实现" class="headerlink" title="5.3.1 链队列实现"></a>5.3.1 链队列实现</h6><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//链队列的存储结构：</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span>  <span class="title class_">QNode</span></span><br><span class="line">&#123;</span><br><span class="line">	ElemType	data;</span><br><span class="line">	<span class="keyword">struct</span>  <span class="title class_">QNode</span>  *next;</span><br><span class="line">&#125;QNode,*QueuePtr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span>  <span class="keyword">struct</span></span><br><span class="line">&#123;</span><br><span class="line">	QueuePtr front;	<span class="comment">//队头指针（指向头结点）</span></span><br><span class="line">	QueuePtr  rear;	<span class="comment">//队尾指针（指向尾结点）</span></span><br><span class="line">&#125;LinkQueue</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建链队列：</span></span><br><span class="line"><span class="function">Status <span class="title">InitQueue</span><span class="params">(LinkQueue &amp;Q)</span></span></span><br><span class="line"><span class="function"></span>&#123;	<span class="comment">//构造一空队列</span></span><br><span class="line">	Q.rear=(QueuePtr)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(QNode));</span><br><span class="line">	Q.front=Q.rear;	<span class="comment">//队头队尾指针均指向头结点。</span></span><br><span class="line">	<span class="keyword">if</span>(Q.front==<span class="literal">NULL</span>)<span class="built_in">exit</span>(OVERFLOW);</span><br><span class="line">	Q.front-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//销毁队列：</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyQueue</span><span class="params">(LinkQueue &amp;Q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(Q.front!=<span class="literal">NULL</span>)&#123;		<span class="comment">//从队头开始一步步free队头</span></span><br><span class="line">		Q.rear=Q.front-&gt;next;     <span class="comment">//队尾移至队头结点的下一个结点（结构体）</span></span><br><span class="line">		<span class="built_in">free</span>(Q.front);			<span class="comment">//释放动态内存</span></span><br><span class="line">		Q.front=Q.rear;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//插入操作：从队尾插入</span></span><br><span class="line"><span class="function">Status <span class="title">EnQueue</span><span class="params">(LinkQueue &amp;Q,ElemType e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	QNode *p=(QueuePtr)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(QNode));</span><br><span class="line">	<span class="comment">//QNode *p=(QNode*)malloc(sizeof(QNode));</span></span><br><span class="line">	<span class="keyword">if</span>(p==<span class="literal">NULL</span>)<span class="built_in">exit</span>(OVERFLOW);</span><br><span class="line">	p-&gt;data=e;</span><br><span class="line">	p-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">	Q.rear-&gt;next=p;</span><br><span class="line">	Q.rear=p;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line"><span class="function">Status <span class="title">DeletQueue</span><span class="params">(LinkQueue &amp;Q,ElemType &amp;e)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(Q.front==Q.rear)<span class="keyword">return</span> ERROR;</span><br><span class="line">	QNode *p=Q.front-&gt;next;</span><br><span class="line">	e=p-&gt;data;</span><br><span class="line">	Q.front-&gt;next=p-&gt;next;</span><br><span class="line">	<span class="keyword">if</span>(Q.rear==p)<span class="comment">//判断是否为空了，若空了，则队头和队尾指向头结点（相等）。</span></span><br><span class="line">		Q.rear=Q.front;</span><br><span class="line">	<span class="built_in">free</span>(p)</span><br><span class="line">	<span class="keyword">return</span> OK</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="6-跳表和散列"><a href="#6-跳表和散列" class="headerlink" title="6. 跳表和散列"></a>6. 跳表和散列</h4>
+<h4 id="6-跳表和哈希散列"><a href="#6-跳表和哈希散列" class="headerlink" title="6. 跳表和哈希散列"></a>6. 跳表和哈希散列</h4><p>有序链表、有序数组、跳表和哈希表的渐进性能如下：</p>
+<table>
+<thead>
+<tr>
+<th>数据结构</th>
+<th>最坏情况</th>
+<th>平均情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有序数组</td>
+<td>查找<code>O(lngn)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+<td>查找<code>O(lngn)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+</tr>
+<tr>
+<td>有序链表</td>
+<td>查找<code>O(n)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+<td>查找<code>O(n)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+</tr>
+<tr>
+<td>跳表</td>
+<td>查找<code>O(n)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+<td>查找<code>O(logn)</code>、插入<code>O(logn)</code>、删除<code>O(logn)</code></td>
+</tr>
+<tr>
+<td>哈希表</td>
+<td>查找<code>O(n)</code>、插入<code>O(n)</code>、删除<code>O(n)</code></td>
+<td>查找<code>O(1)</code>、插入<code>O(1)</code>、删除<code>O(1)</code></td>
+</tr>
+</tbody></table>
+<p>在C+的STL中适用了哈希散列的容器有：<code>unordered_map、unordered_set、hash_map、hash_multimap、hash_multiset、hash_set</code></p>
+<h5 id="6-1-跳表"><a href="#6-1-跳表" class="headerlink" title="6.1 跳表"></a>6.1 跳表</h5><p>对于有序数组，我们进行二分查找所需要的时间为<code>O(logn)</code>。但是在有序链表上仍然需要的时间为<code>O(n)</code>，<strong>为了提高有序链表的查找性能，可以在全部或者部分节点增加额外的指针，在查找时，通过这些指针，可以跳过链表的若干个点，不必查看所有节点来寻找</strong><br><strong>调表</strong>采用<strong>随机技术</strong>来决定链表的哪些节点应增加额外的指针，以及增加多少个指针，基于这种技术，跳表的查找、插入、删除的<strong>平均时间复杂度为<code>O(logn)</code></strong>,最坏情况为<code>O(n)</code>.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//结构skipNOde</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">K</span>&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">skipNode</span>&#123;</span><br><span class="line">	K element;</span><br><span class="line">	skipNode&lt;K&gt; **next;			<span class="comment">//指针数组</span></span><br><span class="line">	<span class="built_in">skipNode</span>(<span class="type">const</span> K&amp; ele,<span class="type">int</span> size):</span><br><span class="line">		<span class="built_in">element</span>(ele)&#123;next=<span class="keyword">new</span> skipNode&lt;K&gt;* [size];&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结构体的指针域有next数组统一管理，next[i]表示i级链表的指针，元素存储在element内</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="6-1-1-实现原理"><a href="#6-1-1-实现原理" class="headerlink" title="6.1.1 实现原理"></a>6.1.1 实现原理</h6><p>在一个用有序链表中查找指定值，至多需要N次值的比较。如果链表的中部节点加一个指针，则比较次数可以减少到<code>N/2+1</code>。这个时候我们在查找一个数时，首先是与中部的这个节点进行值比较，如果查找的数对关键字小，则只在左半部分继续查找，若大，则在右半部分查找。如下图所示:<br><img src="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/skiplist.gif" width="500"><br>上图非常形象的展现了跳表的查找操作：如果跳表有多级索引，如图建立了一级索引，则从一级索引出发.</p>
+<p><strong>1. 索引级数的分配</strong></p>
+<ul>
+<li>在跳表中对<code>n</code>个元素而言，以均等分<code>p=0.5</code>,则最多可有链表级数为<code>maxLevel=logn-1</code>。</li>
+<li>对于第<code>i</code>级链表，每<code>2^i</code>个元素取一个进行连接<img src="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/skiplist.png" width="500"></li>
+</ul>
+<p><strong>2. 插入和删除</strong><br>在插入和删除的时候，如果要保持索引级数分配的规则结构，要耗时<code>O(n)</code>，我们指定i级链表有<code>n/(2^i)</code>个元素，在插入的时候新数据属于<code>i</code>级链表的概率为<code>1/(2^i)</code>。<br><strong>插入步骤：</strong></p>
+<ul>
+<li>进行查找<code>O(logn)</code>，找到要插入的位置</li>
+<li>插入时，要为新数据分配一个级，分配过程就是我们之前说的<strong>随机数生成器</strong>完成（随机数只是尽可能的维护这种结构规则，不是严格意义上的）</li>
+<li>当新数据插入<code>i</code>级链表的时候，只会对<code>0~i</code>级链表产生影响，因此要记住这些链表的前驱</li>
+<li>然后只需对next[0~i]进行重新next指针指向</li>
+</ul>
+<p>对于删除，我们无法控制结构即没有生成随机数操作来中和，<strong>删除操作：</strong></p>
+<ul>
+<li>要删除指定节点，就必须先找到该节点所在处</li>
+<li>知道节点的所找链表级数<code>i</code>，则只会影响<code>0~i</code>级的链表</li>
+<li>对<code>0~i</code>级进行<code>next</code>指针重指向</li>
+</ul>
+<p><strong>为什么插入要随机数：</strong>试想一下，如果插入一直指定一个级数去插入，那么极端情况下将会使跳表退化成单链表，也就失去了跳表的作用，作为一种动态数据结构，我们需要某种手段来维护级数与元素个数之间的平衡。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="type">int</span> skipList&lt;T&gt;::<span class="built_in">level</span>()<span class="type">const</span>&#123;</span><br><span class="line">	<span class="comment">//返回一个链表级数随机数</span></span><br><span class="line">	<span class="type">int</span> lev=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">rand</span>()&lt;=cutoff)</span><br><span class="line">		lev++;</span><br><span class="line">	<span class="keyword">return</span> (lev&lt;maxLevel)?lev:maxLevel;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="6-2-哈希表（散列表）"><a href="#6-2-哈希表（散列表）" class="headerlink" title="6.2 哈希表（散列表）"></a>6.2 哈希表（散列表）</h5><p><strong>哈希表就是根据设定的哈希函数和处理冲突的方法将关键字映射到一个有限的连续的地址集（哈希数组）</strong>。当关键字的范围太大，不能用理想方法表示时，可以采用并不理想的哈希表和哈希函数：哈希表的位置的数量比关键字少，哈希函数把若干个不同关键字映射到哈希表的同一个位置（哈希表的每一个位置叫一个桶），桶的数量等于哈希表的长度。</p>
+<p>构造哈希表，最常遇到的问题无非就是：</p>
+<ul>
+<li><strong>冲突</strong>：当两个不同关键字经哈希函数计算后的桶相同时，冲突就发生了。但这对于一个桶可以容纳多个数对的桶来说，并没有什么影响</li>
+<li><strong>溢出</strong>：桶没有位置可以存储新的数对，就会溢出</li>
+</ul>
+<h6 id="6-2-1-实现原理"><a href="#6-2-1-实现原理" class="headerlink" title="6.2.1 实现原理"></a>6.2.1 实现原理</h6><p><strong>哈希表的建立会适用特定的哈希函数将关键字进行计算转化生成我们访问的下标</strong>，这样就能够建立起<strong>访问、插入、删除</strong>的<code>O(1)</code>操作。因此最重要的是哈希函数的选择和对下标的实现。构造哈希函数的原则是：</p>
+<ul>
+<li><strong>①函数本身便于计算；</strong></li>
+<li><strong>②计算出来的地址分布均匀，即对任一关键字k，f(k) 对应不同地址的概率相等，目的是尽可能减少冲突。</strong></li>
+</ul>
+<p>以下是对哈希函数的常用思想：</p>
+<ul>
+<li><strong>直接定址法</strong>：<strong>取关键字某个线性函数值为哈希地址</strong>，即<code>H(key)=a*key+b</code></li>
+<li><strong>数字分析法</strong>：<strong>前提关键字都是知道的，在此基础上分析数据，依数据选择取哪些位作为<code>key</code>值</strong>。例子：比如现有<code>80</code>个<code>8</code>位的十进制数，只能分配长为<code>100</code>的哈希表供你使用，此时就要依据这<code>8</code>位中哪些位取值分散而从中选取2位为哈希地址来尽可能避免冲突。</li>
+<li><strong>平方取中法</strong>：<strong>取关键字平方后的中间几位为哈希地址</strong>，平方取中法比较适用于不清楚关键字的分布，且位数也不是很大的情况。</li>
+<li><strong>折叠法</strong>：<strong>将关键字分成位数相同的几部分（最后一部分的位数可以不同），然后取这些部分叠加和作为哈希地址</strong>。折叠法比较适用于不清楚关键字的分布，但是关键字位数较多 的情况</li>
+<li><strong>除留余数法</strong>：<strong>取关键字被某个不大于哈希表长m的数<code>p</code>除后所得余数为哈希地址</strong>，即<code>h（k）=k  %  p</code> ，其中<code>%</code>为模p取余运算。一般<code>p</code>选为质数</li>
+<li><strong>位与法</strong>：哈希数组的长度一般选择2的幂，在C&#x2F;C++中位运算相对较为高效，选择2的幂作为数组长度，可以将取模运算转换成<strong>二进制位与</strong></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//专业版hash&lt;string&gt;</span></span><br><span class="line"><span class="comment">//将string关键字转换为size_t的整型哈希值</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">hash</span>&lt;string&gt;</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">size_t</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">const</span> string thekey)</span><span class="type">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="type">unsigned</span> <span class="type">long</span> hashValue=<span class="number">0</span>;</span><br><span class="line">		<span class="type">int</span> length=(<span class="type">int</span>) theKey.<span class="built_in">length</span>();</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;length;i++)</span><br><span class="line">			hashValue=<span class="number">5</span>*hashValue+thekey.<span class="built_in">at</span>(i);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">size_t</span>(hashValue);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h6 id="6-2-2-解决hash冲突方案"><a href="#6-2-2-解决hash冲突方案" class="headerlink" title="6.2.2 解决hash冲突方案"></a>6.2.2 解决hash冲突方案</h6><ul>
+<li><strong>开放定址法</strong>: 当发生地址冲突时，按照某种方法继续探测哈希表中的其他存储单元，直到找到空位置为止。</li>
+<li><strong>再哈希法</strong>：当发生哈希冲突时使用另一个哈希函数计算地址值，直到冲突不再发生。这种方法不易产生聚集，但是增加计算时间，同时需要准备许多哈希函数。</li>
+<li><strong>链地址法：将所有哈希值相同的Key通过链表存储。key按顺序插入到链表中</strong></li>
+<li><strong>建立公共溢出区</strong>：采用一个溢出表存储产生冲突的关键字。如果公共溢出区还产生冲突，再采用处理冲突方法处理。</li>
+</ul>
+
       
     </div>
 
@@ -1052,7 +1623,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-13 14:02:31" itemprop="dateModified" datetime="2022-07-13T14:02:31+08:00">2022-07-13</time>
+                <time title="修改时间：2022-07-14 21:50:10" itemprop="dateModified" datetime="2022-07-14T21:50:10+08:00">2022-07-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1569,7 +2140,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p=<span class="keyword">new</span> <span class="type">int</span>[size];		<span class="comment">//返回的指向第一个元素对象指针</span></span><br><span class="line"><span class="comment">//初始化动态分配对象的数组</span></span><br><span class="line"><span class="comment">//不加括号——默认初始化</span></span><br><span class="line"><span class="type">int</span> *p=<span class="keyword">new</span> <span class="type">int</span>[<span class="number">10</span>];		<span class="comment">//默认初始化</span></span><br><span class="line"><span class="comment">//大小之后加一对空括号——值初始化</span></span><br><span class="line"><span class="type">int</span> *p=<span class="keyword">new</span> <span class="type">int</span>[<span class="number">10</span>]();		<span class="comment">//10个值初始化为0</span></span><br><span class="line"><span class="comment">//大小之后跟一个花括号列表——初始化器初始化</span></span><br><span class="line"><span class="type">int</span> *p=<span class="keyword">new</span> <span class="type">int</span>[<span class="number">10</span>]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//释放，使用特殊的delete来释放动态数组，在delete前加上一个空方括号对(方括号必须加上)</span></span><br><span class="line"><span class="type">int</span> *p=<span class="keyword">new</span> <span class="type">int</span>[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">delete</span>[] p;</span><br></pre></td></tr></table></figure>
 <p>当我们用new分配一个大小为0的数组时，new返回一个合法的非空指针。但此指针不能解引用——毕竟它不指向任何元素。	</p>
 <p><em><strong>注意：</strong></em>我们得到的时数组元素的指针，而不是数组的对象，所以我们不能调用标准库函数中的<code>begin()和end()</code>，也不能使用<code>范围for循环</code>。</p>
-<h6 id="12-2-7-placement-new"><a href="#12-2-7-placement-new" class="headerlink" title="12.2.7 placement new"></a>12.2.7 placement new</h6><p><code>placement new</code>相当于C语言中的<code>realloc</code>，在已有空间的基础上，重新分配一个空间，可以不破坏原来数据，也可以把数据全部用新值覆盖。这个操作就是把已有的空间当成一个缓冲区来使用，这样子就减少了分配空间所耗费的时间，因为直接用new操作符分配内存的话，在堆中查找足够大的剩余空间速度是比较慢的。</p>
+<h6 id="10-2-7-placement-new"><a href="#10-2-7-placement-new" class="headerlink" title="10.2.7 placement new"></a>10.2.7 placement new</h6><p><code>placement new</code>相当于C语言中的<code>realloc</code>，在已有空间的基础上，重新分配一个空间，可以不破坏原来数据，也可以把数据全部用新值覆盖。这个操作就是把已有的空间当成一个缓冲区来使用，这样子就减少了分配空间所耗费的时间，因为直接用new操作符分配内存的话，在堆中查找足够大的剩余空间速度是比较慢的。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//就是在指针p所指向的内存空间创建一个T1类型的对象，但是对象的内容是从T2类型的对象转换过来的,</span></span><br><span class="line"><span class="comment">//就是在已有空间的基础上重新调整分配的空间，类似于realloc函数</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T1</span>, <span class="keyword">class</span> <span class="title class_">T2</span>&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="type">void</span> _construct(T1 * p, <span class="type">const</span> T2&amp; value)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">new</span>(p) <span class="built_in">T1</span>(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h5 id="10-3new与C的malloc的比较"><a href="#10-3new与C的malloc的比较" class="headerlink" title="10.3new与C的malloc的比较"></a>10.3new与C的malloc的比较</h5><p>首先我们来看<code>new</code>生成的源码：</p>
@@ -1714,6 +2285,8 @@
 </ul>
 <p><em><strong>总结：</strong></em><br><strong>直接初始化：</strong>根据提供的参数选择最匹配的构造函数<br><strong>拷贝初始化：</strong>右侧运算对象拷贝到正在创建的对象中，通常由拷贝构造函数完成。</p>
 <h6 id="11-1-4-拷贝构造函数的参数必须是引用"><a href="#11-1-4-拷贝构造函数的参数必须是引用" class="headerlink" title="11.1.4 拷贝构造函数的参数必须是引用"></a>11.1.4 拷贝构造函数的参数必须是引用</h6><p><strong>因为在函数调用中，非引用类型的的参数要进行拷贝初始化；函数返回一个非引用类型，调用方的返回结果也是一个拷贝，所以拷贝函数此时被用来初始化非引用类型的数据。如果拷贝构造函数的参数不是引用类型都是类型形参，为获得它的实参，那么它自身就会无限的调用自身的死循环。P（442）</strong></p>
+<p>######11.1.5 构造函数不能为虚函数<br>我们知道，<strong>每个有虚函数的类都有属于自己的虚函数表<code>vtbl</code>，虚函数表在编译器构建好。当我们的派生类重写了虚函数，那么在虚表中就会替换掉父类的虚函数指针为子类的虚函数指针。当我们创建一个对象时，会在对象的内存模型中有自己的指向虚表的指针<code>vtpr</code>，对象通过虚表才知道调用的是哪一版本的虚函数</strong><br><img src="/2022/07/07/c-primer%E5%89%8D%E9%83%A8%E5%88%86/vtpr.png" width="500"><br>如果构造函数是虚函数,那么也会如上面的机制一样在虚表有一个指向自己构造函数版本的虚函数指针。现在有两个类<code>A</code>和<code>B</code>,<code>B</code>是<code>A</code>的派生类，在构造<code>B</code>的对象的时候发现继承于<code>A</code>的部分要先构造，它就要求调用<code>A</code>的构造函数，但是这些构造函数已经是虚函数了，而虚表指针必须是在构造一个对象的时候分配了内存才能得到，而你有调用不到构造函数，<strong>这就陷入了一个矛盾的处境：你要用虚表指针<code>vtpr</code>去调用构造函数，而虚表指针<code>vtpr</code>只有当年调用构造申请了内存后才能得到，这形成了一个死结。</strong></p>
+<p><em><strong>附加</strong></em>：vptr的初始化工作早于构造函数中的初始化列表</p>
 <h5 id="11-2-拷贝赋值运算符"><a href="#11-2-拷贝赋值运算符" class="headerlink" title="11.2 拷贝赋值运算符"></a>11.2 拷贝赋值运算符</h5><p>与类控制对象如何初始化一样，类也可以控制对象如何赋值：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Sales_data trans,accum;</span><br><span class="line">trans=accum;		<span class="comment">//使用Sales_data的拷贝运算符</span></span><br></pre></td></tr></table></figure>
 <p><em><strong>注意区分：拷贝构造函数是在对象创建时拷贝，而赋值拷贝时在对象已经创建后进行赋值，这就是两者的区别</strong></em></p>
@@ -3801,7 +4374,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -3814,7 +4387,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -3855,12 +4428,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">187k</span>
+    <span title="站点总字数">196k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:50</span>
+    <span title="站点阅读时长">2:58</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
