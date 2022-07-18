@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. make1.1 make是什么make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。 1.2工作原理12345678app:main.o hello.o        gcc -o app main.o hello.oma">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Makefile">
+<meta property="og:url" content="http://example.com/2022/07/18/Makefile/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1. make1.1 make是什么make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。 1.2工作原理12345678app:main.o hello.o        gcc -o app main.o hello.oma">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-18T04:06:19.000Z">
+<meta property="article:modified_time" content="2022-07-18T13:01:53.733Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="Makefile">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/07/18/Makefile/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Makefile | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/18/Makefile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Makefile
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-18 12:06:19 / 修改时间：21:01:53" itemprop="dateCreated datePublished" datetime="2022-07-18T12:06:19+08:00">2022-07-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Makefile/" itemprop="url" rel="index"><span itemprop="name">Makefile</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="1-make"><a href="#1-make" class="headerlink" title="1. make"></a>1. make</h4><h5 id="1-1-make是什么"><a href="#1-1-make是什么" class="headerlink" title="1.1 make是什么"></a>1.1 make是什么</h5><p>make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。</p>
+<h5 id="1-2工作原理"><a href="#1-2工作原理" class="headerlink" title="1.2工作原理"></a>1.2工作原理</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app:main.o hello.o</span><br><span class="line">        gcc -o app main.o hello.o</span><br><span class="line">main.o:main.c hello.h</span><br><span class="line">        gcc -c main.c</span><br><span class="line">hello.o:hello.c hello.h</span><br><span class="line">        gcc -c hello.c</span><br><span class="line">clean:</span><br><span class="line">        rm app main.o hello.o</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>make</code>在当前目录寻找<code>Makefile</code>或<code>makefile</code>文件。</li>
+<li>如果找到，它会找文件中的第一个目标文件<code>target</code>，如上例它找到<code>app</code>这个目标文件，把这个文件作为最终的目标文件。如果<code>app</code>文件不存在,或是<code>app</code>所依赖的后面的<code>.o</code>文件的文件修改时间要比<code>app</code>这个文件新，那么<code>make</code>命令就会执行后面所定义的命令来生成<code>app</code>这个文件。</li>
+<li><strong>如果<code>app</code>所依赖的<code>.o</code>文件也不存在，那么<code>make</code>命令会在当前文件中寻找目标为<code>.o</code>文件的依赖关系。如果找到，则再根据那一个规则生成<code>.o</code>文件，根据<code>.o</code>文件依赖的<code>.c</code>文件和<code>.h</code>文件，执行规则生成<code>.o</code>文件。</strong></li>
+<li><strong>然后make再用<code>.o</code>文件生成执行文件<code>app</code></strong></li>
+</ul>
+<p><strong>总而远之，<code>make</code>会依据依赖关系一层一层地去找文件的依赖关系,直到最终编译出第一个目标文件</strong>。在找寻的过程中,如果出现错误,如最后被依赖的文件找不到,那么 make 就会直接退出并报错。</p>
+<p>但是像<code>clean</code>这种没有被第一个目标文件直接或间接关联,那么它后面所定义的命令将不会被自动执行。不过，可以显式指定<code>make</code>执行<code>clean</code>，即<code>make　clean</code>。<strong>同时只要修改了与第一个目标文件存在直接或间接依赖关系的文件，都会发生重新编译和重新链接</strong></p>
+<h5 id="1-3-make命令"><a href="#1-3-make命令" class="headerlink" title="1.3 make命令"></a>1.3 make命令</h5><p>make是一个命令工具，它解释Makefile 中的指令（应该说是规则）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make [ -f file ][ options ][ targets ]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>-f file</code>:<code>make</code>默认在工作目录中寻找名为<code>GNUmakefile、makefile、Makefile</code>的文件作为<code>makefile</code>输入文件,但有时可能命名不是这些,则<code>-f</code>可以指定以上名字以外的文件作为makefile输入文件</p>
+</li>
+<li><p><code>options</code></p>
+</li>
+<li><p><code>v：</code>显示make工具的版本信息</p>
+</li>
+<li><p><code>w：</code>在处理<code>makefile</code>之前和之后显示工作路径</p>
+</li>
+<li><p><code>C dir：</code>读取<code>makefile</code>之前改变工作路径至dir目录</p>
+</li>
+<li><p><code>n：</code>只打印要执行的命令但不执行</p>
+</li>
+<li><p><code>s：</code>执行但不显示执行的命令</p>
+</li>
+<li><p><code>targets</code>:使用<code>make</code>命令时没有指定目标，则<code>make</code>工具默认会实现<code>makefile</code>文件内的第一个目标，如果指定了<code>make</code>工具要实现的目标则该目标为最终目标（目标可以是一个或多个）</p>
+</li>
+</ul>
+<h4 id="2-Makefile"><a href="#2-Makefile" class="headerlink" title="2. Makefile"></a>2. Makefile</h4><p><code>Makefile</code>是一个脚本文件，其内部编写一些符和<code>make</code>工具解析的语法规则来进行执行一些命令。</p>
+<h5 id="2-1-Makefile是什么"><a href="#2-1-Makefile是什么" class="headerlink" title="2.1 Makefile是什么"></a>2.1 Makefile是什么</h5><p><code>makefile</code>定义了一系列的规则来指定，<strong>哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译</strong>，甚至于进行更复杂的功能操作，因为<code>makefile</code>就像一个<code>Shell</code>脚本一样，其中也可以执行操作系统的命令。<code>Makefile</code>带来的好处就是——“自动化编译”，一旦写好，只需要一个make命令，整个工程完全自动编译，极大的提高了软件开发的效率。<code>makefile</code>文件由<code>make</code>命令工具来执行。</p>
+<p><strong>make主要解决两个问题：</strong></p>
+<ul>
+<li><strong>1) 大量代码的关系维护</strong>:大项目中源代码比较多，手工维护、编译时间长而且编译命令复杂，难以记忆及维护,把代码维护命令及编译命令写在<code>makefile</code>文件中，然后再用<code>make</code>工具解析此文件自动执行相应命令，可实现代码的合理编译</li>
+<li><strong>2) 减少重复编译时间</strong>，在改动其中一个文件的时候，能判断哪些文件被修改过，可以只对该文件进行重新编译，然后重新链接所有的目标文件，节省编译时间。</li>
+</ul>
+<p><code>Makefile</code>文件命名规则<code>makefile</code>和<code>Makefile</code>都可以，推荐使用<code>Makefile</code>,即<code>vim Makefile</code>。学号<code>Makefile</code>只需要学习他的<strong>一条规则，三个变量，两个函数</strong>就能上手了。</p>
+<h5 id="2-2-一条规则"><a href="#2-2-一条规则" class="headerlink" title="2.2 一条规则"></a>2.2 一条规则</h5><p><strong>一条规则</strong>即指完成单此任务所包含的要素，Makefile的一条规则三要素如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一条规则</span></span><br><span class="line">target... : prerequisites ...</span><br><span class="line">     command</span><br><span class="line">     ......</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>target</code>:<strong>通常是要产生的文件名称，目标可以是可执行文件或其它obj文件，也可是一个标签</strong></li>
+<li><code>prerequisites</code>：依赖文件，用来输入从而产生目标的文件，一个目标通常有几个依赖文件（也可以没有）。<code>prerequisites</code>中如果有一个以上的文件比<code>target</code>文件要新的话，<code>command</code>所定义的命令就会被执行。</li>
+<li><code>command</code>：make执行的动作，一个规则可以含几个命令（可以没有）。有多个命令时，每个命令占一行。</li>
+</ul>
+<p><code>make</code>工具从上往下找寻<code>target</code>，<strong>根据<code>target</code>后对应的依赖关系，先去查找依赖项的文件,为索所有的目标文件创建依赖关系链</strong>。若依赖项不存在，则会报错：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make div.o</span><br><span class="line">make: *** No rule to make target <span class="string">&#x27;div.cpp&#x27;</span>, needed by <span class="string">&#x27;div.o&#x27;</span>.  Stop.</span><br></pre></td></tr></table></figure>
+<p>若存在，在检查依赖关系时，同时会检查目标与源文件的时间戳，当源文件时间戳更新时，make会更新依赖它的链路上所有文件，即调用command部分。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Makefile件</span></span><br><span class="line">sum.o:sum.cpp</span><br><span class="line">        g++ -c  sum.cpp -o sum.o</span><br><span class="line">main.o:main.cpp</span><br><span class="line">        g++ -c main.cpp -o main.o</span><br><span class="line">main:main.o sum.o</span><br><span class="line">        g++ main.o sum.o -o main</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用make</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make sum.o main.o main</span><br><span class="line">make: <span class="string">&#x27;sum.o&#x27;</span> is up to date.</span><br><span class="line">g++ -c main.cpp -o main.o</span><br><span class="line">g++ main.o sum.o -o main</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-变量"><a href="#2-3-变量" class="headerlink" title="2.3 变量"></a>2.3 变量</h5><p>在<code>Makefile</code>中使用变量有点类似于C语言中的宏定义，使用该变量相当于内容替换，使用变量可以使<code>Makefile</code>易于维护,修改内容变得简单变量定义及使用。<strong>在<code>Makefile</code>中由自定义变量和自动变量</strong>。</p>
+<h6 id="2-3-1-等号"><a href="#2-3-1-等号" class="headerlink" title="2.3.1 等号"></a>2.3.1 等号</h6><p>在学习变量前需要熟悉Makefile中的等号，等号有4种<code>=，:=，?=，+=</code>。</p>
+<ul>
+<li><code>?=</code>表示，如果左边的变量没有被赋值，那么将等号右边的值赋给左边的变量。如果赋过值，则保持原来的值不变。</li>
+<li><code>+=</code>表示将等号右边的值追加到左边变量中，但是中间会有一个空格。</li>
+<li><code>=</code>与<code>:=</code>是比较不好区分的两个等号，可以将”&#x3D;“理解为”址传递”或引用，”:&#x3D;“理解为”值传递”。</li>
+</ul>
+<p>在<code>Makefile</code>中是不允许将变量自己的值赋给自己的，也不允许出现循环引用。</p>
+<h6 id="2-3-2-变量名的规则"><a href="#2-3-2-变量名的规则" class="headerlink" title="2.3.2 变量名的规则"></a>2.3.2 变量名的规则</h6><p><strong><code>makefile</code>的变量名的起名规则：</strong></p>
+<ul>
+<li><code>makefile</code>变量名可以以数字开头</li>
+<li>变量是大小写敏感的</li>
+<li>变量一般都在<code>makefile</code>的头部定义</li>
+<li>变量几乎可在<code>makefile</code>的任何地方使用</li>
+</ul>
+<h6 id="2-3-3-自定义变量"><a href="#2-3-3-自定义变量" class="headerlink" title="2.3.3 自定义变量"></a>2.3.3 自定义变量</h6><ul>
+<li>1）定义变量方法：<code>变量名=变量值</code>,<code>变量名？=变量值</code>,<code>变量名+=变量值</code>,<code>变量名:=变量值</code></li>
+<li><ol start="2">
+<li>使用变量名：<code>$(变量名)</code>或<code>$&#123;变量名&#125;</code></li>
+</ol>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">objs=add.o sum.o div.o mul.o</span><br><span class="line">target=main</span><br><span class="line">$(target):$(bgjs)</span><br><span class="line">		gcc &amp;(objs) -o $(target)</span><br></pre></td></tr></table></figure>
+
+<h6 id="2-3-4-三个重要自动变量"><a href="#2-3-4-三个重要自动变量" class="headerlink" title="2.3.4 三个重要自动变量"></a>2.3.4 三个重要自动变量</h6><p><code>Makefile</code>的自动变量有以下几个:</p>
+<table>
+<thead>
+<tr>
+<th>自动变量</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$@</code></td>
+<td>规则的目标文件名(依赖关系中冒号:左边的文件，如果<code>a:b c</code>那么<code>$@</code>指<code>a</code>)</td>
+</tr>
+<tr>
+<td><code>$%</code></td>
+<td>当目标文件是一个静态库文件时，代表静态库的一个成员名</td>
+</tr>
+<tr>
+<td><code>$&lt;</code></td>
+<td>被依赖文件的第一项<code>a:b c</code>那么<code>$&lt;</code>指<code>b</code>)</td>
+</tr>
+<tr>
+<td><code>$?</code></td>
+<td>所有比目标文件更新的依赖文件列表，空格分隔</td>
+</tr>
+<tr>
+<td><code>$^</code></td>
+<td>所有依赖文件列表，使用空格分隔<code>a: b c </code>那么<code>$^</code>指<code>b c</code>，不包含重复文件</td>
+</tr>
+<tr>
+<td><code>$+</code></td>
+<td>所有依赖文件列表，使用空格分隔<code>a: b c c</code>那么<code>$+</code>指<code>b c c</code>，包含重复文件</td>
+</tr>
+<tr>
+<td><code>$*</code></td>
+<td>在模式规则和静态模式规则中的<code>%</code>所匹配的内容。这个变量表示目标模式中<code>%</code>及其之前的部分。如果目标是<code>dir/a.foo.b</code>，并且目标的模式是<code>a.%.b</code>，那么，<code>$*</code>的值就是<code>dir/a.foo</code></td>
+</tr>
+</tbody></table>
+<p><strong>其中重要常用的三个是：</strong><br><code>$@:</code> 表示规则中的目标<br><code>$&lt;: </code>表示规则中依赖性的第一个<br><code>$^:</code> 表示规则中的所有依赖性, 组成一个列表, 以空格隔开,如果这个列表中有重复的项则消除重复项。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">objs=add.o sum.o div.o mul.o</span><br><span class="line">target=main</span><br><span class="line">sum.o:sum.cpp</span><br><span class="line">        g++ -c  $^ -o $@</span><br><span class="line">main.o:main.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br><span class="line">$(target):$(bgjs)</span><br><span class="line">		g++ &amp;(objs) -o $(target)</span><br><span class="line">clean:</span><br><span class="line">		rm -rf $(objs) $(target)</span><br></pre></td></tr></table></figure>
+<p><em><strong>注意：自动变量只能在规则的命令中中使用</strong></em></p>
+<h5 id="2-4-模式规则"><a href="#2-4-模式规则" class="headerlink" title="2.4 模式规则"></a>2.4 模式规则</h5><p>如果想要进一步的偷懒，那就必须提到<strong>模式规则</strong>，模式规则用来匹配当前目录下的符合模式匹配的所有文件。模式规则类似于普通规则，<strong>只是在模式规则中，目标名中需要包含有模式字符<code>%</code>，包含有模式字符<code>%</code>的目标被用来匹配一个文件名，<code>%</code>可以匹配任何非空字符串</strong>。看到上面你觉得很绕，让我们看实例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#%表示可以匹配当前目录下的所有以.cpp为后缀的源文件，</span><br><span class="line">#并且对应生成相应名称的.o文件（注意是使用$&lt;才能生成对应.o文件</span><br><span class="line">%.o:%.cpp</span><br><span class="line">		g++ -c $&lt; -o $@</span><br></pre></td></tr></table></figure>
+<p>单独上面的这个<code>makefile</code>不能成功执行，会出现<code>No targets.Stop</code>错误</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接make，不成功</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make</span><br><span class="line">make: *** No targets.  Stop.</span><br><span class="line"><span class="comment">//传入目标，成功</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make main.o</span><br><span class="line">g++ -c main.cpp -o main.o</span><br></pre></td></tr></table></figure>
+<p>这是很正常的，因为<code>%</code>是模式匹配规则，你如果没传入目标它就无法执行<code>make</code>的工作机制。下面来讲解对<code>%</code>的解决办法</p>
+<h5 id="2-5-函数"><a href="#2-5-函数" class="headerlink" title="2.5 函数"></a>2.5 函数</h5><p><code>makefile</code>中的函数有很多，在这里给大家介绍两个最常用的:</p>
+<ul>
+<li><code>wildcard</code>查找指定目录下的指定类型的文件<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src = $(wildcard *.c) <span class="comment">//找到当前目录下所有后缀为.c的文件,赋值给src</span></span><br></pre></td></tr></table></figure></li>
+<li><code>patsubst</code>匹配替换<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj = $(patsubst %.c,%.o, $(src)) <span class="comment">//把src变量里所有后缀为.c的文件替换成.o，然后赋值给obj</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><em><strong>注意</strong></em>：<code>patsubst</code>不是把src里的文件的后缀改为.o，是在<code>makefile.o</code>文件内部将生成的<code>.o</code>文件替换掉<code>src</code>内的<code>.cpp</code>文件，因此在<code>make</code>的时候一定是要先生成<code>.o</code>文件（这里从两者<code>*</code>和<code>%</code>就能看出)，从两者的特性能够得到以下的解决：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">all:$(patsubst %.cpp,%.o,$(wildcard *.cpp))</span><br><span class="line">%.o:%.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br></pre></td></tr></table></figure>
+<p>原理：all目标获得了目录内的<code>*.cpp</code>文件，使用<code>patsubst</code>要求将<code>*.cpp</code>替换为<code>*.o</code>,但是目录中还没有<code>*.o</code>文件，则会依据make工作原理进行到下一个目标，刚好这个目标是生成<code>.o</code>文件的，则执行。</p>
+<h5 id="2-6-简单示例"><a href="#2-6-简单示例" class="headerlink" title="2.6 简单示例"></a>2.6 简单示例</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">src=$(wildcard *.cpp)</span><br><span class="line">objs=$(patsubst %.cpp,%.o,$(src))</span><br><span class="line">target=main</span><br><span class="line">$(target):$(objs)</span><br><span class="line">        g++ $(objs) -o $(target)</span><br><span class="line">%.o:%.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br><span class="line"></span><br><span class="line">#PHONY伪目标，不去判断目标文件是否存在或者更新，无条件执行</span><br><span class="line">.PHONY:clean</span><br><span class="line">clean:</span><br><span class="line">        rm -rf $(objs) $(target)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#执行make</span><br><span class="line">trluper@trluper-virtual-machine:~/Documents/staticLib$ make</span><br><span class="line">g++ -c main.cpp -o main.o</span><br><span class="line">g++ -c sum.cpp -o sum.o</span><br><span class="line">g++ main.o sum.o -o main</span><br><span class="line">#执行makeclean</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Makefile/" rel="tag"># Makefile</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="prev" title="Linux操作系统基本命令">
+      <i class="fa fa-chevron-left"></i> Linux操作系统基本命令
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-make"><span class="nav-number">1.</span> <span class="nav-text">1. make</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-make%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 make是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">1.2工作原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-make%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 make命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Makefile"><span class="nav-number">2.</span> <span class="nav-text">2. Makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-Makefile%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Makefile是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-%E4%B8%80%E6%9D%A1%E8%A7%84%E5%88%99"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 一条规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 变量</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-1-%E7%AD%89%E5%8F%B7"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 等号</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-2-%E5%8F%98%E9%87%8F%E5%90%8D%E7%9A%84%E8%A7%84%E5%88%99"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 变量名的规则</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-3-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 自定义变量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-4-%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E8%87%AA%E5%8A%A8%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 三个重要自动变量</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-%E6%A8%A1%E5%BC%8F%E8%A7%84%E5%88%99"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 模式规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-5-%E5%87%BD%E6%95%B0"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 简单示例</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">232k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:31</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
