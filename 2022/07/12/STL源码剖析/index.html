@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1.STL概述1.1 六大组件 容器：各种数据结构,如vector、list、deque、set、map等,用来存放数据 算法：各种常用的算法（冒泡，排序）,如sort、find、copy、for_each、search、erase 迭代器：扮演了容器与算法之间的胶合剂，是所谓的泛型指针 仿函数：行为类似函数，可作为算法的某种策略 适配器：一种用来修饰容器或者仿函数或迭代器接口的东西 空间配置器：">
+  <meta name="description" content="1.STL概述 1.1 六大组件  容器：各种数据结构,如vector、list、deque、set、map等,用来存放数据 算法：各种常用的算法（冒泡，排序）,如sort、find、copy、for_each、search、erase 迭代器：扮演了容器与算法之间的胶合剂，是所谓的泛型指针 仿函数：行为类似函数，可作为算法的某种策略 适配器：一种用来修饰容器或者仿函数或迭代器接口的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="STL源码剖析">
 <meta property="og:url" content="http://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/index.html">
 <meta property="og:site_name" content="Trluper">
-<meta property="og:description" content="1.STL概述1.1 六大组件 容器：各种数据结构,如vector、list、deque、set、map等,用来存放数据 算法：各种常用的算法（冒泡，排序）,如sort、find、copy、for_each、search、erase 迭代器：扮演了容器与算法之间的胶合剂，是所谓的泛型指针 仿函数：行为类似函数，可作为算法的某种策略 适配器：一种用来修饰容器或者仿函数或迭代器接口的东西 空间配置器：">
+<meta property="og:description" content="1.STL概述 1.1 六大组件  容器：各种数据结构,如vector、list、deque、set、map等,用来存放数据 算法：各种常用的算法（冒泡，排序）,如sort、find、copy、for_each、search、erase 迭代器：扮演了容器与算法之间的胶合剂，是所谓的泛型指针 仿函数：行为类似函数，可作为算法的某种策略 适配器：一种用来修饰容器或者仿函数或迭代器接口的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-12T14:15:12.000Z">
-<meta property="article:modified_time" content="2022-07-13T08:35:56.767Z">
+<meta property="article:modified_time" content="2022-07-22T16:38:47.630Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-13 16:35:56" itemprop="dateModified" datetime="2022-07-13T16:35:56+08:00">2022-07-13</time>
+                <time title="修改时间：2022-07-23 00:38:47" itemprop="dateModified" datetime="2022-07-23T00:38:47+08:00">2022-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -272,7 +272,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="1-STL概述"><a href="#1-STL概述" class="headerlink" title="1.STL概述"></a>1.STL概述</h4><h5 id="1-1-六大组件"><a href="#1-1-六大组件" class="headerlink" title="1.1 六大组件"></a>1.1 六大组件</h5><ul>
+        <h4 id="stl概述">1.STL概述</h4>
+<h5 id="六大组件">1.1 六大组件</h5>
+<ul>
 <li>容器：各种数据结构,如<code>vector、list、deque、set、map</code>等,用来存放数据</li>
 <li>算法：各种常用的算法（冒泡，排序）,如<code>sort、find、copy、for_each、search、erase</code></li>
 <li>迭代器：扮演了容器与算法之间的胶合剂，是所谓的泛型指针</li>
@@ -282,13 +284,13 @@
 </ul>
 <p>六大组件的交互关系是<code>Container</code>通过<code>Allocator</code>获得数据存储空间，<code>Alogrithm</code>通过<code>Iterator</code>存取<code>Container</code>的内容，<code>Functor</code>可以协助<code>Algorithm</code>完成不同的策略变化，<code>Adapter</code>可以修饰或套接<code>Functor</code>。本笔记将会以此对这六大组件进行介绍。</p>
 <p>++说在前面：STL的实现版本由HP版本、PJ版本、RW版本、STLport版本和SGISTL版本等五个主要版本++</p>
-<h4 id="2-空间配置器"><a href="#2-空间配置器" class="headerlink" title="2. 空间配置器"></a>2. 空间配置器</h4><p>在介绍STL的其他组件尤其是<code>container</code>组件之前，空间配置器是必须要先介绍的，因为容器内存空间的开辟需要由<code>allocator</code>去申请。allocator申请的空间是为构造原始的，<code>new</code>申请的空间是已构造的。在<code>gcc</code>中的容器使用了缺省的SGI版本的空间配置器：<code>class Alloc = alloc</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="keyword">class</span> <span class="title class_">Alloc</span> = alloc&gt;</span><br><span class="line"><span class="keyword">class</span> vector &#123;</span><br><span class="line"><span class="comment">/*...实现*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="2-1-空间配置器的标准接口"><a href="#2-1-空间配置器的标准接口" class="headerlink" title="2.1 空间配置器的标准接口"></a>2.1 空间配置器的标准接口</h5><p>allocator的必要接口（无论是哪个版本的STL）：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//成员变量</span></span><br><span class="line">allocator::value_type;</span><br><span class="line">allocator::pointer;</span><br><span class="line">allocator::const_pointer;</span><br><span class="line">allocator::reference;</span><br><span class="line">allocator::const_reference;</span><br><span class="line">allocator::size_type;</span><br><span class="line">allocator::difference_type;</span><br><span class="line">allocator::rbind;</span><br><span class="line"><span class="comment">//构造函数</span></span><br><span class="line">allocator::<span class="built_in">allocator</span>();</span><br><span class="line">allocator::<span class="built_in">allocator</span>(<span class="type">const</span> allocator&amp;);</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">U</span>&gt;allocator：：<span class="built_in">allocator</span>(<span class="type">const</span> allocator&lt;U&gt;&amp;);</span><br><span class="line"><span class="comment">//析构</span></span><br><span class="line">allocator::~<span class="built_in">allocator</span>();</span><br><span class="line"><span class="comment">//返回某个对象的地址，等同于&amp;X</span></span><br><span class="line"><span class="function">pointer <span class="title">allocator::address</span><span class="params">(reference x)</span><span class="type">const</span></span>;</span><br><span class="line"><span class="comment">//配置空间，n个足以存储U对象</span></span><br><span class="line"><span class="function">pointer <span class="title">allocator::allocate</span><span class="params">(size_type n,<span class="type">const</span> <span class="type">void</span>*=<span class="number">0</span>)</span></span>;</span><br><span class="line"><span class="comment">//回收配置的空间,p为allocate返回的指针，n为allocate分配是指定的大小</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">allocator::deallocate</span><span class="params">(pointer p,size_type n)</span></span>;</span><br><span class="line"><span class="comment">//对分配空间进行构造</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">allocator::construct</span><span class="params">(pointer,<span class="type">const</span> T&amp;x)</span></span>;</span><br><span class="line"><span class="comment">//对构造空间析构</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">allocator::destroy</span><span class="params">(pointer p)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="空间配置器">2. 空间配置器</h4>
+<p>在介绍STL的其他组件尤其是<code>container</code>组件之前，空间配置器是必须要先介绍的，因为容器内存空间的开辟需要由<code>allocator</code>去申请。allocator申请的空间是为构造原始的，<code>new</code>申请的空间是已构造的。在<code>gcc</code>中的容器使用了缺省的SGI版本的空间配置器：<code>class Alloc = alloc</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>, <span class="keyword">class</span> <span class="title class_">Alloc</span> = alloc&gt;</span><br><span class="line"><span class="keyword">class</span> vector &#123;</span><br><span class="line"><span class="comment">/*...实现*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="空间配置器的标准接口">2.1 空间配置器的标准接口</h5>
+<p>allocator的必要接口（无论是哪个版本的STL）： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//成员变量</span></span><br><span class="line">allocator::value_type;</span><br><span class="line">allocator::pointer;</span><br><span class="line">allocator::const_pointer;</span><br><span class="line">allocator::reference;</span><br><span class="line">allocator::const_reference;</span><br><span class="line">allocator::size_type;</span><br><span class="line">allocator::difference_type;</span><br><span class="line">allocator::rbind;</span><br><span class="line"><span class="comment">//构造函数</span></span><br><span class="line">allocator::<span class="built_in">allocator</span>();</span><br><span class="line">allocator::<span class="built_in">allocator</span>(<span class="type">const</span> allocator&amp;);</span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">U</span>&gt;allocator：：<span class="built_in">allocator</span>(<span class="type">const</span> allocator&lt;U&gt;&amp;);</span><br><span class="line"><span class="comment">//析构</span></span><br><span class="line">allocator::~<span class="built_in">allocator</span>();</span><br><span class="line"><span class="comment">//返回某个对象的地址，等同于&amp;X</span></span><br><span class="line"><span class="function">pointer <span class="title">allocator::address</span><span class="params">(reference x)</span><span class="type">const</span></span>;</span><br><span class="line"><span class="comment">//配置空间，n个足以存储U对象</span></span><br><span class="line"><span class="function">pointer <span class="title">allocator::allocate</span><span class="params">(size_type n,<span class="type">const</span> <span class="type">void</span>*=<span class="number">0</span>)</span></span>;</span><br><span class="line"><span class="comment">//回收配置的空间,p为allocate返回的指针，n为allocate分配是指定的大小</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">allocator::deallocate</span><span class="params">(pointer p,size_type n)</span></span>;</span><br><span class="line"><span class="comment">//对分配空间进行构造</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">allocator::construct</span><span class="params">(pointer,<span class="type">const</span> T&amp;x)</span></span>;</span><br><span class="line"><span class="comment">//对构造空间析构</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">allocator::destroy</span><span class="params">(pointer p)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="设计一个简单的空间配置器">2.1.1设计一个简单的空间配置器</h6>
+<p>根据上述的接口，我们可以实现一个自己的、功能简单，接口不齐全的allocator。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></p>
 
-<h6 id="设计一个简单的空间配置器"><a href="#设计一个简单的空间配置器" class="headerlink" title="设计一个简单的空间配置器"></a>设计一个简单的空间配置器</h6><p>根据上述的接口，我们可以实现一个自己的、功能简单，接口不齐全的allocator。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -391,7 +393,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-STL%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.STL概述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-%E5%85%AD%E5%A4%A7%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 六大组件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">2. 空间配置器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8%E7%9A%84%E6%A0%87%E5%87%86%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 空间配置器的标准接口</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">设计一个简单的空间配置器</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#stl%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.STL概述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%AD%E5%A4%A7%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 六大组件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">2. 空间配置器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8%E7%9A%84%E6%A0%87%E5%87%86%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 空间配置器的标准接口</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1设计一个简单的空间配置器</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -459,12 +461,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">232k</span>
+    <span title="站点总字数">260k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:31</span>
+    <span title="站点阅读时长">3:57</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
@@ -541,6 +543,8 @@
 
 
 
+
+  
 
   
 

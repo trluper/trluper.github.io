@@ -17,26 +17,26 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="C\C++知识面试版0）编译过程如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件 1)静态链接和动态链接 静态链接：由链接器在链接时将库的内容加入到可执行程序中。   优点：对运行环境的依赖性较小，具有较好的兼容性 缺点：生成的程序比较大，需要更多的系统资源，在装入内存时会消">
+  <meta name="description" content="C++知识面试版 0）编译过程  如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件 1)静态链接和动态链接  静态链接：由链接器在链接时将库的内容加入到可执行程序中。   优点： 对运行环境的依赖性较小，具有较好的兼容性 缺点： 生成的程序比较大，需要更多的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="（面试）C++基础知识">
 <meta property="og:url" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
 <meta property="og:site_name" content="Trluper">
-<meta property="og:description" content="C\C++知识面试版0）编译过程如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件 1)静态链接和动态链接 静态链接：由链接器在链接时将库的内容加入到可执行程序中。   优点：对运行环境的依赖性较小，具有较好的兼容性 缺点：生成的程序比较大，需要更多的系统资源，在装入内存时会消">
+<meta property="og:description" content="C++知识面试版 0）编译过程  如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件 1)静态链接和动态链接  静态链接：由链接器在链接时将库的内容加入到可执行程序中。   优点： 对运行环境的依赖性较小，具有较好的兼容性 缺点： 生成的程序比较大，需要更多的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86.jpg">
-<meta property="og:image" content="http://example.com/%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E5%9B%BE%E8%A7%A3.jpg">
-<meta property="og:image" content="http://example.com/C++%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%9B%BE.jpg">
+<meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/编译原理.jpg">
+<meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/函数调用图解.jpg">
+<meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.jpg">
 <meta property="article:published_time" content="2022-06-18T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-06-23T08:19:10.724Z">
 <meta property="article:author" content="trluper">
-<meta property="article:tag" content="C++">
 <meta property="article:tag" content="面试C++基础知识">
+<meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86.jpg">
+<meta name="twitter:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/编译原理.jpg">
 
 <link rel="canonical" href="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
 
@@ -281,104 +281,60 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="C-C-知识面试版"><a href="#C-C-知识面试版" class="headerlink" title="C\C++知识面试版"></a>C\C++知识面试版</h2><h4 id="0）编译过程"><a href="#0）编译过程" class="headerlink" title="0）编译过程"></a>0）编译过程</h4><p><img src="/./%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86.jpg" alt="编译原理"><br>如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</p>
-<h4 id="1-静态链接和动态链接"><a href="#1-静态链接和动态链接" class="headerlink" title="1)静态链接和动态链接"></a>1)静态链接和动态链接</h4><ol>
+        <h2 id="c知识面试版">C++知识面试版</h2>
+<h4 id="编译过程">0）编译过程</h4>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/编译原理.jpg" alt="编译原理"> 如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</p>
+<h4 id="静态链接和动态链接">1)静态链接和动态链接</h4>
+<ol type="1">
 <li><strong>静态链接：由链接器在链接时将库的内容加入到可执行程序中。</strong></li>
 </ol>
 <ul>
-<li>优点：<br>对运行环境的依赖性较小，具有较好的兼容性</li>
-<li>缺点：<br>生成的程序比较大，需要更多的系统资源，在装入内存时会消耗更多的时间<br>库函数有了更新，必须重新编译应用程序</li>
+<li>优点： 对运行环境的依赖性较小，具有较好的兼容性</li>
+<li>缺点： 生成的程序比较大，需要更多的系统资源，在装入内存时会消耗更多的时间 库函数有了更新，必须重新编译应用程序</li>
 </ul>
-<ol start="2">
+<ol start="2" type="1">
 <li><strong>动态链接</strong>：连接器在链接时仅仅建立与所需库函数的之间的链接关系，在程序运行时才将所需资源调入可执行程序。</li>
 </ol>
 <ul>
-<li>优点：<br>在需要的时候才会调入对应的资源函数<br>简化程序的升级；有着较小的程序体积<br>实现进程之间的资源共享（避免重复拷贝）</li>
-<li>缺点：<br>依赖动态库，不能独立运行<br>动态库依赖版本问题严重</li>
+<li>优点： 在需要的时候才会调入对应的资源函数 简化程序的升级；有着较小的程序体积 实现进程之间的资源共享（避免重复拷贝）</li>
+<li>缺点： 依赖动态库，不能独立运行 动态库依赖版本问题严重</li>
 </ul>
-<p>注：前面我们编写的应用程序大量用到了标准库函数，系统默认采用动态链接的方式进行编译程序，若想采用静态编译，加入-static参数。</p>
-<h4 id="2）C-C-函数调用过程"><a href="#2）C-C-函数调用过程" class="headerlink" title="2）C\C++函数调用过程"></a>2）C\C++函数调用过程</h4><p><strong>函数调用栈的基本知识</strong>：</p>
-<ul>
-<li>每个线程都有一个自己的函数调用栈</li>
-<li>栈也是程序申请的一段内存，随着栈的使用而增长。而一般编译的时候也可以指定编译选项设置栈最大值。如果递归调用层数太深，会导致栈溢出。</li>
-<li>在系统中程序执行的时候 栈都是从高地址往低地址增长的<br>函数参数压栈，一般从右向左压栈（比如 __cdecl 函数调用约定）</li>
-<li>EIP寄存器存储当前执行指令的内存位置</li>
-<li>EBP寄存器表明当前栈帧的栈底</li>
-<li>ESP寄存器表明当前栈帧的栈顶<br><strong>调用函数过程</strong><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//以此为例</span><br><span class="line">intFunAdd(intiPara1, intiPara2) &#123;</span><br><span class="line">    intiAdd = 7; </span><br><span class="line">    intiResult = iPara1 + iPara2 + iAdd; </span><br><span class="line">    returniResult; </span><br><span class="line">&#125;</span><br><span class="line">int main&#123;</span><br><span class="line">    intiVal1 = 5; intiVal2 = 6; </span><br><span class="line">    intiRes = FunAdd(iVal1, iVal2); </span><br><span class="line">    printf( &quot;iRes: %dn&quot;, iRes); </span><br><span class="line">    return 0; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>将函数参数压入（push)栈中（从右到左），在跳入（call)该函数体执行前，会再压入一个数据，改数据是一个地址，是函数执行完后要返回的地址，也是我们程序中函数调用的下一条语句，即“保护现场”。</li>
-<li>push ebp，进入函数后，压入一个旧ebp，该ebp是上一个函数的ebp。这样子就能通过ebp-4、ebp-8来获取参数。</li>
-<li>mov ebp, esp，将此时的栈顶地址作为该函数的栈基址，确定被调函数的栈底</li>
-<li>执行函数将被调函数内的一些局部变量压栈。</li>
-<li>执行最后一步后，如果有返回值，将返回值存入EAX寄存器。</li>
-<li>mov esp,ebp 将ebp赋给esp，此时esp指向栈底，后执行pop恢复原先的main函数栈帧</li>
-<li>此时esp指向了第一步保存的下一条执行语句的地址，获取后回到main函数，此时intFunAdd函数执行完毕</li>
-<li>add esp,8，将压入的两个参数去除，后将eax寄存器的返回值赋给相应变量</li>
-</ul>
-<p><img src="/./%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E5%9B%BE%E8%A7%A3.jpg"></p>
-<h4 id="3）内联函数与普通函数的区别"><a href="#3）内联函数与普通函数的区别" class="headerlink" title="3）内联函数与普通函数的区别"></a>3）内联函数与普通函数的区别</h4><ul>
-<li>相当于把内联函数里面的内容写在调用内联函数的地方；</li>
-<li>相当于不用执行进入函数的步骤，直接执行函数体；</li>
-<li>相当于宏，却比宏多了类型检查，真正具有函数特性；</li>
-<li>编译器一般不内联包含循环、递归、switch 等复杂操作的内联函数；</li>
-<li>在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数</li>
-</ul>
-<h4 id="4）内存中的字节对齐"><a href="#4）内存中的字节对齐" class="headerlink" title="4）内存中的字节对齐"></a>4）内存中的字节对齐</h4><h4 id="5）C-的内存模型"><a href="#5）C-的内存模型" class="headerlink" title="5）C++的内存模型"></a>5）C++的内存模型</h4><ol>
-<li><strong>C++分区</strong>：堆、栈、自由存储区、全局&#x2F;静态存储区、常量存储区</li>
-<li><strong>c&#x2F;c++内存模型生命周期</strong>：自由存储区、动态区、静态区</li>
-<li><em><strong>以下注意点：</strong></em> (a)函数体中定义的变量通常是在栈上； (b)用malloc, calloc, realloc等分配内存的函数分配得到的就是在堆上； (c)在所有函数体外定义的是全局量； (d)加了static修饰符后不管在哪里都存放在全局区（静态区）； (e)在所有函数体外定义的static变量表示在该文件中有效，不能extern到别的文件用； (f)在函数体内定义的static表示只在该函数体内有效； (g)另外，函数中的”adgfdf”这样的字符串存放在常量区</li>
+<p>注：前面我们编写的应用程序大量用到了标准库函数，系统默认采用动态链接的方式进行编译程序，若想采用静态编译，加入-static参数。 #### 2）C++函数调用过程 <strong>函数调用栈的基本知识</strong>： - 每个线程都有一个自己的函数调用栈 - 栈也是程序申请的一段内存，随着栈的使用而增长。而一般编译的时候也可以指定编译选项设置栈最大值。如果递归调用层数太深，会导致栈溢出。 - 在系统中程序执行的时候 栈都是从高地址往低地址增长的 函数参数压栈，一般从右向左压栈（比如 __cdecl 函数调用约定） - EIP寄存器存储当前执行指令的内存位置 - EBP寄存器表明当前栈帧的栈底 - ESP寄存器表明当前栈帧的栈顶 <strong>调用函数过程</strong> <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以此为例</span></span><br><span class="line"><span class="built_in">int</span>FunAdd(<span class="built_in">int</span>iPara1, <span class="built_in">int</span>iPara2) &#123;</span><br><span class="line">    <span class="built_in">int</span>iAdd = <span class="number">7</span>; </span><br><span class="line">    <span class="built_in">int</span>iResult = iPara1 + iPara2 + iAdd; </span><br><span class="line">    returniResult; </span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">int</span> main&#123;</span><br><span class="line">    <span class="built_in">int</span>iVal1 = <span class="number">5</span>; <span class="built_in">int</span>iVal2 = <span class="number">6</span>; </span><br><span class="line">    <span class="built_in">int</span>iRes = FunAdd(iVal1, iVal2); </span><br><span class="line">    printf( <span class="string">&quot;iRes: %dn&quot;</span>, iRes); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> - 将函数参数压入（push)栈中（从右到左），在跳入（call)该函数体执行前，会再压入一个数据，改数据是一个地址，是函数执行完后要返回的地址，也是我们程序中函数调用的下一条语句，即“保护现场”。 - push ebp，进入函数后，压入一个旧ebp，该ebp是上一个函数的ebp。这样子就能通过ebp-4、ebp-8来获取参数。 - mov ebp, esp，将此时的栈顶地址作为该函数的栈基址，确定被调函数的栈底 - 执行函数将被调函数内的一些局部变量压栈。 - 执行最后一步后，如果有返回值，将返回值存入EAX寄存器。 - mov esp,ebp 将ebp赋给esp，此时esp指向栈底，后执行pop恢复原先的main函数栈帧 - 此时esp指向了第一步保存的下一条执行语句的地址，获取后回到main函数，此时intFunAdd函数执行完毕 - add esp,8，将压入的两个参数去除，后将eax寄存器的返回值赋给相应变量</p>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/函数调用图解.jpg"> #### 3）内联函数与普通函数的区别 - 相当于把内联函数里面的内容写在调用内联函数的地方； - 相当于不用执行进入函数的步骤，直接执行函数体； - 相当于宏，却比宏多了类型检查，真正具有函数特性； - 编译器一般不内联包含循环、递归、switch 等复杂操作的内联函数； - 在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数</p>
+<h4 id="内存中的字节对齐">4）内存中的字节对齐</h4>
+<h4 id="c的内存模型">5）C++的内存模型</h4>
+<ol type="1">
+<li><strong>C++分区</strong>：堆、栈、自由存储区、全局/静态存储区、常量存储区</li>
+<li><strong>c/c++内存模型生命周期</strong>：自由存储区、动态区、静态区</li>
+<li><p><strong><em>以下注意点：</em></strong></p>
+<p>(a)函数体中定义的变量通常是在栈上；</p>
+<p>(b)用malloc, calloc, realloc等分配内存的函数分配得到的就是在堆上；</p>
+<p>(c)在所有函数体外定义的是全局量；</p>
+<p>(d)加了static修饰符后不管在哪里都存放在全局区（静态区）；</p>
+<p>(e)在所有函数体外定义的static变量表示在该文件中有效，不能extern到别的文件用；</p>
+<p>(f)在函数体内定义的static表示只在该函数体内有效；</p>
+<p>(g)另外，函数中的&quot;adgfdf&quot;这样的字符串存放在常量区</p></li>
 </ol>
-<p><img src="/./C++%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%9B%BE.jpg"></p>
-<h4 id="6-static关键字的作用"><a href="#6-static关键字的作用" class="headerlink" title="6)static关键字的作用"></a>6)static关键字的作用</h4><ol>
-<li><p><strong>全局静态变量</strong>（编译时初始化，存储在bss&#x2F;data)</p>
-<p> 在全局变量前加上关键字static，全局变量就定义成一个全局静态变量。静态存储区（未初始化bss或已初始化数据段data），在整个程序运行期间一直存在。</p>
-<p> <strong>初始化</strong>：只能初始化一次。未经初始化的静态变量会被自动初始化为0</p>
-<p> <strong>作用域</strong>：全局静态变量在声明他的文件之外是不可见的，准确地说是他的作用域从定义之处开始，到文件结尾。</p>
-</li>
-<li><p><strong>局部静态变量</strong><br> 在局部变量之前加上关键字static，局部变量就成为一个局部静态变量。<br> <strong>内存中的位置</strong>：静态存储区<br> <strong>初始化</strong>：只能初始化一次。未经初始化的静态变量会被自动初始化为0。<br> <strong>作用域</strong>：作用域仍为局部作用域，当定义它的函数或者语句块结束的时候，作用域结束，但并没有销毁，而是仍然驻留在内存当中，只不过我们不能再对它进行访问，直到该函数再次被调用，并且值不变；</p>
-</li>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.jpg"></p>
+<h4 id="static关键字的作用">6)static关键字的作用</h4>
+<ol type="1">
+<li><p><strong>全局静态变量</strong>（编译时初始化，存储在bss/data)</p>
+<p>在全局变量前加上关键字static，全局变量就定义成一个全局静态变量。静态存储区（未初始化bss或已初始化数据段data），在整个程序运行期间一直存在。</p>
+<p><strong>初始化</strong>：只能初始化一次。未经初始化的静态变量会被自动初始化为0</p>
+<p><strong>作用域</strong>：全局静态变量在声明他的文件之外是不可见的，准确地说是他的作用域从定义之处开始，到文件结尾。</p></li>
+<li><p><strong>局部静态变量</strong> 在局部变量之前加上关键字static，局部变量就成为一个局部静态变量。 <strong>内存中的位置</strong>：静态存储区 <strong>初始化</strong>：只能初始化一次。未经初始化的静态变量会被自动初始化为0。 <strong>作用域</strong>：作用域仍为局部作用域，当定义它的函数或者语句块结束的时候，作用域结束，但并没有销毁，而是仍然驻留在内存当中，只不过我们不能再对它进行访问，直到该函数再次被调用，并且值不变；</p></li>
 <li><p><strong>静态函数</strong></p>
-<p> 在函数返回类型前加static，函数就定义为静态函数。函数的定义和声明在默认情况下都是extern的，但静态函数只能在声明他的文件当中可见，不能被其他文件所用。函数的实现使用static修饰，那么这个函数只可在本cpp内使用，不会同其他cpp中的同名函数引起冲突，起到一个函数隐藏的作用；<br> <strong>warning：</strong>不要再头文件中声明static的全局函数，不要在cpp内声明非static的全局函数，如果你要在多个cpp中复用该函数，就把它的声明提到头文件里去，否则cpp内部声明需加上static修饰；</p>
-</li>
+<p>在函数返回类型前加static，函数就定义为静态函数。函数的定义和声明在默认情况下都是extern的，但静态函数只能在声明他的文件当中可见，不能被其他文件所用。函数的实现使用static修饰，那么这个函数只可在本cpp内使用，不会同其他cpp中的同名函数引起冲突，起到一个函数隐藏的作用； <strong>warning：</strong>不要再头文件中声明static的全局函数，不要在cpp内声明非static的全局函数，如果你要在多个cpp中复用该函数，就把它的声明提到头文件里去，否则cpp内部声明需加上static修饰；</p></li>
 <li><p><strong>类的静态成员</strong></p>
-<p> 在类中，静态成员可以实现多个对象之间的数据共享，并且使用静态数据成员还不会破坏隐藏的原则，即保证了安全性。因此，静态成员是类的所有对象中共享的成员，而不是某个对象的成员。对多个对象来说，静态数据成员只存储一处，供所有对象共用</p>
-</li>
+<p>在类中，静态成员可以实现多个对象之间的数据共享，并且使用静态数据成员还不会破坏隐藏的原则，即保证了安全性。因此，静态成员是类的所有对象中共享的成员，而不是某个对象的成员。对多个对象来说，静态数据成员只存储一处，供所有对象共用</p></li>
 <li><p><strong>类的静态函数</strong></p>
-<p> 静态成员函数和静态数据成员一样，它们都属于类的静态成员，它们都不是对象成员。因此，对静态成员的引用不需要用对象名。</p>
-<p> <strong>在静态成员函数中没有this指针，因此无法被const修饰</strong>。实现中不能直接引用类中说明的非静态成员，可以引用类中说明的静态成员（这点非常重要）。如果静态成员函数中要引用非静态成员时，可通过对象来引用。从中可看出，调用静态成员函数使用如下格式：</p>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;类名&gt;::&lt;静态成员函数名&gt;(&lt;参数表&gt;);</span><br></pre></td></tr></table></figure>
- <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//但可用对象.调用静态类的静态成员</span><br><span class="line">o s;</span><br><span class="line">cout &lt;&lt; s.x &lt;&lt; endl;</span><br><span class="line">s.print();</span><br></pre></td></tr></table></figure></li>
+<p>静态成员函数和静态数据成员一样，它们都属于类的静态成员，它们都不是对象成员。因此，对静态成员的引用不需要用对象名。</p>
+<p><strong>在静态成员函数中没有this指针，因此无法被const修饰</strong>。实现中不能直接引用类中说明的非静态成员，可以引用类中说明的静态成员（这点非常重要）。如果静态成员函数中要引用非静态成员时，可通过对象来引用。从中可看出，调用静态成员函数使用如下格式： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;类名&gt;::&lt;静态成员函数名&gt;(&lt;参数表&gt;);</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//但可用对象.调用静态类的静态成员</span><br><span class="line">o s;</span><br><span class="line">cout &lt;&lt; <span class="string">s.x &lt;&lt; endl;</span></span><br><span class="line"><span class="string">s</span>.<span class="built_in">print</span>();</span><br></pre></td></tr></table></figure></p></li>
 </ol>
-<h4 id="7-const关键字"><a href="#7-const关键字" class="headerlink" title="7)const关键字"></a>7)const关键字</h4><h4 id="8-一些seziof大小"><a href="#8-一些seziof大小" class="headerlink" title="8)一些seziof大小"></a>8)一些seziof大小</h4><p><strong>虚函数表4字节，4字节对齐！比如</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">  virtual void fun() &#123;&#125;</span><br><span class="line">  char c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">sizeof(A);的大小应该是8，4+1+（对齐）3=8</span><br><span class="line">static变量虽然属于类，但并不在类内开辟空间</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<h4 id="const关键字">7)const关键字</h4>
+<h4 id="一些seziof大小">8)一些seziof大小</h4>
+<p><strong>虚函数表4字节，4字节对齐！比如</strong> <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">fun</span>()</span> &#123;&#125;</span><br><span class="line">  <span class="built_in">char</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">sizeof</span>(A);的大小应该是<span class="number">8</span>，<span class="number">4</span>+<span class="number">1</span>+（对齐）<span class="number">3</span>=<span class="number">8</span></span><br><span class="line"><span class="keyword">static</span>变量虽然属于类，但并不在类内开辟空间</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -408,8 +364,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/C/" rel="tag"># C++</a>
               <a href="/tags/%E9%9D%A2%E8%AF%95C-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="tag"># 面试C++基础知识</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
           </div>
 
         
@@ -480,7 +436,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-C-%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">C\C++知识面试版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#0%EF%BC%89%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.1.</span> <span class="nav-text">0）编译过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.0.2.</span> <span class="nav-text">1)静态链接和动态链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89C-C-%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.3.</span> <span class="nav-text">2）C\C++函数调用过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%89%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E4%B8%8E%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.0.4.</span> <span class="nav-text">3）内联函数与普通函数的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%89%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90"><span class="nav-number">1.0.5.</span> <span class="nav-text">4）内存中的字节对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%89C-%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.0.6.</span> <span class="nav-text">5）C++的内存模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-static%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.0.7.</span> <span class="nav-text">6)static关键字的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-const%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.0.8.</span> <span class="nav-text">7)const关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E4%B8%80%E4%BA%9Bseziof%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.0.9.</span> <span class="nav-text">8)一些seziof大小</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">C++知识面试版</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.1.</span> <span class="nav-text">0）编译过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.0.2.</span> <span class="nav-text">1)静态链接和动态链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90"><span class="nav-number">1.0.3.</span> <span class="nav-text">4）内存中的字节对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.0.4.</span> <span class="nav-text">5）C++的内存模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#static%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.0.5.</span> <span class="nav-text">6)static关键字的作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.0.6.</span> <span class="nav-text">7)const关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%BA%9Bseziof%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.0.7.</span> <span class="nav-text">8)一些seziof大小</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -548,12 +504,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">232k</span>
+    <span title="站点总字数">260k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:31</span>
+    <span title="站点阅读时长">3:57</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
@@ -630,6 +586,8 @@
 
 
 
+
+  
 
   
 

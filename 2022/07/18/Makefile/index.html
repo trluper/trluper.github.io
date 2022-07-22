@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1. make1.1 make是什么make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。 1.2工作原理12345678app:main.o hello.o        gcc -o app main.o hello.oma">
+  <meta name="description" content="1. make 1.1 make是什么 make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。 1.2工作原理 12345678app:main.o hello.o        gcc -o app main.o he">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Makefile">
 <meta property="og:url" content="http://example.com/2022/07/18/Makefile/index.html">
 <meta property="og:site_name" content="Trluper">
-<meta property="og:description" content="1. make1.1 make是什么make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。 1.2工作原理12345678app:main.o hello.o        gcc -o app main.o hello.oma">
+<meta property="og:description" content="1. make 1.1 make是什么 make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。 1.2工作原理 12345678app:main.o hello.o        gcc -o app main.o he">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-18T04:06:19.000Z">
-<meta property="article:modified_time" content="2022-07-18T13:01:53.733Z">
+<meta property="article:modified_time" content="2022-07-22T16:35:43.572Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Makefile">
 <meta name="twitter:card" content="summary">
@@ -220,10 +220,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-18 12:06:19 / 修改时间：21:01:53" itemprop="dateCreated datePublished" datetime="2022-07-18T12:06:19+08:00">2022-07-18</time>
+              <time title="创建时间：2022-07-18 12:06:19" itemprop="dateCreated datePublished" datetime="2022-07-18T12:06:19+08:00">2022-07-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-23 00:35:43" itemprop="dateModified" datetime="2022-07-23T00:35:43+08:00">2022-07-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -266,8 +272,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="1-make"><a href="#1-make" class="headerlink" title="1. make"></a>1. make</h4><h5 id="1-1-make是什么"><a href="#1-1-make是什么" class="headerlink" title="1.1 make是什么"></a>1.1 make是什么</h5><p>make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。</p>
-<h5 id="1-2工作原理"><a href="#1-2工作原理" class="headerlink" title="1.2工作原理"></a>1.2工作原理</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app:main.o hello.o</span><br><span class="line">        gcc -o app main.o hello.o</span><br><span class="line">main.o:main.c hello.h</span><br><span class="line">        gcc -c main.c</span><br><span class="line">hello.o:hello.c hello.h</span><br><span class="line">        gcc -c hello.c</span><br><span class="line">clean:</span><br><span class="line">        rm app main.o hello.o</span><br></pre></td></tr></table></figure>
+        <h4 id="make">1. make</h4>
+<h5 id="make是什么">1.1 make是什么</h5>
+<p>make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。</p>
+<h5 id="工作原理">1.2工作原理</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app:main.o hello.o</span><br><span class="line">        gcc -o app main.o hello.o</span><br><span class="line">main.o:main.c hello.h</span><br><span class="line">        gcc -c main.c</span><br><span class="line">hello.o:hello.c hello.h</span><br><span class="line">        gcc -c hello.c</span><br><span class="line">clean:</span><br><span class="line">        rm app main.o hello.o</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>make</code>在当前目录寻找<code>Makefile</code>或<code>makefile</code>文件。</li>
 <li>如果找到，它会找文件中的第一个目标文件<code>target</code>，如上例它找到<code>app</code>这个目标文件，把这个文件作为最终的目标文件。如果<code>app</code>文件不存在,或是<code>app</code>所依赖的后面的<code>.o</code>文件的文件修改时间要比<code>app</code>这个文件新，那么<code>make</code>命令就会执行后面所定义的命令来生成<code>app</code>这个文件。</li>
@@ -276,144 +285,94 @@
 </ul>
 <p><strong>总而远之，<code>make</code>会依据依赖关系一层一层地去找文件的依赖关系,直到最终编译出第一个目标文件</strong>。在找寻的过程中,如果出现错误,如最后被依赖的文件找不到,那么 make 就会直接退出并报错。</p>
 <p>但是像<code>clean</code>这种没有被第一个目标文件直接或间接关联,那么它后面所定义的命令将不会被自动执行。不过，可以显式指定<code>make</code>执行<code>clean</code>，即<code>make　clean</code>。<strong>同时只要修改了与第一个目标文件存在直接或间接依赖关系的文件，都会发生重新编译和重新链接</strong></p>
-<h5 id="1-3-make命令"><a href="#1-3-make命令" class="headerlink" title="1.3 make命令"></a>1.3 make命令</h5><p>make是一个命令工具，它解释Makefile 中的指令（应该说是规则）</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make [ -f file ][ options ][ targets ]</span><br></pre></td></tr></table></figure>
+<h5 id="make命令">1.3 make命令</h5>
+<p>make是一个命令工具，它解释Makefile 中的指令（应该说是规则） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make [ -f file ][ options ][ targets ]</span><br></pre></td></tr></table></figure> - <code>-f file</code>:<code>make</code>默认在工作目录中寻找名为<code>GNUmakefile、makefile、Makefile</code>的文件作为<code>makefile</code>输入文件,但有时可能命名不是这些,则<code>-f</code>可以指定以上名字以外的文件作为makefile输入文件</p>
 <ul>
-<li><p><code>-f file</code>:<code>make</code>默认在工作目录中寻找名为<code>GNUmakefile、makefile、Makefile</code>的文件作为<code>makefile</code>输入文件,但有时可能命名不是这些,则<code>-f</code>可以指定以上名字以外的文件作为makefile输入文件</p>
-</li>
-<li><p><code>options</code></p>
-</li>
-<li><p><code>v：</code>显示make工具的版本信息</p>
-</li>
-<li><p><code>w：</code>在处理<code>makefile</code>之前和之后显示工作路径</p>
-</li>
-<li><p><code>C dir：</code>读取<code>makefile</code>之前改变工作路径至dir目录</p>
-</li>
-<li><p><code>n：</code>只打印要执行的命令但不执行</p>
-</li>
-<li><p><code>s：</code>执行但不显示执行的命令</p>
-</li>
-<li><p><code>targets</code>:使用<code>make</code>命令时没有指定目标，则<code>make</code>工具默认会实现<code>makefile</code>文件内的第一个目标，如果指定了<code>make</code>工具要实现的目标则该目标为最终目标（目标可以是一个或多个）</p>
-</li>
+<li><code>options</code></li>
+<li><code>v：</code>显示make工具的版本信息</li>
+<li><code>w：</code>在处理<code>makefile</code>之前和之后显示工作路径</li>
+<li><code>C dir：</code>读取<code>makefile</code>之前改变工作路径至dir目录</li>
+<li><code>n：</code>只打印要执行的命令但不执行</li>
+<li><code>s：</code>执行但不显示执行的命令</li>
+<li><code>targets</code>:使用<code>make</code>命令时没有指定目标，则<code>make</code>工具默认会实现<code>makefile</code>文件内的第一个目标，如果指定了<code>make</code>工具要实现的目标则该目标为最终目标（目标可以是一个或多个）</li>
 </ul>
-<h4 id="2-Makefile"><a href="#2-Makefile" class="headerlink" title="2. Makefile"></a>2. Makefile</h4><p><code>Makefile</code>是一个脚本文件，其内部编写一些符和<code>make</code>工具解析的语法规则来进行执行一些命令。</p>
-<h5 id="2-1-Makefile是什么"><a href="#2-1-Makefile是什么" class="headerlink" title="2.1 Makefile是什么"></a>2.1 Makefile是什么</h5><p><code>makefile</code>定义了一系列的规则来指定，<strong>哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译</strong>，甚至于进行更复杂的功能操作，因为<code>makefile</code>就像一个<code>Shell</code>脚本一样，其中也可以执行操作系统的命令。<code>Makefile</code>带来的好处就是——“自动化编译”，一旦写好，只需要一个make命令，整个工程完全自动编译，极大的提高了软件开发的效率。<code>makefile</code>文件由<code>make</code>命令工具来执行。</p>
-<p><strong>make主要解决两个问题：</strong></p>
-<ul>
-<li><strong>1) 大量代码的关系维护</strong>:大项目中源代码比较多，手工维护、编译时间长而且编译命令复杂，难以记忆及维护,把代码维护命令及编译命令写在<code>makefile</code>文件中，然后再用<code>make</code>工具解析此文件自动执行相应命令，可实现代码的合理编译</li>
-<li><strong>2) 减少重复编译时间</strong>，在改动其中一个文件的时候，能判断哪些文件被修改过，可以只对该文件进行重新编译，然后重新链接所有的目标文件，节省编译时间。</li>
-</ul>
+<h4 id="makefile">2. Makefile</h4>
+<p><code>Makefile</code>是一个脚本文件，其内部编写一些符和<code>make</code>工具解析的语法规则来进行执行一些命令。</p>
+<h5 id="makefile是什么">2.1 Makefile是什么</h5>
+<p><code>makefile</code>定义了一系列的规则来指定，<strong>哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译</strong>，甚至于进行更复杂的功能操作，因为<code>makefile</code>就像一个<code>Shell</code>脚本一样，其中也可以执行操作系统的命令。<code>Makefile</code>带来的好处就是——“自动化编译”，一旦写好，只需要一个make命令，整个工程完全自动编译，极大的提高了软件开发的效率。<code>makefile</code>文件由<code>make</code>命令工具来执行。</p>
+<p><strong>make主要解决两个问题：</strong> - <strong>1) 大量代码的关系维护</strong>:大项目中源代码比较多，手工维护、编译时间长而且编译命令复杂，难以记忆及维护,把代码维护命令及编译命令写在<code>makefile</code>文件中，然后再用<code>make</code>工具解析此文件自动执行相应命令，可实现代码的合理编译 - <strong>2) 减少重复编译时间</strong>，在改动其中一个文件的时候，能判断哪些文件被修改过，可以只对该文件进行重新编译，然后重新链接所有的目标文件，节省编译时间。</p>
 <p><code>Makefile</code>文件命名规则<code>makefile</code>和<code>Makefile</code>都可以，推荐使用<code>Makefile</code>,即<code>vim Makefile</code>。学号<code>Makefile</code>只需要学习他的<strong>一条规则，三个变量，两个函数</strong>就能上手了。</p>
-<h5 id="2-2-一条规则"><a href="#2-2-一条规则" class="headerlink" title="2.2 一条规则"></a>2.2 一条规则</h5><p><strong>一条规则</strong>即指完成单此任务所包含的要素，Makefile的一条规则三要素如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一条规则</span></span><br><span class="line">target... : prerequisites ...</span><br><span class="line">     command</span><br><span class="line">     ......</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>target</code>:<strong>通常是要产生的文件名称，目标可以是可执行文件或其它obj文件，也可是一个标签</strong></li>
-<li><code>prerequisites</code>：依赖文件，用来输入从而产生目标的文件，一个目标通常有几个依赖文件（也可以没有）。<code>prerequisites</code>中如果有一个以上的文件比<code>target</code>文件要新的话，<code>command</code>所定义的命令就会被执行。</li>
-<li><code>command</code>：make执行的动作，一个规则可以含几个命令（可以没有）。有多个命令时，每个命令占一行。</li>
-</ul>
-<p><code>make</code>工具从上往下找寻<code>target</code>，<strong>根据<code>target</code>后对应的依赖关系，先去查找依赖项的文件,为索所有的目标文件创建依赖关系链</strong>。若依赖项不存在，则会报错：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make div.o</span><br><span class="line">make: *** No rule to make target <span class="string">&#x27;div.cpp&#x27;</span>, needed by <span class="string">&#x27;div.o&#x27;</span>.  Stop.</span><br></pre></td></tr></table></figure>
-<p>若存在，在检查依赖关系时，同时会检查目标与源文件的时间戳，当源文件时间戳更新时，make会更新依赖它的链路上所有文件，即调用command部分。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Makefile件</span></span><br><span class="line">sum.o:sum.cpp</span><br><span class="line">        g++ -c  sum.cpp -o sum.o</span><br><span class="line">main.o:main.cpp</span><br><span class="line">        g++ -c main.cpp -o main.o</span><br><span class="line">main:main.o sum.o</span><br><span class="line">        g++ main.o sum.o -o main</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用make</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make sum.o main.o main</span><br><span class="line">make: <span class="string">&#x27;sum.o&#x27;</span> is up to date.</span><br><span class="line">g++ -c main.cpp -o main.o</span><br><span class="line">g++ main.o sum.o -o main</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-3-变量"><a href="#2-3-变量" class="headerlink" title="2.3 变量"></a>2.3 变量</h5><p>在<code>Makefile</code>中使用变量有点类似于C语言中的宏定义，使用该变量相当于内容替换，使用变量可以使<code>Makefile</code>易于维护,修改内容变得简单变量定义及使用。<strong>在<code>Makefile</code>中由自定义变量和自动变量</strong>。</p>
-<h6 id="2-3-1-等号"><a href="#2-3-1-等号" class="headerlink" title="2.3.1 等号"></a>2.3.1 等号</h6><p>在学习变量前需要熟悉Makefile中的等号，等号有4种<code>=，:=，?=，+=</code>。</p>
-<ul>
-<li><code>?=</code>表示，如果左边的变量没有被赋值，那么将等号右边的值赋给左边的变量。如果赋过值，则保持原来的值不变。</li>
-<li><code>+=</code>表示将等号右边的值追加到左边变量中，但是中间会有一个空格。</li>
-<li><code>=</code>与<code>:=</code>是比较不好区分的两个等号，可以将”&#x3D;“理解为”址传递”或引用，”:&#x3D;“理解为”值传递”。</li>
-</ul>
+<h5 id="一条规则">2.2 一条规则</h5>
+<p><strong>一条规则</strong>即指完成单此任务所包含的要素，Makefile的一条规则三要素如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一条规则</span></span><br><span class="line">target... : prerequisites ...</span><br><span class="line">     command</span><br><span class="line">     ......</span><br></pre></td></tr></table></figure> - <code>target</code>:<strong>通常是要产生的文件名称，目标可以是可执行文件或其它obj文件，也可是一个标签</strong> - <code>prerequisites</code>：依赖文件，用来输入从而产生目标的文件，一个目标通常有几个依赖文件（也可以没有）。<code>prerequisites</code>中如果有一个以上的文件比<code>target</code>文件要新的话，<code>command</code>所定义的命令就会被执行。 - <code>command</code>：make执行的动作，一个规则可以含几个命令（可以没有）。有多个命令时，每个命令占一行。</p>
+<p><code>make</code>工具从上往下找寻<code>target</code>，<strong>根据<code>target</code>后对应的依赖关系，先去查找依赖项的文件,为索所有的目标文件创建依赖关系链</strong>。若依赖项不存在，则会报错： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make div.o</span><br><span class="line">make: *** No rule to make target <span class="string">&#x27;div.cpp&#x27;</span>, needed by <span class="string">&#x27;div.o&#x27;</span>.  Stop.</span><br></pre></td></tr></table></figure> 若存在，在检查依赖关系时，同时会检查目标与源文件的时间戳，当源文件时间戳更新时，make会更新依赖它的链路上所有文件，即调用command部分。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Makefile件</span></span><br><span class="line">sum.o:sum.cpp</span><br><span class="line">        g++ -c  sum.cpp -o sum.o</span><br><span class="line">main.o:main.cpp</span><br><span class="line">        g++ -c main.cpp -o main.o</span><br><span class="line">main:main.o sum.o</span><br><span class="line">        g++ main.o sum.o -o main</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用make</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make sum.o main.o main</span><br><span class="line">make: <span class="string">&#x27;sum.o&#x27;</span> is up to date.</span><br><span class="line">g++ -c main.cpp -o main.o</span><br><span class="line">g++ main.o sum.o -o main</span><br></pre></td></tr></table></figure></p>
+<h5 id="变量">2.3 变量</h5>
+<p>在<code>Makefile</code>中使用变量有点类似于C语言中的宏定义，使用该变量相当于内容替换，使用变量可以使<code>Makefile</code>易于维护,修改内容变得简单变量定义及使用。<strong>在<code>Makefile</code>中由自定义变量和自动变量</strong>。</p>
+<h6 id="等号">2.3.1 等号</h6>
+<p>在学习变量前需要熟悉Makefile中的等号，等号有4种<code>=，:=，?=，+=</code>。 - <code>?=</code>表示，如果左边的变量没有被赋值，那么将等号右边的值赋给左边的变量。如果赋过值，则保持原来的值不变。 - <code>+=</code>表示将等号右边的值追加到左边变量中，但是中间会有一个空格。 - <code>=</code>与<code>:=</code>是比较不好区分的两个等号，可以将”=“理解为&quot;址传递&quot;或引用，”:=“理解为&quot;值传递”。</p>
 <p>在<code>Makefile</code>中是不允许将变量自己的值赋给自己的，也不允许出现循环引用。</p>
-<h6 id="2-3-2-变量名的规则"><a href="#2-3-2-变量名的规则" class="headerlink" title="2.3.2 变量名的规则"></a>2.3.2 变量名的规则</h6><p><strong><code>makefile</code>的变量名的起名规则：</strong></p>
+<h6 id="变量名的规则">2.3.2 变量名的规则</h6>
+<p><strong><code>makefile</code>的变量名的起名规则：</strong> - <code>makefile</code>变量名可以以数字开头 - 变量是大小写敏感的 - 变量一般都在<code>makefile</code>的头部定义 - 变量几乎可在<code>makefile</code>的任何地方使用</p>
+<h6 id="自定义变量">2.3.3 自定义变量</h6>
 <ul>
-<li><code>makefile</code>变量名可以以数字开头</li>
-<li>变量是大小写敏感的</li>
-<li>变量一般都在<code>makefile</code>的头部定义</li>
-<li>变量几乎可在<code>makefile</code>的任何地方使用</li>
-</ul>
-<h6 id="2-3-3-自定义变量"><a href="#2-3-3-自定义变量" class="headerlink" title="2.3.3 自定义变量"></a>2.3.3 自定义变量</h6><ul>
 <li>1）定义变量方法：<code>变量名=变量值</code>,<code>变量名？=变量值</code>,<code>变量名+=变量值</code>,<code>变量名:=变量值</code></li>
-<li><ol start="2">
+<li><ol start="2" type="1">
 <li>使用变量名：<code>$(变量名)</code>或<code>$&#123;变量名&#125;</code></li>
-</ol>
-</li>
+</ol></li>
 </ul>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">objs=add.o sum.o div.o mul.o</span><br><span class="line">target=main</span><br><span class="line">$(target):$(bgjs)</span><br><span class="line">		gcc &amp;(objs) -o $(target)</span><br></pre></td></tr></table></figure>
-
-<h6 id="2-3-4-三个重要自动变量"><a href="#2-3-4-三个重要自动变量" class="headerlink" title="2.3.4 三个重要自动变量"></a>2.3.4 三个重要自动变量</h6><p><code>Makefile</code>的自动变量有以下几个:</p>
-<table>
+<h6 id="三个重要自动变量">2.3.4 三个重要自动变量</h6>
+<p><code>Makefile</code>的自动变量有以下几个:</p>
+<table style="width:15%;">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 8%">
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>自动变量</th>
 <th>功能</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><code>$@</code></td>
 <td>规则的目标文件名(依赖关系中冒号:左边的文件，如果<code>a:b c</code>那么<code>$@</code>指<code>a</code>)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>$%</code></td>
 <td>当目标文件是一个静态库文件时，代表静态库的一个成员名</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>$&lt;</code></td>
 <td>被依赖文件的第一项<code>a:b c</code>那么<code>$&lt;</code>指<code>b</code>)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>$?</code></td>
 <td>所有比目标文件更新的依赖文件列表，空格分隔</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>$^</code></td>
-<td>所有依赖文件列表，使用空格分隔<code>a: b c </code>那么<code>$^</code>指<code>b c</code>，不包含重复文件</td>
+<td>所有依赖文件列表，使用空格分隔<code>a: b c</code>那么<code>$^</code>指<code>b c</code>，不包含重复文件</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>$+</code></td>
 <td>所有依赖文件列表，使用空格分隔<code>a: b c c</code>那么<code>$+</code>指<code>b c c</code>，包含重复文件</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>$*</code></td>
 <td>在模式规则和静态模式规则中的<code>%</code>所匹配的内容。这个变量表示目标模式中<code>%</code>及其之前的部分。如果目标是<code>dir/a.foo.b</code>，并且目标的模式是<code>a.%.b</code>，那么，<code>$*</code>的值就是<code>dir/a.foo</code></td>
 </tr>
-</tbody></table>
-<p><strong>其中重要常用的三个是：</strong><br><code>$@:</code> 表示规则中的目标<br><code>$&lt;: </code>表示规则中依赖性的第一个<br><code>$^:</code> 表示规则中的所有依赖性, 组成一个列表, 以空格隔开,如果这个列表中有重复的项则消除重复项。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">objs=add.o sum.o div.o mul.o</span><br><span class="line">target=main</span><br><span class="line">sum.o:sum.cpp</span><br><span class="line">        g++ -c  $^ -o $@</span><br><span class="line">main.o:main.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br><span class="line">$(target):$(bgjs)</span><br><span class="line">		g++ &amp;(objs) -o $(target)</span><br><span class="line">clean:</span><br><span class="line">		rm -rf $(objs) $(target)</span><br></pre></td></tr></table></figure>
-<p><em><strong>注意：自动变量只能在规则的命令中中使用</strong></em></p>
-<h5 id="2-4-模式规则"><a href="#2-4-模式规则" class="headerlink" title="2.4 模式规则"></a>2.4 模式规则</h5><p>如果想要进一步的偷懒，那就必须提到<strong>模式规则</strong>，模式规则用来匹配当前目录下的符合模式匹配的所有文件。模式规则类似于普通规则，<strong>只是在模式规则中，目标名中需要包含有模式字符<code>%</code>，包含有模式字符<code>%</code>的目标被用来匹配一个文件名，<code>%</code>可以匹配任何非空字符串</strong>。看到上面你觉得很绕，让我们看实例：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#%表示可以匹配当前目录下的所有以.cpp为后缀的源文件，</span><br><span class="line">#并且对应生成相应名称的.o文件（注意是使用$&lt;才能生成对应.o文件</span><br><span class="line">%.o:%.cpp</span><br><span class="line">		g++ -c $&lt; -o $@</span><br></pre></td></tr></table></figure>
-<p>单独上面的这个<code>makefile</code>不能成功执行，会出现<code>No targets.Stop</code>错误</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接make，不成功</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make</span><br><span class="line">make: *** No targets.  Stop.</span><br><span class="line"><span class="comment">//传入目标，成功</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make main.o</span><br><span class="line">g++ -c main.cpp -o main.o</span><br></pre></td></tr></table></figure>
-<p>这是很正常的，因为<code>%</code>是模式匹配规则，你如果没传入目标它就无法执行<code>make</code>的工作机制。下面来讲解对<code>%</code>的解决办法</p>
-<h5 id="2-5-函数"><a href="#2-5-函数" class="headerlink" title="2.5 函数"></a>2.5 函数</h5><p><code>makefile</code>中的函数有很多，在这里给大家介绍两个最常用的:</p>
-<ul>
-<li><code>wildcard</code>查找指定目录下的指定类型的文件<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src = $(wildcard *.c) <span class="comment">//找到当前目录下所有后缀为.c的文件,赋值给src</span></span><br></pre></td></tr></table></figure></li>
-<li><code>patsubst</code>匹配替换<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj = $(patsubst %.c,%.o, $(src)) <span class="comment">//把src变量里所有后缀为.c的文件替换成.o，然后赋值给obj</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<p><em><strong>注意</strong></em>：<code>patsubst</code>不是把src里的文件的后缀改为.o，是在<code>makefile.o</code>文件内部将生成的<code>.o</code>文件替换掉<code>src</code>内的<code>.cpp</code>文件，因此在<code>make</code>的时候一定是要先生成<code>.o</code>文件（这里从两者<code>*</code>和<code>%</code>就能看出)，从两者的特性能够得到以下的解决：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">all:$(patsubst %.cpp,%.o,$(wildcard *.cpp))</span><br><span class="line">%.o:%.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br></pre></td></tr></table></figure>
-<p>原理：all目标获得了目录内的<code>*.cpp</code>文件，使用<code>patsubst</code>要求将<code>*.cpp</code>替换为<code>*.o</code>,但是目录中还没有<code>*.o</code>文件，则会依据make工作原理进行到下一个目标，刚好这个目标是生成<code>.o</code>文件的，则执行。</p>
-<h5 id="2-6-简单示例"><a href="#2-6-简单示例" class="headerlink" title="2.6 简单示例"></a>2.6 简单示例</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">src=$(wildcard *.cpp)</span><br><span class="line">objs=$(patsubst %.cpp,%.o,$(src))</span><br><span class="line">target=main</span><br><span class="line">$(target):$(objs)</span><br><span class="line">        g++ $(objs) -o $(target)</span><br><span class="line">%.o:%.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br><span class="line"></span><br><span class="line">#PHONY伪目标，不去判断目标文件是否存在或者更新，无条件执行</span><br><span class="line">.PHONY:clean</span><br><span class="line">clean:</span><br><span class="line">        rm -rf $(objs) $(target)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#执行make</span><br><span class="line">trluper@trluper-virtual-machine:~/Documents/staticLib$ make</span><br><span class="line">g++ -c main.cpp -o main.o</span><br><span class="line">g++ -c sum.cpp -o sum.o</span><br><span class="line">g++ main.o sum.o -o main</span><br><span class="line">#执行makeclean</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</tbody>
+</table>
+<p><strong>其中重要常用的三个是：</strong> <code>$@:</code> 表示规则中的目标 <code>$&lt;:</code>表示规则中依赖性的第一个 <code>$^:</code> 表示规则中的所有依赖性, 组成一个列表, 以空格隔开,如果这个列表中有重复的项则消除重复项。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">objs=add.o sum.o div.o mul.o</span><br><span class="line">target=main</span><br><span class="line">sum.o:sum.cpp</span><br><span class="line">        g++ -c  $^ -o $@</span><br><span class="line">main.o:main.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br><span class="line">$(target):$(bgjs)</span><br><span class="line">		g++ &amp;(objs) -o $(target)</span><br><span class="line">clean:</span><br><span class="line">		rm -rf $(objs) $(target)</span><br></pre></td></tr></table></figure> <strong><em>注意：自动变量只能在规则的命令中中使用</em></strong></p>
+<h5 id="模式规则">2.4 模式规则</h5>
+<p>如果想要进一步的偷懒，那就必须提到<strong>模式规则</strong>，模式规则用来匹配当前目录下的符合模式匹配的所有文件。模式规则类似于普通规则，<strong>只是在模式规则中，目标名中需要包含有模式字符<code>%</code>，包含有模式字符<code>%</code>的目标被用来匹配一个文件名，<code>%</code>可以匹配任何非空字符串</strong>。看到上面你觉得很绕，让我们看实例： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#%表示可以匹配当前目录下的所有以.cpp为后缀的源文件，</span><br><span class="line">#并且对应生成相应名称的.o文件（注意是使用$&lt;才能生成对应.o文件</span><br><span class="line">%.o:%.cpp</span><br><span class="line">		g++ -c $&lt; -o $@</span><br></pre></td></tr></table></figure> 单独上面的这个<code>makefile</code>不能成功执行，会出现<code>No targets.Stop</code>错误 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接make，不成功</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make</span><br><span class="line">make: *** No targets.  Stop.</span><br><span class="line"><span class="comment">//传入目标，成功</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make main.o</span><br><span class="line">g++ -c main.cpp -o main.o</span><br></pre></td></tr></table></figure> 这是很正常的，因为<code>%</code>是模式匹配规则，你如果没传入目标它就无法执行<code>make</code>的工作机制。下面来讲解对<code>%</code>的解决办法</p>
+<h5 id="函数">2.5 函数</h5>
+<p><code>makefile</code>中的函数有很多，在这里给大家介绍两个最常用的: - <code>wildcard</code>查找指定目录下的指定类型的文件 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src = $(wildcard *.c) <span class="comment">//找到当前目录下所有后缀为.c的文件,赋值给src</span></span><br></pre></td></tr></table></figure> - <code>patsubst</code>匹配替换 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj = $(patsubst %.c,%.o, $(src)) <span class="comment">//把src变量里所有后缀为.c的文件替换成.o，然后赋值给obj</span></span><br></pre></td></tr></table></figure></p>
+<p><strong><em>注意</em></strong>：<code>patsubst</code>不是把src里的文件的后缀改为.o，是在<code>makefile.o</code>文件内部将生成的<code>.o</code>文件替换掉<code>src</code>内的<code>.cpp</code>文件，因此在<code>make</code>的时候一定是要先生成<code>.o</code>文件（这里从两者<code>*</code>和<code>%</code>就能看出)，从两者的特性能够得到以下的解决： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">all:$(patsubst %.cpp,%.o,$(wildcard *.cpp))</span><br><span class="line">%.o:%.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br></pre></td></tr></table></figure> 原理：all目标获得了目录内的<code>*.cpp</code>文件，使用<code>patsubst</code>要求将<code>*.cpp</code>替换为<code>*.o</code>,但是目录中还没有<code>*.o</code>文件，则会依据make工作原理进行到下一个目标，刚好这个目标是生成<code>.o</code>文件的，则执行。</p>
+<h5 id="简单示例">2.6 简单示例</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">src=$(wildcard *.cpp)</span><br><span class="line">objs=$(patsubst %.cpp,%.o,$(src))</span><br><span class="line">target=main</span><br><span class="line">$(target):$(objs)</span><br><span class="line">        g++ $(objs) -o $(target)</span><br><span class="line">%.o:%.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br><span class="line"></span><br><span class="line">#PHONY伪目标，不去判断目标文件是否存在或者更新，无条件执行</span><br><span class="line">.PHONY:clean</span><br><span class="line">clean:</span><br><span class="line">        rm -rf $(objs) $(target)</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#执行make</span><br><span class="line">trluper@trluper-virtual-machine:~/Documents/staticLib$ make</span><br><span class="line">g++ -c <span class="selector-tag">main</span><span class="selector-class">.cpp</span> -o <span class="selector-tag">main</span><span class="selector-class">.o</span></span><br><span class="line">g++ -c sum<span class="selector-class">.cpp</span> -o sum<span class="selector-class">.o</span></span><br><span class="line">g++ <span class="selector-tag">main</span><span class="selector-class">.o</span> sum<span class="selector-class">.o</span> -o <span class="selector-tag">main</span></span><br><span class="line">#执行makeclean</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -514,7 +473,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-make"><span class="nav-number">1.</span> <span class="nav-text">1. make</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1-make%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 make是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">1.2工作原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-make%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 make命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Makefile"><span class="nav-number">2.</span> <span class="nav-text">2. Makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-Makefile%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Makefile是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-%E4%B8%80%E6%9D%A1%E8%A7%84%E5%88%99"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 一条规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 变量</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-1-%E7%AD%89%E5%8F%B7"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 等号</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-2-%E5%8F%98%E9%87%8F%E5%90%8D%E7%9A%84%E8%A7%84%E5%88%99"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 变量名的规则</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-3-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 自定义变量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-4-%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E8%87%AA%E5%8A%A8%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 三个重要自动变量</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-4-%E6%A8%A1%E5%BC%8F%E8%A7%84%E5%88%99"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 模式规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-5-%E5%87%BD%E6%95%B0"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-6-%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 简单示例</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#make"><span class="nav-number">1.</span> <span class="nav-text">1. make</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#make%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 make是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">1.2工作原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#make%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 make命令</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#makefile"><span class="nav-number">2.</span> <span class="nav-text">2. Makefile</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#makefile%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Makefile是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E6%9D%A1%E8%A7%84%E5%88%99"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 一条规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 变量</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%AD%89%E5%8F%B7"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 等号</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%90%8D%E7%9A%84%E8%A7%84%E5%88%99"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 变量名的规则</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 自定义变量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%89%E4%B8%AA%E9%87%8D%E8%A6%81%E8%87%AA%E5%8A%A8%E5%8F%98%E9%87%8F"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 三个重要自动变量</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E8%A7%84%E5%88%99"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 模式规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 简单示例</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -582,12 +541,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">232k</span>
+    <span title="站点总字数">260k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:31</span>
+    <span title="站点阅读时长">3:57</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
@@ -664,6 +623,8 @@
 
 
 
+
+  
 
   
 
