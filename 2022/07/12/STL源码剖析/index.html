@@ -36,8 +36,9 @@
 <meta property="og:image" content="http://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/priorityqueue.png">
 <meta property="og:image" content="http://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/rbtreeiterator.png">
 <meta property="og:image" content="http://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/hashtablelist.png">
+<meta property="og:image" content="http://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/quickSort.gif">
 <meta property="article:published_time" content="2022-07-12T14:15:12.000Z">
-<meta property="article:modified_time" content="2022-07-26T10:26:33.134Z">
+<meta property="article:modified_time" content="2022-07-28T13:46:45.271Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary">
@@ -238,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-26 18:26:33" itemprop="dateModified" datetime="2022-07-26T18:26:33+08:00">2022-07-26</time>
+                <time title="修改时间：2022-07-28 21:46:45" itemprop="dateModified" datetime="2022-07-28T21:46:45+08:00">2022-07-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,14 +264,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>79k</span>
+              <span>88k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:12</span>
+              <span>1:20</span>
             </span>
 
         </div>
@@ -537,6 +538,484 @@
 <li><code>map</code>的使用场景：对查找有较高的要求，使用场景比如按ID号存储十万个用户，想要快速要通过ID查找对应的用户。红黑树的查找效率，这时就体现出来了。</li>
 </ul>
 <h4 id="算法">7. 算法</h4>
+<h5 id="stl算法分类">7.1 STL算法分类</h5>
+<h6 id="质变和非质变">7.1.1 质变和非质变</h6>
+<ul>
+<li><strong>质变算法：</strong>是指运算过程中会更改区间内的元素的内容</li>
+<li><strong>非质变算法：</strong>是指运算过程中不会更改区间内的元素内容</li>
+</ul>
+<h6 id="stl算法的一般形式">7.1.2 STL算法的一般形式</h6>
+<p><strong>大多数算法有下列4中形式：</strong></p>
+<ul>
+<li><code>alg(first,last,other args);</code></li>
+<li><code>alg(first,last,dest,other args);</code></li>
+<li><code>alg(first,last,first2,other args);</code></li>
+<li><code>alg(first,last,first2,lasst2,other args);</code></li>
+</ul>
+<p><strong>更一般的说法是：</strong></p>
+<ul>
+<li><strong>所有泛型算法的前两个参数一定是一对迭代器，通常为<code>first</code>和<code>last</code>,范围为<code>[first,last)</code></strong></li>
+<li><strong>许多STL算法不止只支持一个版本，可接受仿函数<code>_if</code>结尾，如<code>find()</code>函数支持传入谓词或仿函数的<code>find_if()</code>版本</strong></li>
+<li>质变算法通常会有至少提供两个版本，一个是就地进行改变操作对象的版本，<strong>另一个是<code>_copy</code>版本，拷贝一份副本，在副本上改变，如<code>replace()</code>函数就有<code>replace_copy()</code>版本</strong></li>
+<li>所有的数值算法实现都在<code>&lt;stl_numeric.h&gt;，用户使用时可包含</code>#include<numeric>`调用</numeric></li>
+<li>其他算法实现于<code>&lt;stl_algo.h&gt;\&lt;stl_algobase.h&gt;</code>，用户使用可通过包含<code>#include&lt;algorithm&gt;</code>调用</li>
+</ul>
+<h6 id="算法总览">7.1.3 算法总览</h6>
+<table>
+<thead>
+<tr class="header">
+<th>算法名称</th>
+<th>算法用途</th>
+<th style="text-align: center;">质变？</th>
+<th>所在文件</th>
+<th style="text-align: center;">所属作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>accumulate</code></td>
+<td>元素求和</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_numeric.h&gt;</code></td>
+<td style="text-align: center;">算术</td>
+</tr>
+<tr class="even">
+<td><code>adjacent_difference</code></td>
+<td>相邻元素差额</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_numeric.h&gt;</code></td>
+<td style="text-align: center;">算术</td>
+</tr>
+<tr class="odd">
+<td><code>adjacent_find</code></td>
+<td>查找相邻重复(或符合条件)的元素</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="even">
+<td><code>binary_search</code></td>
+<td>二分查找</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="odd">
+<td><code>copy</code></td>
+<td>复制</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">拷贝</td>
+</tr>
+<tr class="even">
+<td><code>copy_backward</code></td>
+<td>逆向复制</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">拷贝</td>
+</tr>
+<tr class="odd">
+<td><code>copy_n</code></td>
+<td>复制n个元素</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">拷贝</td>
+</tr>
+<tr class="even">
+<td><code>count</code></td>
+<td>计数</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="odd">
+<td><code>count_if</code></td>
+<td>在特定传入的谓词或仿函数条件下计数</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="even">
+<td><code>equal</code></td>
+<td>判断两个区间相等与否</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">关系</td>
+</tr>
+<tr class="odd">
+<td><code>equal_range</code></td>
+<td>在有序区间寻找某值，返回一个区间</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">关系</td>
+</tr>
+<tr class="even">
+<td><code>fill</code></td>
+<td>该填元素值</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">生成</td>
+</tr>
+<tr class="odd">
+<td><code>fill_n</code></td>
+<td>该填元素值，n次</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">生成</td>
+</tr>
+<tr class="even">
+<td><code>find</code></td>
+<td>循序查找</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="odd">
+<td><code>find_if</code></td>
+<td>查找符合条件的元素</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="even">
+<td><code>find_end</code></td>
+<td>查找某个子序列的最后一次出现点</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="odd">
+<td><code>find_first_of</code></td>
+<td>查找某些元素首次出现点</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="even">
+<td><code>for_each</code></td>
+<td>对区间的每一个元素施行某操作</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">生成</td>
+</tr>
+<tr class="odd">
+<td><code>generate</code></td>
+<td>以特定操作的运算结果填充特定区间内的元素</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">生成</td>
+</tr>
+<tr class="even">
+<td><code>inner_product</code></td>
+<td>内积</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">算术</td>
+</tr>
+<tr class="odd">
+<td><code>iter_swap</code></td>
+<td>元素互换</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">交换</td>
+</tr>
+<tr class="even">
+<td><code>lower_bound</code></td>
+<td>返回有序序列范围内的可以插入指定值而不破坏容器顺序的第一个位置</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="odd">
+<td><code>max</code></td>
+<td>最大值</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="even">
+<td><code>max_element</code></td>
+<td>最大值所在位置</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="odd">
+<td><code>min</code></td>
+<td>最小值</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="even">
+<td><code>min_element</code></td>
+<td>最小值所在位置</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="odd">
+<td><code>merge</code></td>
+<td>合并两个序列</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">生成</td>
+</tr>
+<tr class="even">
+<td><code>inplace_merge</code></td>
+<td>合并且就地替换</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">生成</td>
+</tr>
+<tr class="odd">
+<td><code>random_shuffle</code></td>
+<td>随机重排元素</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">生成</td>
+</tr>
+<tr class="even">
+<td><code>remove</code></td>
+<td>删除某类元素</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">删除</td>
+</tr>
+<tr class="odd">
+<td><code>remove_copy</code></td>
+<td>删除某类元素并将结果存储都另一个容器</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">删除</td>
+</tr>
+<tr class="even">
+<td><code>remove_if</code></td>
+<td>有条件的删除某类元素</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">删除</td>
+</tr>
+<tr class="odd">
+<td><code>remove_copy_if</code></td>
+<td>有条件的删除某类元素，并将结果存储到另外一个容器</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">删除</td>
+</tr>
+<tr class="even">
+<td><code>replace</code></td>
+<td>替换某类元素</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">替换</td>
+</tr>
+<tr class="odd">
+<td><code>replace_copy</code></td>
+<td>替换某类元素，并将结果存储到另一个元素</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">替换</td>
+</tr>
+<tr class="even">
+<td><code>replace_if</code></td>
+<td>有条件的替换</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">替换</td>
+</tr>
+<tr class="odd">
+<td><code>replace_copy_if</code></td>
+<td>有条件的替换，并将结果存储都另一个容q器</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">替换</td>
+</tr>
+<tr class="even">
+<td><code>reverse</code></td>
+<td>反转</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">反转</td>
+</tr>
+<tr class="odd">
+<td><code>reverse_copy</code></td>
+<td>反转并把结果存储到另一个容器</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">反转</td>
+</tr>
+<tr class="even">
+<td><code>rotate</code></td>
+<td>旋转</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">旋转</td>
+</tr>
+<tr class="odd">
+<td><code>rotate_copy</code></td>
+<td>旋转，并把结果存储到另一个容器</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;sta_algo.h&gt;</code></td>
+<td style="text-align: center;">旋转</td>
+</tr>
+<tr class="even">
+<td><code>search</code></td>
+<td>查找某个子序列</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="odd">
+<td><code>search_n</code></td>
+<td>查找连续发生n次的某个子序列</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="even">
+<td><code>sort</code></td>
+<td>排序</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">排序</td>
+</tr>
+<tr class="odd">
+<td><code>stable_sort</code></td>
+<td>排序并保持等值元素的相对次序</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">排序</td>
+</tr>
+<tr class="even">
+<td><code>stable_partition</code></td>
+<td>分割并保存元素的相对次序</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">分割</td>
+</tr>
+<tr class="odd">
+<td><code>swap</code></td>
+<td>交换</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algobase.h&gt;</code></td>
+<td style="text-align: center;">交换</td>
+</tr>
+<tr class="even">
+<td><code>swap_ranges</code></td>
+<td>指定区间的交换</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">交换</td>
+</tr>
+<tr class="odd">
+<td><code>unique</code></td>
+<td>去重</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">去重</td>
+</tr>
+<tr class="even">
+<td><code>unique_copy</code></td>
+<td>去重后的结果存储到另一个容器</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">去重</td>
+</tr>
+<tr class="odd">
+<td><code>upper_bound</code></td>
+<td>返回有序序列范围内的可以插入指定值而不破坏容器顺序的最后位置</td>
+<td style="text-align: center;">否</td>
+<td><code>&lt;stl_algo.h&gt;</code></td>
+<td style="text-align: center;">查找</td>
+</tr>
+<tr class="even">
+<td><code>make_heap</code></td>
+<td>创建一个堆</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_heap.h&gt;</code></td>
+<td style="text-align: center;">堆</td>
+</tr>
+<tr class="odd">
+<td><code>pop_heap</code></td>
+<td>从堆取元素</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_heap.h&gt;</code></td>
+<td style="text-align: center;">堆</td>
+</tr>
+<tr class="even">
+<td><code>push_heap</code></td>
+<td>将元素插入堆</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_heap.h&gt;</code></td>
+<td style="text-align: center;">堆</td>
+</tr>
+<tr class="odd">
+<td><code>sort_heap</code></td>
+<td>堆heap排序</td>
+<td style="text-align: center;">是</td>
+<td><code>&lt;stl_heap.h&gt;</code></td>
+<td style="text-align: center;">堆</td>
+</tr>
+</tbody>
+</table>
+<h5 id="sort">7.2 sort</h5>
+<h6 id="适用容器">7.2.1 适用容器</h6>
+<p><code>sort()</code>算法是最复杂堆庞大的一个，<strong>这个算法接受两个<code>RandomAccessIterator</code>迭代器，然后将区间内的元素由小到大重新排列</strong>。第二个版本则允许用户传入<strong>谓词或者仿函数</strong>作为排序条件，指定按什么规则排序。适用<code>sort</code>算法的容器有<code>vecror\deque</code>。</p>
+<p><strong><em>附</em></strong>：因为关联容器的底层机制，根本不需要<code>sort</code>排序，<code>stack\queue\priority_queue</code>对进出的机制也要求不需排序，而<code>list</code>的迭代器为<code>BidirectinalIterator</code>不适用。</p>
+<h6 id="sort实现的原理">7.2.2 sort实现的原理</h6>
+<p>早期的STL <code>sort()</code>算法都是采用<strong>快排</strong>来实现，对于快排平均的时间复杂度为<code>O(NlogN)</code>,但是最坏的情况却会达到<code>O(N*N)</code>，<strong>因此现今的<code>STL SGI</code>改用<code>IntroSort</code>即内观排序算法，极其类似于<code>median-three QuickSort</code>三数取中快速排序算法。这种算法即使在最坏的情况下推进到<code>O(NlogN)</code>。</strong>快排的最坏情况的发生与快速排序中基准点的选择是有重大的关系，当出现下面两种情况时性能最差:</p>
+<ul>
+<li>在分解时每次选取的基准点为最小元素</li>
+<li>在分解时每次选取的基准点为最大元素</li>
+</ul>
+<p><strong>快排的过程：</strong></p>
+<ul>
+<li>如果序列中的元素个数为0或1，结束</li>
+<li>取序列中的任何一个元素，一般会取该段序列的头或者尾元素作为基准点<code>pivot</code></li>
+<li>将序列分类<code>L\R</code>两段子序列，使L内的每一个元素都小于或等于基准点，R内的每一个元素都大于等于基准点</li>
+<li>对<code>L\R</code>递归执行<code>QuickSort</code>,重复上述操作</li>
+</ul>
+<p><img src="/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/quickSort.gif" width="600"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编写自己的quickSort,没有优化，遇到最坏情况的时间复杂度会变成O(N*N)</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">quickSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; a, <span class="type">int</span> first, <span class="type">int</span> last)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (first &gt;= last)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> leftCursor = first, rightCursor = last;</span><br><span class="line">    <span class="type">int</span> pivot = a[first];</span><br><span class="line">    <span class="keyword">while</span> (leftCursor &lt; rightCursor)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (rightCursor&gt;first&amp;&amp;a[rightCursor] &gt; pivot )</span><br><span class="line">            rightCursor--;</span><br><span class="line">        <span class="keyword">while</span> (leftCursor&lt;last&amp;&amp;a[leftCursor] &lt;= pivot)</span><br><span class="line">            leftCursor++;</span><br><span class="line">        <span class="keyword">if</span> (leftCursor &gt;= rightCursor)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="built_in">Swap</span>(a[leftCursor], a[rightCursor]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//放置基准点</span></span><br><span class="line">    a[first] = a[rightCursor];</span><br><span class="line">    a[rightCursor] = pivot;</span><br><span class="line">    <span class="comment">//递归</span></span><br><span class="line">    <span class="built_in">quickSort</span>(a, first, rightCursor - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">quickSort</span>(a, rightCursor+<span class="number">1</span> , last);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="三点取中优化方案">7.2.3 三点取中优化方案</h6>
+<p>为了避免快排出现上述所说的最坏情况，选择哪一个元素作为基准点是关键，<strong>在快排过程中采用三点取中间值的优化方案。三数取中<code>median-of-three</code>指的是在挑选基准元素时，不是简单的选择数组中的第一个元素或最后一个，而是选取某三个元素，常选头、尾和中央三个元素，并且适用三个元素之中的中位数作为基准元素进行划分</strong>。这样即使在最坏的情况下将时间复杂度推进到<code>O(NlogN)</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//优化后的快排代码</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">quickSort</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; a, <span class="type">int</span> first, <span class="type">int</span> last)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (first &gt;= last)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">medianOfThree</span>(a, first, (first + last) / <span class="number">2</span>, last);</span><br><span class="line">    <span class="type">int</span> leftCursor = first, rightCursor = last;</span><br><span class="line">    <span class="type">int</span> pivot = a[first];</span><br><span class="line">    <span class="keyword">while</span> (leftCursor &lt; rightCursor)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (rightCursor&gt;first&amp;&amp;a[rightCursor] &gt; pivot )</span><br><span class="line">            rightCursor--; </span><br><span class="line">        <span class="keyword">while</span> (leftCursor&lt;last&amp;&amp;a[leftCursor] &lt;= pivot)</span><br><span class="line">            leftCursor++;</span><br><span class="line">        <span class="keyword">if</span> (leftCursor &gt;= rightCursor)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="built_in">Swap</span>(a[leftCursor], a[rightCursor]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//放置基准点</span></span><br><span class="line">    a[first] = a[rightCursor];</span><br><span class="line">    a[rightCursor] = pivot;</span><br><span class="line">    <span class="comment">//递归</span></span><br><span class="line">    <span class="built_in">quickSort</span>(a, first, rightCursor - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">quickSort</span>(a, rightCursor+<span class="number">1</span> , last);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">medianOfThree</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; cap, <span class="type">int</span> first, <span class="type">int</span> mid, <span class="type">int</span> last)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (cap[first] &lt; cap[mid])</span><br><span class="line">        <span class="keyword">if</span> (cap[first] &gt;= cap[last])	<span class="comment">//last=&lt;first&lt;mid</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (cap[mid] &lt; cap[last])		<span class="comment">//first&lt;mid&lt;last</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> temp = cap[mid];</span><br><span class="line">            cap[mid] = cap[first];</span><br><span class="line">            cap[first] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>						<span class="comment">// first&lt;last&lt;=mid</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> temp = cap[last];</span><br><span class="line">            cap[last] = cap[first];</span><br><span class="line">            cap[first] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cap[first] &lt; cap[last])	<span class="comment">//last&gt;first&gt;=mid</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cap[mid] &lt; cap[last])		<span class="comment">//first&gt;=mid</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> temp = cap[last];</span><br><span class="line">        cap[last] = cap[first];</span><br><span class="line">        cap[first] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> temp = cap[mid];</span><br><span class="line">        cap[mid] = cap[first];</span><br><span class="line">        cap[first] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="数值算法">7.3 数值算法</h5>
+<p>数值算法都在头文件<code>&lt;numeric&gt;</code>中，实现于<code>&lt;stl_numeric.h&gt;。 ###### 7.3.1 accumulate</code>accumulate`算法用来计算指定区间的和，需要提供额外参数指定累加到哪一个初始值 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//版本一</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> InputIterator,<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">accumulate</span><span class="params">(InputIterator first,InputIterator last,T init)</span></span>;</span><br><span class="line"><span class="comment">//版本二</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> InputIterator,<span class="keyword">class</span> T，<span class="keyword">class</span> BinaryOperation &gt;</span></span><br><span class="line"><span class="function">T <span class="title">accumulate</span><span class="params">(InputIterator first,InputIterator last,T init,</span></span></span><br><span class="line"><span class="params"><span class="function">	BinaryOperation binary_op)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="power">7.3.2 power</h6>
+<p>计算某数的n次方幂，该算法四<code>SGI</code>版本特有算法。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T,<span class="keyword">class</span> Integer&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> T <span class="title">power</span><span class="params">(T x,Integer n)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="adjacent_difference">7.3.3 adjacent_difference</h6>
+<p>算法<code>adjacent_difference</code>用来计算[first,last)中相邻元素的差额，即它会将<code>*first</code>赋值给<code>*result</code>，并针对[first,last)内的每个迭代器<code>i</code>,进行<code>*i-*(i-1)</code>，然后赋值给<code>*++result</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> InpueIterator,<span class="keyword">class</span> OutputIterator&gt;</span></span><br><span class="line"><span class="function">OutputIterator <span class="title">adjacent_difference</span><span class="params">(InputIterator first,InputIterator last,OutputIterator result)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h5 id="基本算法">7.4 基本算法</h5>
+<p>对于SGI版本,它会把常用的一些算法定义在<code>&lt;stl_algobase.h&gt;</code>,使用时包含<code>&lt;algorithm&gt;</code>即可。</p>
+<h5 id="equal">7.4.1 equal</h5>
+<p>如果两个序列在<code>[first,lasst)</code>区间内相等，<code>equal</code>会返回<code>true</code>。如果第二序列元素多，则剩余元素不考虑，一般调用前要先保证元素个数一样。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> InputIterator1,<span class="keyword">class</span> InputIterator2&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">bool</span> <span class="title">equal</span><span class="params">(InpueIterator1 first1,InpueIterator1 last1,InpueIterator1 first2)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="fill">7.4.2 fill</h6>
+<p>将<code>[first,last)</code>内的元素该填新值。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> ForwardIterator,<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">fill</span><span class="params">(ForwardIterator first,ForwardIterator last,<span class="type">const</span> T&amp; value)</span></span>;</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">###### <span class="number">7.4</span><span class="number">.3</span> fill_n</span><br><span class="line">将`[first,last)`的前n个改填新值，返回的迭代器指向被填入的最后一个元素的下一个位置。</span><br><span class="line">```<span class="function">cpp</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> OutputIterator,<span class="keyword">class</span> Size,<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">OutputIterator <span class="title">fill_n</span><span class="params">(OutputIterator first,Size n,<span class="type">const</span> T&amp; value)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="iter_swap">7.4.4 iter_swap</h6>
+<p>该算法将两个<code>ForwardIterator</code>所指对象对调。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> ForwardIterator1,calss ForwardIterator2&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">void</span> <span class="title">iter_swap</span><span class="params">(ForwardIterator a,ForwardIterator2 b)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="copy">7.4.5 copy</h6>
+<ul>
+<li><code>copy()</code>算法是最最最常用的一个算法，</li>
+<li><code>copy()</code>算法将输入区间的<code>[first,last)</code>的元素复制到目标区间<code>[result,result+(last-first))</code>中，执行完后返回一个迭代器，指向<code>result+(last-first)</code>。</li>
+<li><code>copy</code>函数对参数非常宽松，对输入区间只需由<code>InputIterator</code>构成即可，输出区间尾<code>OutputIterator</code>构成即可，即意味着可以将任何容器的任何一段内容复制带任何容器的任何一段上，当然这些容器要由对应的迭代器。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> InpueIterator,<span class="keyword">class</span> OutputIterator&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> OutputIterator <span class="title">copy</span><span class="params">(InputIterator first,InputIterator last,OutputIterator result)</span></span></span><br></pre></td></tr></table></figure>
+<h6 id="copy_backward">7.4.6 copy_backward</h6>
+<p>与<code>copy</code>非常相似，只不过<code>copy_backward</code>是以逆行方向复制到<code>result</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> BidirectionalIterator1,<span class="keyword">class</span> BidirectionalIterator2&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> OutputIterator <span class="title">copy</span><span class="params">(BidirectionalIterator1 first,</span></span></span><br><span class="line"><span class="params"><span class="function">	BidirectionalIterator1,BidirectionalIterator2 result)</span></span></span><br></pre></td></tr></table></figure></p>
+<h5 id="其他算法">7.5 其他算法</h5>
+<p>定义与<code>&lt;stl_algo.h&gt;</code>内地算法</p>
+<h6 id="adjacent_find">7.5.1 adjacent_find</h6>
+<p>该算法找出第一组满足条件的相邻元素，这里所谓的条件，在版本一中是指<strong>两元素相等</strong>，在版本二中允许用户指定一个二元为谓词运算，两操作数是相邻第一个元素和第二个元素。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//版本一</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> ForwardIterator&gt;</span></span><br><span class="line"><span class="function">ForwardIterator <span class="title">adjacent_find</span><span class="params">(ForwardIterator first,ForwardIterator last)</span></span>;</span><br><span class="line"><span class="comment">//版本二</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> ForwardIterator,<span class="keyword">class</span> BinaryPredicate&gt;</span></span><br><span class="line"><span class="function">ForwardIterator <span class="title">adjacent_find</span><span class="params">(ForwardIterator first,</span></span></span><br><span class="line"><span class="params"><span class="function">	ForwardIterator last,BinaryPredicate binary_pred)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="find">7.5.2 find</h6>
+<p>在<code>[first,lasy)</code>找出第一个符合匹配条件的元素，返回该元素所在位置的迭代器，未找到则返回<code>last</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> InputIterator,<span class="keyword">class</span> T&gt;</span></span><br><span class="line"><span class="function">InputIterator <span class="title">find</span><span class="params">(InputIterator first,InputIterator last,<span class="type">const</span> T&amp; value)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="find_if">7.5.3 find_if</h6>
+<p>传入一原谓词，根据指定的条件<code>pred</code>元素条件查找，返回该元素所在位置的迭代器，未找到则返回<code>last</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> InputIterator,<span class="keyword">class</span> predicate&gt;</span></span><br><span class="line"><span class="function">InputIterator <span class="title">find</span><span class="params">(InputIterator first,InputIterator last,predicate pred)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="find_end">7.5.4 find_end</h6>
+<p>在序列一的<code>[first1,last1)</code>区间中，查找序列二<code>[first2,last2)</code>最后一次出现点，如果不存在，则返回<code>last1</code>。由两个版本，版本一默认使用<code>==</code>,版本二允许用户传入二元运算谓词。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//版本一</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> ForwardIterator1,<span class="keyword">class</span> ForwardIterator2&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="title">ForwardIterator</span><span class="params">(ForwardIterator1 first1,ForwardIterator1 last1</span></span></span><br><span class="line"><span class="params"><span class="function">	ForwardIterator2 first2,ForwardIterator2 last2)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h6 id="find_first_of">7.5.5 find_first_of</h6>
+<p>本算法以<code>[first2,last2)</code>区间内的元素作为查找目标，寻找它们在<code>[first1,last1)</code>第一次出现的位置，<strong>只要<code>[first2,last2)</code>任何一个元素第一次出现在<code>[first1,last1)</code>就返回</strong>。两个版本，一个默认使用<code>==</code>,一个允许用户指定二元谓词传入 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">class</span> InputIterator,<span class="keyword">class</span> ForwardIterator&gt;</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="title">ForwardIterator</span><span class="params">(InputIterator first1,InputIterator last1</span></span></span><br><span class="line"><span class="params"><span class="function">	ForwardIterator2 first2,ForwardIterator2 last2)</span></span>;</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -640,7 +1119,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#stl%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.STL概述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%AD%E5%A4%A7%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 六大组件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">2. 空间配置器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8%E7%9A%84%E6%A0%87%E5%87%86%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 空间配置器的标准接口</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1设计一个简单的空间配置器</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sgi%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 SGI空间配置器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sgi%E7%9A%84alloc"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 SGI的alloc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#alloc%E7%9A%84stl_constuct"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 alloc的stl_constuct</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AEstl_alloc"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 空间配置stl_alloc</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%80%E7%BA%A7%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1 一级配置器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%99%84%E5%8A%A0%E7%9F%A5%E8%AF%86%E7%82%B9new-handler%E6%9C%BA%E5%88%B6"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2 附加知识点：new handler机制</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3 二级配置器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8Etraits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">3. 迭代器与traits编程技法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#traits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95-stl%E6%BA%90%E7%A0%81%E7%9A%84%E9%97%A8%E9%92%A5"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 traits编程技法-STL源码的门钥</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8traits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 为什么要使用traits编程技法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#traits%E5%92%8C%E5%81%8F%E7%89%B9%E4%BE%8B%E5%8C%96"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 traits和偏特例化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9B%B8%E5%BA%94%E5%9E%8B%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 迭代器相应型别</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#value_type"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 value_type</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#difference_type"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 difference_type</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#reference"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 reference</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pointer"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 pointer</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#iterator_category"><span class="nav-number">3.2.5.</span> <span class="nav-text">3.2.5 iterator_category</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#iterator%E6%BA%90%E4%BB%A3%E7%A0%81%E5%B1%95%E7%A4%BA"><span class="nav-number">3.3.</span> <span class="nav-text">3.3.iterator源代码展示</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">4. 序列式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#vector"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 扩容机制</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#list"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 list</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#list%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 list的迭代器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#list%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 list的数据结构</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#deque"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 deque</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#deque%E7%9A%84%E4%B8%AD%E6%8E%A7%E5%99%A8"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 deque的中控器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#deque%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 deque的迭代器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#deque%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.3.3.</span> <span class="nav-text">4.3.3 deque的数据结构</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#heap"><span class="nav-number">4.4.</span> <span class="nav-text">4.5. heap</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#push_heap%E7%AE%97%E6%B3%95"><span class="nav-number">4.4.1.</span> <span class="nav-text">4.5.1 push_heap算法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pop_heap%E7%AE%97%E6%B3%95"><span class="nav-number">4.4.2.</span> <span class="nav-text">4.5.2 pop_heap算法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sort_heap%E7%AE%97%E6%B3%95"><span class="nav-number">4.4.3.</span> <span class="nav-text">4.5.3 sort_heap算法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#priority_queue"><span class="nav-number">4.5.</span> <span class="nav-text">4.6 priority_queue</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">5. 关联式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#rb-tree"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 RB-tree</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#rb-tree%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1 RB-tree结构体</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#rb-tree%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2 RB-tree迭代器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#rb-tree%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.3.</span> <span class="nav-text">5.1.3 RB-tree的数据结构</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#set"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 set</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#set%E6%BA%90%E7%A0%81"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 set源码</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#map"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 map</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#pair%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">5.3.1.</span> <span class="nav-text">5.3.1 pair类型的定义</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#map%E6%BA%90%E7%A0%81"><span class="nav-number">5.3.2.</span> <span class="nav-text">5.3.2 map源码</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#multisetmap"><span class="nav-number">5.3.3.</span> <span class="nav-text">5.3.3 multiset&#x2F;map</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hashtable"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 hashtable</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hashtable%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">5.4.1.</span> <span class="nav-text">5.4.1 hashtable的迭代器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#hashtable%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">5.4.2.</span> <span class="nav-text">5.4.2 hashtable的数据结构</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hash_set"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 hash_set</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hash_set%E6%BA%90%E7%A0%81"><span class="nav-number">5.5.1.</span> <span class="nav-text">5.5.1 hash_set源码</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hash_map"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 hash_map</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hash_map%E6%BA%90%E7%A0%81"><span class="nav-number">5.6.1.</span> <span class="nav-text">5.6.1 hash_map源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E4%B8%AA%E5%AE%B9%E5%99%A8%E7%9A%84%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">6.</span> <span class="nav-text">6. 各个容器的适用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">7. 算法</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#stl%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.STL概述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%AD%E5%A4%A7%E7%BB%84%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 六大组件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">2. 空间配置器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8%E7%9A%84%E6%A0%87%E5%87%86%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 空间配置器的标准接口</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1设计一个简单的空间配置器</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sgi%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 SGI空间配置器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sgi%E7%9A%84alloc"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 SGI的alloc</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#alloc%E7%9A%84stl_constuct"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 alloc的stl_constuct</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E9%85%8D%E7%BD%AEstl_alloc"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 空间配置stl_alloc</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%80%E7%BA%A7%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1 一级配置器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%99%84%E5%8A%A0%E7%9F%A5%E8%AF%86%E7%82%B9new-handler%E6%9C%BA%E5%88%B6"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2 附加知识点：new handler机制</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E9%85%8D%E7%BD%AE%E5%99%A8"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3 二级配置器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E4%B8%8Etraits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">3. 迭代器与traits编程技法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#traits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95-stl%E6%BA%90%E7%A0%81%E7%9A%84%E9%97%A8%E9%92%A5"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 traits编程技法-STL源码的门钥</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8traits%E7%BC%96%E7%A8%8B%E6%8A%80%E6%B3%95"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 为什么要使用traits编程技法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#traits%E5%92%8C%E5%81%8F%E7%89%B9%E4%BE%8B%E5%8C%96"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 traits和偏特例化</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9B%B8%E5%BA%94%E5%9E%8B%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 迭代器相应型别</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#value_type"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 value_type</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#difference_type"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 difference_type</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#reference"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 reference</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pointer"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 pointer</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#iterator_category"><span class="nav-number">3.2.5.</span> <span class="nav-text">3.2.5 iterator_category</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#iterator%E6%BA%90%E4%BB%A3%E7%A0%81%E5%B1%95%E7%A4%BA"><span class="nav-number">3.3.</span> <span class="nav-text">3.3.iterator源代码展示</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E5%BC%8F%E5%AE%B9%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">4. 序列式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#vector"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 vector</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 扩容机制</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#list"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 list</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#list%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 list的迭代器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#list%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 list的数据结构</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#deque"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 deque</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#deque%E7%9A%84%E4%B8%AD%E6%8E%A7%E5%99%A8"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 deque的中控器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#deque%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 deque的迭代器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#deque%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">4.3.3.</span> <span class="nav-text">4.3.3 deque的数据结构</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#heap"><span class="nav-number">4.4.</span> <span class="nav-text">4.5. heap</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#push_heap%E7%AE%97%E6%B3%95"><span class="nav-number">4.4.1.</span> <span class="nav-text">4.5.1 push_heap算法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pop_heap%E7%AE%97%E6%B3%95"><span class="nav-number">4.4.2.</span> <span class="nav-text">4.5.2 pop_heap算法</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sort_heap%E7%AE%97%E6%B3%95"><span class="nav-number">4.4.3.</span> <span class="nav-text">4.5.3 sort_heap算法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#priority_queue"><span class="nav-number">4.5.</span> <span class="nav-text">4.6 priority_queue</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%BC%8F%E5%AE%B9%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">5. 关联式容器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#rb-tree"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 RB-tree</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#rb-tree%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1 RB-tree结构体</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#rb-tree%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2 RB-tree迭代器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#rb-tree%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.3.</span> <span class="nav-text">5.1.3 RB-tree的数据结构</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#set"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 set</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#set%E6%BA%90%E7%A0%81"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 set源码</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#map"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 map</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#pair%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">5.3.1.</span> <span class="nav-text">5.3.1 pair类型的定义</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#map%E6%BA%90%E7%A0%81"><span class="nav-number">5.3.2.</span> <span class="nav-text">5.3.2 map源码</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#multisetmap"><span class="nav-number">5.3.3.</span> <span class="nav-text">5.3.3 multiset&#x2F;map</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hashtable"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 hashtable</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hashtable%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">5.4.1.</span> <span class="nav-text">5.4.1 hashtable的迭代器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#hashtable%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">5.4.2.</span> <span class="nav-text">5.4.2 hashtable的数据结构</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hash_set"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 hash_set</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hash_set%E6%BA%90%E7%A0%81"><span class="nav-number">5.5.1.</span> <span class="nav-text">5.5.1 hash_set源码</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hash_map"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 hash_map</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#hash_map%E6%BA%90%E7%A0%81"><span class="nav-number">5.6.1.</span> <span class="nav-text">5.6.1 hash_map源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%84%E4%B8%AA%E5%AE%B9%E5%99%A8%E7%9A%84%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">6.</span> <span class="nav-text">6. 各个容器的适用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">7. 算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#stl%E7%AE%97%E6%B3%95%E5%88%86%E7%B1%BB"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 STL算法分类</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%B4%A8%E5%8F%98%E5%92%8C%E9%9D%9E%E8%B4%A8%E5%8F%98"><span class="nav-number">7.1.1.</span> <span class="nav-text">7.1.1 质变和非质变</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#stl%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%80%E8%88%AC%E5%BD%A2%E5%BC%8F"><span class="nav-number">7.1.2.</span> <span class="nav-text">7.1.2 STL算法的一般形式</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88"><span class="nav-number">7.1.3.</span> <span class="nav-text">7.1.3 算法总览</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sort"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 sort</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%AE%B9%E5%99%A8"><span class="nav-number">7.2.1.</span> <span class="nav-text">7.2.1 适用容器</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sort%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">7.2.2.</span> <span class="nav-text">7.2.2 sort实现的原理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%89%E7%82%B9%E5%8F%96%E4%B8%AD%E4%BC%98%E5%8C%96%E6%96%B9%E6%A1%88"><span class="nav-number">7.2.3.</span> <span class="nav-text">7.2.3 三点取中优化方案</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E7%AE%97%E6%B3%95"><span class="nav-number">7.3.</span> <span class="nav-text">7.3 数值算法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#power"><span class="nav-number">7.3.1.</span> <span class="nav-text">7.3.2 power</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#adjacent_difference"><span class="nav-number">7.3.2.</span> <span class="nav-text">7.3.3 adjacent_difference</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95"><span class="nav-number">7.4.</span> <span class="nav-text">7.4 基本算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#equal"><span class="nav-number">7.5.</span> <span class="nav-text">7.4.1 equal</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#fill"><span class="nav-number">7.5.1.</span> <span class="nav-text">7.4.2 fill</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#iter_swap"><span class="nav-number">7.5.2.</span> <span class="nav-text">7.4.4 iter_swap</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#copy"><span class="nav-number">7.5.3.</span> <span class="nav-text">7.4.5 copy</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#copy_backward"><span class="nav-number">7.5.4.</span> <span class="nav-text">7.4.6 copy_backward</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95"><span class="nav-number">7.6.</span> <span class="nav-text">7.5 其他算法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#adjacent_find"><span class="nav-number">7.6.1.</span> <span class="nav-text">7.5.1 adjacent_find</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#find"><span class="nav-number">7.6.2.</span> <span class="nav-text">7.5.2 find</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#find_if"><span class="nav-number">7.6.3.</span> <span class="nav-text">7.5.3 find_if</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#find_end"><span class="nav-number">7.6.4.</span> <span class="nav-text">7.5.4 find_end</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#find_first_of"><span class="nav-number">7.6.5.</span> <span class="nav-text">7.5.5 find_first_of</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -654,20 +1133,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -708,12 +1187,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">338k</span>
+    <span title="站点总字数">359k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:07</span>
+    <span title="站点阅读时长">5:26</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
