@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. 动态规划 我们遇到的问题中，有很大一部分可以用动态规划Dynamic Programming来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题 1.1 动态规划的原理 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当前子问题的解将由上一次子问题的解推出。使用动态规划来解题只需要多项式时间复杂度， 因此它比回溯法、暴力法等要快许多。动态规划要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动态规划算法思想">
+<meta property="og:url" content="http://example.com/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1. 动态规划 我们遇到的问题中，有很大一部分可以用动态规划Dynamic Programming来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题 1.1 动态规划的原理 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当前子问题的解将由上一次子问题的解推出。使用动态规划来解题只需要多项式时间复杂度， 因此它比回溯法、暴力法等要快许多。动态规划要">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-29T05:56:14.000Z">
+<meta property="article:modified_time" content="2022-07-30T13:30:25.918Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>动态规划算法思想 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动态规划算法思想
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-29 13:56:14" itemprop="dateCreated datePublished" datetime="2022-07-29T13:56:14+08:00">2022-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-30 21:30:25" itemprop="dateModified" datetime="2022-07-30T21:30:25+08:00">2022-07-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="动态规划">1. 动态规划</h4>
+<p>我们遇到的问题中，有很大一部分可以用动态规划<code>Dynamic Programming</code>来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题</p>
+<h5 id="动态规划的原理">1.1 动态规划的原理</h5>
+<p><strong>动态规划算法通常基于一个递推公式及一个或多个初始状态。 当前子问题的解将由上一次子问题的解推出。使用动态规划来解题只需要多项式时间复杂度</strong>， 因此它比回溯法、暴力法等要快许多。动态规划要求我们要找到某个状态的最优解，然后在它的帮助下，找到下一个状态的最优解。由于单纯使用语言来描述动态规划晦涩难懂，因此采用例子来说明：</p>
+<p><strong>问题1：假设有1元、3元和5元的硬币，如何用最少的的硬币凑够11元？</strong></p>
+<p>学过贪心算法知道，加如使用贪心算法，每次拿面额最高的银币来逼近这个11是一个方法，但它不能保证一定是最少数量的。因此这里介绍动态规划来解答。正如上面所说，动态规划就是将问题小化，以上一次的子问题的最优解推出下一个的最优解：</p>
+<ul>
+<li>因此我们可想当面额为<code>i</code>时，最少的硬币数量是多少，我们使用<code>dp[i]</code>表示凑够<code>i</code>元时最少的硬币数量。</li>
+<li>豪无疑问，当<code>i=0</code>时<code>dp[0]=0</code>，因为题目给出了1元、3元和5元的面额，我们需要对这些进行处理，因此能够得到其他的初始条件，<code>i=1</code>时<code>dp[i]=1</code>,i=3时<code>dp[3]=1</code>,i=5时<code>dp[5]=</code>。</li>
+<li>完成了初始化条件后，我们可以继续推其他面额的情况，由提供的三种面额，可以知道当<code>i=2</code>时<code>dp[2]=2</code>，但<code>i=3</code>时，组成它的有两种选择，一种时三个1元硬币，另一种是直接选择3元，有<code>min(dp[3].dp[2]+1)</code>知道<code>dp[3]=1</code>是最优解，同样<code>dp[4]</code>，它可以有<code>4=1+3</code>或者<code>4=3+1</code>，两者的的数量是一致的，只不过是次序的不同，再到<code>dp[5]</code>可以检查<code>min(dp[4]+1,dp[2]+1,dp[5])</code>取最小</li>
+<li>由上面的分析，我们可以很容易的分析到这样一个状态转移方程： <span class="math display">\[
+dp[i]=
+\begin{cases}
+min(dp[i-1]+1,dp[i-3]+1,dp[i-5]+1),i&gt;5\\
+1,i=1,3,5\\
+2,i=2,4
+\end{cases}
+\]</span></li>
+</ul>
+<p>这样问题就迎刃而解，得如下代码： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 有面值1，3，5的硬币，试求组成39元时用到最少的硬币数量</span></span><br><span class="line"><span class="comment">* 首先定义dp[i]表示i元时用到得最少银币数</span></span><br><span class="line"><span class="comment">* 由题得初始化条件dp[0]=0,dp[1]=1,dp[3]=1,dp[5]=5</span></span><br><span class="line"><span class="comment">* 当i&gt;5时，会有状态转移方程dp[i]=min(dp[i-1].dp[i-3],do[i-5])+1;</span></span><br><span class="line"><span class="comment">*当i&lt;=5时，这个范围含的2，4未初始化，</span></span><br><span class="line"><span class="comment">*可以增加以判断条件当i-1&gt;=0,i-3&gt;=0,i-5&gt;0来决定，是否要在状态转移方程添加对应项</span></span><br><span class="line"><span class="comment">* 这里由于能够自己推段2，4的最小数量，直接当作初始化，</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">Min</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">minCoin</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> dp[<span class="number">40</span>];</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">5</span>] = <span class="number">1</span>;	</span><br><span class="line">	dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">	dp[<span class="number">4</span>] = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">6</span>; i &lt; <span class="number">40</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		dp[i] = <span class="built_in">Min</span>(dp[i - <span class="number">1</span>], dp[i - <span class="number">3</span>], dp[i - <span class="number">5</span>]) + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[<span class="number">39</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>从上面的案例可以知道，解决动态规划的策略最重要的两步是： - 确定可从题意得出的临界值 - <strong>确定状态转移方程</strong></p>
+<p>有了状态和状态转移方程，问题基本上也就解决了，接下来的问题只是如何写迭代代码而已。</p>
+<h5 id="初级问题">1.2 初级问题</h5>
+<p>上面的硬币问题只能说是很简单的动态规划问题，我们可以在来看看更复杂一点的。</p>
+<p><strong>问题：</strong>一个序列有N个数：A[1],A[2],…,A[N]，求出最长连续非降子序列的长度</p>
+<p>同样对于这个问题也能使用动态规划来解决，定义一个<code>dp[i]</code>表示包括当前下标<code>i</code>的非降子序列的长度，那么就有这样的条件：</p>
+<ul>
+<li>初始条件中，我们肯定可以知道<code>i=0</code>时<code>d[i]=1</code>。</li>
+<li>状态转移方程则有<code>d=1+(s[i]&gt;=s[i-1]?d[i-1]:0)</code>，这个状态转移方程指示，我们只需将当前的访问的元素与上一个元素进行对比，如果是<code>&gt;=</code>，则与之前一样是一个非降子序列，反之则不是，重新计数非降子序列长度</li>
+<li>最后只需要遍历一次<code>d[i]</code>就能得到最长非降子序列的长度，起始和结束位置也能递推</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//时间复杂度为O(n)</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">maxLength</span><span class="params">(string s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> len = s.<span class="built_in">size</span>();</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(len)</span></span>;</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; len; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		dp[i] =<span class="number">1</span>+( s[i] &gt;= s[i - <span class="number">1</span>] ? dp[i - <span class="number">1</span>] : <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">getmaxValue</span>(dp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的问题可以进一步升级，不要求连续，如下：</p>
+<p><strong>问题：</strong>一个序列有N个数：A[1],A[2],…,A[N]，求出最长非降子序列的长度</p>
+<p>虽然这个问题不要求连续，我们同样能够使用一维<code>dp[i]</code>尝试解决，同样要找出初始条件和状态转移方程。<strong>我们可以让<code>dp[i]</code>是表示在以<code>A[i]</code>结尾的即下标<code>0~i</code>的子序列的最长非降长度</strong>，那么就有如下策略：</p>
+<ul>
+<li>初始条件<code>dp[0]=1</code></li>
+<li>状态转移方程有两种情况，一是必须在前面找到所有的个x,使得<code>A[i]&gt;=A[x]</code>，更新<code>dp[x]=dp[x]+1</code>,然后执行取最大值,如果没有找到则直接赋值为<code>dp[i]=1</code>。即</li>
+</ul>
+<p><span class="math display">\[
+dp[i]=
+\begin{cases}
+max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
+1，           之前的序列不存在A[x]&lt;=A[i]时
+\end{cases}
+\]</span></p>
+<ul>
+<li>最后遍历一遍<code>dp</code>数组，取最大值，</li>
+<li>该算法因为当<code>A[i]&lt;A[i-1]</code>时，需要从后往前遍历dp数组。外部循环为<code>n</code>，内部平均循环为<code>n/2</code>，因此时间复杂度为<code>O(N*N)</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxSonLength</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; cap)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> len = cap.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">if</span> (len == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(len);</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">            <span class="type">int</span> j;</span><br><span class="line">            <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">tmp</span><span class="params">(i)</span></span>;</span><br><span class="line">            <span class="type">int</span> index=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (cap[i] &gt; cap[j]) &#123;</span><br><span class="line">                    tmp[index]=dp[j];</span><br><span class="line">                    index++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> max=<span class="built_in">getmaxValue</span>(tmp);</span><br><span class="line">            <span class="keyword">if</span> (max==<span class="number">0</span>)</span><br><span class="line">                dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                dp[i]=max+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">getmaxValue</span>(dp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的算法分时间复杂度达到了<code>O(N*N)</code>,是否有办法使复杂度降到<code>O(NlogN)</code>？我们可以看到上面的程序之所以变为<code>O(N*N)</code>，是因为每次对<code>A[i]</code>都要遍历之前的<code>A[x]</code>，我们是否可以通过增加一个数组来存储形成的最长非降子序列，然后进行二分查找呢，经过二分查找使得复杂度变为<code>O(NlogN)</code>:</p>
+<p><strong>要这样做我们必须重新定义<code>dp[i]</code>数组的意义，<code>dp[i]</code>它表示长度为<code>i+1</code>的递增子序列中，最大的序列尾数；再定义一个<code>maxL</code>变量，指示当前最长递增子序列的长度，对数组<code>dp</code>二分查找，判断<code>cap[x]</code>要插入的位置</strong></p>
+<ul>
+<li>若<code>cap[x]&gt;dp[maxL]</code>,表示当前该值比递增子序列的尾数都大，将<code>cap[x]</code>添加到<code>dp</code>尾部，<code>maxL++</code></li>
+<li>若<code>dp[i-1]&lt;cap[x]&lt;dp[i]</code>，更新相应<code>dp[i]</code>即可</li>
+</ul>
+<p>显然这种方法以及不算动态规划了，是一种特殊解法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">lengthOfLIS</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums,vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; storage)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (nums.<span class="built_in">empty</span>())</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(nums.<span class="built_in">size</span>());</span><br><span class="line">	<span class="type">int</span> maxL = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> num : nums)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> lo = <span class="number">0</span>, hi = maxL;</span><br><span class="line">		<span class="comment">//二分查找</span></span><br><span class="line">		<span class="keyword">while</span> (lo &lt; hi)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> mid = (lo + hi) / <span class="number">2</span>;</span><br><span class="line">			<span class="keyword">if</span> (dp[mid] &lt; num)</span><br><span class="line">				lo = mid + <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				hi = mid;</span><br><span class="line">		&#125;</span><br><span class="line">		dp[lo] = num;</span><br><span class="line">		<span class="keyword">if</span> (lo == maxL)</span><br><span class="line">		&#123;</span><br><span class="line">			maxL++;</span><br><span class="line">			<span class="keyword">if</span>(storage[<span class="number">0</span>].size&lt;maxL)</span><br><span class="line">				storage.<span class="built_in">clear</span>();</span><br><span class="line">			storage.<span class="built_in">push_back</span>(dp);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> maxL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong><em>附加：如果要你返回所有最长递增子序列或者返回最长递增子序列的个数该如何解决？</em></strong> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-longest-increasing-subsequence/solution/zui-chang-di-zeng-zi-xu-lie-de-ge-shu-by-w12f/">leetcode第673题.最长递增序列的个数</a></p>
+<h5 id="中级">1.3 中级</h5>
+<p>上面举的例子都是对一维<code>dp</code>来解决，接下来介绍如何解决二维<code>dp</code>的问题。</p>
+<p>**问题：平面上有N*M个格子，每个格子中放着一定数量的苹果。你从左上角的格子开始， 每一步只能向下走或是向右走，每次走到一个格子上就把格子里的苹果收集起来， 这样下去，你最多能收集到多少个苹果**</p>
+<p>当然了，使用动态规划<code>dp</code>就要找初始条件喝状态转移方程</p>
+<ul>
+<li>定义二维数组<code>dp[N][M]</code>，<code>d[i][j]</code>表示从<code>A[0][0]</code>到<code>A[i][j]</code>能收集到的最多苹果数量</li>
+<li>因为只能向下喝右移动，则有状态转移方程<code>d[i][j]=max(d[i-1][j],d[i][j-1])+A[i][j]</code>，其中<code>i&gt;0,j&gt;0</code></li>
+<li>为了方便实现状态转移方程，我们可以人增加隔离带，即<code>A[0][j]=0、A[i][0]=0</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxApple</span><span class="params">(<span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; cap)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (cap.<span class="built_in">empty</span>())</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> row = cap[<span class="number">0</span>].<span class="built_in">size</span>(),</span><br><span class="line">		col = cap.<span class="built_in">size</span>();</span><br><span class="line">	vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(col+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(row+<span class="number">1</span>));</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= col; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= row; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> Max = <span class="built_in">max</span>(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]);</span><br><span class="line">			dp[i][j] = Max + cap[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[col][row];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述算法复杂度为<code>O(N*M)</code></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"># 算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/28/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" rel="prev" title="排序算法">
+      <i class="fa fa-chevron-left"></i> 排序算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" rel="next" title="算法题解">
+      算法题解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92"><span class="nav-number">1.</span> <span class="nav-text">1. 动态规划</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 动态规划的原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9D%E7%BA%A7%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 初级问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%AD%E7%BA%A7"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 中级</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">364k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:31</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
