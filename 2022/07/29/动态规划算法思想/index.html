@@ -28,7 +28,7 @@
 <meta property="og:description" content="1. 动态规划 我们遇到的问题中，有很大一部分可以用动态规划Dynamic Programming来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题 1.1 动态规划的原理 动态规划算法通常基于一个递推公式及一个或多个初始状态。 当前子问题的解将由上一次子问题的解推出。使用动态规划来解题只需要多项式时间复杂度， 因此它比回溯法、暴力法等要快许多。动态规划要">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-29T05:56:14.000Z">
-<meta property="article:modified_time" content="2022-07-30T13:30:25.918Z">
+<meta property="article:modified_time" content="2022-07-31T02:25:02.454Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-30 21:30:25" itemprop="dateModified" datetime="2022-07-30T21:30:25+08:00">2022-07-30</time>
+                <time title="修改时间：2022-07-31 10:25:02" itemprop="dateModified" datetime="2022-07-31T10:25:02+08:00">2022-07-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,7 +292,12 @@ min(dp[i-1]+1,dp[i-3]+1,dp[i-5]+1),i&gt;5\\
 \]</span></li>
 </ul>
 <p>这样问题就迎刃而解，得如下代码： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 有面值1，3，5的硬币，试求组成39元时用到最少的硬币数量</span></span><br><span class="line"><span class="comment">* 首先定义dp[i]表示i元时用到得最少银币数</span></span><br><span class="line"><span class="comment">* 由题得初始化条件dp[0]=0,dp[1]=1,dp[3]=1,dp[5]=5</span></span><br><span class="line"><span class="comment">* 当i&gt;5时，会有状态转移方程dp[i]=min(dp[i-1].dp[i-3],do[i-5])+1;</span></span><br><span class="line"><span class="comment">*当i&lt;=5时，这个范围含的2，4未初始化，</span></span><br><span class="line"><span class="comment">*可以增加以判断条件当i-1&gt;=0,i-3&gt;=0,i-5&gt;0来决定，是否要在状态转移方程添加对应项</span></span><br><span class="line"><span class="comment">* 这里由于能够自己推段2，4的最小数量，直接当作初始化，</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">Min</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">minCoin</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> dp[<span class="number">40</span>];</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">5</span>] = <span class="number">1</span>;	</span><br><span class="line">	dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">	dp[<span class="number">4</span>] = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">6</span>; i &lt; <span class="number">40</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		dp[i] = <span class="built_in">Min</span>(dp[i - <span class="number">1</span>], dp[i - <span class="number">3</span>], dp[i - <span class="number">5</span>]) + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[<span class="number">39</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>从上面的案例可以知道，解决动态规划的策略最重要的两步是： - 确定可从题意得出的临界值 - <strong>确定状态转移方程</strong></p>
+<p>从上面的案例可以知道，解决动态规划的策略最重要的三步是：</p>
+<ul>
+<li><strong>确定<code>dp</code>数组的含义</strong></li>
+<li>确定可从题意得出的临界值</li>
+<li><strong>确定状态转移方程</strong></li>
+</ul>
 <p>有了状态和状态转移方程，问题基本上也就解决了，接下来的问题只是如何写迭代代码而已。</p>
 <h5 id="初级问题">1.2 初级问题</h5>
 <p>上面的硬币问题只能说是很简单的动态规划问题，我们可以在来看看更复杂一点的。</p>
@@ -460,20 +465,20 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -514,12 +519,12 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">364k</span>
+    <span title="站点总字数">387k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:31</span>
+    <span title="站点阅读时长">5:52</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
