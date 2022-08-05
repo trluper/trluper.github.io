@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. MySQL的架构 MySQL最重要最与众不同的就是它的存储引擎架构，这种架构设计将查询处理(QUERY PROCESSING)及其他系统任务和数据存储&#x2F;提取相分离。在这里主要介绍MySQL的服务器架构、各种存储引擎之间的区别。 1.1 逻辑架构 MySQL各组件协同工作的示意图如下：  最上层的客户端不是MySQL独有的，像许多C&#x2F;S结构都具有。 第二层架构是大多数MySQL的核">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高性能MySQL">
+<meta property="og:url" content="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1. MySQL的架构 MySQL最重要最与众不同的就是它的存储引擎架构，这种架构设计将查询处理(QUERY PROCESSING)及其他系统任务和数据存储&#x2F;提取相分离。在这里主要介绍MySQL的服务器架构、各种存储引擎之间的区别。 1.1 逻辑架构 MySQL各组件协同工作的示意图如下：  最上层的客户端不是MySQL独有的，像许多C&#x2F;S结构都具有。 第二层架构是大多数MySQL的核">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Fram.png">
+<meta property="og:image" content="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Lockrecord.png">
+<meta property="og:image" content="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/gaplock.png">
+<meta property="og:image" content="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/nextkeylocks.png">
+<meta property="og:image" content="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/ilock.png">
+<meta property="article:published_time" content="2022-08-04T13:34:03.000Z">
+<meta property="article:modified_time" content="2022-08-05T14:02:27.774Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Fram.png">
+
+<link rel="canonical" href="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>高性能MySQL | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          高性能MySQL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-04 21:34:03" itemprop="dateCreated datePublished" datetime="2022-08-04T21:34:03+08:00">2022-08-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-05 22:02:27" itemprop="dateModified" datetime="2022-08-05T22:02:27+08:00">2022-08-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="mysql的架构">1. MySQL的架构</h4>
+<p>MySQL最重要最与众不同的就是它的存储引擎架构，这种架构设计将查询处理(<code>QUERY PROCESSING</code>)及其他系统任务和数据存储/提取相分离。在这里主要介绍MySQL的服务器架构、各种存储引擎之间的区别。</p>
+<h5 id="逻辑架构">1.1 逻辑架构</h5>
+<p>MySQL各组件协同工作的示意图如下：</p>
+<ul>
+<li>最上层的客户端不是MySQL独有的，像许多C/S结构都具有。</li>
+<li>第二层架构是大多数MySQL的核心服务功能所在的一层，如查询解析、分析、优化、缓存和所有的内置函数，所有跨存储引擎的功能也在这一层实现：存储过程、视图、触发器等。</li>
+<li>第三层包含了存储引擎，存储引擎负责MySQL中数据的存储和提取 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Fram.png" width="400"></li>
+</ul>
+<h6 id="连接管理与安全性">1.1.1 连接管理与安全性</h6>
+<p>每个客户端连接到MySQL服务器进程有一个线程，这个连接的查询只会在这个单独的线程中执行，该线程只能轮流在某个CPU时间片中执行语句。服务器会负责缓存管理线程，因此不需要为每一个新建的连接创建或者销毁线程。</p>
+<p>当有来自于客户端的连接请求时，服务器会对连接信息进行认证，认证基于用户名、密码和主机信息进行。</p>
+<h6 id="优化与执行">1.1.2 优化与执行</h6>
+<p><strong>进行解析的过程：</strong></p>
+<ul>
+<li>MySQL会解析查询，并创建内部数据结构（解析树），<strong>然后对其进行各种优化：包括重写查询、决定表的读取顺序以及选择合适的索引等。</strong></li>
+<li>用户可以通过特殊的关键字提示优化器来影响它的优化决策过程，也可以请求优化器解释优化过程的各个因素，使用户可以知道服务器时如何进行优化决策的。</li>
+<li>优化器不关心表使用哪种存储引擎，但存储引擎对优化查询是有影响的，因为优化器会请求存储引擎提供容量或某个具体操作的开销。</li>
+</ul>
+<p><strong>当然不要忘了还有查询缓存：</strong></p>
+<p>对于select语句，在解析查询之前，服务器会先检查查询缓存，如果能在查询缓存中找到对应查询，服务器就不必执行解析器、优化和执行的整个过程，直接返回查询缓存中的结果集即可。</p>
+<h5 id="并发控制">1.2 并发控制</h5>
+<p>在MySQL当中是在两个面讨论的并发控制：服务器层和存储引擎层。在并发场景下，如果不对并发进行控制，则会导致数据的损坏无效，一般来说我们都是用锁<code>lock</code>来对其进行控制。在MySQL中的锁有共享锁(<code>shared lock</code>)、排他锁(<code>exclusive lock</code>)，也叫读锁(<code>read lock</code>)和写锁(<code>write lock</code>)</p>
+<h4 id="锁">2. 锁</h4>
+<p>锁这个知识点比较繁杂，下图是对锁的各个概念范围进行分类： <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Lockrecord.png" width="700"></p>
+<h5 id="锁类型兼容性">2.1 锁类型（兼容性）</h5>
+<p>对于读取内容来说一般不会发生什么问题，因为本线程没有对数据进行修改，<strong>但是试想一下你正在对读的使用，另一个人正在对数据进行写入，这时候问题就来了，你读的数据会是确定呢吗?答案肯定是不确定的</strong>，因此对于读操作也要注意。而写操作就更不用说了，每一次的写入都会改变数据，必定加入排斥锁。在MySQL中读锁即为共享锁，写锁即为排斥锁。</p>
+<ul>
+<li><p><strong>共享锁（读锁）</strong>：读锁是共享的，或者说是不阻塞的，多个线程可以在同一时刻可以同时读取同一个资源而互不干扰，但是当有一个线程试图写时，是不被允许的，即读锁不阻塞其他的读操作，但是阻塞写操作。</p></li>
+<li><p><strong>排斥锁（写锁）</strong>：写锁是排他的，一个写锁会阻塞其他的写锁和读锁。</p></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//共享锁</span></span><br><span class="line">SELECT * FROM table_name WHERE ... LOCK IN SHARE MODE</span><br><span class="line"><span class="comment">//排他锁（X)</span></span><br><span class="line">SELECT * FROM table_name WHERE ... FOR UPDATE</span><br></pre></td></tr></table></figure>
+<h5 id="锁的粒度">2.2 锁的粒度</h5>
+<p><strong>为提供共享资源并发性就是让锁的对象更具有选择性，即尽量只锁定需要修改的部分数据，而不是所有的资源，任何时候，在给定资源锁的粒度越小精度越高，则系统的并发程度越高。但是我们不能无限制的只加最小粒度的锁，因为锁也需要消耗资源的，如锁的各种操作、包括获得锁、检查锁是否解除、释放锁都会增加系统开销</strong>，因此对锁选择策略是在锁的开销和数据安全性之间寻找平衡折中。</p>
+<h6 id="表级锁">2.2.1 表级锁</h6>
+<p>表级锁是对整个表加锁的一种操作。MyISAM和InnoDB引擎都支持表级锁，</p>
+<ul>
+<li><strong>优点：</strong>是MySQL中锁定粒度最大的一种锁，实现简单，资源消耗也比较少，加锁快，只对一个表操作不会出现死锁。</li>
+<li><strong>缺点</strong>：其锁定粒度最大，触发锁冲突的概率最高，并发度最低。</li>
+</ul>
+<p>表锁的语法是<code>lock tables … read/write</code>。可以用<code>unlock tables</code>主动释放锁，也可以在客户端断开的时候自动释放。<code>lock tables</code>语法除了会限制别的线程的读写外，也限定了本线程接下来的操作对象 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#为表t1上读锁，t2上写锁</span><br><span class="line">lock tables t1 read,t2 wirte;</span><br><span class="line">#释放锁</span><br><span class="line">unlock tables;</span><br><span class="line"></span><br><span class="line">mysql&gt; lock tables employee read;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; insert into employee <span class="title">values</span><span class="params">(<span class="string">&#x27;crf&#x27;</span>,<span class="string">&#x27;8&#x27;</span>,<span class="number">15000</span>,now(),<span class="number">300</span>)</span></span>;</span><br><span class="line">ERROR <span class="number">1099</span> (HY000): Table <span class="string">&#x27;employee&#x27;</span> was locked with a READ lock <span class="keyword">and</span> can<span class="number">&#x27;</span>t be updated</span><br></pre></td></tr></table></figure></p>
+<h6 id="行级锁">2.2.2 行级锁</h6>
+<p>行级锁是MySQL中锁定粒度最小的一种锁，只针对当前操作的行进行加锁，在MySQL中MyISAM不支持行锁，InnoDB支持。<strong>记住行级锁只能对是有索引字段进行加锁从而锁住改行。</strong></p>
+<ul>
+<li><strong>优点：</strong>行级锁能大大减少数据库操作的冲突，其加锁粒度最小，并发度高，</li>
+<li><strong>缺点：</strong>因为粒度小，因此加锁的开销也最大，加锁慢，会出现死锁。</li>
+</ul>
+<p><strong>InnoDB行锁是通过给索引上的索引项加锁来实现的。所以，只有通过索引条件检索数据，InnoDB才使用行级锁，否则，InnoDB将退化使用的是表锁</strong>。</p>
+<p><strong>其他注意事项：</strong></p>
+<ul>
+<li><p>在不通过索引条件查询的时候，InnoDB使用的是表锁，而不是行锁。</p></li>
+<li><p>如果MySQL的行锁是针对范围索引加的锁，不是针对记录加的锁，所以即使是访问不同行的记录，如果使用了相同的索引键，也是会出现锁冲突的，这是因为间隙锁的原因（接下来会讲）</p></li>
+<li><p>当表有多个索引的时候，不同的事务可以使用不同的索引锁定不同的行，另外，不论是使用主键索引、唯一索引或普通索引，InnoDB都会使用行锁来对数据加锁。</p></li>
+<li><p>即便在条件中使用了索引字段，但具体是否使用索引来检索数据是由MySQL通过判断不同执行计划的代价来决定的，如果MySQL认为全表扫描效率更高，比如对一些很小的表，它就不会使用索引，这种情况下InnoDB将使用表锁，而不是行锁。因此，在分析锁冲突时，别忘了检查SQL的执行计划，以确认是否真正使用了索引。</p></li>
+</ul>
+<p><strong>隐式默认加锁</strong>：</p>
+<ul>
+<li>InnoDB自动加意向锁。</li>
+<li>对于<code>UPDATE</code>、<code>DELETE</code>和<code>INSERT</code>语句，<code>InnoDB</code>会自动给涉及数据集加排他锁<code>（X)</code>；</li>
+<li>对于普通<code>SELECT</code>语句，InnoDB不会加任何锁；</li>
+</ul>
+<p><strong>显示加锁</strong>：</p>
+<ul>
+<li><strong>共享锁（S）</strong>：<code>SELECT * FROM table_name WHERE ... LOCK IN SHARE MODE</code></li>
+<li><strong>排他锁（X)</strong> ：<code>SELECT * FROM table_name WHERE ... FOR UPDATE</code></li>
+</ul>
+<p><strong><em>注意</em></strong>：正如上面所说的，行锁是根据索引上的索引项加锁实现的，即上面的对于的列必须有加索引才能是为行级锁，否则为表级锁，如下开两个客户端连接MySQL,因为不是索引，所以为表锁 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#客户端<span class="number">1</span>：不是索引，粒度为表锁，类型为排他锁</span><br><span class="line">mysql&gt; select id,<span class="function">job_name from employee_job where id <span class="title">in</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span> <span class="keyword">for</span> update</span>;</span><br><span class="line">+----+--------------+</span><br><span class="line">| id | job_name     |</span><br><span class="line">+----+--------------+</span><br><span class="line">| <span class="number">1</span>  | 销售         |</span><br><span class="line">| <span class="number">2</span>  | 产品经理     |</span><br><span class="line">| <span class="number">3</span>  | 技术服务     |</span><br><span class="line">| <span class="number">2</span>  | 老板         |</span><br><span class="line">+----+--------------+</span><br><span class="line"><span class="number">4</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function">#客户端2：</span></span><br><span class="line"><span class="function">mysql&gt; select id,job_name from employee_job where id <span class="title">in</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line">ERROR <span class="number">1100</span> (HY000): Table <span class="string">&#x27;employee_job&#x27;</span> was <span class="keyword">not</span> locked with LOCK TABLES</span><br></pre></td></tr></table></figure></p>
+<h6 id="页级锁">2.2.3 页级锁</h6>
+<p>页级锁的粒度介于行级锁和表级锁中间的一种锁。它比表级锁速度快，比表级锁的冲突多，比行级锁的冲突少，但速度慢。因此页级是一种折中锁，一次锁定相邻的一组记录。BDB 支持页级锁。开销和加锁时间界于表锁和行锁之间，会出现死锁。锁定粒度界于表锁和行锁之间，并发度一般。</p>
+<p><strong><em>注意：行级锁不一定比表级锁要好，锁的粒度越细，代价越高，相比表级锁在表的头部直接加锁，行级锁还要扫描找到对应的行对其上锁，这样的代价其实是比较高的，所以表锁和行锁各有所长。</em></strong></p>
+<h6 id="全局锁">2.2.4 全局锁</h6>
+<p>MySQL提供了一个加全局读锁的方法，命令是<code>Flush tables with read lock</code>,当需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修改表结构等）和更新类事务的提交语句 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#对所有数据库实例加读锁</span><br><span class="line">Flush tables with read lock</span><br><span class="line">#对所有数据库实例加写锁</span><br><span class="line">Flush tables with write lock</span><br></pre></td></tr></table></figure></p>
+<h5 id="死锁">2.3 死锁</h5>
+<p>死锁是指两个或两个以上的线程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，</p>
+<h6 id="引起死锁的原因">2.3.1 引起死锁的原因</h6>
+<ul>
+<li>①竞争不可抢占资源引起死锁（不可抢占是指没有使用完的资源，不能被抢占）</li>
+<li>②竞争可消耗资源引起死锁</li>
+<li>③线程推进顺序不当引起死锁</li>
+</ul>
+<p>情况1：有线程<code>p1</code>，<code>p2</code>，都需要资源<code>A</code>，<code>B</code>，本来可以<code>p1运行A</code> --&gt; <code>p1运行B</code> --&gt; <code>p2运行A</code> --&gt; <code>p2运行B</code>，但是顺序换了，<code>p1</code>运行<code>A</code>时<code>p2</code>运行<code>B</code>，容易发生第一种死锁。互相抢占资源对放持有的资源。</p>
+<p>情况2：有<code>p1，p2，p3</code>三个线程，<code>p1</code>向<code>p2</code>发送消息并接受<code>p3</code>发送的消息，<code>p2</code>向<code>p3</code>发送消息并接受<code>p1</code>的消息，<code>p3</code>向<code>p1</code>发送消息并接受<code>p2</code>的消息，如果设置是先接到消息后发送消息，则所有的消息都不能发送，这就造成死锁。</p>
+<h6 id="产生死锁的必要条件">2.3.2 产生死锁的必要条件</h6>
+<ul>
+<li><p><strong>互斥条件</strong>：某资源只能被一个进程使用，其他进程请求该资源时，只能等待，直到资源使用完毕后释放资源。</p></li>
+<li><p><strong>请求和保持条件</strong>：程序已经保持了至少一个资源，但是又提出了新要求，而这个资源被其他进程占用，自己占用资源却保持不放。</p></li>
+<li><p><strong>不可抢占条件</strong>：进程已获得的资源没有使用完，不能被抢占。</p></li>
+<li><p><strong>循环等待条件</strong>：必然存在一个循环链。</p></li>
+</ul>
+<h6 id="解决死锁的方式">2.3.3 解决死锁的方式</h6>
+<p>在InnoDB的事务管理和锁定机制中，有专门检测死锁的机制，会在系统中产生死锁之后的很短时间内就检测到该死锁的存在</p>
+<ul>
+<li><strong>预防死锁：</strong>在设计时，对锁的使用进行预防，以确保业务不会发生死锁，通过破坏死锁产生的后三个必要条件：即破坏请求持、不可抢占、循环等待条件之一来预防死锁。
+<ul>
+<li><strong>破坏请求和保持条件</strong>：所有线程开始前，必须一次性地申请所需的所有资源，这样运行期间就不会再提出资源要求，破坏了请求条件，即使有一种资源不能满足需求，也不会给它分配正在空闲的资源，这样它就没有资源，就破坏了保持条件，从而预防死锁的发生。</li>
+<li><strong>破坏不可抢占条件</strong>：当一个已经保持了某种不可抢占资源的线程，提出新资源请求不能被满足时，它必须释放已经保持的所有资源，以后需要时再重新申请</li>
+<li><strong>破坏循环等待条件</strong>：对系统中的所有资源类型进行线性排序，然后规定每个进程必须按序列号递增的顺序请求资源。假如进程请求到了一些序列号较高的资源，然后有请求一个序列较低的资源时，必须先释放相同和更高序号的资源后才能申请低序号的资源。多个同类资源必须一起请求。</li>
+</ul></li>
+<li><p><strong>解除死锁：</strong>产生死锁时，能够从死锁中解脱处理，比如一种策略超时退出。在MySQL中这个超时时间可以通过参数<code>innodb_lock_wait_timeout</code>来设置，默认为<code>50s</code>.</p></li>
+<li><p><strong>检查死锁：</strong>在MySQL种有这样的机制，线程发现死锁后，会主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。可将参数<code>innodb_deadlock_detect</code>设置为<code>on</code>，表示开启这个逻辑。但是它有额外负担的。每当一个事务被锁的时候，就要看看它所依赖的线程有没有被别人锁住，如此循环，消耗大。</p></li>
+<li><p><strong>一种特殊情况：</strong>在<code>REPEATABLE-READ</code>隔离级别下，如果两个线程同时对相同条件记录用<code>SELECT…FOR UPDATE</code>加排他锁，在没有符合该条件记录情况下，两个线程都会加锁成功。程序发现记录尚不存在，就试图插入一条新记录，如果两个线程都这么做，就会出现死锁。这种情况下，将隔离级别改成<code>READ COMMITTED</code>，就可避免问题。</p></li>
+</ul>
+<h5 id="三种行级锁模式原理">2.4 三种行级锁模式（原理）</h5>
+<h6 id="记录锁">2.4.1 记录锁</h6>
+<p><strong>记录锁其实很好理解，对表中的记录加锁，叫做记录锁，粒度是行级锁，类型是排他锁</strong>。一般记录锁出现在<code>select、update</code>语句，比如下面这句，它会在<code>id=1</code>的记录上加上记录锁，以阻止其他事务插入，更新，删除和更新<code>id=1</code>这一行。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//id 列必须为主键列或唯一索引列</span></span><br><span class="line">SELECT * FROM test WHERE id=<span class="number">1</span> FOR UPDATE;</span><br><span class="line">UPDATE SET age = <span class="number">50</span> WHERE id = <span class="number">1</span>;</span><br></pre></td></tr></table></figure> <strong>记录锁的条件：</strong></p>
+<ul>
+<li><code>id</code> 列必须为唯一索引列或主键列(主键索引)，否则上述语句加的锁就会变成临键锁(有关临键锁下面会讲)。</li>
+<li>同时查询语句的条件子句必须为精准匹配即为<code>=</code>，不能为<code>&gt;、&lt;、like</code>等，否则也会退化成间隙锁或者临键锁</li>
+</ul>
+<p><strong><em>注意：如果要锁的列没有索引，进行全表记录加锁（行级锁的性质）</em></strong></p>
+<h6 id="间隙锁">2.4.2 间隙锁</h6>
+<p><strong>间隙锁<code>Gap Lock</code>是指在InnoDB存储引擎中锁可以加在不存在的空闲空间的一种锁</strong>。它能在两个索引记录之间，也可能是第一个索引记录之前或最后一个索引之后的空间。<strong>间隙锁是一种行级锁，是 InnoDB在 RR(可重复读) 隔离级别下为了解决幻读问题时引入的锁机制。</strong>使用间隙锁锁住的是一个区间，而不仅仅是这个区间中的每一条数据。</p>
+<p><strong>产生间隙锁的条件：</strong></p>
+<ul>
+<li>使用普通索引锁定，或者使用多列唯一索引，或者使用唯一索引锁定多行记录。</li>
+<li>条件子句不为精确匹配，为范围</li>
+</ul>
+<p><strong>可能光说不好理解，看例子：</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建test表，id为主键索引</span></span><br><span class="line">CREATE TABLE `test` (</span><br><span class="line">  `id` <span class="built_in">int</span>(<span class="number">1</span>) NOT <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="built_in">varchar</span>(<span class="number">8</span>) DEFAULT <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="built_in">KEY</span> (`id`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"><span class="comment">//插入数据</span></span><br><span class="line">INSERT INTO `test` <span class="built_in">VALUES</span> (<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;小罗&#x27;</span>),(<span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;小黄&#x27;</span>),(<span class="string">&#x27;7&#x27;</span>, <span class="string">&#x27;小明&#x27;</span>),(<span class="string">&#x27;11&#x27;</span>, <span class="string">&#x27;小红&#x27;</span>);</span><br></pre></td></tr></table></figure> 上面的插入语句完成后，<code>test</code>表中存在的隐藏间隙如下： <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/gaplock.png" width="600"> 即有范围：<code>(-∞, 1]、(1, 5]、(5, 7]、(7, 11]、(11, +∞]</code>，那么当我使用下面语句的时候就会触发间隙锁 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">BEGIN;</span><br><span class="line">SELECT * FROM `test` WHERE `id` BETWEEN <span class="number">5</span> AND <span class="number">7</span> FOR UPDATE;</span><br><span class="line"><span class="comment">/* 事务2插入一条 id = 3，name = &#x27;小张1&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">3</span>, <span class="string">&#x27;小张1&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务3插入一条 id = 4，name = &#x27;小白&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">4</span>, <span class="string">&#x27;小白&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务4插入一条 id = 6，name = &#x27;小东&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">6</span>, <span class="string">&#x27;小东&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务5插入一条 id = 8， name = &#x27;大罗&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">8</span>, <span class="string">&#x27;大罗&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务6插入一条 id = 9， name = &#x27;大东&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">9</span>, <span class="string">&#x27;大东&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务7插入一条 id = 11， name = &#x27;李西&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">11</span>, <span class="string">&#x27;李西&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务8插入一条 id = 12， name = &#x27;张三&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">12</span>, <span class="string">&#x27;张三&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 提交事务1，释放事务1的锁 */</span></span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure> 从上面我们可以看到，<code>(5, 7]、(7, 11]</code>这两个区间被事务1锁住，在此期间的其他事务的插入操作失败，而其它区间，都可以正常插入数据。所以我们可以得出结论：当我们给 <code>(5, 7]</code>这个区间加锁的时候，会锁住 <code>(5, 7]、(7, 11]</code>这两个区间。</p>
+<p><strong>间隙锁的缺点</strong>:</p>
+<ul>
+<li>间隙锁有一个比较致命的弱点，就是当锁定一个范围键值之后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定键值范围内的任何数据。虽然解决了幻读，但在某些场景下这可能会对性能造成很大的危害</li>
+<li>当Query无法利用索引的时候， Innodb会放弃使用行级别锁定而改用表级别的锁定，造成并发性能的降低；</li>
+</ul>
+<p><strong>间隙锁的作用：</strong> - 解决可重复读隔离级别下的幻读 - 为了数据恢复和复制的需要。</p>
+<p><strong><em>注意：可重复读级别下才会有间隙锁！还有如果对不存的记录操作即使使用<code>=</code>也会产生间隙锁，如<code>select id,name from test where id=3 for update;</code>,id=3是不存在的记录</em></strong></p>
+<h6 id="临键锁next-key-locks">2.4.3 临键锁（Next-Key Locks）</h6>
+<p><strong><code>Next-key locks</code>是记录锁和间隙锁的组合，它指的是加在某条记录以及这条记录前面间隙上的锁。</strong></p>
+<p>也可以理解为一种特殊的间隙锁，因此临建锁肯定也可以解决幻读的问题。 <strong>每个数据行上的非唯一索引列上都会存在一把临键锁，当某个事务持有该数据行的临键锁时，会锁住一段左开右闭区间的数据</strong>。需要强调的一点是，InnoDB 中行级锁是基于索引实现的，<strong>而临键锁只与非唯一索引列有关，在唯一索引列（包括主键索引）上不存在临键锁。</strong>即临键锁是对非唯一索引而言的。</p>
+<p>假设有如下表：InnoDB，RR隔离级别，<code>id</code>主键, <code>age</code>普通索引 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/nextkeylocks.png" width="600"> 则有<code>age</code>范围:<code>(-∞, 10],(10, 24],(24, 32],(32, 45],(45, +∞]</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/事务A执行下述语句</span><br><span class="line">-- 根据非唯一索引列 UPDATE 某条记录 </span><br><span class="line">UPDATE table SET name = Vladimir WHERE age = <span class="number">24</span>; </span><br><span class="line">-- 或根据非唯一索引列 锁住某条记录 </span><br><span class="line">SELECT * FROM table WHERE age = <span class="number">24</span> FOR UPDATE;</span><br><span class="line"><span class="comment">//事务B执行下述语句</span></span><br><span class="line"><span class="function">INSERT INTO table <span class="title">VALUES</span><span class="params">(<span class="number">100</span>, <span class="number">26</span>, <span class="string">&#x27;tianqi&#x27;</span>)</span></span>; </span><br></pre></td></tr></table></figure> 上面因为<code>age=26</code>恰好在<code>(24,32]范围内</code>,age为非唯一索引，使用临检索模式的行级锁，则不管事务A执行那个语句，事务B的插入语句总会阻塞。</p>
+<p><strong>总结：</strong></p>
+<ul>
+<li><strong>InnoDB 中的行锁的实现依赖于索引，一旦某个加锁操作没有使用到索引，那么该锁就会退化为表锁。</strong></li>
+<li><strong>记录锁</strong>存在于包括主键索引在内的唯一索引中，锁定单条索引记录。</li>
+<li><strong>间隙锁</strong>存在于非唯一索引中，锁定开区间范围内的一段间隔，它是基于临键锁实现的。</li>
+<li><strong>临键锁</strong>存在于非唯一索引中，该类型的每条记录的索引上都存在这种锁，它是一种特殊的间隙锁，锁定一段左开右闭的索引区间。</li>
+</ul>
+<h5 id="意向锁">2.5 意向锁</h5>
+<p>意向锁又分为<strong>意向共享锁（IS）</strong>和 <strong>意向排他锁（IX）</strong>。在介绍意向锁的意义之前，必须明白下面四点：</p>
+<ul>
+<li>意向共享锁（IS）和 意向排他锁（IX）都是<strong>表锁</strong>。</li>
+<li><strong>意向锁是一种不与行级锁冲突的表级锁，这一点非常重要。它只会与非意向的表锁冲突</strong></li>
+<li><strong>意向锁与意向锁之间永远是兼容的</strong></li>
+<li>意向锁是<code>InnoDB</code>自动加的， 不需用户干预。当兵对表或对行加排他锁时，就会获得意向排他锁；加共享锁时，会获得意向共享锁。</li>
+<li>意向锁是在<code>InnoDB</code>下存在的内部锁，对于<code>MyISAM</code>而言 没有意向锁之说。</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">兼容性</th>
+<th style="text-align: center;">表IS</th>
+<th style="text-align: center;">表IX</th>
+<th style="text-align: center;">表s</th>
+<th style="text-align: center;">表x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>表IS</strong></td>
+<td style="text-align: center;">兼容</td>
+<td style="text-align: center;">兼容</td>
+<td style="text-align: center;">兼容</td>
+<td style="text-align: center;">不兼容</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>表IX</strong></td>
+<td style="text-align: center;">兼容</td>
+<td style="text-align: center;">兼容</td>
+<td style="text-align: center;">不兼容</td>
+<td style="text-align: center;">不兼容</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>表S</strong></td>
+<td style="text-align: center;">兼容</td>
+<td style="text-align: center;">不兼容</td>
+<td style="text-align: center;">兼容</td>
+<td style="text-align: center;">不兼容</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>表X</strong></td>
+<td style="text-align: center;">不兼容</td>
+<td style="text-align: center;">不兼容</td>
+<td style="text-align: center;">不兼容</td>
+<td style="text-align: center;">不兼容</td>
+</tr>
+</tbody>
+</table>
+<p><strong>意向锁的存在目的是为了让InnoDB中的行锁和表锁能够更高效的共存</strong>。假设有下表，InnoDB，RR隔离级别 <code>id</code>是主键 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/ilock.png" width="500"></p>
+<p>加入现在有事务<code>A</code>，进行了一条<code>SELECT * FROM users WHERE id = 6 FOR UPDATE;</code>但未提交，那么事务<code>A</code>会获得<code>id=6</code>的行级锁，且为记录排他锁，同时还有自动生成一个意向排他锁。</p>
+<p>这时候有个事务<code>B</code>,进行操作<code>LOCK TABLES users READ;</code>会失败，因为对于要表锁来说，必须要保证：</p>
+<ul>
+<li>当前没有其他事务持有<code>users</code>表的排他锁。</li>
+<li>当前没有其他事务持有<code>users</code>表中任意一行的排他锁 。</li>
+</ul>
+<p>但是现在<code>users</code>表的排他锁已经被事务<code>A</code>持有了，事务B的这个想获取表共享锁的操作会失败。</p>
+<p>上面的例子是有意向锁的情况，试想一下没有意向锁和表锁情况会这样：事务B会去检查<code>user</code>表中的每一行查看是否有排他锁，如果有则无法执行，无则会执行。很明显这样的效率极低，但有意向锁后，只需检查意向表锁即可。</p>
+<h4 id="事务">3. 事务</h4>
+<p>事务就是由一批SQL语句组成，可以说它是一个独立的工作单元。<strong>事务处理可以用来维护数据的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行，事务处理是一种机制，利用事务处理可以保证成批的MySQL操作不会只执行一部分，如果全部执行那没问题，如果在执行过程中发生错误，它就会进行回退以恢复到数据库以前安全版本</strong>。MySQL中InnoDB支持事务，MyISAM不支持。</p>
+<h5 id="事务的acid">3.1 事务的ACID</h5>
+<p>一个运行良好的事务处理系统，必须具备四大特性：原子性(<code>atomicity</code>)、一致性(<code>consistency</code>)、隔离性(<code>isolation</code>)和持久性(<code>durability</code>)。实现了ACID的数据库相比于未实现的数据库，其通常需要更强的CPU处理能力，更大的内存和磁盘空间。因此要酌情堪虑是否选用事务型存储引擎。</p>
+<ul>
+<li><strong>原子性</strong>：一个事务必须被视为一个不可分割的最小工作单元，整个事务中的操作要么全部提交成功，要么全部失败回滚。</li>
+<li><strong>一致性</strong>：数据库总是从一个一致性状态转移达到另一个一致性状态，一致性状态就是由事务原子性保障，一个事务提交了，那是ok的，一个事务未提交，那也是OK的。</li>
+<li><strong>隔离性</strong>：通常来说，一个事务所做的修改在未提交以前，对其他事务是不可见的。事务间是互不干扰的。</li>
+<li><strong>持久性</strong>：一旦事务提交了，其所做的修改会永久保存到数据库总中，即使系统崩溃，修改的数据也不会丢失，（持久性不能做到100%保证策略，如果数据库本身就能做到吃性，那么要备份又有什么用呢）</li>
+</ul>
+<h5 id="隔离级别">3.2 隔离级别</h5>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/30/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-2/" rel="prev" title="Linux操作系统_2">
+      <i class="fa fa-chevron-left"></i> Linux操作系统_2
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql%E7%9A%84%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">1. MySQL的架构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 逻辑架构</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86%E4%B8%8E%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 连接管理与安全性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E4%B8%8E%E6%89%A7%E8%A1%8C"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 优化与执行</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 并发控制</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">2. 锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%81%E7%B1%BB%E5%9E%8B%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 锁类型（兼容性）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E7%B2%92%E5%BA%A6"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 锁的粒度</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A1%A8%E7%BA%A7%E9%94%81"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 表级锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A1%8C%E7%BA%A7%E9%94%81"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 行级锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A1%B5%E7%BA%A7%E9%94%81"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 页级锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E9%94%81"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 全局锁</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%BB%E9%94%81"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%BC%95%E8%B5%B7%E6%AD%BB%E9%94%81%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 引起死锁的原因</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 产生死锁的必要条件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%AD%BB%E9%94%81%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 解决死锁的方式</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E8%A1%8C%E7%BA%A7%E9%94%81%E6%A8%A1%E5%BC%8F%E5%8E%9F%E7%90%86"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 三种行级锁模式（原理）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E9%94%81"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1 记录锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%97%B4%E9%9A%99%E9%94%81"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2 间隙锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%B4%E9%94%AE%E9%94%81next-key-locks"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3 临键锁（Next-Key Locks）</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%84%8F%E5%90%91%E9%94%81"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 意向锁</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">3.</span> <span class="nav-text">3. 事务</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84acid"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 事务的ACID</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 隔离级别</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">401k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:04</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
