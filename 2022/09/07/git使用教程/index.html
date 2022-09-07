@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. Git是什么 Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。Git原来是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。 1.1 Git 与 SVN 区别 Git 不仅仅是个版本控制系统，它也是个内容管理系统(CMS)，工作管理系统等。如果你是一个具有使用 SVN 背景的人，你需要做一定的思想转换，来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git使用教程">
+<meta property="og:url" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1. Git是什么 Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。Git原来是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。 1.1 Git 与 SVN 区别 Git 不仅仅是个版本控制系统，它也是个内容管理系统(CMS)，工作管理系统等。如果你是一个具有使用 SVN 背景的人，你需要做一定的思想转换，来">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png">
+<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-process.png">
+<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Three.png">
+<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-command.png">
+<meta property="article:published_time" content="2022-09-07T02:10:47.000Z">
+<meta property="article:modified_time" content="2022-09-07T07:21:59.798Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png">
+
+<link rel="canonical" href="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>git使用教程 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git使用教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-07 10:10:47 / 修改时间：15:21:59" itemprop="dateCreated datePublished" datetime="2022-09-07T10:10:47+08:00">2022-09-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="git是什么">1. Git是什么</h4>
+<p>Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。Git原来是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。</p>
+<h5 id="git-与-svn-区别">1.1 Git 与 SVN 区别</h5>
+<p>Git 不仅仅是个版本控制系统，它也是个内容管理系统(CMS)，工作管理系统等。如果你是一个具有使用 SVN 背景的人，你需要做一定的思想转换，来适应 Git 提供的一些概念和特征。</p>
+<p><code>Git</code>与<code>SVN</code>区别点：</p>
+<ul>
+<li><p>1、<code>Git</code>是分布式的，<code>SVN</code>不是：这是<code>Git</code>和其它非分布式的版本控制系统，</p></li>
+<li><p>2、<code>Git</code>把内容按元数据方式存储，而<code>SVN</code>是按文件：所有的资源控制系统都是把文件的元信息隐藏在一个类似 <code>.svn、.cvs</code>等的文件夹里。</p></li>
+<li><p>3、<code>Git</code>分支和<code>SVN</code>的分支不同：分支在 <code>SVN</code>中一点都不特别，其实它就是版本库中的另外一个目录。</p></li>
+<li><p>4、<code>Git</code>没有一个全局的版本号，而<code>SVN</code>有：目前为止这是跟<code>SVN</code>相比<code>Git</code>缺少的最大的一个特征。</p></li>
+<li><p>5、<code>Git</code>的内容完整性要优于<code>SVN</code>：<code>Git</code>的内容存储使用的是<code>SHA-1</code>哈希算法。这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png" width="500"></p></li>
+</ul>
+<h4 id="git安装">2. Git安装</h4>
+<h5 id="linux下的git">2.1 Linux下的Git</h5>
+<p>Git 的工作需要调用<code>curl，zlib，openssl，expat，libiconv</code>等库的代码，所以需要先安装这些依赖工具。 在有<code>yum</code>的系统上centOS或者有<code>apt-get</code>的系统上（比如 Debian 体系），可以用下面的命令安装：</p>
+<h6 id="ubuntu安装">2.1.1 ubuntu安装</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install libcurl4-gnutls-dev libexpat1-dev gettext \</span><br><span class="line">  libz-dev libssl-dev</span><br><span class="line"></span><br><span class="line">$ apt-get install git</span><br><span class="line"></span><br><span class="line">$ git --version</span><br><span class="line">git version <span class="number">1.8</span><span class="number">.1</span><span class="number">.2</span></span><br></pre></td></tr></table></figure>
+<h6 id="centos安装">2.1.2 centOS安装</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ yum install curl-devel expat-devel gettext-devel \</span><br><span class="line">  openssl-devel zlib-devel</span><br><span class="line"></span><br><span class="line">$ yum -y install git-core</span><br><span class="line"></span><br><span class="line">$ git --version</span><br><span class="line">git version <span class="number">1.7</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+<h5 id="windows下的git">2.2 windows下的Git</h5>
+<p>在 Windows平台上安装 Git同样轻松,找到<a target="_blank" rel="noopener" href="https://gitforwindows.org/">官网下载链接</a>，点击下一步直接安装即可。</p>
+<h5 id="git配置">2.3 Git配置</h5>
+<p>Git 提供了一个叫做<code>git config</code>的工具，专门用来配置或读取相应的工作环境变量。这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。这些变量可以存放在以下三个不同的地方：</p>
+<ul>
+<li><code>/etc/gitconfig</code>文件：系统中对所有用户都普遍适用的配置。若使用<code>git config</code>时用 <code>--system</code>选项，读写的就是这个文件。</li>
+<li><code>~/.gitconfig</code>文件：用户目录下的配置文件只适用于该用户。若使用<code>git config</code>时用 <code>--global</code>选项，读写的就是这个文件。</li>
+<li>当前项目的<code>Git</code>目录中的配置文件（也就是工作目录中的 <code>.git/config</code> 文件）：这里的配置仅仅针对当前项目有效。每一个级别的配置都会覆盖上层的相同配置，所以 <code>.git/config</code>里的配置会覆盖 <code>/etc/gitconfig</code>中的同名变量。</li>
+</ul>
+<p>在 Windows 系统上，Git 会找寻用户主目录下的 <code>.gitconfig</code>文件。主目录即 $HOME 变量指定的目录，一般都是 <code>C:\Documents and Settings\$USER。</code></p>
+<p>此外，Git 还会尝试找寻 <code>/etc/gitconfig</code>文件，只不过看当初 Git 装在什么目录，就以此作为根目录来定位。</p>
+<h6 id="用户信息">2.3.1 用户信息</h6>
+<p>为了方便后续Git能跟踪到谁做了修改，我们需要设置对应的用户名与邮箱地址。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;wuwenjie&quot;</span></span><br><span class="line">$ git config --global user.email <span class="number">1229413537</span>@qq.com</span><br><span class="line"></span><br><span class="line">$ git config --list</span><br><span class="line">diff.astextplain.textconv=astextplain</span><br><span class="line">filter.lfs.clean=git-lfs clean -- %f</span><br><span class="line">filter.lfs.smudge=git-lfs smudge -- %f</span><br><span class="line">filter.lfs.process=git-lfs filter-process</span><br><span class="line">filter.lfs.required=<span class="literal">true</span></span><br><span class="line">http.sslbackend=openssl</span><br><span class="line">http.sslcainfo=D:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt</span><br><span class="line">core.autocrlf=<span class="literal">true</span></span><br><span class="line">core.fscache=<span class="literal">true</span></span><br><span class="line">core.symlinks=<span class="literal">false</span></span><br><span class="line">pull.rebase=<span class="literal">false</span></span><br><span class="line">credential.helper=manager-core</span><br><span class="line">credential.https:<span class="comment">//dev.azure.com.usehttppath=true</span></span><br><span class="line">init.defaultbranch=master</span><br><span class="line">user.email=<span class="number">1229413537</span>@qq.com</span><br><span class="line">user.name=wuwenjie</span><br></pre></td></tr></table></figure></p>
+<h4 id="git工作流程">3. git工作流程</h4>
+<p>git一般工作流程如下：</p>
+<ul>
+<li>克隆 Git 资源作为工作目录。</li>
+<li>在克隆的资源上添加或修改文件。</li>
+<li>如果其他人修改了，你可以更新资源。</li>
+<li>在提交前查看修改。</li>
+<li>提交修改。</li>
+<li>在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-process.png" width="500"></li>
+</ul>
+<h4 id="git三个区和三个状态">4. git三个区和三个状态</h4>
+<p>我们先来理解下 Git 工作区、暂存区和版本库概念：</p>
+<ul>
+<li><strong>工作区</strong>：就是你在电脑里能看到的目录。</li>
+<li><strong>暂存区</strong>：英文叫<code>stage</code>或<code>index</code>。一般存放在<code>.git</code>目录下的<code>index</code>文件（<code>.git/index</code>）中，所以我们把暂存区有时也叫作索引（index）。</li>
+<li><p><strong>版本库</strong>：工作区有一个隐藏目录 <code>.git</code>，这个不算工作区，而是 <code>Git</code> 的版本库。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Three.png" width="500"></p></li>
+<li>图中左侧为工作区，右侧为版本库。在版本库中标记为 <code>index</code>的区域是暂存区<code>stage/index</code>，标记为 <code>master</code>的是<code>master</code>分支所代表的目录树。</li>
+<li>图中我们可以看出此时<code>HEAD</code>实际是指向<code>master</code>分支的一个<code>游标</code>。所以图示的命令中出现<code>HEAD</code>的地方可以用<code>master</code>来替换。</li>
+<li>图中的<code>objects</code>标识的区域为<code>Git</code>的对象库，实际位于<code>.git/objects</code>目录下，里面包含了创建的各种对象及内容。</li>
+<li>当对工作区修改（或新增）的文件执行<code>git add</code>命令时，暂存区的目录树被更新，同时工作区修改（或新增）的文件内容被写入到对象库中的一个新的对象中，而该对象的ID被记录在暂存区的文件索引中。</li>
+<li>当执行提交操作<code>git commit</code>时，暂存区的目录树写到版本库（对象库）中，master 分支会做相应的更新。即 <code>master</code>指向的目录树就是提交时暂存区的目录树。</li>
+<li>当执行<code>git reset HEAD</code>命令时，暂存区的目录树会被重写，被 <code>master</code>分支指向的目录树所替换，但是工作区不受影响。</li>
+<li>当执行 <code>git rm --cached &lt;file&gt;</code>命令时，会直接从暂存区删除文件，工作区则不做出改变。</li>
+<li>当执行 <code>git checkout</code> . 或者 <code>git checkout -- &lt;file&gt;</code>命令时，会用暂存区全部或指定的文件替换工作区的文件。这个操作很危险，会清除工作区中未添加到暂存区中的改动。</li>
+<li><p>当执行 <code>git checkout HEAD</code> . 或者 <code>git checkout HEAD &lt;file&gt;</code>命令时，会用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件。这个命令也是极具危险性的，因为不但会清除工作区中未提交的改动，也会清除暂存区中未提交的改动。</p></li>
+</ul>
+<h4 id="git创建仓库">5. Git创建仓库</h4>
+<p>可以使用一个已经存在的目录作为<code>Git</code>仓库。<code>Git</code>使用<code>git init</code>命令来初始化一个<code>Git</code>仓库，<code>Git</code>的很多命令都需要在<code>Git</code>的仓库中运行，所以<code>git init</code>是使用<code>Git</code>的第一个命令。</p>
+<p>在执行完成<code>git init</code>命令后，<code>Git</code> 仓库会生成一个<code>.git</code>目录，该目录包含了资源的所有元数据，其他的项目目录保持不变</p>
+<ul>
+<li><p><strong>当前目录即为仓库</strong>：使用当前目录作为 Git 仓库，我们只需使它初始化。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure> 该命令执行完后会在当前目录生成一个 .git 目录。</p></li>
+<li><p><strong>使用我们指定目录作为Git仓库。</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init newrepo</span><br></pre></td></tr></table></figure> 初始化后，会在<code>newrepo</code>目录下会出现一个名为 <code>.git</code>的目录，所有<code>Git</code>需要的数据和资源都存放在这个目录中。</p></li>
+</ul>
+<p>如果当前目录下有几个文件想要纳入版本控制，需要先用<code>git add</code>命令告诉<code>Git</code>开始对这些文件进行跟踪，然后提交： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以下命令将目录下以 .c 结尾及 README 文件提交到仓库中。</span></span><br><span class="line">$ git add *.c</span><br><span class="line">$ git add README</span><br><span class="line">$ git commit -m <span class="string">&#x27;初始化项目版本&#x27;</span></span><br></pre></td></tr></table></figure> &gt; 注： 在 Linux 系统中，commit 信息使用单引号 <code>'</code>，Windows 系统，commit 信息使用双引号<code>&quot;</code>。 &gt;所以在 git bash 中<code>git commit -m '提交说明'</code>这样是可以的，在 Windows 命令行中就要使用双引号 &gt;<code>git commit -m &quot;提交说明&quot;</code>。</p>
+<h4 id="git的基本操作">6. Git的基本操作</h4>
+<p>Git 的工作就是创建和保存你项目的快照及与之后的快照进行对比。Git 常用的是以下 6 个命令：<code>git clone、git push、git add 、git commit、git checkout、git pull</code>，后面我们会详细介绍。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-command.png" width="500"></p>
+<ul>
+<li><code>workspace</code>：工作区</li>
+<li><code>staging area</code>：暂存区/缓存区</li>
+<li><code>local repository</code>：版本库或本地仓库</li>
+<li><code>remote repository</code>：远程仓库</li>
+</ul>
+<h5 id="git-clone">6.1 git clone</h5>
+<p>我们使用<code>git clone</code>从现有<code>Git</code>仓库中拷贝项目（类似<code>svn checkout</code>）.克隆仓库的命令格式为：<code>git clone &lt;repo&gt;</code>。</p>
+<p>要克隆<code>Ruby</code>语言的<code>Git</code>代码仓库<code>Grit</code>，可以用下面的命令： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git:<span class="comment">//github.com/schacon/grit.git</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="提交与修改">6.2 提交与修改</h5>
+<p>下表列出了有关创建与提交你的项目的快照的命令：</p>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git add</code></td>
+<td>添加文件到暂存区</td>
+</tr>
+<tr class="even">
+<td><code>git status</code></td>
+<td>查看仓库当前的状态，显示有变更的文件。</td>
+</tr>
+<tr class="odd">
+<td><code>git diff</code></td>
+<td>比较文件的不同，即暂存区和工作区的差异。</td>
+</tr>
+<tr class="even">
+<td><code>git commit</code></td>
+<td>提交暂存区到本地仓库。</td>
+</tr>
+<tr class="odd">
+<td><code>git reset</code></td>
+<td>回退版本。</td>
+</tr>
+<tr class="even">
+<td><code>git rm</code></td>
+<td>将文件从暂存区和工作区中删除。</td>
+</tr>
+<tr class="odd">
+<td><code>git mv</code></td>
+<td>移动或重命名工作区文件。</td>
+</tr>
+</tbody>
+</table>
+<h5 id="提交日志">6.3 提交日志</h5>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git log</code></td>
+<td>查看历史提交记录</td>
+</tr>
+<tr class="even">
+<td><code>git blame &lt;file&gt;</code></td>
+<td>以列表形式查看指定文件的历史修改记录</td>
+</tr>
+</tbody>
+</table>
+<h5 id="远程操作">6.4 远程操作</h5>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>git remote</code></td>
+<td>远程仓库操作</td>
+</tr>
+<tr class="even">
+<td><code>git fetch</code></td>
+<td>从远程获取代码库</td>
+</tr>
+<tr class="odd">
+<td><code>git pull</code></td>
+<td>下载远程代码并合并</td>
+</tr>
+<tr class="even">
+<td><code>git push</code></td>
+<td>上传远程代码并合并</td>
+</tr>
+</tbody>
+</table>
+<h4 id="git的分支管理">7. Git的分支管理</h4>
+<p>几乎每一种版本控制系统都以某种形式支持分支，一个分支代表一条独立的开发线。使用分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。<code>Git</code>分支实际上是指向更改快照的指针。有人把<code>Git</code>的分支模型称为必杀技特性，而正是因为它，将<code>Git</code>从版本控制系统家族里区分出来。</p>
+<h5 id="git-branch创建分支">7.1 git branch创建分支</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">git <span class="title">branch</span> <span class="params">(branchname)</span></span></span><br></pre></td></tr></table></figure>
+<p>没有参数时，<code>git branch</code>会列出你在本地的分支。当你执行<code>git init</code>的时候，默认情况下<code>Git</code>就会为你创建<code>master</code>主分支。如果我们要手动创建一个分支。执行<code>git branch (branchname)</code>即可。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git branch testing</span><br><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  testing</span><br></pre></td></tr></table></figure></p>
+<h5 id="git-checkout切换分支">7.2 git checkout切换分支</h5>
+<p>用<code>git checkout (branch)</code>切换到我们要修改的分支 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">README</span><br><span class="line">$ echo <span class="string">&#x27;runoob.com&#x27;</span> &gt; test.txt</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">&#x27;add test.txt&#x27;</span></span><br><span class="line">[master <span class="number">3e92</span>c19] add test.txt</span><br><span class="line"> <span class="number">1</span> file changed, <span class="number">1</span> <span class="built_in">insertion</span>(+)</span><br><span class="line"> create mode <span class="number">100644</span> test.txt</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br><span class="line">$ git checkout testing</span><br><span class="line">Switched to branch <span class="string">&#x27;testing&#x27;</span></span><br><span class="line">$ ls</span><br><span class="line">README</span><br><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br></pre></td></tr></table></figure> 当我们切换到<code>testing</code>分支的时候，我们添加的新文件 <code>test.txt</code>被移除了。切换回<code>master</code>分支的时候，它们又重新出现了。</p>
+<p>我们也可以使用<code>git checkout -b (branchname)</code> 命令来创建新分支并立即切换到该分支下，从而在该分支中操作。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b newtest</span><br><span class="line">Switched to a <span class="keyword">new</span> branch <span class="string">&#x27;newtest&#x27;</span></span><br><span class="line">$ git rm test.txt </span><br><span class="line">rm <span class="string">&#x27;test.txt&#x27;</span></span><br><span class="line">$ ls</span><br><span class="line">README</span><br><span class="line">$ touch runoob.php</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -am <span class="string">&#x27;removed test.txt、add runoob.php&#x27;</span></span><br><span class="line">[newtest c1501a2] removed test.txt、add runoob.php</span><br><span class="line"> <span class="number">2</span> files changed, <span class="number">1</span> <span class="built_in">deletion</span>(-)</span><br><span class="line"> create mode <span class="number">100644</span> runoob.php</span><br><span class="line"> <span class="keyword">delete</span> mode <span class="number">100644</span> test.txt</span><br><span class="line">$ ls</span><br><span class="line">README        runoob.php</span><br><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br></pre></td></tr></table></figure>
+<p>如你所见，我们创建了一个分支，在该分支上移除了一些文件<code>test.txt</code>，并添加了<code>runoob.php</code>文件，然后切换回我们的主分支，删除的<code>test.txt</code>文件又回来了，且新增加的<code>runoob.php</code>不存在主分支中。</p>
+<p>这样就将工作切分开来，从而让我们能够在不同开发环境中做事，并来回切换。</p>
+<h5 id="合并分支">7.4 合并分支</h5>
+<p>一旦某分支有了独立内容，你终究会希望将它合并回到你的主分支。 你可以使用以下命令将任何分支合并到当前分支中去：<code>git merge</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  newtest</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br><span class="line">$ git merge newtest</span><br><span class="line">Updating <span class="number">3e92</span>c19..c1501a2</span><br><span class="line">Fast-forward</span><br><span class="line"> runoob.php | <span class="number">0</span></span><br><span class="line"> test.txt   | <span class="number">1</span> -</span><br><span class="line"> <span class="number">2</span> files changed, <span class="number">1</span> <span class="built_in">deletion</span>(-)</span><br><span class="line"> create mode <span class="number">100644</span> runoob.php</span><br><span class="line"> <span class="keyword">delete</span> mode <span class="number">100644</span> test.txt</span><br><span class="line">$ ls</span><br><span class="line">README        runoob.php</span><br></pre></td></tr></table></figure> 以上实例中我们将<code>newtest</code>分支合并到主分支去，那么<code>test.txt</code>文件被删除,<code>runoob.php</code>被添加到主分支</p>
+<h5 id="删除分支">7.5 删除分支</h5>
+<p>删除分支只需加个<code>-d</code>即可：<code>git branch -d (branchname)</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  testing</span><br><span class="line">$ git branch -<span class="function">d testing</span></span><br><span class="line"><span class="function">Deleted branch <span class="title">testing</span> <span class="params">(was <span class="number">85f</span>c7e7)</span>.</span></span><br><span class="line"><span class="function">$ git branch</span></span><br><span class="line"><span class="function">* master</span></span><br></pre></td></tr></table></figure></p>
+<p>文章来源：<a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-workflow.html">菜鸟教程</a></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/07/VScode%E6%95%99%E7%A8%8B/" rel="prev" title="VScode教程">
+      <i class="fa fa-chevron-left"></i> VScode教程
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">1. Git是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#git-%E4%B8%8E-svn-%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Git 与 SVN 区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">2. Git安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#linux%E4%B8%8B%E7%9A%84git"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Linux下的Git</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#ubuntu%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 ubuntu安装</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#centos%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 centOS安装</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#windows%E4%B8%8B%E7%9A%84git"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 windows下的Git</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#git%E9%85%8D%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Git配置</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 用户信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">3. git工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E4%B8%89%E4%B8%AA%E5%8C%BA%E5%92%8C%E4%B8%89%E4%B8%AA%E7%8A%B6%E6%80%81"><span class="nav-number">4.</span> <span class="nav-text">4. git三个区和三个状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">5. Git创建仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">6. Git的基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#git-clone"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 git clone</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E4%B8%8E%E4%BF%AE%E6%94%B9"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 提交与修改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E6%97%A5%E5%BF%97"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 提交日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9C"><span class="nav-number">6.4.</span> <span class="nav-text">6.4 远程操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git%E7%9A%84%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">7. Git的分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#git-branch%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 git branch创建分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#git-checkout%E5%88%87%E6%8D%A2%E5%88%86%E6%94%AF"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 git checkout切换分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF"><span class="nav-number">7.3.</span> <span class="nav-text">7.4 合并分支</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="nav-number">7.4.</span> <span class="nav-text">7.5 删除分支</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">432k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">6:33</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

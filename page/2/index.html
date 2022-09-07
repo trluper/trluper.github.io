@@ -192,6 +192,1793 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/18/Makefile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/18/Makefile/" class="post-title-link" itemprop="url">Makefile</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-18 12:06:19" itemprop="dateCreated datePublished" datetime="2022-07-18T12:06:19+08:00">2022-07-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-23 13:20:49" itemprop="dateModified" datetime="2022-07-23T13:20:49+08:00">2022-07-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Makefile/" itemprop="url" rel="index"><span itemprop="name">Makefile</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="make">1. make</h4>
+<h5 id="make是什么">1.1 make是什么</h5>
+<p>make是一个命令，是管理文件的自动编译管理器，这里的自动是指能根据文件时间戳自动发现更新过的文件而减少编译的工作量，同时通过读取makefile的文件的内容来进行预期的编译工作，make将只编译有改动的文件，而不用完全编译。</p>
+<h5 id="工作原理">1.2工作原理</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">app:main.o hello.o</span><br><span class="line">        gcc -o app main.o hello.o</span><br><span class="line">main.o:main.c hello.h</span><br><span class="line">        gcc -c main.c</span><br><span class="line">hello.o:hello.c hello.h</span><br><span class="line">        gcc -c hello.c</span><br><span class="line">clean:</span><br><span class="line">        rm app main.o hello.o</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>make</code>在当前目录寻找<code>Makefile</code>或<code>makefile</code>文件。</li>
+<li>如果找到，它会找文件中的第一个目标文件<code>target</code>，如上例它找到<code>app</code>这个目标文件，把这个文件作为最终的目标文件。如果<code>app</code>文件不存在,或是<code>app</code>所依赖的后面的<code>.o</code>文件的文件修改时间要比<code>app</code>这个文件新，那么<code>make</code>命令就会执行后面所定义的命令来生成<code>app</code>这个文件。</li>
+<li><strong>如果<code>app</code>所依赖的<code>.o</code>文件也不存在，那么<code>make</code>命令会在当前文件中寻找目标为<code>.o</code>文件的依赖关系。如果找到，则再根据那一个规则生成<code>.o</code>文件，根据<code>.o</code>文件依赖的<code>.c</code>文件和<code>.h</code>文件，执行规则生成<code>.o</code>文件。</strong></li>
+<li><strong>然后make再用<code>.o</code>文件生成执行文件<code>app</code></strong></li>
+</ul>
+<p><strong>总而远之，<code>make</code>会依据依赖关系一层一层地去找文件的依赖关系,直到最终编译出第一个目标文件</strong>。在找寻的过程中,如果出现错误,如最后被依赖的文件找不到,那么 make 就会直接退出并报错。</p>
+<p>但是像<code>clean</code>这种没有被第一个目标文件直接或间接关联,那么它后面所定义的命令将不会被自动执行。不过，可以显式指定<code>make</code>执行<code>clean</code>，即<code>make　clean</code>。<strong>同时只要修改了与第一个目标文件存在直接或间接依赖关系的文件，都会发生重新编译和重新链接</strong></p>
+<h5 id="make命令">1.3 make命令</h5>
+<p>make是一个命令工具，它解释Makefile 中的指令（应该说是规则） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make [ -f file ][ options ][ targets ]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p><code>-f file</code>:<code>make</code>默认在工作目录中寻找名为<code>GNUmakefile、makefile、Makefile</code>的文件作为<code>makefile</code>输入文件,但有时可能命名不是这些,则<code>-f</code>可以指定以上名字以外的文件作为makefile输入文件</p></li>
+<li><code>options</code>
+<ul>
+<li><code>v：</code>显示make工具的版本信息</li>
+<li><code>w：</code>在处理<code>makefile</code>之前和之后显示工作路径</li>
+<li><code>C dir：</code>读取<code>makefile</code>之前改变工作路径至dir目录</li>
+<li><code>n：</code>只打印要执行的命令但不执行</li>
+<li><code>s：</code>执行但不显示执行的命令</li>
+</ul></li>
+<li><p><code>targets</code>:使用<code>make</code>命令时没有指定目标，则<code>make</code>工具默认会实现<code>makefile</code>文件内的第一个目标，如果指定了<code>make</code>工具要实现的目标则该目标为最终目标（目标可以是一个或多个）</p></li>
+</ul>
+<h4 id="makefile">2. Makefile</h4>
+<p><code>Makefile</code>是一个脚本文件，其内部编写一些符和<code>make</code>工具解析的语法规则来进行执行一些命令。</p>
+<h5 id="makefile是什么">2.1 Makefile是什么</h5>
+<p><code>makefile</code>定义了一系列的规则来指定，<strong>哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译</strong>，甚至于进行更复杂的功能操作，因为<code>makefile</code>就像一个<code>Shell</code>脚本一样，其中也可以执行操作系统的命令。<code>Makefile</code>带来的好处就是——“自动化编译”，一旦写好，只需要一个make命令，整个工程完全自动编译，极大的提高了软件开发的效率。<code>makefile</code>文件由<code>make</code>命令工具来执行。</p>
+<p><strong>make主要解决两个问题：</strong></p>
+<ul>
+<li><strong>1) 大量代码的关系维护</strong>:大项目中源代码比较多，手工维护、编译时间长而且编译命令复杂，难以记忆及维护,把代码维护命令及编译命令写在<code>makefile</code>文件中，然后再用<code>make</code>工具解析此文件自动执行相应命令，可实现代码的合理编译</li>
+<li><strong>2) 减少重复编译时间</strong>，在改动其中一个文件的时候，能判断哪些文件被修改过，可以只对该文件进行重新编译，然后重新链接所有的目标文件，节省编译时间。</li>
+</ul>
+<p><code>Makefile</code>文件命名规则<code>makefile</code>和<code>Makefile</code>都可以，推荐使用<code>Makefile</code>,即<code>vim Makefile</code>。学号<code>Makefile</code>只需要学习他的<strong>一条规则，三个变量，两个函数</strong>就能上手了。</p>
+<h5 id="一条规则">2.2 一条规则</h5>
+<p><strong>一条规则</strong>即指完成单此任务所包含的要素，Makefile的一条规则三要素如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一条规则</span></span><br><span class="line">target... : prerequisites ...</span><br><span class="line">     command</span><br><span class="line">     ......</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>target</code>:<strong>通常是要产生的文件名称，目标可以是可执行文件或其它obj文件，也可是一个标签</strong></li>
+<li><code>prerequisites</code>：依赖文件，用来输入从而产生目标的文件，一个目标通常有几个依赖文件（也可以没有）。<code>prerequisites</code>中如果有一个以上的文件比<code>target</code>文件要新的话，<code>command</code>所定义的命令就会被执行。</li>
+<li><code>command</code>：make执行的动作，一个规则可以含几个命令（可以没有）。有多个命令时，每个命令占一行。</li>
+</ul>
+<p><code>make</code>工具从上往下找寻<code>target</code>，<strong>根据<code>target</code>后对应的依赖关系，先去查找依赖项的文件,为索所有的目标文件创建依赖关系链</strong>。若依赖项不存在，则会报错： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make div.o</span><br><span class="line">make: *** No rule to make target <span class="string">&#x27;div.cpp&#x27;</span>, needed by <span class="string">&#x27;div.o&#x27;</span>.  Stop.</span><br></pre></td></tr></table></figure> 若存在，在检查依赖关系时，同时会检查目标与源文件的时间戳，当源文件时间戳更新时，make会更新依赖它的链路上所有文件，即调用command部分。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Makefile件</span></span><br><span class="line">sum.o:sum.cpp</span><br><span class="line">        g++ -c  sum.cpp -o sum.o</span><br><span class="line">main.o:main.cpp</span><br><span class="line">        g++ -c main.cpp -o main.o</span><br><span class="line">main:main.o sum.o</span><br><span class="line">        g++ main.o sum.o -o main</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用make</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make sum.o main.o main</span><br><span class="line">make: <span class="string">&#x27;sum.o&#x27;</span> is up to date.</span><br><span class="line">g++ -c main.cpp -o main.o</span><br><span class="line">g++ main.o sum.o -o main</span><br></pre></td></tr></table></figure></p>
+<h5 id="变量">2.3 变量</h5>
+<p>在<code>Makefile</code>中使用变量有点类似于C语言中的宏定义，使用该变量相当于内容替换，使用变量可以使<code>Makefile</code>易于维护,修改内容变得简单变量定义及使用。<strong>在<code>Makefile</code>中由自定义变量和自动变量</strong>。</p>
+<h6 id="等号">2.3.1 等号</h6>
+<p>在学习变量前需要熟悉Makefile中的等号，等号有4种<code>=，:=，?=，+=</code>。</p>
+<ul>
+<li><code>?=</code>表示，如果左边的变量没有被赋值，那么将等号右边的值赋给左边的变量。如果赋过值，则保持原来的值不变。</li>
+<li><code>+=</code>表示将等号右边的值追加到左边变量中，但是中间会有一个空格。</li>
+<li><code>=</code>与<code>:=</code>是比较不好区分的两个等号，可以将”=“理解为&quot;址传递&quot;或引用，”:=“理解为&quot;值传递”。</li>
+</ul>
+<p>在<code>Makefile</code>中是不允许将变量自己的值赋给自己的，也不允许出现循环引用。</p>
+<h6 id="变量名的规则">2.3.2 变量名的规则</h6>
+<p><strong><code>makefile</code>的变量名的起名规则：</strong></p>
+<ul>
+<li><code>makefile</code>变量名可以以数字开头</li>
+<li>变量是大小写敏感的</li>
+<li>变量一般都在<code>makefile</code>的头部定义</li>
+<li>变量几乎可在<code>makefile</code>的任何地方使用</li>
+</ul>
+<h6 id="自定义变量">2.3.3 自定义变量</h6>
+<ul>
+<li>1）定义变量方法：<code>变量名=变量值</code>,<code>变量名？=变量值</code>,<code>变量名+=变量值</code>,<code>变量名:=变量值</code></li>
+<li><ol start="2" type="1">
+<li>使用变量名：<code>$(变量名)</code>或<code>$&#123;变量名&#125;</code></li>
+</ol></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">objs=add.o sum.o div.o mul.o</span><br><span class="line">target=main</span><br><span class="line">$(target):$(bgjs)</span><br><span class="line">		gcc &amp;(objs) -o $(target)</span><br></pre></td></tr></table></figure>
+<h6 id="三个重要自动变量">2.3.4 三个重要自动变量</h6>
+<p><code>Makefile</code>的自动变量有以下几个:</p>
+<p><img src="/2022/07/18/Makefile/auto.png" width="700"></p>
+<p><strong>其中重要常用的三个是：</strong></p>
+<ul>
+<li><code>$@:</code> 表示规则中的目标</li>
+<li><code>$&lt;:</code>表示规则中依赖性的第一个</li>
+<li><code>$^:</code> 表示规则中的所有依赖性, 组成一个列表, 以空格隔开,如果这个列表中有重复的项则消除重复项。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">objs=add.o sum.o div.o mul.o</span><br><span class="line">target=main</span><br><span class="line">sum.o:sum.cpp</span><br><span class="line">        g++ -c  $^ -o $@</span><br><span class="line">main.o:main.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br><span class="line">$(target):$(bgjs)</span><br><span class="line">		g++ &amp;(objs) -o $(target)</span><br><span class="line">clean:</span><br><span class="line">		rm -rf $(objs) $(target)</span><br></pre></td></tr></table></figure>
+<p><strong><em>注意：自动变量只能在规则的命令中中使用</em></strong></p>
+<h5 id="模式规则">2.4 模式规则</h5>
+<p>如果想要进一步的偷懒，那就必须提到<strong>模式规则</strong>，模式规则用来匹配当前目录下的符合模式匹配的所有文件。模式规则类似于普通规则，<strong>只是在模式规则中，目标名中需要包含有模式字符<code>%</code>，包含有模式字符<code>%</code>的目标被用来匹配一个文件名，<code>%</code>可以匹配任何非空字符串</strong>。看到上面你觉得很绕，让我们看实例： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#%表示可以匹配当前目录下的所有以.cpp为后缀的源文件，</span><br><span class="line">#并且对应生成相应名称的.o文件（注意是使用$&lt;才能生成对应.o文件</span><br><span class="line">%.o:%.cpp</span><br><span class="line">		g++ -c $&lt; -o $@</span><br></pre></td></tr></table></figure> 单独上面的这个<code>makefile</code>不能成功执行，会出现<code>No targets.Stop</code>错误 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//直接make，不成功</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make</span><br><span class="line">make: *** No targets.  Stop.</span><br><span class="line"><span class="comment">//传入目标，成功</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make main.o</span><br><span class="line">g++ -c main.cpp -o main.o</span><br></pre></td></tr></table></figure> 这是很正常的，因为<code>%</code>是模式匹配规则，你如果没传入目标它就无法执行<code>make</code>的工作机制。下面来讲解对<code>%</code>的解决办法</p>
+<h5 id="函数">2.5 函数</h5>
+<p><code>makefile</code>中的函数有很多，在这里给大家介绍两个最常用的:</p>
+<ul>
+<li><p><code>wildcard</code>查找指定目录下的指定类型的文件 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">src = $(wildcard *.c) <span class="comment">//找到当前目录下所有后缀为.c的文件,赋值给src</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p><code>patsubst</code>匹配替换 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj = $(patsubst %.c,%.o, $(src)) <span class="comment">//把src变量里所有后缀为.c的文件替换成.o，然后赋值给obj</span></span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<p><strong><em>注意</em></strong>：<code>patsubst</code>不是把src里的文件的后缀改为.o，是在<code>makefile.o</code>文件内部将生成的<code>.o</code>文件替换掉<code>src</code>内的<code>.cpp</code>文件，因此在<code>make</code>的时候一定是要先生成<code>.o</code>文件（这里从两者<code>*</code>和<code>%</code>就能看出)，从两者的特性能够得到以下的解决： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">all:$(patsubst %.cpp,%.o,$(wildcard *.cpp))</span><br><span class="line">%.o:%.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br></pre></td></tr></table></figure> 原理：all目标获得了目录内的<code>*.cpp</code>文件，使用<code>patsubst</code>要求将<code>*.cpp</code>替换为<code>*.o</code>,但是目录中还没有<code>*.o</code>文件，则会依据make工作原理进行到下一个目标，刚好这个目标是生成<code>.o</code>文件的，则执行。</p>
+<h5 id="简单示例">2.6 简单示例</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">src=$(wildcard *.cpp)</span><br><span class="line">objs=$(patsubst %.cpp,%.o,$(src))</span><br><span class="line">target=main</span><br><span class="line">$(target):$(objs)</span><br><span class="line">        g++ $(objs) -o $(target)</span><br><span class="line">%.o:%.cpp</span><br><span class="line">        g++ -c $&lt; -o $@</span><br><span class="line"></span><br><span class="line">#PHONY伪目标，不去判断目标文件是否存在或者更新，无条件执行</span><br><span class="line">.PHONY:clean</span><br><span class="line">clean:</span><br><span class="line">        rm -rf $(objs) $(target)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#执行make</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ make</span><br><span class="line">g++ -c main.cpp -o main.o</span><br><span class="line">g++ -c sum.cpp -o sum.o</span><br><span class="line">g++ main.o sum.o -o main</span><br><span class="line">#执行makeclean</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">Linux操作系统基本命令</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-15 17:26:07" itemprop="dateCreated datePublished" datetime="2022-07-15T17:26:07+08:00">2022-07-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-23 12:41:17" itemprop="dateModified" datetime="2022-07-23T12:41:17+08:00">2022-07-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>35k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>32 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="shell">1. shell</h4>
+<p><code>shell</code>是<code>Linux</code>系统中运行的一种特殊程序。在用户和内核之间之间充当“翻译官”，用户登陆<code>Linux</code>系统时，自动加载一个<code>Shell</code>程序，<code>Bash</code>是<code>Linux</code>系统中默认使用的<code>Shell</code>程序。</p>
+<ul>
+<li>内核：用于调用计算机硬件资源</li>
+<li>shell：将用户指令转换成计算机语言让内核去调用计算机硬件资源 <img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/shell.png" width="500"></li>
+</ul>
+<h4 id="bash解析器常用快捷键teminal">2. Bash解析器常用快捷键(Teminal)</h4>
+<p><code>bash</code>是一个文件，linux系统中万物皆文件，<code>bash</code>文件位于<code>/bin/bash</code>，<code>bash</code>使用的快捷键：</p>
+<ul>
+<li><code>Tab</code>键:补齐命令，补齐路径，显示当前目录下的所有目录</li>
+<li>使用快捷键<code>Ctrl + L</code> 清除终端上的显示(类似于DOS的cls清屏功能)，也可用<code>clear</code>指令</li>
+<li><code>ctlr+c</code>的作用是中断终端的操作。</li>
+<li>遍历输入的历史命令：从当前位置向上遍历<code>ctrl + p</code>或<code>↑</code>；从当前位置向下遍历<code>ctrl + n（↓）</code></li>
+<li>光标相关操作</li>
+<li>光标左移： <code>ctrl + b （←）</code></li>
+<li>坐标右移： <code>ctrl + f （→）</code></li>
+<li>移动到头部：<code>ctrl + a（Home）</code></li>
+<li>移动到尾部：<code>ctlr + e（End）</code></li>
+<li>字符删除</li>
+<li>删除光标前边的字符：ctrl + h（Backspace）</li>
+<li>删除光标后边的字符：ctrl + d</li>
+<li>删除光标前所有内容：ctrl + u</li>
+<li>删除光标后所有内容：ctrl + k</li>
+</ul>
+<h4 id="系统目录">3. 系统目录</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">oot@trluper-<span class="keyword">virtual</span>-machine:/home/trluper<span class="meta"># cd /</span></span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:/<span class="meta"># ls</span></span><br><span class="line">bin    dev   lib    libx32      mnt   root  snap      sys  var</span><br><span class="line">boot   etc   lib32  lost+found  opt   run   srv       tmp</span><br><span class="line">cdrom  home  lib64  media       proc  sbin  swapfile  usr</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>/</code>：根目录，一般根目录下只存放目录，<strong>在<code>Linux</code>下有且只有一个根目录</strong>。所有的东西都是从这里开始。当你在终端里输入<code>/home</code>，你其实是在告诉电脑，先从/（根目录）开始，再进入到home目录。</li>
+<li><code>/bin</code>: <strong>这一目录中存放了供超级用户和一般用户都可以使用的命令，常用的命令<code>ls、tar、mv、cat</code>等</strong></li>
+<li><code>/usr/bin</code>: <strong>安装的外部的命令，<code>usr</code>表示的是<code>unix software source</code>，不是user。</strong></li>
+<li><code>/boot</code>：放置<code>linux</code>系统启动时用到的一些文件，如<code>Linux</code>的内核文件<code>/boot/vmlinuz</code>，系统引导管理器<code>/boot/grub</code>。</li>
+<li><code>/dev</code>：存放<code>linux</code>系统下的设备文件，访问该目录下某个文件，相当于访问某个设备，</li>
+<li><code>/etc</code>：<strong>系统配置文件存放的目录，不建议在此目录下存放可执行文件</strong>，重要的配置文件有 <code>/etc/inittab、/etc/fstab、/etc/init.d、/etc/X11、/etc/sysconfig、/etc/xinetd.d。</code></li>
+<li><code>/home</code>：<strong>系统默认的用户家目录，新增用户账号时，用户的家目录都存放在此目录下，~表示当前用户的家目录，<code>~edu</code>表示用户<code>edu</code>的家目录。</strong></li>
+<li><code>/lib</code>：<strong>内核级别</strong>,系统使用的函数库的目录，包含许多被<code>/bin/</code>和<code>/sbin/</code>中的程序使用的库文件。</li>
+<li><code>/usr/lib</code>: <strong>系统级别</strong>，目标库文件，包括动态连接库加上一些通常不是直接调用的可执行文件的存放位置。这个目录功能类似/lib目录</li>
+<li><code>/usr/local/lib</code>：<strong>用户级别</strong>，包含许多被<code>/bin/</code>和<code>/sbin/</code>中的程序使用的库文件。</li>
+<li><code>/usr/include</code>：<strong>C程序语言编译使用的头文件。<code>linux</code>下开发和编译应用程序所需要的头文件一般都存放在这里，通过头文件来使用某些库函数</strong></li>
+<li><code>/lost+fount</code>：系统异常产生错误时，会将一些遗失的片段放置于此目录下。</li>
+<li><code>/mnt、/media</code>:光盘默认挂载点，通常光盘挂载<code>/mnt/cdrom</code>下，也不一定，可以选择任意位置进行挂载。</li>
+<li><code>/opt</code>：给主机额外安装软件所摆放的目录。</li>
+<li><code>/proc</code>：此目录的数据都在内存中，如系统核心，外部设备，网络状态，由于数据都存放于内存中，所以不占用磁盘空间，比较重要的目录有 <code>/proc/cpuinfo、/proc/interrupts、/proc/dma、/proc/ioports、/proc/net/*</code> 等。</li>
+<li><code>/root</code>：系统管理员root的家目录。</li>
+<li><code>/sbin、/usr/sbin、/usr/local/sbin</code>：<strong>放置系统管理员使用的可执行命令</strong>，如<code>fdisk、shutdown、mount</code>等。<strong>与<code>/bin</code>不同的是，这几个目录是给系统管理员root使用的命令，</strong>一般用户只能&quot;查看&quot;而不能设置和使用。</li>
+<li><code>/tmp</code>：<strong>一般用户或正在执行的程序临时存放文件的目录，任何人都可以访问，重要数据不可放置在此目录下。</strong></li>
+<li><code>/srv</code>：服务启动之后需要访问的数据目录，如<code>www</code>服务需要访问的网页数据存放在<code>/srv/www</code>内。</li>
+<li><code>/usr</code>：<strong>应用程序存放目录，<code>/usr/bin</code>存放应用程序，<code>/usr/share</code>存放共享数据，<code>/usr/lib</code>存放不能直接运行的，却是许多程序运行所必需的一些函数库文件。<code>/usr/local</code>:存放软件升级包。<code>/usr/share/doc:</code>系统说明文件存放目录。<code>/usr/share/man:</code>程序说明文件存放目录。</strong></li>
+<li><code>/var</code>：放置系统执行过程中经常变化的文件，如随时更改的日志文件 <code>/var/log，/var/log/message</code>所有的登录文件存放目录，<code>/var/spool/mail</code>邮件存放的目录，<code>/var/run</code>程序或服务启动后，其PID存放在该目录</li>
+</ul>
+<h4 id="linux的文件">4. Linux的文件</h4>
+<p>在Linux世界里，一切皆文件。在Linux中，文件可分为以下几种：<strong>普通文件（普通文件、可执行文件、压缩文件）、目录文件、设备文件、链接文件和套接字</strong> <img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/linuxFile.png" width="400"></p>
+<p><strong>文件符号标识：</strong></p>
+<ul>
+<li>普通文件:<code>-</code></li>
+<li>目录：<code>d</code></li>
+<li>字符设备：<code>c</code></li>
+<li>管道：<code>p</code></li>
+<li>符号链接：<code>l</code></li>
+<li>套接字：<code>s</code></li>
+<li>符号连结：<code>l</code></li>
+<li>一般文件:<code>f</code></li>
+</ul>
+<h4 id="linux常用命令">5. Linux常用命令</h4>
+<p>Linux的命令分为内建命令和外部命令。<code>shell</code>内建命令是指<code>bash</code>工具中集成的命令，一般有一些都会有一个与之同名的系统函数。外部命令是安装外部软件所带的命令。</p>
+<h5 id="内建命令和外部命令的区别">5.1 内建命令和外部命令的区别</h5>
+<ul>
+<li><p><strong>内部命令</strong>：实际上是<code>shell</code>程序的一部分，其中包含的是一些比较简单的<code>linux</code>系统命令，这些命令由<code>shell</code>程序识别并在<code>shell</code>程序内部完成运行，通常在<code>linux</code>系统加载运行<code>shell</code>时就被加载并驻留在系统内存中。内部命令是写在bashy源码里面的，<strong>其执行速度比外部命令快，因为解析内部命令shell不需要创建子进程</strong>。<code>exit，history，cd，echo</code>等就是内建命令 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help 内建命令</span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong>外部命令</strong>：<strong>外部命令是<code>linux</code>系统中的实用程序部分，因为实用程序的功能通常都比较强大，所以其包含的程序量也会很大，在系统加载时并不随系统一起被加载到内存中，而是在需要时才将其调用内存</strong>。通常外部命令的实体并不包含在<code>shell</code>中，但是其命令执行过程是由<code>shell</code>程序控制的。<code>shell</code>程序管理外部命令执行的路径查找、加载存放，并控制命令的执行。外部命令是在<code>bash</code>之外额外安装的，通常放在<code>/bin，/sbin，/usr/bin，/usr/sbin，/usr/local/sbin</code>等等。可通过<code>echo $PATH</code>命令查看外部命令的存储路径 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是外部命令一个--help选项，不是help指令</span></span><br><span class="line">外部命令 --help</span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong><code>type</code>命令可以分辨内部命令与外部命令</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//常用的三个参数：-t对应-type，-a对应-all，-p对应-path，</span></span><br><span class="line">type [-a | -t | -p] name</span><br><span class="line"><span class="comment">//或</span></span><br><span class="line">type [-all | -type | -path] name</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h5 id="内建命令使用">5.2 内建命令使用</h5>
+<p>所有内建命令如下：加星号的为常用项</p>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>说明</th>
+<th style="text-align: center;">重要程度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>：</code></td>
+<td>扩展参数列表，执行重定向操作</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>.</code></td>
+<td>读取并执行指定文件中的命令（在当前shell环境中）</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>alias</code></td>
+<td>为指定命令定义一个别名</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>bg</code></td>
+<td>将作业以后台模式运行</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>bind</code></td>
+<td>将键盘序列绑定到一个<code>readline</code>函数或宏</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>break</code></td>
+<td>退出<code>for、while、selec</code>t或<code>until</code>循环</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>builtin</code></td>
+<td>执行指定的<code>shell</code>内建命令</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>caller</code></td>
+<td>返回活动子函数调用的上下文</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>cd</code></td>
+<td>将当前目录切换为指定目录</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="even">
+<td><code>command</code></td>
+<td>执行指定的命令，无需进行通常的shell查找</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>compgen</code></td>
+<td>为指定单词生成可能的补全匹配</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>complete</code></td>
+<td>显示指定的单词是如何补全的</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>compopt</code></td>
+<td>修改指定单词的补全选项</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>continue</code></td>
+<td>继续执行<code>for、while、select或until</code>循环的下一次迭代</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>declare</code></td>
+<td>声明一个变量或者变量类型</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>dirs</code></td>
+<td>显示当前存储目录的列表</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="odd">
+<td><code>disown</code></td>
+<td>从进程作业表中删除指定的作业</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>echo</code></td>
+<td>将指定字符串输出到<code>STDOUT</code></td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="odd">
+<td><code>enable</code></td>
+<td>启用或禁止指定的内建<code>shell</code>命令</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>eval</code></td>
+<td>将指定的参数拼接成一个命令，然后执行该命令</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>exec</code></td>
+<td>用指定命令替换<code>shell</code>进程</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>exit</code></td>
+<td>强制<code>shell</code>以指定的退出状态码退出</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="odd">
+<td><code>export</code></td>
+<td>设置子<code>shell</code>进程可用的变量</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>fc</code></td>
+<td>从历史记录中选择命令列表</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>fg</code></td>
+<td>将作业以前台模式运行</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>getopts</code></td>
+<td>分析指定的位置参数</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>hash</code></td>
+<td>查找并记住指定命令的全路径名</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>help</code></td>
+<td>显示帮助文件</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="odd">
+<td><code>history</code></td>
+<td>显示命令历史记录</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="even">
+<td><code>jobs</code></td>
+<td>列出活动作业</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>kill</code></td>
+<td>向指定的进程ID发送一个系统信号</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="even">
+<td><code>let</code></td>
+<td>计算一个数学表达式中的每个参数</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>local</code></td>
+<td>在函数中创建一个作用域受限的变量</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>logout</code></td>
+<td>退出登录<code>shell</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>mapfile</code></td>
+<td>从<code>STDIN</code>读取数据行，并将其加入索引数组</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>popd</code></td>
+<td>从目录栈中删除记录</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>printf</code></td>
+<td>使用格式化字符串显示文本</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="even">
+<td><code>pushd</code></td>
+<td>向目录栈添加一个目录</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>pwd</code></td>
+<td>显示当前工作目录的路径名</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="even">
+<td><code>read</code></td>
+<td>从<code>STDIN</code>读取一行数据并将其赋值给一个变量</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="odd">
+<td><code>readarray</code></td>
+<td>从<code>STDIN</code>读取数据行并将其放入索引数组</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>readonly</code></td>
+<td>从<code>STDIN</code>读取一行数据并将其赋值给一个不可修改的变量</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>return</code></td>
+<td>强制函数以某个值退出，这个值可以被调用脚本提取</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="even">
+<td><code>set</code></td>
+<td>设置并显示环境变量的值和shell属性</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>shift</code></td>
+<td>将位置参数依次向下降一个位置</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>shopt</code></td>
+<td>打开/关闭控制<code>shell</code>可选行为的变量值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>source</code></td>
+<td>读取并执行指定文件中的命令（在当前<code>shell</code>环境中）</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="even">
+<td><code>suspend</code></td>
+<td>暂停<code>shell</code>的执行，直到收到一个<code>SIGCONT</code>信号</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>test</code></td>
+<td>基于指定条件返回退出状态码0或1</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>times</code></td>
+<td>显示累计的用户和系统时间</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="odd">
+<td><code>trap</code></td>
+<td>如果收到了指定的系统信号，执行指定的命令</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>type</code></td>
+<td>显示指定的单词如果作为命令将会如何被解释</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>typeset</code></td>
+<td>声明一个变量或变量类型</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>ulimit</code></td>
+<td>为系统用户设置指定的资源的上限</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="odd">
+<td><code>umask</code></td>
+<td>为新建的文件和目录设置默认权限</td>
+<td style="text-align: center;">*</td>
+</tr>
+<tr class="even">
+<td><code>unalias</code></td>
+<td>删除指定的别名</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td><code>unset</code></td>
+<td>删除指定的环境变量或<code>shell</code>属性</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td><code>wait</code></td>
+<td>等待指定的进程完成，并返回退出状态码</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h6 id="cd命令">5.2.1 cd命令</h6>
+<p><code>cd</code>命令是改变当前工作目录 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd ../	返回上一级目录</span><br><span class="line">cd /  进入根目录</span><br><span class="line">cd ~	进入用户主目录</span><br><span class="line">如：</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ cd ~</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ pwd</span><br><span class="line">/home/trluper</span><br></pre></td></tr></table></figure></p>
+<h6 id="dirs命令">5.2.2 dirs命令</h6>
+<p><code>dirs</code>命令用于显示<code>Shell</code>目录中的堆栈记录。不加选项时显示当前的Shell命令堆栈中的所有目录，显示时左边为最新加入的目录。</p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-c</code></td>
+<td>删除目录堆栈中的所有记录</td>
+</tr>
+<tr class="even">
+<td><code>-l</code></td>
+<td>以完整格式显示堆栈中的目录。显示用户宿主目录时，列出完整路径，而不是“~”</td>
+</tr>
+<tr class="odd">
+<td><code>-n</code></td>
+<td>显示右起第n个目录（n从0计数）</td>
+</tr>
+<tr class="even">
+<td><code>+n</code></td>
+<td>显示左起第n个目录 （n从0计数）</td>
+</tr>
+<tr class="odd">
+<td><code>-p</code></td>
+<td>以每行一个记录的方式列出堆栈中多有记录</td>
+</tr>
+<tr class="even">
+<td><code>-v</code></td>
+<td>以每行一个记录的方式列出堆栈中所有记录，并在每行加上序号（从0开始编号）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ dirs -v</span><br><span class="line"> <span class="number">0</span>  ~/Documents</span><br></pre></td></tr></table></figure>
+<h6 id="echo命令">5.2.3 echo命令</h6>
+<p><code>echo</code>命令用于将输入的字符串送往标准输出，默认输出的字符间以空白字符隔开，并在最后加上换行号。常与重定向命令<code>&gt;</code>结合使用。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo [OPTION]... [STRING]...</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>参数选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-n</code></td>
+<td>不输出行尾的换行符，不自动换行</td>
+</tr>
+<tr class="even">
+<td><code>-e</code></td>
+<td>允许对下面列出的加反斜线转义的字符进行解释</td>
+</tr>
+<tr class="odd">
+<td><code>-E</code></td>
+<td>默认选项，禁止对在STRINGs中的那些序列进行解释</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ echo -e <span class="string">&quot;这是echo&quot;</span></span><br><span class="line">这是echo</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ echo -e <span class="string">&quot;这是echo&quot;</span> &gt;test.txt</span><br></pre></td></tr></table></figure>
+<h6 id="help命令">5.2.4 help命令</h6>
+<p>help命令用于显示<code>shell</code>内部命令的帮助信息。<code>help</code>命令只能显示<code>shell</code>内部的命令帮助信息。而对于外部命令的帮助信息只能使用<code>man</code>或者<code>info</code>或者以外部命令的<code>--help</code>选项查看。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ help cd</span><br><span class="line">cd: cd [-L|[-P [-e]] [-@]] [dir]</span><br><span class="line">    Change the shell working directory.</span><br><span class="line">.....</span><br></pre></td></tr></table></figure></p>
+<h6 id="history命令">5.2.5 history命令</h6>
+<p><code>Bash</code>有完善的历史命令，这对于简化管理操作、排查系统错误都有重要的作用，而且使用简单方便，建议大家多使用历史命令。系统保存的历史命令可以使用<code>history</code>命令查询。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">history [选项] [历史命令保存文件]</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>c</code></td>
+<td>清空历史命令</td>
+</tr>
+<tr class="even">
+<td><code>w</code></td>
+<td>把缓存中的历史命令写入历史命令保存文件中。如果不手工指定历史命令保存文件，则放入默认历史命令保存文件<code>~/.bash_history</code>中</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ history</span><br><span class="line">    <span class="number">1</span>  ping baidu.com</span><br><span class="line">    <span class="number">2</span>  ifconfig</span><br><span class="line">    <span class="number">3</span>  sudo apt install net-tools</span><br><span class="line">    <span class="number">4</span>  ifconfig </span><br><span class="line">    <span class="number">5</span>  ping baidu.com</span><br><span class="line">    <span class="number">6</span>  sudu apt update</span><br><span class="line">    <span class="number">7</span>  sudo apt update</span><br><span class="line">    <span class="number">8</span>  ifconfig</span><br><span class="line">    <span class="number">9</span>  ssh</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<h6 id="kill命令">5.2.6 kill命令</h6>
+<p><code>kill</code>命令用于删除执行中的程序或工作。<code>kill</code>可将指定的信息送至程序。预设的信息为<code>SIGTERM(15)</code>，可将指定程序终止。若仍无法终止该程序，可使用<code>SIGKILL(9)</code>信息尝试强制删除程序。程序或工作的编号可利用 <code>ps</code>指令或<code>jobs</code>指令查看。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill [信号] PID</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>信号编号</th>
+<th>信号名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td><code>EXIT</code></td>
+<td>程序退出时收到该信息。</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td><code>HUP</code></td>
+<td>挂掉电话线或终端连接的挂起信号，这个信号也会造成某些进程在没有终止的情况下重新初始化。</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td><code>INT</code></td>
+<td>表示结束进程，但并不是强制性的，常用的<code>Ctrl+C</code>组合键发出就是一个 <code>kill -2</code> 的信号。</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td><code>QUIT</code></td>
+<td>退出。</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><code>KILL</code></td>
+<td>杀死进程，即强制结束进程。</td>
+</tr>
+<tr class="even">
+<td>11</td>
+<td><code>SEGV</code></td>
+<td>段错误。</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td><code>TERM</code></td>
+<td>正常结束进程，是<code>kill</code>命令的默认信号。</td>
+</tr>
+</tbody>
+</table>
+<h6 id="pwd命令">5.2.7 pwd命令</h6>
+<p>命令用于显示工作目录。执行<code>pwd</code>指令可立刻得知您目前所在的工作目录的绝对路径名称。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ pwd</span><br><span class="line">/home/trluper/Documents</span><br></pre></td></tr></table></figure></p>
+<h6 id="ulimit命令">5.2.8 ulimit命令</h6>
+<p><code>ulimit</code>用来限制每个用户可使用的资源，如CPU、内存、句柄等。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ulimit [-SHabcdefiklmnpqrstuvxPT] [limit]	设置limit</span><br><span class="line">ulimit [-SHabcdefiklmnpqrstuvxPT]			查询</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>S</code></td>
+<td>表示软限制,超出设定的值会告警</td>
+</tr>
+<tr class="even">
+<td><code>H</code></td>
+<td>表示硬限制，超出设定的值会报错</td>
+</tr>
+<tr class="odd">
+<td><code>a</code></td>
+<td>列出系统所有资源限制的值</td>
+</tr>
+<tr class="even">
+<td><code>d</code></td>
+<td>每个进程数据段的最大值</td>
+</tr>
+<tr class="odd">
+<td><code>f</code></td>
+<td>当前<code>shell</code>可创建的最大文件容量</td>
+</tr>
+<tr class="even">
+<td><code>l</code></td>
+<td>可以锁定的物理内存的最大值</td>
+</tr>
+<tr class="odd">
+<td><code>m</code></td>
+<td>可以使用的常驻内存的最大值</td>
+</tr>
+<tr class="even">
+<td><code>n</code></td>
+<td>每个进程可以同时打开的最大文件句柄数</td>
+</tr>
+<tr class="odd">
+<td><code>p</code></td>
+<td>管道的最大值</td>
+</tr>
+<tr class="even">
+<td><code>s</code></td>
+<td>堆栈的最大值</td>
+</tr>
+<tr class="odd">
+<td><code>t</code></td>
+<td>每个进程可以使用CPU的最大时间</td>
+</tr>
+<tr class="even">
+<td><code>u</code></td>
+<td>每个用户运行的最大进程并发数</td>
+</tr>
+<tr class="odd">
+<td><code>v</code></td>
+<td>当前<code>shell</code>可使用的最大虚拟内存</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ulimit -n</span><br><span class="line"><span class="number">1024</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ulimit -v</span><br><span class="line">unlimited</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ulimit -p</span><br><span class="line"><span class="number">8</span></span><br></pre></td></tr></table></figure>
+<h6 id="source命令和.命令">5.2.9 source命令和.命令</h6>
+<p>.sh后缀的文件为Linux的脚本文件，里面可以写入许多执行命令语句。然后我们可以通过使用<code>source</code>命令或者<code>.</code>在当前shell环境来执行该脚本文件中的所有语句。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">source test.sh</span><br><span class="line">或</span><br><span class="line">. test.sh</span><br></pre></td></tr></table></figure>
+<p><strong>来看一下四个执行的区别：</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//test.sh文件：</span></span><br><span class="line">#!/bin/bash</span><br><span class="line">echo <span class="string">&quot;step 1 sleeping&quot;</span></span><br><span class="line">sleep <span class="number">200</span></span><br><span class="line">echo <span class="string">&quot;step 2 sleeping&quot;</span></span><br><span class="line">sleep <span class="number">200</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//执行：</span></span><br><span class="line">./test.sh	<span class="comment">//当前shell下正常执行，这种执行方式需要test.sh的执行权限，开启两个进程一个是test.sh,一个是sleep</span></span><br><span class="line">sh test.sh	<span class="comment">//开启新的shell执行，不用执行权限，有读取权限即可，开两个新进程：一个bash，一个sleep</span></span><br><span class="line">. test.sh	<span class="comment">//当前shell下执行，只需要读取权限即可，开启一个新进程sleep</span></span><br><span class="line">source test.sh	<span class="comment">//同第三个一样</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="umask命令">5.3.10 umask命令</h6>
+<p><code>umask</code>命令用来设置限制新建文件权限的掩码。当新文件被创建时，其最初的权限由umask设置的掩码决定。用户每次注册进入系统时，<code>umask</code>命令都被执行， 并自动设置掩码<code>mode</code>来限制新文件的权限。用户可以通过再次执行<code>umask</code>命令来改变默认值，新的权限将会把旧的覆盖掉。<strong>注意umask命令是指定哪些权限将在新文件的默认权限中被删除</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> umask [-p] [-S] [mode]</span><br><span class="line"> -p        以八进制数字表示掩码</span><br><span class="line"> -S        以符号格式表示掩码</span><br><span class="line"></span><br><span class="line">ugo：u表示当前用户权限，g为组用户权限，o为其他用户权限</span><br><span class="line">rwx：r为读权限(<span class="number">4</span>)，w为写权限(<span class="number">2</span>)，x为执行权限(<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<p>我们通过<code>umask</code>查询其默认的删除权限代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前目录的umask掩码</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ umask</span><br><span class="line"><span class="number">0002</span></span><br></pre></td></tr></table></figure>
+<p>因为umask的掩码表示被删除的权限，则目录拥有的权限为<code>777-002=765</code>，则以后建立的目录的权限为<code>u=rwx,g=r-x,o=r-x</code>。如果想要改变默认，则设置<code>umask</code>,那么以后新建的目录或文件会按这个来删除权限</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ umask -p <span class="number">555</span>		<span class="comment">//以后新建的目录和文件删除所有用户的读和执行权限</span></span><br></pre></td></tr></table></figure>
+<h5 id="外部命令">5.3 外部命令</h5>
+<h6 id="sudo命令">5.3.1 sudo命令</h6>
+<p><code>sudo</code>命令以系统管理者的身份执行指令，也就是说，经由<code>sudo</code>所执行的外部指令就好像是<code>root</code>亲自执行。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ sudo --help</span><br><span class="line">sudo - execute a command as another user</span><br></pre></td></tr></table></figure></p>
+<p><code>usage: sudo -h | -K | -k | -V</code></p>
+<ul>
+<li><code>V</code> 显示版本编号</li>
+<li><code>h</code> 会显示版本编号及指令的使用方式说明</li>
+<li><code>l</code> 显示出自己（执行<code>sudo</code>的使用者）的权限</li>
+<li><code>k</code> 将会强迫使用者在下一次执行<code>sudo</code>时问密码（不论有没有超过 N 分钟）</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ sudo cd /</span><br><span class="line">sudo: cd: command <span class="keyword">not</span> found</span><br><span class="line"><span class="comment">//注意，shell是一个命令解析器，sudo cd是错误的，因为cd是shell内置的，不是系统里面的，</span></span><br><span class="line"><span class="comment">//要进入root用户，先获取root权限 然后进入/root</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ sudo -sH</span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:/home/trluper<span class="meta"># cd /root</span></span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:~# </span><br></pre></td></tr></table></figure>
+<h6 id="su命令">5.3.2 su命令</h6>
+<p><code>su</code>（英文全拼：<code>switch user</code>）命令用于变更为其他使用者的身份，除<code>root</code>外，需要键入该使用者的密码。使用权限：所有使用者。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:~<span class="meta"># su trluper	<span class="comment">//切回用户身份</span></span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:/root$ sudo su	<span class="comment">//切回root</span></span><br><span class="line">[sudo] password <span class="keyword">for</span> trluper: </span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:~# </span><br></pre></td></tr></table></figure></p>
+<h6 id="ls命令">5.3.3 ls命令</h6>
+<p>是英文单词<code>list</code>的简写，其功能为列出目录的内容，是用户最常用的命令之一，它类似于<code>DOS</code>下的<code>dir</code>命令。</p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-a</code></td>
+<td>显示所有文件及目录<code>.</code>开头的隐藏文件也会列出)</td>
+</tr>
+<tr class="even">
+<td><code>-l</code></td>
+<td>除文件名称外，亦将文件型态、权限、拥有者、文件大小等资讯详细列出</td>
+</tr>
+<tr class="odd">
+<td><code>-r</code></td>
+<td>将文件以相反次序显示(原定依英文字母次序)</td>
+</tr>
+<tr class="even">
+<td><code>-t</code></td>
+<td>将文件依建立时间之先后次序列出</td>
+</tr>
+<tr class="odd">
+<td><code>-A</code></td>
+<td>同 -a ，但不列出 <code>.</code> (目前目录) 及<code>..</code>(父目录)</td>
+</tr>
+<tr class="even">
+<td><code>-F</code></td>
+<td>在列出的文件名称后加一符号；例如可执行档则加 <code>*</code>, 目录则加 <code>/</code></td>
+</tr>
+<tr class="odd">
+<td><code>-R</code></td>
+<td>若目录下有文件，则以下之文件亦皆依序列出</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ ls -l</span><br><span class="line">total <span class="number">40</span></span><br><span class="line">drwxr-xr-x <span class="number">2</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> Desktop</span><br><span class="line">drwxr-xr-x <span class="number">2</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> Documents</span><br><span class="line">drwxr-xr-x <span class="number">2</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> Downloads</span><br><span class="line">drwxr-xr-x <span class="number">2</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> Music</span><br><span class="line">drwxr-xr-x <span class="number">2</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> Pictures</span><br><span class="line">drwxrwxr-x <span class="number">3</span> trluper trluper <span class="number">4096</span>  <span class="number">7</span>月 <span class="number">13</span> <span class="number">23</span>:<span class="number">46</span> projects</span><br><span class="line">drwxr-xr-x <span class="number">2</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> Public</span><br><span class="line">drwx------ <span class="number">3</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> snap</span><br><span class="line">drwxr-xr-x <span class="number">2</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> Templates</span><br><span class="line">drwxr-xr-x <span class="number">2</span> trluper trluper <span class="number">4096</span>  <span class="number">6</span>月 <span class="number">23</span> <span class="number">15</span>:<span class="number">34</span> Videos</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="man命令">5.3.4 man命令</h6>
+<p>man命令是Linux下的帮助指令，通过man指令可以查看Linux中的指令帮助、配置文件帮助和编程帮助等信息：<code>man [选项] 命令名</code> linux中各个分页的意义：</p>
+<table>
+<thead>
+<tr class="header">
+<th>分页</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>1</code></td>
+<td><code>Standard commands</code>（标准命令）</td>
+</tr>
+<tr class="even">
+<td><code>2</code></td>
+<td><code>System calls</code>系统调用，如<code>open,write</code></td>
+</tr>
+<tr class="odd">
+<td><code>3</code></td>
+<td><code>Library functions</code>库函数，如<code>printf,fopen</code></td>
+</tr>
+<tr class="even">
+<td><code>4</code></td>
+<td><code>Special devices</code>（设备文件的说明，/dev下各种设备）</td>
+</tr>
+<tr class="odd">
+<td><code>5</code></td>
+<td><code>File formats</code>（文件格式，如passwd）</td>
+</tr>
+<tr class="even">
+<td><code>6</code></td>
+<td><code>Games and toys</code>（游戏和娱乐）</td>
+</tr>
+<tr class="odd">
+<td><code>7</code></td>
+<td><code>Miscellaneous</code>（杂项、惯例与协定等，例如Linux档案系统、网络协定、ASCII 码；environ全局变量）</td>
+</tr>
+<tr class="even">
+<td><code>8</code></td>
+<td><code>Administrative Commands</code>（管理员命令，如ifconfig）</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ man <span class="number">3</span> open</span><br><span class="line">NAME</span><br><span class="line">       open, openat — open file</span><br><span class="line"></span><br><span class="line">SYNOPSIS</span><br><span class="line">       <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line">       <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">       <span class="function"><span class="type">int</span> <span class="title">open</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="type">int</span> oflag, ...)</span></span>;</span><br><span class="line">       <span class="function"><span class="type">int</span> <span class="title">openat</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">char</span> *path, <span class="type">int</span> oflag, ...)</span></span>;</span><br></pre></td></tr></table></figure>
+<h6 id="makdir命令">5.3.5 makdir命令</h6>
+<p>mkdir（英文全拼：<code>make directory</code>）命令用于创建目录。需要注意的是新建目录的名称不能与当前目录中已有的目录或文件同名，并且目录创建者必须对当前目录具有写权限。参数<code>-p</code>可递归创建目录。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ cd ./Documents/</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ mkdir -p a/b</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">a</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ mkdir mydir&#123;<span class="number">1.</span><span class="number">.3</span>&#125;</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">a  mydir1  mydir2  mydir3</span><br></pre></td></tr></table></figure></p>
+<h6 id="rmdir命令">5.3.6 rmdir命令</h6>
+<p>rmdir删除指定的目录，一个目录被删除之前必须是空的，'-p'递归删除目录 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">a  mydir1  mydir2  mydir3</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ rmdir -p a/b/c</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ rmdir mydir&#123;<span class="number">1.</span><span class="number">.3</span>&#125;</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br></pre></td></tr></table></figure></p>
+<h6 id="touch命令">5.3.7 touch命令</h6>
+<p><strong><code>touch</code>命令用于修改文件或者目录的时间属性，包括访问时间和修改时间，若文件不存在，系统会建立一个新的文件。</strong>即：</p>
+<ul>
+<li>1）如果文件不存在, 创建新文件(只能是普通文件，不能是文件夹)</li>
+<li>2）如果文件存在, 更新文件时间</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ touch test.cpp</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ ls</span><br><span class="line">test.cpp</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ touch test&#123;<span class="number">1.</span><span class="number">.3</span>&#125;.cpp</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ ls</span><br><span class="line">test  test1.cpp  test2.cpp  test3.cpp  test.cpp</span><br></pre></td></tr></table></figure>
+<h6 id="cp命令">5.3.8 cp命令</h6>
+<p><code>cp</code>命令的功能是将给出的文件或目录复制到另一个文件或目录中，即：</p>
+<ul>
+<li>可以将一个或多个文件复制到另一个文件夹中</li>
+<li>可以将目录即目录下的文件和子目录复制到另一个目录</li>
+<li>可以将一个文件复制给另一个文件</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>a</code></td>
+<td>此选项通常在复制目录时使用，它保留链接、文件属性，并复制目录下的所有内容。其作用等于dpR参数组合</td>
+</tr>
+<tr class="even">
+<td><code>d</code></td>
+<td>复制时保留链接。这里所说的链接相当于<code>Windows</code>系统中的快捷方式。</td>
+</tr>
+<tr class="odd">
+<td><code>f</code></td>
+<td>覆盖已经存在的目标文件而不给出提示</td>
+</tr>
+<tr class="even">
+<td><code>i</code></td>
+<td>与 -f 选项相反，在覆盖目标文件之前给出提示，要求用户确认是否覆盖，回答<code>y</code>时目标文件将被覆盖</td>
+</tr>
+<tr class="odd">
+<td><code>p</code></td>
+<td>除复制文件的内容外，还把修改时间和访问权限也复制到新文件中</td>
+</tr>
+<tr class="even">
+<td><code>r</code></td>
+<td>若给出的源文件是一个目录文件，此时将复制该目录下所有的子目录和文件。</td>
+</tr>
+<tr class="odd">
+<td><code>l</code></td>
+<td>不复制文件，只是生成硬链接文件，可以把硬链接当成源文件的副本，他和源文件一样的大小，但是事实上却不占任何空间</td>
+</tr>
+<tr class="even">
+<td><code>s</code></td>
+<td>不复制文件，创建文件的软链接，软链接就相当于windows的快捷键（即路径名）</td>
+</tr>
+<tr class="odd">
+<td><code>u</code></td>
+<td>当存在相同的文件时，只有源文件比目标文件新时，才会将源文件复制给目标文件</td>
+</tr>
+</tbody>
+</table>
+<p><strong>1.复制一个文件到另外一个文件夹</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp 源文件 目标文件（夹）:</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cp test1.cpp /home/trluper/Documents/mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cd ../mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ls</span><br><span class="line">test1.cpp</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. 复制多个文件到另外一个文件夹</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cp 源文件<span class="number">1</span> 源文件<span class="number">2</span> 目标文件夹 或cp 文件* 目标文件夹</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cp -u *.cpp /home/trluper/Documents/mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cd ../mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ls</span><br><span class="line">test1.cpp  test2.cpp  test3.cpp  test.cpp</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 复制目录到另一个目录</strong></p>
+<p>只需要记住复制文件夹一定要加<code>-r</code>参数，否则会出现<code>cp: omitting directory</code>错误。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">未加-r出错:</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$  cp /home/trluper/Documents/mydir_1 /home/trluper/Documents/mydir_2</span><br><span class="line">cp: -r <span class="keyword">not</span> specified; omitting directory <span class="string">&#x27;/home/trluper/Documents/mydir_1&#x27;</span></span><br><span class="line"></span><br><span class="line">加-r:</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cp -r /home/trluper/Documents/mydir_1 /home/trluper/Documents/mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cd ../mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ls</span><br><span class="line">mydir_1  test1.cpp  test2.cpp  test3.cpp  test.cpp</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ cd mydir_1/</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2/mydir_1$ ls</span><br><span class="line">mysondir  test  test1.cpp  test2.cpp  test3.cpp  test.cpp</span><br></pre></td></tr></table></figure></p>
+<p><strong>4. 复制文件到另一个文件</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">复制内容到文件</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ cp test.cpp test2.cp</span><br></pre></td></tr></table></figure>
+<p><strong>5. -u的重要性</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ls -l</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">20</span> test1.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">20</span> test2.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">20</span> test3.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper <span class="number">127</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">20</span> test.cpp</span><br><span class="line"></span><br><span class="line">使用-u，没有更新，因为文件没有更新变动：</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cp -u *.cpp /home/trluper/Documents/mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cd ../mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ls -l</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">20</span> test1.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">20</span> test2.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">20</span> test3.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper <span class="number">127</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">20</span> test.cpp</span><br><span class="line"></span><br><span class="line">未使用-u，直接更新:</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cp *.cpp /home/trluper/Documents/mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_1$ cd ../mydir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ls -l</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">28</span> test1.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">28</span> test2.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper   <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">28</span> test3.cpp</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper <span class="number">127</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">28</span> test.cpp </span><br></pre></td></tr></table></figure>
+<h6 id="rm命令">5.3.9 rm命令</h6>
+<p>可通过<code>rm</code>删除文件或目录。使用<code>rm</code>命令要小心，因为文件删除后不能恢复。为了防止文件误删，可以在<code>rm</code>后使用<code>-i</code>参数以逐个确认要删除的文件。</p>
+<h6 id="mv命令">5.3.10 mv命令</h6>
+<p>用户可以使用<code>mv</code>命令来<strong>移动文件或目录</strong>，<strong>也可以给文件或目录重命名</strong>。<code>mv</code>与<code>cp</code>时不同的，<code>mv</code>是移动，<code>cp</code>是复制一个。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv [OPTION]... [-T] SOURCE DEST</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--backup</code></td>
+<td>若需覆盖文件，则覆盖前先行备份</td>
+</tr>
+<tr class="even">
+<td><code>-b</code></td>
+<td>当文件存在时，覆盖前，为其创建一个备份</td>
+</tr>
+<tr class="odd">
+<td><code>-f</code></td>
+<td>若目标文件或目录与现有的文件或目录重复，则直接覆盖现有的文件或目录</td>
+</tr>
+<tr class="even">
+<td><code>-i</code></td>
+<td>交互式操作，覆盖前先行询问用户，如果源文件与目标文件或目标目录中的文件同名，则询问用户是否覆盖目标文件。用户输入<code>y</code>，表示将覆盖目标文件</td>
+</tr>
+<tr class="odd">
+<td><code>-S</code></td>
+<td>为备份文件指定后缀，而不使用默认的后缀</td>
+</tr>
+<tr class="even">
+<td><code>-u</code></td>
+<td>当源文件比目标文件新或者目标文件不存在时，才执行移动操作。</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ mv ../mydir_1 .</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ls</span><br><span class="line">mydir_1  test  test.cpp</span><br><span class="line"><span class="comment">//对文件重命名</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ ls</span><br><span class="line">alogrithm.h  sum.cpp</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ mv alogrithm.h Alogrithm.h</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ ls</span><br><span class="line">Alogrithm.h  sum.cpp</span><br></pre></td></tr></table></figure>
+<h6 id="cat命令">5.3.11 cat命令</h6>
+<p>cat：将文件内容一次性输出到终端。缺点是终端显示的内容有限，如果文件太长无法全部显示</p>
+<ul>
+<li><code>-n</code>:对输出的所有行编号</li>
+<li><code>-b</code>:输出内容并且给非空行编号</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ cat -n test.cpp </span><br><span class="line">     <span class="number">1</span>	<span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">     <span class="number">2</span>	<span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">     <span class="number">3</span>	<span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="number">4</span>	    cout&lt;&lt;<span class="string">&quot;这里是test1.cpp&quot;</span>&lt;&lt;endl;</span><br><span class="line">     <span class="number">5</span>	&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="less命令">5.3.12 less命令</h6>
+<p>less命令将文件内容分页显示到终端，可以自由上下浏览</p>
+<h6 id="head命令">5.3.13 head命令</h6>
+<p>head命令从文件头部开始查看前n行的内容。如果没有指定行数，默认显示前10行内容。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">head –n [行数] 文件名</span><br><span class="line">head -n <span class="number">30</span> /etc/passwd</span><br></pre></td></tr></table></figure></p>
+<h6 id="find命令">5.3.14 find命令</h6>
+<p><code>find</code>命令功能非常强大也很复杂，通常用来在特定的目录下搜索符合条件的文件，也可以用来搜索特定用户属主的文件。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find   path   -option   [   -print ]   [ -exec   -ok   command ]   &#123;&#125; \;</span><br></pre></td></tr></table></figure> <code>option</code>多达二十多种，这里列举两个：</p>
+<ul>
+<li>按文件名查询，使用<code>-name</code>,如<code>find . -name &quot;test.cpp&quot;</code></li>
+<li>按文件类型查找，使用<code>-type</code>,如<code>find . -type f</code></li>
+</ul>
+<p>举例： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将当前目录及其子目录下所有最近 20 天内更新过的文件列出</span></span><br><span class="line">find . -ctime  <span class="number">20</span></span><br><span class="line"><span class="comment">//查找 /var/log 目录中更改时间在 7 日以前的普通文件，并在删除之前询问它们：</span></span><br><span class="line">find /var/log -type f -mtime +<span class="number">7</span> -ok rm &#123;&#125; \;</span><br><span class="line"><span class="comment">//找当前目录中文件属主具有读、写权限，并且文件所属组的用户和其他用户具有读权限的文件：</span></span><br><span class="line">find . -type f -perm <span class="number">644</span> -exec ls -l &#123;&#125; \;</span><br><span class="line"><span class="comment">//查找系统中所有文件长度为 0 的普通文件，并列出它们的完整路径：</span></span><br><span class="line">find / -type f -size <span class="number">0</span> -exec ls -l &#123;&#125; \;</span><br></pre></td></tr></table></figure></p>
+<h6 id="grep命令">5.3.15 grep命令</h6>
+<p>很多时候，我们并不需要列出文件的全部内容，而是从文件中找到包含指定信息的那些行，要实现这个目的，可以使用<code>grep</code>命令。<code>grep</code>命令是一个强大的文本搜索工具，它能使用<strong>正则表达式</strong>搜索文本，并把匹配的行打印出来.<strong>其中<code>pattern</code>为模式，它要么是字符串，要么是正则表达式，总而言之是我们检索的指定信息</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep [options] pattern filename</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-i</code></td>
+<td>不区分大小写</td>
+</tr>
+<tr class="even">
+<td><code>-c</code></td>
+<td>只输出匹配行的计数</td>
+</tr>
+<tr class="odd">
+<td><code>-l</code></td>
+<td>查询多文件时只输出包含匹配字符的文件名</td>
+</tr>
+<tr class="even">
+<td><code>-n</code></td>
+<td>显示匹配行及行号</td>
+</tr>
+<tr class="odd">
+<td><code>-s</code></td>
+<td>不显示不存在或无匹配文本的错误信息</td>
+</tr>
+<tr class="even">
+<td><code>-v</code></td>
+<td>显示不包含匹配文本的所有行，即反向查找</td>
+</tr>
+<tr class="odd">
+<td><code>-o</code></td>
+<td>只显示匹配字符串的部分</td>
+</tr>
+<tr class="even">
+<td><code>-e</code></td>
+<td>实现多个选项的匹配，逻辑<code>or</code>关系</td>
+</tr>
+<tr class="odd">
+<td><code>-E</code></td>
+<td>使用扩展正则表达式，而不是基本正则表达式，在使用<code>-E</code>选项时，相当于使用<code>egrep</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>正则表达式：</strong></p>
+<ul>
+<li><code>^</code>：此时匹配正则表达以“某字符串”开头的行</li>
+<li><code>$</code>：匹配正则表达式的以“某字符串”结尾的行</li>
+<li><code>[xyz]</code>：匹配方括号中的任意一个字符</li>
+<li><code>[^xyz]</code>：匹配除方括号中字符外的所有字符</li>
+<li><code>*</code>：匹配<code>*</code>前面的字符，匹配0个或无数个</li>
+<li><code>[ - ]</code>: 范围匹配，如<code>[A-C]</code>，即<code>A、B、C</code>都符合要求</li>
+</ul>
+<p><strong>1. 查找以指定字字符串开头的行</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ grep -in ^[a,q,r,f] hell.txt</span><br><span class="line"><span class="number">2</span>:QQWEWQE</span><br><span class="line"><span class="number">5</span>:FDSST</span><br><span class="line"><span class="number">7</span>:AFASRAY</span><br><span class="line"><span class="number">12</span>:ASDSAEE</span><br><span class="line"><span class="number">13</span>:FAFSDG</span><br><span class="line"><span class="number">17</span>:FBB</span><br><span class="line"><span class="number">24</span>:R</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. 查找以指定字结符串尾的行</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ grep -in [a,q,r,f]$ hell.txt</span><br><span class="line"><span class="number">1</span>:dasdfDSFSDA</span><br><span class="line"><span class="number">4</span>:KKJHFR</span><br><span class="line"><span class="number">14</span>:DAGSA</span><br><span class="line"><span class="number">24</span>:R</span><br><span class="line"><span class="number">26</span>:CZXCGA</span><br></pre></td></tr></table></figure>
+<p><strong>3.在文本中搜素只有一个字符的行，且为字母或数字</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ grep -in ^[[:alnum:]]$ hell.txt</span><br><span class="line"><span class="number">20</span>:Z</span><br><span class="line"><span class="number">21</span>:D</span><br><span class="line"><span class="number">22</span>:E</span><br><span class="line"><span class="number">23</span>:W</span><br><span class="line"><span class="number">24</span>:R</span><br><span class="line"><span class="number">25</span>:T</span><br></pre></td></tr></table></figure>
+<p><strong>4.匹配<code>*</code>前面的字符，匹配0个或无数个</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ grep -in <span class="string">&quot;FDSS&quot;</span>* hell.txt </span><br><span class="line"><span class="number">1</span>:dasdfDSFSDA</span><br><span class="line"><span class="number">5</span>:FDSST</span><br></pre></td></tr></table></figure>
+<h6 id="命令">5.3.16 |命令</h6>
+<p>管道<code>|</code>一个命令的输出可以通过管道做为另一个命令的输入。即它只能处理经由前面一个指令传出的正确输出信息，对错误信息信息没有直接处理能力。然后，传递给下一个命令，作为标准的输入. 最常用的： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ps -ef|gerp <span class="string">&quot;进程名&quot;</span></span><br><span class="line">ps -aux|grep <span class="string">&quot;进程名&quot;</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ps -ef|grep bash</span><br><span class="line">trluper     <span class="number">2755</span>    <span class="number">2754</span>  <span class="number">0</span> <span class="number">16</span>:<span class="number">03</span> pts/<span class="number">1</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">02</span> -bash</span><br><span class="line">trluper     <span class="number">4549</span>    <span class="number">4548</span>  <span class="number">0</span> <span class="number">20</span>:<span class="number">29</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> -bash</span><br><span class="line">trluper     <span class="number">4716</span>    <span class="number">4549</span>  <span class="number">0</span> <span class="number">20</span>:<span class="number">49</span> pts/<span class="number">0</span>    <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> grep --color=<span class="keyword">auto</span> bash</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ps -aux|grep bash</span><br><span class="line">trluper     <span class="number">2755</span>  <span class="number">0.0</span>  <span class="number">0.2</span>  <span class="number">19972</span>  <span class="number">5956</span> pts/<span class="number">1</span>    Ss+  <span class="number">16</span>:<span class="number">03</span>   <span class="number">0</span>:<span class="number">02</span> -bash</span><br><span class="line">trluper     <span class="number">4549</span>  <span class="number">0.0</span>  <span class="number">0.2</span>  <span class="number">19864</span>  <span class="number">5956</span> pts/<span class="number">0</span>    Ss   <span class="number">20</span>:<span class="number">29</span>   <span class="number">0</span>:<span class="number">00</span> -bash</span><br><span class="line">trluper     <span class="number">4718</span>  <span class="number">0.0</span>  <span class="number">0.1</span>  <span class="number">17864</span>  <span class="number">2584</span> pts/<span class="number">0</span>    S+   <span class="number">20</span>:<span class="number">49</span>   <span class="number">0</span>:<span class="number">00</span> grep --color=<span class="keyword">auto</span> bas</span><br></pre></td></tr></table></figure></p>
+<h6 id="ps命令">5.3.17 ps命令</h6>
+<p><code>ps</code>（英文全拼：<code>process status</code>）命令用于显示当前进程的状态，类似于<code>windows</code>的任务管理器 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps [options]</span><br></pre></td></tr></table></figure> <code>ps</code>的参数非常多, 在此仅列出几个常用的参数并大略介绍含义</p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>a</code></td>
+<td>显示现行终端机下的所有程序，包括其他用户的程序</td>
+</tr>
+<tr class="even">
+<td><code>-a</code></td>
+<td>显示所有终端机下执行的程序，除了阶段作业领导者之外</td>
+</tr>
+<tr class="odd">
+<td><code>-A</code></td>
+<td>显示所有程序</td>
+</tr>
+<tr class="even">
+<td><code>-e</code></td>
+<td>此选项的效果和指定”A”选项相同</td>
+</tr>
+<tr class="odd">
+<td><code>-f</code></td>
+<td>显示UID,PPIP,C与STIME栏位</td>
+</tr>
+<tr class="even">
+<td><code>-u</code></td>
+<td>此选项的效果和指定”-U”选项相同</td>
+</tr>
+<tr class="odd">
+<td><code>u</code></td>
+<td>以用户为主的格式来显示程序状况</td>
+</tr>
+<tr class="even">
+<td><code>-U</code></td>
+<td>列出属于该用户的程序的状况，也可使用用户名称来指定</td>
+</tr>
+<tr class="odd">
+<td><code>U</code></td>
+<td>列出属于该用户的程序的状况</td>
+</tr>
+<tr class="even">
+<td><code>x</code></td>
+<td>显示所有程序，不以终端机来区分</td>
+</tr>
+</tbody>
+</table>
+<p><strong>1. <code>-aux</code>输出格式</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ps -aux</span><br><span class="line">USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</span><br><span class="line">root           <span class="number">1</span>  <span class="number">0.0</span>  <span class="number">0.4</span> <span class="number">166516</span> <span class="number">11808</span> ?        Ss   <span class="number">13</span>:<span class="number">20</span>   <span class="number">0</span>:<span class="number">06</span> /sbin/init <span class="keyword">auto</span> noprom</span><br><span class="line">root           <span class="number">2</span>  <span class="number">0.0</span>  <span class="number">0.0</span>      <span class="number">0</span>     <span class="number">0</span> ?        S    <span class="number">13</span>:<span class="number">20</span>   <span class="number">0</span>:<span class="number">00</span> [kthreadd]</span><br><span class="line">root           <span class="number">3</span>  <span class="number">0.0</span>  <span class="number">0.0</span>      <span class="number">0</span>     <span class="number">0</span> ?        I&lt;   <span class="number">13</span>:<span class="number">20</span>   <span class="number">0</span>:<span class="number">00</span> [rcu_gp]</span><br><span class="line">root           <span class="number">4</span>  <span class="number">0.0</span>  <span class="number">0.0</span>      <span class="number">0</span>     <span class="number">0</span> ?        I&lt;   <span class="number">13</span>:<span class="number">20</span>   <span class="number">0</span>:<span class="number">00</span> [rcu_par_gp]</span><br><span class="line">root           <span class="number">5</span>  <span class="number">0.0</span>  <span class="number">0.0</span>      <span class="number">0</span>     <span class="number">0</span> ?        I&lt;   <span class="number">13</span>:<span class="number">20</span>   <span class="number">0</span>:<span class="number">00</span> [netns]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>USER</code>: 行程拥有者</li>
+<li><code>PID: pid</code></li>
+<li><code>%CPU</code>: 占用的 <code>CPU</code> 使用率</li>
+<li><code>%MEM</code>: 占用的记忆体使用率</li>
+<li><code>VSZ</code>: 占用的虚拟记忆体大小</li>
+<li><code>RSS</code>: 占用的记忆体大小</li>
+<li><code>TTY</code>: 终端的次要装置号码 (minor device number of tty)</li>
+<li><code>STAT:</code> 该行程的状态:</li>
+<li><code>D:</code> 无法中断的休眠状态 (通常 IO 的进程)</li>
+<li><code>R:</code> 正在执行中</li>
+<li><code>S:</code> 睡眠状态，可被唤醒</li>
+<li><code>T:</code> 暂停执行</li>
+<li><code>Z:</code> 僵尸进程</li>
+<li><code>W:</code> 没有足够的记忆体分页可分配</li>
+<li><code>s：</code>进程是会话首进程</li>
+<li><code>&lt;:</code> 高优先序的行程</li>
+<li><code>N:</code> 低优先序的行程</li>
+<li><code>X：</code>死掉的进程</li>
+<li><code>START:</code> 行程开始时间</li>
+<li><code>TIME:</code> 执行的时间</li>
+<li><code>COMMAND：</code>所执行的指令</li>
+</ul>
+<p><strong>2. <code>-ef</code>输出格式</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/mydir_2$ ps -ef</span><br><span class="line">UID          PID    PPID  C STIME TTY          TIME CMD</span><br><span class="line">root           <span class="number">1</span>       <span class="number">0</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">20</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">06</span> /sbin/init <span class="keyword">auto</span> noprompt splash</span><br><span class="line">root           <span class="number">2</span>       <span class="number">0</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">20</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> [kthreadd]</span><br><span class="line">root           <span class="number">3</span>       <span class="number">2</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">20</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> [rcu_gp]</span><br><span class="line">root           <span class="number">4</span>       <span class="number">2</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">20</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> [rcu_par_gp]</span><br><span class="line">root           <span class="number">5</span>       <span class="number">2</span>  <span class="number">0</span> <span class="number">13</span>:<span class="number">20</span> ?        <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> [netns]</span><br></pre></td></tr></table></figure></p>
+<h6 id="tar命令">5.3.18 tar命令</h6>
+<p><code>tar</code>是Unix/Linux中最常用的备份工具，此命令可以把一系列文件归档到一个大文件中，也可以把档案文件解压以恢复数据。<code>tar</code>这个命令并没有压缩的功能，它只是一个打包的命令，<strong>但是在<code>tar</code>命令中增加一个选项<code>-z</code>可以调用<code>gzip</code>实现了一个压缩的功能，实行一个先打包后压缩的过程</strong>。当然你可以调用其他的压缩命令来压缩。<code>tar</code>要指定扩展名 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只打包</span></span><br><span class="line">tar -cvf test.tar ./</span><br><span class="line"><span class="comment">//压缩当前文件内的所有内容打成和压缩成test.tar.gz包</span></span><br><span class="line">tar -zcvf test.tar.gz ./</span><br><span class="line"><span class="comment">//解压缩和解包</span></span><br><span class="line">tar -zxvf test.tar.gz</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-c</code></td>
+<td>创建一个新归档</td>
+</tr>
+<tr class="even">
+<td><code>-x</code></td>
+<td>从归档中解出文件</td>
+</tr>
+<tr class="odd">
+<td><code>-f</code></td>
+<td>使用归档文件，一定为最后一个参数</td>
+</tr>
+<tr class="even">
+<td><code>-z</code></td>
+<td>通过 gzip 过滤归档</td>
+</tr>
+<tr class="odd">
+<td><code>-t</code></td>
+<td>查看内容</td>
+</tr>
+<tr class="even">
+<td><code>-r</code></td>
+<td>向压缩归档文件末尾追加文件</td>
+</tr>
+<tr class="odd">
+<td><code>-u</code></td>
+<td>更新原压缩包中的文件</td>
+</tr>
+<tr class="even">
+<td><code>-v</code></td>
+<td>显示所有过程</td>
+</tr>
+</tbody>
+</table>
+<p><strong>-f 是必须的，切记，这个参数是最后一个参数，后面只能接档案名。</strong></p>
+<p><strong><em>linux中的压缩后缀：</em></strong></p>
+<ul>
+<li><code>*.gz</code>：由<code>gzip</code>压缩，参数为<code>-z</code></li>
+<li><code>*.bz2</code>:由<code>bzip2</code>压缩，参数为<code>-j</code></li>
+<li><code>*.Z</code>:由<code>compress</code>压缩，参数为<code>-Z</code></li>
+<li><code>*.rar:</code>由<code>rar</code>压缩，linux需下载<code>rar</code></li>
+<li><code>*.zip</code>：由<code>zip</code>压缩，linux需下载<code>zip</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ tar -zcvf mytar.tar.gz ./</span><br><span class="line">./</span><br><span class="line">./mymdir_2</span><br><span class="line">./mytar.tar.gz</span><br><span class="line">./mydir_2/</span><br><span class="line">./mydir_2/test.cpp</span><br><span class="line">./mydir_2/hell.txt</span><br><span class="line">./mydir_2/mydir_1/</span><br><span class="line">./mydir_2/mydir_1/test.cpp</span><br><span class="line">./mydir_2/mydir_1/test1.cpp</span><br><span class="line">./mydir_2/mydir_1/sondir/</span><br><span class="line">./mydir_2/mydir_1/mysondir/</span><br><span class="line">./mydir_2/mydir_1/test3.cpp</span><br><span class="line">./mydir_2/mydir_1/test</span><br><span class="line">./mydir_2/mydir_1/test2.cpp</span><br><span class="line">./mydir_2/test</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">mydir_2  mymdir_2  mytar.tar.gz</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ tar -tvf mytar.tar.gz </span><br><span class="line">drwxr-xr-x trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-17</span> <span class="number">10</span>:<span class="number">31</span> ./</span><br><span class="line">-rw-rw-r-- trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">12</span> ./mymdir_2</span><br><span class="line">-rw-rw-r-- trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-17</span> <span class="number">10</span>:<span class="number">31</span> ./mytar.tar.gz</span><br><span class="line">drwxrwxr-x trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">20</span>:<span class="number">39</span> ./mydir_2/</span><br><span class="line">-rw-rw-r-- trluper/trluper  <span class="number">93</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">34</span> ./mydir_2/test.cpp</span><br><span class="line">-rw-rw-r-- trluper/trluper <span class="number">161</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">20</span>:<span class="number">39</span> ./mydir_2/hell.txt</span><br><span class="line">drwxrwxr-x trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">16</span>:<span class="number">03</span> ./mydir_2/mydir_1/</span><br><span class="line">hrw-rw-r-- trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">34</span> ./mydir_2/mydir_1/test.cpp link to ./mydir_2/test.cpp</span><br><span class="line">-rw-rw-r-- trluper/trluper  <span class="number">93</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">34</span> ./mydir_2/mydir_1/test1.cpp</span><br><span class="line">drwxrwxr-x trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">16</span>:<span class="number">03</span> ./mydir_2/mydir_1/sondir/</span><br><span class="line">drwxrwxr-x trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">49</span> ./mydir_2/mydir_1/mysondir/</span><br><span class="line">-rw-rw-r-- trluper/trluper   <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">04</span> ./mydir_2/mydir_1/test3.cpp</span><br><span class="line">-rwxrwxr-x trluper/trluper <span class="number">23528</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">01</span> ./mydir_2/mydir_1/test</span><br><span class="line">-rw-rw-r-- trluper/trluper     <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">04</span> ./mydir_2/mydir_1/test2.cpp</span><br><span class="line">hrwxrwxr-x trluper/trluper     <span class="number">0</span> <span class="number">2022</span><span class="number">-07</span><span class="number">-16</span> <span class="number">15</span>:<span class="number">01</span> ./mydir_2/test link to ./mydir_2/mydir_1/test</span><br></pre></td></tr></table></figure>
+<h6 id="gzip命令">5.3.19 gzip命令</h6>
+<p>其实上面的<code>tar</code>加<code>-z</code>参数就已经完成了<code>gzip</code>命令的工作了。<code>tar</code>与<code>gzip</code>命令结合使用实现文件打包、压缩。<code>gzip</code>要指定扩展名</p>
+<ul>
+<li><code>-d</code>:解压</li>
+<li><code>-r</code>:压缩所有子目录</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ tar -cvf mytar1.tar mydir_2</span><br><span class="line">mydir_2/</span><br><span class="line">mydir_2/test.cpp</span><br><span class="line">mydir_2/hell.txt</span><br><span class="line">mydir_2/mydir_1/</span><br><span class="line">mydir_2/mydir_1/test.cpp</span><br><span class="line">mydir_2/mydir_1/test1.cpp</span><br><span class="line">mydir_2/mydir_1/sondir/</span><br><span class="line">mydir_2/mydir_1/mysondir/</span><br><span class="line">mydir_2/mydir_1/test3.cpp</span><br><span class="line">mydir_2/mydir_1/test</span><br><span class="line">mydir_2/mydir_1/test2.cpp</span><br><span class="line">mydir_2/test</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">mydir_2  mymdir_2  mytar1.tar  mytar.tar.gz</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ gzip -r mytar1.tar</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">mydir_2  mymdir_2  mytar1.tar.gz  mytar.tar.gz</span><br></pre></td></tr></table></figure>
+<h6 id="zip和unzip命令">5.3.20 zip和unzip命令</h6>
+<p>通过zip压缩文件的目标文件不需要指定扩展名，默认扩展名为zip。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">压缩文件：zip -r 目标文件(没有扩展名) 源文件</span><br><span class="line">解压文件：unzip -d 解压后目录文件 压缩文件</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ zip -r myzip mydir_2</span><br><span class="line">  adding: mydir_2/ (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/test.<span class="built_in">cpp</span> (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/hell.<span class="built_in">txt</span> (deflated <span class="number">20</span>%)</span><br><span class="line">  adding: mydir_2/mydir_1/ (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/mydir_1/test.<span class="built_in">cpp</span> (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/mydir_1/test1.<span class="built_in">cpp</span> (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/mydir_1/sondir/ (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/mydir_1/mysondir/ (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/mydir_1/test3.<span class="built_in">cpp</span> (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/mydir_1/<span class="built_in">test</span> (deflated <span class="number">79</span>%)</span><br><span class="line">  adding: mydir_2/mydir_1/test2.<span class="built_in">cpp</span> (stored <span class="number">0</span>%)</span><br><span class="line">  adding: mydir_2/<span class="built_in">test</span> (deflated <span class="number">79</span>%)</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">mydir_2  mymdir_2  mytar1.tar.gz  mytar.tar.gz  myzip.zip</span><br></pre></td></tr></table></figure></p>
+<h6 id="chmod命令">5.3.21 chmod命令</h6>
+<p><code>chmod</code>（英文全拼：change mode）命令是控制用户对文件的权限的命令。Linux/Unix 的文件调用权限分为三级 : 文件所有者<code>Owner</code>、用户组<code>Group</code>、其它用户<code>ther Users</code>。<strong>在内建命令中我们通过设置<code>umask</code>命令来指定新建的文件的权限，但是对于已经存在的文件的权限我们要怎么去修改呢，只能使用<code>chmod</code>命令来修改</strong> <code>chmod</code> 修改文件权限有两种使用格式<strong>字母法与数字法</strong>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//字母</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls -l</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">drwxrwxr-x <span class="number">3</span> trluper trluper <span class="number">4096</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">20</span>:<span class="number">39</span> mydir_2</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper    <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">12</span> mymdir_2</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ chmod o+w mydir_2/</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls -l</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">drwxrwxrwx <span class="number">3</span> trluper trluper <span class="number">4096</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">20</span>:<span class="number">39</span> mydir_2</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper    <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">12</span> mymdir_2</span><br><span class="line"></span><br><span class="line"><span class="comment">//数字</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ chmod <span class="number">775</span> mydir_2/</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls -l</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">drwxrwxr-x <span class="number">3</span> trluper trluper <span class="number">4096</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">20</span>:<span class="number">39</span> mydir_2</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper    <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">12</span> mymdir_2</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h6 id="命令-1">5.3.22 &gt;命令</h6>
+<p><code>&gt;</code>命令是重定向命令。我们在bash上运行命令，其默认输出为当前的bash终端。当我们想要看查询的东西时（如ls命令），把原来输出到终端的，可以重定向到一个文件。命令后接 <code>&gt;文件名</code>，<code>&gt;</code>会覆盖，<code>&gt;&gt;</code>不覆盖原来内容 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls -l &gt;text.txt</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ ls</span><br><span class="line">mydir_2  mymdir_2  text.txt</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents$ cat text.txt </span><br><span class="line">total <span class="number">4</span></span><br><span class="line">drwxrwxr-x <span class="number">3</span> trluper trluper <span class="number">4096</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">20</span>:<span class="number">39</span> mydir_2</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper    <span class="number">0</span>  <span class="number">7</span>月 <span class="number">16</span> <span class="number">15</span>:<span class="number">12</span> mymdir_2</span><br><span class="line">-rw-rw-r-- <span class="number">1</span> trluper trluper    <span class="number">0</span>  <span class="number">7</span>月 <span class="number">17</span> <span class="number">11</span>:<span class="number">04</span> text.txt</span><br></pre></td></tr></table></figure></p>
+<h6 id="ln命令">5.3.23 ln命令</h6>
+<p><code>ln</code>命令是linux系统中一个非常重要命令，英文全称是“link”，即链接的意思，它的功能是为某一个文件在另外一个位置建立一个同步的链接。 一种是<code>hard link</code>，又称为硬链接；另一种是<code>symbolic link</code>，又称为符号链接。<strong>通俗一点理解，可以把硬链接当成源文件的副本，他和源文件一样的大小，但是事实上却不占任何空间。符号链接可以理解为类似windows一样的快捷方式</strong>。 符号链接 ：</p>
+<ul>
+<li>1.符号链接以路径的形式存在，类似于Windows操作系统中的快捷方式。</li>
+<li>2.符号链接可以跨文件系统 ，硬链接不可以。</li>
+<li>3.符号链接可以对一个不存在的文件名进行链接，硬链接不可以。</li>
+<li>4.符号链接可以对目录进行链接，硬链接不可以。</li>
+</ul>
+<p><strong>硬链接：</strong></p>
+<ul>
+<li>1.硬链接以文件副本的形式存在，但不占用实际空间。</li>
+<li>2.硬链接不允许给目录创建硬链接。</li>
+<li>3.硬链接只有在同一个文件系统中才能创建。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln [参数] [源文件或目录] [目标文件或目录]</span><br></pre></td></tr></table></figure>
+<p><strong>常用参数：</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-b</code></td>
+<td>为每个已存在的目标文件创建备份文件</td>
+</tr>
+<tr class="even">
+<td><code>-d</code></td>
+<td>此选项允许“root”用户建立目录的硬链接</td>
+</tr>
+<tr class="odd">
+<td><code>-f</code></td>
+<td>强制创建链接，即使目标文件已经存在</td>
+</tr>
+<tr class="even">
+<td><code>-n</code></td>
+<td>把指向目录的符号链接视为一个普通文件</td>
+</tr>
+<tr class="odd">
+<td><code>-i</code></td>
+<td>交互模式，若目标文件已经存在，则提示用户确认进行覆盖</td>
+</tr>
+<tr class="even">
+<td><code>-s</code></td>
+<td>对源文件建立符号链接，而非硬链接</td>
+</tr>
+<tr class="odd">
+<td><code>-v</code></td>
+<td>详细信息模式，输出指令的详细执行过程</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//软连接</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ ln -s /home/trluper/Documents/mydir_2 ln_file1</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ ls</span><br><span class="line">ln_file1</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ cd ln_file1</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file/ln_file1$ ls</span><br><span class="line">hell.txt  mydir_1  test  test.cpp</span><br><span class="line"><span class="comment">//软连接就是路径</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ ls -l</span><br><span class="line">total <span class="number">4</span></span><br><span class="line">lrwxrwxrwx <span class="number">1</span> trluper trluper <span class="number">31</span>  <span class="number">7</span>月 <span class="number">17</span> <span class="number">11</span>:<span class="number">15</span> ln_file1 -&gt; /home/trluper/Documents/mydir_2</span><br><span class="line"><span class="comment">//硬链接</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ ln /home/trluper/Documents/mydir_2/test.cpp lntest</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ ls</span><br><span class="line">ln_file1  lntest</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ cat lntest </span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    cout&lt;&lt;<span class="string">&quot;这里时test1.cpp&quot;</span>&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="file命令">5.3.24 file命令</h6>
+<p>file命令用于辨识文件类型。通过<code>file</code>指令，我们得以辨识该文件的类型。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file [-bcLvz][-f &lt;名称文件&gt;][-m &lt;魔法数字文件&gt;...][文件或目录...]</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-b</code></td>
+<td>列出辨识结果时，不显示文件名称。</td>
+</tr>
+<tr class="even">
+<td><code>-c</code></td>
+<td>详细显示指令执行过程，便于排错或分析程序执行的情形。</td>
+</tr>
+<tr class="odd">
+<td><code>-f&lt;名称文件&gt;</code></td>
+<td>指定名称文件，其内容有一个或多个文件名称时，让file依序辨识这些文件，格式为每列一个文件名称。</td>
+</tr>
+<tr class="even">
+<td><code>-L</code></td>
+<td>直接显示符号连接所指向的文件的类别。</td>
+</tr>
+<tr class="odd">
+<td><code>-m&lt;魔法数字文件&gt;</code></td>
+<td>　指定魔法数字文件。</td>
+</tr>
+<tr class="even">
+<td><code>-v</code></td>
+<td>显示版本信息。</td>
+</tr>
+<tr class="odd">
+<td><code>-z</code></td>
+<td>尝试去解读压缩文件的内容。</td>
+</tr>
+<tr class="even">
+<td><code>[文件或目录...]</code></td>
+<td>要确定类型的文件列表，多个文件之间使用空格分开，可以使用shell通配符匹配多个文件。</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ file lntest1 </span><br><span class="line">lntest1: C++ source, Unicode text, UTF<span class="number">-8</span> text</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ file ln_file1</span><br><span class="line">ln_file1: symbolic link to /home/trluper/Documents/mydir_2</span><br></pre></td></tr></table></figure>
+<h6 id="chgrp命令">5.3.25 chgrp命令</h6>
+<p><strong><code>chgrp</code>命令用来改变文件或目录所属的用户组。该命令用来改变指定文件所属的用户组</strong>。其中，组名可以是用户组的<code>id</code>，也可以是用户组的组名。文件名可以是由空格分开的要改变属组的文件列表，也可以是由通配符描述的文件集合。如果用户不是该文件的文件主或超级用户(root)，则不能改变该文件的组。<strong>同时必须在<code>/etc/group</code>有该组名。</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chgrp [选项] 组名 文件...</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-c</code></td>
+<td>效果类似<code>-v</code>参数，但仅会显示更改的部分</td>
+</tr>
+<tr class="even">
+<td><code>-f</code></td>
+<td>不显示错误信息</td>
+</tr>
+<tr class="odd">
+<td><code>-h</code></td>
+<td>只对符号连接的文件作修改，而不是该其他任何相关文件</td>
+</tr>
+<tr class="even">
+<td><code>-R</code></td>
+<td>递归处理，将指令目录下的所有文件及子目录一并处理</td>
+</tr>
+<tr class="odd">
+<td><code>-v</code></td>
+<td>显示指令执行过程；</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ cat /etc/group</span><br><span class="line">root:x:<span class="number">0</span>:</span><br><span class="line">daemon:x:<span class="number">1</span>:</span><br><span class="line">bin:x:<span class="number">2</span>:</span><br><span class="line">sys:x:<span class="number">3</span>:</span><br><span class="line">adm:x:<span class="number">4</span>:syslog,trluper</span><br><span class="line">tty:x:<span class="number">5</span>:</span><br><span class="line">disk:x:<span class="number">6</span>:</span><br><span class="line">lp:x:<span class="number">7</span>:</span><br><span class="line">mail:x:<span class="number">8</span>:</span><br><span class="line">news:x:<span class="number">9</span>:</span><br><span class="line">uucp:x:<span class="number">10</span>:</span><br><span class="line">man:x:<span class="number">12</span>:</span><br><span class="line">...</span><br><span class="line"><span class="comment">//将rumenz目录由root组改为www群组</span></span><br><span class="line">chgrp -R www rumenz</span><br></pre></td></tr></table></figure>
+<h6 id="top命令">5.3.26 top命令</h6>
+<p><code>top</code>命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">top [参数]</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-b</code></td>
+<td>批处理</td>
+</tr>
+<tr class="even">
+<td><code>-c</code></td>
+<td>显示完整的治命令</td>
+</tr>
+<tr class="odd">
+<td><code>-I</code></td>
+<td>忽略失效过程</td>
+</tr>
+<tr class="even">
+<td><code>-s</code></td>
+<td>保密模式</td>
+</tr>
+<tr class="odd">
+<td><code>-S</code></td>
+<td>累积模式</td>
+</tr>
+<tr class="even">
+<td><code>-i&lt;时间&gt;</code></td>
+<td>设置间隔时间</td>
+</tr>
+<tr class="odd">
+<td><code>-u&lt;用户名&gt;</code></td>
+<td>指定用户名</td>
+</tr>
+<tr class="even">
+<td><code>-p&lt;进程号&gt;</code></td>
+<td>指定进程</td>
+</tr>
+<tr class="odd">
+<td><code>-n&lt;次数&gt;</code></td>
+<td>循环显示的次数</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/ln_file$ top -p2567</span><br><span class="line">top - <span class="number">12</span>:<span class="number">55</span>:<span class="number">36</span> up  <span class="number">2</span>:<span class="number">23</span>,  <span class="number">2</span> users,  load average: <span class="number">0.00</span>, <span class="number">0.00</span>, <span class="number">0.00</span></span><br><span class="line">Tasks:   <span class="number">0</span> total,   <span class="number">0</span> running,   <span class="number">0</span> sleeping,   <span class="number">0</span> stopped,   <span class="number">0</span> zombie</span><br><span class="line">%<span class="built_in">Cpu</span>(s):  <span class="number">0.0</span> us,  <span class="number">0.0</span> sy,  <span class="number">0.0</span> ni, <span class="number">99.9</span> id,  <span class="number">0.1</span> wa,  <span class="number">0.0</span> hi,  <span class="number">0.0</span> si,  <span class="number">0.0</span> st</span><br><span class="line">MiB Mem :   <span class="number">2408.3</span> total,    <span class="number">493.1</span> free,    <span class="number">655.0</span> used,   <span class="number">1260.2</span> buff/cache</span><br><span class="line">MiB Swap:   <span class="number">2048.0</span> total,   <span class="number">2048.0</span> free,      <span class="number">0.0</span> used.   <span class="number">1570.8</span> avail Mem </span><br></pre></td></tr></table></figure>
+<h6 id="ar命令">5.3.27 ar命令</h6>
+<p><code>ar</code>命令用于<strong>建立或修改备存文件，或是从备存文件中抽取文件。可集合许多文件，成为单一的备存文件。在备存文件中，所有成员文件皆保有原来的属性与权限</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ar [参数]</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr class="header">
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-d</code></td>
+<td>删除备存文件中的成员文件</td>
+</tr>
+<tr class="even">
+<td><code>-m</code></td>
+<td>变更成员文件在备存文件中的次序</td>
+</tr>
+<tr class="odd">
+<td><code>-p</code></td>
+<td>显示备存文件中的成员文件内容</td>
+</tr>
+<tr class="even">
+<td><code>-q</code></td>
+<td>将文件附加在备存文件末端</td>
+</tr>
+<tr class="odd">
+<td><code>-r</code></td>
+<td>将文件插入备存文件中</td>
+</tr>
+<tr class="even">
+<td><code>-t</code></td>
+<td>显示备存文件中所包含的文件</td>
+</tr>
+<tr class="odd">
+<td><code>-x</code></td>
+<td>自备存文件中取出成员文件</td>
+</tr>
+<tr class="even">
+<td><code>-c</code></td>
+<td>创建</td>
+</tr>
+<tr class="odd">
+<td><code>-s</code></td>
+<td>建立索引</td>
+</tr>
+</tbody>
+</table>
+<h6 id="nm命令">5.3.28 nm命令</h6>
+<p><code>nm</code>是<code>names</code>的缩写，<strong><code>nm</code>命令主要是用来列出某些文件中的符号（说白了就是一些函数和全局变量等）</strong>。 一般来说，搞linux开发的人，才会用到<code>nm</code>命令，非开发的人，应该用不到. <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nm [参数]</span><br></pre></td></tr></table></figure></p>
+<h4 id="vim编辑器">6. vim编辑器</h4>
+<p><code>vi (Visual interface)</code>编辑器是<code>Linux</code>系统中最常用的文本编辑器，<code>vi</code>工作在字符模式下，不需要图形界面，非常适合远程及嵌入式工作，是效率很高的文本编辑器。<code>vim</code>是<code>vi</code>的升级版，它不仅兼容<code>vi</code>的所有指令，而且还有一些新的特性，例如<code>vim</code>可以撤消无限次、支持关键词自动完成、可以用不同的颜色来高亮你的代码。<code>vim</code>普遍被推崇为类<code>vi</code>编辑器中最好的一个。</p>
+<h5 id="vim的三种模式">6.1 vim的三种模式</h5>
+<p>vi有三种基本工作模式: <strong>命令模式、文本输入模式(编辑模式)、末行模式</strong></p>
+<ul>
+<li><p><strong>命令模式：</strong> <strong>任何时候,不管用户处于何种模式,只要按一下<code>ESC</code>键,即可使<code>vi</code>进入命令模式</strong>。我们在<code>shell</code>环境(提示符为<code>$</code>)下输入启动<code>vim</code>命令，进入编辑器时，也是处于该模式下。在命令模式下，用户可以输入各种合法的<code>vi</code>命令，用于管理自己的文档。<strong>此时从键盘上输入的任何字符都被当做编辑命令来解释，若输入的字符是合法的<code>vi</code>命令，则<code>vi</code>在接受用户命令之后完成相应的动作</strong>。但需注意的是，所输入的命令并不在屏幕上显示出来。若输入的字符不是<code>vi</code>的合法命令，<code>vi</code>会响铃报警。</p></li>
+<li><p>文本输入模式： 在命令模式下输入插入命令<code>i（I）、附加命令a（A） 、打开命令o（O）、替换命s（S）</code>都可以进入文本输入模式，此时vi窗口的最后一行会显示“插入”,可进行文本编辑.</p></li>
+<li><p>末行模式： 末行模式下，用户可以对文件进行一些附加处理。尽管命令模式下的命令可以完成很多功能，但要执行一些如字符串查找、替换、显示行号等操作还是必须要进入末行模式的。<strong>在命令模式下，输入冒号<code>:</code>即可进入末行模式。此时vi窗口的状态行会显示出冒号，等待用户输入命令。用户输入完成后，按回车执行，之后<code>vi</code>编辑器又自动返回到命令模式下</strong> <img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/vi-vim.gif"></p></li>
+</ul>
+<h5 id="命令模式下的命令操作">6.2 命令模式下的命令操作</h5>
+<h6 id="切换到编辑模式">6.2.1 切换到编辑模式</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/vimbianji.png"></p>
+<h6 id="光标移动">6.2.2 光标移动</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/mousemove.png"></p>
+<h6 id="删除">6.2.3 删除</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/delete.png"> <strong>常用：<code>D</code>、<code>dG</code>、<code>nx</code>(n为数字)、<code>ndd</code></strong></p>
+<h6 id="查找">6.2.4 查找</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/find.png"></p>
+<h6 id="可视模式">6.2.5 可视模式</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/copydelete.png"></p>
+<h6 id="粘贴和复制">6.2.6 粘贴和复制</h6>
+<ul>
+<li><code>p</code>:粘贴在光标后面</li>
+<li><code>P</code>:粘贴在光标前面</li>
+<li><code>y</code>:拷贝行</li>
+<li><code>Y</code>:拷贝行</li>
+</ul>
+<h5 id="末行模式下的命令操作">6.3 末行模式下的命令操作</h5>
+<h6 id="保存退出">6.3.1 保存退出</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/saveexit.png"></p>
+<h6 id="替换">6.3.2 替换</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/tihuan.png"> 可以从上图总结：<code>s(</code>代表本行，<code>g</code>为所有(global)都替换，<code>%</code>指本文件所有行，<code>c</code>每次替换都要求确认</p>
+<h6 id="分屏">6.3.3 分屏</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/fenping.png"></p>
+<h6 id="其他用法扩展">6.3.4 其他用法扩展</h6>
+<p><img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/others.png"></p>
+<h5 id="vim的配置文件所在">6.4 vim的配置文件所在</h5>
+<p>局部配置文件（推荐）：<code>~/.vimrc</code> 全局配置文件:<code>/etc/vim/vimrc</code></p>
+<h4 id="gcc和gcc编译器">7. GCC和gcc++编译器</h4>
+<h5 id="gcc和-gcc是两个不同的东西">7.1 gcc和 GCC是两个不同的东西</h5>
+<ul>
+<li><code>GCC:GNU Compiler Collection</code>(GUN 编译器集合)，它可以编译<code>C、C++、JAV、Fortran、Pascal、Object-C、Ada</code>等语言。</li>
+<li>因此<code>gcc</code>是<code>GCC</code>中的<code>GUN C Compiler</code>（C 编译器）；<code>g++</code>是<code>GCC</code>中的<code>GUN C++ Compiler</code>（<code>C++</code>编译器）。二者都可以编译<code>c</code>或<code>cpp</code>文件。只不过用<code>gcc</code>编译<code>c++</code>需要手动添加链接库</li>
+<li><strong>在编译阶段，<code>g++</code>会调用<code>gcc</code>，对于<code>c++</code>代码，两者是等价的，但是因为<code>gcc</code>命令不能自动和<code>C++</code>程序使用的库联接，所以通常使用用<code>g++</code>来编译以求自动完成链接。所以对于<code>C</code>语言程序的编译，我们应该使用<code>gcc</code> 指令，而编译<code>C++</code>程序则推荐使用<code>g++</code>指令</strong></li>
+</ul>
+<h5 id="gccg的四个步骤">7.2 gcc/g++的四个步骤</h5>
+<p><code>gcc、g++</code>编译器从拿到一个c源文件到生成一个可执行程序，中间一共经历了<strong>四个步骤：</strong> <img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/compile.png"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">第一步: 进行预处理</span><br><span class="line">deng@itcast:~/share/<span class="number">3</span>rd/<span class="number">1</span>gcc$ gcc -E <span class="number">1</span>hello.c -o <span class="number">1</span>hello.i</span><br><span class="line">第二步: 生成汇编文件</span><br><span class="line">deng@itcast:~/share/<span class="number">3</span>rd/<span class="number">1</span>gcc$ gcc -S <span class="number">1</span>hello.i -o <span class="number">1</span>hello.s</span><br><span class="line">第三步: 生成目标代码</span><br><span class="line">deng@itcast:~/share/<span class="number">3</span>rd/<span class="number">1</span>gcc$ gcc -c <span class="number">1</span>hello.s -o <span class="number">1</span>hello.o</span><br><span class="line">第四步: 生成可以执行文件</span><br><span class="line"><span class="comment">//这条指令是完成链接这个过程的，它通过链接器ld将运行程序的目标文件和库文件链接在一起，</span></span><br><span class="line"><span class="comment">//生成最后的可执行文件</span></span><br><span class="line">deng@itcast:~/share/<span class="number">3</span>rd/<span class="number">1</span>gcc$ gcc <span class="number">1</span>hello.o -o <span class="number">1</span>hello</span><br><span class="line">第五步: 执行 </span><br><span class="line">deng@itcast:~/share/<span class="number">3</span>rd/<span class="number">1</span>gcc​$ ./<span class="number">1</span>hello</span><br><span class="line">hello itcast</span><br><span class="line"></span><br><span class="line">也可直接将源文件生成一个可以执行文件</span><br><span class="line">deng@itcast:~/share/<span class="number">3</span>rd/<span class="number">1</span>gcc$ gcc <span class="number">1</span>hello.c -o <span class="number">1</span>hello</span><br><span class="line">deng@itcast:~/share/<span class="number">3</span>rd/<span class="number">1</span>gcc​$ ./<span class="number">1</span>hello</span><br><span class="line">hello itcast</span><br></pre></td></tr></table></figure></p>
+<p><strong>常用选项</strong> <img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/gcc.png"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">gcc hello.c -o hello  -I /home/hello/include -L /home/hello/lib -lworld</span><br><span class="line">上面这句表示在编译hello.c时：</span><br><span class="line"></span><br><span class="line">-I /home/hello/include表示将/home/hello/include目录作为第一个寻找头文件的目录，</span><br><span class="line">寻找的顺序是：/home/hello/include--&gt;/usr/include--&gt;/usr/local/include </span><br><span class="line"></span><br><span class="line">-L /home/hello/lib表示将/home/hello/lib目录作为第一个寻找库文件的目录，</span><br><span class="line">寻找的顺序是：/home/hello/lib--&gt;/lib--&gt;/usr/lib--&gt;/usr/local/lib</span><br><span class="line"></span><br><span class="line">-lworld表示在上面的lib的路径中寻找libworld.so动态库文件或libworld.a静态库文件</span><br></pre></td></tr></table></figure></p>
+<p><strong><em>附加</em></strong>：</p>
+<ul>
+<li><p><code>-I</code>针对头文件，未指明路径时，使用<code>#include&lt;&gt;</code>,<code>gcc/g++</code>默认目录<code>/usr/include</code>，如果使用<code>#include&lt;my.h&gt;</code>则找不到<code>my.h</code>文件，因此要通过<code>-I dir</code>参数来指定包含的头文件<code>my.h</code>的位置： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$gcc hell.c -o hell -I /<span class="built_in">root</span>              (假设文件my.h存放在/root下)</span><br></pre></td></tr></table></figure></p></li>
+<li><p><code>-L</code>与<code>-I</code> 功能类似，只不过<code>-L</code>时对库文件使用，能够在指定库文件搜索路径。如果一个程序用到了目录<code>/root/lib</code>下的一个动态库<code>libsunq.so</code>，因为<code>-L dir</code>指定的是路径而没有指定文件，则需要用到 <code>-llibname</code>参数，它可以指定<code>gcc</code>去寻找<code>libsunq.so</code>或者<code>libsunq.a</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$gcc hello.c -o hell -L /root/lib -lsunq</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h5 id="静态链接和动态链接">7.3 静态链接和动态链接</h5>
+<h6 id="静态链接">7.3.1静态链接</h6>
+<p><strong>静态链接是指由链接器在链接时将库的内容直接加入到可执行程序中。</strong></p>
+<ul>
+<li><strong>优点：</strong>
+<ul>
+<li>对运行环境的依赖性较小，具有较好的兼容性</li>
+</ul></li>
+<li><strong>缺点：</strong>
+<ul>
+<li>生成的程序比较大，需要更多的系统资源，在装入内存时会消耗更多的时间</li>
+<li>库函数有了更新，必须重新编译应用程序</li>
+</ul></li>
+</ul>
+<h6 id="动态链接">7.3.2 动态链接</h6>
+<p><strong>动态链接是指连接器在链接时仅仅建立与所需库函数的之间的链接关系，在程序运行时才将所需资源调入可执行程序。</strong></p>
+<ul>
+<li><strong>优点：</strong>
+<ul>
+<li>在需要的时候才会调入对应的资源函数</li>
+<li>简化程序的升级；有着较小的程序体积</li>
+<li>实现进程之间的资源共享（避免重复拷贝）</li>
+</ul></li>
+<li><strong>缺点：</strong>
+<ul>
+<li>依赖动态库，不能独立运行</li>
+<li>动态库依赖版本问题严重</li>
+</ul></li>
+</ul>
+<p>注：前面我们编写的应用程序大量用到了标准库函数，系统默认采用动态链接的方式进行编译程序，若想采用静态编译，加入<code>-static</code>参数。</p>
+<h6 id="静态库的制作">7.3.3 静态库的制作</h6>
+<p>静态库可以认为是一些目标代码的集合，是在可执行程序运行前就已经加入到执行码中，成为执行程序的一部分。 按照习惯,一般以<code>.a</code>做为文件后缀名。静态库的命名一般分为三个部分：</p>
+<ul>
+<li>前缀：<code>lib</code></li>
+<li>库名称：自己定义即可</li>
+<li>后缀：<code>.a</code></li>
+</ul>
+<p><strong>所以最终的静态库的名字应该为：<code>libxxx.a</code></strong> <img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/staticlinked.png" width="600"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">步骤<span class="number">1</span>：将c源文件生成对应的.o文件</span><br><span class="line">deng@itcast:~/test/<span class="number">3</span>static_lib$ gcc -c add.c -o add.o</span><br><span class="line">deng@itcast:~/test/<span class="number">3</span>static_lib​$ gcc -c sub.c -o sub.o </span><br><span class="line">deng@itcast:~/test/<span class="number">3</span>static_lib​$ gcc -c mul.c -o mul.o </span><br><span class="line">deng@itcast:~/test/<span class="number">3</span>static_lib​$ gcc -c div.c -o div.o</span><br><span class="line">步骤<span class="number">2</span>：使用打包工具ar将准备好的.o文件打包为.a文件 libtest.a</span><br><span class="line">deng@itcast:~/test/<span class="number">3</span>static_lib$ ar -rcs libAlogrithm.a add.o sub.o mul.o div.o</span><br></pre></td></tr></table></figure> <strong>在使用ar工具是时候需要添加参数：<code>-rcs</code></strong></p>
+<ul>
+<li><code>r</code>更新</li>
+<li><code>c</code>创建</li>
+<li><code>s</code>建立索引</li>
+</ul>
+<h6 id="静态库的使用">7.3.4 静态库的使用</h6>
+<p>静态库制作完成之后，<strong>需要将<code>.a</code>文件和头文件一起发布给用户</strong>。假设测试文件为<code>main.c</code>，静态库文件为<code>libAlogrithm.a</code>，头文件为<code>Alogrithm.h</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/test$ cat main.cpp </span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Alogrithm.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> a=<span class="number">20</span>,b=<span class="number">20</span>;</span><br><span class="line">	cout&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/test$ g++ -<span class="type">static</span> main.cpp -I ../staticLib/ -L ../staticLib/ -lAlogrithm -o test</span><br></pre></td></tr></table></figure></p>
+<h6 id="动图库的制作">7.3.5 动图库的制作</h6>
+<p>共享库在程序编译时并不会被连接到目标代码中，而是在程序运行是才被载入。不同的应用程序如果调用相同的库，那么在内存里只需要有一份该共享库的实例，规避了空间浪费问题和更新问题。 按照习惯,一般以“.so”做为文件后缀名。共享库的命名一般分为三个部分：</p>
+<ul>
+<li>前缀：<code>lib</code></li>
+<li>库名称：自己定义即可</li>
+<li>后缀：<code>.so</code></li>
+</ul>
+<p><strong>所以最终的动态库的名字应该为：<code>libxxx.so</code></strong> <img src="/2022/07/15/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/dynamiclib.png" width="500"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">步骤一：生成目标文件，此时要加编译选项：-fPIC（fpic）</span><br><span class="line">deng@itcast:~/test/<span class="number">5</span>share_lib$ gcc -fPIC -c add.c</span><br><span class="line">deng@itcast:~/test/<span class="number">5</span>share_lib​$ gcc -fPIC -c sub.c </span><br><span class="line">deng@itcast:~/test/<span class="number">5</span>share_lib$ gcc -fPIC -c mul.c </span><br><span class="line">deng@itcast:~/test/<span class="number">5</span>share_lib​$ gcc -fPIC -c div.c</span><br><span class="line">参数：-fPIC 创建与地址无关的编译程序（pic，position independent code），是为了能够在多个应用程序间共享。</span><br><span class="line">步骤二：生成共享库，此时要加链接器选项: -shared（指定生成动态链接库）</span><br><span class="line">deng@itcast:~/test/<span class="number">5</span>share_lib$ gcc -shared add.o sub.o mul.o div.o -o libtest.so</span><br><span class="line"></span><br><span class="line">步骤三: 通过nm命令查看对应的函数</span><br><span class="line">deng@itcast:~/test/<span class="number">5</span>share_lib$ nm libtest.so | grep add </span><br><span class="line"><span class="number">00000000000006b</span>0 T add </span><br><span class="line">deng@itcast:~/test/<span class="number">5</span>share_lib​$ nm libtest.so | grep sub </span><br><span class="line"><span class="number">00000000000006</span>c4 T sub</span><br></pre></td></tr></table></figure>
+<h6 id="使用动态库">7.3.6 使用动态库</h6>
+<p>静态库制作完后，需要在测试文件所在的目录创建<code>libxxx.so</code>的链接接，否则就会出现下面这个错误： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error <span class="keyword">while</span> loading shared libraries: libtiger.so: cannot open shared object file: No such file <span class="keyword">or</span> direct</span><br></pre></td></tr></table></figure> 可以通过<code>ldd</code>命令查看哪些动态链接库没有找到： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/test$ ldd test1</span><br><span class="line">	linux-vdso.so<span class="number">.1</span> (<span class="number">0x00007ffc0d5fe000</span>)</span><br><span class="line">	libAlogrithm.so =&gt; <span class="keyword">not</span> found</span><br><span class="line">	libstdc++.so<span class="number">.6</span> =&gt; /lib/x86_64-linux-gnu/libstdc++.so<span class="number">.6</span> (<span class="number">0x00007fbd2317f000</span>)</span><br><span class="line">	libc.so<span class="number">.6</span> =&gt; /lib/x86_64-linux-gnu/libc.so<span class="number">.6</span> (<span class="number">0x00007fbd22f57000</span>)</span><br><span class="line">	libm.so<span class="number">.6</span> =&gt; /lib/x86_64-linux-gnu/libm.so<span class="number">.6</span> (<span class="number">0x00007fbd22e70000</span>)</span><br><span class="line">	/lib64/ld-linux-x86<span class="number">-64.</span>so<span class="number">.2</span> (<span class="number">0x00007fbd233c1000</span>)</span><br><span class="line">	libgcc_s.so<span class="number">.1</span> =&gt; /lib/x86_64-linux-gnu/libgcc_s.so<span class="number">.1</span> (<span class="number">0x00007fbd22e50000</span>)</span><br></pre></td></tr></table></figure> <strong>这是因为程序运行时没有找到动态链接库造成的。程序编译时链接动态库和运行时使用动态链接库的概念是不同的，在运行时，程序链接的动态链接库需要在系统目录下才行</strong>。方法：</p>
+<ul>
+<li><strong>方法一是可在系统目录创建软链接，链接文件。</strong>这是因为用·<code>-L</code>指定动态库文件路径只能保证编译通过，是否能执行还是得看<code>/lib/</code>或<code>/usr/lib</code>下面有没有该库文件（只要没有删除，永久有效）</li>
+<li>方法二当然你要可以修改<code>LD_LIBRARY_PATH</code>指定的动态库搜索路径(当前shell有效)</li>
+<li>方法三是配置文件<code>/etc/ld.so.conf</code>中指定的动态库搜索路径(永久有效)</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">deng@itcast:~/test/<span class="number">6</span>share_test$ sudo ln -s /home/trluper/Documents/staticLib/libtest.so /lib/share_test/libtest.so</span><br></pre></td></tr></table></figure>
+<p>然后同静态链接一样，引用动态库去编译：（要保证能找到头文件，因此使用<code>-I</code>) <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -<span class="type">static</span> main.cpp -I ../staticLib/ -lAlogrithm -o test</span><br></pre></td></tr></table></figure></p>
+<h5 id="gdb调试">7.4 gdb调试</h5>
+<p>GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试工具。 对于一名Linux下工作的c/c++程序员，gdb是必不可少的工具。GDB主要帮忙你完成下面四个方面的功能：</p>
+<ul>
+<li>启动程序，可以按照你的自定义的要求随心所欲的运行程序。</li>
+<li>可让被调试的程序在你所指定的调置的断点处停住。（断点可以是条件表达式）</li>
+<li>当程序被停住时，可以检查此时你的程序中所发生的事。</li>
+<li>动态的改变你程序的执行环境。</li>
+</ul>
+<h6 id="gdb的工作步骤">7.4.1 gdb的工作步骤</h6>
+<p><strong>1. 准备工作</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用gcc/g++将其编译为可执行文件，同时使用-g表示该程序可调试：</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ g++ -g main.cpp sum.cpp -o main</span><br></pre></td></tr></table></figure>
+<p><strong>2. 启动gdb</strong></p>
+<p>输入<code>gdb -q + 可执行文件</code>，启动gdb进行调试。<code>-q</code>参数可以屏蔽一些gdb版本等相关信息，使得页面看起来干净些（我用了）。至此gdb启动完毕： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~/Documents/staticLib$ gdb -q main</span><br><span class="line">Reading symbols from main...</span><br><span class="line">(gdb) </span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 查看代码（可选）</strong></p>
+<p>输入<code>list（l）</code>即可查看程序源码 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">(gdb) l</span><br><span class="line"><span class="number">1</span>	<span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Alogrithm.h&quot;</span></span></span><br><span class="line"><span class="number">2</span>	<span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="number">3</span>	<span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="number">4</span>	<span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function">5	</span>&#123;</span><br><span class="line"><span class="number">6</span>		<span class="type">int</span> a=<span class="number">10</span>,b=<span class="number">20</span>;</span><br><span class="line"><span class="number">7</span>		cout&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line"><span class="number">8</span>		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">9</span>	&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>4. 设置参数（可选）</strong></p>
+<p><code>set args</code>可指定运行时参数（如：<code>set args 10 20 30 40 50</code>）。<code>show args</code>命令可以查看设置好的运行参数 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(gdb) set args <span class="number">20</span> <span class="number">30</span> <span class="number">50</span></span><br><span class="line">(gdb) b <span class="number">2</span></span><br><span class="line">Breakpoint <span class="number">1</span> at <span class="number">0x11b5</span>: file main.cpp, line <span class="number">6.</span></span><br><span class="line">(gdb) run</span><br><span class="line">Starting program: /home/trluper/Documents/staticLib/main <span class="number">20</span> <span class="number">30</span> <span class="number">50</span></span><br><span class="line">gdb) show args</span><br><span class="line">Argument list to give program being debugged when it is started is <span class="string">&quot;20 30 50&quot;</span>.</span><br></pre></td></tr></table></figure></p>
+<p><strong>5.设置断点（可选）</strong></p>
+<p>输入<code>break（b）+数字</code> 可以对程序进行断点操作（数字就是设置断点的代码行数） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(gdb) b <span class="number">2</span></span><br><span class="line">Breakpoint <span class="number">1</span> at <span class="number">0x11b5</span>: file main.cpp, line <span class="number">6.</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>6. 启动程序</strong></p>
+<p>输入<code>run（r)</code>开始运行程序，直到遇到“断点”或者“结束” <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(gdb) r</span><br><span class="line">Starting program: /home/trluper/Documents/staticLib/main </span><br><span class="line">[Thread debugging <span class="keyword">using</span> libthread_db enabled]</span><br><span class="line">Using host libthread_db library <span class="string">&quot;/lib/x86_64-linux-gnu/libthread_db.so.1&quot;</span>.</span><br><span class="line"></span><br><span class="line">Breakpoint <span class="number">1</span>, <span class="built_in">main</span> () at main.cpp:<span class="number">6</span></span><br><span class="line"><span class="number">6</span>		<span class="type">int</span> a=<span class="number">10</span>,b=<span class="number">20</span>;</span><br></pre></td></tr></table></figure></p>
+<p><strong>7.单步执行程序（可选）</strong></p>
+<ul>
+<li><code>next</code>单步执行程序，但是遇到函数时会直接跳过函数，不进入函数</li>
+<li><code>step</code>单步执行程序，但遇到函数会进入函数</li>
+<li><code>continue</code>继续执行程序，直到遇到断点或结束</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Argument list to give program being debugged when it is started is <span class="string">&quot;20 30 50&quot;</span>.</span><br><span class="line">(gdb) s</span><br><span class="line"><span class="number">7</span>		cout&lt;&lt;<span class="built_in">sum</span>(a,b)&lt;&lt;endl;</span><br><span class="line">(gdb) <span class="function">s</span></span><br><span class="line"><span class="function"><span class="title">sum</span> <span class="params">(a=<span class="number">10</span>, b=<span class="number">20</span>)</span> at sum.cpp:<span class="number">4</span></span></span><br><span class="line"><span class="function"><span class="number">4</span>		return a+b;</span></span><br><span class="line">(gdb) s</span><br><span class="line"><span class="number">5</span>	&#125;</span><br><span class="line">(gdb) s</span><br><span class="line"><span class="number">30</span></span><br><span class="line"><span class="built_in">main</span> () at main.cpp:<span class="number">8</span></span><br><span class="line"><span class="number">8</span>		<span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p><strong>8. 查看变量值（可选）</strong></p>
+<p><code>print + 变量</code>查看变量值；<code>whatis + 变量</code>查看变量数据类型。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(gdb) print a</span><br><span class="line">$<span class="number">1</span> = <span class="number">10</span></span><br><span class="line">(gdb) whatis a</span><br><span class="line">type = <span class="type">int</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>9. 退出</strong></p>
+<p>输入<code>q</code>即可退出gdb <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(gdb) q</span><br><span class="line">A debugging session is active.</span><br><span class="line">	Inferior <span class="number">1</span> [process <span class="number">3102</span>] will be killed.</span><br><span class="line">Quit anyway? (y <span class="keyword">or</span> n) y</span><br></pre></td></tr></table></figure></p>
+<h6 id="其他命令">7.4.2 其他命令</h6>
+<p><strong>1. 断点</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>delete + n</code></td>
+<td>删除第<code>n</code>个断点</td>
+</tr>
+<tr class="even">
+<td><code>disable + n</code></td>
+<td>暂停第<code>n</code>个断点</td>
+</tr>
+<tr class="odd">
+<td><code>enable + n</code></td>
+<td>开启第<code>n</code>个断点</td>
+</tr>
+<tr class="even">
+<td><code>clear + n</code></td>
+<td>清除第<code>n</code>行的断点</td>
+</tr>
+<tr class="odd">
+<td><code>info b</code></td>
+<td>显示当前程序的断点设置情况</td>
+</tr>
+<tr class="even">
+<td><code>delete breakpoints</code></td>
+<td>清除所有断点</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. 运行信息</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>where/bt</code></td>
+<td>当前运行的堆栈列表</td>
+</tr>
+<tr class="even">
+<td><code>bt backtrace</code></td>
+<td>显示当前调用堆栈</td>
+</tr>
+<tr class="odd">
+<td><code>up/down</code></td>
+<td>改变堆栈显示的深度</td>
+</tr>
+<tr class="even">
+<td><code>info program</code></td>
+<td>查看程序是否在运行，以及进程号被暂停的原因</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. 运行命令</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>until</code></td>
+<td>如果你厌倦了在一个循环内单步跟踪，它可以运行程序直到退出循环体</td>
+</tr>
+<tr class="even">
+<td><code>until + 行号</code></td>
+<td>运行至某行</td>
+</tr>
+<tr class="odd">
+<td><code>finish</code></td>
+<td>运行程序，直到当前函数返回完成，并且打印函数返回时的堆栈地址和返回值及参数值等信息</td>
+</tr>
+<tr class="even">
+<td><code>call + 行数 + （参数）</code></td>
+<td>调用程序中可见的函数，并传递参数</td>
+</tr>
+</tbody>
+</table>
+<h4 id="shell脚本">8. shell脚本</h4>
+<p>Shell 脚本（shell script），是一种为 shell 编写的脚本程序。对于Linux 的 Shell 种类众多，常见的有：</p>
+<ul>
+<li><code>Bourne Shell（/usr/bin/sh或/bin/sh）</code></li>
+<li><code>Bourne Again Shell（/bin/bash）</code></li>
+<li><code>C Shell（/usr/bin/csh）</code></li>
+<li><code>K Shell（/usr/bin/ksh）</code></li>
+<li><code>Shell for Root（/sbin/sh）</code></li>
+</ul>
+<p>在一般情况下，人们并不区分<code>Bourne Shell</code>和<code>Bourne Again Shell</code>，所以，像<code>#!/bin/sh，</code>它同样也可以改为 <code>#!/bin/bash</code>。<code>#!</code>告诉系统其后路径所指定的程序即是解释此脚本文件的 <code>Shell</code> 程序。</p>
+<h5 id="创建一个脚本文件">8.1 创建一个脚本文件</h5>
+<p>使用<code>vi/vim</code>命令来创建文件)，新建一个文件<code>test.sh</code>，扩展名为<code>sh</code>（sh代表shell），扩展名并不影响脚本执行，见名知意就好。输入一些代码，第一行一般是这样: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">echo <span class="string">&quot;Hello World !&quot;</span></span><br></pre></td></tr></table></figure> <strong><code>#!</code>是一个约定的标记，它告诉系统这个脚本需要什么解释器来执行，即使用哪一种<code>Shell</code></strong>。echo 命令用于向窗口输出文本。</p>
+<h5 id="运行脚本的方法">8.2 运行脚本的方法</h5>
+<h6 id="作为可执行程序">8.2.1 作为可执行程序</h6>
+<p>将上面的代码保存到<code>test.sh</code>，并<code>cd</code>到相应目录： <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x ./test.sh  <span class="comment">#使脚本具有执行权限</span></span><br><span class="line">./test.sh  <span class="comment">#执行脚本</span></span><br></pre></td></tr></table></figure> 注意，一定要写成 <code>./test.sh</code>，而不是<code>test.sh</code>，运行其它二进制的程序也一样，直接写<code>test.sh</code>的话，<code>linux</code>系统会去<code>PATH</code>里寻找有没有叫<code>test.sh</code>的，而只有 <code>/bin, /sbin, /usr/bin，/usr/sbin</code>等在<code>PATH</code>里，你的当前目录通常不在<code>PATH</code>里，所以写成<code>test.sh</code>是会找不到命令的，要用 <code>./test.sh</code> 告诉系统说，就在当前目录找。</p>
+<h6 id="作为解释器参数">8.2.2 作为解释器参数</h6>
+<p>这种运行方式是，直接运行解释器，其参数就是 shell 脚本的文件名，如： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/bin/sh test.sh</span><br><span class="line">/bin/php test.php</span><br></pre></td></tr></table></figure> 这种方式运行的脚本，不需要在第一行指定解释器信息，写了也没用。</p>
+<h5 id="变量">8.3 变量</h5>
+<p>变量名和等号之间不能有空格，这可能和你熟悉的所有编程语言都不一样。同时，变量名的命名须遵循如下规则： - 命名只能使用英文字母，数字和下划线，首个字符不能以数字开头。 - 中间不能有空格，可以使用下划线 _。 - 不能使用标点符号。 - 不能使用bash里的关键字（可用help命令查看保留关键字）。</p>
+<p>定义变量时，变量名不加美元符号<code>$</code>，但PHP语言中变量需要。使用变量名是需要加<code>$</code> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">your_name=<span class="string">&quot;runoob.com&quot;</span></span><br><span class="line">echo $your_name</span><br><span class="line">echo $&#123;your_name&#125;</span><br><span class="line">echo <span class="string">&quot;My name is &amp;&#123;your_name&#125;teacher&quot;</span></span><br><span class="line">your_name=<span class="string">&quot;xiaoming&quot;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>变量名外面的<code>&#123;&#125;</code>是可选的，加不加都行，加花括号是为了帮助解释器识别变量的边界，</li>
+<li>一般推荐使用<code>&#123;&#125;</code>,比如上面的第三节，如果不加<code>&#123;&#125;</code>，则会认为your_nameteacher为一个变量名，就出错了。</li>
+<li>重新赋值是允许的，仍有不用加<code>$</code>,只有使用的时候加上<code>$</code></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/13/ubuntu%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4856,20 +6643,20 @@ r^{k-1}_{ij}，不更新
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -4910,12 +6697,12 @@ r^{k-1}_{ij}，不更新
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">425k</span>
+    <span title="站点总字数">432k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:26</span>
+    <span title="站点阅读时长">6:33</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
