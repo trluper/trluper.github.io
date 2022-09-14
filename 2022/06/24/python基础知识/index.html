@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/2022/06/24/python%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/2.png">
 <meta property="og:image" content="http://example.com/2022/06/24/python%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/file.jpg">
 <meta property="article:published_time" content="2022-06-24T01:07:58.000Z">
-<meta property="article:modified_time" content="2022-07-23T04:51:46.468Z">
+<meta property="article:modified_time" content="2022-09-13T03:47:53.610Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-23 12:51:46" itemprop="dateModified" datetime="2022-07-23T12:51:46+08:00">2022-07-23</time>
+                <time title="修改时间：2022-09-13 11:47:53" itemprop="dateModified" datetime="2022-09-13T11:47:53+08:00">2022-09-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>27k</span>
+              <span>30k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>24 分钟</span>
+              <span>27 分钟</span>
             </span>
 
         </div>
@@ -286,7 +286,14 @@
 <h5 id="pvm虚拟机">1.2 PVM虚拟机</h5>
 <p>py程序编译成字节码后，字节码文件会发送给PVM，也就是python虚拟机进行出来。PVM是python运行的引擎，从根本上讲，它才算是python解释器。python虚拟机就是去模拟可执行程序在x86机器上的运行</p>
 <h4 id="python的内置对象">2. python的内置对象</h4>
-<p>python中没有类型声明，运行的表达式的语法决定了创建和使用对象的类型，正如以下表达式就是这些类型起源的地方。</p>
+<p>python中没有类型声明，运行的表达式的语法决定了创建和使用对象的类型，正如以下表达式就是这些类型起源的地方。Python有五个标准的数据类型：</p>
+<ul>
+<li><code>Numbers</code>（数字）</li>
+<li><code>String</code>（字符串）</li>
+<li><code>List</code>（列表）</li>
+<li><code>Tuple</code>（元组）</li>
+<li><code>Dictionary</code>（字典）</li>
+</ul>
 <table>
 <thead>
 <tr class="header">
@@ -377,7 +384,7 @@
 <p>对于python的字符串，无论是<code>&quot;&quot;</code>还是<code>''</code>都一样,支持串与串的相加，支持串与数的相乘，但不允许串与数的相加。同时支持负偏移和分片操作： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>=<span class="string">&quot;trluper&quot;</span>;	<span class="comment">#合法</span></span><br><span class="line"><span class="built_in">str</span>=<span class="string">&#x27;trluper&#x27;</span>;	<span class="comment">#合法</span></span><br><span class="line">c=<span class="built_in">str</span>[-<span class="number">1</span>];		<span class="comment">#str[len(str)-1]=str[6]</span></span><br><span class="line"><span class="built_in">str</span>=<span class="built_in">str</span>+<span class="string">&#x27;github&#x27;</span>;</span><br><span class="line"><span class="built_in">str</span>*=<span class="number">4</span>;</span><br><span class="line"><span class="built_in">str</span>+=<span class="number">4</span>;			<span class="comment">#error</span></span><br><span class="line"></span><br></pre></td></tr></table></figure> 输出： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r</span><br><span class="line">trlupergithub</span><br><span class="line">trlupergithubtrlupergithubtrlupergithubtrlupergithub</span><br></pre></td></tr></table></figure></p>
 <p><strong>分片：</strong><code>Str[i:j]</code>i表示从下标为i的开始，小标j结束（不包括j）(i未输入时默认为0，j未说明默认为到最后一个元素)。即<code>str[1:-1]</code>,表示从r开始到e结束（<code>len(str)-1=6</code>），<strong>分片会产生新对象。</strong> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>=<span class="string">&#x27;trluper&#x27;</span>;</span><br><span class="line">s=<span class="built_in">str</span>[<span class="number">1</span>:-<span class="number">1</span>];</span><br><span class="line"><span class="built_in">print</span>(s);</span><br></pre></td></tr></table></figure> 输出： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rlupe</span><br></pre></td></tr></table></figure></p>
 <p><strong>扩展分片：</strong>分片表达式有可选的第三个索引，用作步进<code>str[i:j:k]</code>，未声明时k默认为1，表示隔几个元素取 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">str</span>=<span class="string">&#x27;trluper&#x27;</span>;</span><br><span class="line">s=<span class="built_in">str</span>[<span class="number">1</span>:-<span class="number">1</span>:<span class="number">2</span>];</span><br><span class="line"><span class="built_in">print</span>(s);</span><br></pre></td></tr></table></figure> 输出： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rue</span><br></pre></td></tr></table></figure></p>
-<h5 id="字符串转换">4.3 字符串转换</h5>
+<h5 id="数据类型转换">4.3 数据类型转换</h5>
 <p>上面讲到字符串和数字之间无法相加，会发生错误，为解决这方面问题，python提供了字符串和数字间的转换函数：</p>
 <table>
 <thead>
@@ -410,6 +417,22 @@
 <tr class="even">
 <td><code>chr(int i)</code></td>
 <td>将数字转换为对于的ascii码</td>
+</tr>
+<tr class="odd">
+<td><code>tuple(s)</code></td>
+<td>将序列 s 转换为一个元组</td>
+</tr>
+<tr class="even">
+<td><code>list(s)</code></td>
+<td>将序列 s 转换为一个列表</td>
+</tr>
+<tr class="odd">
+<td><code>set(s)</code></td>
+<td>转换为可变集合</td>
+</tr>
+<tr class="even">
+<td><code>dict(d)</code></td>
+<td>创建一个字典。d 必须是一个序列 (key,value)元组。</td>
 </tr>
 </tbody>
 </table>
@@ -637,6 +660,64 @@
 <li>与列表不同，字典是无序，保存在字典中的项没有特定的顺序，因此不支持序列操作，如下标访问，是通过键值访问，键值是不可重复的</li>
 <li>与列表一样，可变长，存储的元素可为任意类型，支持任意嵌套，可以在原处修改；存储的是对象引用，而不是拷贝 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">keyValue_test=&#123;<span class="string">&#x27;food&#x27;</span>:<span class="string">&#x27;fish&#x27;</span>,<span class="string">&#x27;quantity&#x27;</span>:<span class="number">4</span>,<span class="string">&#x27;price&#x27;</span>:<span class="number">50</span>&#125;;</span><br><span class="line">fod_name=keyValue_test[<span class="string">&#x27;food&#x27;</span>];</span><br></pre></td></tr></table></figure> <strong>字典常用函数：</strong> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;fish&quot;</span> <span class="keyword">in</span> keyValue;		<span class="comment">#键存在判断</span></span><br><span class="line">D.keys();				<span class="comment">#返回所有键,可迭代对象</span></span><br><span class="line">D.values();				<span class="comment">#返回所有值,可迭代对象</span></span><br><span class="line">D.items();				<span class="comment">#键+值,可迭代对象</span></span><br><span class="line">D.copy();				<span class="comment">#拷贝</span></span><br><span class="line">D.get(key,\);			<span class="comment">#返回key对应的值，相当于D[key]</span></span><br><span class="line">D.update(D1);			<span class="comment">#合并字典</span></span><br><span class="line">D.pop(key);				<span class="comment">#删除键值对</span></span><br><span class="line"><span class="built_in">len</span>(D);					<span class="comment">#长度</span></span><br><span class="line"><span class="keyword">del</span> D[key];</span><br><span class="line"><span class="built_in">list</span>(D.keys())			<span class="comment">#生成键序列</span></span><br></pre></td></tr></table></figure></li>
 </ul>
+<table>
+<thead>
+<tr class="header">
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>clear()</code></td>
+<td>删除字典内所有元素</td>
+</tr>
+<tr class="even">
+<td><code>copy()</code></td>
+<td>返回一个字典的浅复制</td>
+</tr>
+<tr class="odd">
+<td><code>fromkeys(seq[, val])</code></td>
+<td>创建一个新字典，以序列 seq 中元素做字典的键，val 为字典所有键对应的初始值</td>
+</tr>
+<tr class="even">
+<td><code>get(key, default=None)</code></td>
+<td>返回指定键的值，如果值不在字典中返回default值</td>
+</tr>
+<tr class="odd">
+<td><code>has_key(key)</code></td>
+<td>如果键在字典dict里返回true，否则返回false</td>
+</tr>
+<tr class="even">
+<td><code>items()</code></td>
+<td>以列表返回可遍历的(键, 值) 元组数组</td>
+</tr>
+<tr class="odd">
+<td><code>keys()</code></td>
+<td>以列表返回一个字典所有的键</td>
+</tr>
+<tr class="even">
+<td><code>setdefault(key, default=None)</code></td>
+<td>和get()类似, 但如果键不存在于字典中，将会添加键并将值设为default</td>
+</tr>
+<tr class="odd">
+<td><code>update(dict2)</code></td>
+<td>把字典dict2的键/值对更新到dict里</td>
+</tr>
+<tr class="even">
+<td><code>values()</code></td>
+<td>以列表返回字典中的所有值</td>
+</tr>
+<tr class="odd">
+<td><code>pop(key[,default])</code></td>
+<td>删除字典给定键 key 所对应的值，返回值为被删除的值。key值必须给出。 否则，返回default值。</td>
+</tr>
+<tr class="even">
+<td><code>popitem()</code></td>
+<td>返回并删除字典中的最后一对键和值。</td>
+</tr>
+</tbody>
+</table>
 <h5 id="键的排序">9.1 键的排序</h5>
 <ul>
 <li><p>因为字典不是序列，不包含任何可靠的从左到右的顺序排序方法，当我们需要强调某种顺序时，一个常用方法就是通过字典的keys方法收集一个键的列表，使用列表的<code>sort</code>方法进行排序： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">key_list=<span class="built_in">list</span>(d.keys());</span><br><span class="line"><span class="built_in">print</span>(key_list);</span><br><span class="line">key_list.sort();</span><br><span class="line"><span class="built_in">print</span>(key_list);</span><br></pre></td></tr></table></figure> 输出： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">&#x27;food&#x27;</span>, <span class="string">&#x27;price&#x27;</span>, <span class="string">&#x27;quantity&#x27;</span>, <span class="string">&#x27;buyer&#x27;</span>]</span><br><span class="line">[<span class="string">&#x27;buyer&#x27;</span>, <span class="string">&#x27;food&#x27;</span>, <span class="string">&#x27;price&#x27;</span>, <span class="string">&#x27;quantity&#x27;</span>]</span><br></pre></td></tr></table></figure></p></li>
@@ -940,7 +1021,11 @@
 <li>模块是一个独立的作用域（本地变量就是全局变量）：模板自己成立一个作用域，但是它的变量可看作全局变量，文件内都可使用</li>
 </ul>
 <h6 id="进行导入操作的文件的与被导入的文件的关系">20.4.2 进行导入操作的文件的与被导入的文件的关系</h6>
-<p>导入操作不会赋予被导入文件种的代码对上层代码的可见度：即被导入文件无法看见进行导入操作的文件内的变量名 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#modeA.py</span></span><br><span class="line">x=<span class="number">88</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>():</span><br><span class="line">	gloabal x;</span><br><span class="line">	x=<span class="number">99</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">#modeB.py</span></span><br><span class="line"><span class="keyword">import</span> modeA</span><br><span class="line">x=<span class="number">11</span>;</span><br><span class="line">modeA.f()</span><br><span class="line"><span class="built_in">print</span>(x,modeA.x);	<span class="comment">#11 99</span></span><br></pre></td></tr></table></figure> 总结来说： - 函数绝对无法看见其他函数内的变量名，除非它们是嵌套的 - 模块程序代码绝对无法看见其他模块的变量名，除非明确进行了变量导入</p>
+<p>导入操作不会赋予被导入文件种的代码对上层代码的可见度：即被导入文件无法看见进行导入操作的文件内的变量名 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#modeA.py</span></span><br><span class="line">x=<span class="number">88</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>():</span><br><span class="line">	gloabal x;</span><br><span class="line">	x=<span class="number">99</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">#modeB.py</span></span><br><span class="line"><span class="keyword">import</span> modeA</span><br><span class="line">x=<span class="number">11</span>;</span><br><span class="line">modeA.f()</span><br><span class="line"><span class="built_in">print</span>(x,modeA.x);	<span class="comment">#11 99</span></span><br></pre></td></tr></table></figure> 总结来说：</p>
+<ul>
+<li>函数绝对无法看见其他函数内的变量名，除非它们是嵌套的</li>
+<li>模块程序代码绝对无法看见其他模块的变量名，除非明确进行了变量导入</li>
+</ul>
 <h6 id="模块重载">20.4.3 模块重载</h6>
 <p>我们之前提到，模块导入只会执行一次，要强制模块代码重新载入并执行，得要调用<code>reload</code>内置函数： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> simple</span><br><span class="line">reload(simple);		<span class="comment">#重载模块</span></span><br></pre></td></tr></table></figure> 重载模块有几个<strong><em>注意点：</em></strong></p>
 <ul>
@@ -948,6 +1033,200 @@
 <li>重载会影响所有使用import读取的模块属性</li>
 <li>重载只会以后对以后使用from的造成影响</li>
 </ul>
+<h4 id="内置函数">21 内置函数</h4>
+<p>python内部内置了丰富的函数供开发者调用，下面进行简单的介绍。</p>
+<h5 id="数学函数">21.1 数学函数</h5>
+<table>
+<thead>
+<tr class="header">
+<th>名称</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>abs(x)</code></td>
+<td>返回数字的绝对值，如<code>abs(-10)</code>返回 10</td>
+</tr>
+<tr class="even">
+<td><code>ceil(x)</code></td>
+<td>返回数字的上入整数，如<code>math.ceil(4.1)</code> 返回 5</td>
+</tr>
+<tr class="odd">
+<td><code>cmp(x, y)</code></td>
+<td>如果 <code>x &lt; y</code> 返回 -1, 如果 <code>x == y</code> 返回 0, 如果 <code>x &gt; y</code> 返回 1</td>
+</tr>
+<tr class="even">
+<td><code>exp(x)</code></td>
+<td>返回e的x次幂(ex),如<code>math.exp(1)</code> 返回2.718281828459045</td>
+</tr>
+<tr class="odd">
+<td><code>fabs(x)</code></td>
+<td>返回数字的绝对值，如<code>math.fabs(-10)</code> 返回10.0</td>
+</tr>
+<tr class="even">
+<td><code>floor(x)</code></td>
+<td>返回数字的下舍整数，如<code>math.floor(4.9)</code>返回 4</td>
+</tr>
+<tr class="odd">
+<td><code>log(x)</code></td>
+<td>如<code>math.log(math.e)</code>返回1.0,<code>math.log(100,10)</code>返回2.0</td>
+</tr>
+<tr class="even">
+<td><code>log10(x)</code></td>
+<td>返回以10为基数的x的对数，如<code>math.log10(100)</code>返回 2.0</td>
+</tr>
+<tr class="odd">
+<td><code>max(x1, x2,...)</code></td>
+<td>返回给定参数的最大值，参数可以为序列。</td>
+</tr>
+<tr class="even">
+<td><code>min(x1, x2,...)</code></td>
+<td>返回给定参数的最小值，参数可以为序列。</td>
+</tr>
+<tr class="odd">
+<td><code>modf(x)</code></td>
+<td>返回x的整数部分与小数部分，两部分的数值符号与x相同，整数部分以浮点型表示。</td>
+</tr>
+<tr class="even">
+<td><code>pow(x, y)</code></td>
+<td>x**y 运算后的值。</td>
+</tr>
+<tr class="odd">
+<td><code>round(x [,n])</code></td>
+<td>返回浮点数x的四舍五入值，如给出n值，则代表舍入到小数点后的位数。</td>
+</tr>
+<tr class="even">
+<td><code>sqrt(x)</code></td>
+<td>返回数字x的平方根</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内置函数-1">21.2 内置函数</h5>
+<p>这里列举一些简单内置函数列表，不做例子解释：</p>
+<table style="width:11%;">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>名称</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>abs()</code></td>
+<td><code>abs()</code>函数返回数字的绝对值</td>
+</tr>
+<tr class="even">
+<td><code>all()</code></td>
+<td><code>all()</code>函数用于判断给定的可迭代参数<code>iterable</code>中的所有元素是否都为<code>TRUE</code>，如果是返回 <code>True</code>，否则返回<code>False</code>.元素除了<code>0、空、None、False</code>外都算 True</td>
+</tr>
+<tr class="odd">
+<td><code>any()</code></td>
+<td><code>any()</code>函数用于判断给定的可迭代参数<code>iterable</code>是否全部为<code>False</code>，则返回<code>False</code>，如果有一个为<code>True</code>，则返回<code>True</code>。元素除了是<code>0、空、FALSE 外都算 TRUE</code>。</td>
+</tr>
+<tr class="even">
+<td><code>bin()</code></td>
+<td><code>bin()</code>返回一个整数 <code>int</code> 或者长整数 <code>long int</code> 的二进制表示</td>
+</tr>
+<tr class="odd">
+<td><code>bool()</code></td>
+<td><code>bool()</code> 函数用于将给定参数转换为布尔类型，如果没有参数，返回 False。</td>
+</tr>
+<tr class="even">
+<td><code>bytearray()</code></td>
+<td><code>bytearray()</code>方法返回一个新字节数组。这个数组里的元素是可变的，并且每个元素的值范围</td>
+</tr>
+<tr class="odd">
+<td><code>callable()</code></td>
+<td>函数用于检查一个对象是否是可调用的。如果返回<code>True</code>，<code>object</code>仍然可能调用失败；但如果返回<code>False</code>，调用对象<code>object</code>绝对不会成功。</td>
+</tr>
+<tr class="even">
+<td><code>chr()</code></td>
+<td><code>chr()</code>用一个范围在 <code>range（256）</code>内的（就是0～255）整数作参数，返回一个对应的字符</td>
+</tr>
+<tr class="odd">
+<td><code>classmethod修饰符</code></td>
+<td><code>classmethod</code> 修饰符对应的函数不需要实例化，不需要 <code>self</code> 参数，但第一个参数需要是表示自身类的 <code>cls</code> 参数，可以来调用类的属性，类的方法，实例化对象等。</td>
+</tr>
+<tr class="even">
+<td><code>cmp()</code></td>
+<td>cmp(x,y) 函数用于比较2个对象，如果 <code>x &lt; y</code> 返回 -1, 如果<code>x == y</code>返回 0, 如果 <code>x &gt; y</code>返回 1</td>
+</tr>
+<tr class="odd">
+<td><code>delattr()</code></td>
+<td>删除属性,<code>delattr(x, 'foobar')</code> 相等于 <code>del x.foobar</code></td>
+</tr>
+<tr class="even">
+<td><code>dir()</code></td>
+<td><code>dir()</code>函数不带参数时，返回当前范围内的变量、方法和定义的类型列表；带参数时，返回参数的属性、方法列表</td>
+</tr>
+<tr class="odd">
+<td><code>divmod()</code></td>
+<td>把除数和余数运算结果结合起来，返回一个包含商和余数的元组<code>(a / b, a % b)</code></td>
+</tr>
+<tr class="even">
+<td><code>execfile()</code></td>
+<td>函数可以用来执行一个文件</td>
+</tr>
+<tr class="odd">
+<td><code>file()</code></td>
+<td><code>file()</code>函数用于创建一个 file 对象，它有一个别名叫<code>open()</code>，更形象一些，它们是内置函数。参数是以字符串的形式传递的</td>
+</tr>
+<tr class="even">
+<td><code>float()</code></td>
+<td><code>float()</code>函数用于将整数和字符串转换成浮点数。</td>
+</tr>
+<tr class="odd">
+<td><code>frozenset()</code></td>
+<td>返回一个冻结的集合，冻结后集合不能再添加或删除任何元素，即不可变</td>
+</tr>
+<tr class="even">
+<td><code>getattr()</code></td>
+<td>返回一个对象的属性值</td>
+</tr>
+<tr class="odd">
+<td><code>globals()</code></td>
+<td><code>globals()</code>函数会以字典类型返回当前位置的全部全局变量</td>
+</tr>
+<tr class="even">
+<td><code>hasattr()</code></td>
+<td><code>hasattr()</code>函数用于判断对象是否包含对应的属性</td>
+</tr>
+<tr class="odd">
+<td><code>hash()</code></td>
+<td><code>hash()</code>用于获取取一个对象（字符串或者数值等）的哈希值</td>
+</tr>
+<tr class="even">
+<td><code>help()</code></td>
+<td><code>help()</code> 函数用于查看函数或模块用途的详细说明</td>
+</tr>
+<tr class="odd">
+<td><code>hex()</code></td>
+<td><code>hex()</code> 函数用于将10进制整数转换成16进制，以字符串形式表示</td>
+</tr>
+<tr class="even">
+<td><code>id()</code></td>
+<td><code>id()</code>函数返回对象的唯一标识符，标识符是一个整数</td>
+</tr>
+</tbody>
+</table>
+<h6 id="compile函数">21.2.1 compile()函数</h6>
+<h6 id="complex函数">21.2.2 complex()函数</h6>
+<h6 id="dict函数">21.2.3 dict()函数</h6>
+<h6 id="enumerate函数">21.2.4 enumerate()函数</h6>
+<h6 id="eval函数">21.2.5 eval()函数</h6>
+<h6 id="filter函数">21.2.6 filter()函数</h6>
+<p><code>filter()</code>函数用于过滤序列，过滤掉不符合条件的元素，返回由符合条件元素组成的新列表。<strong>接收两个参数，第一个为函数，第二个为序列，序列的每个元素作为参数传递给函数进行判断，然后返回 <code>True</code> 或 <code>False</code>，最后将返回 <code>True</code> 的元素放到新列表中。</strong></p>
+<blockquote>
+<p>注意: Python2.7 返回列表，Python3.x 返回迭代器对象，具体内容可以查看：Python3 filter() 函数</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">def <span class="title">is_odd</span><span class="params">(n)</span>:</span></span><br><span class="line"><span class="function">    return n % <span class="number">2</span> =</span>= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">newlist = <span class="built_in">filter</span>(is_odd, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>])</span><br><span class="line"><span class="built_in">print</span>(newlist) #[<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+<h6 id="format-格式化函数">21.2.7 format 格式化函数</h6>
+<p>Python2.6 开始，新增了一种格式化字符串的函数<code>str.format()</code>，它增强了字符串格式化的功能。基本语法是通过<code>&#123;&#125;</code>和<code>:</code>来代替以前的 <code>%</code>。<code>format</code> 函数可以接受不限个参数，位置可以不按顺序 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;<span class="string">&quot;&#123;&#125; &#123;&#125;&quot;</span>.format(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>)    # 不设置指定位置，按默认顺序</span><br><span class="line"><span class="string">&#x27;hello world&#x27;</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="string">&quot;&#123;0&#125; &#123;1&#125;&quot;</span>.format(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>)  # 设置指定位置</span><br><span class="line"><span class="string">&#x27;hello world&#x27;</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; <span class="string">&quot;&#123;1&#125; &#123;0&#125; &#123;1&#125;&quot;</span>.format(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>)  # 设置指定位置</span><br><span class="line"><span class="string">&#x27;world hello world&#x27;</span></span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -1051,7 +1330,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E7%9A%84%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">1. python的运行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E7%A0%81%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 字节码编译</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pvm%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 PVM虚拟机</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E7%9A%84%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">2. python的内置对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">3. 数字类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AE%E7%9A%84%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 一些内置的数学函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 表达式操作符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.</span> <span class="nav-text">4. 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#raw%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8A%91%E5%88%B6%E8%BD%AC%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 raw字符串抑制转义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 常见操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 字符串转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%9F%A5%E8%AF%A2%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 修改&#x2F;查询字符串</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 字符串格式化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.</span> <span class="nav-text">5. 字符串的函数接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 字符串查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2%E6%93%8D%E4%BD%9Cupperlowerswapcasecapitalize%E5%92%8Ctitle"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 字符串大小写转换操作（upper、lower、swapcase、capitalize和title）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E9%BD%90centerjust%E5%92%8Czfill"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 字符串对齐（center，just和zfill）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E5%AD%97%E7%AC%A6%E4%B8%B2splitsplitlines%E5%92%8Cpartition"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 分割字符串(split、splitlines和partition)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E4%B8%8E%E6%9B%BF%E6%8D%A2joinreplace"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 合并与替换(join，replace)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%AF%94%E8%BE%83maxmin%E7%AD%89"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 字符串的比较(&lt;,&gt;,max,min等)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2isidentifierisspaceisalphaisdecimalisnumeric%E5%92%8Cisalnum%E7%AD%89"><span class="nav-number">5.7.</span> <span class="nav-text">5.7 判断字符串(isidentifier、isspace、isalpha、isdecimal、isnumeric和isalnum等)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="nav-number">6.</span> <span class="nav-text">6. 模式匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E8%A1%A8list"><span class="nav-number">7.</span> <span class="nav-text">7. 列表(list)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E8%A7%A3%E6%9E%90"><span class="nav-number">8.</span> <span class="nav-text">8. 列表解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E5%85%B8dictionary"><span class="nav-number">9.</span> <span class="nav-text">9. 字典(Dictionary)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%AE%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="nav-number">9.1.</span> <span class="nav-text">9.1 键的排序</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set%E9%9B%86%E5%90%88"><span class="nav-number">10.</span> <span class="nav-text">10. set集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%83%E7%BB%84tuple"><span class="nav-number">11.</span> <span class="nav-text">11. 元组(tuple)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">12.</span> <span class="nav-text">12. 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E7%9A%84%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B"><span class="nav-number">13.</span> <span class="nav-text">13. python的动态类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">13.1.</span> <span class="nav-text">13.1 动态类型是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%BC%95%E7%94%A8"><span class="nav-number">13.2.</span> <span class="nav-text">13.2. 共享引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%92%8C%E6%8B%B7%E8%B4%9D"><span class="nav-number">13.3.</span> <span class="nav-text">13.3.引用和拷贝</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E8%AF%AD%E5%8F%A5"><span class="nav-number">14.</span> <span class="nav-text">14. python语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8Ecc%E5%AE%8C%E5%85%A8%E4%B8%8D%E5%90%8C%E7%82%B9"><span class="nav-number">14.1.</span> <span class="nav-text">14.1 与C&#x2F;C++完全不同点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC%E5%92%8C%E6%89%93%E5%8D%B0"><span class="nav-number">14.2.</span> <span class="nav-text">14.2 赋值和打印</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC"><span class="nav-number">14.2.1.</span> <span class="nav-text">14.2.1 赋值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%93%E5%8D%B0"><span class="nav-number">14.2.2.</span> <span class="nav-text">14.2.2 打印</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#python%E7%9A%84%E5%B8%83%E5%B0%94%E5%80%BC"><span class="nav-number">14.3.</span> <span class="nav-text">14.3 python的布尔值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-number">14.4.</span> <span class="nav-text">14.4 判断循环语句</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#ifelifelse"><span class="nav-number">14.4.1.</span> <span class="nav-text">14.4.1 if&#x2F;elif&#x2F;else</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#while%E8%AF%AD%E5%8F%A5"><span class="nav-number">14.4.2.</span> <span class="nav-text">14.4.2 while语句</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#for%E8%AF%AD%E5%8F%A5"><span class="nav-number">14.4.3.</span> <span class="nav-text">14.4.3 for语句</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%BE%AA%E7%8E%AF"><span class="nav-number">14.5.</span> <span class="nav-text">14.5 其他循环</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#range%E5%87%BD%E6%95%B0%E8%B7%B3%E9%81%8D%E5%8E%86"><span class="nav-number">14.5.1.</span> <span class="nav-text">14.5.1 range函数跳遍历</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E9%81%8D%E5%8E%86zip%E5%92%8Cmap"><span class="nav-number">14.5.2.</span> <span class="nav-text">14.5.2 并行遍历zip和map</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#filter%E5%92%8Creduce"><span class="nav-number">14.5.3.</span> <span class="nav-text">14.5.3 filter和reduce</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E8%A7%A3%E6%9E%90"><span class="nav-number">15.</span> <span class="nav-text">15. 迭代器和解析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">15.1.</span> <span class="nav-text">15.1. 文件迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#next__"><span class="nav-number">15.1.1.</span> <span class="nav-text">15.1.1 __next()__</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%A8for%E5%BE%AA%E7%8E%AF%E6%8E%A8%E8%8D%90"><span class="nav-number">15.1.2.</span> <span class="nav-text">15.1.2 用for循环(推荐)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E8%BF%AD%E4%BB%A3"><span class="nav-number">15.1.3.</span> <span class="nav-text">15.1.3 手动迭代</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E8%BF%AD%E4%BB%A3"><span class="nav-number">15.2.</span> <span class="nav-text">15.2. 字典迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E9%94%AE%E5%80%BC%E5%88%97%E8%A1%A8%E5%86%8D%E7%94%B1%E9%81%8D%E5%8E%86%E5%88%97%E8%A1%A8%E9%81%8D%E5%8E%86%E5%AD%97%E5%85%B8"><span class="nav-number">15.2.1.</span> <span class="nav-text">15.2.1 获取键值列表，再由遍历列表遍历字典</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%89%E5%AD%97%E5%85%B8%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%81%8D%E5%8E%86"><span class="nav-number">15.2.2.</span> <span class="nav-text">15.2.2 有字典的迭代器遍历</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%BF%AD%E4%BB%A3%E7%8E%AF%E5%A2%83"><span class="nav-number">15.3.</span> <span class="nav-text">15.3 其他迭代环境</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">16.</span> <span class="nav-text">16. 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#def"><span class="nav-number">16.1.</span> <span class="nav-text">16.1 def</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#python%E4%B8%AD%E7%9A%84%E5%A4%9A%E6%80%81"><span class="nav-number">16.2.</span> <span class="nav-text">16.2 python中的多态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">16.3.</span> <span class="nav-text">16.3 作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%B3%95%E5%88%99"><span class="nav-number">16.3.1.</span> <span class="nav-text">16.3.1 作用域法则</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#global"><span class="nav-number">16.3.2.</span> <span class="nav-text">16.3.2 global</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#nonlocal"><span class="nav-number">16.3.3.</span> <span class="nav-text">16.3.3 nonlocal</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">17.</span> <span class="nav-text">17. 参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92"><span class="nav-number">17.1.</span> <span class="nav-text">17.1 引用传递</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">17.2.</span> <span class="nav-text">17.2 返回值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%9E%8B"><span class="nav-number">17.3.</span> <span class="nav-text">17.3 参数匹配模型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E9%AB%98%E7%BA%A7%E8%AF%9D%E9%A2%98"><span class="nav-number">18.</span> <span class="nav-text">18. 函数的高级话题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0"><span class="nav-number">18.1.</span> <span class="nav-text">18.1 递归函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E5%AD%98%E5%82%A8%E5%92%8C%E6%B3%A8%E8%A7%A3"><span class="nav-number">18.2.</span> <span class="nav-text">18.2 属性存储和注解</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">18.2.1.</span> <span class="nav-text">18.2.1 属性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3"><span class="nav-number">18.2.2.</span> <span class="nav-text">18.2.2 注解</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">18.3.</span> <span class="nav-text">18.3. lambda表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%BC%E5%BC%8F"><span class="nav-number">18.3.1.</span> <span class="nav-text">18.3.1 lambda表达式格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%BF%AD%E4%BB%A3%E5%92%8C%E8%A7%A3%E6%9E%90"><span class="nav-number">19.</span> <span class="nav-text">19深入理解迭代和解析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E8%AE%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">19.1.</span> <span class="nav-text">19.1 重访迭代器：生成器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E5%87%BD%E6%95%B0"><span class="nav-number">19.1.1.</span> <span class="nav-text">19.1.1 生成器函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">19.1.2.</span> <span class="nav-text">19.1.2 生成器表达式</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E8%AF%AD%E6%B3%95%E6%A6%82%E5%86%B5"><span class="nav-number">19.2.</span> <span class="nav-text">19.2. 解析语法概况</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">20.</span> <span class="nav-text">20. 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#import%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">20.1.</span> <span class="nav-text">20.1 import工作机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E6%A8%A1%E5%9D%97%E6%90%9C%E7%B4%A2%E8%B7%AF%E5%BE%84"><span class="nav-number">20.2.</span> <span class="nav-text">20.2.标准模块搜索路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#import%E5%92%8Cfrom"><span class="nav-number">20.3.</span> <span class="nav-text">20.3 import和from</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-number">20.4.</span> <span class="nav-text">20.4 命名空间</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">20.4.1.</span> <span class="nav-text">20.4.1 模块加载和作用域</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%9B%E8%A1%8C%E5%AF%BC%E5%85%A5%E6%93%8D%E4%BD%9C%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%8E%E8%A2%AB%E5%AF%BC%E5%85%A5%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">20.4.2.</span> <span class="nav-text">20.4.2 进行导入操作的文件的与被导入的文件的关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E9%87%8D%E8%BD%BD"><span class="nav-number">20.4.3.</span> <span class="nav-text">20.4.3 模块重载</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E7%9A%84%E8%BF%90%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">1. python的运行过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E7%A0%81%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 字节码编译</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pvm%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 PVM虚拟机</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E7%9A%84%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">2. python的内置对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">3. 数字类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%86%85%E7%BD%AE%E7%9A%84%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 一些内置的数学函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 表达式操作符</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.</span> <span class="nav-text">4. 字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#raw%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8A%91%E5%88%B6%E8%BD%AC%E4%B9%89"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 raw字符串抑制转义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 常见操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 数据类型转换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%9F%A5%E8%AF%A2%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 修改&#x2F;查询字符串</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 字符串格式化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><span class="nav-number">5.</span> <span class="nav-text">5. 字符串的函数接口</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 字符串查询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2%E6%93%8D%E4%BD%9Cupperlowerswapcasecapitalize%E5%92%8Ctitle"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 字符串大小写转换操作（upper、lower、swapcase、capitalize和title）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AF%B9%E9%BD%90centerjust%E5%92%8Czfill"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 字符串对齐（center，just和zfill）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E5%AD%97%E7%AC%A6%E4%B8%B2splitsplitlines%E5%92%8Cpartition"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 分割字符串(split、splitlines和partition)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E4%B8%8E%E6%9B%BF%E6%8D%A2joinreplace"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 合并与替换(join，replace)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%AF%94%E8%BE%83maxmin%E7%AD%89"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 字符串的比较(&lt;,&gt;,max,min等)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2isidentifierisspaceisalphaisdecimalisnumeric%E5%92%8Cisalnum%E7%AD%89"><span class="nav-number">5.7.</span> <span class="nav-text">5.7 判断字符串(isidentifier、isspace、isalpha、isdecimal、isnumeric和isalnum等)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D"><span class="nav-number">6.</span> <span class="nav-text">6. 模式匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E8%A1%A8list"><span class="nav-number">7.</span> <span class="nav-text">7. 列表(list)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E8%A7%A3%E6%9E%90"><span class="nav-number">8.</span> <span class="nav-text">8. 列表解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E5%85%B8dictionary"><span class="nav-number">9.</span> <span class="nav-text">9. 字典(Dictionary)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%AE%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="nav-number">9.1.</span> <span class="nav-text">9.1 键的排序</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set%E9%9B%86%E5%90%88"><span class="nav-number">10.</span> <span class="nav-text">10. set集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%83%E7%BB%84tuple"><span class="nav-number">11.</span> <span class="nav-text">11. 元组(tuple)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6"><span class="nav-number">12.</span> <span class="nav-text">12. 文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E7%9A%84%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B"><span class="nav-number">13.</span> <span class="nav-text">13. python的动态类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">13.1.</span> <span class="nav-text">13.1 动态类型是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%BC%95%E7%94%A8"><span class="nav-number">13.2.</span> <span class="nav-text">13.2. 共享引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%92%8C%E6%8B%B7%E8%B4%9D"><span class="nav-number">13.3.</span> <span class="nav-text">13.3.引用和拷贝</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#python%E8%AF%AD%E5%8F%A5"><span class="nav-number">14.</span> <span class="nav-text">14. python语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8Ecc%E5%AE%8C%E5%85%A8%E4%B8%8D%E5%90%8C%E7%82%B9"><span class="nav-number">14.1.</span> <span class="nav-text">14.1 与C&#x2F;C++完全不同点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC%E5%92%8C%E6%89%93%E5%8D%B0"><span class="nav-number">14.2.</span> <span class="nav-text">14.2 赋值和打印</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%B5%8B%E5%80%BC"><span class="nav-number">14.2.1.</span> <span class="nav-text">14.2.1 赋值</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%93%E5%8D%B0"><span class="nav-number">14.2.2.</span> <span class="nav-text">14.2.2 打印</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#python%E7%9A%84%E5%B8%83%E5%B0%94%E5%80%BC"><span class="nav-number">14.3.</span> <span class="nav-text">14.3 python的布尔值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-number">14.4.</span> <span class="nav-text">14.4 判断循环语句</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#ifelifelse"><span class="nav-number">14.4.1.</span> <span class="nav-text">14.4.1 if&#x2F;elif&#x2F;else</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#while%E8%AF%AD%E5%8F%A5"><span class="nav-number">14.4.2.</span> <span class="nav-text">14.4.2 while语句</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#for%E8%AF%AD%E5%8F%A5"><span class="nav-number">14.4.3.</span> <span class="nav-text">14.4.3 for语句</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%BE%AA%E7%8E%AF"><span class="nav-number">14.5.</span> <span class="nav-text">14.5 其他循环</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#range%E5%87%BD%E6%95%B0%E8%B7%B3%E9%81%8D%E5%8E%86"><span class="nav-number">14.5.1.</span> <span class="nav-text">14.5.1 range函数跳遍历</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E9%81%8D%E5%8E%86zip%E5%92%8Cmap"><span class="nav-number">14.5.2.</span> <span class="nav-text">14.5.2 并行遍历zip和map</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#filter%E5%92%8Creduce"><span class="nav-number">14.5.3.</span> <span class="nav-text">14.5.3 filter和reduce</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%92%8C%E8%A7%A3%E6%9E%90"><span class="nav-number">15.</span> <span class="nav-text">15. 迭代器和解析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">15.1.</span> <span class="nav-text">15.1. 文件迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#next__"><span class="nav-number">15.1.1.</span> <span class="nav-text">15.1.1 __next()__</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%A8for%E5%BE%AA%E7%8E%AF%E6%8E%A8%E8%8D%90"><span class="nav-number">15.1.2.</span> <span class="nav-text">15.1.2 用for循环(推荐)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E8%BF%AD%E4%BB%A3"><span class="nav-number">15.1.3.</span> <span class="nav-text">15.1.3 手动迭代</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%97%E5%85%B8%E8%BF%AD%E4%BB%A3"><span class="nav-number">15.2.</span> <span class="nav-text">15.2. 字典迭代</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E9%94%AE%E5%80%BC%E5%88%97%E8%A1%A8%E5%86%8D%E7%94%B1%E9%81%8D%E5%8E%86%E5%88%97%E8%A1%A8%E9%81%8D%E5%8E%86%E5%AD%97%E5%85%B8"><span class="nav-number">15.2.1.</span> <span class="nav-text">15.2.1 获取键值列表，再由遍历列表遍历字典</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%89%E5%AD%97%E5%85%B8%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%99%A8%E9%81%8D%E5%8E%86"><span class="nav-number">15.2.2.</span> <span class="nav-text">15.2.2 有字典的迭代器遍历</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%BF%AD%E4%BB%A3%E7%8E%AF%E5%A2%83"><span class="nav-number">15.3.</span> <span class="nav-text">15.3 其他迭代环境</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">16.</span> <span class="nav-text">16. 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#def"><span class="nav-number">16.1.</span> <span class="nav-text">16.1 def</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#python%E4%B8%AD%E7%9A%84%E5%A4%9A%E6%80%81"><span class="nav-number">16.2.</span> <span class="nav-text">16.2 python中的多态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">16.3.</span> <span class="nav-text">16.3 作用域</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%B3%95%E5%88%99"><span class="nav-number">16.3.1.</span> <span class="nav-text">16.3.1 作用域法则</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#global"><span class="nav-number">16.3.2.</span> <span class="nav-text">16.3.2 global</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#nonlocal"><span class="nav-number">16.3.3.</span> <span class="nav-text">16.3.3 nonlocal</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">17.</span> <span class="nav-text">17. 参数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92"><span class="nav-number">17.1.</span> <span class="nav-text">17.1 引用传递</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">17.2.</span> <span class="nav-text">17.2 返回值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%9E%8B"><span class="nav-number">17.3.</span> <span class="nav-text">17.3 参数匹配模型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E9%AB%98%E7%BA%A7%E8%AF%9D%E9%A2%98"><span class="nav-number">18.</span> <span class="nav-text">18. 函数的高级话题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0"><span class="nav-number">18.1.</span> <span class="nav-text">18.1 递归函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E5%AD%98%E5%82%A8%E5%92%8C%E6%B3%A8%E8%A7%A3"><span class="nav-number">18.2.</span> <span class="nav-text">18.2 属性存储和注解</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">18.2.1.</span> <span class="nav-text">18.2.1 属性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3"><span class="nav-number">18.2.2.</span> <span class="nav-text">18.2.2 注解</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">18.3.</span> <span class="nav-text">18.3. lambda表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A0%BC%E5%BC%8F"><span class="nav-number">18.3.1.</span> <span class="nav-text">18.3.1 lambda表达式格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%BF%AD%E4%BB%A3%E5%92%8C%E8%A7%A3%E6%9E%90"><span class="nav-number">19.</span> <span class="nav-text">19深入理解迭代和解析</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E8%AE%BF%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-number">19.1.</span> <span class="nav-text">19.1 重访迭代器：生成器</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E5%87%BD%E6%95%B0"><span class="nav-number">19.1.1.</span> <span class="nav-text">19.1.1 生成器函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">19.1.2.</span> <span class="nav-text">19.1.2 生成器表达式</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E8%AF%AD%E6%B3%95%E6%A6%82%E5%86%B5"><span class="nav-number">19.2.</span> <span class="nav-text">19.2. 解析语法概况</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">20.</span> <span class="nav-text">20. 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#import%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">20.1.</span> <span class="nav-text">20.1 import工作机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E6%A8%A1%E5%9D%97%E6%90%9C%E7%B4%A2%E8%B7%AF%E5%BE%84"><span class="nav-number">20.2.</span> <span class="nav-text">20.2.标准模块搜索路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#import%E5%92%8Cfrom"><span class="nav-number">20.3.</span> <span class="nav-text">20.3 import和from</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-number">20.4.</span> <span class="nav-text">20.4 命名空间</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E5%92%8C%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">20.4.1.</span> <span class="nav-text">20.4.1 模块加载和作用域</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%9B%E8%A1%8C%E5%AF%BC%E5%85%A5%E6%93%8D%E4%BD%9C%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%8E%E8%A2%AB%E5%AF%BC%E5%85%A5%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">20.4.2.</span> <span class="nav-text">20.4.2 进行导入操作的文件的与被导入的文件的关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E9%87%8D%E8%BD%BD"><span class="nav-number">20.4.3.</span> <span class="nav-text">20.4.3 模块重载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0"><span class="nav-number">21.</span> <span class="nav-text">21 内置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0"><span class="nav-number">21.1.</span> <span class="nav-text">21.1 数学函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0-1"><span class="nav-number">21.2.</span> <span class="nav-text">21.2 内置函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#compile%E5%87%BD%E6%95%B0"><span class="nav-number">21.2.1.</span> <span class="nav-text">21.2.1 compile()函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#complex%E5%87%BD%E6%95%B0"><span class="nav-number">21.2.2.</span> <span class="nav-text">21.2.2 complex()函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#dict%E5%87%BD%E6%95%B0"><span class="nav-number">21.2.3.</span> <span class="nav-text">21.2.3 dict()函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#enumerate%E5%87%BD%E6%95%B0"><span class="nav-number">21.2.4.</span> <span class="nav-text">21.2.4 enumerate()函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#eval%E5%87%BD%E6%95%B0"><span class="nav-number">21.2.5.</span> <span class="nav-text">21.2.5 eval()函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#filter%E5%87%BD%E6%95%B0"><span class="nav-number">21.2.6.</span> <span class="nav-text">21.2.6 filter()函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#format-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%87%BD%E6%95%B0"><span class="nav-number">21.2.7.</span> <span class="nav-text">21.2.7 format 格式化函数</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1065,20 +1344,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1119,12 +1398,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">432k</span>
+    <span title="站点总字数">440k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:33</span>
+    <span title="站点阅读时长">6:40</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
