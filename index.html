@@ -192,6 +192,475 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/" class="post-title-link" itemprop="url">python数学库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-18 10:40:45 / 修改时间：16:25:30" itemprop="dateCreated datePublished" datetime="2022-09-18T10:40:45+08:00">2022-09-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="numpy概述">1. Numpy概述</h4>
+<h5 id="概念">1.1 概念</h5>
+<p>Python本身含有列表和数组，但对于大数据来说，这些结构是有很多不足的。由于列表的元素可以是任何对象，因此列表中所保存的是对象的指针。对于数值运算来说这种 结构比较浪费内存和CPU资源。至于数组对象，它可以直接保存 数值，和C语言的一维数组比较类似。但是由于它不支持多维，在上面的函数也不多，因此也不适合做数值运算。Numpy提供了两种基本的对象：<code>ndarray(N-dimensional Array Object)</code>和 <code>ufunc(Universal Function Object)</code>。ndarray是存储单一数据类型的多维数组，而ufunc则是能够对数组进行处理的函数。</p>
+<h5 id="功能">1.2 功能</h5>
+<ul>
+<li>创建n维数组(矩阵)</li>
+<li>对数组进行函数运算，使用函数计算十分快速，节省了大量的时间，且不需要编写循环，十分方便</li>
+<li>数值积分、线性代数运算、傅里叶变换</li>
+<li>ndarray快速节省空间的多维数组，提供数组化的算术运算和高级的 广播功能</li>
+</ul>
+<h5 id="对象">1.3 对象</h5>
+<ul>
+<li>NumPy中的核心对象是<code>ndarray</code></li>
+<li><code>ndarray</code>可以看成数组，存放 同类元素</li>
+<li>NumPy里面所有的函数都是围绕ndarray展开的</li>
+</ul>
+<p><strong><code>ndarray</code> 内部由以下内容组成：</strong></p>
+<ul>
+<li>一个指向数据(内存或内存映射文件中的一块数据)的指针。</li>
+<li>数据类型或 dtype，描述在数组中的固定大小值的格子。</li>
+<li>一个表示数组形状(shape)的元组，表示各维度大小的元组。形状为(row×col)</li>
+</ul>
+<h5 id="数据类型">1.4 数据类型</h5>
+<p>numpy 支持的数据类型比 Python 内置的类型要多很多，基本上可以和C语言的数据类型对应上。主要包括<code>int8、int16、int32、int64、uint8、uint16、uint32、uint64、float16、float32、float64</code></p>
+<h5 id="数组属性">1.5 数组属性</h5>
+<table>
+<thead>
+<tr class="header">
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ndarray.ndim</code></td>
+<td>秩，即轴的数量或维度的数量</td>
+</tr>
+<tr class="even">
+<td><code>ndarray.shape</code></td>
+<td>数组的维度(n×m)，对于矩阵，n 行 m 列</td>
+</tr>
+<tr class="odd">
+<td><code>ndarray.size</code></td>
+<td>数组元素的总个数，相当于 .shape 中 n*m 的值</td>
+</tr>
+<tr class="even">
+<td><code>ndarray.dtype</code></td>
+<td>ndarray 对象的元素类型</td>
+</tr>
+<tr class="odd">
+<td><code>ndarray.itemsize</code></td>
+<td>ndarray 对象中每个元素的大小，以字节为单位</td>
+</tr>
+<tr class="even">
+<td><code>ndarray.flags</code></td>
+<td>ndarray对象的内存信息</td>
+</tr>
+<tr class="odd">
+<td><code>ndarray.real</code></td>
+<td>ndarray元素的实部</td>
+</tr>
+<tr class="even">
+<td><code>ndarray.imag</code></td>
+<td>ndarray元素的虚部</td>
+</tr>
+<tr class="odd">
+<td><code>ndarray.data</code></td>
+<td>包含实际数组元素的缓冲区，由于一般通过数组的索引获取元素，所以通常不需要使用这个属性。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="具体操作">2. 具体操作</h4>
+<h5 id="numpy的创建">2.1 Numpy的创建</h5>
+<h6 id="利用列表生成数组">2.1.1 利用列表生成数组</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">lst=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br><span class="line">np1=np.array(lst)</span><br><span class="line"><span class="built_in">print</span>(np1,<span class="built_in">type</span>(np1))</span><br></pre></td></tr></table></figure>
+<h6 id="利用random模块生成数组">2.1.2 利用random模块生成数组</h6>
+<p><img src="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/numpyRandom.png" width="600"> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment">#0到1标准正态分布</span></span><br><span class="line">arr1 = np.random.randn(<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">#0到1均匀分布</span></span><br><span class="line">arr2 = np.random.rand(<span class="number">3</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">#均匀分布的随机数（浮点数），前两个参数表示随机数的范围，第三个表示生成随机数的个数</span></span><br><span class="line">arr3 = np.random.uniform(<span class="number">0</span>, <span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment">#均匀分布的随机数（整数），前两个参数表示随机数的范围，第三个表示生成随机数的个数</span></span><br><span class="line">arr4 = np.random.randint(<span class="number">0</span>, <span class="number">10</span>, <span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;arr1 : <span class="subst">&#123;arr1&#125;</span>\narr2 : <span class="subst">&#123;arr2&#125;</span>\narr3 : <span class="subst">&#123;arr3&#125;</span>\narr4 : <span class="subst">&#123;arr4&#125;</span>&#x27;</span>)</span><br><span class="line">out : </span><br><span class="line"><span class="comment"># arr1 : [[-0.31637952 -0.08258995  1.43866984]</span></span><br><span class="line"><span class="comment">#  [-0.11216775  0.43881134  0.11745847]</span></span><br><span class="line"><span class="comment">#  [-1.1770306  -0.97657465  2.2368878 ]]</span></span><br><span class="line"><span class="comment"># arr2 : [[0.16350611 0.4467384  0.9465067 ]</span></span><br><span class="line"><span class="comment">#  [0.1882318  0.40261184 0.93577701]</span></span><br><span class="line"><span class="comment">#  [0.56243911 0.69179631 0.83407725]]</span></span><br><span class="line"><span class="comment"># arr3 : [4.41402883 6.03259052]</span></span><br><span class="line"><span class="comment"># arr4 : [9 7 7]</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="创建特定形状数组">2.1.3 创建特定形状数组</h6>
+<p><img src="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/spacial.png" width="600"> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mport numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment">#未初始化的数组</span></span><br><span class="line">arr1 = np.empty((<span class="number">2</span>,<span class="number">3</span>))</span><br><span class="line"><span class="comment">#数组元素以 0 来填充</span></span><br><span class="line">arr2 = np.zeros((<span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line"><span class="comment">#数组元素以 1 来填充</span></span><br><span class="line">arr3 = np.ones((<span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line"><span class="comment">#数组以指定的数来进行填充，这里举例3</span></span><br><span class="line">arr4 = np.full((<span class="number">2</span>, <span class="number">3</span>), <span class="number">3</span>)</span><br><span class="line"><span class="comment">#生成单位，对角线上元素为 1，其他为0</span></span><br><span class="line">arr5 = np.eye(<span class="number">2</span>)</span><br><span class="line"><span class="comment">#二维矩阵输出矩阵对角线的元素，一维矩阵形成一个以一维数组为对角线元素的矩阵</span></span><br><span class="line">arr6 = np.diag(np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]]))</span><br></pre></td></tr></table></figure></p>
+<h6 id="linspace">2.1.4 linspace</h6>
+<p>此函数类似于arange()函数。在此函数中，指定了范围之间的均匀间隔数量，而不是步长。用法如下 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">numpy.linspace(start, stop, num, endpoint, retstep, dtype)</span><br></pre></td></tr></table></figure> - <code>start</code> 序列的起始值 - <code>stop</code> 序列的终止值，如果endpoint为true，该值包含于序列中 - <code>num</code> 要生成的等间隔样例数量，默认为50 - <code>endpoint</code> 序列中是否包含stop值，默认为ture - <code>retstep</code> 如果为true，返回样例，以及连续数字之间的步长 - <code>dtype</code> 输出ndarray的数据类型</p>
+<h5 id="查找和搜索">2.2 查找和搜索</h5>
+<p>Numpy可以通过索引或切片来访问和修改，与 Python 中 list 的切片操作一样，设置start, stop 及 step 参数</p>
+<h6 id="切片操作">2.2.1 切片操作</h6>
+<p><img src="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/index.png" width="600"></p>
+<h6 id="元素查找定位">2.2.2 元素查找定位</h6>
+<p>Numpy库中提供了<code>where</code>函数来查找满足条件元素的索引，表示如下：</p>
+<ul>
+<li><code>np.where(condition, x, y)</code>: 满足条件(condition)，输出x，不满足输出y</li>
+<li><code>np.where(condition)</code>: 输出满足条件 (即非0) 元素的坐标</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a=np.array([<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>,<span class="number">12</span>]).reshape(<span class="number">2</span>,<span class="number">3</span>)</span><br><span class="line">x=np.where(a&gt;<span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(a[x])</span><br></pre></td></tr></table></figure>
+<p>输出： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">6</span>  <span class="number">8</span> <span class="number">10</span> <span class="number">12</span>]</span><br></pre></td></tr></table></figure></p>
+<h6 id="高级索引">2.2.3 高级索引</h6>
+<p>如果一个<code>ndarray</code>是非元组序列，数据类型为整数或布尔值的ndarray，或者至少一个元素为序列对象的元组，我们就能够用它来索引ndarray。高级索引始终返回数据的副本。使用方法 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"> </span><br><span class="line">x = np.array([[<span class="number">1</span>,  <span class="number">2</span>],  [<span class="number">3</span>,  <span class="number">4</span>],  [<span class="number">5</span>,  <span class="number">6</span>]]) </span><br><span class="line">y = x[[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>],  [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>]]  </span><br><span class="line"><span class="built_in">print</span> y</span><br></pre></td></tr></table></figure> 输出： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>,<span class="number">4</span>,<span class="number">5</span>]</span><br></pre></td></tr></table></figure> 解析:上面的x下标索引的两个列表进行两两配对<code>(0,0),(1,1),(2,0)</code>位置，得到`x[0,0],x[1,1],x[2,0]等就是输出结果</p>
+<h5 id="删除">2.3 删除</h5>
+<p><code>np.delete(arr, index, axis=None)</code></p>
+<ul>
+<li>第一个参数：要处理的矩阵，</li>
+<li>第二个参数，处理的位置，下标</li>
+<li>第三个参数，0表示按照行删除，1表示按照列删除，默认为0</li>
+<li>返回值为删除后的剩余元素构成的矩阵</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">m=np.delete(a,[<span class="number">0</span>],<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(m)</span><br></pre></td></tr></table></figure>
+<h5 id="numpy的拼接和分割">2.4 numpy的拼接和分割</h5>
+<h6 id="拼接">2.4.1 拼接</h6>
+<p>下面的图列举了常见的用于数组或向量 合并的方法。 <img src="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/append.png" width="600"></p>
+<ul>
+<li><code>append、concatenate</code>以及<code>stack</code>都有一个<code>axis</code>参数，用于控制数组的合 并方式是按行还是按列。</li>
+<li>对于<code>append</code>和<code>concatenate</code>，待合并的数组必须有相同的行数或列数</li>
+<li><code>stack、hstack、dstack</code>，要求待合并的数组必须具有相同的形状</li>
+</ul>
+<h6 id="分割">2.4.2 分割</h6>
+<ul>
+<li>水平分割：<code>np.split(arr,n,axis=1) 或 np.hsplit(arr,n)</code>：按列分成<code>n</code>份。返回一个<code>list</code></li>
+<li>垂直分割：<code>np.split(arr,n,axis=0)</code> 或 <code>np.vsplit(arr,n)</code>：按行分成n份，返回一个<code>list</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">splitTes=np.split(a,<span class="number">2</span>,<span class="number">0</span>)</span><br><span class="line">splitTes2=np.split(a,<span class="number">3</span>,<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="维度变换">2.5 维度变换</h5>
+<p>在机器学习以及深度学习的任务中，通常需要将处理好的数据以模型能 接收的格式输入给模型，然后由模型通过一系列的运算，最终返回一个处理 结果。然而，由于不同模型所接收的输入格式不一样，往往需要先对其进行 一系列的变形和运算，从而将数据处理成符合模型要求的格式。在矩阵或者 数组的运算中，经常会遇到需要把多个向量或矩阵按某轴方向合并，或展平 (如在卷积或循环神经网络中，在全连接层之前，需要把矩阵展平)的情 况。下面介绍几种常用的数据变形方法。 <img src="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/switch.png" width="600"></p>
+<h6 id="reshape">2.5.1 reshape</h6>
+<p>不会改变数组内额元素，返回一个指定的shap维度的数组，按原顺序放置元素 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#三行四列，如果单指定行数或列数，另一个参数可设置为-1</span></span><br><span class="line">x=np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span><br></pre></td></tr></table></figure></p>
+<h6 id="resize">2.5.2 resize</h6>
+<p>改变向量的维度，同<code>reshape</code>作用 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#二行五列</span></span><br><span class="line">arr=np.arange(<span class="number">10</span>)</span><br><span class="line">arr.resize(<span class="number">2</span>,<span class="number">5</span>)</span><br></pre></td></tr></table></figure></p>
+<h6 id="转置">2.5.3 转置</h6>
+<p>将矩阵转置 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr=np.nrange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"><span class="built_in">print</span>(arr.T)</span><br></pre></td></tr></table></figure></p>
+<h6 id="向量展平">2.5.4 向量展平</h6>
+<p>将多维数组转为一维数组，不会产生数组的副本 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arr=arr.ravel()</span><br></pre></td></tr></table></figure></p>
+<h6 id="向量展平之flatten">2.5.5 向量展平之flatten</h6>
+<p>把矩阵转换为向量，这种需求经常出现在卷积网络与全连接层之间 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">8</span>).reshape(<span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line">arr.flatten() <span class="comment"># out : array([0, 1, 2, 3, 4, 5, 6, 7])</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="squeeze">2.5.6 squeeze</h6>
+<p>这是一个降维的函数，把矩阵中为1维的维度去掉 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">8</span>).reshape(<span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>)</span><br><span class="line">arr.shape <span class="comment"># out : (2, 4, 1)</span></span><br><span class="line">arr.squeeze().shape <span class="comment"># out : (2, 4)</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="transpose">2.5.7 transpose</h6>
+<p>对高维矩阵进行轴对换，这个在深度学习中经常使用，比如把图片中表 示颜色顺序的RGB改为GBR。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arr = np.arange(<span class="number">12</span>).reshape(<span class="number">2</span>, <span class="number">6</span>, <span class="number">1</span>)</span><br><span class="line">arr.shape <span class="comment"># out : (2, 6, 1)</span></span><br><span class="line">arr.transpose(<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>).shape <span class="comment"># out : (6, 1, 2)</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="矩阵运算">2.6 矩阵运算</h5>
+<h6 id="对于元素相乘">2.6.1 对于元素相乘</h6>
+<p>对应元素相乘（Element-Wise Product）是两个矩阵中对应元素乘积。 np.multiply函数用于数组或矩阵对应元素相乘，输出与相乘数组或矩阵的大 小一致。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>]])</span><br><span class="line">b = np.array([[<span class="number">4</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">2</span>]])</span><br><span class="line">np.multiply(a, b) <span class="comment"># 等效于a * b，out : array([[4, 0], [0, 2]])</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="点积">2.6.2 点积</h6>
+<p>点积运算(Dot Product)又称为内积，在Numpy用np.dot或者np.matmul表示 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">0</span>],[<span class="number">0</span>,<span class="number">1</span>]])</span><br><span class="line">b = np.array([[<span class="number">4</span>,<span class="number">1</span>],[<span class="number">2</span>,<span class="number">2</span>]])</span><br><span class="line">np.dot(a, b) <span class="comment"># 等效于np.matmul(a, b) out : array([[4, 1], [2, 2]])</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="行列式">2.6.3 行列式</h6>
+<p>计算行列式的值 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr = np.array([[<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>]]) </span><br><span class="line">np.linalg.det(arr) <span class="comment"># out : -2.0000000000000004</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="求逆">2.6.4 求逆</h6>
+<p>求逆 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr = np.array([[<span class="number">1</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">4</span>]])</span><br><span class="line">np.linalg.inv(arr) <span class="comment"># out : array([[-2. ,  1. ], [ 1.5, -0.5]])</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="特征值和特征向量">2.6.5 特征值和特征向量</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">A = np.random.<span class="built_in">randint</span>(<span class="number">-10</span>,<span class="number">10</span>,(<span class="number">4</span>,<span class="number">4</span>))</span><br><span class="line">C = np.<span class="built_in">dot</span>(A.T, A)</span><br><span class="line">vals, vecs = np.linalg.<span class="built_in">eig</span>(C) </span><br><span class="line"><span class="built_in">print</span>(f<span class="number">&#x27;</span>特征值 : &#123;vals&#125;, 特征向量 : &#123;vecs&#125;<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">#out : </span></span><br><span class="line"><span class="string">特征值 : [395.26566729 358.52489695  44.41465068  52.79478508]</span></span><br><span class="line"><span class="string">特征向量 : [[ 0.30221599  0.64309202 -0.64757004 -0.27522935]</span></span><br><span class="line"><span class="string">             [ 0.87819925 -0.03518532  0.18871425  0.43808105]</span></span><br><span class="line"><span class="string">             [-0.35779498  0.26192443 -0.27010759  0.85464626]</span></span><br><span class="line"><span class="string">             [ 0.09702746 -0.71874212 -0.68708214  0.04374437]]</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+<h5 id="numpy--matplotlib">2.7 numpy- Matplotlib</h5>
+<p>Matplotlib 是 Python 的绘图库。 它可与 NumPy 一起使用，提供了一种有效的 MatLab 开源替代方案。 它也可以和图形工具包一起使用，如 PyQt 和 wxPython。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure> 这里<code>pyplot()</code>是 <code>matplotlib</code>库中最重要的函数，用于绘制 2D 数据。 以下脚本绘制方程<code>y = 2x + 5：</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt </span><br><span class="line"> </span><br><span class="line">x = np.arange(<span class="number">1</span>,<span class="number">11</span>) <span class="comment">#x=np.linspace(1,11,2000)</span></span><br><span class="line">y =  <span class="number">2</span>  * x +  <span class="number">5</span> </span><br><span class="line">plt.title(<span class="string">&quot;Matplotlib demo&quot;</span>) </span><br><span class="line">plt.xlabel(<span class="string">&quot;x axis caption&quot;</span>) </span><br><span class="line">plt.ylabel(<span class="string">&quot;y axis caption&quot;</span>) </span><br><span class="line">plt.plot(x,y) plt.show()</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://quantfabric.blog.csdn.net/article/details/123096127?spm=1001.2014.3001.5502">Numpy详细教程</a></p>
+<h4 id="pandas概述">3.pandas概述</h4>
+<p>Pandas是Python的一个大数据处理模块。Pandas使用一个二维的数据结构DataFrame来表示表格式的数据，相比较于Numpy，Pandas可以存储混合的数据结构，同时使用NaN来表示缺失的数据，而不用像Numpy一样要手工处理缺失的数据，并且Pandas使用轴标签来表示行和列。它具有：</p>
+<ul>
+<li>便捷的数据处理能力</li>
+<li>独特的数据结构</li>
+<li>读取文件方便</li>
+<li>封装了<code>matplotlib</code>的画图和<code>numpy</code>的计算</li>
+</ul>
+<h5 id="pandas的数据结构">3.1 pandas的数据结构</h5>
+<p>Pandas有三种主要数据结构<code>Series、DataFrame、Panel</code>。</p>
+<ul>
+<li><p><code>Series</code>是带有标签的一维数组，可以保存任何数据类型（整数，字符串，浮点数，Python对象等），轴标签统称为索引（index）。</p></li>
+<li><p><code>DataFrame</code>是带有标签的二维数据结构，具有<code>index</code>（行标签）和<code>columns</code>（列标签）。如果传递<code>index</code>或<code>columns</code>，则会用于生成的D<code>ataFrame</code>的<code>index</code>或<code>columns</code>。</p></li>
+<li><p><code>Panel</code>是一个三维数据结构，由<code>items、major_axis、minor_axis</code>定义。<code>items</code>（条目），即轴0，每个条目对应一个<code>DataFrame</code>；<code>major_axis（主轴）</code>，即轴1，是每个<code>DataFrame</code>的index（行）；<code>minor_axis</code>（副轴），即轴2，是每个<code>DataFrame</code>的columns（列）。</p></li>
+</ul>
+<h5 id="series">3.2 Series</h5>
+<p>Series是能够保存任何类型数据(整数，字符串，浮点数，Python对象等)的一维标记数组，轴标签统称为index（索引）。series是一种一维数据结构，每一个元素都带有一个索引，其中索引可以为数字或字符串。Series结构名称： <img src="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/Series.png" width="400"></p>
+<h6 id="构造对象">3.2.1 构造对象</h6>
+<p>Series的构造函数如下： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandas.Series( data, index, dtype, copy)</span><br></pre></td></tr></table></figure> - <code>data</code>：构建Series的数据，可以是ndarray，list，dict，constants。 - <code>index</code>：索引值必须是唯一的和散列的，与数据的长度相同。 如果没有索引被传递，默认为np.arange(n)。 - <code>dtype</code>：数据类型，如果没有，将推断数据类型。 - <code>copy</code>：是否复制数据，默认为false。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    data = np.array([<span class="string">&#x27;a&#x27;</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>])</span><br><span class="line">    s = pd.Series(data,index=[<span class="number">101</span>, <span class="number">102</span>, <span class="number">103</span>, <span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>])</span><br><span class="line">    <span class="built_in">print</span>(s)</span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># 101      a</span></span><br><span class="line"><span class="comment"># 102      1</span></span><br><span class="line"><span class="comment"># 103      2</span></span><br><span class="line"><span class="comment"># hello    4</span></span><br><span class="line"><span class="comment"># world    6</span></span><br><span class="line"><span class="comment"># dtype: object</span></span><br></pre></td></tr></table></figure>
+<p>使用<code>ndarray</code>作为数据时，传递的索引必须与<code>ndarray</code>具有相同的长度。 如果没有传递索引值，那么默认的索引是<code>range(n)</code>，其中n是数组长度，即<code>[0,1,2,3…. range(len(array))-1] - 1]</code>。</p>
+<h6 id="series数据的访问">3.2.2 Series数据的访问</h6>
+<p>Series中的数据可以使用有序序列的方式进行访问。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    s = pd.Series([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>], index=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>])</span><br><span class="line">    <span class="built_in">print</span>(s[<span class="number">0</span>])</span><br><span class="line">    <span class="built_in">print</span>(s[-<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">print</span>(s[-<span class="number">3</span>:])</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="comment"># 5</span></span><br><span class="line"><span class="comment"># c    3</span></span><br><span class="line"><span class="comment"># d    4</span></span><br><span class="line"><span class="comment"># e    5</span></span><br><span class="line"><span class="comment"># dtype: int64</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="series属性">3.2.3 Series属性</h6>
+<ul>
+<li><code>Series.axes</code>：返回行轴标签列表</li>
+<li><code>Series.dtype</code>：返回对象的数据类型</li>
+<li><code>Series.empty</code>：如果对象为空，返回True</li>
+<li><code>Series.ndim</code>：返回底层数据的维数，默认为1</li>
+<li><code>Series.size</code>：返回基础数据中的元素数</li>
+<li><code>Series.values</code>：将对象作为ndarray返回</li>
+<li><code>Series.head()</code>：返回前n行</li>
+<li><code>Series.tail()</code>：返回后n行</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    s = pd.Series([<span class="string">&quot;Bauer&quot;</span>, <span class="number">30</span>, <span class="number">90</span>], index=[<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Age&#x27;</span>, <span class="string">&#x27;Score&#x27;</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Series=================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;axes===================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s.axes)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;dtype==================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s.dtype)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;empty==================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s.empty)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;ndim===================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s.ndim)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;size===================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s.size)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;values=================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s.values)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;head()=================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s.head(<span class="number">2</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;tail()=================&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s.tail(<span class="number">2</span>))</span><br><span class="line"> </span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># Series=================</span></span><br><span class="line"><span class="comment"># Name     Bauer</span></span><br><span class="line"><span class="comment"># Age         30</span></span><br><span class="line"><span class="comment"># Score       90</span></span><br><span class="line"><span class="comment"># dtype: object</span></span><br><span class="line"><span class="comment"># axes===================</span></span><br><span class="line"><span class="comment"># [Index([&#x27;Name&#x27;, &#x27;Age&#x27;, &#x27;Score&#x27;], dtype=&#x27;object&#x27;)]</span></span><br><span class="line"><span class="comment"># dtype==================</span></span><br><span class="line"><span class="comment"># object</span></span><br><span class="line"><span class="comment"># empty==================</span></span><br><span class="line"><span class="comment"># False</span></span><br><span class="line"><span class="comment"># ndim===================</span></span><br><span class="line"><span class="comment"># 1</span></span><br><span class="line"><span class="comment"># size===================</span></span><br><span class="line"><span class="comment"># 3</span></span><br><span class="line"><span class="comment"># values=================</span></span><br><span class="line"><span class="comment"># [&#x27;Bauer&#x27; 30 90]</span></span><br><span class="line"><span class="comment"># head()=================</span></span><br><span class="line"><span class="comment"># Name    Bauer</span></span><br><span class="line"><span class="comment"># Age        30</span></span><br><span class="line"><span class="comment"># dtype: object</span></span><br><span class="line"><span class="comment"># tail()=================</span></span><br><span class="line"><span class="comment"># Age      30</span></span><br><span class="line"><span class="comment"># Score    90</span></span><br><span class="line"><span class="comment"># dtype: object</span></span><br></pre></td></tr></table></figure>
+<h5 id="dataframe">3.3 DataFrame</h5>
+<p>数据帧(DataFrame)是二维的表格型数据结构，即数据以行和列的表格方式排列，DataFrame是Series的容器。 <img src="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/DataFrame.png" width="400"> <strong>特点：</strong></p>
+<ul>
+<li>底层数据列是不同的类型</li>
+<li>大小可变</li>
+<li>标记轴(行和列)</li>
+<li>可以对行和列执行算术运算</li>
+</ul>
+<h6 id="dataframe对象构造">3.3.1 DataFrame对象构造</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandas.DataFrame( data, index, columns, dtype, copy)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>data</code>：构建DataFrame的数据，可以是ndarray，series，map，lists，dict，constant和其它DataFrame。</li>
+<li><code>index</code>：行索引标签，如果没有传递索引值，索引默认为np.arrange(n)。</li>
+<li><code>columns</code>：列索引标签，如果没有传递索列引值，默认列索引是np.arange(n)。</li>
+<li><code>dtype</code>：每列的数据类型。</li>
+<li><code>copy</code>：如果默认值为False，则此命令(或任何它)用于复制数据。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    data = &#123;<span class="string">&#x27;one&#x27;</span>: pd.Series([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], index=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>]),</span><br><span class="line">            <span class="string">&#x27;two&#x27;</span>: pd.Series([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], index=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>]),</span><br><span class="line">            <span class="string">&#x27;three&#x27;</span>: pd.Series([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>], index=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>])&#125;</span><br><span class="line">    df = pd.DataFrame(data, columns=[<span class="string">&#x27;one&#x27;</span>, <span class="string">&#x27;two&#x27;</span>, <span class="string">&#x27;three&#x27;</span>])</span><br><span class="line">    <span class="built_in">print</span>(df)</span><br><span class="line">    <span class="keyword">del</span>(df[<span class="string">&#x27;two&#x27;</span>])</span><br><span class="line">    <span class="built_in">print</span>(df)</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment">#  one  two  three</span></span><br><span class="line"><span class="comment"># a  1.0    1   10.0</span></span><br><span class="line"><span class="comment"># b  2.0    2   20.0</span></span><br><span class="line"><span class="comment"># c  3.0    3   30.0</span></span><br><span class="line"><span class="comment"># d  NaN    4    NaN</span></span><br><span class="line"><span class="comment">#    one  three</span></span><br><span class="line"><span class="comment"># a  1.0   10.0</span></span><br><span class="line"><span class="comment"># b  2.0   20.0</span></span><br><span class="line"><span class="comment"># c  3.0   30.0</span></span><br><span class="line"><span class="comment"># d  NaN    NaN</span></span><br></pre></td></tr></table></figure>
+<h6 id="dataframe属性">3.3.2 DataFrame属性</h6>
+<ul>
+<li><code>DataFrame.T</code>：转置行和列</li>
+<li><code>DataFrame.axes</code>：返回一个列，行轴标签和列轴标签作为唯一的成员。</li>
+<li><code>DataFrame.dtypes</code>：返回对象的数据类型</li>
+<li><code>DataFrame.empty</code>：如果NDFrame完全为空，返回True</li>
+<li><code>DataFrame.ndim</code>：返回轴/数组维度的大小</li>
+<li><code>DataFrame.shape</code>：返回表示DataFrame维度的元组</li>
+<li><code>DataFrame.size</code>：返回DataFrame的元素数</li>
+<li><code>DataFrame.values</code>：将对象作为ndarray返回</li>
+<li><code>DataFrame.head()</code>：返回前n行</li>
+<li><code>DataFrame.tail()</code>：返回后n行</li>
+</ul>
+<h6 id="示例">3.3.3 示例</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入库</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个符合正态分布的10个股票5天的涨跌幅数据,0表示正态分布的中心点，1表示标准宽度，越大曲线越矮越胖，[10,5]数据shape</span></span><br><span class="line">stocks = np.random.normal(<span class="number">0</span>, <span class="number">1</span>, [<span class="number">10</span>, <span class="number">5</span>])</span><br><span class="line"><span class="comment"># 使用pandas中的数据结构 DataFrame() 处理数据</span></span><br><span class="line">stocks_rise = pd.DataFrame(stocks)</span><br><span class="line"><span class="comment"># 设置行索引,获取行数 stocks_rise.shape[0] 进行遍历 列表生成式</span></span><br><span class="line">index_row = [<span class="string">&#x27;股票&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(i+<span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(stocks_rise.shape[<span class="number">0</span>])]</span><br><span class="line"><span class="comment"># 设置列索引，日期是一个时间序列，为了简便，使用pd.date_range()生成一组连续的时间序列</span></span><br><span class="line"><span class="comment"># pd.date_range(start,end,periods,freq) start:开始时间, end:结束时间</span></span><br><span class="line"><span class="comment"># periods:时间天数, freq:递进单位，默认1天，&#x27;B&#x27;默认略过周末</span></span><br><span class="line">index_col = pd.date_range(start=<span class="string">&#x27;20220201&#x27;</span>,periods=stocks_rise.shape[<span class="number">1</span>],freq=<span class="string">&#x27;B&#x27;</span>)</span><br><span class="line"><span class="comment"># 添加索引，注意数据是ndarray数据 index表示行索引，columns表示列索引</span></span><br><span class="line">data = pd.DataFrame(stocks, index=index_row, columns=index_col)</span><br><span class="line"><span class="built_in">print</span>(data)</span><br><span class="line"></span><br><span class="line">      <span class="number">2022</span>-02-01  <span class="number">2022</span>-02-02  <span class="number">2022</span>-02-03  <span class="number">2022</span>-02-04  <span class="number">2022</span>-02-07</span><br><span class="line">股票<span class="number">1</span>    -<span class="number">2.054041</span>   -<span class="number">1.170757</span>    <span class="number">0.162393</span>    <span class="number">0.253333</span>   -<span class="number">1.638837</span></span><br><span class="line">股票<span class="number">2</span>    -<span class="number">1.463734</span>    <span class="number">0.408459</span>    <span class="number">0.530070</span>   -<span class="number">0.925281</span>    <span class="number">1.454630</span></span><br><span class="line">股票<span class="number">3</span>    -<span class="number">0.511517</span>   -<span class="number">0.827591</span>   -<span class="number">2.076265</span>    <span class="number">0.139486</span>    <span class="number">0.658707</span></span><br><span class="line">股票<span class="number">4</span>    -<span class="number">1.698789</span>    <span class="number">0.250902</span>   -<span class="number">0.624713</span>    <span class="number">1.378845</span>   -<span class="number">1.672292</span></span><br><span class="line">股票<span class="number">5</span>     <span class="number">0.683233</span>   -<span class="number">1.083694</span>    <span class="number">0.810567</span>    <span class="number">0.421215</span>    <span class="number">1.375385</span></span><br><span class="line">股票<span class="number">6</span>    -<span class="number">0.296111</span>   -<span class="number">0.946959</span>    <span class="number">0.836536</span>   -<span class="number">1.179879</span>   -<span class="number">0.397406</span></span><br><span class="line">股票<span class="number">7</span>     <span class="number">0.017772</span>    <span class="number">0.180210</span>    <span class="number">2.022776</span>    <span class="number">0.436337</span>   -<span class="number">1.555866</span></span><br><span class="line">股票<span class="number">8</span>     <span class="number">0.638262</span>   -<span class="number">0.790932</span>    <span class="number">1.077822</span>   -<span class="number">1.746631</span>   -<span class="number">0.591360</span></span><br><span class="line">股票<span class="number">9</span>    -<span class="number">0.681391</span>   -<span class="number">0.613255</span>   -<span class="number">1.849094</span>    <span class="number">0.438304</span>   -<span class="number">0.503742</span></span><br><span class="line">股票<span class="number">10</span>   -<span class="number">0.243500</span>   -<span class="number">1.733623</span>   -<span class="number">1.137840</span>    <span class="number">0.124976</span>   -<span class="number">0.415727</span></span><br></pre></td></tr></table></figure>
+<h5 id="panel">3.4 panel</h5>
+<p>panel 是三维的数据结构，是DataFrame的容器，Panel的3个轴如下：</p>
+<ul>
+<li><code>items</code>：axis 0，每个项目对应于内部包含的数据帧(DataFrame)。</li>
+<li><code>major_axis</code> ：axis 1，是每个数据帧(DataFrame)的索引(行)。</li>
+<li><code>minor_axis</code>：axis 2，是每个数据帧(DataFrame)的列。</li>
+</ul>
+<h6 id="panel对象构造">3.4.1 Panel对象构造</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pandas.Panel(data, items, major_axis, minor_axis, dtype, copy)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>data</code>：构建Panel的数据，采取各种形式，如<code>ndarray，series，map，lists，dict，constant</code>和另一个数据帧<code>DataFrame</code>。</li>
+<li><code>items</code>：axis=0</li>
+<li><code>major_axis</code>：axis=1</li>
+<li><code>minor_axis</code>：axis=2</li>
+<li><code>dtype</code>：每列的数据类型</li>
+<li><code>copy</code>：复制数据，默认 - false</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    data = np.random.rand(<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>)</span><br><span class="line">    p = pd.Panel(data, items=[<span class="string">&quot;item1&quot;</span>, <span class="string">&quot;item2&quot;</span>], major_axis=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], minor_axis=[<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>])</span><br><span class="line">    <span class="built_in">print</span>(p)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;item1&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(p[<span class="string">&quot;item1&quot;</span>])</span><br><span class="line">    <span class="built_in">print</span>(p.major_xs(<span class="number">2</span>))</span><br><span class="line">    <span class="built_in">print</span>(p.minor_xs(<span class="string">&#x27;b&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment"># &lt;class &#x27;pandas.core.panel.Panel&#x27;&gt;</span></span><br><span class="line"><span class="comment"># Dimensions: 2 (items) x 4 (major_axis) x 5 (minor_axis)</span></span><br><span class="line"><span class="comment"># Items axis: item1 to item2</span></span><br><span class="line"><span class="comment"># Major_axis axis: 1 to 4</span></span><br><span class="line"><span class="comment"># Minor_axis axis: a to e</span></span><br><span class="line"><span class="comment"># item1</span></span><br><span class="line"><span class="comment">#           a         b         c         d         e</span></span><br><span class="line"><span class="comment"># 1  0.185626  0.976123  0.566263  0.273208  0.675442</span></span><br><span class="line"><span class="comment"># 2  0.209664  0.205190  0.217200  0.158447  0.400683</span></span><br><span class="line"><span class="comment"># 3  0.499591  0.963321  0.759330  0.089930  0.362824</span></span><br><span class="line"><span class="comment"># 4  0.723158  0.585642  0.629246  0.886086  0.493039</span></span><br><span class="line"><span class="comment">#       item1     item2</span></span><br><span class="line"><span class="comment"># a  0.209664  0.592154</span></span><br><span class="line"><span class="comment"># b  0.205190  0.661562</span></span><br><span class="line"><span class="comment"># c  0.217200  0.743716</span></span><br><span class="line"><span class="comment"># d  0.158447  0.055882</span></span><br><span class="line"><span class="comment"># e  0.400683  0.245760</span></span><br><span class="line"><span class="comment">#       item1     item2</span></span><br><span class="line"><span class="comment"># 1  0.976123  0.630320</span></span><br><span class="line"><span class="comment"># 2  0.205190  0.661562</span></span><br><span class="line"><span class="comment"># 3  0.963321  0.741791</span></span><br><span class="line"><span class="comment"># 4  0.585642  0.729366</span></span><br></pre></td></tr></table></figure>
+<h6 id="panel数据索引">3.4.2 Panel数据索引</h6>
+<p>Panel右三个数据索引，因此可使用它们获取相应的结果，这里使用<code>Items</code>访问<code>Panel</code>可以获取相应的<code>DataFrame</code> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    data = &#123;<span class="string">&#x27;Table1&#x27;</span>: pd.DataFrame(np.random.randn(<span class="number">4</span>, <span class="number">3</span>),</span><br><span class="line">                                   index=[<span class="string">&#x27;rank1&#x27;</span>, <span class="string">&#x27;rank2&#x27;</span>, <span class="string">&#x27;rank3&#x27;</span>, <span class="string">&#x27;rank4&#x27;</span>],</span><br><span class="line">                                   columns=[<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Age&#x27;</span>, <span class="string">&#x27;Score&#x27;</span>]),</span><br><span class="line">            <span class="string">&#x27;Table2&#x27;</span>: pd.DataFrame(np.random.randn(<span class="number">4</span>, <span class="number">3</span>),</span><br><span class="line">                                   index=[<span class="string">&#x27;rank1&#x27;</span>, <span class="string">&#x27;rank2&#x27;</span>, <span class="string">&#x27;rank3&#x27;</span>, <span class="string">&#x27;rank4&#x27;</span>],</span><br><span class="line">                                   columns=[<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Age&#x27;</span>, <span class="string">&#x27;Score&#x27;</span>]</span><br><span class="line">                                   )</span><br><span class="line">            &#125;</span><br><span class="line">    p = pd.Panel(data)</span><br><span class="line">    <span class="built_in">print</span>(p[<span class="string">&#x27;Table1&#x27;</span>])</span><br><span class="line"> </span><br><span class="line"><span class="comment"># output:</span></span><br><span class="line"><span class="comment">#            Name       Age     Score</span></span><br><span class="line"><span class="comment"># rank1 -1.240644 -0.820041  1.656150</span></span><br><span class="line"><span class="comment"># rank2  1.830655 -0.258068 -0.728560</span></span><br><span class="line"><span class="comment"># rank3  1.268695  1.259693 -1.005151</span></span><br><span class="line"><span class="comment"># rank4 -0.139876  0.611589  2.343394</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="panel属性">3.4.3 Panel属性</h6>
+<ul>
+<li><code>Panel.T</code>：转置行和列</li>
+<li><code>Panel.axes</code>：返回一个列，行轴标签和列轴标签作为唯一的成员。</li>
+<li><code>Panel.dtypes</code>：返回对象的数据类型</li>
+<li><code>Panel.empty</code>：如果NDFrame完全为空，返回True</li>
+<li><code>Panel.ndim</code>：返回轴/数组维度的大小</li>
+<li><code>Panel.shape</code>：返回表示DataFrame维度的元组</li>
+<li><code>Panel.size</code>：返回DataFrame的元素数</li>
+<li><code>Panel.values</code>：将对象作为ndarray返回</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45698637/article/details/122766366">Pandas教程</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">python环境配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-17 14:02:12 / 修改时间：15:23:19" itemprop="dateCreated datePublished" datetime="2022-09-17T14:02:12+08:00">2022-09-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="使用anaconda">1. 使用Anaconda</h4>
+<p>Anaconda，中文大蟒蛇，是一个开源的Python发行版本，其包含了conda、Python等180多个科学包及其依赖.可通过<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">Anaconda下载</a>。选择合适版本。</p>
+<p><strong><em>注意</em></strong>：一个python环境应当只安装一个版本的tensorflow，如果还需要安装其他版本的tensorflow，应该再创建一个python环境</p>
+<h5 id="anaconda创建指定python环境">1.1 anaconda创建指定python环境</h5>
+<p>主要命令为配置自己环境<code>conda create -n 环境的名字 python=版本号</code></p>
+<ul>
+<li>步骤一：打开Anaconda powershell prompt。</li>
+<li>步骤二：输入命令<code>conda create -n py36 anaconda=2020.02 python=3.6</code>，版本<code>python=3.x</code>自己指定。</li>
+<li>步骤三：应用该环境<code>conda activate py36</code></li>
+<li>下载的环境会在<code>D:\pythonDeve\Anaconda\envs\py36</code>处</li>
+</ul>
+<blockquote>
+<p>退出该环境使用<code>conda deactivate py36</code> 显示当前所有已发现的环境：<code>conda info --envs</code></p>
+</blockquote>
+<h5 id="pycharm中导入该python版本编译环境">1.2pycharm中导入该python版本编译环境：</h5>
+<ul>
+<li>步骤一：打开pycharm，点击<code>File\settings\project:项目名</code> <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/one.png" width="500"></li>
+<li>步骤二：选择上面提到的路径导入 <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/two.png" width="500"></li>
+</ul>
+<h5 id="配置python环境变量">1.3 配置python环境变量</h5>
+<p>配置python环境变量是为了能在命令行窗口中能够找到该命令。一般建议配置，因为后续的许多安装都要用到<code>pip</code>和<code>conda</code>。 <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/three.png" width="500"></p>
+<h5 id="安装指定版本tensorflow">1.4 安装指定版本tensorflow</h5>
+<ul>
+<li>查看当前可使用的tensorflow版本<code>conda search  --full tensorflow</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">(py36) PS C:\Users\Trluper&gt; conda search  --full tensorflow</span><br><span class="line">&gt;&gt;</span><br><span class="line">Loading channels: done</span><br><span class="line"># Name                       Version           Build  Channel</span><br><span class="line">tensorflow                     <span class="number">1.7</span><span class="number">.0</span>               <span class="number">0</span>  pkgs/main</span><br><span class="line">tensorflow                     <span class="number">1.7</span><span class="number">.1</span>               <span class="number">0</span>  pkgs/main</span><br><span class="line">tensorflow                     <span class="number">1.8</span><span class="number">.0</span>               <span class="number">0</span>  pkgs/main</span><br><span class="line">tensorflow                     <span class="number">1.8</span><span class="number">.0</span>      haa95532_0  pkgs/main</span><br><span class="line">tensorflow                     <span class="number">1.9</span><span class="number">.0</span> eigen_py35hb0e21f4_1  pkgs/main</span><br><span class="line">tensorflow                     <span class="number">1.9</span><span class="number">.0</span> eigen_py36h0b764b7_1  pkgs/main</span><br><span class="line">tensorflow                     <span class="number">1.9</span><span class="number">.0</span> gpu_py35h0075c17_1  pkgs/main</span><br><span class="line">tensorflow                     <span class="number">1.9</span><span class="number">.0</span> gpu_py36hfdee9c2_1  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.10</span><span class="number">.0</span> eigen_py35h38c8211_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.10</span><span class="number">.0</span> eigen_py36h849fbd8_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.10</span><span class="number">.0</span> gpu_py35ha5d5ef7_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.10</span><span class="number">.0</span> gpu_py36h3514669_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.10</span><span class="number">.0</span> mkl_py35h4a0f5c2_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.10</span><span class="number">.0</span> mkl_py36hb361250_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.11</span><span class="number">.0</span> eigen_py36h346fd36_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.11</span><span class="number">.0</span> gpu_py36h5dc63e2_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.11</span><span class="number">.0</span> mkl_py36h41bbc20_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.12</span><span class="number">.0</span> eigen_py36h67ac661_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.12</span><span class="number">.0</span> gpu_py36ha5f9131_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.12</span><span class="number">.0</span> mkl_py36h4f00353_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.13</span><span class="number">.1</span> eigen_py36hf0a88a9_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.13</span><span class="number">.1</span> eigen_py37h2a8d240_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.13</span><span class="number">.1</span> gpu_py36h1635174_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.13</span><span class="number">.1</span> gpu_py36h9006a92_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.13</span><span class="number">.1</span> gpu_py37h83e5d6a_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.13</span><span class="number">.1</span> gpu_py37hbc1a9d5_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.13</span><span class="number">.1</span> mkl_py36hd212fbe_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.13</span><span class="number">.1</span> mkl_py37h9463c59_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.14</span><span class="number">.0</span> eigen_py36hf4fd08c_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.14</span><span class="number">.0</span> eigen_py37hcf3f253_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.14</span><span class="number">.0</span> gpu_py36h305fd99_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.14</span><span class="number">.0</span> gpu_py36heb2afb7_0  pkgs/main</span><br><span class="line">tensorflow                    <span class="number">1.14</span><span class="number">.0</span> gpu_py37h2fabf85_0  pkgs/main</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看tensorflow包信息及依赖关系<code>conda  info  tensorflow</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">(py36) PS C:\Users\Trluper&gt; conda  info  tensorflow</span><br><span class="line">tensorflow <span class="number">1.15</span><span class="number">.0</span> mkl_py36h997801b_0</span><br><span class="line">------------------------------------</span><br><span class="line">file name   : tensorflow<span class="number">-1.15</span><span class="number">.0</span>-mkl_py36h997801b_0.conda</span><br><span class="line">name        : tensorflow</span><br><span class="line">version     : <span class="number">1.15</span><span class="number">.0</span></span><br><span class="line">build string: mkl_py36h997801b_0</span><br><span class="line">build number: <span class="number">0</span></span><br><span class="line">channel     : https:<span class="comment">//repo.anaconda.com/pkgs/main/win-64</span></span><br><span class="line">size        : <span class="number">4</span> KB</span><br><span class="line">arch        : None</span><br><span class="line">constrains  : ()</span><br><span class="line">legacy_bz2_md5: ad6e18c8cdd17fe2bd396177ba904065</span><br><span class="line">legacy_bz2_size: <span class="number">3829</span></span><br><span class="line">license     : Apache <span class="number">2.0</span></span><br><span class="line">license_family: Apache</span><br><span class="line">md5         : aa94e7a35e3cf46219e5750ea5674fa0</span><br><span class="line">platform    : None</span><br><span class="line">sha256      : <span class="number">04b</span>f8a4c378f150163cbdfe1cf5d996c1251b9231acf2d723336668259a4e0e4</span><br><span class="line">subdir      : win<span class="number">-64</span></span><br><span class="line">timestamp   : <span class="number">1573235601611</span></span><br><span class="line">url         : https:<span class="comment">//repo.anaconda.com/pkgs/main/win-64/tensorflow-1.15.0-mkl_py36h997801b_0.conda</span></span><br><span class="line">dependencies:</span><br><span class="line">    _tflow_select <span class="number">2.3</span><span class="number">.0</span> mkl</span><br><span class="line">    python <span class="number">3.6</span>.*</span><br><span class="line">    tensorboard &gt;=<span class="number">1.15</span><span class="number">.0</span></span><br><span class="line">    tensorflow-base <span class="number">1.15</span><span class="number">.0</span> mkl_py36h190a33d_0</span><br><span class="line">    tensorflow-estimator &gt;=<span class="number">1.15</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<p>主要看<code>dependencies</code>，可以看到tensorflow对应的python版本</p>
+<ul>
+<li>安装指定版本tensorflow：<code>conda  install tensorflow-cpu=1.13</code>，其中<code>-cpu</code>指cpu版本，还有<code>-gpu</code>版本</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指定清华源，但有一些会没有</span></span><br><span class="line">pip install -i  https:<span class="comment">//pypi.mirrors.ustc.edu.cn/simple  tensorflow-cpu==2.1.0</span></span><br><span class="line"><span class="comment">//国外源</span></span><br><span class="line">pip install tensorflow-cpu==<span class="number">2.1</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>激活tensorflow<code>conda activate tensorflow</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate tensorflow</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看该环境下安装的tensorflow：<code>conda list tensorflow</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(py36) PS C:\Users\Trluper&gt; conda list tensorflow</span><br><span class="line"><span class="meta"># packages in environment at D:\pythonDeve\Anaconda\envs\py36:</span></span><br><span class="line">#</span><br><span class="line"># Name                    Version                   Build  Channel</span><br><span class="line">tensorflow-cpu            <span class="number">2.1</span><span class="number">.0</span>                    pypi_0    pypi</span><br><span class="line">tensorflow-estimator      <span class="number">2.1</span><span class="number">.0</span>                    pypi_0    pypi</span><br></pre></td></tr></table></figure>
+<h5 id="安装指定版本keras">1.5 安装指定版本keras</h5>
+<ul>
+<li>查询所有版本的keras</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">(py36) PS C:\Users\Trluper&gt; conda info keras</span><br><span class="line">keras <span class="number">2.6</span><span class="number">.0</span> pyhd3eb1b0_0</span><br><span class="line">------------------------</span><br><span class="line">file name   : keras<span class="number">-2.6</span><span class="number">.0</span>-pyhd3eb1b0_0.conda</span><br><span class="line">name        : keras</span><br><span class="line">version     : <span class="number">2.6</span><span class="number">.0</span></span><br><span class="line">build string: pyhd3eb1b0_0</span><br><span class="line">build number: <span class="number">0</span></span><br><span class="line">channel     : https:<span class="comment">//repo.anaconda.com/pkgs/main/noarch</span></span><br><span class="line">size        : <span class="number">721</span> KB</span><br><span class="line">arch        : None</span><br><span class="line">constrains  : (<span class="string">&#x27;tensorflow 2.6.0&#x27;</span>,)</span><br><span class="line">legacy_bz2_md5: <span class="number">9</span>c47afd01ba08eeb2130cf9811c59918</span><br><span class="line">legacy_bz2_size: <span class="number">848011</span></span><br><span class="line">license     : MIT</span><br><span class="line">license_family: MIT</span><br><span class="line">md5         : <span class="number">4</span>aeef3bf046f7e1ed44efe59fb7d3e23</span><br><span class="line">noarch      : python</span><br><span class="line">package_type: noarch_python</span><br><span class="line">platform    : None</span><br><span class="line">sha256      : c0156c162ce479d5eafd468acb956b977b7b9ae9236494b698d5b4dab02cdd7d</span><br><span class="line">subdir      : noarch</span><br><span class="line">timestamp   : <span class="number">1643826831715</span></span><br><span class="line">url         : https:<span class="comment">//repo.anaconda.com/pkgs/main/noarch/keras-2.6.0-pyhd3eb1b0_0.conda</span></span><br><span class="line">dependencies:</span><br><span class="line">    python &gt;=<span class="number">3.6</span></span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装指定版本keras</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(py36) PS C:\Users\Trluper&gt; pip install keras==<span class="number">2.6</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<h4 id="错误总览">2. 错误总览</h4>
+<h5 id="cannot-import-name-get_config">2.1 cannot import name 'get_config'</h5>
+<ul>
+<li><p>问题：导入语句<code>from keras.datasets import mnist</code>出现<code>ImportError: cannot import name ‘get_config’</code></p></li>
+<li><p><code>解决方法</code>： <code>ImportError: cannot import name ‘get_config’</code> 这个类型报错的问题我遇到的都可以通过导入包时使用tensorflow.keras解决,如下：成功解决 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from tensorflow.keras.datasets <span class="keyword">import</span> mnist</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,6 +687,22 @@
 
               <time title="创建时间：2022-09-12 20:47:43" itemprop="dateCreated datePublished" datetime="2022-09-12T20:47:43+08:00">2022-09-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-17 15:25:36" itemprop="dateModified" datetime="2022-09-17T15:25:36+08:00">2022-09-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">深度学习算法</span></a>
+                </span>
+            </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -225,14 +710,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -244,7 +729,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          
+          <h4 id="我的思考">0. 我的思考</h4>
+<p>两个可供突破的大方向：</p>
+<ul>
+<li>是否能推动深度学习的训练数据规模减小？</li>
+<li>怎么使得训练模型的结果更加精确。</li>
+</ul>
+<p>资源:</p>
+<ul>
+<li>kaggle机器学习竞赛</li>
+</ul>
+<h4 id="人工智能机器学习和深度学习">1. 人工智能、机器学习和深度学习</h4>
+<p>人工智能、机器学习和深度学习三者的关系如下所示： <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/relationship.png" wudth="500"></p>
+<ul>
+<li>机器学习：机器学习系统是训练出来的，而不是明确用代码编写出来的。人们通过输入数据和从这些数据中预期得到的答案，系统输出相应的规则。</li>
+<li>深度学习：<strong>深度学习里面的&quot;深度&quot;不是指通过学习获得更深层次的理解，而是指通过一系列连续的表示层来获得更有效果的数据特征。一个深度学习模型有多少层就被称为模型的深度是多少</strong>。一般来说，现代深度学习通常包含数十个甚至上百个连续的表示层。<strong>这些层也被称为神经网络</strong> <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/CNN.png" wudth="500"></li>
+</ul>
+<h4 id="深度学习的指标">2. 深度学习的指标</h4>
+<p>在上面我们已经知道，深度学习是<strong>通过各层对输入数据不断提取特征</strong>，提取方式的具体操作就是<strong>每层都是对输入数据进行权重计算</strong>，其本质就是一串数字，</p>
+<p>如下图所示，<span class="math display">\[$X_i\]</span><span class="math inline">\(是从图片拉伸出来的像素，它是不会变的，无法对其进行操作。而\)</span><span class="math display">\[W\]</span><span class="math inline">\(矩阵就是参数矩阵，\)</span><span class="math display">\[b\]</span>$是神经元偏置。<strong>因此对于深度学习，对于参数矩阵的选择是一项艰巨的任务，参数的好坏决定了输出结果的优劣</strong>。但是我们不能糊里糊涂的对参数进行更改，这样可能适得其反，<strong>必须借助某一个评估指标来更改，这就是接下来要介绍的损失函数</strong> <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/pixels.png" wudth="500"></p>
+<h5 id="损失函数">2.1 损失函数</h5>
+<p><strong>损失函数</strong>：损失函数的任务，就是通过一定数学式子衡量出该深度学习的实际输出与预期标准值之间的距离。</p>
+<p><strong>通过损失函数计算的损失值作为反馈信号来对参数矩阵中的权值进行微调，来降低对应的损失值</strong>。这种调节右优化器来完成，它实现了所谓的<strong>反向传播</strong>算法。 <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/optimizer.png" wudth="300"></p>
+<blockquote>
+<p>一般来说，一开始神经网络的权值是随机赋值的，那么第一次的输出也就通常与预期值相差甚远，但随着权重值的不断微调，损失在也在降低，这就是为什么说学习模型是训练出来的。</p>
+</blockquote>
+<h5 id="softmax分类器">2.2 softmax分类器</h5>
+<p>上面我们经过各层神经网络最终得到一个输入的得分值，但我们想一想如果结果给与我们一个概率不是更好，那么把得分值转化为概率就是<code>softmax</code>的作用。</p>
+<p><code>softmax</code>分类器将各个得分值<strong>进行放大然后归一化后再计算概率</strong></p>
+<h4 id="卷积神经网络">3. 卷积神经网络</h4>
+<p>神经网络本质上就是将我们的输入信息转换为特征矩阵。<strong>卷积神经网络就是对同一个区域可以提取多个特征值，传统的神经网络一般只提取单个特征值，这样卷积更加全面稳实。</strong></p>
+<p>卷积神经网络右输入层、隐含层、输出层组成：</p>
+<ul>
+<li><p>输入层：卷积神经网络的输入层可以处理多维数据，常见地，一维卷积神经网络的输入层接收一维或二维数组，其中一维数组通常为时间或频谱采样；二维数组可能包含多个通道；二维卷积神经网络的输入层接收二维或三维数组；三维卷积神经网络的输入层接收四维数组。由于使用<strong>梯度下降算法</strong>进行学习，卷积神经网络的输入特征需要进行标准化处理。具体地，在将学习数据输入卷积神经网络前，<strong>需在通道或时间/频率维对输入数据进行归一化</strong>，若输入数据为像素，也可将分布于的原始像素值归一化至<span class="math inline">\([0,1]\)</span>区间</p></li>
+<li><p><strong>隐含层</strong>：隐含层包含卷积层、池化层和全连接层3类常见构筑。卷积层中的卷积核包含权重系数，而池化层不包含权重系数</p>
+<ul>
+<li><p><strong>卷积核</strong>：卷积层的功能是对输入数据进行特征提取，其内部包含多个<strong>卷积核</strong>，组成卷积核的每个元素都对应一个权重系数和一个偏差量（bias vector）。卷积核就是图像处理时，给定输入图像，输入图像中一个小区域中像素加权平均后成为输出图像中的每个对应像素，其中权值由一个函数定义，这个函数称为卷积核。</p></li>
+<li><p><strong>激励函数</strong>：卷积层中包含激励函数以协助表达复杂特征，卷积神经网络通常使用线性整流函数<code>Rectified Linear Unit, ReLU</code>,它的作用就是对于上一层经过卷积后的数据经过<code>relu</code>的<code>max(0,x)</code>筛选</p></li>
+<li><strong>池化层</strong>：在卷积层进行特征提取后，为避免特征量太多计算缓慢，对其进行特征值压缩，输出的特征图会被传递至池化层进行特征选择和信息过滤。池化层包含预设定的池化函数，其功能是将特征图中单个点的结果替换为其相邻区域的特征图统计量。</li>
+<li><p><strong>全连接层</strong>：卷积神经网络中的卷积层和池化层能够对输入数据进行特征提取，<strong>全连接层的作用则是对提取的特征进行非线性组合以得到输出，即全连接层本身不被期望具有特征提取能力</strong>，而是试图利用现有的高阶特征完成学习目标 <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/car.png" wudth="500"></p></li>
+</ul></li>
+</ul>
+<h4 id="神经网络的数学基础">4. 神经网络的数学基础</h4>
 
       
     </div>
@@ -385,10 +911,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-09-08 10:38:18 / 修改时间：11:46:28" itemprop="dateCreated datePublished" datetime="2022-09-08T10:38:18+08:00">2022-09-08</time>
+              <time title="创建时间：2022-09-08 10:38:18" itemprop="dateCreated datePublished" datetime="2022-09-08T10:38:18+08:00">2022-09-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-18 16:29:54" itemprop="dateModified" datetime="2022-09-18T16:29:54+08:00">2022-09-18</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -396,7 +928,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>771</span>
+              <span>768</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -447,8 +979,13 @@
 <ul>
 <li>经典文献和最新文献应该持续以恒的进行全篇阅读</li>
 </ul>
-<p>不要用软件大段翻译，最好是划词翻译，长久来看比较有好处 - （1）文献阅读前首先要确定好自己的研究方向，将研究方向中的关键点找出来，这样在阅读文献前就弄清楚自己想要了解的内容是哪个方面的。<br>
-- （2）在阅读某篇具体文献时，先看标题和摘要，了解文章大致内容，同时确定该篇文献中和自己研究方向相关的部分，作为阅读重点 - （3）作为一个求知者，最重要的是一个新的看待问题的视角或者说一个新的思考问题的思路，很多问题没有一个明确的答案，我们需要在学习他人研究成果的同时，加强自己对问题的思考能力</p>
+<p>不要用软件大段翻译，最好是划词翻译，长久来看比较有好处</p>
+<ul>
+<li>（1）文献阅读前首先要确定好自己的研究方向，将研究方向中的关键点找出来，这样在阅读文献前就弄清楚自己想要了解的内容是哪个方面的。<br>
+</li>
+<li>（2）在阅读某篇具体文献时，先看标题和摘要，了解文章大致内容，同时确定该篇文献中和自己研究方向相关的部分，作为阅读重点</li>
+<li>（3）作为一个求知者，最重要的是一个新的看待问题的视角或者说一个新的思考问题的思路，很多问题没有一个明确的答案，我们需要在学习他人研究成果的同时，加强自己对问题的思考能力</li>
+</ul>
 <h5 id="文献管理">3.3 文献管理</h5>
 <p>使用ENDNOTE对文献进行分类管理，记录每个文献主要讲了什么，有什么创新点和对自己的启发，同时讲不同的文献进行分组，方便后续的查看。</p>
 
@@ -1743,461 +2280,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/30/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/30/Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-1/" class="post-title-link" itemprop="url">Linux操作系统_1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-07-30 22:28:49 / 修改时间：22:31:06" itemprop="dateCreated datePublished" datetime="2022-07-30T22:28:49+08:00">2022-07-30</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/30/MySQL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/30/MySQL/" class="post-title-link" itemprop="url">MySQL</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-30 21:59:16" itemprop="dateCreated datePublished" datetime="2022-07-30T21:59:16+08:00">2022-07-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-05 22:38:42" itemprop="dateModified" datetime="2022-08-05T22:38:42+08:00">2022-08-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>25k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>23 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="了解sql">1. 了解SQL</h4>
-<h5 id="数据库基础">1.1 数据库基础</h5>
-<p>数据库是一个以某种有组织的方式存储的数据集合。<code>MySQL</code>数据库中只有一个用户，名为<code>root</code>，但是它可以有多个数据库，如下是与<code>Oracle</code>数据库的不同之处： <img src="/2022/07/30/MySQL/different.png" width="700"></p>
-<h6 id="表的概念">1.1.1 表的概念</h6>
-<p>在数据库中，<strong>表是一种结构化的文件，用来存储某种特定类型的数据</strong>。数据库中的表都有一个唯一名字来标识自己，称为<strong>表名</strong>。同时表具有一些特性，这些特性定义了数据在表中如何存储，可以存储什么样的数据，数据如何分解、各部分信息如何让命名等等。</p>
-<p>描述表的这组信息就是所谓的<strong>模式</strong>，模式即指关于数据库和表的布局以及特性的信息。</p>
-<h6 id="列和数据类型">1.1.2 列和数据类型</h6>
-<p><strong>表由列组成，列就是表中的一个字段</strong>。列中存储着表的某部分信息，数据库中的列都有相应的类型，数据类型定义了列中可以存储的数据种类。</p>
-<h6 id="行">1.1.3 行</h6>
-<p><strong>虽然表由列组成，但存储过程中，表中的数据是按行存储的</strong>。每次保存的记录都存储在自己所在的行中，你也可以理解为行就是表中的一个记录。</p>
-<h6 id="主键">1.1.4 主键</h6>
-<p><strong>表中的每一行都应该有唯一标识自己的一列，这样搜索起来才不容易出错，保证数据的完整性</strong>，就如一个顾客列表可以使用顾客编号来作为主键,如果使用顾客姓名来搜索，万一有相同姓名的顾客搜索就容易混淆。<strong>因此对于每创建一个表来说都应该至少设置一列为主键</strong>，作为主键的列必须满足：</p>
-<ul>
-<li>任意两行都不具有相同的主键值</li>
-<li>每一行都必须具有一个主键值（主键列不允许为NULL值）</li>
-</ul>
-<p>主键虽然通常定义在表的一列上，但是也可以使用多个列作为主键</p>
-<h6 id="外键">1.1.5 外键</h6>
-<p><strong>外键就是某个表中被定义为外键的一列，它包含另一个表的主键值</strong>，定义两个表之间的关系，一个表中可以有多个外键。其作用主要有：</p>
-<ul>
-<li>不用重复存储另一个表中有的数据到本表，只需通过外键建立连续即可，节省了时间和空间</li>
-<li>同时在删除中必须先删除外键才能删除主键，因此能保证数据的完整性</li>
-</ul>
-<h4 id="mysql的安装和修改">2. MySQL的安装和修改</h4>
-<p>在ubuntu中可以使用<code>sudo apt install mysql-server</code>进行安装MySQL数据库。以下是对数据库的的初始化必做事项 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#进入本地数据库shell界面</span><br><span class="line">mysql -u root -p</span><br><span class="line">#进入其他主机的数据库shell</span><br><span class="line">mysql -h 192.168.18.251 -u root -p</span><br><span class="line">#修改密码</span><br><span class="line">mysql&gt; alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified with mysql_native_password by &#x27;123456&#x27;;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure></p>
-<h5 id="启动和关闭mysql服务器">2.1 启动和关闭MySQL服务器</h5>
-<p>MySQLS数据库分为客户端和服务器，<code>mysql-server</code>与<code>mysql-client</code>是DBMS的两个面向不同操作对象的工具。<code>server</code>是DBMS面向物理层次，包含存储数据的一系列机制、处理方法的集成；<code>client</code>是DBMS面向用户，提供一系列工具为用户所用，这些工具包括通常写的<code>sql</code>在内都要通过<code>server</code>的编译才能操作物理数据。即在连接服务器时要先开启<code>mysql-server</code></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//三种启动mysql服务器方法</span></span><br><span class="line">service mysql start</span><br><span class="line">systemctl statrt mysql</span><br><span class="line">systemctl restart mysql</span><br><span class="line"></span><br><span class="line"><span class="comment">//查看状态</span></span><br><span class="line">systemctl status mysql.service</span><br><span class="line"></span><br><span class="line"><span class="comment">//关闭服务器</span></span><br><span class="line">systectl stop mysql</span><br><span class="line">service mysql stop</span><br></pre></td></tr></table></figure>
-<p><strong>注意数据库shell界面</strong>，<code>shell</code>界面是<code>mysql-client</code>提供了一种人与<code>mysql</code>直接交互的命令窗口，同Linux的<code>bashShell</code>是一样的。</p>
-<h5 id="其他对数据库的操作">2.2 其他对数据库的操作</h5>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">#展示目前数据库目录</span><br><span class="line">mysql&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sys                |</span><br><span class="line">| test               |</span><br><span class="line">+--------------------+</span><br><span class="line">5 rows in set (0.05 sec)</span><br><span class="line"></span><br><span class="line">#创建数据库:创建一个使用utf-8字符集，并带校对规则的mydb3数据库。会对存入的数据进行检查。</span><br><span class="line">mysql&gt; create database mydb3 character set utf8 collate utf8_general_ci;</span><br><span class="line">Query OK, 1 row affected, 2 warnings (0.03 sec)</span><br><span class="line"></span><br><span class="line">#修改数据库</span><br><span class="line">mysql&gt; alter database test character set utf8;</span><br><span class="line">Query OK, 1 row affected, 1 warning (0.05 sec)</span><br><span class="line">mysql&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mydb3              |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sys                |</span><br><span class="line">| test               |</span><br><span class="line">+--------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">#选择test数据库</span><br><span class="line">mysql&gt; use test;</span><br><span class="line">Database changed</span><br><span class="line"></span><br><span class="line">#删除数据库</span><br><span class="line">mysql&gt; drop database mydb3;</span><br><span class="line">Query OK, 0 rows affected (0.08 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sys                |</span><br><span class="line">| test               |</span><br><span class="line">+--------------------+</span><br><span class="line">5 rows in set (0.00 sec)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="表的创建修改和删除">2.3 表的创建、修改和删除</h5>
-<p>本节主要简单介绍对表的操作关键字和相应的数据库数据类型，让读者对表创建有一个总体的认识。能够简单创建表，提升性能的表创建方法后续才会介绍到。在创建表之前，必须选择对哪一个数据库操作 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use test;</span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure></p>
-<h6 id="mysql的数据类型">2.3.1 MySQL的数据类型</h6>
-<p>数据类型是定义该列可以存储的数据以及该数据实际怎样存储的法则</p>
-<p><strong>1. 串数据类型</strong> <img src="/2022/07/30/MySQL/string.png" width="700"></p>
-<p><strong>2. 数值数据类型</strong> <img src="/2022/07/30/MySQL/digit.png" width="700"></p>
-<p><strong>3. 日期和时间数据类型</strong> <img src="/2022/07/30/MySQL/date.png" width="700"></p>
-<p><strong>4. 二进制数据类型</strong>：可以存储任何数据，如图像、多媒体、字处理文档等 <img src="/2022/07/30/MySQL/binary.png" width="700"></p>
-<ul>
-<li><code>bit</code>：1位，可以指定位数，如：<code>bit(3)</code></li>
-<li><code>int</code>：2字节可以指定最大位数，如<code>int&lt;4&gt;</code>,最大为4位的整数</li>
-<li><code>float</code>：2个字节,可以指定最大的位数和最大的小数位数，如：<code>float&lt;5,2&gt;</code> 最大为一个5位的数，小数位最多2位</li>
-<li><code>double</code>：4个字节,可以指定最大的位数和最大的小数位数，如：<code>float&lt;6,4&gt;</code>最大为一个6位的数，小数位最多4位</li>
-<li><code>char</code>：必须指定字符数,如<code>char(5)</code>,为不可变字符　即使存储的内容为'ab',也是用5个字符的空间存储这个数据</li>
-<li><code>varchar</code>：必须指定字符数,如varchar(5) 为可变字符　如果存储的内容为'ab',占用2个字符的空间；如果为'abc',则占用3个字符的空间</li>
-<li><code>text</code>: 大文本(大字符串)</li>
-<li><code>blob</code>：二进制大数据,如图片，音频文件，视频文件</li>
-<li><code>date</code>: 日期　如：'1921-01-02'</li>
-<li><code>datetime</code>: 日期+时间　如：'1921-01-02 12:23:43'</li>
-<li><code>timeStamp</code>: 时间戳，自动赋值为当前日期时间</li>
-</ul>
-<h6 id="创建表">2.3.2 创建表</h6>
-<p>创建表使用<code>create table</code> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#创建CUSTOMER表，以ID作为主键，同时指示除SALARY外其他都不能为NULL</span><br><span class="line">mysql&gt; CREATE TABLE IF NOT EXISTS CUSTOMER(</span><br><span class="line">    -&gt; NAME VARCHAR(20) NOT NULL, </span><br><span class="line">    -&gt; ID VARCHAR(30) NOT NULL AUTO_INCREMENT,</span><br><span class="line">    -&gt; SALARY DOUBLE NULL,</span><br><span class="line">    -&gt; HIREDATE DATE NOT NULL,</span><br><span class="line">    -&gt; PRIMARY KEY (ID)</span><br><span class="line">    -&gt; )ENGINE=InnoDB;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br></pre></td></tr></table></figure> <strong>这里有几个关键字需要介绍</strong>：</p>
-<ul>
-<li><p><code>NULL</code>和<code>NOT NULL</code>:这两个关键字指示我们在插入记录对于该列来说，如果是<code>NOT NULL</code>,则插入记录时该列必须要有数据，否则会报错，而<code>NULL</code>修饰的列可以允许插入的记录在该列为空。</p></li>
-<li><p><code>AUTO_INCREMENT</code>:在上述的表中<code>ID</code>是标识顾客的唯一编号，它们可以任意但是必须唯一，如果认为指定那么很难维护，<code>AUTO_INCREMENT</code>则是告诉MySQL本列每增加一行时自动增量，即每次执行一个<code>insert</code>,对该列增量。</p></li>
-<li><p><code>PRIMARY KEY()</code>:指示使用哪一个或哪几个字段作为主键</p></li>
-<li><p><code>ENGINE=InnoDB</code>:指示使用的引擎类型为<code>InnoDB</code> ，关于引擎类型后续会讲到</p></li>
-</ul>
-<h6 id="更新表">2.3.3 更新表</h6>
-<p>有时候我们创建了表，但是对于表的字段列需要添加或者删除操作，这时候就用到了<strong>表更新</strong>这个概念，更新表使用<code>alter table CUSTOMER add/drop ID VARCHAR(40) NOT NULL</code> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#添加列</span><br><span class="line">mysql&gt; alter table CUSTOMER add marriage VARCHAR(5) NULL;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br><span class="line">#删除列</span><br><span class="line">mysql&gt; alter table CUSTOMER DROP MARRIAGE;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br><span class="line">#修改列</span><br><span class="line">alter table employee modify column height float;</span><br><span class="line">#修改表的字符集:</span><br><span class="line">alter table employee character set gbk;</span><br></pre></td></tr></table></figure></p>
-<h6 id="删除表">2.3.4 删除表</h6>
-<p>删除数据库中的表使用<code>drop table</code> <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE CUSTOMER;</span><br></pre></td></tr></table></figure></p>
-<h6 id="重命名表">2.3.5 重命名表</h6>
-<p>如果相对表的名字重命名则可使用<code>rename</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; rename table CUSTOMER TO customer;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.01</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; show tables</span>;</span><br><span class="line">+----------------+</span><br><span class="line">| Tables_in_test |</span><br><span class="line">+----------------+</span><br><span class="line">| customer       |</span><br><span class="line">+----------------+</span><br><span class="line"><span class="number">1</span> <span class="function">row in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<h6 id="显示表结构">2.3.6 显示表结构</h6>
-<p>如果想对表的结构字段名、类型等了解，可通过<code>describe</code>来显示表结构： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; describe customer;</span><br><span class="line">+----------+-------------+------+-----+---------+-------+</span><br><span class="line">| Field    | Type        | Null | Key | Default | Extra |</span><br><span class="line">+----------+-------------+------+-----+---------+-------+</span><br><span class="line">| NAME     | <span class="built_in">varchar</span>(<span class="number">20</span>) | NO   |     | <span class="literal">NULL</span>    |       |</span><br><span class="line">| ID       | <span class="built_in">varchar</span>(<span class="number">30</span>) | NO   | PRI | <span class="literal">NULL</span>    |       |</span><br><span class="line">| SALARY   | <span class="type">double</span>      | YES  |     | <span class="literal">NULL</span>    |       |</span><br><span class="line">| HIREDATE | date        | NO   |     | <span class="literal">NULL</span>    |       |</span><br><span class="line">+----------+-------------+------+-----+---------+-------+</span><br><span class="line"><span class="number">4</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.02</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<h4 id="sql常用语句">3. SQL常用语句</h4>
-<p>对于数据库来说，对数据库的操作离不开最重要的语句，而SQL语句就是对数据库操作的主流语言，可以说数据库和结构化查询语言<code>SQL</code>几乎是同义词，谈到<code>SQL</code>就当相于是在说数据库了。在数据库的操作中最常用的就是<strong>查询<code>select</code>,插入<code>insert into</code>，修改<code>update</code>和删除<code>delete</code>。</strong>也就是增删改差</p>
-<h5 id="select语句">3.1 select语句</h5>
-<p><code>select</code>是数据库中最常用的语句，它能从一个表或多个表中检索数据，使用<code>select</code>至少给出两个信息：一是要检索什么，从什么地方检索：<code>select what from where;</code>。<strong>你可以看作调用<code>select</code>会生成一个临时表作为结果集输出。</strong></p>
-<p>如下是最简单的两句查询语句： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//产看该表所有数据</span><br><span class="line">select * from employee;</span><br><span class="line">//查看特定数据</span><br><span class="line">select name 姓名,birthday 出生日期 from employee where sal=15500;</span><br></pre></td></tr></table></figure> 上面的两条语句中：<strong>第一条既没有过滤也没有对查询结果排序</strong>，通常来说都不会使用如下低效的查询语句；<strong>第二句虽然增加了过滤条件<code>sal=15500</code>,也使用文字显示代替<code>name</code>和<code>birthday</code>作为输出界面，但是也没有对结果排序</strong></p>
-<h6 id="distinct关键字">3.1.1 distinct关键字</h6>
-<p>如果一个表中的一列不是主键有多个相同的值，但是我们又想查询结果只显示不同的值，这个使用就要使用到<code>distinct</code>关键字 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//过滤表中重复数据。</span></span><br><span class="line">select DISTINCT english from student;</span><br><span class="line">select DISTINCT english,name from student;</span><br></pre></td></tr></table></figure></p>
-<h6 id="limit关键字">3.1.2 limit关键字</h6>
-<p>如果我们对检索的结果不要求其返回太多话，或者是限定其应该返回几行，这个时候就应该使用<code>limit</code>关键字:</p>
-<ul>
-<li><code>limit</code>后带一个数字的表示最多返回多少行</li>
-<li><code>limit</code>后面带两个数字的表示从检索结果的的几行开始和返回的最多行数</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from customer limit <span class="number">5</span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| jack    | <span class="number">1</span>  |  <span class="number">12000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| tom     | <span class="number">2</span>  |  <span class="number">12500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| lili    | <span class="number">3</span>  |  <span class="number">15000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| 小明    | <span class="number">4</span>  |  <span class="number">15000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">mysql&gt; select * from customer limit <span class="number">5</span>,<span class="number">5</span>;</span><br><span class="line">+------+----+--------+------------+</span><br><span class="line">| NAME | ID | SALARY | HIREDATE   |</span><br><span class="line">+------+----+--------+------------+</span><br><span class="line">| trl  | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+------+----+--------+------------+</span><br></pre></td></tr></table></figure>
-<h6 id="order-by关键字">3.1.3 order by关键字</h6>
-<p>一般来说，如果<code>select</code>语句没有对数据进行排序，则默认使用的数据在底层表中出现的顺序而显示，它可能是数据最初添加到表的顺序，但是一旦你进行过更新和删除，这个顺序就会受到MySQL重用回收存储空间的影响。因此应该采用关键字<code>order by</code>对检索结构进行排序。</p>
-<ul>
-<li>当<code>order by</code>后面只有一个字段名是，按该字段排序</li>
-<li>当<code>order by</code>后面跟着多个字段名排序，首先是按照第一个字段排序，然后看排序后是否有相同的第一个字段值的记录，如果有，则对有相同第一个字段值的记录进行第二个字段排序。</li>
-<li>默认情况下，使用的是升序排序，如果相要使用降序排序，则应该在后面添加<code>desc</code>,如<code>...order by name DESC;</code></li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select name 姓名 from customer order by name;</span><br><span class="line">+---------+</span><br><span class="line">| 姓名    |</span><br><span class="line">+---------+</span><br><span class="line">| jack    |</span><br><span class="line">| lili    |</span><br><span class="line">| tom     |</span><br><span class="line">| trl     |</span><br><span class="line">| trluper |</span><br><span class="line">| 小明    |</span><br><span class="line">+---------+</span><br></pre></td></tr></table></figure>
-<h6 id="where关键字">3.1.4 where关键字</h6>
-<p>在上面首次介绍<code>select</code>时，我们已经使用了<code>where</code>关键字，<code>where</code>关键字时对检索记录的一个筛选，只有符合<code>where</code>后面的条件才会输出这些记录 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#普通条件显示</span><br><span class="line">mysql&gt; select * from customer where salary&gt;=<span class="number">15000</span> order by salary desc;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| lili    | <span class="number">3</span>  |  <span class="number">15000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| 小明    | <span class="number">4</span>  |  <span class="number">15000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line"><span class="number">4</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">#非空显示</span></span><br><span class="line"><span class="function">mysql&gt; select * from customer where salary is <span class="keyword">not</span> null</span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| jack    | <span class="number">1</span>  |  <span class="number">12000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| tom     | <span class="number">2</span>  |  <span class="number">12500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| lili    | <span class="number">3</span>  |  <span class="number">15000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| 小明    | <span class="number">4</span>  |  <span class="number">15000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br></pre></td></tr></table></figure></p>
-<p>在这里我们还需要介绍能够与<code>where</code>组合的更高级的过滤语句关键字<code>and、or</code>。上面使用<code>where</code>都是单一条件,如果要求要符合多个条件的使用怎么办？那当然是使用<code>and\or</code>来解决</p>
-<ul>
-<li><code>and</code>：同c++中的<code>&amp;&amp;</code>起一样的作用，优先级高于<code>or</code></li>
-<li><code>or</code>：同c++中的<code>||</code>起一样的作用</li>
-</ul>
-<h6 id="in关键字">3.1.5 IN关键字</h6>
-<p><code>IN</code>操作符用来指定条件的范围，范围中的每个条件都可以进行匹配，它的功能与<code>or</code>很相像，使用<code>IN</code>是因为：</p>
-<ul>
-<li>在使用长的合法选项清单是，<code>IN</code>操作符更加直观清楚，语句也不如<code>or</code>那样长冗余。</li>
-<li>在使用<code>IN</code>时，计算的次序更容易管理</li>
-<li><code>IN</code>操作一般比<code>or</code>操作符清单执行的更快</li>
-<li><code>IN</code>操作符最多的优点是可以包含其他<code>select</code>语句，更加动态的建立<code>where</code>子句。</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="function">select * from customer where salary <span class="title">in</span><span class="params">(<span class="number">12000</span>,<span class="number">15000</span>,<span class="number">25000</span>)</span></span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| jack    | <span class="number">1</span>  |  <span class="number">12000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| lili    | <span class="number">3</span>  |  <span class="number">15000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| 小明    | <span class="number">4</span>  |  <span class="number">15000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line"><span class="number">4</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure>
-<h6 id="not关键字">3.1.6 NOT关键字</h6>
-<p><code>NOT</code>关键字有且只有一个功能，那就是否定它之后的紧跟的条件，NOT肯对<code>and、or</code>没什么用，但是对于<code>IN</code>来说却是绝配。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="function">select * from customer where salary <span class="keyword">not</span> <span class="title">in</span><span class="params">(<span class="number">12000</span>,<span class="number">15000</span>,<span class="number">25000</span>)</span></span>;</span><br><span class="line">+------+----+--------+------------+</span><br><span class="line">| NAME | ID | SALARY | HIREDATE   |</span><br><span class="line">+------+----+--------+------------+</span><br><span class="line">| tom  | <span class="number">2</span>  |  <span class="number">12500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl  | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+------+----+--------+------------+</span><br><span class="line"><span class="number">2</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<h6 id="like和通配符">3.1.7 LIKE和通配符</h6>
-<p><strong>通配符</strong>指的是用来匹配一部分的特殊字符；<strong>搜索模式</strong>则是指在搜索语句中使用字面值、通配符或两者组合成的搜索条件。<strong>使用通配符是必须在前面使用<code>LIKE</code>关键字，该关键字告诉MySQL后面跟着的搜索模式是使用通配符匹配而不是直接使用字面值匹配</strong></p>
-<ul>
-<li><code>%</code>通配符：该通配符是最常使用的，它可以表示任意字符出现任意次数，如<code>trl%</code>表示以<code>trl</code>开头的任意名称</li>
-<li><code>_</code>通配符：同<code>%</code>是一样的作用，但是只匹配单个任意字符，即只匹配一次。</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from customer where name like <span class="string">&#x27;trl%&#x27;</span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line"><span class="number">2</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure>
-<p>虽然通配符很有用，但是代价是很大的，它的搜索一般比前面的其他搜索所花时间更多，一般来说使用通配要遵循以下技巧：</p>
-<ul>
-<li>尽量不使用，如果有其他操作符能够达到相同效果，则应该使用这些操作符</li>
-<li>假如一定要使用，则不要把通配符放在搜索模式的开始处，因为这样的搜索极慢</li>
-</ul>
-<h6 id="select支持算术运算">3.1.8 select支持算术运算</h6>
-<p>对于MySQL中的数字类型，运行使用<code>* + - /</code>运算。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select salary,add_salary,salary+add_salary as finalSalary from custommer order by id;</span><br><span class="line">+--------+------------+-------------+</span><br><span class="line">| salary | add_salary | finalSalary |</span><br><span class="line">+--------+------------+-------------+</span><br><span class="line">|  <span class="number">12000</span> |        <span class="number">300</span> |       <span class="number">12300</span> |</span><br><span class="line">|  <span class="number">12500</span> |        <span class="number">300</span> |       <span class="number">12800</span> |</span><br><span class="line">|  <span class="number">15000</span> |        <span class="number">300</span> |       <span class="number">15300</span> |</span><br><span class="line">|  <span class="number">15000</span> |        <span class="number">300</span> |       <span class="number">15300</span> |</span><br><span class="line">|  <span class="number">25000</span> |        <span class="number">300</span> |       <span class="number">25300</span> |</span><br><span class="line">|  <span class="number">16000</span> |        <span class="number">300</span> |       <span class="number">16300</span> |</span><br><span class="line">+--------+------------+-------------+</span><br><span class="line"><span class="number">6</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<h5 id="正则表达式进行搜索">3.2 正则表达式进行搜索</h5>
-<p>前面介绍的过滤使用匹配、比较和通配符进行操作寻找符合的数据，对于一些基本情况来说足够了，但是随着过滤条件的增加，<code>where</code>子句本身的复杂性也在增加，这时候就应当使用正则表达式匹配。<strong>使用正则表达式必须在正则表达式（文本）前面使用<code>regexp</code>关键字，同·<code>like</code>一样告诉MySQL后面使用正则表达式进行匹配</strong>。</p>
-<p>注意在正则表达式中，对于有特殊意义的符号，如果你不希望他被翻译成则表示里的特殊符号，应该加<code>\\</code>进行转义，如<code>. | []</code>这些通过<code>\\. \\| \\[\\]</code>经过转义后才能被认为是字符串的一部分。</p>
-<h6 id="section">3.2.1 |</h6>
-<p>在正则表达式中<code>|</code>上面的<code>or</code>是起到一样的作用 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from customer where name regexp <span class="string">&#x27;trl|tom&#x27;</span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| tom     | <span class="number">2</span>  |  <span class="number">12500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br></pre></td></tr></table></figure></p>
-<h6 id="section-1">3.2.2 []</h6>
-<p><code>[]</code>的作用是匹配方括号内的字符之一，如<code>[123]</code>是指匹配1或2或3，同样为省略书写也可以写出<code>[1-3]</code>是同样的表示。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from customer where name regexp <span class="string">&#x27;[a-z]rl&#x27;</span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br></pre></td></tr></table></figure></p>
-<h6 id="section-2">3.2.3</h6>
-<p><code>.</code>也是正则表达式中一个特殊字符，它表示匹配任意一个字符。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select *from customer where name regexp <span class="string">&#x27;.rl&#x27;</span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------|</span><br></pre></td></tr></table></figure></p>
-<h6 id="匹配字符类">3.2.4 匹配字符类</h6>
-<p>MySQL中存在一些已经定义的字符集，这样就不用你自己手动去阻止这些字符集 <img src="/2022/07/30/MySQL/charSet.png" width="700"></p>
-<h6 id="匹配多个字符">3.2.5 匹配多个字符</h6>
-<p>至今为止，上面介绍的都是匹配单个字符的情况，是否有匹配多个字符的正则表达式特殊字符呢，当然是有的。 <img src="/2022/07/30/MySQL/muchChar.png" width="700"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select *from customer where name regexp <span class="string">&#x27;trl*&#x27;</span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line"><span class="number">2</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<p>注意这里的重复元字符是指能够匹配当前元字符的前一个字符的多个重复值，如<code>trl*</code>,匹配<code>trl\trll\trll\trlll...\..</code>等</p>
-<h6 id="定位符">3.2.6 定位符</h6>
-<p>到目前为止，上面的匹配规则都是匹配一个串中任意一个为止的文本，为了能够指定匹配的为止，给出了定位符： <img src="/2022/07/30/MySQL/locate.png" width="700"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select *from customer where name regexp <span class="string">&#x27;^trl&#x27;</span>;</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| NAME    | ID | SALARY | HIREDATE   |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line">| trluper | <span class="number">5</span>  |  <span class="number">25000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+----+--------+------------+</span><br><span class="line"><span class="number">2</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; select *from customer where name regexp &#x27;^trl$&#x27;</span>;</span><br><span class="line">+------+----+--------+------------+</span><br><span class="line">| NAME | ID | SALARY | HIREDATE   |</span><br><span class="line">+------+----+--------+------------+</span><br><span class="line">| trl  | <span class="number">6</span>  |  <span class="number">16000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+------+----+--------+------------+</span><br><span class="line"><span class="number">1</span> <span class="function">row in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure> 一般来说，其他的正则表达式字符都应当与定位符结合使用</p>
-<h5 id="insert语句">3.3 insert语句</h5>
-<p>插入数据使用<code>insert into</code>，如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//插入完整数据</span></span><br><span class="line"><span class="function">insert into employee <span class="title">values</span><span class="params">(<span class="number">1</span>,<span class="string">&#x27;tom&#x27;</span>,<span class="number">15000</span>,<span class="string">&#x27;1998-05-09&#x27;</span>,<span class="number">1</span>,<span class="string">&#x27;2021-1-9&#x27;</span>)</span></span>;</span><br><span class="line"><span class="comment">//与select结合使用</span></span><br><span class="line"><span class="function">insert into  <span class="title">employee</span><span class="params">(id,name,salary,birthday,rank,hiredate)</span> select id,name,salary,birthday,rank,hiredate from employee_1 where name</span>=<span class="string">&#x27;trluper&#x27;</span>;</span><br></pre></td></tr></table></figure></p>
-<h5 id="update语句">3.4 update语句</h5>
-<p>修改更新数据使用<code>update</code>: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; update customer set salary=salary+<span class="number">500</span>;</span><br><span class="line">Query OK, <span class="number">6</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function">Rows matched: <span class="number">6</span>  Changed: <span class="number">6</span>  Warnings: <span class="number">0</span></span></span><br></pre></td></tr></table></figure></p>
-<h5 id="delete语句">3.5 delete语句</h5>
-<p><code>delete</code>用来删除记录 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除所有数据</span></span><br><span class="line"><span class="keyword">delete</span> from employee;</span><br><span class="line"><span class="comment">//删除指定数据</span></span><br><span class="line"><span class="keyword">delete</span> form employee where name=<span class="string">&#x27;jack&#x27;</span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">//使用truncate删除表中记录。无条件 效率高</span></span><br><span class="line">truncate table employee;</span><br></pre></td></tr></table></figure></p>
-<h4 id="函数">4. 函数</h4>
-<p>有时候，我们对于搜索到的列的一些东西需要得到总和、平均和拼接，总之，我们不希望查找后的结果仍然是以底层表所存储的那样呈现上来,<strong>而是希望在<code>select</code>运行阶段经过处理后得到我们想要的结果，这时候就用到了想要的MySQL函数。</strong>大多数SQL支持以下函数：</p>
-<ul>
-<li>用于处理文本串的文本函数，如删除或填充、大小写转换等。</li>
-<li>用于数值数据进行算术的操作，如绝对值、求和等</li>
-<li>用于处理日期和时间值并从时间值提取特定成分</li>
-<li>返回DBMS正使用的特殊信息的系统函数，如返回登录信息、检查版本细节等</li>
-</ul>
-<h5 id="拼接字段">4.1 拼接字段</h5>
-<p>假如我们想在<code>select</code>中让输出的结果的一个字段即显示<code>name</code>又显示<code>salary</code>,而不是分开两个字段显示，这样就用到了<code>concat()</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="function">select <span class="title">concat</span><span class="params">(name,<span class="string">&#x27;:&#x27;</span>,salary,<span class="string">&#x27; &#x27;</span>,hiredate)</span> as &#x27;name:salary hiredate<span class="string">&#x27;&#x27; from customer order by id;</span></span></span><br><span class="line"><span class="string"><span class="function">+--------------------------+</span></span></span><br><span class="line"><span class="string"><span class="function">| name:salary hiredate     |</span></span></span><br><span class="line"><span class="string"><span class="function">+--------------------------+</span></span></span><br><span class="line"><span class="string"><span class="function">| jack:12000 2022-08-03    |</span></span></span><br><span class="line"><span class="string"><span class="function">| tom:12500 2022-08-03     |</span></span></span><br><span class="line"><span class="string"><span class="function">| lili:15000 2022-08-03    |</span></span></span><br><span class="line"><span class="string"><span class="function">| 小明:15000 2022-08-03    |</span></span></span><br><span class="line"><span class="string"><span class="function">| trluper:25000 2022-08-03 |</span></span></span><br><span class="line"><span class="string"><span class="function">| trl:16000 2022-08-03     |</span></span></span><br><span class="line"><span class="string"><span class="function">+--------------------------+</span></span></span><br><span class="line"><span class="string"><span class="function">6 rows in set (0.00 sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<p><strong><em>注意：</em></strong>在MySQL中拼接两个字段只能使用<code>concat()</code>函数，而在其他的数据库中则运行使用<code>+</code>直接拼接。</p>
-<h5 id="文本处理函数">4.2 文本处理函数</h5>
-<p><img src="/2022/07/30/MySQL/stringFunc.png" width="700"></p>
-<h5 id="日期和时间处理函数">4.3 日期和时间处理函数</h5>
-<p><img src="/2022/07/30/MySQL/dateFunc.png" width="700"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; <span class="function">select <span class="title">now</span><span class="params">()</span>,<span class="title">year</span><span class="params">(now())</span> as 年,<span class="title">month</span><span class="params">(now() )</span>as 月,<span class="title">date</span><span class="params">(now())</span> as 日</span>; </span><br><span class="line">+---------------------+------+------+------------+</span><br><span class="line">| <span class="built_in">now</span>()               | 年   | 月   | 日         |</span><br><span class="line">+---------------------+------+------+------------+</span><br><span class="line">| <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> <span class="number">22</span>:<span class="number">26</span>:<span class="number">25</span> | <span class="number">2022</span> |    <span class="number">8</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------------------+------+------+------------+</span><br></pre></td></tr></table></figure></p>
-<h5 id="数值处理函数">4.4 数值处理函数</h5>
-<p><img src="/2022/07/30/MySQL/numberFunc.png" width="700"></p>
-<h5 id="汇总函数">4.5 汇总函数</h5>
-<p>有时候我们需要对表中的数据进行汇总，而不是把它们实际检索出来，这时候就需要这样的函数，因此MySQL专门设立了<strong>汇总函数</strong> <img src="/2022/07/30/MySQL/finalFunc.png" width="700"></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#统计一个班级共有多少学生？</span><br><span class="line"><span class="function">select <span class="title">count</span><span class="params">(*)</span> from student</span>;</span><br><span class="line">#统计数学成绩大于<span class="number">90</span>的学生有多少个？</span><br><span class="line"><span class="function">select <span class="title">count</span><span class="params">(*)</span> from student where math&gt;90</span>;</span><br><span class="line">#统计总分大于<span class="number">250</span>的人数有多少？</span><br><span class="line"><span class="function">select <span class="title">count</span><span class="params">(*)</span> from student where math+chinese+english&gt;250</span>;</span><br><span class="line">#统计一个班级数学总成绩？</span><br><span class="line"><span class="function">select <span class="title">sum</span><span class="params">(math)</span> from student</span>;</span><br><span class="line">#统计一个班级语文、英语、数学各科的总成绩</span><br><span class="line"><span class="function">select <span class="title">sum</span><span class="params">(math)</span>, <span class="title">sum</span><span class="params">(chinese)</span>, <span class="title">sum</span><span class="params">(english)</span> from student</span>;</span><br><span class="line">#统计一个班级语文、英语、数学的成绩总和</span><br><span class="line"><span class="function">select <span class="title">sum</span><span class="params">(math+chinese+english)</span>from student</span>;</span><br><span class="line"><span class="function">select <span class="title">sum</span><span class="params">(math)</span>+<span class="title">sum</span><span class="params">(chinese)</span>+<span class="title">sum</span><span class="params">(english)</span> from student</span>;</span><br><span class="line">#求一个班级数学平均分？</span><br><span class="line"><span class="function">select <span class="title">avg</span><span class="params">(math)</span> from student</span>;</span><br><span class="line">#求一个班级总分平均分</span><br><span class="line"><span class="function">select <span class="title">avg</span><span class="params">(math+chinese+english)</span>from student</span>;</span><br><span class="line"><span class="function">select <span class="title">avg</span><span class="params">(math)</span>+<span class="title">avg</span><span class="params">(chinese)</span>+<span class="title">avg</span><span class="params">(english)</span> from student</span>;</span><br><span class="line">#求班级最高分和最低分</span><br><span class="line"><span class="function">select <span class="title">max</span><span class="params">(math+chinese+english)</span>,<span class="title">min</span><span class="params">(math+chinese+english)</span> from student</span>;</span><br></pre></td></tr></table></figure>
-<h4 id="其他查询操作">4. 其他查询操作</h4>
-<p>在这里将会介绍分组查询、子查询和组合查询等查询手段，进一步掌握查询检索方法。</p>
-<h5 id="分组查询">4.1 分组查询</h5>
-<p>分组查询得关键字为<code>group by</code>，使用该关键字能够使得检索后得结果按照你想要得情况进行分组,<strong>下述得<code>group by</code>句子指示是按<code>salary</code>排序并分组</strong>,这样一来我们就不用一一调用<code>select salary count(*) where salary=各个数值;</code>语句，只需要以<code>group by</code>就能执行全部，同时还有附有<code>order by</code>进行排序，如下所示： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#这句sql语句相当于<span class="function">select salary <span class="title">count</span><span class="params">(*)</span> where salary</span>=各个数值 order by salary;</span><br><span class="line">mysql&gt; select salary,<span class="built_in">count</span>(*) from customer group by salary;</span><br><span class="line">+--------+----------+</span><br><span class="line">| salary | <span class="built_in">count</span>(*) |</span><br><span class="line">+--------+----------+</span><br><span class="line">|  <span class="number">12500</span> |        <span class="number">1</span> |</span><br><span class="line">|  <span class="number">13000</span> |        <span class="number">1</span> |</span><br><span class="line">|  <span class="number">15500</span> |        <span class="number">2</span> |</span><br><span class="line">|  <span class="number">25500</span> |        <span class="number">1</span> |</span><br><span class="line">|  <span class="number">16500</span> |        <span class="number">1</span> |</span><br><span class="line">+--------+----------+</span><br><span class="line"><span class="number">5</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<p>使用<code>group by</code>分组数据，还允许对分组进行过滤，但在这里使用得不是<code>where</code>，而应该使用<code>having</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select salary,<span class="built_in">count</span>(*) from customer group by salary having salary&gt;=<span class="number">13000</span>;</span><br><span class="line">+--------+----------+</span><br><span class="line">| salary | <span class="built_in">count</span>(*) |</span><br><span class="line">+--------+----------+</span><br><span class="line">|  <span class="number">13000</span> |        <span class="number">1</span> |</span><br><span class="line">|  <span class="number">15500</span> |        <span class="number">2</span> |</span><br><span class="line">|  <span class="number">25500</span> |        <span class="number">1</span> |</span><br><span class="line">|  <span class="number">16500</span> |        <span class="number">1</span> |</span><br><span class="line">+--------+----------+</span><br><span class="line"><span class="number">4</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<h5 id="子查询">4.2 子查询</h5>
-<p>迄今为止，我们上面学的得<code>select</code>查询语句都是单语句得简单查询，即都是从单个数据表中检索数据得单条语句。还有一种嵌套在其他查询中查询，内部的查询语句称为<strong>子查询</strong>。有子查询的语句从内向外处理</p>
-<p><strong>使用子查询是因为在实际的应用中我们总不可能用一张表来存储全部的数据，而是让每一个表存储特定的内容，这样一来，我们就极有可能会用到一个表中的数据作为另一个表的字段名称或者条件来进行查询</strong>，如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//作为条件</span></span><br><span class="line"><span class="function">select cust_id from order_num <span class="title">in</span><span class="params">(select order_num from orderitems where prod_id=<span class="string">&#x27;TNT2&#x27;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//作为计算字段</span></span><br><span class="line">select cust_name,cust_state,</span><br><span class="line">(select <span class="built_in">count</span>(*) from orders where order.cust_id=customer.cust_id) as orders from customer order by cust_name;</span><br></pre></td></tr></table></figure></p>
-<h5 id="组合查询">4.3 组合查询</h5>
-<p><strong>组合查询是将多个<code>select</code>语句的组合成一个结果集返回，这些组合查询通常称为并<code>union</code>或复合查询</strong>。使用组合查询的情况有以下两点：</p>
-<ul>
-<li>在多个查询中从不同表返回类似结构的数据要形成一个结果集</li>
-<li>对单个表执行多个查询，要按单个查询结果集返回</li>
-</ul>
-<p>这时就可使用<code>union</code>操作符来组合数条SQL查询语句，<strong>使用时只需要在各条<code>select</code>语句之间加上<code>union</code>关键字即可，返回的结果集中会自动的去重</strong>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select name,salary from employee where name=<span class="string">&#x27;trluper&#x27;</span></span><br><span class="line">   -&gt; <span class="keyword">union</span> select name,salary froom employee where name=<span class="string">&#x27;trl&#x27;</span>;</span><br><span class="line">+---------+--------+</span><br><span class="line">| name    | salary |</span><br><span class="line">+---------+--------+</span><br><span class="line">| trluper |  <span class="number">25500</span> |</span><br><span class="line">| trl     |  <span class="number">16500</span> |</span><br><span class="line">+---------+--------+</span><br><span class="line"><span class="number">2</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<p><strong>使用<code>union</code>时的规则:</strong></p>
-<ul>
-<li><code>union</code>必须由两条或以上的<code>select</code>语句上才能使用</li>
-<li><code>union</code>的每个查询必须包含相同的列、表达式或聚集函数（不要求相同次序列出），输出会以第一个<code>select</code>语句的列名称为准</li>
-<li>列数据必须兼容：类型不必完全相同，但是DBMS可以隐式转换</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select salary from employee where name=<span class="string">&#x27;trluper&#x27;</span>  <span class="keyword">union</span> select job_name from employyee_job where id=<span class="number">5</span>;</span><br><span class="line">+-----------+</span><br><span class="line">| salary    |</span><br><span class="line">+-----------+</span><br><span class="line">| <span class="number">25500</span>     |</span><br><span class="line">| c++开发   |</span><br><span class="line">+-----------+</span><br><span class="line"><span class="number">2</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.01</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; select name,salary from employee where name</span>=<span class="string">&#x27;trluper&#x27;</span>  <span class="keyword">union</span> <span class="title class_">select</span> salary,name frmom employee where name=<span class="string">&#x27;trl&#x27;</span>;</span><br><span class="line">+---------+--------+</span><br><span class="line">| name    | salary |</span><br><span class="line">+---------+--------+</span><br><span class="line">| trluper | <span class="number">25500</span>  |</span><br><span class="line">| <span class="number">16500</span>   | trl    |</span><br><span class="line">+---------+--------+</span><br><span class="line"><span class="number">2</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure>
-<h4 id="连结表多表查询">5. 连结表（多表查询）</h4>
-<p><strong>我们知道将数据分不同种类存储到不同的表能够更有效率，也更方便管理，单是我们不可能在检索的时候对单个表单个表的检索，我们希望能够将不同表但相同对象的数据放置在一起，这和时候就用到了连结表。</strong>SQL最强大的功能就是能在数据检索查询的执行中连结<code>join</code>表，连结表不存在于数据库的存储中，它是在<code>select</code>运行过程依据条件创建而成。一般来说使用连结表最好是定义<strong>主键和外键</strong>，通过主外键将两者两者连结在一起。</p>
-<p>下面的例子中employee的<code>ID</code>为主键，<code>employee_job</code>的外键为<code>ID</code>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select name,salary,job_name from employee,employee_job where employee.id=employee_jjob.id order by salary desc;</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| name    | salary | job_name     |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| trluper |  <span class="number">25500</span> | c++开发      |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 老大         |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 技术服务     |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 开发         |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 产品经理     |</span><br><span class="line">| jack    |  <span class="number">12500</span> | 销售         |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line"><span class="number">6</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<p>上面使用<code>where</code>子句来建立连结，但是对于连结表这一知识点来说，最好是使用它的特定规则来实现连结比较好即使用<code>join</code>关键字。如下介绍当中的：笛卡儿积、内连结、外连结。</p>
-<h5 id="笛卡儿积交叉连接">5.1 笛卡儿积（交叉连接）</h5>
-<p>笛卡尔集是指两个集合<code>A</code>和<code>B</code>的乘积,如下 <figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">例如，有 A 和 B 两个集合，它们的值如下：</span><br><span class="line">A = &#123;<span class="number">1</span>,<span class="number">2</span>&#125;</span><br><span class="line">B = &#123;<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;</span><br><span class="line"></span><br><span class="line">集合 A×B 和 B×A 的结果集分别表示为：</span><br><span class="line">A×B=&#123;<span class="comment">(1,3)</span>, <span class="comment">(1,4)</span>, <span class="comment">(1,5)</span>, <span class="comment">(2,3)</span>, <span class="comment">(2,4)</span>, <span class="comment">(2,5)</span> &#125;;</span><br><span class="line">B×A=&#123;<span class="comment">(3,1)</span>, <span class="comment">(3,2)</span>, <span class="comment">(4,1)</span>, <span class="comment">(4,2)</span>, <span class="comment">(5,1)</span>, <span class="comment">(5,2)</span> &#125;;</span><br></pre></td></tr></table></figure> 我们发现笛卡儿积不遵从弄个交换律即<code>A*B≠B*A</code>。多表查询遵循的算法就是以上提到的笛卡尔积，表与表之间的连接可以看成是在做乘法运算。<strong>在实际应用中，应避免使用笛卡尔积，因为笛卡尔积中容易存在大量的不合理数据，简单来说就是容易导致查询结果重复、混乱。</strong>笛卡儿积使用<code>cross join</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select name,salary,job_name from employee cross join employee_job order by name;</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| name    | salary | job_name     |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| jack    |  <span class="number">12500</span> | 老大         |</span><br><span class="line">| jack    |  <span class="number">12500</span> | 开发         |</span><br><span class="line">| jack    |  <span class="number">12500</span> | 技术服务     |</span><br><span class="line">| jack    |  <span class="number">12500</span> | 销售         |</span><br><span class="line">| jack    |  <span class="number">12500</span> | 产品经理     |</span><br><span class="line">| jack    |  <span class="number">12500</span> | c++开发      |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 开发         |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 技术服务     |</span><br><span class="line">| lili    |  <span class="number">15500</span> | c++开发      |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 产品经理     |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 老大         |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 销售         |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 产品经理     |</span><br><span class="line">| tom     |  <span class="number">13000</span> | c++开发      |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 销售         |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 技术服务     |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 老大         |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 开发         |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 老大         |</span><br><span class="line">| trl     |  <span class="number">16500</span> | c++开发      |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 开发         |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 销售         |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 技术服务     |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 产品经理     |</span><br><span class="line">| trluper |  <span class="number">25500</span> | 开发         |</span><br><span class="line">| trluper |  <span class="number">25500</span> | c++开发      |</span><br><span class="line">| trluper |  <span class="number">25500</span> | 技术服务     |</span><br><span class="line">| trluper |  <span class="number">25500</span> | 产品经理     |</span><br><span class="line">| trluper |  <span class="number">25500</span> | 老大         |</span><br><span class="line">| trluper |  <span class="number">25500</span> | 销售         |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 开发         |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 技术服务     |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | c++开发      |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 产品经理     |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 老大         |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 销售         |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line"><span class="number">36</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<h5 id="内连接">5.2 内连接</h5>
-<p><strong>基于两个表直接的主键和外键相等的查询称为内部链接</strong>。只返回满足<code>on</code>后连接条件的数据（两边都有的才显示）。（对应oracle等值连接。） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select name,salary,job_name from employee a inner join employee_job b on a.id=b.id order by name;</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| name    | salary | job_name     |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| jack    |  <span class="number">12500</span> | 销售         |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 技术服务     |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 产品经理     |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 老大         |</span><br><span class="line">| trluper |  <span class="number">25500</span> | c++开发      |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 开发         |</span><br><span class="line">+---------+--------+--------------+</span><br></pre></td></tr></table></figure></p>
-<h5 id="外连接">5.3 外连接</h5>
-<p>外连结有左外连结和右外连结，外连接与内连接的不同在于外连接对于另一个表会显示全部记录，不管符不符合后边<code>on</code>的条件，另一个表只显示符合条件的数据。</p>
-<h6 id="左外连结">5.3.1 左外连结</h6>
-<p><code>left join</code>是<code>left outer join</code>的简写，它的全称是左外连接，是外连接中的一种。外连接，左表<code>a</code>的记录将会全部表示出来，而右表<code>b</code>只会显示符合搜索条件的记录。右表记录不足的地方均为<code>NULL</code>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select name,salary,job_name from employee a left join employee_job b on a.id=b.idorder by name;</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| name    | salary | job_name     |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| Adson   |  <span class="number">19000</span> | <span class="literal">NULL</span>         |</span><br><span class="line">| jack    |  <span class="number">12500</span> | 销售         |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 技术服务     |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 产品经理     |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 老大         |</span><br><span class="line">| trluper |  <span class="number">25500</span> | c++开发      |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 开发         |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line"><span class="number">7</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<h6 id="右外连接">5.3.2 右外连接</h6>
-<p>效果同左外是相反的 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ysql&gt; select name,salary,job_name from employee a right join employee_job b on a.id=b.id order by name;</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| name    | salary | job_name     |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line">| jack    |  <span class="number">12500</span> | 销售         |</span><br><span class="line">| lili    |  <span class="number">15500</span> | 技术服务     |</span><br><span class="line">| tom     |  <span class="number">13000</span> | 产品经理     |</span><br><span class="line">| trl     |  <span class="number">16500</span> | 老大         |</span><br><span class="line">| trluper |  <span class="number">25500</span> | c++开发      |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | 开发         |</span><br><span class="line">+---------+--------+--------------+</span><br><span class="line"><span class="number">6</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.01</span> sec)</span></span></span><br></pre></td></tr></table></figure></p>
-<h4 id="视图">6. 视图</h4>
-<p>视图是虚拟的比表，与包含数据的表不同，视图只包含使用时动态检索数据的查询<strong>。即视图是将一个查询语句包装成一个有名字的虚拟表，我们可以通过该虚拟表来使用这个查询语句</strong>。因此对于视图来说具有以下优点：</p>
-<ul>
-<li>重用SQL语句</li>
-<li>简化了复杂的SQL操作，在编写查询后，我们可以很方便重用它，而不用知道它的细节</li>
-<li>使用表的组成部分而不是整个表</li>
-<li>保护数据，可以给用户授予表的特定部分的权限而不是整个表的访问权限</li>
-<li>更改数据格式和表示。视图可以返回与底层表不同的数据格式和表示。</li>
-<li>节省空间，有了视图，不用在去创建一个同视图一样的表，在有需要的使用视图生成一个临时表即可。</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create view employee_view as select name,salary,hiredate from employee,employee_job where employee.id=employee_job.id;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.01</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; show tables</span>;</span><br><span class="line">+----------------+</span><br><span class="line">| Tables_in_test |</span><br><span class="line">+----------------+</span><br><span class="line">| employee       |</span><br><span class="line">| employee_job   |</span><br><span class="line">| employee_view  |</span><br><span class="line">+----------------+</span><br><span class="line"><span class="number">3</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; select * from employee_view</span>;</span><br><span class="line">+---------+--------+------------+</span><br><span class="line">| name    | salary | hiredate   |</span><br><span class="line">+---------+--------+------------+</span><br><span class="line">| jack    |  <span class="number">12500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| tom     |  <span class="number">13000</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| lili    |  <span class="number">15500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| 小明    |  <span class="number">15500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trluper |  <span class="number">25500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">| trl     |  <span class="number">16500</span> | <span class="number">2022</span><span class="number">-08</span><span class="number">-03</span> |</span><br><span class="line">+---------+--------+------------+</span><br><span class="line"><span class="number">6</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br></pre></td></tr></table></figure>
-<p><strong><em>注意</em></strong>：通常来说，视图是支持更新的，即可以对视图使用和表一样的<code>insert\update\delete</code>操作，因为视图只是一个包装<code>select</code>语句的虚拟表，因此更新一个视图会更新其相关的底层表，对视图的更新就是对底层表的更新。<strong>但是并不是所有的视图都支持更新，如果视图不能正确的确定被更新的基数据所在就不能更新。</strong></p>
-<h4 id="存储过程">7. 存储过程</h4>
-<p>视图能够很好的重复利用SQL语句，但是只能存储<code>select</code>语句，存储过程能够解决这个问题，<strong>存储过程（PROCEDURE）是事先经过编译并存储在数据库中的一段SQL语句的集合。调用存储过程可以简化应用开发人员的很多工作，减少数据在数据库和应用服务器之间的传输，对于提高数据处理的效率是很有好处的。</strong></p>
-<p><strong>优点：</strong></p>
-<ul>
-<li>简化操作，存储过程通过把处理语句封装在容易使用的单元中。</li>
-<li>简化对变动的管理，如果有表名、列名的变动时，只需要改动存储过程内的代码即可。</li>
-<li>提高性能，使用存储过程比使用单独的SQL语句要快。</li>
-<li>安全性大，因此使用的是存储过程内的SQL语句，数据库管理员是可以向访问数据库中存储过程的应用程序授予适当的权限，而不是向基础数据库表提供任何权限。</li>
-</ul>
-<p><strong>缺点：</strong></p>
-<ul>
-<li>如果使用大量的存储过程，那么使用这些存储过程的每个连接的内存使用量将大大增加</li>
-<li>对于复杂的业务逻辑的存储过程的设计较为困难</li>
-<li>开发和维护存储过程都不容易。</li>
-<li>对数据库依赖程度较高，移值性差。</li>
-</ul>
-<h5 id="建立和调用存储过程">7.1 建立和调用存储过程</h5>
-<p>存储过程就类似于c++中的函数，需要先定义，使用时需要调用。存储过程可以定义参数，参数分为<code>IN、OUT、INOUT</code>类型三种类型。调用存储过程使用<code>call</code></p>
-<ul>
-<li><code>IN</code>类型的参数表示接受调用者传入的数据；</li>
-<li><code>OUT</code>类型的参数表示向调用者返回数据；</li>
-<li><code>INOUT</code>类型的参数即可以接受调用者传入的参数，也可以向调用者返回数据。</li>
-<li><code>declare</code>指示在存储过程中定义的变量，可使用<code>set</code>设置值</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 创建存储过程</span><br><span class="line"><span class="function">CREATE PROCEDURE <span class="title">demo2</span><span class="params">(IN s_sex CHAR(<span class="number">1</span>),OUT s_count INT)</span></span></span><br><span class="line"><span class="function">	-- 存储过程体</span></span><br><span class="line"><span class="function">	BEGIN</span></span><br><span class="line"><span class="function">		-- 把SQL中查询的结果通过INTO赋给变量</span></span><br><span class="line"><span class="function">		SELECT <span class="title">COUNT</span><span class="params">(*)</span> INTO s_count FROM student WHERE sex</span>= s_sex;</span><br><span class="line">		declare id <span class="type">int</span>;</span><br><span class="line">		set id=<span class="number">15</span>;</span><br><span class="line">	END;</span><br><span class="line"></span><br><span class="line">-- 调用存储过程</span><br><span class="line"><span class="function">call <span class="title">demo2</span><span class="params">(<span class="string">&#x27;男&#x27;</span>,nums)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>上面的<code>SELECT COUNT(*) INTO s_count FROM student WHERE sex= s_sex;</code>语句将统计到的数目存储到<code>s_count</code>以返回给调用着，因为调用后他这是将结果返回给了<code>s_count</code>并没有输出结果集，可通过<code>select</code>输出 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select s_count;</span><br></pre></td></tr></table></figure></p>
-<h5 id="删除和检查存储过程">7.2 删除和检查存储过程</h5>
-<p>可以通过<code>show create procedure</code>查看存储过程的详细信息，通过<code>drop procedure</code>删除存储过程 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">show create procedure demo2;</span><br><span class="line">drop procedure demo2;</span><br></pre></td></tr></table></figure></p>
-<h4 id="触发器">8. 触发器</h4>
-<p>触发器的作用是让某一条语句在某事件发生时会自动执行。创建触发器时必须给出四条信息：</p>
-<ul>
-<li>唯一的触发器名称</li>
-<li>触发器的关联表</li>
-<li>触发器应该响应的活动，如<code>select、insert、update、delete</code>等</li>
-<li>触发器何时执行<code>befor\after</code></li>
-</ul>
-<p>创建触发器使用<code>create trigger</code>,如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create trigger newproduct after insert on products <span class="keyword">for</span> each row select NEW.product_id;</span><br></pre></td></tr></table></figure> 上面这条触发器名称为<code>newproduct</code>,触发时机为在<code>products</code>表对每个插入行后会执行<code>select NEW.product.id</code>。这里<code>NEW</code>时关键字指定该插入行</p>
-<h4 id="事务处理">9. 事务处理</h4>
-<p>MySQL支持多种数据库引擎，最常见的是<code>MyISAM</code>和<code>InnoDB</code>。前者不支持事务处理，后者支持。<strong>事务处理可以用来维护数据的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行，事务处理是一种机制，利用事务处理可以保证成批的MySQL操作不会只执行一部分，如果全部执行那没问题，如果在执行过程中发生错误，它就会进行回退以恢复到数据库以前安全版本</strong>。</p>
-<p>上面的这种事务处理机制保证了数据的完整性和安全性。事务处理需要知道的几个关键词如下：</p>
-<ul>
-<li>事务<code>transaction</code>：指一组SQL语句</li>
-<li>回退<code>rollback</code>：指撤销指定SQL语句的过程</li>
-<li>提交<code>commit</code>：指将未存储的SQL语句写入数据库表</li>
-<li>保留的<code>savepoint</code>：指事务处理设置的临时占位符，你可以对它发布回退</li>
-</ul>
-<h5 id="事务的特性">9.1 事务的特性</h5>
-<h6 id="事务的四大特性acid">9.1.1 事务的四大特性acid</h6>
-<ul>
-<li><strong>原子性</strong>：一个事务必须被视为一个不可分割的最小工作单元，整个事务中的操作要么全部提交成功，要么全部失败回滚。</li>
-<li><strong>一致性</strong>：数据库总是从一个一致性状态转移达到另一个一致性状态，一致性状态就是由事务原子性保障，一个事务提交了，那是ok的，一个事务未提交，那也是OK的。</li>
-<li><strong>隔离性</strong>：通常来说，一个事务所做的修改在未提交以前，对其他事务是不可见的。事务间是互不干扰的。</li>
-<li><strong>持久性</strong>：一旦事务提交了，其所做的修改会永久保存到数据库总中，即使系统崩溃，修改的数据也不会丢失，（持久性不能做到100%保证策略，如果数据库本身就能做到吃性，那么要备份又有什么用呢）</li>
-</ul>
-<h6 id="事务的隔离级别">9.1.2 事务的隔离级别</h6>
-<p><strong>事务的并发问题：</strong></p>
-<ul>
-<li>脏读 : 能读取到另一个未提交的数据（最可怕）</li>
-<li>不可重复读: 对同一记录的两次读取不一致, 因为另一事务对该记录做了修改</li>
-<li>幻读(虚读): 对同一记录的两次查询不一致, 因为另一事务插入了一条记录</li>
-</ul>
-<p><strong>四大隔离级别:</strong></p>
-<ul>
-<li><p><strong>未提交读(<code>read uncommitted</code>)</strong>：在该隔离级别，事务中的修改，即使没有提交，对其他事务也都是可见的。<strong>事务可以读取未提交的数据，这也被称为脏读</strong>。这个级别会导致喝多问题，从性能上来说，该级别没有比其他级别好很多，一般不推荐使用。</p></li>
-<li><strong>提交读(<code>read committed</code>)：在该级别，一个事务开始时只能看见已经提交的事务的修改。换句话说，一个事务从开始直到提交之前，所作的任何修改对其他事务都是不可见的，因此也可称为</strong>不可重复的**。这个隔离级别时大多数数据库默认的隔离级别。</li>
-<li><strong>可重复读(<code>repeatable read</code>)</strong>：在该级别，保证了同一个事务多次读取同样的记录的结果是一致的。可重复读是MySQ的默认隔离级别，解决了脏读的问题，但是对于幻读无法解决。<strong>所谓的幻读就是指当某个事务在读取某个范围内的记录时，另一个事务又在该范围插入新的记录，当之前的事务再次读取该范围记录时，产生幻行。</strong>InooDB引擎使用多版本控制MVCC解决幻读问题。</li>
-<li><p><strong>可串行化(<code>serializable1</code>)</strong>：该隔离级别时最高的隔离级别，它通过强制事务串行执行，避免了前面说的幻读问题。简单来说，就是在读取每一行数据都加锁，所有会导致大量的超时和锁争问题。</p></li>
-</ul>
-<h5 id="rollback">9.2 rollback</h5>
-<p>MySQL的<code>rollback</code>命令用来指示回退到事务开始之前的版本，如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from employee_job;</span><br><span class="line">+----+--------------+</span><br><span class="line">| ID | JOB_NAME     |</span><br><span class="line">+----+--------------+</span><br><span class="line">| <span class="number">1</span>  | 销售         |</span><br><span class="line">| <span class="number">2</span>  | 产品经理     |</span><br><span class="line">| <span class="number">3</span>  | 技术服务     |</span><br><span class="line">| <span class="number">4</span>  | 开发         |</span><br><span class="line">| <span class="number">5</span>  | c++开发      |</span><br><span class="line">| <span class="number">6</span>  | 老大         |</span><br><span class="line">+----+--------------+</span><br><span class="line"><span class="number">6</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">#开启事务机制</span></span><br><span class="line"><span class="function">mysql&gt; start transaction</span>;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; <span class="keyword">delete</span> from employee_job</span>;</span><br><span class="line">Query OK, <span class="number">6</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function">mysql&gt; select * from employee_job</span>;</span><br><span class="line"><span class="function">Empty <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">#回退</span></span><br><span class="line"><span class="function">mysql&gt; roolback</span>;</span><br><span class="line">mysql&gt; select * from employee_job;</span><br><span class="line">+----+--------------+</span><br><span class="line">| ID | JOB_NAME     |</span><br><span class="line">+----+--------------+</span><br><span class="line">| <span class="number">1</span>  | 销售         |</span><br><span class="line">| <span class="number">2</span>  | 产品经理     |</span><br><span class="line">| <span class="number">3</span>  | 技术服务     |</span><br><span class="line">| <span class="number">4</span>  | 开发         |</span><br><span class="line">| <span class="number">5</span>  | c++开发      |</span><br><span class="line">| <span class="number">6</span>  | 老大         |</span><br></pre></td></tr></table></figure></p>
-<h5 id="commit">9.3 commit</h5>
-<p>在Mysql中，如果不是在事务处理快，则提交的更改是默认自动立刻写入表中的。但是在事务处理块中，提交不会隐含执行，必须你显示的调用<code>commit</code>它才会提交到表中。但是如果在<code>start transaction</code>~<code>commit</code>当中的SQL语句出现错误时，则全部不会提交，回退事务开始前的版本 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from employee_job;</span><br><span class="line">+----+--------------+</span><br><span class="line">| ID | JOB_NAME     |</span><br><span class="line">+----+--------------+</span><br><span class="line">| <span class="number">1</span>  | 销售         |</span><br><span class="line">| <span class="number">2</span>  | 产品经理     |</span><br><span class="line">| <span class="number">3</span>  | 技术服务     |</span><br><span class="line">| <span class="number">4</span>  | 开发         |</span><br><span class="line">| <span class="number">5</span>  | c++开发      |</span><br><span class="line">| <span class="number">6</span>  | 老大         |</span><br><span class="line">+----+--------------+</span><br><span class="line"><span class="number">6</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">#开始事务</span></span><br><span class="line"><span class="function">mysql&gt; start transaction</span>;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; insert into employee_job <span class="title">values</span><span class="params">(<span class="string">&#x27;2&#x27;</span>,<span class="string">&#x27;老板&#x27;</span>)</span></span>;</span><br><span class="line">Query OK, <span class="number">1</span> <span class="function">row <span class="title">affected</span> <span class="params">(<span class="number">0.01</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">#提交</span></span><br><span class="line"><span class="function">mysql&gt; commit</span>;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.01</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">mysql&gt; select* from employee_job</span>;</span><br><span class="line">+----+--------------+</span><br><span class="line">| ID | JOB_NAME     |</span><br><span class="line">+----+--------------+</span><br><span class="line">| <span class="number">1</span>  | 销售         |</span><br><span class="line">| <span class="number">2</span>  | 产品经理     |</span><br><span class="line">| <span class="number">3</span>  | 技术服务     |</span><br><span class="line">| <span class="number">4</span>  | 开发         |</span><br><span class="line">| <span class="number">5</span>  | c++开发      |</span><br><span class="line">| <span class="number">6</span>  | 老大         |</span><br><span class="line">| <span class="number">2</span>  | 老板         |</span><br><span class="line">+----+--------------+</span><br><span class="line"><span class="number">7</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.01</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br></pre></td></tr></table></figure></p>
-<h5 id="使用保留点">9.4 使用保留点</h5>
-<p>为了避免一次性对事务处理块进行全部的回退或者提交，使用<code>savepoint</code>来设置保留的，已达到能支持部分回退或者提交的功能。如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">start transaction;</span><br><span class="line">...</span><br><span class="line">savepoint point1;</span><br><span class="line">...</span><br><span class="line">savepoint point2;</span><br><span class="line">...</span><br><span class="line">rollback to point1;</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure> 上面的程序会回退到<code>point1</code>，因此提交的MySQL批次只有<code>point1</code>前的，后面的无法提交。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2267,20 +2349,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2321,12 +2403,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">440k</span>
+    <span title="站点总字数">467k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:40</span>
+    <span title="站点阅读时长">7:05</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

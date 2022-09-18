@@ -20,15 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="0. 我的思考 两个可供突破的大方向：  是否能推动深度学习的训练数据规模减小？ 怎么使得训练模型的结果更加精确。  资源:  kaggle机器学习竞赛  1. 人工智能、机器学习和深度学习 人工智能、机器学习和深度学习三者的关系如下所示：   机器学习：机器学习系统是训练出来的，而不是明确用代码编写出来的。人们通过输入数据和从这些数据中预期得到的答案，系统输出相应的规则">
+<meta property="og:type" content="article">
 <meta property="og:title" content="深度学习核心算法">
 <meta property="og:url" content="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/index.html">
 <meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="0. 我的思考 两个可供突破的大方向：  是否能推动深度学习的训练数据规模减小？ 怎么使得训练模型的结果更加精确。  资源:  kaggle机器学习竞赛  1. 人工智能、机器学习和深度学习 人工智能、机器学习和深度学习三者的关系如下所示：   机器学习：机器学习系统是训练出来的，而不是明确用代码编写出来的。人们通过输入数据和从这些数据中预期得到的答案，系统输出相应的规则">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/relationship.png">
+<meta property="og:image" content="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/CNN.png">
+<meta property="og:image" content="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/pixels.png">
+<meta property="og:image" content="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/optimizer.png">
+<meta property="og:image" content="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/car.png">
 <meta property="article:published_time" content="2022-09-12T12:47:43.000Z">
-<meta property="article:modified_time" content="2022-09-12T12:47:43.230Z">
+<meta property="article:modified_time" content="2022-09-17T07:25:36.063Z">
 <meta property="article:author" content="trluper">
+<meta property="article:tag" content="深度学习算法">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/relationship.png">
 
 <link rel="canonical" href="http://example.com/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/">
 
@@ -220,6 +229,22 @@
 
               <time title="创建时间：2022-09-12 20:47:43" itemprop="dateCreated datePublished" datetime="2022-09-12T20:47:43+08:00">2022-09-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-17 15:25:36" itemprop="dateModified" datetime="2022-09-17T15:25:36+08:00">2022-09-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">深度学习算法</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -234,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -253,7 +278,48 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h4 id="我的思考">0. 我的思考</h4>
+<p>两个可供突破的大方向：</p>
+<ul>
+<li>是否能推动深度学习的训练数据规模减小？</li>
+<li>怎么使得训练模型的结果更加精确。</li>
+</ul>
+<p>资源:</p>
+<ul>
+<li>kaggle机器学习竞赛</li>
+</ul>
+<h4 id="人工智能机器学习和深度学习">1. 人工智能、机器学习和深度学习</h4>
+<p>人工智能、机器学习和深度学习三者的关系如下所示： <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/relationship.png" wudth="500"></p>
+<ul>
+<li>机器学习：机器学习系统是训练出来的，而不是明确用代码编写出来的。人们通过输入数据和从这些数据中预期得到的答案，系统输出相应的规则。</li>
+<li>深度学习：<strong>深度学习里面的&quot;深度&quot;不是指通过学习获得更深层次的理解，而是指通过一系列连续的表示层来获得更有效果的数据特征。一个深度学习模型有多少层就被称为模型的深度是多少</strong>。一般来说，现代深度学习通常包含数十个甚至上百个连续的表示层。<strong>这些层也被称为神经网络</strong> <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/CNN.png" wudth="500"></li>
+</ul>
+<h4 id="深度学习的指标">2. 深度学习的指标</h4>
+<p>在上面我们已经知道，深度学习是<strong>通过各层对输入数据不断提取特征</strong>，提取方式的具体操作就是<strong>每层都是对输入数据进行权重计算</strong>，其本质就是一串数字，</p>
+<p>如下图所示，<span class="math display">\[$X_i\]</span><span class="math inline">\(是从图片拉伸出来的像素，它是不会变的，无法对其进行操作。而\)</span><span class="math display">\[W\]</span><span class="math inline">\(矩阵就是参数矩阵，\)</span><span class="math display">\[b\]</span>$是神经元偏置。<strong>因此对于深度学习，对于参数矩阵的选择是一项艰巨的任务，参数的好坏决定了输出结果的优劣</strong>。但是我们不能糊里糊涂的对参数进行更改，这样可能适得其反，<strong>必须借助某一个评估指标来更改，这就是接下来要介绍的损失函数</strong> <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/pixels.png" wudth="500"></p>
+<h5 id="损失函数">2.1 损失函数</h5>
+<p><strong>损失函数</strong>：损失函数的任务，就是通过一定数学式子衡量出该深度学习的实际输出与预期标准值之间的距离。</p>
+<p><strong>通过损失函数计算的损失值作为反馈信号来对参数矩阵中的权值进行微调，来降低对应的损失值</strong>。这种调节右优化器来完成，它实现了所谓的<strong>反向传播</strong>算法。 <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/optimizer.png" wudth="300"></p>
+<blockquote>
+<p>一般来说，一开始神经网络的权值是随机赋值的，那么第一次的输出也就通常与预期值相差甚远，但随着权重值的不断微调，损失在也在降低，这就是为什么说学习模型是训练出来的。</p>
+</blockquote>
+<h5 id="softmax分类器">2.2 softmax分类器</h5>
+<p>上面我们经过各层神经网络最终得到一个输入的得分值，但我们想一想如果结果给与我们一个概率不是更好，那么把得分值转化为概率就是<code>softmax</code>的作用。</p>
+<p><code>softmax</code>分类器将各个得分值<strong>进行放大然后归一化后再计算概率</strong></p>
+<h4 id="卷积神经网络">3. 卷积神经网络</h4>
+<p>神经网络本质上就是将我们的输入信息转换为特征矩阵。<strong>卷积神经网络就是对同一个区域可以提取多个特征值，传统的神经网络一般只提取单个特征值，这样卷积更加全面稳实。</strong></p>
+<p>卷积神经网络右输入层、隐含层、输出层组成：</p>
+<ul>
+<li><p>输入层：卷积神经网络的输入层可以处理多维数据，常见地，一维卷积神经网络的输入层接收一维或二维数组，其中一维数组通常为时间或频谱采样；二维数组可能包含多个通道；二维卷积神经网络的输入层接收二维或三维数组；三维卷积神经网络的输入层接收四维数组。由于使用<strong>梯度下降算法</strong>进行学习，卷积神经网络的输入特征需要进行标准化处理。具体地，在将学习数据输入卷积神经网络前，<strong>需在通道或时间/频率维对输入数据进行归一化</strong>，若输入数据为像素，也可将分布于的原始像素值归一化至<span class="math inline">\([0,1]\)</span>区间</p></li>
+<li><p><strong>隐含层</strong>：隐含层包含卷积层、池化层和全连接层3类常见构筑。卷积层中的卷积核包含权重系数，而池化层不包含权重系数</p>
+<ul>
+<li><p><strong>卷积核</strong>：卷积层的功能是对输入数据进行特征提取，其内部包含多个<strong>卷积核</strong>，组成卷积核的每个元素都对应一个权重系数和一个偏差量（bias vector）。卷积核就是图像处理时，给定输入图像，输入图像中一个小区域中像素加权平均后成为输出图像中的每个对应像素，其中权值由一个函数定义，这个函数称为卷积核。</p></li>
+<li><p><strong>激励函数</strong>：卷积层中包含激励函数以协助表达复杂特征，卷积神经网络通常使用线性整流函数<code>Rectified Linear Unit, ReLU</code>,它的作用就是对于上一层经过卷积后的数据经过<code>relu</code>的<code>max(0,x)</code>筛选</p></li>
+<li><strong>池化层</strong>：在卷积层进行特征提取后，为避免特征量太多计算缓慢，对其进行特征值压缩，输出的特征图会被传递至池化层进行特征选择和信息过滤。池化层包含预设定的池化函数，其功能是将特征图中单个点的结果替换为其相邻区域的特征图统计量。</li>
+<li><p><strong>全连接层</strong>：卷积神经网络中的卷积层和池化层能够对输入数据进行特征提取，<strong>全连接层的作用则是对提取的特征进行非线性组合以得到输出，即全连接层本身不被期望具有特征提取能力</strong>，而是试图利用现有的高阶特征完成学习目标 <img src="/2022/09/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A0%B8%E5%BF%83%E7%AE%97%E6%B3%95/car.png" wudth="500"></p></li>
+</ul></li>
+</ul>
+<h4 id="神经网络的数学基础">4. 神经网络的数学基础</h4>
 
     </div>
 
@@ -282,6 +348,9 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" rel="tag"># 深度学习算法</a>
+          </div>
 
         
 
@@ -292,7 +361,10 @@
     <a href="/2022/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" rel="prev" title="计算机视觉课程笔记">
       <i class="fa fa-chevron-left"></i> 计算机视觉课程笔记
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" rel="next" title="python环境配置">
+      python环境配置 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -351,6 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%80%9D%E8%80%83"><span class="nav-number">1.</span> <span class="nav-text">0. 我的思考</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%92%8C%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.</span> <span class="nav-text">1. 人工智能、机器学习和深度学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%8C%87%E6%A0%87"><span class="nav-number">3.</span> <span class="nav-text">2. 深度学习的指标</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 损失函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#softmax%E5%88%86%E7%B1%BB%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 softmax分类器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">4.</span> <span class="nav-text">3. 卷积神经网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">5.</span> <span class="nav-text">4. 神经网络的数学基础</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -364,20 +437,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -418,12 +491,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">440k</span>
+    <span title="站点总字数">467k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">6:40</span>
+    <span title="站点阅读时长">7:05</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
