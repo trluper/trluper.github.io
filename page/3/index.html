@@ -3780,7 +3780,7 @@ r^{k-1}_{ij}，不更新
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-15 11:29:49" itemprop="dateModified" datetime="2022-09-15T11:29:49+08:00">2022-09-15</time>
+                <time title="修改时间：2022-10-07 19:30:29" itemprop="dateModified" datetime="2022-10-07T19:30:29+08:00">2022-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -4394,8 +4394,8 @@ r^{k-1}_{ij}，不更新
 <li>传三个参数时，第三个为步进值</li>
 </ul>
 <h6 id="并行遍历zip和map">14.5.2 并行遍历zip和map</h6>
-<p><strong><code>zip</code>函数</strong>：传入一个或多个序列对象为参数，然后返回一个元组列表（可迭代对象），该元组列表将传入的列表并排元素组成一个元组。当传入序列长度不同时，<strong><code>zip</code>会以最短序列长度为准截断得到元组列表。</strong> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">L1=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">L2=[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>];</span><br><span class="line">L3=<span class="built_in">zip</span>(L1,L2);	<span class="comment">#L3=[(1,5),(2,6),(3,7),(4,8)]</span></span><br><span class="line"><span class="comment">#并行遍历</span></span><br><span class="line"><span class="keyword">for</span> (x,y) <span class="keyword">in</span> L3:</span><br><span class="line">	<span class="built_in">print</span>(x,y,<span class="string">&quot;x+y=&quot;</span>,x+y);</span><br></pre></td></tr></table></figure> 事实上，<code>zip()</code>可以接受任何类型的序列（就是任何可迭代对象）。</p>
-<p><strong><code>map函数</code>:</strong> 与<code>zip</code>不同只在于不会截断，会用None补齐，python3.0不再支持该函数。一般来讲，map会带一个函数以及一个到多个序列参数，然后从序列中取出并行元素并调用函数后将结果收集 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="built_in">ord</span>,<span class="string">&#x27;spam&#x27;</span>);	<span class="comment">#ord为ascii转换为数字，结果为115，112，97，109</span></span><br></pre></td></tr></table></figure></p>
+<p><strong><code>zip</code>函数</strong>：传而对于<code>zip()</code>，原型是<code>zip(*list)</code>，<code>list</code>是一个列表，<code>zip(*list)</code>返回的是一个元组串，如果要转为元组列表，必须使用<code>list()</code>函数 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">L1=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">L2=[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>];</span><br><span class="line">L3=<span class="built_in">zip</span>(L1,L2);	<span class="comment">#L3=(1,5),(2,6),(3,7),(4,8)</span></span><br><span class="line">L4=<span class="built_in">list</span>(<span class="built_in">zip</span>(L1,L2)) <span class="comment">#L4=[(1,5),(2,6),(3,7),(4,8)]</span></span><br><span class="line"><span class="comment">#并行遍历</span></span><br><span class="line"><span class="keyword">for</span> (x,y) <span class="keyword">in</span> L3:</span><br><span class="line">	<span class="built_in">print</span>(x,y,<span class="string">&quot;x+y=&quot;</span>,x+y);</span><br><span class="line">a2,b2=<span class="built_in">zip</span>(*<span class="built_in">zip</span>(L1,L2))  <span class="comment">#a2=(1,2,3,4) b2=(5,6,7,8)</span></span><br></pre></td></tr></table></figure> 事实上，<code>zip()</code>可以接受任何类型的序列（就是任何可迭代对象）。</p>
+<p><strong><code>map函数</code>:</strong> 对于map()它的原型是<code>map(function,sequence)</code>，就是对序列sequence中每个元素都执行函数function操作.比如之前的<code>a,b,c = map(int,raw_input().split())</code>，意思就是说把输入的<code>a，b，c</code>转化为整数 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">map</span>(<span class="built_in">ord</span>,<span class="string">&#x27;spam&#x27;</span>);	<span class="comment">#ord为ascii转换为数字，结果为115，112，97，109</span></span><br></pre></td></tr></table></figure></p>
 <h6 id="filter和reduce">14.5.3 filter和reduce</h6>
 <p><code>filter</code>和<code>reduce</code>都会返回可迭代对象。在python3.0,需要用<code>list</code>调用来显示其所有结果。<code>filter</code>的作用是基于某一函数的过滤器。<code>reduce</code>是没对元素都应用函数得到最后结果 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">list</span>(<span class="built_in">filter</span>((<span class="keyword">lambda</span> x:x&gt;<span class="number">0</span>),<span class="built_in">range</span>(-<span class="number">5</span>,<span class="number">5</span>)));	<span class="comment">#[1,2,3,4]</span></span><br><span class="line">reduce((<span class="keyword">lambda</span> x,y:x+y),[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]);			<span class="comment">#10</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="迭代器和解析">15. 迭代器和解析</h4>
@@ -5166,12 +5166,12 @@ r^{k-1}_{ij}，不更新
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">501k</span>
+    <span title="站点总字数">517k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:36</span>
+    <span title="站点阅读时长">7:50</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
