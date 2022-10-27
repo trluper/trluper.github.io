@@ -192,6 +192,217 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">计算机网络</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-07 21:34:12" itemprop="dateCreated datePublished" datetime="2022-08-07T21:34:12+08:00">2022-08-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-08-22 09:47:06" itemprop="dateModified" datetime="2022-08-22T09:47:06+08:00">2022-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="get请求和post请求的区别">1. get请求和post请求的区别</h4>
+<p><strong>在实际应用中，get和post请求的区别主要有以下几个：</strong></p>
+<ul>
+<li><strong><code>get</code>请求用于从服务器上获得资源，而<code>post</code>请求用于向服务器提交数据</strong></li>
+<li><code>get</code>将表单中的数据按照<code>key=value</code>的形式，添加到<code>action</code>指定的<code>URL</code>后面，并且两者之间使用<code>?</code>连接，各个变量之间使用&amp;连接；post是将表单的数据放在HTTP协议的请求头或者消息体中，传递到action所指向的URL</li>
+<li><strong><code>get</code>传输的数据要受到URL长度的限制（最大长度是2048个字符）；而<code>post</code>可以传输大量数据，上传文件通常使用post</strong></li>
+<li><strong>使用<code>get</code>时参数会显示在地址栏上，如果这些数据不是敏感数据，那么可以使用<code>get</code>，对于敏感数据应使用<code>post</code></strong></li>
+<li><code>get</code>使用<code>MIME</code>类型<code>application/x-www-form-urlencoded</code>的URL编码（也叫百分号编码）文本格式传递参数，保证被传送的参数由遵循规范的文本组成，例如一个空格的编码是<code>%20</code></li>
+<li><strong><code>get</code>请求参数会被完整保留在浏览器历史记录里，而<code>post</code>中的参数不会被保留。</strong></li>
+</ul>
+<p><strong>但是在本质上，get和post请求没有区别：</strong></p>
+<p><code>get</code>和<code>post</code>是HTTP协议中的两种发送请求的方法，而HTTP是基于<code>TCP/IP</code>的关于数据如何在万维网中如何通信的协议。因此，<code>get</code>和<code>post</code>的底层也是<code>TCP/IP</code>,也就是说，<code>get</code>和<code>post</code>都是TCP链接。</p>
+<p><strong>此外，get和post还有一个重要的区别：</strong></p>
+<p><code>get</code>产生一个<code>TCP</code>数据包；<code>POST</code>产生两个TCP数据包。对于<code>get</code>方式的请求，浏览器会把<code>http header</code>和<code>data</code>一并发送出去，服务器响应200（返回数据）；而对于<code>post</code>，浏览器先发送<code>header</code>，服务器响应<code>100 continue</code>，浏览器再发送<code>data</code>，服务器响应<code>200 ok</code>（返回数据）。</p>
+<h4 id="tcp和udp的区别">2. TCP和UDP的区别</h4>
+<ul>
+<li><strong>连接性：</strong>TCP是面向连接的传输层协议，即传输数据之前必须先建立好连接。UDP无连接。</li>
+<li><strong>服务对象</strong>：TCP是点对点的两点间服务，即一条TCP连接只能有两个端点；UDP支持一对一，一对多，多对一，多对多的交互通信。</li>
+<li><strong>可靠性</strong>：TCP是有保证数据安全可靠的措施，可靠交付：无差错，不丢失，不重复，按序到达。UDP是尽最大努力交付，不保证可靠交付。</li>
+<li><strong>拥塞控制和流量控制</strong>：TCP有拥塞控制和流量控制保证数据传输的安全性。UDP没有拥塞控制，网络拥塞不会影响源主机的发送效率。</li>
+<li><strong>报文长度</strong>：TCP是动态报文长度，即TCP报文长度是根据接收方的窗口大小和当前网络拥塞情况决定的。UDP面向报文，不合并，不拆分，保留上面传下来报文的边界。</li>
+<li><strong>首部开销</strong>：TCP首部开销大，首部20个字节。UDP首部开销小，8字节。（源端口，目的端口，数据长度，校验和）</li>
+<li><strong>TCP和UDP适用场景</strong>：从特点上我们已经知道，TCP是可靠的但传输速度慢，UDP 是不可靠的但传输速度快。因此在选用具体协议通信时，应该根据通信数据的要求而决定。</li>
+</ul>
+<p>若通信数据完整性需让位与通信实时性，则应该选用TCP 协议（如文件传输、重要状态的更新等）；反之，则使用 UDP 协议（如视频传输、实时通信等）。 <img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP.png" width="600"></p>
+<h4 id="tcp三次握手">3. TCP三次握手</h4>
+<ul>
+<li>只有<code>SYN</code>位置1表示连接请求。</li>
+<li>只有<code>ACK</code>置1表示<code>ACK</code>报文段，携带数据时会消耗序号<code>seq</code>，不携带则不消耗</li>
+<li><code>ACK</code>和<code>SYN</code>都置1，不能携带数据，但消耗1个序号<code>seq</code> <img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/threeAndFour.png" width="600"></li>
+</ul>
+<h5 id="三次握手">3.1 三次握手</h5>
+<ul>
+<li>1、Client将标志位<code>SYN</code>置为1，随机产生一个序号值<code>seq=J</code>，并将该数据包发送给Server，Client进入<code>SYN_SENT</code>状态，等待Server确认。</li>
+<li>2、Server收到数据包后由标志位<code>SYN=1</code>知道Client请求建立连接，Server将标志位<code>SYN</code>和<code>ACK</code>都置为1，<code>ack=J+1</code>，随机产生一个值<code>seq=K</code>，并将该数据包发送给Client以确认连接请求，Server进入<code>SYN_RCVD</code>状态。</li>
+<li>3、Client收到确认后，检查<code>ack</code>是否为J+1，ACK若为1，如果正确则将标志位ACK置为1，<code>ack=K+1</code>，并将该数据包发送给Server，Server检查<code>ack</code>是否为K+1，<code>ACK</code>为1，如果正确则连接建立成功，Client和Server进入<code>ESTABLISHED</code>状态，完成三次握手，随后Client与Server之间可以开始传输数据了。</li>
+</ul>
+<h5 id="三次握手的原因">3.2 三次握手的原因</h5>
+<ul>
+<li>①建立连接，</li>
+<li>②第三次要回ACK的原因：如果没有第三次回ACK，会导致已经失效的连接请求报文突然又传输到服务器端，又建立客户端与服务器的连接，但客户端又不发送数据，此时导致的服务器资源浪费。 所谓已经失效的连接请求是指客户端发出的连接请求滞留在网络中，超时后但又被服务器接收到。</li>
+</ul>
+<h5 id="思考connect为什么会阻塞即第三次ack丢失下客户端怎么办">3.3 思考：connect为什么会阻塞（即第三次ACK丢失下客户端怎么办）</h5>
+<p><strong>server端：</strong></p>
+<blockquote>
+<p>第三次的ACK在网络中丢失，那么Server端该TCP连接的状态为SYN_RECV,并且会根据 TCP的超时重传机制，会等待3秒、6秒、12秒后重新发送SYN+ACK包，以便Client重新发送ACK包。 而Server重发SYN+ACK包的次数，可以通过设置/proc/sys/net/ipv4/tcp_synack_retries修改，默认值为&gt;5.如果重发指定次数之后，仍然未收到 client 的ACK应答，那么一段时间后，Server自动关闭这个连接。</p>
+</blockquote>
+<p><strong>client端</strong>：</p>
+<blockquote>
+<p>在linux c 中，client 一般是通过<code>connect()</code>函数来连接服务器的，而<code>connect()</code>是在TCP的三次握手的第二次握手完成后就成功返回值。也就是说client在接收到 SYN+ACK包，它的TCP连接状态就为established （已连接），表示该连接已经建立。 那么如果第三次握手中的ACK包丢失的情况下，Client 向<code>server</code>端发送数据，Server端将以<code>reset</code>包响应，方能感知到Server的错误。</p>
+</blockquote>
+<h4 id="tcp四次挥手">4. TCP四次挥手</h4>
+<p>由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个<code>FIN</code>来终止这一方向的连接，收到一个<code>FIN</code> 只是意味着这一方向上没有数据流动了，即不会再发送到数据了，但是在这个TCP连接上仍然能够收数据，直到另一方也发送了<code>FIN</code>。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭。</p>
+<h5 id="四次挥手过程">4.1 四次挥手过程</h5>
+<ul>
+<li>1.数据传输结束后，客户端的应用进程发出连接释放<code>FIN</code>报文段，并停止发送数据，客户端进入<code>FIN_WAIT_1</code>状态，此时客户端依然可以接收服务器发送来的数据。</li>
+<li>2.服务器接收到<code>FIN</code>后，发送一个<code>ACK</code>给客户端，确认序号为收到的序号<code>+1</code>，服务器进入<code>CLOSE_WAIT</code>状态。客户端收到后进入<code>FIN_WAIT_2</code>状态。</li>
+<li>3.当服务器没有数据要发送时，服务器也发送一个<code>FIN</code>报文，此时服务器进入<code>LAST_ACK</code>状态，等待客户端的确认</li>
+<li>4.客户端收到服务器的<code>FIN</code>报文后，给服务器发送一个<code>ACK</code>报文，确认序列号为收到的序号<code>+1</code>。此时客户端进入<code>TIME_WAIT</code>状态，等待<code>2MSL</code>（MSL：报文段最大生存时间），然后关闭连接。</li>
+</ul>
+<p>应用层可以使用系统调用函数read函数==0来判断对端是否关闭连接。</p>
+<h5 id="为什么要等待2msl才关闭链接">4.2 为什么要等待2MSL才关闭链接</h5>
+<ul>
+<li>①为保证客户端发送的最后一个ACK报文段能够到达服务器。若第4次挥手的报文段丢失了，服务器就会超时重传第3次挥手的报文段。</li>
+<li>②经过2MSL时间，可以使本次连接持续时间内所以产生的报文段(主要针对滞留在网络中的）都失效，这样就可避免已失效的本次链接请求影响下一次链接请求。</li>
+</ul>
+<h5 id="为什么要4次挥手">4.3 为什么要4次挥手</h5>
+<p>因为主动关闭的一方是已经确定没有数据要发送了，而被动关闭的一方还未<code>FIN</code>报文，先回一个<code>ACK</code>确认报文，其在<code>FIN</code>发生前可能还要发送数据，只有等待数据发生完，才能回一个<code>FIN</code>报文，主动关闭方再回一个<code>ACK</code>确认,才能达到双向关闭，</p>
+<h4 id="tcp机的状态转移">5. TCP机的状态转移</h4>
+<p><img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/statusSwitch.png" width="600"> [^上半部分为3次握手，下半部分为4次挥手，实线表示主动，虚线为被动，细线为特殊情况]</p>
+<p><strong>状态解释：</strong></p>
+<ul>
+<li><code>CLOSED</code>：表示初始状态。</li>
+<li><code>LISTEN</code>：该状态表示服务器端的某个SOCKET处于监听状态，可以接受连接。</li>
+<li><code>SYN_SENT</code>：这个状态与<code>SYN_RCVD</code>遥相呼应，当客户端SOCKET执行CONNECT连接时，它首先发送SYN报文，随即进入到了SYN_SENT状态，并等待服务端的发送三次握手中的第2个报文。<code>SYN_SENT</code>状态表示客户端已发送SYN报文。</li>
+<li><code>SYN_RCVD</code>: 该状态表示接收到SYN报文，在正常情况下，这个状态是服务器端的SOCKET在建立TCP连接时的三次握手会话过程中的一个中间状态，很短暂。此种状态时，当收到客户端的ACK报文后，会进入到ESTABLISHED状态。</li>
+<li><p><code>ESTABLISHED</code>：表示连接已经建立。</p></li>
+<li><strong><code>FIN_WAIT_1</code>: FIN_WAIT_1和FIN_WAIT_2状态的真正含义都是表示等待对方的FIN报文</strong>。区别是：
+<ul>
+<li><code>FIN_WAIT_1</code>状态是当socket在<code>ESTABLISHED</code>状态时，想主动关闭连接，向对方发送了<code>FIN</code>报文，此时该socket进入到FIN_WAIT_1状态。</li>
+<li><code>FIN_WAIT_2</code>状态是当对方回应<code>ACK</code>后，该socket进入到<code>FIN_WAIT_2</code>状态，正常情况下，对方应马上回应<code>ACK</code>报文，所以<code>FIN_WAIT_1</code>状态一般较难见到，而<code>FIN_WAIT_2</code>状态可用netstat看到。</li>
+</ul></li>
+<li><p><code>FIN_WAIT_2</code>：<strong>主动关闭链接的一方，发出<code>FIN</code>收到<code>ACK</code>以后进入该状态。称之为半连接或半关闭状态。该状态下的socket只能接收数据，不能发，既socket上还有数据流动。</strong></p></li>
+<li><p><code>TIME_WAIT</code>: <strong>表示收到了对方的<code>FIN</code>报文，并发送出了<code>ACK</code>报文，等2MSL后即可回到CLOSED可用状态。如果<code>FIN_WAIT_1</code>状态下，收到对方同时带<code>FIN</code>标志和<code>ACK</code>标志的报文时，可以直接进入到<code>TIME_WAIT</code>状态，而无须经过<code>FIN_WAIT_2</code>状态。</strong></p></li>
+<li><p><code>CLOSING</code>: 这种状态较特殊，属于一种较罕见的状态。正常情况下，当你发送FIN报文后，按理来说是应该先收到（或同时收到）对方的 ACK报文，再收到对方的FIN报文。但是CLOSING状态表示你发送FIN报文后，并没有收到对方的ACK报文，反而却也收到了对方的FIN报文。什么情况下会出现此种情况呢？如果双方几乎在同时close一个SOCKET的话，那么就出现了双方同时发送FIN报文的情况，也即会出现CLOSING状态，表示双方都正在关闭SOCKET连接。</p></li>
+<li><code>CLOSE_WAIT</code>: 此种状态表示在等待关闭。当对方关闭一个SOCKET后发送FIN报文给自己，系统会回应一个ACK报文给对方，此时则进入到CLOSE_WAIT状态。接下来呢，察看是否还有数据发送给对方，如果没有可以 close这个SOCKET，发送FIN报文给对方，即关闭连接。所以在CLOSE_WAIT状态下，需要关闭连接。（服务器）</li>
+<li><p><code>LAST_ACK</code>: 该状态是被动关闭一方在发送FIN报文后，最后等待对方的ACK报文。当收到ACK报文后，即可以进入到CLOSED可用状态。（服务器）</p></li>
+</ul>
+<h4 id="tcp的拥塞控制对整个网络">6. TCP的拥塞控制：对整个网络</h4>
+<p>拥塞控制是防止过多的数据注入网络，使得网络中的路由器或者链路过载。<strong>流量控制是点对点的通信量控制，而拥塞控制是全局的网络流量整体性的控制。发送双方都有一个拥塞窗口<code>cwnd</code>。</strong></p>
+<ul>
+<li><p><strong>慢开始</strong>：最开始发送方的拥塞窗口为1，由小到大逐渐增大发送窗口和拥塞窗口。每经过一个传输轮次，拥塞窗口cwnd加倍。当cwnd超过慢开始门限，则使用拥塞避免算法，避免<code>cwnd</code>增长过大。</p></li>
+<li><p><strong>拥塞避免</strong>：每经过一个往返时间<code>RTT</code>，<code>cwnd</code>只增长1。在慢开始和拥塞避免的过程中，一旦发现网络拥塞（超时），就把慢开始门限设为当前值的一半，并且重新设置cwnd为1，重新慢启动。（乘法减小，加法增大）</p></li>
+<li><p><strong>快重传</strong>：接收方每次收到一个失序的报文段后就立即发出重复确认，发送方只要连续收到三个重复确认就立即重传（尽早重传未被确认的报文段）。</p></li>
+<li><p><strong>快恢复</strong>：当发送方连续收到了三个重复确认，就乘法减半（慢开始门限减半），并将当前的cwnd设置为慢开始门限，并且采用拥塞避免算法（连续收到了三个重复请求，说明当前网络可能没有拥塞）。 <img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/controlOfcrowd.png" width="600"></p></li>
+</ul>
+<h4 id="tcp的可靠性保证">7. TCP的可靠性保证</h4>
+<p>TCP主要提供了<strong>检验和、序列号/确认应答、超时重传、最大消息长度、滑动窗口控制</strong>等方法实现了可靠性传输。</p>
+<ul>
+<li><p><strong>检验和</strong>：通过检验和的方式，接收端可以检测出来数据是否有差错和异常，假如有差错就会直接丢弃TCP段，重新发送。TCP在计算检验和时，会在TCP首部加上一个12字节的伪首部。检验和总共计算3部分：TCP首部、TCP数据、TCP伪首部</p></li>
+<li><p>最大长度：在建立TCP连接的时候，双方约定一个最大的长度（MSS）作为发送的单位，重传的时候也是以这个单位来进行重传。理想的情况下是该长度的数据刚好不被网络层分块。</p></li>
+<li><p><strong>滑动窗口：</strong>我们上面提到的超时重传的机制存在效率低下的问题，发送一个包到发送下一个包要经过一段时间才可以。这就提出了一个滑动窗口的概念:不必等等确认，发送端直接发送数据，在连续收到三个重复确认应答时，重新发生要求的序列号包 <img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/resend.png" width="600"></p></li>
+</ul>
+<h4 id="tcp的滑动窗口">8. TCP的滑动窗口</h4>
+<p>端对端的流量控制,也解决包乱序问题（数据包格式有SequenceNumber，是数据包的序号seq,ACK——用于确认收到，用来解决不丢包的问题)。每一次读取数据之后,回ack报文,报文中会携带当前缓冲区大小,用来告知对方发送的数据不能超过我接收的缓冲区大小。</p>
+<h4 id="tcp黏包问题">9. TCP黏包问题</h4>
+<p><strong>原因：</strong> TCP 是一个基于字节流的传输服务（UDP 基于报文的），“流” 意味着 TCP 所传输的数据是没有边界的。所以可能会出现两个数据包黏在一起的情况。</p>
+<p><strong>解决：</strong></p>
+<ul>
+<li>发送定长包。如果每个消息的大小都是一样的，那么在接收对等方只要累计接收数据，直到数据等于一个定长的数值就将它作为一个消息。</li>
+<li>包头加上包体长度。包头是定长的 4 个字节，说明了包体的长度。接收对等方先接收包头长度，依据包头长度来接收包体。</li>
+<li>在数据包之间设置边界，如添加特殊符号 标记。FTP 协议正是这么做的。但问题在于如果数据正文中也含有 ，则会误判为消息的边界。</li>
+</ul>
+<h4 id="简述域名解析过程本机如何干预域名解析">10. 简述域名解析过程，本机如何干预域名解析</h4>
+<ul>
+<li><p>1）在浏览器中输入<code>www.qq.com</code>域名，操作系统会先检查自己本地的<code>hosts</code>文件是否有这个网址映射关系，如果有，就先调用这个IP地址映射，完成域名解析。</p></li>
+<li><p>2）如果<code>hosts</code>里没有这个域名的映射，则查找本地DNS解析器缓存，是否有这个网址映射关系，如果有，直接返回，完成域名解析。</p></li>
+<li><p>3）如果<code>hosts</code>与本地DNS解析器缓存都没有相应的网址映射关系，首先会找TCP/IP参数中设置的首选DNS服务器，在此我们叫它本地DNS服务器，此服务器收到查询时，如果要查询的域名，包含在本地配置区域资源中，则返回解析结果给客户机，完成域名解析，此解析具有权威性。</p></li>
+<li><p>4）如果要查询的域名，不由本地DNS服务器区域解析，但该服务器已缓存了此网址映射关系，则调用这个IP地址映射，完成域名解析，此解析不具有权威性。</p></li>
+<li><p>5）如果本地DNS服务器本地区域文件与缓存解析都失效，则根据本地DNS服务器的设置（是否设置转发器）进行查询，如果未用转发模式，本地DNS就把请求发至13台根DNS，根DNS服务器收到请求后会判断这个域名<code>.com</code>是谁来授权管理，并会返回一个负责该顶级域名服务器的一个IP。本地DNS服务器收到IP信息后，将会联系负责<code>.com</code>域的这台服务器。这台负责<code>.com</code>域的服务器收到请求后，如果自己无法解析，它就会找一个管理.com域的下一级DNS服务器地址<code>qq.com</code>给本地DNS服务器。当本地DNS服务器收到这个地址后，就会找<code>qq.com</code>域服务器，重复上面的动作，进行查询，直至找到<code>www.qq.com</code>主机。</p></li>
+<li><p>6）如果用的是转发模式，此DNS服务器就会把请求转发至上一级DNS服务器，由上一级服务器进行解析，上一级服务器如果不能解析，或找根DNS或把转请求转至上上级，以此循环。不管是本地DNS服务器用是是转发，还是根提示，最后都是把结果返回给本地DNS服务器，由此DNS服务器再返回给客户机。</p></li>
+</ul>
+<p>从客户端到本地DNS服务器是属于递归查询，而DNS服务器之间就是的交互查询就是迭代查询。</p>
+<h4 id="section">10.</h4>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1948,7 +2159,7 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-23 12:41:17" itemprop="dateModified" datetime="2022-07-23T12:41:17+08:00">2022-07-23</time>
+                <time title="修改时间：2022-10-14 08:35:37" itemprop="dateModified" datetime="2022-10-14T08:35:37+08:00">2022-10-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -3504,134 +3715,7 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
 <li>一般推荐使用<code>&#123;&#125;</code>,比如上面的第三节，如果不加<code>&#123;&#125;</code>，则会认为your_nameteacher为一个变量名，就出错了。</li>
 <li>重新赋值是允许的，仍有不用加<code>$</code>,只有使用的时候加上<code>$</code></li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/13/ubuntu%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/13/ubuntu%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/" class="post-title-link" itemprop="url">ubuntu使用手册</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-13 16:44:21" itemprop="dateCreated datePublished" datetime="2022-07-13T16:44:21+08:00">2022-07-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-05 14:34:15" itemprop="dateModified" datetime="2022-08-05T14:34:15+08:00">2022-08-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ubuntu/" itemprop="url" rel="index"><span itemprop="name">ubuntu</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="ubuntu常用快捷键">1. Ubuntu常用快捷键</h4>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、打开终端：Ctr+Alt+T</span><br><span class="line"><span class="number">2</span>、关闭终端：Ctrl + Shift + Q</span><br><span class="line"><span class="number">3</span>、复制：Ctrl + Shift + C</span><br><span class="line"><span class="number">4</span>、粘贴：Ctrl + Shift + V</span><br><span class="line"><span class="number">5</span>、跳转回主机操作:ctr+alt</span><br><span class="line"><span class="number">6</span>、跳回虚拟机：Ctr+G</span><br><span class="line"><span class="number">7</span>、新建终端窗口：Ctrl + Shift + N</span><br><span class="line"><span class="number">8</span>、运行命令：Alt + F2</span><br><span class="line"><span class="number">9</span>、全屏切换：F11</span><br></pre></td></tr></table></figure>
-<h4 id="apt安装">2. apt安装</h4>
-<p>对于Ubuntu安装各种软件包的命令格式使用<code>apt-get</code>或者<code>apt</code>。（centOS使用<code>yum</code>），这是在线安装。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在线安装</span></span><br><span class="line">sudo apt-get update		<span class="comment">//更新软件包列表</span></span><br><span class="line">sudo apt-get install	<span class="comment">//安装软件</span></span><br><span class="line">sudo apt-get remove		<span class="comment">//删除软件</span></span><br><span class="line">sudo apt-get clean		<span class="comment">//清理安装包</span></span><br></pre></td></tr></table></figure> <strong><em>附：</em></strong>如果是从Ubuntu官网已经下载好了安装包，相应离线安装的话，因为从Ubuntu的文件为deb格式，所以</p>
-<ul>
-<li>软件安装<code>sudo dpkg -i xxx.deb</code></li>
-<li>软件卸载<code>sudo dpkg -r 软件名</code></li>
-</ul>
-<h5 id="安装net-tools网络工具">2.1 安装net-tools网络工具</h5>
-<p><code>net-tools</code>工具箱包括<code>arp, hostname, ifconfig, netstat, rarp, route, plipconfig, slattach, mii-tool and iptunnel and ipmaddr</code>等命令。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install net-tools</span><br></pre></td></tr></table></figure></p>
-<h5 id="安装ssh">2.2 安装ssh</h5>
-<p><code>ssh</code>用于远程登录到<code>Linux</code>服务器来管理维护系统。<code>SSH</code>是专为远程登录会话和其他网络服务提供安全性的协议；使用<code>ssh</code>服务（指实现<code>SSH</code>协议的软件）可远程登录到服务器来管理维护系统，防止远程管理过程中的信息泄露问题。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//安装</span></span><br><span class="line">sudo apt-get install openssh-server</span><br><span class="line"><span class="comment">//查看状态</span></span><br><span class="line">service ssh status</span><br><span class="line"><span class="comment">//查看端口</span></span><br><span class="line">netstat -anp |grep <span class="number">22</span> netstat -anp |grep sshlsof -i :<span class="number">22</span></span><br></pre></td></tr></table></figure></p>
-<h5 id="aptitude">2.3 aptitude</h5>
-<p><code>aptitude</code> 命令与 <code>apt-get</code> 命令一样，都是Debian Linux 及其衍生系统中功能极其强大的包管理工具。与<code>apt-get</code>不同的是，<code>aptitude</code>在处理依赖问题上更佳一些。举例来说，<code>aptitude</code> 在删除一个包时，会同时删除本身所依赖的包。这样，系统中不会残留无用的包，整个系统更为干净。它通过文本操作菜单和命令两种方式管理软件包。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//安装</span></span><br><span class="line">sudo apt-get install aptitude</span><br><span class="line"><span class="comment">//命令</span></span><br><span class="line">aptitude upgrade		<span class="comment">//升级系统所有的软件包</span></span><br><span class="line">aptitude dist-upgrade	<span class="comment">//将系统升级到新的发行版</span></span><br><span class="line">aptitude safe-upgrade	<span class="comment">//安全升级系统的软件包</span></span><br><span class="line">aptitude install net-tools	<span class="comment">//安装软件包</span></span><br><span class="line">ptitude purge net-tools	<span class="comment">//彻底删除软件包</span></span><br><span class="line">aptitude search ssh	<span class="comment">//根据关键词搜索软件包</span></span><br><span class="line">aptitude show ssh	<span class="comment">//查看软件包的详细信息</span></span><br><span class="line">aptitude clean		<span class="comment">//删除缓存目录中的软件包安装文件</span></span><br></pre></td></tr></table></figure></p>
-<h5 id="安装gccg">2.3 安装gcc/g++</h5>
-<p><code>GCC</code>原名为 <code>GNU C</code> 语言编译器，因为它原本只能处理 C语言。GCC 快速演进，变得可处理 <code>C++、Fortran、Pascal、Objective-C、Java</code> 以及 <code>Ada</code> 等他语言。实际使用中：</p>
-<ul>
-<li>使用 <code>gcc</code> 指令编译 C 代码</li>
-<li>使用 <code>g++</code>指令编译 C++ 代码</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo  apt-get insatll gcc</span><br><span class="line">sudo apt-get install g++</span><br></pre></td></tr></table></figure>
-<h5 id="安装vim">2.4 安装vim</h5>
-<p><code>vim</code>是从<code>VI</code>发展而来的一个文本编辑器，功能更强大。而<code>vim.tiny</code>是vim的精简版，所以，安装<code>vim</code>势在必行。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install vim</span><br></pre></td></tr></table></figure></p>
-<h5 id="安装cmake">2.5 安装Cmake</h5>
-<p><code>Camke</code>是一个高级编译工具，当你用不同的语言或者编译器开发一个项目，各就各位code完之后要生成最终的输出（<code>dll</code>或执行文件），这时候就尴尬了，你要手动去MingGW或者GCC下配置成千上万的<code>.cpp .h .o .c</code>路劲和地址吗？这时候神器就出现了<code>CMake</code>，主要功能：</p>
-<ul>
-<li>配置和生成各大平台的工程（vs的vcxproj，Qt的Pro）</li>
-<li>生成makefile文件</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install cmake</span><br></pre></td></tr></table></figure>
-<h5 id="第三方线程库">2.6 第三方线程库</h5>
-<p><code>pthread</code>是第三方线程库，安装如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install glibc-doc</span><br><span class="line"> sudo apt-get install manpages-posix manpages-posix-dev</span><br></pre></td></tr></table></figure></p>
-<h5 id="mysql安装">2.7 MySQL安装</h5>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install mysql-server;</span><br></pre></td></tr></table></figure>
-<h4 id="虚拟机网络问题">3. 虚拟机网络问题</h4>
-<p>有时候我们的虚拟机会出现无法连接上网的情况，解决方法如下：</p>
-<ul>
-<li>检查宿主主机，能正常联网</li>
-<li><p>linux的ifconfig显示，没有固定IP <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lo: flags=<span class="number">73</span>&lt;UP,LOOPBACK,RUNNING&gt;  mtu <span class="number">65536</span></span><br><span class="line">        inet <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>  netmask <span class="number">255.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">        inet6 ::<span class="number">1</span>  prefixlen <span class="number">128</span>  scopeid <span class="number">0x10</span>&lt;host&gt;</span><br><span class="line">        loop  txqueuelen <span class="number">1000</span>  (Local Loopback)</span><br><span class="line">        RX packets <span class="number">2588</span>  bytes <span class="number">197004</span> (<span class="number">197.0</span> KB)</span><br><span class="line">        RX errors <span class="number">0</span>  dropped <span class="number">0</span>  overruns <span class="number">0</span>  frame <span class="number">0</span></span><br><span class="line">        TX packets <span class="number">2588</span>  bytes <span class="number">197004</span> (<span class="number">197.0</span> KB)</span><br><span class="line">        TX errors <span class="number">0</span>  dropped <span class="number">0</span> overruns <span class="number">0</span>  carrier <span class="number">0</span>  collisions <span class="number">0</span></span><br></pre></td></tr></table></figure></p></li>
-<li><p>将网络管理的缓存清除后重新开启即可 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo service network-manager stop</span><br><span class="line">sudo rm /var/lib/NetworkManager/NetworkManager.state</span><br><span class="line">sudo service network-manager start</span><br><span class="line">或</span><br><span class="line">sudo service NetworkManager stop</span><br><span class="line">sudo rm /var/lib/NetworkManager/NetworkManager.state</span><br><span class="line">sudo service NetworkManager start</span><br><span class="line">sudo vim /etc/NetworkManager/NetworkManager.conf #在这个文件中把第四行的<span class="literal">false</span>改成<span class="literal">true</span></span><br><span class="line">sudo service NetworkManager restart</span><br></pre></td></tr></table></figure></p></li>
-</ul>
+<h4 id="ssh">9. ssh</h4>
 
       
     </div>
@@ -3716,20 +3800,20 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -3770,12 +3854,12 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">517k</span>
+    <span title="站点总字数">531k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:50</span>
+    <span title="站点阅读时长">8:03</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

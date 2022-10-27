@@ -30,6 +30,7 @@
 <meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/one.png">
 <meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/two.png">
 <meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/three.png">
+<meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/jupyter.png">
 <meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/Annconda.png">
 <meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/config.png">
 <meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/delete.png">
@@ -37,7 +38,7 @@
 <meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/mmcv.png">
 <meta property="og:image" content="http://example.com/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/install.png">
 <meta property="article:published_time" content="2022-09-17T06:02:12.000Z">
-<meta property="article:modified_time" content="2022-10-08T12:20:00.916Z">
+<meta property="article:modified_time" content="2022-10-09T12:04:49.552Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -238,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-08 20:20:00" itemprop="dateModified" datetime="2022-10-08T20:20:00+08:00">2022-10-08</time>
+                <time title="修改时间：2022-10-09 20:04:49" itemprop="dateModified" datetime="2022-10-09T20:04:49+08:00">2022-10-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,7 +264,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.7k</span>
+              <span>6.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -337,7 +338,9 @@
 <h5 id="annconda中使用jupyter">1.6 Annconda中使用Jupyter</h5>
 <p>在Annconda prompt中切换自己想要的python环境，然后直接输入<code>jupyter notebook</code>即可 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(base) PS C:\Users\Trluper&gt; <span class="function">conda activate <span class="title">py36</span></span></span><br><span class="line"><span class="function"><span class="params">(py36)</span> PS C:\Users\Trluper&gt; jupyter notebook</span></span><br></pre></td></tr></table></figure></p>
 <h5 id="jupyter导入文件夹">1.7 jupyter导入文件夹</h5>
-<p>导入压缩包后，创建一个python文件输入下述代码并运行，可能会出现乱码 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">files = zipfile.<span class="built_in">ZipFile</span>(<span class="string">&#x27;文件夹名称.zip&#x27;</span>,<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">files.<span class="built_in">extractall</span>(os.<span class="built_in">getcwd</span>())</span><br></pre></td></tr></table></figure> ##### 1.8 更改jupyter的工作路径 默认情况下jupytr的工作路径wei<code>C:\Users\用户名</code>，我们不希望放在C盘，可以通过以下方法更改。</p>
+<p>导入压缩包后，创建一个python文件输入下述代码并运行，可能会出现乱码 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> zipfile</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">files = zipfile.<span class="built_in">ZipFile</span>(<span class="string">&#x27;文件夹名称.zip&#x27;</span>,<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">files.<span class="built_in">extractall</span>(os.<span class="built_in">getcwd</span>())</span><br></pre></td></tr></table></figure> 当然你要可以在本地jupyter的工作路径上直接解压该文件更快，也更推荐这种方法： <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/jupyter.png" width="500"></p>
+<h5 id="更改jupyter的工作路径">1.8 更改jupyter的工作路径</h5>
+<p>默认情况下jupytr的工作路径wei<code>C:\Users\用户名</code>，我们不希望放在C盘，可以通过以下方法更改。</p>
 <ul>
 <li>首先找到对于的python环境的Annconda prompt进入,输入命令<code>jupyter notebook --generate-config</code>得到路径 <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/Annconda.png" width="500"></li>
 <li>根据上面运行处的路径打开<code>C:\Users\Trluper\.jupyter\jupyter_notebook_config.py</code>文件</li>
@@ -353,7 +356,12 @@
 <li>mmcv-full: 完整版，包含所有的特性以及丰富的开箱即用的 CUDA 算子。注意完整版本可能需要更长时间来编译。</li>
 <li>mmcv: 精简版，不包含 CUDA 算子但包含其余所有特性和功能，类似 MMCV 1.0 之前的版本。如果你不需要使用 CUDA 算子的话，精简版可以作为一个考虑选项。</li>
 </ul>
-<p><strong>安装CUDA版mmcv</strong>: - 从网址中选择自己对应的cuda版本、pytorch版本，如下<code>https://download.openmmlab.com/mmcv/dist/cu101/torch1.8.0/index.html</code>，其中cu后面的三个数字对应你的cuda版本号，torch后面的数字对应逆的pytorch版本号。 <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/mmcv.png" width="500"> - 将选择的<code>whl</code>包下载后，到指定的python虚拟环境进行安装，这里我将包下载到了<code>D:\Applycation_SapceOfSourse</code>,进入该路径后，执行<code>pip install  mmcv_full-1.5.3-cp37-cp37m-win_amd64.whl</code> <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/install.png" width="500"> - 安装完成后运行<code>check_installation.py</code>脚本看是否安装成功</p>
+<p><strong>安装CUDA版mmcv</strong>:</p>
+<ul>
+<li>从网址中选择自己对应的cuda版本、pytorch版本，如下<code>https://download.openmmlab.com/mmcv/dist/cu101/torch1.8.0/index.html</code>，其中cu后面的三个数字对应你的cuda版本号，torch后面的数字对应逆的pytorch版本号。 <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/mmcv.png" width="500"></li>
+<li>将选择的<code>whl</code>包下载后，到指定的python虚拟环境进行安装，这里我将包下载到了<code>D:\Applycation_SapceOfSourse</code>,进入该路径后，执行<code>pip install  mmcv_full-1.5.3-cp37-cp37m-win_amd64.whl</code> <img src="/2022/09/17/python%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/install.png" width="500"></li>
+<li>安装完成后运行<code>check_installation.py</code>脚本看是否安装成功</li>
+</ul>
 <p><strong>精简版</strong>： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install mmcv</span><br></pre></td></tr></table></figure></p>
 <p>详情看<a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmcv/blob/master/README_zh-CN.md">mmlab的官方github</a></p>
 <h5 id="安装mmlab的mmdetection3d">1.11 安装mmlab的mmdetection3D</h5>
@@ -468,7 +476,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8anaconda"><span class="nav-number">1.</span> <span class="nav-text">1. 使用Anaconda</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#anaconda%E5%88%9B%E5%BB%BA%E6%8C%87%E5%AE%9Apython%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 anaconda创建指定python环境</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pycharm%E4%B8%AD%E5%AF%BC%E5%85%A5%E8%AF%A5python%E7%89%88%E6%9C%AC%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.2.</span> <span class="nav-text">1.2pycharm中导入该python版本编译环境：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEpython%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 配置python环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACtensorflow"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 安装指定版本tensorflow</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACkeras"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 安装指定版本keras</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#annconda%E4%B8%AD%E4%BD%BF%E7%94%A8jupyter"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 Annconda中使用Jupyter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jupyter%E5%AF%BC%E5%85%A5%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 jupyter导入文件夹</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85pytorch"><span class="nav-number">1.8.</span> <span class="nav-text">1.9 安装pytorch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mmlab%E7%9A%84mmcv"><span class="nav-number">1.9.</span> <span class="nav-text">1.10 安装mmlab的mmcv</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mmlab%E7%9A%84mmdetection3d"><span class="nav-number">1.10.</span> <span class="nav-text">1.11 安装mmlab的mmdetection3D</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E6%80%BB%E8%A7%88"><span class="nav-number">2.</span> <span class="nav-text">2. 错误总览</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cannot-import-name-get_config"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 cannot import name &#39;get_config&#39;</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8anaconda"><span class="nav-number">1.</span> <span class="nav-text">1. 使用Anaconda</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#anaconda%E5%88%9B%E5%BB%BA%E6%8C%87%E5%AE%9Apython%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 anaconda创建指定python环境</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pycharm%E4%B8%AD%E5%AF%BC%E5%85%A5%E8%AF%A5python%E7%89%88%E6%9C%AC%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.2.</span> <span class="nav-text">1.2pycharm中导入该python版本编译环境：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEpython%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 配置python环境变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACtensorflow"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 安装指定版本tensorflow</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%8C%87%E5%AE%9A%E7%89%88%E6%9C%ACkeras"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 安装指定版本keras</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#annconda%E4%B8%AD%E4%BD%BF%E7%94%A8jupyter"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 Annconda中使用Jupyter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jupyter%E5%AF%BC%E5%85%A5%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 jupyter导入文件夹</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9jupyter%E7%9A%84%E5%B7%A5%E4%BD%9C%E8%B7%AF%E5%BE%84"><span class="nav-number">1.8.</span> <span class="nav-text">1.8 更改jupyter的工作路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85pytorch"><span class="nav-number">1.9.</span> <span class="nav-text">1.9 安装pytorch</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mmlab%E7%9A%84mmcv"><span class="nav-number">1.10.</span> <span class="nav-text">1.10 安装mmlab的mmcv</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85mmlab%E7%9A%84mmdetection3d"><span class="nav-number">1.11.</span> <span class="nav-text">1.11 安装mmlab的mmdetection3D</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E6%80%BB%E8%A7%88"><span class="nav-number">2.</span> <span class="nav-text">2. 错误总览</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cannot-import-name-get_config"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 cannot import name &#39;get_config&#39;</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -482,20 +490,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -536,12 +544,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">517k</span>
+    <span title="站点总字数">531k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:50</span>
+    <span title="站点阅读时长">8:03</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
