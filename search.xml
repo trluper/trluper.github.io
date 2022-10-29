@@ -105,8 +105,39 @@
   <entry>
     <title>Effective C++</title>
     <url>/2022/10/29/Effective-C/</url>
-    <content><![CDATA[
+    <content><![CDATA[<p><strong>在本笔记中主要对《Effective C++》一书中的重要条款做学习笔记，提取当中主要的知识点和面试考点，读者在进行<code>C plus plus</code>岗位面试前可细读该篇文章的（重要）部分。</strong></p>
+<h5 id="条款1视c为一个语言联邦">1 条款1：视C++为一个语言联邦</h5>
+<p>在C++中我们总会有一种错觉，那就是人为C++主要就是面向对象的编程，但是这是不全面的，作为从C中延伸的语言，它保留了C的特性，也集成了许多新的功能，你可理解成:</p>
+<ul>
+<li>C：以C为基础。</li>
+<li>面向对象的C++：添加面向对象特性。</li>
+<li>模板C++：泛型编程概念，使用模板。</li>
+<li>STL：使用STL的容器、迭代器、算法、及函数对象。</li>
+</ul>
+<p>四者的集合</p>
+<h5 id="条款2尽量用编译器替换预处理器">2 条款2：尽量用编译器替换预处理器</h5>
+<p>在C/C++中，我们明白一个程序流程为<code>预处理--&gt;编译--&gt;汇编--&gt;链接</code>，在预处理阶段中，我们对文件内的进行<strong>头文件展开、宏替换和去注释</strong>等预处理操作。那么也就是说<strong>像宏定义相关的定义从未被编译器看见</strong> <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ASPECT_RATIO 1.645</span></span><br></pre></td></tr></table></figure> 上面的记号名称<code>ASPECT_RATIO</code>也许在编译器开始处理源码之前它就被预处理器移走了，于是该记号就没有进入<strong>记号表（在二进制文件即生成的<code>.o</code>文件中）</strong>。那么当你运用此常量但获得一个编译错误信息时，这个错误信息也许只会提到<code>1.653</code>而不是<code>ASPECT_ARTIO</code>，而它又被定义在一个非你所写的头文件，那么你对<code>1.635</code>来自何处毫无概念，你要耗费大量时间寻找它。</p>
+<p>用<code>const</code>替换<code>#define</code>: <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">double</span> AspectRatio=<span class="number">1.635</span>;</span><br></pre></td></tr></table></figure> 作为一个常量，它肯定能被编译器看到并放到符号表内。</p>
+<p>基于上述的一个讲解，因此对于条款2有一下准则：</p>
+<ul>
+<li>对于单纯常量，尽量以<code>const</code>对象或<code>enums</code>枚举来代替#define。</li>
+<li>若用<code>define</code>的可能会导致程序出出现多份目标码，而常量不会出现这种情况</li>
+<li>取一<code>enum</code>的地址就不合法，这种行为和<code>define</code>类似因此可以用此来代替<code>define</code> ，如果你不想让别人获得一个<code>pointer</code>或<code>reference</code>指向你的某个整数常量，<code>enum</code>可以帮助你实现这个约束。</li>
+<li>对于函数宏，用<code>inline</code>函数代替<code>#define</code>（<code>define</code>是死板的替换，容易产生传递计算式类似累加多次的问题）</li>
+</ul>
+<h5 id="条款3尽可能使用const重要">3. 条款3：尽可能使用const(重要)</h5>
+<p><code>const</code>是C++中最为常用、也是最为强大的一个关键字，也是面试过程中极有可能问道的。</p>
 ]]></content>
+      <categories>
+        <category>Effective C++</category>
+        <category>C++</category>
+        <category>面试</category>
+      </categories>
+      <tags>
+        <tag>面试</tag>
+        <tag>C++</tag>
+        <tag>Effective C++</tag>
+      </tags>
   </entry>
   <entry>
     <title>Linux操作系统_2</title>
