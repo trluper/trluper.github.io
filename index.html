@@ -192,6 +192,289 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/29/Effective-C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/29/Effective-C/" class="post-title-link" itemprop="url">Effective C++</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-29 18:26:41" itemprop="dateCreated datePublished" datetime="2022-10-29T18:26:41+08:00">2022-10-29</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">pytorch常用函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-10-29 15:50:21 / 修改时间：17:11:49" itemprop="dateCreated datePublished" datetime="2022-10-29T15:50:21+08:00">2022-10-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">深度学习算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="torch">1. torch</h4>
+<p>包 torch 包含了多维张量的数据结构以及基于其上的多种数学操作。另外，它也提供了多种工具，其中一些可以更有效地对张量和任意类型进行序列化。</p>
+<p>它有 CUDA 的对应实现，可以在 NVIDIA GPU 上进行张量运算(计算能力&gt;=2.0)。</p>
+<h5 id="tensor张量">1.1 Tensor张量</h5>
+<h6 id="torch.numel">1.1.1 torch.numel</h6>
+<p><code>torch.numel(input)-&gt;int</code>，返回 input 张量中的元素个数。</p>
+<ul>
+<li>参数: input (Tensor)为输入张量对象 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.randn(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.numel(a)</span><br><span class="line"><span class="number">120</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="创建操作">1.2 创建操作</h5>
+<h6 id="torch.eye">1.2.1 torch.eye</h6>
+<p><code>torch.eye(n, m=None, out=None)</code>,返回一个 2 维张量，对角线位置全 1，其它位置全 0</p>
+<ul>
+<li><code>n (int )</code> – 行数</li>
+<li><code>m (int, optional)</code> – 列数.如果为 None,则默认为 n</li>
+<li><code>out (Tensor, optinal)</code> - Output tensor</li>
+</ul>
+<p>返回值: 对角线位置全 1，其它位置全 0 的 2 维张量 返回值类型: Tensor <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.eye(<span class="number">3</span>)</span><br><span class="line"><span class="number">1</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line"><span class="number">0</span> <span class="number">1</span> <span class="number">0</span></span><br><span class="line"><span class="number">0</span> <span class="number">0</span> <span class="number">1</span></span><br><span class="line">[torch.FloatTensor of size 3x3]</span><br></pre></td></tr></table></figure></p>
+<h6 id="from_numpy">1.2.2 from_numpy</h6>
+<p><code>torch.from_numpy(ndarray) → Tensor</code>。将 numpy.ndarray 转换为 pytorch 的 Tensor。返回的张量 tensor 和 numpy的 ndarray 共享同一内存空间。修改一个会导致另外一个也被修改。返回的张量不能改变大小。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = numpy.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t = torch.from_numpy(a)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t</span><br><span class="line">torch.LongTensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t[<span class="number">0</span>] = -<span class="number">1</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">array([-<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure></p>
+<h6 id="torch.linspace">1.2.3 torch.linspace</h6>
+<p><code>torch.linspace(start, end, steps=100, out=None) → Tensor</code>返回一个 1 维张量，包含在区间 <code>start</code> 和 <code>end</code> 上均匀间隔的 step 个点。 输出 1 维张量的长度为</p>
+<ul>
+<li><code>start (float)</code> – 序列的起始点</li>
+<li><code>end (float)</code> – 序列的最终值</li>
+<li><code>steps (int)</code> – 在 start 和 end 间生成的样本数</li>
+<li><code>out (Tensor, optional)</code> – 结果张量 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.linspace(<span class="number">3</span>, <span class="number">10</span>, steps=<span class="number">5</span>)</span><br><span class="line"><span class="number">3.0000</span></span><br><span class="line"><span class="number">4.7500</span></span><br><span class="line"><span class="number">6.5000</span></span><br><span class="line"><span class="number">8.2500</span></span><br><span class="line"><span class="number">10.0000</span></span><br><span class="line">[torch.FloatTensor of size <span class="number">5</span>]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.ones">1.2.4 torch.ones</h6>
+<p><code>torch.ones(*sizes, out=None) → Tensor</code>.返回一个全为 1 的张量，形状由可变参数 sizes 定义。 参数:</p>
+<ul>
+<li><code>sizes (int...)</code> – 整数序列，定义了输出形状</li>
+<li><code>out (Tensor, optional)</code> – 结果张量 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.ones(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="number">1</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line"><span class="number">1</span> <span class="number">1</span> <span class="number">1</span></span><br><span class="line">[torch.FloatTensor of size 2x3]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.rand">1.2.5 torch.rand</h6>
+<p><code>torch.rand(*sizes, out=None) → Tensor</code>返回一个张量，包含了从区间[0,1)的均匀分布中抽取的一组随机数，形状由可变参数sizes 定义。 参数:</p>
+<ul>
+<li><code>sizes (int...)</code> – 整数序列，定义了输出形状</li>
+<li><code>out (Tensor, optinal)</code> - 结果张量 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.rand(<span class="number">4</span>)</span><br><span class="line"><span class="number">0.9193</span></span><br><span class="line"><span class="number">0.3347</span></span><br><span class="line"><span class="number">0.3232</span></span><br><span class="line"><span class="number">0.7715</span></span><br><span class="line">[torch.FloatTensor of size <span class="number">4</span>]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.randn">1.2.6 torch.randn</h6>
+<p><code>torch.randn(*sizes, out=None) → Tensor</code>.返回一个张量，包含了从标准正态分布(均值为 0，方差为 1，即高斯白噪声)中抽取一组随机数，形状由可变参数 sizes 定义。 参数:</p>
+<ul>
+<li><code>sizes (int...)</code> – 整数序列，定义了输出形状</li>
+<li><code>out (Tensor, optinal)</code> - 结果张量 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">torch.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="number">1.4339</span> <span class="number">0.3351</span> -<span class="number">1.0999</span></span><br><span class="line"><span class="number">1.5458</span> -<span class="number">0.9643</span> -<span class="number">0.3558</span></span><br><span class="line">[torch.FloatTensor of size 2x3]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.randperm">1.2.7 torch.randperm</h6>
+<p><code>torch.randperm(n, out=None) → LongTensor</code>.给定参数 n，返回一个从 0 到 n-1 的随机整数排列。 参数:</p>
+<ul>
+<li><code>n (int)</code> – 上边界(不包含) <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.randperm(<span class="number">4</span>)</span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line">[torch.LongTensor of size <span class="number">4</span>]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.arange">1.2.8 torch.arange</h6>
+<p><code>torch.arange(start, end, step=1, out=None) → Tensor</code>。返回一个 1 维张量，长度为 <code>floor((end−start)/step)</code>。包含从<code>start</code>到<code>end</code>，以 <code>step</code> 为步长的一组序列值(默认步长为 1)。 参数:</p>
+<ul>
+<li><code>start (float)</code> – 序列的起始点</li>
+<li><code>end (float)</code> – 序列的终止点</li>
+<li><code>step (float)</code> – 相邻点的间隔大小 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.arange(<span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line">[torch.FloatTensor of size <span class="number">3</span>]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.range">1.2.9 torch.range</h6>
+<p><code>torch.range(start, end, step=1, out=None) → Tensor</code>。返回一个 1 维张量，有 <code>floor((end−start)/step)+1</code>个元素。包含在半开区间<code>[start, end）</code>从 start开始，以 step 为步长的一组值。 step 是两个值之间的间隔，即 <code>xi+1=xi+step</code></p>
+<p><strong><em>警告：建议使用函数 torch.arange()</em></strong></p>
+<ul>
+<li><code>start (float)</code> – 序列的起始点</li>
+<li><code>end (float)</code> – 序列的最终值</li>
+<li><code>step (int)</code> – 相邻点的间隔大小 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt;torch.<span class="built_in">range</span>(<span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line">[torch.FloatTensor of size <span class="number">4</span>]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.tensor">1.2.10 torch.tensor</h6>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">torch.tensor(data, </span><br><span class="line">             dtype=<span class="literal">None</span>, </span><br><span class="line">             device=<span class="literal">None</span>, </span><br><span class="line">             requires_grad=<span class="literal">False</span>, </span><br><span class="line">             pin_memory=<span class="literal">False</span>) -&gt; Tensor</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>data</code>：数据，可以是list，也可以是numpy</li>
+<li><code>dtype</code>：数据类型，默认和data一致</li>
+<li><code>device</code>：tensor所在的设备</li>
+<li><code>requires_grad</code>：是否需要梯度，默认False，在搭建神经网络时需要将求导的参数设为True</li>
+<li><code>pin_memory</code>：是否存于锁页内存，默认False</li>
+</ul>
+<h6 id="torch.zeros">1.2.11 torch.zeros</h6>
+<p>返回一个全为标量 0 的张量，形状由可变参数 sizes 定义。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">torch.zeros(*size, </span><br><span class="line">            out=<span class="literal">None</span>, </span><br><span class="line">            dtype=<span class="literal">None</span>, </span><br><span class="line">            layout=torch.strided, </span><br><span class="line">            device=<span class="literal">None</span>, </span><br><span class="line">            requires_grad=<span class="literal">False</span>) -&gt; Tensor</span><br></pre></td></tr></table></figure> - <code>size</code>：张量的形状，如（3，3） - <code>layout</code> ：这个是内存中的布局形式,有strided和sparse_coo等 - <code>out</code>：表示输出张量，就是再把这个张量赋值给别的一个张量，但是这两个张量时一样的，指的同一个内存地址 - <code>device</code>：所在的设备，gpu/cpu - <code>requires_grad</code>：是否需要梯度</p>
+<h5 id="tensor的常用操作">1.3 Tensor的常用操作</h5>
+<p>对于tensor数据我们经常会进行切片、索引、降维、升维、连接等操作。这里介绍一下我们经常用到的。</p>
+<h6 id="torch.cat">1.3.1 torch.cat</h6>
+<p><code>torch.cat(inputs, dimension=0) → Tensor</code>。在<strong>给定维度</strong>上对输入的张量序列 seq 进行连接操作。<code>torch.cat()</code>可以看做 <code>torch.split()</code>和 <code>torch.chunk()</code>的反操作。</p>
+<ul>
+<li><code>inputs (sequence of Tensors)</code> – 可以是任意相同 Tensor 类型的 python 序列</li>
+<li><code>dimension (int, optional)</code> – 沿着此维连接张量序列。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#沿着0维合并</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x</span><br><span class="line"><span class="number">0.5983</span> -<span class="number">0.0341</span> <span class="number">2.4918</span></span><br><span class="line"><span class="number">1.5981</span> -<span class="number">0.5265</span> -<span class="number">0.8735</span></span><br><span class="line">[torch.FloatTensor of size 2x3]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.cat((x, x, x), <span class="number">0</span>)</span><br><span class="line"><span class="number">0.5983</span> -<span class="number">0.0341</span> <span class="number">2.4918</span></span><br><span class="line"><span class="number">1.5981</span> -<span class="number">0.5265</span> -<span class="number">0.8735</span></span><br><span class="line"><span class="number">0.5983</span> -<span class="number">0.0341</span> <span class="number">2.4918</span></span><br><span class="line"><span class="number">1.5981</span> -<span class="number">0.5265</span> -<span class="number">0.8735</span></span><br><span class="line"><span class="number">0.5983</span> -<span class="number">0.0341</span> <span class="number">2.4918</span></span><br><span class="line"><span class="number">1.5981</span> -<span class="number">0.5265</span> -<span class="number">0.8735</span></span><br><span class="line">[torch.FloatTensor of size 6x3]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.chunk">1.3.2 torch.chunk</h6>
+<p><code>torch.chunk(tensor, chunks, dim=0)</code>。在给定维度(轴)上将输入张量进行分块儿。</p>
+<ul>
+<li><code>tensor (Tensor)</code> – 待分块的输入张量</li>
+<li><code>chunks (int)</code> – 分块的个数</li>
+<li><code>dim (int)</code> – 沿着此维度进行分块</li>
+</ul>
+<h6 id="torch.split">1.3.3 torch.split</h6>
+<p><code>torch.split(tensor, split_size, dim=0)</code>。将输入张量分割成相等形状的 chunks（如果可分）。 如果沿指定维的张量形状大小不能被<code>split_size</code>整分， 则最后一个分块会小于其它分块。</p>
+<ul>
+<li><code>tensor (Tensor)</code> – 待分割张量</li>
+<li><code>split_size (int)</code> – 单个分块的形状大小</li>
+<li><code>dim (int)</code> – 沿着此维进行分割</li>
+</ul>
+<h6 id="torch.squeeze">1.3.4 torch.squeeze</h6>
+<p><code>torch.squeeze(input, dim=None, out=None)</code>。当未给定<code>dim</code>时，将输入张量形状中维度为1 去除并返回。 如果输入是形如<code>(A×1×B×1×C×1×D)</code>，那么输出形状就为：<code>(A×B×C×D)</code></p>
+<p>当给定 dim 时 ， 那 么 挤 压 操 作 只 在 给 定 维 度 上 。 例 如 ， 输 入 形 状为: <code>(A×1×B)</code>, <code>squeeze(input, 0)</code> 将会保持张量不变，只有用 <code>squeeze(input, 1)</code>，形状会变成<code>(A×B)</code>。</p>
+<p><strong><em>注意： 返回张量与输入张量共享内存，所以改变其中一个的内容会改变另一个。</em></strong> 参数:</p>
+<ul>
+<li><code>input (Tensor)</code> – 输入张量</li>
+<li><code>dim (int, optional)</code> – 如果给定，则 input 只会在给定维度挤压</li>
+<li><code>out (Tensor, optional)</code> – 输出张量 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.zeros(<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.size()</span><br><span class="line">(<span class="number">2L</span>, <span class="number">1L</span>, <span class="number">2L</span>, <span class="number">1L</span>, <span class="number">2L</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = torch.squeeze(x)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.size()</span><br><span class="line">(<span class="number">2L</span>, <span class="number">2L</span>, <span class="number">2L</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = torch.squeeze(x, <span class="number">0</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.size()</span><br><span class="line">(<span class="number">2L</span>, <span class="number">1L</span>, <span class="number">2L</span>, <span class="number">1L</span>, <span class="number">2L</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = torch.squeeze(x, <span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.size()</span><br><span class="line">(<span class="number">2L</span>, <span class="number">2L</span>, <span class="number">1L</span>, <span class="number">2L</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.stacksource">1.3.5 torch.stack[source]</h6>
+<p><code>torch.stack(sequence, dim=0)</code>。沿着一个新维度对输入张量序列进行连接。 序列中所有的张量都应该为相同形状。</p>
+<p>参数:</p>
+<ul>
+<li><code>sqequence (Sequence)</code> – 待连接的张量序列</li>
+<li><code>dim (int)</code> – 插入的维度。必须介于 0 与 待连接的张量序列数之间。</li>
+</ul>
+<h6 id="torch.transpose">1.3.6 torch.transpose</h6>
+<p><code>torch.transpose(input, dim0, dim1, out=None) → Tensor</code>。交换维度 dim0 和 dim1。 输出张量与输入张量共享内存，所以改变其中一个会导致另外一个也被修改。</p>
+<ul>
+<li><code>input (Tensor)</code> – 输入张量</li>
+<li><code>dim0 (int)</code> – 转置的第一维</li>
+<li><code>dim1 (int)</code> – 转置的第二维 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x</span><br><span class="line"><span class="number">0.5983</span> -<span class="number">0.0341</span> <span class="number">2.4918</span></span><br><span class="line"><span class="number">1.5981</span> -<span class="number">0.5265</span> -<span class="number">0.8735</span></span><br><span class="line">[torch.FloatTensor of size 2x3]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h6 id="torch.unsqueeze">1.3.7 torch.unsqueeze</h6>
+<p><code>torch.unsqueeze(input, dim, out=None)</code>。返回一个新的张量，对输入的制定位置插入维度1 注意： 返回张量与输入张量共享内存，所以改变其中一个的内容会改变另一个。如果 <code>dim</code> 为负，则将会被转化 <code>dim+input.dim()+1</code> 参数:</p>
+<ul>
+<li><code>tensor (Tensor)</code> – 输入张量</li>
+<li><code>dim (int)</code> – 插入维度的索引</li>
+<li><code>out (Tensor, optional)</code> – 结果张量</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.Tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.unsqueeze(x, <span class="number">0</span>)</span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span></span><br><span class="line">[torch.FloatTensor of size 1x4]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.unsqueeze(x, <span class="number">1</span>)</span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line">[torch.FloatTensor of size 4x1]</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/26/Transformer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2042,518 +2325,6 @@ w_{t+1}=w_t+α{δR(w)\over δw}
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">git使用教程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-09-07 10:10:47 / 修改时间：15:21:59" itemprop="dateCreated datePublished" datetime="2022-09-07T10:10:47+08:00">2022-09-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="git是什么">1. Git是什么</h4>
-<p>Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。Git原来是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。</p>
-<h5 id="git-与-svn-区别">1.1 Git 与 SVN 区别</h5>
-<p>Git 不仅仅是个版本控制系统，它也是个内容管理系统(CMS)，工作管理系统等。如果你是一个具有使用 SVN 背景的人，你需要做一定的思想转换，来适应 Git 提供的一些概念和特征。</p>
-<p><code>Git</code>与<code>SVN</code>区别点：</p>
-<ul>
-<li><p>1、<code>Git</code>是分布式的，<code>SVN</code>不是：这是<code>Git</code>和其它非分布式的版本控制系统，</p></li>
-<li><p>2、<code>Git</code>把内容按元数据方式存储，而<code>SVN</code>是按文件：所有的资源控制系统都是把文件的元信息隐藏在一个类似 <code>.svn、.cvs</code>等的文件夹里。</p></li>
-<li><p>3、<code>Git</code>分支和<code>SVN</code>的分支不同：分支在 <code>SVN</code>中一点都不特别，其实它就是版本库中的另外一个目录。</p></li>
-<li><p>4、<code>Git</code>没有一个全局的版本号，而<code>SVN</code>有：目前为止这是跟<code>SVN</code>相比<code>Git</code>缺少的最大的一个特征。</p></li>
-<li><p>5、<code>Git</code>的内容完整性要优于<code>SVN</code>：<code>Git</code>的内容存储使用的是<code>SHA-1</code>哈希算法。这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png" width="500"></p></li>
-</ul>
-<h4 id="git安装">2. Git安装</h4>
-<h5 id="linux下的git">2.1 Linux下的Git</h5>
-<p>Git 的工作需要调用<code>curl，zlib，openssl，expat，libiconv</code>等库的代码，所以需要先安装这些依赖工具。 在有<code>yum</code>的系统上centOS或者有<code>apt-get</code>的系统上（比如 Debian 体系），可以用下面的命令安装：</p>
-<h6 id="ubuntu安装">2.1.1 ubuntu安装</h6>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install libcurl4-gnutls-dev libexpat1-dev gettext \</span><br><span class="line">  libz-dev libssl-dev</span><br><span class="line"></span><br><span class="line">$ apt-get install git</span><br><span class="line"></span><br><span class="line">$ git --version</span><br><span class="line">git version <span class="number">1.8</span><span class="number">.1</span><span class="number">.2</span></span><br></pre></td></tr></table></figure>
-<h6 id="centos安装">2.1.2 centOS安装</h6>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ yum install curl-devel expat-devel gettext-devel \</span><br><span class="line">  openssl-devel zlib-devel</span><br><span class="line"></span><br><span class="line">$ yum -y install git-core</span><br><span class="line"></span><br><span class="line">$ git --version</span><br><span class="line">git version <span class="number">1.7</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
-<h5 id="windows下的git">2.2 windows下的Git</h5>
-<p>在 Windows平台上安装 Git同样轻松,找到<a target="_blank" rel="noopener" href="https://gitforwindows.org/">官网下载链接</a>，点击下一步直接安装即可。</p>
-<h5 id="git配置">2.3 Git配置</h5>
-<p>Git 提供了一个叫做<code>git config</code>的工具，专门用来配置或读取相应的工作环境变量。这些环境变量，决定了 Git 在各个环节的具体工作方式和行为。这些变量可以存放在以下三个不同的地方：</p>
-<ul>
-<li><code>/etc/gitconfig</code>文件：系统中对所有用户都普遍适用的配置。若使用<code>git config</code>时用 <code>--system</code>选项，读写的就是这个文件。</li>
-<li><code>~/.gitconfig</code>文件：用户目录下的配置文件只适用于该用户。若使用<code>git config</code>时用 <code>--global</code>选项，读写的就是这个文件。</li>
-<li>当前项目的<code>Git</code>目录中的配置文件（也就是工作目录中的 <code>.git/config</code> 文件）：这里的配置仅仅针对当前项目有效。每一个级别的配置都会覆盖上层的相同配置，所以 <code>.git/config</code>里的配置会覆盖 <code>/etc/gitconfig</code>中的同名变量。</li>
-</ul>
-<p>在 Windows 系统上，Git 会找寻用户主目录下的 <code>.gitconfig</code>文件。主目录即 $HOME 变量指定的目录，一般都是 <code>C:\Documents and Settings\$USER。</code></p>
-<p>此外，Git 还会尝试找寻 <code>/etc/gitconfig</code>文件，只不过看当初 Git 装在什么目录，就以此作为根目录来定位。</p>
-<h6 id="用户信息">2.3.1 用户信息</h6>
-<p>为了方便后续Git能跟踪到谁做了修改，我们需要设置对应的用户名与邮箱地址。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">&quot;wuwenjie&quot;</span></span><br><span class="line">$ git config --global user.email <span class="number">1229413537</span>@qq.com</span><br><span class="line"></span><br><span class="line">$ git config --list</span><br><span class="line">diff.astextplain.textconv=astextplain</span><br><span class="line">filter.lfs.clean=git-lfs clean -- %f</span><br><span class="line">filter.lfs.smudge=git-lfs smudge -- %f</span><br><span class="line">filter.lfs.process=git-lfs filter-process</span><br><span class="line">filter.lfs.required=<span class="literal">true</span></span><br><span class="line">http.sslbackend=openssl</span><br><span class="line">http.sslcainfo=D:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt</span><br><span class="line">core.autocrlf=<span class="literal">true</span></span><br><span class="line">core.fscache=<span class="literal">true</span></span><br><span class="line">core.symlinks=<span class="literal">false</span></span><br><span class="line">pull.rebase=<span class="literal">false</span></span><br><span class="line">credential.helper=manager-core</span><br><span class="line">credential.https:<span class="comment">//dev.azure.com.usehttppath=true</span></span><br><span class="line">init.defaultbranch=master</span><br><span class="line">user.email=<span class="number">1229413537</span>@qq.com</span><br><span class="line">user.name=wuwenjie</span><br></pre></td></tr></table></figure></p>
-<h4 id="git工作流程">3. git工作流程</h4>
-<p>git一般工作流程如下：</p>
-<ul>
-<li>克隆 Git 资源作为工作目录。</li>
-<li>在克隆的资源上添加或修改文件。</li>
-<li>如果其他人修改了，你可以更新资源。</li>
-<li>在提交前查看修改。</li>
-<li>提交修改。</li>
-<li>在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-process.png" width="500"></li>
-</ul>
-<h4 id="git三个区和三个状态">4. git三个区和三个状态</h4>
-<p>我们先来理解下 Git 工作区、暂存区和版本库概念：</p>
-<ul>
-<li><strong>工作区</strong>：就是你在电脑里能看到的目录。</li>
-<li><strong>暂存区</strong>：英文叫<code>stage</code>或<code>index</code>。一般存放在<code>.git</code>目录下的<code>index</code>文件（<code>.git/index</code>）中，所以我们把暂存区有时也叫作索引（index）。</li>
-<li><p><strong>版本库</strong>：工作区有一个隐藏目录 <code>.git</code>，这个不算工作区，而是 <code>Git</code> 的版本库。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Three.png" width="500"></p></li>
-<li>图中左侧为工作区，右侧为版本库。在版本库中标记为 <code>index</code>的区域是暂存区<code>stage/index</code>，标记为 <code>master</code>的是<code>master</code>分支所代表的目录树。</li>
-<li>图中我们可以看出此时<code>HEAD</code>实际是指向<code>master</code>分支的一个<code>游标</code>。所以图示的命令中出现<code>HEAD</code>的地方可以用<code>master</code>来替换。</li>
-<li>图中的<code>objects</code>标识的区域为<code>Git</code>的对象库，实际位于<code>.git/objects</code>目录下，里面包含了创建的各种对象及内容。</li>
-<li>当对工作区修改（或新增）的文件执行<code>git add</code>命令时，暂存区的目录树被更新，同时工作区修改（或新增）的文件内容被写入到对象库中的一个新的对象中，而该对象的ID被记录在暂存区的文件索引中。</li>
-<li>当执行提交操作<code>git commit</code>时，暂存区的目录树写到版本库（对象库）中，master 分支会做相应的更新。即 <code>master</code>指向的目录树就是提交时暂存区的目录树。</li>
-<li>当执行<code>git reset HEAD</code>命令时，暂存区的目录树会被重写，被 <code>master</code>分支指向的目录树所替换，但是工作区不受影响。</li>
-<li>当执行 <code>git rm --cached &lt;file&gt;</code>命令时，会直接从暂存区删除文件，工作区则不做出改变。</li>
-<li>当执行 <code>git checkout</code> . 或者 <code>git checkout -- &lt;file&gt;</code>命令时，会用暂存区全部或指定的文件替换工作区的文件。这个操作很危险，会清除工作区中未添加到暂存区中的改动。</li>
-<li><p>当执行 <code>git checkout HEAD</code> . 或者 <code>git checkout HEAD &lt;file&gt;</code>命令时，会用 HEAD 指向的 master 分支中的全部或者部分文件替换暂存区和以及工作区中的文件。这个命令也是极具危险性的，因为不但会清除工作区中未提交的改动，也会清除暂存区中未提交的改动。</p></li>
-</ul>
-<h4 id="git创建仓库">5. Git创建仓库</h4>
-<p>可以使用一个已经存在的目录作为<code>Git</code>仓库。<code>Git</code>使用<code>git init</code>命令来初始化一个<code>Git</code>仓库，<code>Git</code>的很多命令都需要在<code>Git</code>的仓库中运行，所以<code>git init</code>是使用<code>Git</code>的第一个命令。</p>
-<p>在执行完成<code>git init</code>命令后，<code>Git</code> 仓库会生成一个<code>.git</code>目录，该目录包含了资源的所有元数据，其他的项目目录保持不变</p>
-<ul>
-<li><p><strong>当前目录即为仓库</strong>：使用当前目录作为 Git 仓库，我们只需使它初始化。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure> 该命令执行完后会在当前目录生成一个 .git 目录。</p></li>
-<li><p><strong>使用我们指定目录作为Git仓库。</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init newrepo</span><br></pre></td></tr></table></figure> 初始化后，会在<code>newrepo</code>目录下会出现一个名为 <code>.git</code>的目录，所有<code>Git</code>需要的数据和资源都存放在这个目录中。</p></li>
-</ul>
-<p>如果当前目录下有几个文件想要纳入版本控制，需要先用<code>git add</code>命令告诉<code>Git</code>开始对这些文件进行跟踪，然后提交： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以下命令将目录下以 .c 结尾及 README 文件提交到仓库中。</span></span><br><span class="line">$ git add *.c</span><br><span class="line">$ git add README</span><br><span class="line">$ git commit -m <span class="string">&#x27;初始化项目版本&#x27;</span></span><br></pre></td></tr></table></figure> &gt; 注： 在 Linux 系统中，commit 信息使用单引号 <code>'</code>，Windows 系统，commit 信息使用双引号<code>&quot;</code>。 &gt;所以在 git bash 中<code>git commit -m '提交说明'</code>这样是可以的，在 Windows 命令行中就要使用双引号 &gt;<code>git commit -m &quot;提交说明&quot;</code>。</p>
-<h4 id="git的基本操作">6. Git的基本操作</h4>
-<p>Git 的工作就是创建和保存你项目的快照及与之后的快照进行对比。Git 常用的是以下 6 个命令：<code>git clone、git push、git add 、git commit、git checkout、git pull</code>，后面我们会详细介绍。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-command.png" width="500"></p>
-<ul>
-<li><code>workspace</code>：工作区</li>
-<li><code>staging area</code>：暂存区/缓存区</li>
-<li><code>local repository</code>：版本库或本地仓库</li>
-<li><code>remote repository</code>：远程仓库</li>
-</ul>
-<h5 id="git-clone">6.1 git clone</h5>
-<p>我们使用<code>git clone</code>从现有<code>Git</code>仓库中拷贝项目（类似<code>svn checkout</code>）.克隆仓库的命令格式为：<code>git clone &lt;repo&gt;</code>。</p>
-<p>要克隆<code>Ruby</code>语言的<code>Git</code>代码仓库<code>Grit</code>，可以用下面的命令： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone git:<span class="comment">//github.com/schacon/grit.git</span></span><br></pre></td></tr></table></figure></p>
-<h5 id="提交与修改">6.2 提交与修改</h5>
-<p>下表列出了有关创建与提交你的项目的快照的命令：</p>
-<table>
-<thead>
-<tr class="header">
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>git add</code></td>
-<td>添加文件到暂存区</td>
-</tr>
-<tr class="even">
-<td><code>git status</code></td>
-<td>查看仓库当前的状态，显示有变更的文件。</td>
-</tr>
-<tr class="odd">
-<td><code>git diff</code></td>
-<td>比较文件的不同，即暂存区和工作区的差异。</td>
-</tr>
-<tr class="even">
-<td><code>git commit</code></td>
-<td>提交暂存区到本地仓库。</td>
-</tr>
-<tr class="odd">
-<td><code>git reset</code></td>
-<td>回退版本。</td>
-</tr>
-<tr class="even">
-<td><code>git rm</code></td>
-<td>将文件从暂存区和工作区中删除。</td>
-</tr>
-<tr class="odd">
-<td><code>git mv</code></td>
-<td>移动或重命名工作区文件。</td>
-</tr>
-</tbody>
-</table>
-<h5 id="提交日志">6.3 提交日志</h5>
-<table>
-<thead>
-<tr class="header">
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>git log</code></td>
-<td>查看历史提交记录</td>
-</tr>
-<tr class="even">
-<td><code>git blame &lt;file&gt;</code></td>
-<td>以列表形式查看指定文件的历史修改记录</td>
-</tr>
-</tbody>
-</table>
-<h5 id="远程操作">6.4 远程操作</h5>
-<table>
-<thead>
-<tr class="header">
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>git remote</code></td>
-<td>远程仓库操作</td>
-</tr>
-<tr class="even">
-<td><code>git fetch</code></td>
-<td>从远程获取代码库</td>
-</tr>
-<tr class="odd">
-<td><code>git pull</code></td>
-<td>下载远程代码并合并</td>
-</tr>
-<tr class="even">
-<td><code>git push</code></td>
-<td>上传远程代码并合并</td>
-</tr>
-</tbody>
-</table>
-<h4 id="git的分支管理">7. Git的分支管理</h4>
-<p>几乎每一种版本控制系统都以某种形式支持分支，一个分支代表一条独立的开发线。使用分支意味着你可以从开发主线上分离开来，然后在不影响主线的同时继续工作。<code>Git</code>分支实际上是指向更改快照的指针。有人把<code>Git</code>的分支模型称为必杀技特性，而正是因为它，将<code>Git</code>从版本控制系统家族里区分出来。</p>
-<h5 id="git-branch创建分支">7.1 git branch创建分支</h5>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">git <span class="title">branch</span> <span class="params">(branchname)</span></span></span><br></pre></td></tr></table></figure>
-<p>没有参数时，<code>git branch</code>会列出你在本地的分支。当你执行<code>git init</code>的时候，默认情况下<code>Git</code>就会为你创建<code>master</code>主分支。如果我们要手动创建一个分支。执行<code>git branch (branchname)</code>即可。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git branch testing</span><br><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  testing</span><br></pre></td></tr></table></figure></p>
-<h5 id="git-checkout切换分支">7.2 git checkout切换分支</h5>
-<p>用<code>git checkout (branch)</code>切换到我们要修改的分支 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">README</span><br><span class="line">$ echo <span class="string">&#x27;runoob.com&#x27;</span> &gt; test.txt</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -m <span class="string">&#x27;add test.txt&#x27;</span></span><br><span class="line">[master <span class="number">3e92</span>c19] add test.txt</span><br><span class="line"> <span class="number">1</span> file changed, <span class="number">1</span> <span class="built_in">insertion</span>(+)</span><br><span class="line"> create mode <span class="number">100644</span> test.txt</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br><span class="line">$ git checkout testing</span><br><span class="line">Switched to branch <span class="string">&#x27;testing&#x27;</span></span><br><span class="line">$ ls</span><br><span class="line">README</span><br><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br></pre></td></tr></table></figure> 当我们切换到<code>testing</code>分支的时候，我们添加的新文件 <code>test.txt</code>被移除了。切换回<code>master</code>分支的时候，它们又重新出现了。</p>
-<p>我们也可以使用<code>git checkout -b (branchname)</code> 命令来创建新分支并立即切换到该分支下，从而在该分支中操作。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b newtest</span><br><span class="line">Switched to a <span class="keyword">new</span> branch <span class="string">&#x27;newtest&#x27;</span></span><br><span class="line">$ git rm test.txt </span><br><span class="line">rm <span class="string">&#x27;test.txt&#x27;</span></span><br><span class="line">$ ls</span><br><span class="line">README</span><br><span class="line">$ touch runoob.php</span><br><span class="line">$ git add .</span><br><span class="line">$ git commit -am <span class="string">&#x27;removed test.txt、add runoob.php&#x27;</span></span><br><span class="line">[newtest c1501a2] removed test.txt、add runoob.php</span><br><span class="line"> <span class="number">2</span> files changed, <span class="number">1</span> <span class="built_in">deletion</span>(-)</span><br><span class="line"> create mode <span class="number">100644</span> runoob.php</span><br><span class="line"> <span class="keyword">delete</span> mode <span class="number">100644</span> test.txt</span><br><span class="line">$ ls</span><br><span class="line">README        runoob.php</span><br><span class="line">$ git checkout master</span><br><span class="line">Switched to branch <span class="string">&#x27;master&#x27;</span></span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br></pre></td></tr></table></figure>
-<p>如你所见，我们创建了一个分支，在该分支上移除了一些文件<code>test.txt</code>，并添加了<code>runoob.php</code>文件，然后切换回我们的主分支，删除的<code>test.txt</code>文件又回来了，且新增加的<code>runoob.php</code>不存在主分支中。</p>
-<p>这样就将工作切分开来，从而让我们能够在不同开发环境中做事，并来回切换。</p>
-<h5 id="合并分支">7.4 合并分支</h5>
-<p>一旦某分支有了独立内容，你终究会希望将它合并回到你的主分支。 你可以使用以下命令将任何分支合并到当前分支中去：<code>git merge</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  newtest</span><br><span class="line">$ ls</span><br><span class="line">README        test.txt</span><br><span class="line">$ git merge newtest</span><br><span class="line">Updating <span class="number">3e92</span>c19..c1501a2</span><br><span class="line">Fast-forward</span><br><span class="line"> runoob.php | <span class="number">0</span></span><br><span class="line"> test.txt   | <span class="number">1</span> -</span><br><span class="line"> <span class="number">2</span> files changed, <span class="number">1</span> <span class="built_in">deletion</span>(-)</span><br><span class="line"> create mode <span class="number">100644</span> runoob.php</span><br><span class="line"> <span class="keyword">delete</span> mode <span class="number">100644</span> test.txt</span><br><span class="line">$ ls</span><br><span class="line">README        runoob.php</span><br></pre></td></tr></table></figure> 以上实例中我们将<code>newtest</code>分支合并到主分支去，那么<code>test.txt</code>文件被删除,<code>runoob.php</code>被添加到主分支</p>
-<h5 id="删除分支">7.5 删除分支</h5>
-<p>删除分支只需加个<code>-d</code>即可：<code>git branch -d (branchname)</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br><span class="line">* master</span><br><span class="line">  testing</span><br><span class="line">$ git branch -<span class="function">d testing</span></span><br><span class="line"><span class="function">Deleted branch <span class="title">testing</span> <span class="params">(was <span class="number">85f</span>c7e7)</span>.</span></span><br><span class="line"><span class="function">$ git branch</span></span><br><span class="line"><span class="function">* master</span></span><br></pre></td></tr></table></figure></p>
-<p>文章来源：<a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-workflow.html">菜鸟教程</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/07/VScode%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">VScode教程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-09-07 09:46:11 / 修改时间：11:19:39" itemprop="dateCreated datePublished" datetime="2022-09-07T09:46:11+08:00">2022-09-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/VScode/" itemprop="url" rel="index"><span itemprop="name">VScode</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="为什么使用vscode">1. 为什么使用VScode</h4>
-<p>VScode是微软推出一个轻量化编辑器，只需要下载相应的编译器和包即可支持C/C++、java、python的编写。相对于VS来说，VScode更加的轻便、体积小，支持许多插件。</p>
-<h4 id="vscode的界面使用">2. VScode的界面使用</h4>
-<p><img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/someClick.png" width="600"></p>
-<h5 id="用户设置">2.1 用户设置</h5>
-<p><code>文件File--首选项preferences--设置settings</code>，打开用户设置。VScode支持选择配置，也支持编辑<code>setting.json</code>文件修改默认配置 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">（<span class="number">1</span>）editor.fontsize用来设置字体大小，可以设置editor.fontsize : <span class="number">14</span>;</span><br><span class="line"></span><br><span class="line">（<span class="number">2</span>）files.autoSave这个属性是表示文件是否进行自动保存，推荐设置为onFocusChange——文件焦点变化时自动保存。</span><br><span class="line"></span><br><span class="line">（<span class="number">3</span>）editor.tabCompletion用来在出现推荐值时，按下Tab键是否自动填入最佳推荐值，推荐设置为on;</span><br><span class="line"></span><br><span class="line">（<span class="number">4</span>）editor.codeActionsOnSave中的source.organizeImports属性，这个属性能够在保存时，自动调整 <span class="keyword">import</span> 语句相关顺序，能够让你的 <span class="keyword">import</span> 语句按照字母顺序进行排列，推荐设置为<span class="literal">true</span>,即<span class="string">&quot;editor.codeActionsOnSave&quot;</span>: &#123; <span class="string">&quot;source.organizeImports&quot;</span>: <span class="literal">true</span> &#125;；</span><br><span class="line"></span><br><span class="line">（<span class="number">5</span>）editor.lineNumbers设置代码行号,即editor.lineNumbers ：<span class="literal">true</span>；</span><br></pre></td></tr></table></figure></p>
-<h4 id="常用快捷键">3. 常用快捷键</h4>
-<p>高效的使用vscode,记住一些常用的快捷键是必不可少的，这里罗列了一些常用的快捷键。 ##### 3.1 主命令</p>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">命令</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+Shift+P</code></td>
-<td>俗称万能键，可以输入任何命令</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+P</code></td>
-<td>根据名称查找文件</td>
-</tr>
-</tbody>
-</table>
-<h5 id="编辑器与窗口管理">3.2 编辑器与窗口管理</h5>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">命令</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+N</code></td>
-<td><strong>新建文件</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Shift+N</code></td>
-<td><strong>打开一个新的VSCode编辑器</strong></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+O</code></td>
-<td><strong>打开文件</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Shift+O</code></td>
-<td>打开文件夹</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+W</code></td>
-<td>关闭当前文件</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Shift+W 或 Alt+F4</code></td>
-<td>关闭当前VSCode编辑器</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+\</code></td>
-<td>新建窗口显示代码（相当于复制当前代码到一个新的窗口；同一引用，修改一个文件，其他相同文件会一起改变）</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Alt+→</code></td>
-<td>移动当前文件到右窗口，若没有右窗口，则创建一个新窗口</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+Alt+←</code></td>
-<td>移动当前文件到左窗口</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Tab</code></td>
-<td><strong>切换文件窗口</strong></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+B</code></td>
-<td>显示/隐藏侧边栏</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl +/-</code></td>
-<td>放大/缩小编辑器窗口</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+Shift+E</code></td>
-<td>文件资源管理器（Explorer）</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Shift+G</code></td>
-<td>git管理窗口（Source Control）</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+Shift+X</code></td>
-<td>扩展（插件）管理窗口（Extentions）</td>
-</tr>
-</tbody>
-</table>
-<h5 id="代码文本快捷键">3.3 代码文本快捷键</h5>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: center;">命令</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+F</code></td>
-<td><strong>查找</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+H</code></td>
-<td><strong>查找替换</strong></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+Shift+F</code></td>
-<td>全局查找</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Shift+H</code></td>
-<td>全局查找替换</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+D</code></td>
-<td>选中下一个匹配项</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Shift+L</code></td>
-<td>选中所有匹配项（秀儿）</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+[</code></td>
-<td>向左缩进</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+]</code></td>
-<td>向右缩进</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Alt+Up</code></td>
-<td><strong>向上移动当前行</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Alt+Down</code></td>
-<td>向下移动当前行</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Shift+Alt+Up</code></td>
-<td><strong>向上复制当前行</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Shift+Alt+Down</code></td>
-<td>向下复制当前行</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Ctrl+Enter</code></td>
-<td><strong>在当前行下方插入空行（光标位置可以不在行尾）</strong></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><code>Ctrl+Shift+Enter</code></td>
-<td>在当前行上方插入空行（光标位置可以不在行尾）</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><code>Alt+Z</code></td>
-<td>切换内容是否自动换行（底部显示/隐藏滚动条</td>
-</tr>
-</tbody>
-</table>
-<p>如果在编程中忘记了快捷键，也可以使用<code>Ctrl+K/Ctrl+S</code>来查看VSCode中全部快捷键。</p>
-<h4 id="插件安装">4. 插件安装</h4>
-<p>在输入框中输入想要安装的插件名称，点击安装即可，推荐安装的插件有： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、Bracket Pair Colorizer：给嵌套的各种括号加上不同的颜色。</span><br><span class="line"><span class="number">2</span>、Path Intellisense：智能路径提示，可以在你输入文件路径时智能提示。</span><br><span class="line"><span class="number">3</span>、Markdown Preview：实时预览 markdown。</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2623,14 +2394,14 @@ w_{t+1}=w_t+α{δR(w)\over δw}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -2677,12 +2448,12 @@ w_{t+1}=w_t+α{δR(w)\over δw}
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">531k</span>
+    <span title="站点总字数">536k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:03</span>
+    <span title="站点阅读时长">8:08</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
