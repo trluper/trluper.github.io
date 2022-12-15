@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-04 21:35:53" itemprop="dateModified" datetime="2022-08-04T21:35:53+08:00">2022-08-04</time>
+                <time title="修改时间：2022-12-01 13:50:29" itemprop="dateModified" datetime="2022-12-01T13:50:29+08:00">2022-12-01</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -326,7 +326,7 @@
 (e)在所有函数体外定义的static变量表示在该文件中有效，不能extern到别的文件用；
 (f)在函数体内定义的static表示只在该函数体内有效；
 (g)另外，函数中的&quot;adgfdf&quot;这样的字符串存放在常量区</code></pre>
-<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.jpg"></p>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.png" width="500"></p>
 <h4 id="static关键字的作用">1.7 static关键字的作用</h4>
 <h5 id="全局静态变量编译时初始化存储在bssdata">1.7.1 全局静态变量（编译时初始化，存储在bss/data)</h5>
 <p>在全局变量前加上关键字<code>static</code>，全局变量就定义成一个全局静态变量。<strong>存储在静态存储区（未初始化<code>bss</code>或已初始化数据段<code>data</code>），在整个程序运行期间一直存在。</strong></p>
@@ -353,6 +353,7 @@
 <h4 id="const关键字">1.8 const关键字</h4>
 <h4 id="一些seziof大小">1.9一些seziof大小</h4>
 <p><strong>虚函数表4字节，4字节对齐！比如</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fun</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="type">char</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">sizeof</span>(A);/大小是<span class="number">8</span>，<span class="number">4</span>+<span class="number">1</span>+（对齐）<span class="number">3</span>=<span class="number">8</span></span><br><span class="line"><span class="comment">//static变量虽然属于类，但并不在类内开辟空间</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="section">1.10</h4>
 
       
     </div>
@@ -491,7 +492,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">547k</span>
+    <span title="站点总字数">548k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
