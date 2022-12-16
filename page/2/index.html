@@ -192,6 +192,440 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">机器学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-12 20:47:43" itemprop="dateCreated datePublished" datetime="2022-09-12T20:47:43+08:00">2022-09-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-10-05 09:27:16" itemprop="dateModified" datetime="2022-10-05T09:27:16+08:00">2022-10-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">深度学习算法</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="我的思考">0. 我的思考</h4>
+<p>两个可供突破的大方向：</p>
+<ul>
+<li>是否能推动深度学习的训练数据规模减小？</li>
+<li>怎么使得训练模型的结果更加精确。</li>
+</ul>
+<p>资源:</p>
+<ul>
+<li>kaggle机器学习竞赛</li>
+</ul>
+<h4 id="机器学习和深度学习关系概述">1. 机器学习和深度学习关系概述</h4>
+<p>人工智能、机器学习和深度学习三者的关系如下所示： <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/relationship.png" width="400"> <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/knowladge.png" width="400"></p>
+<ul>
+<li><p><strong>机器学习</strong>：机器学习系统是训练出来的，而不是明确用代码编写出来的。人们通过输入数据和从这些数据中预期得到的答案，系统输出相应的规则。</p></li>
+<li><p><strong>深度学习</strong>：<strong>深度学习里面的&quot;深度&quot;不是指通过学习获得更深层次的理解，而是指通过一系列连续的表示层来获得更有效果的数据特征。一个深度学习模型有多少层就被称为模型的深度是多少</strong>。一般来说，现代深度学习通常包含数十个甚至上百个连续的表示层。<strong>这些层也被称为神经网络</strong> <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/CNN.png" width="500"></p></li>
+</ul>
+<h5 id="深度学习的指标">1.2 深度学习的指标</h5>
+<p>在上面我们已经知道，深度学习是<strong>通过各层对输入数据不断提取特征</strong>，提取方式的具体操作就是<strong>每层都是对输入数据进行权重计算</strong>，其本质就是一串数字，</p>
+<p>如下图所示，<span class="math inline">\(X_i\)</span>是从图片拉伸出来的像素，它是不会变的，无法对其进行操作。而<span class="math inline">\(W\)</span>矩阵就是参数矩阵，<span class="math inline">\(b\)</span>是神经元偏置。<strong>因此对于深度学习，对于参数矩阵的选择是一项艰巨的任务，参数的好坏决定了输出结果的优劣</strong>。但是我们不能糊里糊涂的对参数进行更改，这样可能适得其反，<strong>必须借助某一个评估指标来更改，这就是接下来要介绍的损失函数</strong> <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/pixels.png" width="500"></p>
+<h5 id="损失函数">1.2.1 损失函数</h5>
+<p><strong>损失函数</strong>：损失函数的任务，就是通过一定数学式子衡量出该深度学习的实际输出与预期标准值之间的距离。</p>
+<p><strong>通过损失函数计算的损失值作为反馈信号来对参数矩阵中的权值进行微调，来降低对应的损失值</strong>。这种调节右优化器来完成，它实现了所谓的<strong>反向传播</strong>算法。 <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/optimizer.png" width="300"></p>
+<blockquote>
+<p>一般来说，一开始神经网络的权值是随机赋值的，那么第一次的输出也就通常与预期值相差甚远，但随着权重值的不断微调，损失在也在降低，这就是为什么说学习模型是训练出来的。</p>
+</blockquote>
+<h6 id="softmax分类器">1.2.2 softmax分类器</h6>
+<p>上面我们经过各层神经网络最终得到一个输入的得分值，但我们想一想如果结果给与我们一个概率不是更好，那么把得分值转化为概率就是<code>softmax</code>的作用。</p>
+<p><code>softmax</code>分类器将各个得分值<strong>进行放大然后归一化后再计算概率</strong></p>
+<h5 id="卷积神经网络">1.3 卷积神经网络</h5>
+<p>神经网络本质上就是将我们的输入信息转换为特征矩阵。<strong>卷积神经网络就是对同一个区域可以提取多个特征值，传统的神经网络一般只提取单个特征值，这样卷积更加全面稳实。</strong></p>
+<p>卷积神经网络右输入层、隐含层、输出层组成：</p>
+<ul>
+<li><p>输入层：卷积神经网络的输入层可以处理多维数据，常见地，一维卷积神经网络的输入层接收一维或二维数组，其中一维数组通常为时间或频谱采样；二维数组可能包含多个通道；二维卷积神经网络的输入层接收二维或三维数组；三维卷积神经网络的输入层接收四维数组。由于使用<strong>梯度下降算法</strong>进行学习，卷积神经网络的输入特征需要进行标准化处理。具体地，在将学习数据输入卷积神经网络前，<strong>需在通道或时间/频率维对输入数据进行归一化</strong>，若输入数据为像素，也可将分布于的原始像素值归一化至<span class="math inline">\([0,1]\)</span>区间</p></li>
+<li><p><strong>隐含层</strong>：隐含层包含卷积层、池化层和全连接层3类常见构筑。卷积层中的卷积核包含权重系数，而池化层不包含权重系数</p>
+<ul>
+<li><p><strong>卷积核</strong>：卷积层的功能是对输入数据进行特征提取，其内部包含多个<strong>卷积核</strong>，组成卷积核的每个元素都对应一个权重系数和一个偏差量（bias vector）。卷积核就是图像处理时，给定输入图像，输入图像中一个小区域中像素加权平均后成为输出图像中的每个对应像素，其中权值由一个函数定义，这个函数称为卷积核。</p></li>
+<li><p><strong>激励函数</strong>：卷积层中包含激励函数以协助表达复杂特征，卷积神经网络通常使用线性整流函数<code>Rectified Linear Unit, ReLU</code>,它的作用就是对于上一层经过卷积后的数据经过<code>relu</code>的<code>max(0,x)</code>筛选</p></li>
+<li><strong>池化层</strong>：在卷积层进行特征提取后，为避免特征量太多计算缓慢，对其进行特征值压缩，输出的特征图会被传递至池化层进行特征选择和信息过滤。池化层包含预设定的池化函数，其功能是将特征图中单个点的结果替换为其相邻区域的特征图统计量。</li>
+<li><p><strong>全连接层</strong>：卷积神经网络中的卷积层和池化层能够对输入数据进行特征提取，<strong>全连接层的作用则是对提取的特征进行非线性组合以得到输出，即全连接层本身不被期望具有特征提取能力</strong>，而是试图利用现有的高阶特征完成学习目标 <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/car.png" width="500"></p></li>
+</ul></li>
+</ul>
+<h4 id="机器学习">2. 机器学习</h4>
+<p>当我们用机器学习来解决实际任务时，会面对多种多样的数据形式，比如声音、图像、文本等．不同数据的特征构造方式差异很大．对于图像这类数据，我们可以很自然地将其表示为一个连续的向量． 将图像数据表示为向量的方法有很多种，比如直接将一幅图像的所有像素值（灰度值或RGB 值）组成一个连续向量．而对于文本数据，因为其一般由离散符号组成，并且每个符号在计算机内部都表示为无意义的编码，所以通常很难找到合适的表示方式．因此，在实际任务中使用机器学习模型一般会包含以下几个步骤</p>
+<ul>
+<li><strong>（1）数据预处理</strong>：对数据的原始形式进行初步的数据清理（比如去掉一些有缺失特征的样本，或去掉一些冗余的数据特征等）和加工（对数值特征进行缩放和归一化等），并构建成可用于训练机器学习模型的数据集．</li>
+<li><strong>（2）特征提取</strong>：从数据的原始特征中提取一些对特定机器学习任务有用的高质量特征．比如在图像分类中提取边缘、尺度不变特征变换（Scale InvariantFeature Transform，SIFT）特征，在文本分类中去除停用词等．</li>
+<li><strong>（3）特征转换</strong>：对特征进行进一步的加工，比如降维和升维． 很多特征转换方法也都是机器学习方法．降维包括特征抽取（Feature Extraction）和特征选择（Feature Selection）两种途径．常用的特征转换方法有主成分分析（Principal Components Analysis，PCA）、 线性判别分析（Linear Discriminant Analysis，LDA）等．</li>
+<li><strong>（4）预测</strong>：机器学习的核心部分，学习一个函数并进行预测 <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/MLprocedrue.png" width="500"></li>
+</ul>
+<p>上述流程中，每步特征处理以及预测一般都是分开进行的．<strong>传统的机器学习模型主要关注最后一步，即构建预测函数．但是实际操作过程中，不同预测模型的性能相差不多</strong>，<strong><em>而前三步中的特征处理对最终系统的准确性有着十分关键的作用．特征处理一般都需要人工干预完成，利用人类的经验来选取好的特征，并最终提高机器学习系统的性能．因此，很多的机器学习问题变成了特征工程（Feature Engineering）问题．开发一个机器学习系统的主要工作量都消耗在了预处理、特征提取以及特征转换上</em></strong>． <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/pro.png" width="500"></p>
+<h5 id="机器学习类型">2.1 机器学习类型</h5>
+<p>常见的机器学习有监督学习、无监督学习和强化学习。</p>
+<ul>
+<li>监督学习：训练集有标签，学习准则为期望风险最小化，进行最大似然估计</li>
+<li>无监督学习：训练集没有标签，学习准则为最大似然估计和最小重构错误</li>
+<li>强化学习：智能体和环境交互的规矩t和累积奖励G，学习准则中会使用策略评估和改进。</li>
+</ul>
+<p>总的来说学习的分类有，有监督主要是回归、分类问题；无监督学习问题主要为聚类、降维和密度估计</p>
+<h5 id="机器学习要素">2.2 机器学习要素</h5>
+<p>机器学习的主要四要素是数据、模型、学习准则和优化算法。</p>
+<h6 id="模型">2.2.1 模型</h6>
+<ul>
+<li>模型：以回归问题为例，输入空间<span class="math inline">\(X\)</span>和输出空间<span class="math inline">\(Y\)</span>构成了一个样本空间．对于样本空间中的样本<span class="math inline">\((x, y) ∈ X × Y\)</span>，假定x和y 之间的关系可以通过一个未知的真实映射函数<span class="math inline">\(y =g(x)\)</span>或真实条件概率分布<span class="math inline">\(P_r(y|x)\)</span>来描述．机器学习的目标是找到一个模型来近 似真实映射函数<span class="math inline">\(g(x)\)</span>或真实条件概率分布<span class="math inline">\(p_r(y|x)\)</span>．</li>
+</ul>
+<h6 id="学习准则">2.2.2 学习准则</h6>
+<ul>
+<li>学习准则：这里使用了损失函数，损失函数是一个非负实数函数，用来量化模型预测和真实标签之间的差异．下面介绍几种常用的损失函数：
+<ul>
+<li><strong>平方损失函数</strong>：平方损失函数（Quadratic Loss Function）经常用在预测标签<span class="math inline">\(y\)</span>为实数值的任务中，定义为 <span class="math display">\[L(y,f(x;θ))={1 \over 2}(y-f(x;θ))^2\]</span></li>
+<li><strong>交叉熵损失函数</strong>：交叉熵损失函数（Cross-Entropy Loss Function）一般用于分类问题．假设样本的标签 <span class="math inline">\(y ∈ {1, ⋯ , C}\)</span> 为离散的类别，模型<span class="math inline">\(f(x; θ) ∈ [0, 1]^C\)</span>的输出为类别标签的条件概率分布。如下：比如对于三分类问题，一个样本的标签向量为 <span class="math inline">\(y = [0, 0, 1]^T\)</span>，模型预测的标签分布为 <span class="math inline">\(f(x; θ) = [0.3, 0.3, 0.4]^T\)</span>，则它们的交叉熵为 <span class="math display">\[ L(y,f(x;θ))=−(0 × log(0.3) + 0 ×log(0.3) + 1 × log(0.4)) = − log(0.4)\]</span></li>
+<li><strong>Hinge损失函数</strong>：对于二分类问题，假设<span class="math inline">\(y∈{−1, +1}，f(x; θ)∈ℝ\)</span>，Hinge损失函数（Hinge Loss Function）为： <span class="math display">\[L(y,f(x;θ))=max(0,1-yf(x;θ))\]</span></li>
+</ul></li>
+</ul>
+<h6 id="风险最小化准则">2.2.3 风险最小化准则</h6>
+<p>一个好的模型 <span class="math inline">\(f(x;θ)\)</span>应当有一个比较小的期望错误，但由于不知道真实的数据分布和映射函数，实际上无法计算其期望风险 ℛ(θ)．给定一个训练集 <span class="math inline">\(D ={(x^{(n)}, y^{(n)})}_{n=1}^N\)</span>，我们可以计算的是<strong>经验风险（Empirical Risk）</strong>，即在训练集上的<strong>平均损失</strong>: <span class="math display">\[R_D^{emp}(θ)={1\over N} \sum_{n=1}^NL(y^{(n)},f(x^{(n)};θ))\]</span></p>
+<p>因此，一个切实可行的学习准则是找到一组参数<span class="math inline">\(θ^*\)</span> 使得经验风险最小，即: <span class="math display">\[θ^*=argminR_D^{emp}(θ)\]</span> 这就是经验风险最小化（Empirical Risk Minimization，ERM）准则</p>
+<p><strong>过拟合</strong>：</p>
+<p>根据大数定理可知，当训练集大小 |𝒟| 趋向于无穷大时，经验风险就趋于期望风险。然而通常情况下，我们无法获取无限的训练样本，并且训练样本往往是真实数据的一个很小的子集或者包含一定的噪声数据，不能很好地反映全部数据的真实分布．<strong>经验风险最小化原则很容易导致模型在训练集上错误率很低，但是在未知数据上错误率很高．这就是所谓的过拟合（Overfitting）</strong></p>
+<p><strong>过拟合问题往往是由于训练数据少和噪声以及模型能力强等原因造成的</strong>．为了解决过拟合问题，一般在经验风险最小化的基础上再引入<strong>参数的正则化（Regularization）来限制模型能力</strong>，使其不要过度地最小化经验风险。这种准则就是<strong>结构风险最小化（Structure Risk Minimization，SRM）准则</strong>： <span class="math display">\[θ^*=argminR_D^{struct}(θ)=argminR_D^{emp}(θ)+{1\over 2}λ||θ||^2\]</span> 其中<span class="math inline">\(‖θ‖\)</span>是<span class="math inline">\(ℓ2\)</span> 范数的正则化项，用来减少参数空间，避免过拟合；<span class="math inline">\(λ\)</span>用来控制正则化的强度．正则化项也可使用其他函数，比如$ ℓ1<span class="math inline">\(范数．\)</span>ℓ1 $范数的引入通常会使得参数有一定稀疏性，因此在很多算法中也经常使用． 从贝叶斯学习的角度来讲，正则化是引入了参数的先验分布，使其不完全依赖训练数据 <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/overAndlack.png" width="400"></p>
+<p><strong><em>注</em></strong>：所有损害优化的方法都可称为正则化</p>
+<h6 id="最优化">2.2.4 最优化</h6>
+<p>在确定了训练集<span class="math inline">\(X\)</span>、假设空间<span class="math inline">\(ℱ\)</span>以及学习准则后，如何找到最优的模型<span class="math inline">\(f(x, θ^∗)\)</span> 就成了一个最优化（Optimization）问题．机器学习的训练过程其实就是最优化问题的求解过程。</p>
+<p>参数与超参数 在机器学习中，优化又可以分为<strong>参数优化和超参数优化</strong>．模型<span class="math inline">\(f(x; θ)\)</span>中的<span class="math inline">\(θ\)</span>称为模型的参数，可以通过优化算法进行学习．除了可学习的参数<span class="math inline">\(θ\)</span>之外，<strong>还有一类参数是用来定义模型结构或优化策略的，这类参数叫作超参数(Hyper-Parameter）</strong></p>
+<p>常见的超参数包括：<strong>聚类算法中的类别个数、梯度下降法中的步长、正则化项的系数、神经网络的层数、支持向量机中的核函数等</strong>．<em><u>超参数的选取一般都是组合优化问题，很难通过优化算法来自动学习．因此，超参数优化是机器学习的一个经验性很强的技术，通常是按照人的经验设定，或者通过搜索的方法对一组超参数组合进行不断试错调整</u>．</em></p>
+<ul>
+<li><strong>优化算法：</strong>
+<ul>
+<li><p><strong>梯度下降法</strong>：为了充分利用凸优化中一些高效、成熟的优化方法，比如共轭梯度、拟牛顿法等，很多机器学习方法都倾向于选择合适的模型和损失函数，以构造一个凸函数作为优化目标．但也有很多模型（比如神经网络）的优化目标是非凸的，只能退而求其次找到局部最优解。在机器学习中，<strong>最简单、常用的优化算法就是梯度下降法</strong>，即首先初始化参数<span class="math inline">\(θ_0\)</span>，然后按下面的迭代公式来计算训练集<span class="math inline">\(D\)</span>上风险函数的最小值: <span class="math display">\[θ_{t+1}=θ_t-α{δR_D(θ)\over δθ}=θ_t-α{1\over N}\sum{_{n=1}^N}{δL(y^{(n)},f(x^{(n)};θ)\over δθ}\]</span> 其中<span class="math inline">\(θ_t\)</span>为第<span class="math inline">\(t\)</span>次迭代时的参数值，<span class="math inline">\(α\)</span>为搜索步长．在机器学习中，<span class="math inline">\(α\)</span>一般称为学习率（Learning Rate）</p></li>
+<li><p><strong>提前停止</strong>：针对梯度下降的优化算法，<strong>除了加正则化项之外，还可以通过提前停止来防止过拟合</strong>．在梯度下降训练的过程中，由于过拟合的原因，在训练样本上收敛的参数，并不一定在测试集上最优．因此，除了训练集和测试集之外，有时也会使用一个验证集（Validation Set）来进行模型选择，测试模型在验证集上是否最优. 在每次迭代时，把新得到的模型 <span class="math inline">\(f(x; θ)\)</span> 在验证集上进行测试，并计算错误率．如果在验证集上的错误率不再下降，就停止迭代．这种策略叫提前停止（EarlyStop）．如果没有验证集，可以在训练集上划分出一个小比例的子集作为验证集 <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/EarlyStop.png" width="400"></p></li>
+<li><p><strong>随机梯度下降法</strong>：上面的<strong>梯度下降法</strong>的目标函数是整个训练集上的风险函数，批量梯度下降法在每次迭代时需要计算每个样本上损失函数的梯度并求和．当训练集中的样本数量<span class="math inline">\(N\)</span>很大时，空间复杂度比较高，每次迭代的计算开销也很大。<strong>批量梯度下降法相当于是从真实数据分布中采集<span class="math inline">\(N\)</span>个样本</strong>，并由它们计算出来的经验风险的梯度来近似期望风险的梯度．为了减少每次迭代的计算复杂度，我们也可以在每次迭代时只采集一个样本，计算这个样本损失函数的梯度并更新参数，即<strong>随机梯度下降法（Stochastic Gradient Descent，SGD</strong>）．当经过足够次数的迭代时，随机梯度下降 作增量梯度下降法．也可以收敛到局部最优解[Nemirovski et al., 2009] <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/random.png" width="400"></p></li>
+</ul>
+<p>批量梯度下降和随机梯度下降之间的区别在于，每次迭代的优化目标是对所有样本的平均损失函数还是对单个样 本的损失函数．由于随机梯度下降实现简单，收敛速度也非常快，因此使用非常广泛．随机梯度下降相当于在批 量梯度下降的梯度上引入了随机噪声．在非凸优化问题中，随机梯度下降更容易逃离局部最优点．</p>
+<ul>
+<li><strong>小批量梯度下降法</strong>：随机梯度下降法的一个缺点是无法充分利用计算机的并行计算能力．小批量梯度下降法（Mini-Batch Gradient Descent）是批量梯度下降和随机梯度下降的折中．每次迭代时，我们随机选取一小部分训练样本来计算梯度并更新参数，这样既可以兼顾随机梯度下降法的优点，也可以提高训练效率： <span class="math display">\[θ_{t+1}←θ_t-α{1\over k}\sum_{(x,y)∈δ_t}{δL(y,f(x;θ))\over δθ}\]</span></li>
+</ul></li>
+</ul>
+<h5 id="线性回归">2.3 线性回归</h5>
+<p>本节通过一个简单的模型（线性回归）来具体了解机器学习的一般过程，以及不同学习准则（经验风险最小化、结构风险最小化、最大似然估计、最大后验估计）之间的关系．线性回归（Linear Regression）是机器学习和统计学中最基础和最广泛应用的模型，是一种对自变量和因变量之间关系进行建模的回归分析．自变量数量为1时称为简单回归，自变量数量大于1时称为多元回归。如下： <span class="math display">\[f(x;w,b)=w^Tx+b\]</span> 其中权重向量<span class="math inline">\(w∈ ℝ^D\)</span> 和偏置<span class="math inline">\(b∈ ℝ\)</span>都是可学习的参数，<span class="math inline">\(f(x;w,b)=w^Tx+b\)</span>即为线性模型</p>
+<h6 id="参数学习">2.3.1 参数学习</h6>
+<p>给定一组包含 𝑁 个训练样本的训练集 <span class="math inline">\(D = {(x^{(n)}, y{(n)})}_{n=1}^N=1\)</span>，我们希望能够学习一个最优的线性回归的模型参数<span class="math inline">\(w\)</span>．我们介绍四种不同的参数估计方法：经验风险最小化、结构风险最小化、最大似然估计、最大后验估计．</p>
+<h5 id="经验风险最小化">2.4 经验风险最小化</h5>
+<p>由于线性回归的标签𝑦和模型输出都为连续的实数值，因此平方损失函数非常合适衡量真实标签和预测标签之间的差异．根据经验风险最小化准则，训练集<span class="math inline">\(w\)</span>上的经验风险定义 <span class="math display">\[R(w)=\sum_{n=1}^NL(y^{(n)},f(x^{(n)};w)\\
+={1\over 2}\sum_{n=1}^N(y^{(n)}-w^Tx^{(n)})^2 \\
+={1\over 2}||y-X^Tw||^2
+\]</span></p>
+<p>风险函数<span class="math inline">\(ℛ(w)\)</span>是关于𝒘的凸函数，其对<span class="math inline">\(w\)</span>的偏导数为: <span class="math display">\[
+{δR(w)\over δw}={1\over 2}{δ||y-X^Tw||^2\over δw}\\
+=-X(y-X^Tw)
+\]</span> 令其等于0，则可得<span class="math inline">\(w^*=(XX^T)^{(-1)}Xy\)</span> 上述求解线性回归参数的方法为<strong>最小二乘法</strong>。在最小二乘法，<span class="math inline">\(XX^T∈R^{(D+1)×(D+1)}\)</span>必须存在逆矩阵。</p>
+<h5 id="结构风险最小化">2.5 结构风险最小化</h5>
+<p>最小二乘法的基本要求是各个特征之间相互独立，保证<span class="math inline">\(XX^T\)</span>可逆，且即使可逆，如果特征值之间有较大的多重共线性，也会使得<span class="math inline">\(XX^T\)</span>在的逆在数值上无法准确计算。<strong>因此此时给<span class="math inline">\(XX^T\)</span>的对角线加上一个常数<span class="math inline">\(λ\)</span>，使其满秩</strong> <span class="math display">\[R(w)={1\over 2}||y-X^Tw||^2+{1\over 2}λ||w||\]</span></p>
+<h5 id="最大似然估计">2.6 最大似然估计</h5>
+<p>一类是样本的特征向量<span class="math inline">\(x\)</span>和标签<span class="math inline">\(y\)</span> 之间存在未知的函数关系 <span class="math inline">\(y = ℎ(x)\)</span>，另一类是条件概率$ p(y|x)$ 服从某个未知分布．最小二乘法是属于第一类，直接建模 <span class="math inline">\(x\)</span> 和标签 <span class="math inline">\(y\)</span> 之间的函数关系．此外，线性回归还可以从建模条件概率<span class="math inline">\(p(y|x)\)</span>的角度来进行参数估计。</p>
+<p>假设标签<span class="math inline">\(y\)</span>为一个随机变量，并由函数<span class="math inline">\(f(x; w) = w^Tx\)</span> 加上一个随机噪声<span class="math inline">\(ε\)</span>决定，即<span class="math inline">\(f(x; w) = w^Tx+ε\)</span> 其中<span class="math inline">\(ε\)</span>服从均值为0，方差为<span class="math inline">\(δ^2\)</span>的高斯分布，则<span class="math inline">\(y\)</span>服从均值为<span class="math inline">\(w^Tx\)</span>,方差为<span class="math inline">\(δ^2\)</span>的高斯分布： <span class="math display">\[
+p(y|x;w,δ)={1\over \sqrt{2\piδ}}exp(-{(y-w^Tx)^2\over2δ^2})
+\]</span></p>
+<p>接下来计算<span class="math inline">\(w\)</span>在训练集上的似然函数，后对似然函数取对数方便计算，令其导等于0，求出解得: <span class="math display">\[w^{ML}=(XX^T)^{-1}Xy\]</span></p>
+<h5 id="最大后验估计">2.7 最大后验估计</h5>
+<p><strong>最大似然估计的一个缺点是当训练数据比较少时会发生过拟合，估计的参数可能不准确．为了避免过拟合，我们可以给参数加上一些先验知识</strong>．略，详看书</p>
+<h5 id="偏差-方差分解">2.8 偏差-方差分解</h5>
+<p>为了避免过拟合，我们经常会在模型的拟合能力和复杂度之间进行权衡．拟合能力强的模型一般复杂度会比较高，容易导致过拟合．相反，如果限制模型的复杂度，降低其拟合能力，又可能会导致欠拟合．因此，如何在模型的拟合能力和复杂度之间取得一个较好的平衡，对一个机器学习算法来讲十分重要．<strong>偏差-方差分解（Bias-Variance Decomposition）为我们提供了一个很好的分析和指导工具．</strong></p>
+<h5 id="机器学习算法类型">2.9 机器学习算法类型</h5>
+<p>机器学习算法可以按照不同的标准来进行分类．比如按函数<span class="math inline">\(f(y; θ)\)</span>的不同，机器学习算法可以分为<strong>线性模型和非线性模型</strong>；按照学习准则的不同，机器学习算法也可以分为<strong>统计方法和非统计方法</strong>．</p>
+<p>但一般来说，我们会<strong>按照训练样本提供的信息以及反馈方式的不同</strong>，将机器学习算法分为以下几类：</p>
+<ul>
+<li><strong>监督学习</strong>：如果机器学习的目标是建模样本的特征<span class="math inline">\(x\)</span>和标签<span class="math inline">\(y\)</span>之间的关系：<span class="math inline">\(y =f(x; θ)\)</span>或<span class="math inline">\(p(y|x; θ)\)</span>，并且训练集中每个样本都有标签，那么这类机器学习称为监督学习（Supervised Learning）.根据标签类型的不同，监督学习又可以分为<strong>回归问题、分类问题和结构化学习问题</strong>．
+<ul>
+<li>回归（Regression）问题中的标签<span class="math inline">\(y\)</span>是连续值（实数或连续整数），f(x; θ)$的输出也是连续值．</li>
+<li><strong>分类（Classification）问题</strong>中的标签<span class="math inline">\(y\)</span>是离散的类别（符号）．在分类问题中，学习到的模型也称为分类器（Classifier）。分类问题根据其类别数量又可分为二分类（Binary Classification）和多分类（Multi-class Classification）问题．</li>
+<li>结构化学习（Structured Learning）问题是一种特殊的分类问题．在结构化学习中，标签𝒚通常是结构化的对象，比如序列、树或图等．由于结构化学习的输出空间比较大，因此我们一般定义一个联合特征空间，将<span class="math inline">\(x, y\)</span>映射为该空间中的联合特征向量<span class="math inline">\(\phi(x, y)\)</span>，预测模型可以写为: <span class="math display">\[y=arg max f(\phi(x,y);θ)\]</span> 计算<span class="math inline">\(argmax\)</span>s得过程也称为解码Decoding过程</li>
+</ul></li>
+<li><p><strong>无监督学习</strong>：无监督学习（Unsupervised Learning，UL）是指从不包含目标标签的训练样本中自动学习到一些有价值的信息．典型的无监督学习问题有聚类、密度估计、特征学习、降维等．</p></li>
+<li><p><strong>强化学习</strong>：强化学习（Reinforcement Learning，RL）是一类通过交互来学习的机器学习算法．在强化学习中，智能体根据环境的状态做出一个动作，并得到即时或延时的奖励．智能体在和环境的交互中不断学习并调整策略，以取得最大化的期望总回报</p></li>
+</ul>
+<h4 id="线性模型">3. 线性模型</h4>
+<p>线性模型（Linear Model）是机器学习中应用最广泛的模型，指通过样本特征的线性组合来进行预测的模型。本节我们主要介绍四种不同线性分类模型：<strong>Logistic回归、Softmax回归、感知器和支持向量机</strong>，这些模型的区别主要在于使用了不同的损失函数</p>
+<h5 id="线性判别函数和决策边界">3.1 线性判别函数和决策边界</h5>
+<p>一个线性分类模型（Linear Classification Model）或线性分类器（Linear Classifier），是由一个（或多个）线性的判别函数<span class="math inline">\(f(x; w) =w^T + b\)</span> 和非线性的决策函数<span class="math inline">\(g(⋅)\)</span>组成．我们首先考虑二分类的情况，然后再扩展到多分类的情况．</p>
+<h6 id="二分类">3.1.1 二分类</h6>
+<p>二分类问题是最简单得，其类别标签只有两个值，通常设为<span class="math inline">\({+1,-1}\)</span>。因此只需要一个线性判别函数<span class="math inline">\(f(x; w) =w^T + b\)</span>。在特征空间<span class="math inline">\(R^D\)</span>中所有满足<span class="math inline">\(f(x;w)=0\)</span>得点组成一个<strong>分割超平面</strong>，也称为决策边界或决策平面，它将特征空间一分为二，两个区域各对应一个类边。特征空间中样本点到决策平面得距离为： <span class="math display">\[
+\gamma={f(x;w)\over||w||}
+\]</span> <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/binaryclassfier.png" width="300"></p>
+<h6 id="多分类">3.1.2 多分类</h6>
+<p>多分类（Multi-class Classification）问题是指分类的类别数<span class="math inline">\(C\)</span>大于 2．多分类一般需要多个线性判别函数，但设计这些判别函数有很多种方式。一个多分类问题常用以下三种：</p>
+<ul>
+<li><strong>一对其余方式</strong>：把多分类问题转换为 C个“一对其余”的二分类问题．这种方式共需要<span class="math inline">\(C\)</span>个判别函数，其中第c个判别函数<span class="math inline">\(f_c\)</span> 是将类别c的样本和不属于类别c的样本分开</li>
+<li><strong>“一对一”方式</strong>：把多分类问题转换为 <span class="math inline">\(C(C − 1)/2\)</span>个“一对一”的二分类问题．这种方式共需要<span class="math inline">\(C(C − 1)/2\)</span>个判别函数，其中第<span class="math inline">\((i, j)\)</span>个判别函数是把类别i和类别j的样本分开</li>
+<li><strong>“argmax”方式</strong>：这是一种改进的“一对其余”方式，共需要<span class="math inline">\(C\)</span>个判别函数: <span class="math display">\[
+f_C(x;w_c)=w^T_cx+b_C
+\]</span> 表示对于样本<span class="math inline">\(x\)</span>，如果存在一个类边<span class="math inline">\(c\)</span>，相对于所有其他类边<span class="math inline">\(\tilde{c}(\tilde{c}≠c)\)</span>有<span class="math inline">\(f_c(x;w_c)&gt;f_{\tilde{c}(x,w_{\tilde{c}})}\)</span>。那么<span class="math inline">\(x\)</span>属于类边<span class="math inline">\(c\)</span></li>
+</ul>
+<p>上述得三种分类判别函数中前两个都有缺陷，那就是会存在一些难以区分得区域，二<strong>argmax</strong>方式很好得解决了这个问题</p>
+<h5 id="logistic回归">3.2 Logistic回归</h5>
+<p>Logistic 回归（Logistic Regression，LR）是一种常用的处理二分类问题的线性模型．在本节中，我们采用<span class="math inline">\(y ∈ [0, 1]\)</span>以符合Logistic回归的描述习惯。为解决连续线性函数不适合分类问题，引入非线性函数g来预测后验概率<span class="math inline">\(p(y=1|x)\)</span>: <span class="math display">\[
+p(y=1|x)=g(f(x;w))
+\]</span> 上面<span class="math inline">\(g\)</span>也被称为<strong>激活函数</strong>，它得作业其实就是将通过<span class="math inline">\(f(x;w)\)</span>得出得值进行(0,1)间的压缩，使其成为概率。反函数<span class="math inline">\(g^{-1}\)</span>称为<strong>联系函数</strong>。</p>
+<p>因此使用LR作为激活函数时，相应的后验概率为（为简单起见，<span class="math inline">\(w\)</span>和<span class="math inline">\(x\)</span>均为增广矩阵）： <span class="math display">\[
+p(y=1|x)={1\over 1+exp(-w^Tx)}；
+p(y=0|x)=1-p(y=1|x)
+\]</span> <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/logistic.png" width="300"></p>
+<h6 id="参数学习-1">3.2.1 参数学习</h6>
+<p>Logistic 回归采用交叉熵作为损失函数，并使用梯度下降法来对参数进行优化．</p>
+<p>给定<span class="math inline">\(N\)</span>个训练样本<span class="math inline">\((x^{(n)},y^{(n)})_{n=1}^N\)</span>，使用LR回归模型对每个样本进行预测，输出其标签为1的后验概率，<strong>记为<span class="math inline">\(\tilde{y}^{(n)}\)</span></strong>。则交叉熵损失函数后，其风险函数为： <span class="math display">\[
+R(w)={-1\over N}\sum_{n=1}^N(p_r(y^{(n)}=1|x^{(n)}))log\tilde{y}^{(n)}+p_r(y^{(n)}=0|x^{(n)}))log(1-\tilde{y}^{(n)}))\\
+={-1\over N}\sum_{n=1}^N(y^{(n)}log\tilde{y}^{(n)}+(1-y^{(n)})log(1-\tilde{y}^{(n)}))   \qquad式3.2.1
+\]</span></p>
+<p>然后对其进行求导的<span class="math inline">\({δR(w)\over δw}=-{1\over N}\sum x^{(n)}(y^{(n)}-\tilde{y}^{(n)})\)</span>。然后使用梯度下降法进行迭代更新进行优化： <span class="math display">\[
+w_{t+1}=w_t+α{δR(w)\over δw}
+\]</span></p>
+<p>由式子<span class="math inline">\(3.2.1\)</span>可知，其风险函数是关于参数<span class="math inline">\(w\)</span>连续可导的凸函数，因此除了使用梯度下降，LR回归还可以用高阶的优化方法，如牛顿法。</p>
+<h5 id="softmax回归">3.3 softmax回归</h5>
+<p>Softmax 回归（Softmax Regression），也称为多项（Multinomial）或多类（Multi-Class）的Logistic回归，<strong>是Logistic回归在多分类问题上的推广</strong>。对于多类问题，类别标签<span class="math inline">\(y∈ {1, 2, ⋯ , C}\)</span>可以有<span class="math inline">\(C\)</span> 个取值．给定一个样本<span class="math inline">\(x\)</span>，Softmax回归预测的属于类别<span class="math inline">\(c\)</span>的条件概率为: <span class="math display">\[
+\tilde{y}=p(y=c|x)=softmax(w^T_cx)\\
+={exp(w_c^Tx)\over \sum ^C_{\tilde{c}=1}exp(w^T_\tilde{c}x)}
+\]</span></p>
+<p><strong>其决策函数为：</strong> <span class="math display">\[
+\{y=[I(C=c]\}=arg max_{c=1}^C p(y=c|x)
+\]</span></p>
+<h6 id="参数学习-2">3.3.1 参数学习</h6>
+<p>给定<span class="math inline">\(N\)</span>个训练样本<span class="math inline">\({(x^{(n)}, y^{(n)})}_{n=1}^N\)</span>，<strong>Softmax回归使用交叉熵损失函数来学习最优的参数矩阵<span class="math inline">\(W\)</span></strong>．为了方便起见，我们用<span class="math inline">\(C\)</span>维的one-hot向量<span class="math inline">\(y ∈(0, 1)^c\)</span> 来表示类别标签．对于类别<span class="math inline">\(C\)</span>，其向量表示为: <span class="math display">\[
+y=[I(1=c),I(2=c),...,I(C=c)]
+\]</span></p>
+<p>采用交叉熵损失函数时，softmax的风险函数为： <span class="math display">\[
+R(w)=-{1\over N}\sum_{n=1}^N\sum_{c=1}^C y_c^{(n)}log\tilde{y}_c^{(n)} \\
+=-{1\over N}\sum_{n=1}^N (y^{(n)})^Tlog\tilde{y}^{(n)}
+\]</span></p>
+<p>利用梯度下降法，对其求导可得梯度： <span class="math display">\[
+{δR(W)\over δW}=-{1\over N}\sum_{n=1}^N x^{(n)}(y^{(n)}-\tilde{y}^{(n)})^T
+\]</span> 然后进行迭代更新： <span class="math display">\[
+w_{t+1}=w_t+α{δR(w)\over δw}
+\]</span></p>
+<h4 id="深度学习简述">4.深度学习简述</h4>
+<p>为了学习一种好的表示，需要构建具有一定“深度”的模型，并通过学习算法来让模型自动学习出好的特征表示（从底层特征，到中层特征，再到高层特征），从而最终提升预测模型的准确率．<strong>所谓“深度”是指原始数据进行非线性特征转换的次数</strong> <img src="/2022/09/12/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/DL.png" width="500"></p>
+<p>深度学习是将原始的数据特征通过多步的特征转换得到一种特征表示，并进一步输入到预测函数得到最终结果．和“浅层学习”不同，<strong>深度学习需要解决的关键问题是贡献度分配问题（Credit Assignment Problem，CAP）[Minsky,1961]</strong>，即一个系统中不同的组件（component）或其参数对最终系统输出结果的贡献或影响.从某种意义上讲，深度学习可以看作一种强化学习（Reinforcement Learning，RL），每个内部组件并不能直接得到监督信息，需要通过整个模型的最终监督信息（奖励）得到，并且有一定的延时性</p>
+<p><strong>深度学习采用的模型主要是神经网络模型，其主要原因是神经网络模型可以使用误差反向传播算法，从而可以比较好地解决贡献度分配问题</strong>．</p>
+<h5 id="表示学习">4.1 表示学习</h5>
+<p>为了提高机器学习系统的准确率，我们就需要将输入信息转换为有效的特 征，或者更一般性地称为表示（Representation）。如果有一种算法可以自动地学习出有效的特征，并提高最终机器学习模型的性能，那么这种学习就可以叫作<strong>表示学习</strong>。</p>
+<p>表示学习的关键是解决<strong>语义鸿沟（Semantic Gap）问题</strong>．语义鸿沟问题是指输入数据的底层特征和高层语义信息之间的不一致性和差异性．比如给定一些关于“车”的图片，由于图片中每辆车的颜色和形状等属性都不尽相同，因此不同图片在像素级别上的表示（即底层特征）差异性也会非常大．但是我们理解这些图片是建立在比较抽象的高层语义概念上的．如果一个预测模型直接建立在底层特征之上，会导致对预测模型的能力要求过高．如果可以有一个好的表示在某种程度上能够反映出数据的高层语义特征，那么我们就能相对容易地构建后续的机器学习模型</p>
+<h6 id="局部和分布式表示">4.1.1 局部和分布式表示</h6>
+<p>在机器学习中，我们经常使用两种方式来表示特征：<strong>局部表示（Local Representation）和分布式表示（Distributed Representation）．</strong></p>
+<ul>
+<li><strong>局部表示</strong>：离散表示，one-Hot向量，单一值表示一个东西。
+<ul>
+<li><strong>优点：</strong>
+<ul>
+<li>这种离散的表示方式具有很好的解释性，有利于人工归纳和总结特征，并通过特征组合进行高效的特征工程</li>
+<li>通过多种特征组合得到的表示向量通常是稀疏的二值向量，当用于线性模型时计算效率非常高</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>one-hot向量的维数很高，且不能扩展．如果有一种新的颜色，我们就需要增加一维来表示</li>
+<li>不同颜色之间的相似度都为0，即我们无法知道“红色”和“中国红”的相似度要高于“红色”和“黑色”的相似度</li>
+</ul></li>
+</ul></li>
+<li><strong>分布式表示</strong>：压缩、低维的稠密向量，使用多个值表示一个东西，如表示颜色的方法是用RGB值来表示颜色，不同颜色对应到R、G、B三维空间中一个点，这种表示方式叫作分布式表示
+<ul>
+<li>分布式表示的表示能力要强很多，分布式表示的向量维度一般都比较低．我们只需要用一个三维的稠密向量就可以表示所有颜色．并且，分布式表示也很容易表示新的颜色名．此外，不同颜色之间的相似度也很容易计算</li>
+</ul></li>
+</ul>
+<h5 id="端到端学习">4.2 端到端学习</h5>
+<p><strong>端到端学习（End-to-End Learning），也称端到端训练，是指在学习过程中不进行分模块或分阶段训练，直接优化任务的总体目标</strong>．在端到端学习中，一般不需要明确地给出不同模块或阶段的功能，中间过程不需要人为干预．端到端学习的训练数据为“输入-输出”对的形式，无须提供其他额外信息．因此，端到端学习和深度学习一样，都是要解决贡献度分配问题．目前，大部分采用神经网络模型的深度学习也可以看作一种端到端的学习</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" class="post-title-link" itemprop="url">计算机视觉课程笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-09 20:14:55" itemprop="dateCreated datePublished" datetime="2022-09-09T20:14:55+08:00">2022-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-12 22:37:58" itemprop="dateModified" datetime="2022-09-12T22:37:58+08:00">2022-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" itemprop="url" rel="index"><span itemprop="name">计算机视觉</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/09/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>222</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="深度学习cnn卷积神经网络算法精讲">1. 深度学习CNN卷积神经网络算法精讲</h4>
+<h5 id="cnn与transformer的不同点">1.1 CNN与Transformer的不同点</h5>
+<ul>
+<li>要明白CNN就是对图像提取特征，提取不是一次性提取，而是多次，由局部向全局做特征。</li>
+<li>Transformer则与CNN不同，直接全局考提取特征，这就避免了多次提取特征。</li>
+</ul>
+<h4 id="ai当下最火模块注意力机制解读">2. AI当下最火模块注意力机制解读</h4>
+<h4 id="视觉领域transformer应用实例">3. 视觉领域transformer应用实例</h4>
+<p>Transformer则与CNN不同，直接全局考提取特征，这就避免了多次提取特征。</p>
+<h5 id="应用">3.1 应用</h5>
+<h4 id="视觉当下最新研究方向与进展">4. 视觉当下最新研究方向与进展</h4>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/08/%E7%A0%94%E7%A9%B6%E7%94%9F%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2151,337 +2585,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">算法题解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-30 21:30:13" itemprop="dateCreated datePublished" datetime="2022-07-30T21:30:13+08:00">2022-07-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-21 10:31:03" itemprop="dateModified" datetime="2022-09-21T10:31:03+08:00">2022-09-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="动态规划类">1. 动态规划类</h4>
-<h5 id="打家劫舍">1.1 打家劫舍</h5>
-<p><strong>问题：</strong>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
-<p>给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">rob</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//dp[i]：表示第i家房屋结尾的最多能偷窃到的最高数额</span></span><br><span class="line">        <span class="comment">//初始条件：dp[0]=nums[0]、dp[1]=nums[1]</span></span><br><span class="line">        <span class="comment">//因为对邻接房屋偷窃，则dp[i]=max(dp[x])+nums[i]，0≤x&lt;i-1</span></span><br><span class="line">        <span class="comment">//这样的算法复杂度为O(N*N)，可以通过两个变量，使得算法降为O(N)</span></span><br><span class="line">        <span class="comment">//变量maxOdd表示奇次序的最大值，maxEven表示偶次序的最大值</span></span><br><span class="line">        <span class="keyword">if</span>(nums.<span class="built_in">size</span>()==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums.<span class="built_in">size</span>()==<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">        <span class="type">int</span> len=nums.<span class="built_in">size</span>();</span><br><span class="line">        <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(len)</span></span>;</span><br><span class="line">        <span class="comment">//初始条件</span></span><br><span class="line">        dp[<span class="number">0</span>]=nums[<span class="number">0</span>];</span><br><span class="line">        dp[<span class="number">1</span>]=nums[<span class="number">1</span>];</span><br><span class="line">        <span class="comment">//maxOdd初始为dp[1]，maxEven初始为dp[0]</span></span><br><span class="line">        <span class="type">int</span> maxOdd=dp[<span class="number">1</span>],maxEven=dp[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;len;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="number">0</span>==i%<span class="number">2</span>)      <span class="comment">//为偶下标</span></span><br><span class="line">            &#123;</span><br><span class="line">               dp[i]=nums[i]+maxEven;</span><br><span class="line">                <span class="comment">//更新奇偶的最大值</span></span><br><span class="line">                <span class="keyword">if</span>(maxOdd&lt;maxEven)</span><br><span class="line">                    maxOdd=maxEven;</span><br><span class="line">                maxEven=<span class="built_in">Max</span>(maxEven,maxOdd,dp[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>            <span class="comment">//奇下标</span></span><br><span class="line">            &#123;</span><br><span class="line">                dp[i]=nums[i]+maxOdd;</span><br><span class="line">                <span class="keyword">if</span>(maxOdd&gt;maxEven)</span><br><span class="line">                    maxEven=maxOdd;</span><br><span class="line">                maxOdd=<span class="built_in">Max</span>(maxEven,maxOdd,dp[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">getMaxValue</span>(dp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h5 id="最长回文子串">1.2 最长回文子串</h5>
-<p><strong>问题：</strong>给你一个字符串<code>s</code>，找到<code>s</code>中最长的回文子串。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">string <span class="title">longestPalindrome</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//dp[i][j]:表示s[i]是否等于s[j],相等且回文则置为true，否则为false</span></span><br><span class="line">    <span class="comment">//初始条件：dp[i][i]=true;</span></span><br><span class="line">    <span class="comment">//状态转移方程：</span></span><br><span class="line">	<span class="comment">//①若i和j是相邻的即i+1=j且s[i]==s[j],则dp[i][j]=true</span></span><br><span class="line">    <span class="comment">//②若不相邻，则判断内侧是否为true，若dp[i+1][j-1]=true&amp;&amp;s[i]==s[j],则dp[i][j]=true</span></span><br><span class="line">    <span class="comment">//通过增加两变量记录当前回文串的最长长度Maxlen,初始为1,以及记录回文串的下标开始index_min，初始为最后一个元素</span></span><br><span class="line">    <span class="comment">//算法的时间复杂度为O(n*n)</span></span><br><span class="line">    <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">if</span>(len==<span class="number">0</span>||len==<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    vector&lt;vector&lt;<span class="type">bool</span>&gt;&gt; <span class="built_in">dp</span>(len,<span class="built_in">vector</span>&lt;<span class="type">bool</span>&gt;(len,<span class="literal">false</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">        dp[i][i]=<span class="literal">true</span>;</span><br><span class="line">    <span class="type">int</span> Maxlen=<span class="number">1</span>,index_min=len<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=len<span class="number">-2</span>;i&gt;=<span class="number">0</span>;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=i+<span class="number">1</span>;j&lt;len;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(s[i]==s[j])<span class="comment">//如果两元素相等</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(j==i+<span class="number">1</span>)<span class="comment">//如果相邻</span></span><br><span class="line">                    dp[i][j]=<span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">else</span>      <span class="comment">//不相邻，判断两元素内部是否为回文串</span></span><br><span class="line">                    <span class="keyword">if</span>(dp[i+<span class="number">1</span>][j<span class="number">-1</span>])</span><br><span class="line">                        dp[i][j]=<span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">if</span>(dp[i][j]&amp;&amp;Maxlen&lt;j-i+<span class="number">1</span>)<span class="comment">//更新Maxlen和index_min</span></span><br><span class="line">                &#123;</span><br><span class="line">                    Maxlen=j-i+<span class="number">1</span>;</span><br><span class="line">                    index_min=i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    string ret=s.<span class="built_in">substr</span>(index_min,Maxlen);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="树类">2. 树类</h4>
-<h4 id="链表类">3. 链表类</h4>
-<h5 id="两数相加">3.1 两数相加</h5>
-<p>给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。请你将两个数相加，并以相同形式返回一个表示和的链表。你可以假设除了数字 0 之外，这两个数都不会以 0 开头。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode() : val(0), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">addTwoNumbers</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">        ListNode* head=l1;</span><br><span class="line">        <span class="type">int</span> jingwei=<span class="number">0</span>;</span><br><span class="line">        ListNode* prio;</span><br><span class="line">        <span class="keyword">while</span>(l1&amp;&amp;l2)</span><br><span class="line">        &#123;</span><br><span class="line">            l1-&gt;val=l1-&gt;val+l2-&gt;val+jingwei;</span><br><span class="line">            prio=l1;</span><br><span class="line">            jingwei=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(l1-&gt;val&gt;<span class="number">9</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                l1-&gt;val-=<span class="number">10</span>;</span><br><span class="line">                jingwei=<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            l1=l1-&gt;next;</span><br><span class="line">            l2=l2-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(l1&amp;&amp;!l2)</span><br><span class="line">        &#123;</span><br><span class="line">            l1-&gt;val+=jingwei;</span><br><span class="line">            jingwei=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span>(l1&amp;&amp;l1-&gt;val&gt;<span class="number">9</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                prio=l1;</span><br><span class="line">                jingwei=<span class="number">1</span>;</span><br><span class="line">                l1-&gt;val-=<span class="number">10</span>;</span><br><span class="line">                l1=l1-&gt;next;</span><br><span class="line">                <span class="keyword">if</span>(l1)&#123;</span><br><span class="line">                    l1-&gt;val+=jingwei;</span><br><span class="line">                    jingwei=<span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!l1&amp;&amp;l2)</span><br><span class="line">        &#123;</span><br><span class="line">            prio-&gt;next=l2;</span><br><span class="line">            l1=l2;</span><br><span class="line">            l1-&gt;val+=jingwei;</span><br><span class="line">            jingwei=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span>(l1&amp;&amp;l1-&gt;val&gt;<span class="number">9</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                prio=l1;</span><br><span class="line">                jingwei=<span class="number">1</span>;</span><br><span class="line">                l1-&gt;val-=<span class="number">10</span>;</span><br><span class="line">                l1=l1-&gt;next;</span><br><span class="line">                <span class="keyword">if</span>(l1)&#123;</span><br><span class="line">                    l1-&gt;val+=jingwei;</span><br><span class="line">                    jingwei=<span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(jingwei)</span><br><span class="line">            &#123;</span><br><span class="line">                prio-&gt;next=<span class="keyword">new</span> <span class="built_in">ListNode</span>(jingwei,<span class="literal">NULL</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h5 id="删除链表倒数第n个节点">3.2 删除链表倒数第N个节点</h5>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> len=<span class="number">0</span>;</span><br><span class="line">        ListNode* tmp=head;</span><br><span class="line">        <span class="keyword">while</span>(tmp)</span><br><span class="line">        &#123;</span><br><span class="line">            len++;</span><br><span class="line">            tmp=tmp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        tmp=head;</span><br><span class="line">		<span class="comment">//删除头节点单独考虑</span></span><br><span class="line">        <span class="keyword">if</span>(len-n==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> tmp-&gt;next;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=len-n;i&gt;<span class="number">1</span>;i--)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp=tmp-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        tmp-&gt;next=tmp-&gt;next-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h5 id="合并k个有序链表">4.2 合并K个有序链表</h5>
-<p>给你一个链表数组，每个链表都已经按升序排列。请你将所有链表合并到一个升序链表中，返回合并后的链表。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode() : val(0), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeKLists</span><span class="params">(vector&lt;ListNode*&gt;&amp; lists)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//使用分治的思想，分别两两合并</span></span><br><span class="line">        <span class="comment">//使用递归实现：</span></span><br><span class="line">        <span class="comment">//递归退出条件为：一是传入的只有一个链表另一个为NUL，二是传入的均为NULL，直接返回</span></span><br><span class="line">        <span class="comment">//程序结构：mergeKList为主调用，不做其他功能，merge递归入口，当达到底层是使用mergeTwoList   </span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">merge</span>(lists,<span class="number">0</span>,lists.<span class="built_in">size</span>()<span class="number">-1</span>);     </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ListNode* <span class="title">mergeTwoList</span><span class="params">(ListNode* a,ListNode* b)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="literal">NULL</span>==a||<span class="literal">NULL</span>==b)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>==a?b:a;</span><br><span class="line">        ListNode* head=<span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">if</span>(a-&gt;val&gt;b-&gt;val)&#123;</span><br><span class="line">            head=b;</span><br><span class="line">            b=b-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            head=a;</span><br><span class="line">            a=a-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode* tempNode=head;</span><br><span class="line">        <span class="keyword">while</span>(a&amp;&amp;b)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(a-&gt;val&gt;b-&gt;val)</span><br><span class="line">            &#123;</span><br><span class="line">                tempNode-&gt;next=b;</span><br><span class="line">                b=b-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                tempNode-&gt;next=a;</span><br><span class="line">                a=a-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            tempNode=tempNode-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(a)</span><br><span class="line">            tempNode-&gt;next=a;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            tempNode-&gt;next=b;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ListNode* <span class="title">merge</span><span class="params">(vector&lt;ListNode*&gt;&amp; lists,<span class="type">int</span> l,<span class="type">int</span> r)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="type">int</span> m=(r+l)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(r==l)</span><br><span class="line">            <span class="keyword">return</span> lists[r];</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(r&lt;l)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">mergeTwoList</span>(<span class="built_in">merge</span>(lists,l,m),<span class="built_in">merge</span>(lists,m+<span class="number">1</span>,r));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h4 id="字符串类">4. 字符串类</h4>
-<h5 id="n字形变换">4.1 N字形变换</h5>
-<p>将一个给定字符串 s 根据给定的行数 numRows ，以从上往下、从左到右进行 Z 字形排列。如输入字符串为 <code>PAYPALISHIRING</code> 行数为 4 时，排列如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">输入：s = <span class="string">&quot;PAYPALISHIRING&quot;</span>, numRows = <span class="number">4</span></span><br><span class="line">输出：<span class="string">&quot;PINALSIGYAHRPI&quot;</span></span><br><span class="line">解释：</span><br><span class="line">P     I    N</span><br><span class="line">A   L S  I G</span><br><span class="line">Y A   H R</span><br><span class="line">P     I</span><br><span class="line"></span><br><span class="line"><span class="comment">//对于numRows有这样的一个规律：</span></span><br><span class="line"><span class="comment">//按规定第一列取s的前numRows个字符，即i=0.....numRows</span></span><br><span class="line"><span class="comment">//对于i行后面的列每隔(numRows-1)*2+i取一个，直到(numrow-1)*2*j&gt;s.size()为止,j&gt;=1</span></span><br><span class="line"><span class="comment">//同时对于第i行，在取s[(numRow-1)*2*j+i]时，</span></span><br><span class="line"><span class="comment">//前面应该还有当(numRows-1)*2*j+i-2i!=(numRows-1)*2*(j-1)+i时添加一个字符为s[(numsRow-1)*2*j+i-2i]</span></span><br><span class="line"><span class="comment">//或者只需排除第一行和最后一行即可</span></span><br><span class="line"><span class="comment">//时间复杂度为O(N)，空间复杂度为O(N)</span></span><br><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    string <span class="built_in">convert</span>(string s, <span class="type">int</span> numRows) &#123;</span><br><span class="line">        string ret=<span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">if</span>(numRows==<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> s;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;numRows&amp;&amp;i&lt;s.<span class="built_in">size</span>();i++)  <span class="comment">//第i行存储</span></span><br><span class="line">        &#123;</span><br><span class="line">            ret+=s[i];</span><br><span class="line">            <span class="type">int</span> gapDistance=(numRows<span class="number">-1</span>)*<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">1</span>;gapDistance*j-i&lt;s.<span class="built_in">size</span>();j++)<span class="comment">//寻找下一个位置</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(i!=<span class="number">0</span>&amp;&amp;i!=numRows<span class="number">-1</span>)             <span class="comment">//判断是不是第一行或者最后一行,不是则进入</span></span><br><span class="line">                &#123;</span><br><span class="line">                    ret+=s[gapDistance*j-i];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(gapDistance*j+i&lt;s.<span class="built_in">size</span>())</span><br><span class="line">                    ret+=s[gapDistance*j+i];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure> #### 5. 双指针类 ##### 5.1 无重复字符的最长子串 <strong>问题：</strong>给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。</p>
-<blockquote>
-<p>示例： 输入: s = &quot;abcabcbb&quot; 输出: 3 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</p>
-</blockquote>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">   <span class="comment">//使用滑动窗口的思路，即双指针的应用，左指针first表示以该元素为起始点</span></span><br><span class="line">   <span class="comment">//右指针last表示[first,last)是以s[first]开头最长无重复子串，以first为起始</span></span><br><span class="line">   <span class="comment">//不断向右移动右指针，直到遇到重复的为止</span></span><br><span class="line">   <span class="comment">//用unordered_set记录来判断是否有重复元素</span></span><br><span class="line">   <span class="comment">//虽然是双循环，但是内部右指针不重置，移动次数为常数，因此时间复杂度为O(N)</span></span><br><span class="line">   <span class="type">int</span> len=s.<span class="built_in">size</span>();</span><br><span class="line">   <span class="keyword">if</span>(<span class="number">0</span>==len||<span class="number">1</span>==len)</span><br><span class="line">        <span class="keyword">return</span> len;</span><br><span class="line">    <span class="type">int</span> last=<span class="number">0</span>,maxLen=<span class="number">1</span>;</span><br><span class="line">    unordered_set&lt;<span class="type">char</span>&gt; hSet;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> first=<span class="number">0</span>;first&lt;len;first++)  <span class="comment">//左指针向前</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//不是第一次进入循环，说明当前元素s[last]与hSet存在重复，不断去除前一个</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="number">0</span>!=first)</span><br><span class="line">            hSet.<span class="built_in">erase</span>(s[first<span class="number">-1</span>]);</span><br><span class="line">        <span class="comment">//不断右移右指针，直到遇到重复的</span></span><br><span class="line">        <span class="keyword">while</span>(last&lt;len&amp;&amp;!hSet.<span class="built_in">count</span>(s[last]))</span><br><span class="line">        &#123;</span><br><span class="line">            hSet.<span class="built_in">insert</span>(s[last]);</span><br><span class="line">            last++;</span><br><span class="line">        &#125;</span><br><span class="line">        maxLen=<span class="built_in">max</span>(maxLen,last-first);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxLen;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="盛最多水的容器">5.2 盛最多水的容器</h5>
-<p><strong>问题</strong>：给定一个长度为<code>n</code>的整数数组<code>height</code>。有<code>n</code>条垂线，第<code>i</code>条线的两个端点是<code>(i, 0)</code>和<code>(i, height[i])</code>。找出其中的两条线，使得它们与<code>x</code>轴共同构成的容器可以容纳最多的水。返回容器可以储存的最大水量。。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxArea</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; height)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//双指针，一头指向头，一个指向尾</span></span><br><span class="line">    <span class="comment">//原理不用多说，看代码即可知</span></span><br><span class="line">    <span class="comment">//复杂度O(N)</span></span><br><span class="line">    <span class="type">int</span> left=<span class="number">0</span>,right=height.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">    <span class="type">int</span> maxCap=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(left&lt;right)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> tmp=<span class="built_in">Min</span>(height[left],height[right])*(right-left);</span><br><span class="line">        <span class="keyword">if</span>(maxCap&lt;tmp)</span><br><span class="line">            maxCap=tmp;</span><br><span class="line">        <span class="keyword">if</span>(height[left]&lt;height[right])</span><br><span class="line">            left++;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            right--;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxCap;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">Min</span><span class="params">(<span class="type">int</span>&amp; a,<span class="type">int</span>&amp; b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(a&gt;b)</span><br><span class="line">        <span class="keyword">return</span> b;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="三数之和">5.3 三数之和</h5>
-<p><strong>算法思路：</strong></p>
-<ul>
-<li>1、特判，对于数组长度<code>n</code>，如果数组为<code>null</code>或者数组长度小于<code>3</code>，返回<code>[]</code></li>
-<li>2、对数组进行排序。</li>
-<li>3、遍历排序后数组：
-<ul>
-<li>若<code>nums[i]&gt;0</code>：因为已经排序好，所以后面不可能有三个数加和等于0，直接返回结果。</li>
-<li>对于重复元素：跳过，避免出现重复解</li>
-<li>令左指针<code>L=i+1</code>，右指针<code>R=n-1</code>，当 <code>L&lt;R</code>时，执行循环：
-<ul>
-<li>当<code>nums[i]+nums[L]+nums[R]==0</code>，执行循环，判断左界和右界是否和下一位置重复，去除重复解。并同时将 L,R 移到下一位置，寻找新的解</li>
-<li>若和大于0，说明<code>nums[R]</code>太大，<code>R</code>左移</li>
-<li>若和小于0，说明<code>nums[L]</code>太小，<code>L</code>右移</li>
-</ul></li>
-</ul></li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">threeSum</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums) &#123;</span><br><span class="line"><span class="comment">/*方法一：转化为两数之和</span></span><br><span class="line"><span class="comment">*先将nums的元素拷贝一份到unordered_set处</span></span><br><span class="line"><span class="comment">*再将将nums内的数据两两求和存储回到tmp</span></span><br><span class="line"><span class="comment">*通过在set寻找是否有符合tmp的数据求得其解</span></span><br><span class="line"><span class="comment">*时间复杂度为O(N*N),空间复杂度为O(N)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">/*方法二：双指针和排序</span></span><br><span class="line"><span class="comment">*先对数组nums进行升序排序，</span></span><br><span class="line"><span class="comment">*后依次从负值取一个元素作为第一个选取的值</span></span><br><span class="line"><span class="comment">*之后定义左右指针，从左指向右前进一位选取一个元素，这里选取了两个元素执行求和得target</span></span><br><span class="line"><span class="comment">*右指针向左移动若干个位置，寻找元素与target和为0得元素</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; ret;</span><br><span class="line"><span class="type">int</span> len = nums.<span class="built_in">size</span>();</span><br><span class="line"><span class="keyword">if</span> (len &lt; <span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line"><span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line"><span class="type">int</span> left = <span class="number">0</span>, right = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len &amp;&amp; nums[i] &lt;= <span class="number">0</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    left = i + <span class="number">1</span>;</span><br><span class="line">    right = len - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">    &#123;</span><br><span class="line">        vector&lt;<span class="type">int</span>&gt; tmp;</span><br><span class="line">        <span class="keyword">if</span> (nums[i] + nums[left] + nums[right] &lt; <span class="number">0</span>)</span><br><span class="line">            left++;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nums[i] + nums[left] + nums[right] &gt; <span class="number">0</span>)</span><br><span class="line">            right--;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(nums[i]);</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(nums[left]);</span><br><span class="line">            tmp.<span class="built_in">push_back</span>(nums[right]);</span><br><span class="line">            ret.<span class="built_in">push_back</span>(tmp);</span><br><span class="line">            <span class="comment">//判断下一个值是否重复，是则跳过</span></span><br><span class="line">            <span class="keyword">while</span> (right&gt;left&amp;&amp;nums[right] == nums[right - <span class="number">1</span>])</span><br><span class="line">                right--;</span><br><span class="line">            <span class="keyword">while</span> (right&gt;left&amp;&amp;nums[left] == nums[left + <span class="number">1</span>])</span><br><span class="line">                left++;</span><br><span class="line">            left++;</span><br><span class="line">            right--;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (i&lt;len<span class="number">-1</span>&amp;&amp;nums[i] == nums[i + <span class="number">1</span>])</span><br><span class="line">        i++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="最接近的三数之和">5.4 最接近的三数之和</h5>
-<p>给你一个长度为 n 的整数数组 nums 和 一个目标值 target。请你从 nums 中选出三个整数，使它们的和与 target 最接近。返回这三个数的和。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">threeSumClosest</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    *使用三数之和的方法：</span></span><br><span class="line"><span class="comment">    *1、先对数组进行排序</span></span><br><span class="line"><span class="comment">    *2、之后想三数之和一样遍历排序后的数组：</span></span><br><span class="line"><span class="comment">    *时间复杂度为O(N*N)，空间复杂度为O(1)</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(),nums.<span class="built_in">end</span>());</span><br><span class="line">    <span class="type">int</span> ret=nums[<span class="number">0</span>]+nums[<span class="number">1</span>]+nums[nums.<span class="built_in">size</span>()<span class="number">-1</span>];</span><br><span class="line">    <span class="type">int</span> len=nums.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> right=len<span class="number">-1</span>,left=i+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(left&lt;right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//比较ret是否要更新</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">abs</span>(target-(nums[i]+nums[left]+nums[right]))</span><br><span class="line">                    &lt;<span class="built_in">abs</span>(target-ret))</span><br><span class="line">                    ret=nums[i]+nums[left]+nums[right];</span><br><span class="line">            <span class="comment">//双指针应该向哪边移动</span></span><br><span class="line">            <span class="keyword">if</span>(target&lt;nums[i]+nums[left]+nums[right])&#123;</span><br><span class="line">                right--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(target&gt;nums[i]+nums[left]+nums[right])&#123;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> target;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h5 id="四数之和">5.5 四数之和</h5>
-<p>给你一个由 n 个整数组成的数组<code>nums</code>，和一个目标值<code>target</code> 。请你找出并返回满足下述全部条件且不重复的四元组<code>[nums[a], nums[b], nums[c], nums[d]]</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">fourSum</span>(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target) &#123;</span><br><span class="line">        <span class="comment">//解决方法同三数求和一样，使用排序+双指针方法</span></span><br><span class="line">        <span class="comment">//只不过此时多加了一层循环，则时间复杂度为O(N^3),</span></span><br><span class="line">        <span class="type">long</span> Target=target;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;ret;</span><br><span class="line">        <span class="keyword">if</span>(nums.<span class="built_in">size</span>()&lt;<span class="number">4</span>)</span><br><span class="line">            <span class="keyword">return</span> ret;</span><br><span class="line">        <span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(),nums.<span class="built_in">end</span>());</span><br><span class="line">         <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>()<span class="number">-3</span>;i++)</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="keyword">if</span>(nums[i]&gt;<span class="number">0</span>&amp;&amp;Target&lt;<span class="number">1</span>)</span><br><span class="line">                <span class="keyword">return</span> ret;</span><br><span class="line">             <span class="keyword">for</span>(<span class="type">int</span> j=nums.<span class="built_in">size</span>()<span class="number">-1</span>;j&gt;=i+<span class="number">3</span>;j--)</span><br><span class="line">             &#123;</span><br><span class="line">                 <span class="type">int</span> left=i+<span class="number">1</span>,right=j<span class="number">-1</span>;</span><br><span class="line">                 <span class="keyword">while</span>(left&lt;right)</span><br><span class="line">                 &#123;</span><br><span class="line">                     <span class="type">long</span> result=(<span class="type">long</span>)nums[i]+(<span class="type">long</span>)nums[j]+</span><br><span class="line">					 			(<span class="type">long</span>)nums[left]+(<span class="type">long</span>)nums[right];</span><br><span class="line">                    <span class="keyword">if</span>(Target&lt;result)</span><br><span class="line">                        right--;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(Target&gt;result)</span><br><span class="line">                        left++;</span><br><span class="line">                    <span class="keyword">else</span>&#123;</span><br><span class="line">                        ret.<span class="built_in">push_back</span>(&#123;nums[i],nums[j],nums[left],nums[right]&#125;);</span><br><span class="line">                        <span class="keyword">while</span>(right&gt;left&amp;&amp;nums[right]==nums[right<span class="number">-1</span>])</span><br><span class="line">                            right--;</span><br><span class="line">                        <span class="keyword">while</span>(right&gt;left&amp;&amp;nums[left]==nums[left+<span class="number">1</span>])</span><br><span class="line">                            left++;</span><br><span class="line">                        right--;</span><br><span class="line">                        left++;</span><br><span class="line">                    &#125;</span><br><span class="line">                 &#125;</span><br><span class="line">                 <span class="comment">//跳过重复</span></span><br><span class="line">                 <span class="keyword">while</span>(j&gt;=i+<span class="number">3</span>&amp;&amp;nums[j]==nums[j<span class="number">-1</span>])</span><br><span class="line">                    j--;</span><br><span class="line">             &#125;</span><br><span class="line">             <span class="comment">//跳过重复</span></span><br><span class="line">             <span class="keyword">while</span>(i&lt;nums.<span class="built_in">size</span>()<span class="number">-3</span>&amp;&amp;nums[i]==nums[i+<span class="number">1</span>])</span><br><span class="line">                i++;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h4 id="深度优先搜索类">6. 深度优先搜索类</h4>
-<h4 id="广度优先搜索类">7. 广度优先搜索类</h4>
-<h4 id="数学">8. 数学</h4>
-<h4 id="矩阵">9. 矩阵</h4>
-<h4 id="图类">5. 图类</h4>
-<p>题目来源：<a target="_blank" rel="noopener" href="https://leetcode.cn/problemset/all/">leetcode</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" class="post-title-link" itemprop="url">动态规划算法思想</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-29 13:56:14" itemprop="dateCreated datePublished" datetime="2022-07-29T13:56:14+08:00">2022-07-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-12-15 13:49:29" itemprop="dateModified" datetime="2022-12-15T13:49:29+08:00">2022-12-15</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="动态规划">1. 动态规划</h4>
-<p>我们遇到的问题中，有很大一部分可以用动态规划<code>Dynamic Programming</code>来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题</p>
-<h5 id="动态规划的原理">1.1 动态规划的原理</h5>
-<p><strong>动态规划算法通常基于一个递推公式及一个或多个初始状态。 当前子问题的解将由上一次子问题的解推出。使用动态规划来解题只需要多项式时间复杂度</strong>， 因此它比回溯法、暴力法等要快许多。动态规划要求我们要找到某个状态的最优解，然后在它的帮助下，找到下一个状态的最优解。由于单纯使用语言来描述动态规划晦涩难懂，因此采用例子来说明：</p>
-<p><strong>问题1：假设有1元、3元和5元的硬币，如何用最少的的硬币凑够11元？</strong></p>
-<p>学过贪心算法知道，加如使用贪心算法，每次拿面额最高的银币来逼近这个11是一个方法，但它不能保证一定是最少数量的。因此这里介绍动态规划来解答。正如上面所说，动态规划就是将问题小化，以上一次的子问题的最优解推出下一个的最优解：</p>
-<ul>
-<li>因此我们可想当面额为<code>i</code>时，最少的硬币数量是多少，我们使用<code>dp[i]</code>表示凑够<code>i</code>元时最少的硬币数量。</li>
-<li>豪无疑问，当<code>i=0</code>时<code>dp[0]=0</code>，因为题目给出了1元、3元和5元的面额，我们需要对这些进行处理，因此能够得到其他的初始条件，<code>i=1</code>时<code>dp[i]=1</code>,i=3时<code>dp[3]=1</code>,i=5时<code>dp[5]=</code>。</li>
-<li>完成了初始化条件后，我们可以继续推其他面额的情况，由提供的三种面额，可以知道当<code>i=2</code>时<code>dp[2]=2</code>，但<code>i=3</code>时，组成它的有两种选择，一种时三个1元硬币，另一种是直接选择3元，有<code>min(dp[3].dp[2]+1)</code>知道<code>dp[3]=1</code>是最优解，同样<code>dp[4]</code>，它可以有<code>4=1+3</code>或者<code>4=3+1</code>，两者的的数量是一致的，只不过是次序的不同，再到<code>dp[5]</code>可以检查<code>min(dp[4]+1,dp[2]+1,dp[5])</code>取最小</li>
-<li>由上面的分析，我们可以很容易的分析到这样一个状态转移方程： <span class="math display">\[
-dp[i]=
-\begin{cases}
-min(dp[i-1]+1,dp[i-3]+1,dp[i-5]+1),i&gt;5\\
-1,i=1,3,5\\
-2,i=2,4
-\end{cases}
-\]</span></li>
-</ul>
-<p>这样问题就迎刃而解，得如下代码： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* 有面值1，3，5的硬币，试求组成39元时用到最少的硬币数量</span></span><br><span class="line"><span class="comment">* 首先定义dp[i]表示i元时用到得最少银币数</span></span><br><span class="line"><span class="comment">* 由题得初始化条件dp[0]=0,dp[1]=1,dp[3]=1,dp[5]=5</span></span><br><span class="line"><span class="comment">* 当i&gt;5时，会有状态转移方程dp[i]=min(dp[i-1].dp[i-3],do[i-5])+1;</span></span><br><span class="line"><span class="comment">*当i&lt;=5时，这个范围含的2，4未初始化，</span></span><br><span class="line"><span class="comment">*可以增加以判断条件当i-1&gt;=0,i-3&gt;=0,i-5&gt;0来决定，是否要在状态转移方程添加对应项</span></span><br><span class="line"><span class="comment">* 这里由于能够自己推段2，4的最小数量，直接当作初始化，</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">Min</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b, <span class="type">int</span> c)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">minCoin</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> dp[<span class="number">40</span>];</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">3</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">5</span>] = <span class="number">1</span>;	</span><br><span class="line">	dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">	dp[<span class="number">4</span>] = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">6</span>; i &lt; <span class="number">40</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		dp[i] = <span class="built_in">Min</span>(dp[i - <span class="number">1</span>], dp[i - <span class="number">3</span>], dp[i - <span class="number">5</span>]) + <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[<span class="number">39</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>从上面的案例可以知道，解决动态规划的策略最重要的三步是：</p>
-<ul>
-<li><strong>确定<code>dp</code>数组的含义</strong></li>
-<li>确定可从题意得出的临界值</li>
-<li><strong>确定状态转移方程</strong></li>
-</ul>
-<p>有了状态和状态转移方程，问题基本上也就解决了，接下来的问题只是如何写迭代代码而已。</p>
-<h5 id="初级问题">1.2 初级问题</h5>
-<p>上面的硬币问题只能说是很简单的动态规划问题，我们可以在来看看更复杂一点的。</p>
-<p><strong>问题：</strong>一个序列有N个数：A[1],A[2],…,A[N]，求出最长连续非降子序列的长度</p>
-<p>同样对于这个问题也能使用动态规划来解决，定义一个<code>dp[i]</code>表示包括当前下标<code>i</code>的非降子序列的长度，那么就有这样的条件：</p>
-<ul>
-<li>初始条件中，我们肯定可以知道<code>i=0</code>时<code>d[i]=1</code>。</li>
-<li>状态转移方程则有<code>d=1+(s[i]&gt;=s[i-1]?d[i-1]:0)</code>，这个状态转移方程指示，我们只需将当前的访问的元素与上一个元素进行对比，如果是<code>&gt;=</code>，则与之前一样是一个非降子序列，反之则不是，重新计数非降子序列长度</li>
-<li>最后只需要遍历一次<code>d[i]</code>就能得到最长非降子序列的长度，起始和结束位置也能递推</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//时间复杂度为O(n)</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">int</span> <span class="title">maxLength</span><span class="params">(string s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> len = s.<span class="built_in">size</span>();</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">dp</span><span class="params">(len)</span></span>;</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; len; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		dp[i] =<span class="number">1</span>+( s[i] &gt;= s[i - <span class="number">1</span>] ? dp[i - <span class="number">1</span>] : <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">getmaxValue</span>(dp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的问题可以进一步升级，不要求连续，如下：</p>
-<p><strong>问题：</strong>一个序列有N个数：A[1],A[2],…,A[N]，求出最长非降子序列的长度</p>
-<p>虽然这个问题不要求连续，我们同样能够使用一维<code>dp[i]</code>尝试解决，同样要找出初始条件和状态转移方程。<strong>我们可以让<code>dp[i]</code>是表示在以<code>A[i]</code>结尾的即下标<code>0~i</code>的子序列的最长非降长度</strong>，那么就有如下策略：</p>
-<ul>
-<li>初始条件<code>dp[0]=1</code></li>
-<li>状态转移方程有两种情况，一是必须在前面找到所有的个x,使得<code>A[i]&gt;=A[x]</code>，更新<code>dp[x]=dp[x]+1</code>,然后执行取最大值,如果没有找到则直接赋值为<code>dp[i]=1</code>。即</li>
-</ul>
-<p><span class="math display">\[
-dp[i]=
-\begin{cases}
-max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
-1，           之前的序列不存在A[x]&lt;=A[i]时
-\end{cases}
-\]</span></p>
-<ul>
-<li>最后遍历一遍<code>dp</code>数组，取最大值，</li>
-<li>该算法因为当<code>A[i]&lt;A[i-1]</code>时，需要从后往前遍历dp数组。外部循环为<code>n</code>，内部平均循环为<code>n/2</code>，因此时间复杂度为<code>O(N*N)</code></li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxSonLength</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; cap)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> len = cap.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">if</span> (len == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(len);</span><br><span class="line">    dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">            <span class="type">int</span> j;</span><br><span class="line">            <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">tmp</span><span class="params">(i)</span></span>;</span><br><span class="line">            <span class="type">int</span> index=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (j = i - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (cap[i] &gt; cap[j]) &#123;</span><br><span class="line">                    tmp[index]=dp[j];</span><br><span class="line">                    index++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">int</span> max=<span class="built_in">getmaxValue</span>(tmp);</span><br><span class="line">            <span class="keyword">if</span> (max==<span class="number">0</span>)</span><br><span class="line">                dp[i] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                dp[i]=max+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">getmaxValue</span>(dp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的算法分时间复杂度达到了<code>O(N*N)</code>,是否有办法使复杂度降到<code>O(NlogN)</code>？我们可以看到上面的程序之所以变为<code>O(N*N)</code>，是因为每次对<code>A[i]</code>都要遍历之前的<code>A[x]</code>，我们是否可以通过增加一个数组来存储形成的最长非降子序列，然后进行二分查找呢，经过二分查找使得复杂度变为<code>O(NlogN)</code>:</p>
-<p><strong>要这样做我们必须重新定义<code>dp[i]</code>数组的意义，<code>dp[i]</code>它表示长度为<code>i+1</code>的递增子序列中，最大的序列尾数；再定义一个<code>maxL</code>变量，指示当前最长递增子序列的长度，对数组<code>dp</code>二分查找，判断<code>cap[x]</code>要插入的位置</strong></p>
-<ul>
-<li>若<code>cap[x]&gt;dp[maxL]</code>,表示当前该值比递增子序列的尾数都大，将<code>cap[x]</code>添加到<code>dp</code>尾部，<code>maxL++</code></li>
-<li>若<code>dp[i-1]&lt;cap[x]&lt;dp[i]</code>，更新相应<code>dp[i]</code>即可</li>
-</ul>
-<p>显然这种方法以及不算动态规划了，是一种特殊解法：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">lengthOfLIS</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums,vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; storage)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (nums.<span class="built_in">empty</span>())</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt;<span class="built_in">dp</span>(nums.<span class="built_in">size</span>());</span><br><span class="line">	<span class="type">int</span> maxL = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> num : nums)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> lo = <span class="number">0</span>, hi = maxL;</span><br><span class="line">		<span class="comment">//二分查找</span></span><br><span class="line">		<span class="keyword">while</span> (lo &lt; hi)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> mid = (lo + hi) / <span class="number">2</span>;</span><br><span class="line">			<span class="keyword">if</span> (dp[mid] &lt; num)</span><br><span class="line">				lo = mid + <span class="number">1</span>;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				hi = mid;</span><br><span class="line">		&#125;</span><br><span class="line">		dp[lo] = num;</span><br><span class="line">		<span class="keyword">if</span> (lo == maxL)</span><br><span class="line">		&#123;</span><br><span class="line">			maxL++;</span><br><span class="line">			<span class="keyword">if</span>(storage[<span class="number">0</span>].size&lt;maxL)</span><br><span class="line">				storage.<span class="built_in">clear</span>();</span><br><span class="line">			storage.<span class="built_in">push_back</span>(dp);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> maxL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong><em>附加：如果要你返回所有最长递增子序列或者返回最长递增子序列的个数该如何解决？</em></strong> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/number-of-longest-increasing-subsequence/solution/zui-chang-di-zeng-zi-xu-lie-de-ge-shu-by-w12f/">leetcode第673题.最长递增序列的个数</a></p>
-<h5 id="中级">1.3 中级</h5>
-<p>上面举的例子都是对一维<code>dp</code>来解决，接下来介绍如何解决二维<code>dp</code>的问题。</p>
-<p>**问题：平面上有N*M个格子，每个格子中放着一定数量的苹果。你从左上角的格子开始， 每一步只能向下走或是向右走，每次走到一个格子上就把格子里的苹果收集起来， 这样下去，你最多能收集到多少个苹果**</p>
-<p>当然了，使用动态规划<code>dp</code>就要找初始条件喝状态转移方程</p>
-<ul>
-<li>定义二维数组<code>dp[N][M]</code>，<code>d[i][j]</code>表示从<code>A[0][0]</code>到<code>A[i][j]</code>能收集到的最多苹果数量</li>
-<li>因为只能向下喝右移动，则有状态转移方程<code>d[i][j]=max(d[i-1][j],d[i][j-1])+A[i][j]</code>，其中<code>i&gt;0,j&gt;0</code></li>
-<li>为了方便实现状态转移方程，我们可以人增加隔离带，即<code>A[0][j]=0、A[i][0]=0</code></li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxApple</span><span class="params">(<span class="type">const</span> vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;&amp; cap)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (cap.<span class="built_in">empty</span>())</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> row = cap[<span class="number">0</span>].<span class="built_in">size</span>(),</span><br><span class="line">		col = cap.<span class="built_in">size</span>();</span><br><span class="line">	vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(col+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(row+<span class="number">1</span>));</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= col; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= row; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="type">int</span> Max = <span class="built_in">max</span>(dp[i - <span class="number">1</span>][j], dp[i][j - <span class="number">1</span>]);</span><br><span class="line">			dp[i][j] = Max + cap[i - <span class="number">1</span>][j - <span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[col][row];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述算法复杂度为<code>O(N*M)</code></p>
-<h4 id="参考文章动态规划从新手到专家">参考文章：<a target="_blank" rel="noopener" href="https://hawstein.com/2013/03/26/dp-novice-to-advanced/">动态规划：从新手到专家</a></h4>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2553,20 +2656,20 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2607,12 +2710,12 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">548k</span>
+    <span title="站点总字数">549k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">8:18</span>
+    <span title="站点阅读时长">8:19</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
