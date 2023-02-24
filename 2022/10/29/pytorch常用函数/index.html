@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1. torch 包 torch 包含了多维张量的数据结构以及基于其上的多种数学操作。另外，它也提供了多种工具，其中一些可以更有效地对张量和任意类型进行序列化。 它有 CUDA 的对应实现，可以在 NVIDIA GPU 上进行张量运算(计算能力&gt;&#x3D;2.0)。 1.1 Tensor张量 1.1.1 torch.numel torch.numel(input)-&gt;int，返回 i">
+  <meta name="description" content="1. torch 包 torch 包含了多维张量的数据结构以及基于其上的多种数学操作。另外，它也提供了多种工具，其中一些可以更有效地对张量和任意类型进行序列化。 它有 CUDA 的对应实现，可以在 NVIDIA GPU 上进行张量运算(计算能力&gt;&#x3D;2.0)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pytorch常用函数">
 <meta property="og:url" content="http://example.com/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/index.html">
 <meta property="og:site_name" content="Trluper">
-<meta property="og:description" content="1. torch 包 torch 包含了多维张量的数据结构以及基于其上的多种数学操作。另外，它也提供了多种工具，其中一些可以更有效地对张量和任意类型进行序列化。 它有 CUDA 的对应实现，可以在 NVIDIA GPU 上进行张量运算(计算能力&gt;&#x3D;2.0)。 1.1 Tensor张量 1.1.1 torch.numel torch.numel(input)-&gt;int，返回 i">
+<meta property="og:description" content="1. torch 包 torch 包含了多维张量的数据结构以及基于其上的多种数学操作。另外，它也提供了多种工具，其中一些可以更有效地对张量和任意类型进行序列化。 它有 CUDA 的对应实现，可以在 NVIDIA GPU 上进行张量运算(计算能力&gt;&#x3D;2.0)。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/dialation.gif">
 <meta property="article:published_time" content="2022-10-29T07:50:21.000Z">
-<meta property="article:modified_time" content="2022-11-16T08:25:37.785Z">
+<meta property="article:modified_time" content="2023-02-24T14:02:23.494Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="pytorch">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-11-16 16:25:37" itemprop="dateModified" datetime="2022-11-16T16:25:37+08:00">2022-11-16</time>
+                <time title="修改时间：2023-02-24 22:02:23" itemprop="dateModified" datetime="2023-02-24T22:02:23+08:00">2023-02-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -291,6 +291,7 @@
         <h4 id="torch">1. torch</h4>
 <p>包 torch 包含了多维张量的数据结构以及基于其上的多种数学操作。另外，它也提供了多种工具，其中一些可以更有效地对张量和任意类型进行序列化。</p>
 <p>它有 CUDA 的对应实现，可以在 NVIDIA GPU 上进行张量运算(计算能力&gt;=2.0)。</p>
+<span id="more"></span>
 <h5 id="tensor张量">1.1 Tensor张量</h5>
 <h6 id="torch.numel">1.1.1 torch.numel</h6>
 <p><code>torch.numel(input)-&gt;int</code>，返回 input 张量中的元素个数。</p>
@@ -651,13 +652,13 @@ x_{new}=(1-momentum)*x_{old}+momentum*x_{obser}
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -703,7 +704,7 @@ x_{new}=(1-momentum)*x_{old}+momentum*x_{obser}
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:32</span>
+    <span title="站点阅读时长">9:33</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

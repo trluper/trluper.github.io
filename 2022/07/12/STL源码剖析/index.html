@@ -38,9 +38,8 @@
 <meta property="og:image" content="http://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/hashtablelist.png">
 <meta property="og:image" content="http://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/quickSort.gif">
 <meta property="article:published_time" content="2022-07-12T14:15:12.000Z">
-<meta property="article:modified_time" content="2022-10-29T11:18:32.251Z">
+<meta property="article:modified_time" content="2023-02-24T14:02:44.605Z">
 <meta property="article:author" content="trluper">
-<meta property="article:tag" content="C++">
 <meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/memorypool.png">
@@ -240,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-29 19:18:32" itemprop="dateModified" datetime="2022-10-29T19:18:32+08:00">2022-10-29</time>
+                <time title="修改时间：2023-02-24 22:02:44" itemprop="dateModified" datetime="2023-02-24T22:02:44+08:00">2023-02-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,10 +248,6 @@
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/STL/" itemprop="url" rel="index"><span itemprop="name">STL</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/STL/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
                 </span>
             </span>
 
@@ -314,6 +309,7 @@
 </ul>
 <p>六大组件的交互关系是<code>Container</code>通过<code>Allocator</code>获得数据存储空间，<code>Alogrithm</code>通过<code>Iterator</code>存取<code>Container</code>的内容，<code>Functor</code>可以协助<code>Algorithm</code>完成不同的策略变化，<code>Adapter</code>可以修饰或套接<code>Functor</code>。本笔记将会以此对这六大组件进行介绍。</p>
 <p>++说在前面：STL的实现版本由HP版本、PJ版本、RW版本、STLport版本和SGISTL版本等五个主要版本++</p>
+<span id="more"></span>
 <h4 id="空间配置器">2. 空间配置器</h4>
 <p>在介绍STL的其他组件尤其是<code>container</code>组件之前，空间配置器是必须要先介绍的，因为容器内存空间的开辟需要由<code>allocator</code>去申请。allocator申请的空间是为构造原始的，<code>new</code>申请的空间是已构造的。在<code>gcc</code>中的容器使用了缺省的SGI版本的空间配置器：<code>class Alloc = alloc</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>, **<span class="keyword">class</span> <span class="title class_">Alloc</span> = alloc**&gt;	<span class="comment">//默认使用了alloc</span></span><br><span class="line"><span class="keyword">class</span> vector &#123;</span><br><span class="line"><span class="comment">/*...实现*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h5 id="空间配置器的标准接口">2.1 空间配置器的标准接口</h5>
@@ -1064,7 +1060,6 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/C/" rel="tag"># C++</a>
               <a href="/tags/STL/" rel="tag"># STL</a>
           </div>
 
@@ -1163,13 +1158,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1215,7 +1210,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:32</span>
+    <span title="站点阅读时长">9:33</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

@@ -20,19 +20,18 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本)  - POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C - C++标准多线程和Boost线程是类形式，这点要注意。 1 认识并发concurrency 如下图，在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的">
+  <meta name="description" content="读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本)   POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C C++标准多线程和Boost线程是类形式，这点要注意。  1 认识并发concurrency 如下图，在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++并发">
 <meta property="og:url" content="http://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/index.html">
 <meta property="og:site_name" content="Trluper">
-<meta property="og:description" content="读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本)  - POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C - C++标准多线程和Boost线程是类形式，这点要注意。 1 认识并发concurrency 如下图，在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的">
+<meta property="og:description" content="读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本)   POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C C++标准多线程和Boost线程是类形式，这点要注意。  1 认识并发concurrency 如下图，在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png">
 <meta property="article:published_time" content="2023-02-19T01:57:24.000Z">
-<meta property="article:modified_time" content="2023-02-23T14:34:03.503Z">
+<meta property="article:modified_time" content="2023-02-24T13:57:41.019Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="C++">
-<meta property="article:tag" content="C++并发">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png">
 
@@ -231,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-23 22:34:03" itemprop="dateModified" datetime="2023-02-23T22:34:03+08:00">2023-02-23</time>
+                <time title="修改时间：2023-02-24 21:57:41" itemprop="dateModified" datetime="2023-02-24T21:57:41+08:00">2023-02-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -270,14 +269,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -289,9 +288,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong>读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本) </strong> - POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C - C++标准多线程和Boost线程是类形式，这点要注意。</p>
+        <p><strong>读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本) </strong></p>
+<ul>
+<li>POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C</li>
+<li>C++标准多线程和Boost线程是类形式，这点要注意。</li>
+</ul>
 <h4 id="认识并发concurrency">1 认识并发concurrency</h4>
 <p>如下图，<strong>在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方式，让任务看起来是并行执行的</strong>。这种方式称为“任务切换(task switching)”。但是，实际上是并发形式的，因为任务切换得太快，以至于无法感觉到任务在何时会被暂时挂起 <img src="/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png" width="500"> 系统每次从一个任务切换到另一个时都需要切换一次上下文(context switch)，任务切换也有时间开销。</p>
+<span id="more"></span>
 <ul>
 <li>进行上下文的切换时，操作系统必须为当前运行的任务保存CPU的状态和指令指针，并计算出要切换到哪个任务，并为即将切换到的任务重新加载处理器状态。</li>
 <li>然后，CPU可能要将新任务的指令和数据的内存载入到缓存中，这会阻止CPU执行任何指令，从而造成的更多的延迟</li>
@@ -321,11 +325,26 @@
 <h4 id="线程管理">2 线程管理</h4>
 <p>在本节主要讲述线程管理，涉及启动一个线程，等待这个线程结束，或放在后台运行；怎么给已经启动的线程函数传递参数，以及怎么将一个线程的所有权从当前<code>std::thread</code>对象移交给另一个。最后，再来确定线程数，以及识别特殊线程。线程头文件为<code>&lt;thread&gt;</code></p>
 <h5 id="启动线程">2.1 启动线程</h5>
-<p>线程在<code>std::thread</code>对象创建(为线程指定任务)时启动。即使用C++线程库启动线程，可以归结为构造 <code>std::thread</code> 对像。因此对于创建一个线程对象来说，可以调用不同的构造函数，因此这里不会做详细的构造函数阐述，只举示例。</p>
+<p><strong>线程在<code>std::thread</code>对象创建(为线程指定任务)时启动</strong>。即使用C++线程库启动线程，可以归结为构造 <code>std::thread</code> 对像。因此对于创建一个线程对象来说，可以调用不同的构造函数，因此这里不会做详细的构造函数阐述，只举示例。</p>
 <ul>
-<li><p>下面这个例子创建了一个<code>my_thread</code>多线程对象，传入的为可调用对象进去作为线程的处理函数： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">background_task</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">do_something</span>();</span><br><span class="line">	<span class="built_in">do_something_else</span>();</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line">background_task f;</span><br><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">(f)</span></span>;</span><br></pre></td></tr></table></figure></p></li>
-<li><p>注意，当把函数对象传入到线程构造函数时，需要避免下述的“语法解析”：<strong>如果你传入的是一个零时变量，而不是一个命名变量</strong>，C++会将器解析为函数声明，而不是创建类型对象 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">(background_task())</span></span>;		</span><br><span class="line"><span class="comment">//background_task()使用默认构造创建了一个background_task零时对象</span></span><br><span class="line"><span class="comment">//那么此时my_thread就会被解析为一个函数声明</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">解决方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">((background_task()))</span></span>;	<span class="comment">//1</span></span><br><span class="line">std::thread my_thread&#123;<span class="built_in">background_task</span>()&#125;;	<span class="comment">//2</span></span><br><span class="line">background_task f;</span><br><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">(f)</span></span>;					<span class="comment">//3</span></span><br><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">([]&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">do_something();</span></span></span><br><span class="line"><span class="params"><span class="function">do_something_else();</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;)</span></span>;											<span class="comment">//4,使用lambda</span></span><br></pre></td></tr></table></figure></p></li>
+<li>下面这个例子创建了一个<code>my_thread</code>多线程对象，传入的为可调用对象进去作为线程的处理函数： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">background_task</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">do_something</span>();</span><br><span class="line">	<span class="built_in">do_something_else</span>();</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line">background_task f;</span><br><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">(f)</span></span>;</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h6 id="启动线程时易错点">2.1.1 启动线程时易错点</h6>
+<ul>
+<li><p>注意，当把函数对象传入到线程构造函数时，需要避免下述的“语法解析”：<strong>如果你传入的是一个零时变量，而不是一个命名变量</strong>，C++会将器解析为函数声明，而不是创建类型对象 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">(background_task())</span></span>;		</span><br><span class="line"><span class="comment">//background_task()使用默认构造创建了一个background_task零时对象</span></span><br><span class="line"><span class="comment">//那么此时my_thread就会被解析为一个函数声明</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">解决方法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">((background_task()))</span></span>;	<span class="comment">//1</span></span><br><span class="line">std::thread my_thread&#123;<span class="built_in">background_task</span>()&#125;;	<span class="comment">//2</span></span><br><span class="line">background_task f;</span><br><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">(f)</span></span>;			<span class="comment">//3</span></span><br><span class="line"><span class="function">std::thread <span class="title">my_thread</span><span class="params">([]&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">do_something();</span></span></span><br><span class="line"><span class="params"><span class="function">do_something_else();</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;)</span></span>;					 	<span class="comment">//4,使用lambda</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>启动了线程，在对象销毁之前必须明确是等待线程结束（join加入式）还是自主运行（detach分离式）。如果在<code>std::thread</code>对象销毁之前还没做出决定，<strong>整个程序</strong>会终止（<code>std::thread</code>的析构会调用<code>std::terminate</code>），因此，即便有异常存在，也必须确保线程能够在<code>join</code>或<code>detach</code>。</p></li>
+<li>如果采用分离式而不是加入式，必须保证线程结束之前可访问数据的有效性。比如下面这种情况是很糟糕的： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">func</span>()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span>&amp; i;</span><br><span class="line">	<span class="built_in">func</span>(<span class="type">int</span>&amp; _i):<span class="built_in">i</span>(_i)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span> <span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">unsigned</span> <span class="type">int</span> j=<span class="number">0</span>;j&lt;<span class="number">100000</span>;++j)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">do_something_else</span>(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">oops</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> some_local_state=<span class="number">0</span>;</span><br><span class="line">	<span class="function">func <span class="title">my_func</span><span class="params">(some_local_state)</span></span>;</span><br><span class="line">	<span class="function">std::thread <span class="title">my_thread</span><span class="params">(my_func)</span></span>;		<span class="comment">//新线程对象，入口函数为func()</span></span><br><span class="line">	my_thread.<span class="built_in">detach</span>();			<span class="comment">//2. 不等待新线程的结束，采用分离式</span></span><br><span class="line">&#125;			<span class="comment">//3.调用线程到这里执行完毕退出</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面我们可看到，我们在函数<code>oops</code>创建线程，线程使用可调用对象作为线程的函数入口，线程处在运行式就会调用<code>do_something_else</code>。</li>
+<li>因为新线程采用分离式，把么调用线程在执行完<code>oops</code>函数后就会退出，那么my_func对象就会被销毁，内部的变量i也就被销毁了,然而新线程还在运行中，此时调用发现<code>i</code>被销毁，访问<code>i</code>是一个未定义的行为。</li>
+<li>解决方法：
+<ul>
+<li>将数据复制到线程中，而不是复制到共享数据中。如使用一个可调用对象作为线程函数，对象就复制到线程中。</li>
+<li>通过加入式的方式确保线程在函数退出前结束。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h5 id="等待线程完成">2.2 等待线程完成</h5>
 
     </div>
 
@@ -356,7 +375,6 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/C/" rel="tag"># C++</a>
-              <a href="/tags/C-%E5%B9%B6%E5%8F%91/" rel="tag"># C++并发</a>
           </div>
 
         
@@ -365,12 +383,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/" rel="prev" title="Linux系统编程-线程">
-      <i class="fa fa-chevron-left"></i> Linux系统编程-线程
+    <a href="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/" rel="prev" title="Linux系统编程_线程">
+      <i class="fa fa-chevron-left"></i> Linux系统编程_线程
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/" rel="next" title="Linux系统编程—网络">
-      Linux系统编程—网络 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/" rel="next" title="Linux系统编程_网络">
+      Linux系统编程_网络 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -431,7 +449,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86%E5%B9%B6%E5%8F%91concurrency"><span class="nav-number">1.</span> <span class="nav-text">1 认识并发concurrency</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%80%94%E5%BE%84"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 并发途径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E8%A6%81%E4%BD%BF%E7%94%A8%E5%B9%B6%E5%8F%91"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 为何要使用并发</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2 线程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 启动线程</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86%E5%B9%B6%E5%8F%91concurrency"><span class="nav-number">1.</span> <span class="nav-text">1 认识并发concurrency</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%80%94%E5%BE%84"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 并发途径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E8%A6%81%E4%BD%BF%E7%94%A8%E5%B9%B6%E5%8F%91"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 为何要使用并发</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2 线程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 启动线程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B%E6%97%B6%E6%98%93%E9%94%99%E7%82%B9"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 启动线程时易错点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AD%89%E5%BE%85%E7%BA%BF%E7%A8%8B%E5%AE%8C%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 等待线程完成</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -454,13 +472,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -506,7 +524,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:32</span>
+    <span title="站点阅读时长">9:33</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

@@ -40,7 +40,7 @@
 <meta property="og:image" content="http://example.com/2022/10/26/Transformer/cat.png">
 <meta property="og:image" content="http://example.com/2022/10/26/Transformer/fc.png">
 <meta property="article:published_time" content="2022-10-26T02:38:28.000Z">
-<meta property="article:modified_time" content="2022-10-26T13:39:10.717Z">
+<meta property="article:modified_time" content="2023-02-24T14:03:00.162Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="Transformer">
@@ -234,10 +234,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-10-26 10:38:28 / 修改时间：21:39:10" itemprop="dateCreated datePublished" datetime="2022-10-26T10:38:28+08:00">2022-10-26</time>
+              <time title="创建时间：2022-10-26 10:38:28" itemprop="dateCreated datePublished" datetime="2022-10-26T10:38:28+08:00">2022-10-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-24 22:03:00" itemprop="dateModified" datetime="2023-02-24T22:03:00+08:00">2023-02-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -301,6 +307,7 @@
         <h4 id="transformer是什么">1. Transformer是什么</h4>
 <p><code>Transformer</code>是一个利用注意力机制来提高模型训练速度的模型。关于注意力机制可以参看<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/52119092">这篇文章</a>，<strong>trasnformer可以说是完全基于自注意力机制的一个深度学习模型</strong>，因为它适用于并行化计算，和它本身模型的复杂程度导致它在精度和性能上都要高于之前流行的RNN循环神经网络。</p>
 <p>对于RNN来说它一般只关注附近的关系关联，而没有从全局寻找关系紧密的相关特征。因此对于一些特定的场景，不能够很好的处理。而Transforme放眼全局,通过计算权重得到相应的向量，得到更为全面的特征</p>
+<span id="more"></span>
 <h4 id="transformer的构成">2. Transformer的构成</h4>
 <p>里面主要有两部分组成：<code>Encoder</code>和<code>Decoder</code> <img src="/2022/10/26/Transformer/Constitue.png" width="500"> 当我输入一个文本<code>机器学习</code>的时候，该文本数据会先经过一个叫Encoders的模块，对该文本进行编码，然后将编码后的数据再传入一个叫Decoders的模块进行解码，解码后就得到了翻译后的文本，对应的我们称Encoders为编码器，Decoders为解码器。</p>
 <p>这个编码模块里边，有很多小的编码器，一般情况下，<code>Encoders</code>里边有6个小编码器，同样的，<code>Decoders</code>里边有6个小解码器。 <img src="/2022/10/26/Transformer/encorder.png" width="500"></p>
@@ -459,13 +466,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -511,7 +518,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:32</span>
+    <span title="站点阅读时长">9:33</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>

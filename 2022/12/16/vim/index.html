@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://example.com/2022/12/16/vim/fenping.png">
 <meta property="og:image" content="http://example.com/2022/12/16/vim/others.png">
 <meta property="article:published_time" content="2022-12-16T03:50:28.000Z">
-<meta property="article:modified_time" content="2022-12-16T05:57:09.961Z">
+<meta property="article:modified_time" content="2023-02-24T14:03:32.202Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="vim">
@@ -232,10 +232,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-12-16 11:50:28 / 修改时间：13:57:09" itemprop="dateCreated datePublished" datetime="2022-12-16T11:50:28+08:00">2022-12-16</time>
+              <time title="创建时间：2022-12-16 11:50:28" itemprop="dateCreated datePublished" datetime="2022-12-16T11:50:28+08:00">2022-12-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-24 22:03:32" itemprop="dateModified" datetime="2023-02-24T22:03:32+08:00">2023-02-24</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -299,7 +305,10 @@
         <h5 id="vim的三种模式">6.1 vim的三种模式</h5>
 <p>vi有三种基本工作模式: <strong>命令模式、文本输入模式(编辑模式)、末行模式</strong></p>
 <ul>
-<li><p><strong>命令模式：</strong> <strong>任何时候,不管用户处于何种模式,只要按一下<code>ESC</code>键,即可使<code>vi</code>进入命令模式</strong>。我们在<code>shell</code>环境(提示符为<code>$</code>)下输入启动<code>vim</code>命令，进入编辑器时，也是处于该模式下。在命令模式下，用户可以输入各种合法的<code>vi</code>命令，用于管理自己的文档。<strong>此时从键盘上输入的任何字符都被当做编辑命令来解释，若输入的字符是合法的<code>vi</code>命令，则<code>vi</code>在接受用户命令之后完成相应的动作</strong>。但需注意的是，所输入的命令并不在屏幕上显示出来。若输入的字符不是<code>vi</code>的合法命令，<code>vi</code>会响铃报警。</p></li>
+<li><strong>命令模式：</strong> <strong>任何时候,不管用户处于何种模式,只要按一下<code>ESC</code>键,即可使<code>vi</code>进入命令模式</strong>。我们在<code>shell</code>环境(提示符为<code>$</code>)下输入启动<code>vim</code>命令，进入编辑器时，也是处于该模式下。在命令模式下，用户可以输入各种合法的<code>vi</code>命令，用于管理自己的文档。<strong>此时从键盘上输入的任何字符都被当做编辑命令来解释，若输入的字符是合法的<code>vi</code>命令，则<code>vi</code>在接受用户命令之后完成相应的动作</strong>。但需注意的是，所输入的命令并不在屏幕上显示出来。若输入的字符不是<code>vi</code>的合法命令，<code>vi</code>会响铃报警。</li>
+</ul>
+<span id="more"></span>
+<ul>
 <li><p>文本输入模式： 在命令模式下输入插入命令<code>i（I）、附加命令a（A） 、打开命令o（O）、替换命s（S）</code>都可以进入文本输入模式，此时vi窗口的最后一行会显示“插入”,可进行文本编辑.</p></li>
 <li><p>末行模式： 末行模式下，用户可以对文件进行一些附加处理。尽管命令模式下的命令可以完成很多功能，但要执行一些如字符串查找、替换、显示行号等操作还是必须要进入末行模式的。<strong>在命令模式下，输入冒号<code>:</code>即可进入末行模式。此时vi窗口的状态行会显示出冒号，等待用户输入命令。用户输入完成后，按回车执行，之后<code>vi</code>编辑器又自动返回到命令模式下</strong> <img src="/2022/12/16/vim/vi-vim.gif"></p></li>
 </ul>
@@ -375,7 +384,7 @@
       <i class="fa fa-chevron-left"></i> Effective C++
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/12/16/blog%E5%9F%9F%E5%90%8D%E6%8C%82%E9%9D%A0/" rel="next" title="blog域名挂靠">
+    <a href="/2022/12/16/blog/" rel="next" title="blog域名挂靠">
       blog域名挂靠 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -460,13 +469,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -512,7 +521,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:32</span>
+    <span title="站点阅读时长">9:33</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
