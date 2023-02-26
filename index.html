@@ -14,10 +14,12 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
@@ -192,6 +194,346 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">GOF23</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-25 10:08:24" itemprop="dateCreated datePublished" datetime="2023-02-25T10:08:24+08:00">2023-02-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-26 16:44:40" itemprop="dateModified" datetime="2023-02-26T16:44:40+08:00">2023-02-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="概览">1 概览</h4>
+<p>23种设计模式主要可以分为三种类型：</p>
+<ul>
+<li><p><strong>创建型模式：用来创建对象</strong></p>
+<ul>
+<li>单例模式、工厂模式、抽象工厂模式、建造者模式、原型模式。</li>
+</ul></li>
+<li><p><strong>结构型模式：是从程序的结构上实现松耦合，从而可以扩大整体的类结构，用来解决更大的问题。（关注对象和类的组成关系）</strong></p>
+<ul>
+<li>适配器模式、桥接模式、装饰模式、组合模式、外观模式、享元模式、代理模式。</li>
+</ul></li>
+<li><p><strong>行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责</strong></p>
+<ul>
+<li>模版方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式。 <img src="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/GOF23.png" width="700"></li>
+</ul></li>
+</ul>
+<h5 id="原则">1.1 原则</h5>
+<ul>
+<li>单一职责原则(<code>SRP</code>)：一个类或者模块只负责完成一个职责（或者功能）。</li>
+<li>开闭原则(<code>OCP</code>)：软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的</li>
+<li>接口独立原则(<code>ISP</code>)：接口分离原则指在设计时采用多个与特定客户类有关的接口比采用一个通用的接口要好</li>
+<li>依赖倒置原则(<code>DIP</code>)：程序要依赖于抽象接口，不要依赖于具体实现</li>
+<li>高内聚：一个模块或一个类被设计成只支持一组相关的功能时，它具有高内聚。反之，被设计成一组不相关的功能时，我们说它具有低内聚。</li>
+<li>低耦合：每个个模块之间或类的关联性降到可控范围的最低</li>
+</ul>
+<h4 id="单例模式">2 单例模式</h4>
+<p>保证证一个类只有一个实例，并且提供一个访问该实例的全局访问点。</p>
+<p><strong>单例模式同时解决了两个问题</strong></p>
+<ul>
+<li>保证一个类只有一个实例。
+<ul>
+<li>为什么会想要控制一个类所拥有的实例数量？ 最常见的原因是控制某些共享资源 （例如数据库或文件） 的访问权限。它的运作方式是这样的： 如果创建了一个对象， 同时过一会儿后决定再创建一个新对象， 此时会获得之前已创建的对象， 而不是一个新对象。</li>
+</ul>
+<p>注意， 普通构造函数无法实现上述行为， 因为构造函数的设计决定了它必须总是返回一个新对象。</p></li>
+<li><p>为该实例提供一个全局访问节点。 全局变量在使用上十分方便， 但同时也非常不安全， 因为任何代码都有可能覆盖掉那些变量的内容， 从而引发程序崩溃。</p>
+<p>和全局变量一样， 单例模式也允许在程序的任何地方访问特定对象。 但是它可以保护该实例不被其他代码覆盖。</p>
+<p>还有一点： 我们不会希望解决同一个问题的代码分散在程序各处的。 因此更好的方式是将其放在同一个类中， 特别是当其他代码已经依赖这个类时更应该如此。</p></li>
+</ul>
+<p><strong>常见的五种单例模式实现方式</strong></p>
+<ul>
+<li>饿汉式（线程安全，调用效率高。 但是，不能延时加载。）</li>
+<li>普通懒汉式（线程不安全，调用效率不高。 但是，可以延时加载。）</li>
+<li>双重检测锁式（加锁的懒汉式，使用互斥锁保证线程安全）</li>
+<li>静态局部变量的懒汉单例(线程安全，调用效率高。 但是，可以延时加载)</li>
+<li>std::call_once 实现单例（C++11线程安全）(线程安全，调用效率高，不能延时加载)</li>
+</ul>
+<p><strong><em>注意</em></strong>：</p>
+<ul>
+<li>懒汉式的名称来源是因为系统运行中，实例并不存在，只有当需要使用该实例时，才会去创建并使用实例；这种方式要考虑线程安全。<strong>而饿汉式则是系统一运行，就初始化创建实例，当需要时，直接调用即可。这种方式本身就线程安全，没有多线程的线程安全问题。</strong></li>
+<li><strong>这里的线程安全是指创建单例对象时的，使用单例对像时的安全要开发者自己保证</strong></li>
+</ul>
+<h5 id="饿汉式">2.1 饿汉式</h5>
+<p>饿汉式之所以线程安全是因为其实例是在代码一运行就初始话创建的，其本身就是线程安全的 <strong>实现步骤</strong>：</p>
+<ul>
+<li>设置构造、析构、拷贝和赋值函数私有化，禁止外部构造和析构</li>
+<li>创建静态接口，以获得单例对象，并定义一个类内私有的类静态成员指针</li>
+<li><strong>类外静态初始化一个单例对象</strong></li>
+</ul>
+<p>头文件： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">static</span> Singelton* <span class="title">getsingle</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//释放单例，进程退出时调用</span></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">delteSingle</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">Singleton</span>();</span><br><span class="line">	<span class="built_in">Singleton</span>(<span class="type">const</span> Singleton&amp; single);</span><br><span class="line">	<span class="type">const</span> Singleton&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Singleton&amp; single);</span><br><span class="line">	~<span class="built_in">Singleton</span>();</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">static</span> Singleton *g_singleton;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 源文件： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//装载类时就会初始化创建实例，本身就是线程安全</span></span><br><span class="line">Singleton* Singleton::g_singleton = <span class="built_in">new</span>(std::nothrow)<span class="built_in">Singleton</span>();</span><br><span class="line"></span><br><span class="line"><span class="function">Singleton* <span class="title">Singleton::getsingle</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> g_singleton;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Singleton::delteSingle</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(g_singleton)&#123;</span><br><span class="line">		<span class="keyword">delete</span> g_singleton;</span><br><span class="line">		g_singleton = <span class="literal">nullptr</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Singleton::<span class="built_in">Singleton</span>()&#123;</span><br><span class="line">	cout&lt;&lt;<span class="string">&quot;构造函数&quot;</span>&lt;&lt;endl;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h5 id="加锁懒汉模式双重检测锁">2.2 加锁懒汉模式（双重检测锁）</h5>
+<p>懒汉模式因为需要使用时才创建该实例，因此一般对线程来说是不安全的，需要通过加互斥锁来保证线程安全，但加锁的开销还是很大的，<strong>因此加锁的懒汉模式用两个<code>if</code>判断语句来检测是否加锁，也叫双重检测锁式</strong> <strong>步骤</strong></p>
+<ul>
+<li>设置构造、析构、拷贝和赋值函数私有化，禁止外部构造和析构</li>
+<li>创建静态接口，以获得单例对象，<strong>并定义一个类内私有的类静态成员指针并在类外设置为nullptr</strong></li>
+<li>在静态接口使用双重<code>if</code>即双捡锁判断是否加锁来赋值 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//头文件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Singleton</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">static</span> Singelton* <span class="title">getsingle</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//释放单例，进程退出时调用</span></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">delteSingle</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">Singleton</span>();</span><br><span class="line">	<span class="built_in">Singleton</span>(<span class="type">const</span> Singleton&amp; single);</span><br><span class="line">	<span class="type">const</span> Singleton&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Singleton&amp; single);</span><br><span class="line">	~<span class="built_in">Singleton</span>();</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">static</span> Singleton *g_singleton;</span><br><span class="line">	<span class="type">static</span> std::mutex m_Mutex;</span><br><span class="line">&#125;；</span><br><span class="line"><span class="comment">//源文件</span></span><br><span class="line"><span class="comment">//初始化静态成员变量</span></span><br><span class="line">Singleton* Singleton:: g_singleton = <span class="literal">nullptr</span>;</span><br><span class="line">std::mutex Singleton::m_Mutex;</span><br><span class="line"><span class="function">Singelton* <span class="title">Singleton::getsingle</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//使用两个if，双检锁：只有判断指针为空在加锁，每次调用该方法式避免每次都要加锁</span></span><br><span class="line">	<span class="comment">//若是空，则进入进行赋值</span></span><br><span class="line">	<span class="keyword">if</span>(g_singleton==<span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">			std::unique_lock&lt;std::mutex&gt;<span class="built_in">lock</span>(m_Mutex);	<span class="comment">//加锁</span></span><br><span class="line">			<span class="keyword">if</span>(g_singleton==<span class="literal">nullptr</span>)</span><br><span class="line">				g_singleton=<span class="built_in">new</span>(std::nothrow)<span class="built_in">Singleton</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> g_singleton;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="静态局部变量的懒汉单例">2.3 静态局部变量的懒汉单例</h5>
+<p>静态局部变量的懒汉单例，顾名思义就是在静态接口初始化一个静态变量(利用了静态变量只初始化一次的特性)</p>
+<p>步骤：</p>
+<ul>
+<li>设置构造、析构、拷贝和赋值函数私有化，禁止外部构造和析构</li>
+<li>创建静态接口，以获得单例对象</li>
+<li><strong>在静态接口初始化一个局部静态变量</strong>(只初始化一次)</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//头文件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Singleton</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">static</span> Singelton&amp; <span class="title">getsingle</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="comment">//释放单例，进程退出时调用</span></span><br><span class="line">	<span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">delteSingle</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">Singleton</span>();</span><br><span class="line">	<span class="built_in">Singleton</span>(<span class="type">const</span> Singleton&amp; single);</span><br><span class="line">	<span class="type">const</span> Singleton&amp; <span class="keyword">operator</span>=(<span class="type">const</span> Singleton&amp; single);</span><br><span class="line">	~<span class="built_in">Singleton</span>();</span><br><span class="line">&#125;；</span><br><span class="line"><span class="comment">//源文件</span></span><br><span class="line"></span><br><span class="line"><span class="function">Singelton&amp; <span class="title">Singleton::getsingle</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">static</span> Singleton g_single;</span><br><span class="line">	<span class="keyword">return</span> g_single;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>但是，这种方法也有点问题：在多线程场景下还是有可能会存在线程安全的问题，因为多线程同时调用 <code>gessingle()</code> 方法有可能还是会产生竞争。</p>
+<p>解决这个问题的一种做法是：在程序的单线程启动阶段就调用 <code>gessingle()</code> 方法。</p>
+<h5 id="stdcall_once-实现单例">2.4 std::call_once 实现单例</h5>
+<p>std::call_once修饰的代码表示只被执行一次，常与lambda联合使用。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mutex&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Singleton</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> std::shared_ptr&lt;Singleton&gt; <span class="title">getSingleton</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">Singleton</span>() &#123;</span><br><span class="line">        ..</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">Singleton</span>() &#123;</span><br><span class="line">       ...</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> std::shared_ptr&lt;Singleton&gt; singleton = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="type">static</span> std::once_flag singletonFlag;</span><br><span class="line"></span><br><span class="line"><span class="function">std::shared_ptr&lt;Singleton&gt; <span class="title">Singleton::getSingleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::<span class="built_in">call_once</span>(singletonFlag, [&amp;] &#123;</span><br><span class="line">        singleton = std::<span class="built_in">shared_ptr</span>&lt;Singleton&gt;(<span class="keyword">new</span> <span class="built_in">Singleton</span>());</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> singleton;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h5 id="适用场景">2.5 适用场景</h5>
+<ul>
+<li><p>如果程序中的某个类对于所有客户端只有一个可用的实例， 可以使用单例模式。 单例模式禁止通过除特殊构建方法以外的任何方式来创建自身类的对象。 该方法可以创建一个新对象， 但如果该对象已经被创建， 则返回已有的对象。</p></li>
+<li><p>如果需要更加严格地控制全局变量， 可以使用单例模式。 单例模式与全局变量不同， 它保证类只存在一个实例。 除了单例类自己以外， 无法通过任何方式替换缓存的实例。</p></li>
+<li><p>如要解决一个全局使用的类频繁的创建和销毁的问题，可以考虑单例模式</p></li>
+</ul>
+<p>请注意， 可以随时调整限制并设定生成单例实例的数量， 只需修改获取实例方法。</p>
+<h5 id="优缺点">2. 6 优缺点</h5>
+<ul>
+<li>优点
+<ul>
+<li>由于单例模式只生成一个实例，减少了系统性能开销，当一个对象的产生需要比较多的资源时，如读取配置、产生其他依赖对象时，则可以通过在应用启动时直接产生一个单例对象，然后永久驻留内存的方式来解决</li>
+<li>单例模式可以在系统设置全局的访问点，优化环共享资源访问，例如可以设计一个单例类，负责所有数据表的映射处理</li>
+</ul></li>
+<li>缺点
+<ul>
+<li>单例模式可能掩盖不良设计， 比如程序各组件之间相互了解过多等。</li>
+<li>该模式在多线程环境下需要进行特殊处理， 避免多个线程多次创建单例对象。</li>
+<li>单例的客户端代码单元测试可能会比较困难， 因为许多测试框架以基于继承的方式创建模拟对象。 由于单例类的构造函数是私有的， 而且绝大部分语言无法重写静态方法， 所以需要想出仔细考虑模拟单例的方法。 要么干脆不编写测试代码， 或者不使用单例模式。</li>
+</ul></li>
+</ul>
+<h5 id="与其他设计模式的关系">2.7 与其他设计模式的关系</h5>
+<ul>
+<li>外观模式类通常可以转换为单例模式类， 因为在大部分情况下一个外观对象就足够了。</li>
+<li>如果能将对象的所有共享状态简化为一个享元对象， 那么享元模式就和单例类似了。 但这两个模式有两个根本性的不同。
+<ul>
+<li>只会有一个单例实体， 但是享元类可以有多个实体， 各实体的内在状态也可以不同。</li>
+<li>单例对象可以是可变的。 享元对象是不可变的。</li>
+</ul></li>
+<li>抽象工厂模式、 生成器模式和原型模式都可以用单例来实现。</li>
+</ul>
+<h4 id="工厂模式">3 工厂模式</h4>
+<p><strong>工厂模式实现了创建者和调用者分离，本质上是实例化对象，用工厂方法代替创建对象</strong>。 同时，将选择实现类、创建对象统一管理和控制。<strong>从而将调用者跟我们的实现类解耦。</strong></p>
+<p>工厂模式可以分为三类：</p>
+<ul>
+<li><strong>简单工厂模式</strong>：用来生产同一等级结构中的任意产品。（对于增加新的产品，需要修改已有代码）</li>
+<li><strong>工厂方法模式</strong>：用来生产同一等级结构中的固定产品。（支持增加任意产品）</li>
+<li><strong>抽象工厂模式</strong>：用来生产不同产品族的全部产品。（对于增加新的产品，无能为力；支持增加产品族）</li>
+</ul>
+<h5 id="简单工厂模式">3.1 简单工厂模式</h5>
+<p>简单工厂模式也叫静态工厂模式，<strong>就是工厂类一般是使用静态方法， 通过接收的参数的不同来返回不同的对象实例</strong>。 其缺陷是对于增加新产品无能为力，不修改代码的话，是无法扩展的。</p>
+<p>因此对于简单工厂模式来说客户端只知道传入工厂类的参数，对于如何创建对象，调用什么产品类创建对象不关心，客户端只需要指定工厂类的公共方法即可； <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//基类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Phone</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	 <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">run</span><span class="params">()</span></span>=<span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//不同品牌手机的实现类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Huawei</span>:<span class="keyword">public</span> Phone</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">		cout&lt;&lt;<span class="string">&quot;HUAWEI&quot;</span>&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">iPhone</span>:<span class="keyword">public</span> Phone</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		cout&lt;&lt;<span class="string">&quot;iPhone&quot;</span>&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//工厂类</span></span><br><span class="line"><span class="function"><span class="keyword">class</span> <span class="title">phone_Factory</span><span class="params">()</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">static</span> Phone* <span class="title">Create</span><span class="params">(<span class="type">char</span> Type)</span></span>&#123;</span><br><span class="line">		Phone* ret=<span class="literal">nullptr</span>;</span><br><span class="line">		<span class="keyword">switch</span>(Type)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span><span class="number">&#x27;</span>H<span class="number">&#x27;</span>:</span><br><span class="line">				ret=<span class="keyword">new</span> <span class="built_in">Huawei</span>();</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span><span class="number">&#x27;</span>i<span class="number">&#x27;</span>:</span><br><span class="line">				ret=<span class="keyword">new</span> <span class="built_in">iPhone</span>();</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span></span>&#123;</span><br><span class="line">	Phone* phone_Object=phone_Factory::<span class="built_in">Create</span>(<span class="string">&#x27;H&#x27;</span>);</span><br><span class="line">	phone_Object-&gt;<span class="built_in">run</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> - 简单工厂模式中的静态方法根据输入的条件产生不同的类对象。</p>
+<ul>
+<li><p><strong>优点：</strong>工厂类是整个模式的关键.包含了必要的逻辑判断,根据客户端给定的信息,决定究竟应该创建哪个具体类的对象.通过使用工厂类,外界可以从直接创建具体产品对象的尴尬局面摆脱出来,仅仅需要负责“消费”对象就可以了。而不必管这些对象究竟如何创建及如何组织的。</p></li>
+<li><strong>缺点：</strong>
+<ul>
+<li>由于工厂类集中了所有实例的创建逻辑，违反了高内聚责任分配原则，将全部创建逻辑集中到了一个工厂类中；它所能创建的类只能是事先考虑到的，如果需要添加新的类，则就需要改变工厂类了。</li>
+<li>当系统中的具体产品类不断增多时候，可能会出现要求工厂类根据不同条件创建不同实例的需求．这种对条件的判断和对具体产品类型的判断交错在一起，很难避免模块功能的蔓延，对系统的维护和扩展非常不利；</li>
+</ul></li>
+</ul>
+<h5 id="工厂方法模式">3.2 工厂方法模式</h5>
+<p>修正了简单工厂模式中不遵守开放－封闭原则。工厂方法模式把选择判断交给客户端去实现，工厂只负责实例化各个实现类；</p>
+<p>即工厂方法模式和简单工厂模式最大的不同在于，简单工厂模式只有一个（对于一个项目或者一个独立模块而言）工厂类，内部要逻辑判断实例化哪一个类，<strong>而工厂方法模式有一组继承工厂基类的工厂类，各个工厂类各自实现对应的类实例化，其逻辑判断交由客户端去处理。</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//工厂基类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Factory</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> Phone* <span class="title">create</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//工厂类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Huawei_Factory</span>:<span class="keyword">public</span> Factory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> Phone* <span class="title">create</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Phone* ret =<span class="keyword">new</span> <span class="built_in">Huawei</span>();</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">iPhone_Factory</span>:<span class="keyword">public</span> Factory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> Phone* <span class="title">create</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Phone* ret=<span class="keyword">new</span> <span class="built_in">iPhone</span>();</span><br><span class="line">		<span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Phone* phone1=<span class="keyword">new</span> <span class="built_in">Huawei_Factory</span>().<span class="built_in">create</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<blockquote>
+<p>根据设计理论建议：工厂方法模式。但实际上，我们一般都用简单工厂模式。</p>
+</blockquote>
+</blockquote>
+<h5 id="工厂模式的优缺点">3.3 工厂模式的优缺点</h5>
+<ul>
+<li>可以避免创建者和具体产品之间的紧密耦合。工厂模式创建对象时不会对客户端暴露具体产品创建逻辑，并且是通过使用一个共同的接口来创建的新对象。</li>
+<li>单一职责原则。 可以将产品创建代码放在程序的单一位置， 从而使得代码更容易维护。</li>
+<li>开闭原则。 无需更改现有客户端代码， 就可以在程序中引入新的产品类型。</li>
+</ul>
+<h5 id="工厂模式的应用场景">3. 4 工厂模式的应用场景</h5>
+<ul>
+<li><p>当在编写代码的过程中，如果无法预知对象确切类别及其依赖关系，可使用工厂方法。</p>
+<p>工厂方法将创建产品的代码与实际使用产品的代码分离， 从而能在不影响其他代码的情况下扩展产品创建部分代码。</p>
+<p>例如， 如果需要向应用中添加一种新产品， 只需要开发新的创建者产品子类， 然后重写其工厂方法即可。</p></li>
+</ul>
+<h5 id="与其他设计模式的关系-1">3.5 与其他设计模式的关系</h5>
+<ul>
+<li>在许多设计工作的初期都会使用工厂方法模式 （较为简单， 而且可以更方便地通过子类进行定制），随后演化为使用抽象工厂模式、 原型模式或生成器模式（更灵活但更加复杂）。</li>
+<li>抽象工厂模式通常基于一组工厂方法， 但也可以使用原型模式来生成这些类的方法。</li>
+<li>可以同时使用工厂方法和迭代器模式来让子类集合返回不同类型的迭代器， 并使得迭代器与集合相匹配。</li>
+<li>原型并不基于继承， 因此没有继承的缺点。 另一方面， 原型需要对被复制对象进行复杂的初始化。 工厂方法基于继承， 但是它不需要初始化步骤。</li>
+<li>工厂方法是模板方法模式的一种特殊形式。 同时， 工厂方法可以作为一个大型模板方法中的一个步骤。与其他设计模式的关系</li>
+</ul>
+<h4 id="抽象工厂模式">4 抽象工厂模式</h4>
+<p><strong>抽象工厂模式是简单工厂和工厂方法的结合。</strong>工厂类：</p>
+<ul>
+<li><strong>抽象工厂模式有多个工厂（即抽象工厂-&gt;具体工厂），每个具体工厂又可以生产多种产品；因此抽象工厂模式是多个工厂，每个工厂一对多</strong></li>
+<li>简单工厂模式是一个工厂，自己一对多；</li>
+<li>工厂方法模式是多个工厂，每个工厂一对一</li>
+</ul>
+<p>且如果说简单工厂和工厂方法是对单个产品系列，那抽象工厂模式针对的是<strong>产品族</strong>，<strong>用来生产不同产品族的全部产品</strong>。在有多个业务品种、业务分类时，通过抽象工厂模式产生需要的对象是一种非常好的解决方式。就比如产品类：</p>
+<ul>
+<li>对于简单工厂和工厂方法，我们只讨论了华为和苹果手机，这样产品类从<code>手机-&gt;(Huawei/iPhone)</code> <img src="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/factory.png" width="600"></li>
+<li>而对于抽象工厂模式来说，其产品可对系列来说，比如说多加了一个电脑，这样可以以这样方式设计:<code>抽象产品类-&gt;HUAWEI、iPhone产品工厂-&gt;HUAWEI、iPhone手机/电脑</code> <img src="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/abstract.png" width="600"></li>
+</ul>
+<p>总结来说抽象工厂如下： <img src="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/ab.png" width="700"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">----------------产品-------------------------------------------</span><br><span class="line"><span class="comment">//抽象产品类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">product</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">product</span>(<span class="type">int</span> _price):<span class="built_in">prince</span>(_price)&#123;&#125;</span><br><span class="line">	<span class="keyword">virtual</span> ~<span class="built_in">product</span>()&#123;&#125;</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">getPrince</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> prince;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> price;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//抽象产品细分--HUAWEI</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Huawei_product</span>:<span class="keyword">public</span> product</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Huawei_product</span>(<span class="type">int</span> price,string color):<span class="built_in">product</span>(price),<span class="built_in">m_color</span>(color)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="title">Huawei_product</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">	<span class="comment">//获取颜色</span></span><br><span class="line">	<span class="function">string <span class="title">getColor</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> m_color;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	string m_color;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//HUAWEI具体产品类：手机和电脑</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Huawei_phone</span>:<span class="keyword">public</span> Huawei_product</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Huawei_phone</span>(<span class="type">int</span> price,string color,<span class="type">int</span> _type):</span><br><span class="line">		<span class="built_in">Huawei_product</span>(price,color),<span class="built_in">type</span>(_type&#123;&#125;</span><br><span class="line">	<span class="keyword">virtual</span> <span class="built_in">Huawei_phone</span>()&#123;&#125;</span><br><span class="line">	<span class="type">int</span> <span class="built_in">getType</span>()&#123;<span class="keyword">return</span> type;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> Huawei_phone:<span class="keyword">public</span> Huawei_computer</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Huawei_phone</span>(<span class="type">int</span> price,string color,string _type):</span><br><span class="line">		<span class="built_in">Huawei_product</span>(price,color),<span class="built_in">cpu_type</span>(_type&#123;&#125;</span><br><span class="line">	<span class="keyword">virtual</span> <span class="built_in">Huawei_phone</span>()&#123;&#125;</span><br><span class="line">	string <span class="built_in">getType</span>()&#123;<span class="keyword">return</span> type;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> cpu_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">...苹果产品略</span><br><span class="line">-----------------------------------------------------------</span><br><span class="line">工厂：</span><br><span class="line"><span class="keyword">class</span> Factory&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">virtual</span> product* <span class="built_in">getPhone</span>()=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">virtual</span> product* <span class="built_in">getComputer</span>()=<span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//具体工厂--HUAWEI工厂</span></span><br><span class="line"><span class="keyword">class</span> Huawei_factory:<span class="keyword">public</span> Factory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">virtual</span> product* <span class="built_in">getPhone</span>()&#123;</span><br><span class="line">		product* H_phone=<span class="keyword">new</span> <span class="built_in">Huawei_phone</span>(<span class="number">4399</span>,<span class="string">&quot;白色&quot;</span>,<span class="number">203</span>);</span><br><span class="line">		<span class="keyword">return</span> H_phone;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">virtual</span> product* <span class="built_in">getComputer</span>()&#123;</span><br><span class="line">			product* H_computer=<span class="keyword">new</span> <span class="built_in">Huawei_computer</span>(<span class="number">5699</span>,<span class="string">&quot;银色&quot;</span>,<span class="string">&quot;i7-12500h&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> H_computer;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体工厂类---Apple</span></span><br><span class="line"><span class="keyword">class</span> Apple_factory:<span class="keyword">public</span> Factory</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">virtual</span> product* <span class="built_in">getPhone</span>()&#123;</span><br><span class="line">		product* A_phone=<span class="keyword">new</span> <span class="built_in">Apple_phone</span>(<span class="number">4399</span>,<span class="string">&quot;白色&quot;</span>,<span class="number">203</span>);</span><br><span class="line">		<span class="keyword">return</span> A_phone;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">virtual</span> product* <span class="built_in">getComputer</span>()&#123;</span><br><span class="line">			product* A_computer=<span class="keyword">new</span> <span class="built_in">Apple_computer</span>(<span class="number">5699</span>,<span class="string">&quot;银色&quot;</span>,<span class="string">&quot;i7-12500h&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> A_computer;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h5 id="抽象工厂的优缺点">4.1 抽象工厂的优缺点</h5>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>具体类分离。具体产品类在具体工厂的实现中进行了分离和归类。</li>
+<li>易于更换产品族。当客户端想要使用哪个整个产品族时，只需要切换具体工厂即可。也避免客户端和具体产品代码的耦合。</li>
+<li>利于产品一致性。当产品族的各个产品需要在一起执行时，抽象工厂可以确保客户只操作同系列产品，而不会进行跨品牌的组合</li>
+<li>单一职责原则。 可以将产品生成代码抽取到同一位置， 使得代码易于维护。</li>
+</ul>
+<h5 id="抽象工厂适用场景">4.2 抽象工厂适用场景</h5>
+<ul>
+<li>如果代码需要与多个不同系列的相关产品交互， 但是由于无法提前获取相关信息， 或者出于对未来扩展性的考虑， 不希望代码基于产品的具体类进行构建， 在这种情况下， 可以使用抽象工厂。</li>
+<li>抽象工厂提供了一个接口， 可用于创建每个系列产品的对象。 只要代码通过该接口创建对象， 那么就不会生成与应用程序已生成的产品类型不一致的产品。</li>
+<li>如果有一个基于一组抽象方法的类， 且其主要功能因此变得不明确， 那么在这种情况下可以考虑使用抽象工厂模式。</li>
+<li>在设计良好的程序中， 每个类应该仅负责一件事。 如果在应用场景中一个类与多种类型产品交互， 就可以考虑将工厂方法抽取到独立的工厂类或具备完整功能的抽象工厂类中。</li>
+</ul>
+<h5 id="与其他模式的关系">4.3 与其他模式的关系</h5>
+<ul>
+<li>在许多设计工作的初期都会使用工厂方法模式（较为简单， 而且可以更方便地通过子类进行定制）， 随后演化为使用抽象工厂模式、原型模式或生成器模式](更灵活但更加复杂）。</li>
+<li>生成器重点关注如何分步生成复杂对象。 抽象工厂专门用于生产一系列相关对象。 抽象工厂会马上返回产品， 生成器则允许在获取产品前执行一些额外构造步骤。</li>
+<li>抽象工厂模式通常基于一组工厂方法， 但也可以使用原型模式来生成这些类的方法。</li>
+<li>当只需对客户端代码隐藏子系统创建对象的方式时， 可以使用抽象工厂来代替外观模式。</li>
+<li>可以将抽象工厂和桥接模式搭配使用。 如果由桥接定义的抽象只能与特定实现合作， 这一模式搭配就非常有用。 在这种情况下， 抽象工厂可以对这些关系进行封装， 并且对客户端代码隐藏其复杂性。</li>
+<li>抽象工厂、 生成器和原型都可以用单例模式来实现。</li>
+</ul>
+<h4 id="观察者模式">5 观察者模式</h4>
+<h4 id="代理模式">6 代理模式</h4>
+<h4 id="策略模式">7 策略模式</h4>
+<h4 id="装饰模式">8 装饰模式</h4>
+<h4 id="适配器模式">9 适配器模式</h4>
+<h4 id="外观模式">10 外观模式</h4>
+<h4 id="命令模式">11 命令模式</h4>
+<h4 id="迭代器模式">12 迭代器模式</h4>
+<h4 id="模板方法模式">13 模板方法模式</h4>
+<h4 id="组合模式">14 组合模式</h4>
+<h4 id="状态模式">15 状态模式</h4>
+<h4 id="责任链模式">16 责任链模式</h4>
+<ul>
+<li><p>责任链模式在面向对象程式设计里是一种软件设计模式，它包含了一些命令对象和一系列的处理对象。每一个处理对象决定它能处理哪些客户端的哪些请求，它也知道如何将它不能处理的命令对象传递给该链中的下一个处理对象；</p></li>
+<li><p>由于责任链的创建完全在客户端，因此新增新的具体处理者对原有类库没有任何影响，只需添加新的类，然后在客户端调用时添加即可。 符合开闭原则。</p></li>
+<li><p>因此发出这个请求的客户端可以不知道链上的哪一个对象最终处理这个请求，只需要发送即可，这使得系统可以在不影响客户端的情况下动态地重新组织和分配责任</p></li>
+</ul>
+<h5 id="实现">16.1 实现</h5>
+<p>责任链的实现方法有两种：</p>
+<ul>
+<li>链表方式定义职责链</li>
+<li><strong>非链表方式实现职责链：通过集合、数组生成职责链更加实用！</strong>实际上，很多项目中，每个具体的Handler并不是由开发团队定义的，而是项目上线后由外部单位追加的，所以使用链表方式定义COR链就很困难。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="优缺点-1">16.2 优缺点</h5>
+<ul>
+<li>优点
+<ul>
+<li>可以控制请求处理的顺序。</li>
+<li>单一职责原则。 可对发起操作和执行操作的类进行解耦。</li>
+<li>开闭原则。 可以在不更改现有代码的情况下在程序中新增处理者。</li>
+</ul></li>
+<li>缺点
+<ul>
+<li>部分请求可能未被处理</li>
+</ul></li>
+</ul>
+<h5 id="适用场景-1">16.3 适用场景</h5>
+<ul>
+<li><p>当程序需要使用不同方式处理不同种类请求，而且请求类型和顺序预先未知时，可以使用责任链模式。</p></li>
+<li><p>该模式能将多个处理者连接成一条链。 接收到请求后， 它会 “询问” 每个处理者是否能够对其进行处理。 这样所有处理者都有机会来处理请求。</p></li>
+<li><p>当必须按顺序执行多个处理者时， 可以使用该模式。</p></li>
+<li><p>无论以何种顺序将处理者连接成一条链， 所有请求都会严格按照顺序通过链上的处理者。</p></li>
+<li><p>如果所需处理者及其顺序必须在运行时进行改变， 可以使用责任链模式。</p></li>
+<li><p>如果在处理者类中有对引用成员变量的设定方法， 将能动态地插入和移除处理者， 或者改变其顺序。</p></li>
+</ul>
+<h5 id="与其他模式的关系-1">16.4 与其他模式的关系</h5>
+<ul>
+<li><p>责任链模式、命令模式、中介者模式和观察者模式用于处理请求发送者和接收者之间的不同连接方式：</p></li>
+<li><p>责任链按照顺序将请求动态传递给一系列的潜在接收者， 直至其中一名接收者对请求进行处理。</p></li>
+<li><p>命令在发送者和请求者之间建立单向连接。</p></li>
+<li><p>中介者清除了发送者和请求者之间的直接连接， 强制它们通过一个中介对象进行间接沟通。</p></li>
+<li><p>观察者允许接收者动态地订阅或取消接收请求。</p></li>
+<li><p>责任链通常和组合模式结合使用。 在这种情况下， 叶组件接收到请求后， 可以将请求沿包含全体父组件的链一直传递至对象树的底部。</p></li>
+<li><p>责任链的管理者可使用命令模式实现。 在这种情况下， 可以对由请求代表的同一个上下文对象执行许多不同的操作。</p></li>
+<li><p>还有另外一种实现方式， 那就是请求自身就是一个命令对象。 在这种情况下， 可以对由一系列不同上下文连接而成的链执行相同的操作。</p></li>
+<li><p>责任链和装饰模式的类结构非常相似。 两者都依赖递归组合将需要执行的操作传递给一系列对象。 但是， 两者有几点重要的不同之处。</p></li>
+<li><p>责任链的管理者可以相互独立地执行一切操作， 还可以随时停止传递请求。 另一方面， 各种装饰可以在遵循基本接口的情况下扩展对象的行为。 此外， 装饰无法中断请求的传递。</p></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -235,21 +577,7 @@
                 </span>
             </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -341,7 +669,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 21:57:41" itemprop="dateModified" datetime="2023-02-24T21:57:41+08:00">2023-02-24</time>
+                <time title="修改时间：2023-02-26 14:41:12" itemprop="dateModified" datetime="2023-02-26T14:41:12+08:00">2023-02-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -353,34 +681,20 @@
                 </span>
             </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/02/19/C-%E5%B9%B6%E5%8F%91/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/19/C-%E5%B9%B6%E5%8F%91/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -468,21 +782,7 @@
                 </span>
             </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -585,21 +885,7 @@
                 </span>
             </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -699,21 +985,7 @@
                 </span>
             </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -815,9 +1087,7 @@
                 </span>
             </span>
 
-          
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -913,21 +1183,7 @@
                 </span>
             </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/12/16/blog/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/16/blog/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -1030,21 +1286,7 @@
                 </span>
             </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/12/16/vim/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/16/vim/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -1143,21 +1385,7 @@
                 </span>
             </span>
 
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/29/Effective-C/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/29/Effective-C/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
+          <br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -1195,117 +1423,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/10/29/Effective-C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" class="post-title-link" itemprop="url">pytorch常用函数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-29 15:50:21" itemprop="dateCreated datePublished" datetime="2022-10-29T15:50:21+08:00">2022-10-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 22:02:23" itemprop="dateModified" datetime="2023-02-24T22:02:23+08:00">2023-02-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">深度学习算法</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>14k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>13 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="torch">1. torch</h4>
-<p>包 torch 包含了多维张量的数据结构以及基于其上的多种数学操作。另外，它也提供了多种工具，其中一些可以更有效地对张量和任意类型进行序列化。</p>
-<p>它有 CUDA 的对应实现，可以在 NVIDIA GPU 上进行张量运算(计算能力&gt;=2.0)。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1396,20 +1513,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1450,12 +1567,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">630k</span>
+    <span title="站点总字数">648k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:33</span>
+    <span title="站点阅读时长">9:49</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
@@ -1594,34 +1711,6 @@
 
   
 
-
-<script>
-NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
-  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
-    var GUEST = ['nick', 'mail', 'link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item => {
-      return GUEST.includes(item);
-    });
-    new Valine({
-      el         : '#valine-comments',
-      verify     : false,
-      notify     : false,
-      appId      : 'TXhU0V217D2k9wXcjdYcmYLt-gzGzoHsz',
-      appKey     : '7vt5hNdJIFoHxQb92AoWuR3E',
-      placeholder: "骚言骚语",
-      avatar     : 'wavatar',
-      meta       : guest,
-      pageSize   : '10' || 10,
-      visitor    : false,
-      lang       : '' || 'zh-cn',
-      path       : location.pathname,
-      recordIP   : true,
-      serverURLs : ''
-    });
-  }, window.Valine);
-});
-</script>
 
 </body>
 </html>
