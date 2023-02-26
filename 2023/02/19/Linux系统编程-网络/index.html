@@ -29,22 +29,22 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 TCP&#x2F;IP协议 TCP&#x2F;IP协议套件是一个分层联网协议，它包括因特网协议(ip)和位于其上层的各个协议层。 1.1 OSI七层模型和TCP&#x2F;IP模型  各层协议主要有：  应用层协议: FTP（文件传输协议）、HTTP（超文本传输协议）、NFS（网络文件系统） 传输层协议： TCP （传输控制协议）、UDP（用户数据报协议） 网络层：IP（英特网互联协议）、ICMP（英特网控制">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/osi.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/TCP.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/TCP_connect.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/TCP_stat.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/bigorsmall.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/socket_domain.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/socket_type.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/client_server.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/compare.png">
-<meta property="og:image" content="http://example.com/Linux系统编程-网络/select.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/osi.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/TCP.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/TCP_connect.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/TCP_stat.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/bigorsmall.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/socket_domain.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/socket_type.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/client_server.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/compare.png">
+<meta property="og:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/select.png">
 <meta property="article:published_time" content="2023-02-19T06:26:39.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:07:46.701Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Linux coding">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/Linux系统编程-网络/osi.png">
+<meta name="twitter:image" content="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/osi.png">
 
 <link rel="canonical" href="http://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/">
 
@@ -288,7 +288,7 @@
         <h4 id="tcpip协议">1 TCP/IP协议</h4>
 <p>TCP/IP协议套件是一个分层联网协议，它包括因特网协议(ip)和位于其上层的各个协议层。</p>
 <h5 id="osi七层模型和tcpip模型">1.1 OSI七层模型和TCP/IP模型</h5>
-<p><img src="/Linux系统编程-网络/osi.png" width="500"> 各层协议主要有：</p>
+<p><img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/osi.png" width="500"> 各层协议主要有：</p>
 <ul>
 <li>应用层协议: FTP（文件传输协议）<strong>、HTTP（超文本传输协议）</strong>、NFS（网络文件系统）</li>
 <li><strong>传输层协议： TCP （传输控制协议）、UDP（用户数据报协议）</strong></li>
@@ -297,7 +297,7 @@
 </ul>
 <span id="more"></span>
 <h5 id="tcp报文格式">1.2 TCP报文格式</h5>
-<p><img src="/Linux系统编程-网络/TCP.png" width="500"> - 序列号：该报文的序列号，标识TCP发端向TCP接收端发送的数据字节流 - <strong>确认序列号</strong>：如果设定了<code>ACK</code>,那么从这个字段包含了接收放期望从发送方接收到的下一个数据字节的序列号 - 首部长度：该字段标识了TCP报文首部长度，该字段4个比特网位，则表示首部长度最大可达60字节 - 保留位：该字段有4位未使用的比特位 - 控制位： - <code>CWR</code>：拥塞窗口减小标记 - <code>ECE</code>：显示的拥塞通知回显标记 - <code>URG</code>：若设置了该位，则紧急指针字段包含的信息有效 - <strong><code>ACK</code>：若设置了该位，则确认序列号字段包含的信息有效</strong> - <code>PSH</code>：将所有收到的数据发送接收的进程 - <code>RST</code>：重置连接 - <strong><code>SYN</code>：同步序列号</strong> - <strong><code>FIN</code>：发送端提示已经完成了发送任务</strong></p>
+<p><img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/TCP.png" width="500"> - 序列号：该报文的序列号，标识TCP发端向TCP接收端发送的数据字节流 - <strong>确认序列号</strong>：如果设定了<code>ACK</code>,那么从这个字段包含了接收放期望从发送方接收到的下一个数据字节的序列号 - 首部长度：该字段标识了TCP报文首部长度，该字段4个比特网位，则表示首部长度最大可达60字节 - 保留位：该字段有4位未使用的比特位 - 控制位： - <code>CWR</code>：拥塞窗口减小标记 - <code>ECE</code>：显示的拥塞通知回显标记 - <code>URG</code>：若设置了该位，则紧急指针字段包含的信息有效 - <strong><code>ACK</code>：若设置了该位，则确认序列号字段包含的信息有效</strong> - <code>PSH</code>：将所有收到的数据发送接收的进程 - <code>RST</code>：重置连接 - <strong><code>SYN</code>：同步序列号</strong> - <strong><code>FIN</code>：发送端提示已经完成了发送任务</strong></p>
 <ul>
 <li>窗口大小：该字段用在接收端发送ACK确认时提示自己可接受数据的空间大小</li>
 <li>校验和：16位的检验</li>
@@ -343,7 +343,7 @@
 <ul>
 <li><strong>只有SYN位置1表示连接请求。</strong></li>
 <li><strong>只有ACK置1表示ACK报文段，携带数据时会消耗序号seq，不携带则不消耗</strong></li>
-<li><strong>ACK和SYN都置1，不能携带数据，但消耗1个序号seq</strong> <img src="/Linux系统编程-网络/TCP_connect.png" width="400"></li>
+<li><strong>ACK和SYN都置1，不能携带数据，但消耗1个序号seq</strong> <img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/TCP_connect.png" width="400"></li>
 </ul>
 <h6 id="三次握手">1.4.1 三次握手</h6>
 <ul>
@@ -371,7 +371,7 @@
 <li>经过2MSL时间，可以使本次连接持续时间内所以产生的报文段(主要针对滞留在网络中的）都失效，这样就可避免已失效的本次链接请求影响下一次链接请求。</li>
 </ul>
 <h6 id="tcp状态转换图">1.4.3 TCP状态转换图</h6>
-<p><img src="/Linux系统编程-网络/TCP_stat.png" width="500"></p>
+<p><img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/TCP_stat.png" width="500"></p>
 <ul>
 <li><code>CLOSED</code>：表示初始状态。</li>
 <li><code>LISTEN</code>：该状态表示服务器端的某个SOCKET处于监听状态，可以接受连接。</li>
@@ -404,7 +404,7 @@
 <li>存储整数时在最小内存地址先存储最高位的称为大端，<strong>低位存低地址，高位存高地址</strong>（也叫网络字节序）</li>
 <li>存储整数时在最小内存地址先存储最低位的称为小端，<strong>低位存高地址，高位存低地址</strong></li>
 </ul>
-<p><img src="/Linux系统编程-网络/bigorsmall.png" width="500"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">unit32_t</span> <span class="title">htonl</span><span class="params">(<span class="type">unit32_t</span> hostlong)</span>	<span class="comment">//host to newwork long</span></span></span><br><span class="line"><span class="function"><span class="type">unit16_t</span> <span class="title">htons</span><span class="params">(<span class="type">unit16_t</span> hostshort)</span></span></span><br><span class="line"><span class="function"><span class="type">unit32_t</span> <span class="title">ntohl</span><span class="params">(<span class="type">unit32_t</span> netlong)</span></span></span><br><span class="line"><span class="function"><span class="type">nuit16_t</span> <span class="title">ntohs</span><span class="params">(<span class="type">unit16_t</span> netshort)</span></span></span><br></pre></td></tr></table></figure> 示例deamon: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#incldue <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#incldue <span class="string">&lt;apra/inet.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">char</span> buf[<span class="number">4</span>]=&#123;<span class="number">192</span>,<span class="number">168</span>,<span class="number">1</span>,<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="comment">//int is 4B,char is 1B,can cover by int just right</span></span><br><span class="line">	<span class="type">int</span> num =*(<span class="type">int</span>*)buf;</span><br><span class="line">	<span class="type">int</span> sum=<span class="built_in">htonl</span>(num);</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> *p=&amp;num;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d %d %d %d&quot;</span>,*p,*(p+<span class="number">1</span>),*(p+<span class="number">2</span>),*(p=<span class="number">3</span>));</span><br><span class="line">	<span class="type">int</span> sum1=<span class="built_in">ntohl</span>(num);</span><br><span class="line">	p=&amp;sum;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d %d %d %d&quot;</span>,*p,*(p+<span class="number">1</span>),*(p+<span class="number">2</span>),*(p=<span class="number">3</span>));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/bigorsmall.png" width="500"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">unit32_t</span> <span class="title">htonl</span><span class="params">(<span class="type">unit32_t</span> hostlong)</span>	<span class="comment">//host to newwork long</span></span></span><br><span class="line"><span class="function"><span class="type">unit16_t</span> <span class="title">htons</span><span class="params">(<span class="type">unit16_t</span> hostshort)</span></span></span><br><span class="line"><span class="function"><span class="type">unit32_t</span> <span class="title">ntohl</span><span class="params">(<span class="type">unit32_t</span> netlong)</span></span></span><br><span class="line"><span class="function"><span class="type">nuit16_t</span> <span class="title">ntohs</span><span class="params">(<span class="type">unit16_t</span> netshort)</span></span></span><br></pre></td></tr></table></figure> 示例deamon: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#incldue <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#incldue <span class="string">&lt;apra/inet.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">char</span> buf[<span class="number">4</span>]=&#123;<span class="number">192</span>,<span class="number">168</span>,<span class="number">1</span>,<span class="number">2</span>&#125;;</span><br><span class="line">	<span class="comment">//int is 4B,char is 1B,can cover by int just right</span></span><br><span class="line">	<span class="type">int</span> num =*(<span class="type">int</span>*)buf;</span><br><span class="line">	<span class="type">int</span> sum=<span class="built_in">htonl</span>(num);</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> *p=&amp;num;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d %d %d %d&quot;</span>,*p,*(p+<span class="number">1</span>),*(p+<span class="number">2</span>),*(p=<span class="number">3</span>));</span><br><span class="line">	<span class="type">int</span> sum1=<span class="built_in">ntohl</span>(num);</span><br><span class="line">	p=&amp;sum;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d %d %d %d&quot;</span>,*p,*(p+<span class="number">1</span>),*(p+<span class="number">2</span>),*(p=<span class="number">3</span>));</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h5 id="ip转换">2.3 ip转换</h5>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"> <span class="function"><span class="type">int</span> <span class="title">inet_pton</span><span class="params">(<span class="type">int</span> af, <span class="type">const</span> <span class="type">char</span> *src, <span class="type">void</span> *dst)</span></span>;</span><br><span class="line">功能: 将点分十进制串 转成<span class="number">32</span>位网络大端的数据(<span class="string">&quot;192.168.1.2&quot;</span>  ==&gt;   )</span><br><span class="line">参数:</span><br><span class="line">    af : </span><br><span class="line">        AF_INET         IPV4</span><br><span class="line">        AF_INET6        IPV6</span><br><span class="line">  src: 点分十进制串的首地址 </span><br><span class="line">  dst : <span class="number">32</span>位网络数据的地址 </span><br><span class="line">成功返回<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">const</span> <span class="type">char</span> *<span class="title">inet_ntop</span><span class="params">(<span class="type">int</span> af, <span class="type">const</span> <span class="type">void</span> *src,</span></span></span><br><span class="line"><span class="params"><span class="function">                             <span class="type">char</span> *dst, <span class="type">socklen_t</span> size)</span></span>;</span><br><span class="line">功能: 将<span class="number">32</span>位大端的网络数据转成点分十进制串</span><br><span class="line">参数:</span><br><span class="line">    af : AF_INET</span><br><span class="line">    src : <span class="number">32</span>位大端的网络数 地址</span><br><span class="line">    dst : 存储点分十进制串 地址</span><br><span class="line">    size : 存储点分制串数组的大小  ，一般为<span class="number">16</span></span><br><span class="line">返回值: 存储点分制串数组首地址</span><br></pre></td></tr></table></figure>
 <p>示例： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;arpa/inet.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">char</span> buf[]=<span class="string">&quot;192.16.1.2&quot;</span>;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> num=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">inet_pton</span>(AF_INET,buf,&amp;num);</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span>* p=(<span class="type">unsigned</span> <span class="type">char</span>*)&amp;num;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d %d %d %d\n&quot;</span>,*p,*(p+<span class="number">1</span>),*(p+<span class="number">2</span>),*(p=<span class="number">3</span>));</span><br><span class="line">	cahr ip[<span class="number">16</span>]=<span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,<span class="built_in">inet_ntop</span>(AF_INET,&amp;num,ip,<span class="number">16</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -420,13 +420,13 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">sockaddr</span> &#123;</span><br><span class="line">    <span class="type">sa_family_t</span> sa_family;     <span class="comment">/* address family, AF_xxx */</span></span><br><span class="line">    <span class="type">char</span> sa_data[<span class="number">14</span>];          <span class="comment">/* 14 bytes of protocol address */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h4 id="socket套接字">3 socket套接字</h4>
 <p>socket是一钟IPC方法，它允许位于同一主机或使用网络连接起来的不同主机上的应用程序之间能够交换数据。常见的就是： - UNIX domain(AF_UNIX)允许在同一主机上的应用程序之间通信。 - <strong>IPv4(AF_INET)domain允许在使用因特网协议第四版(IPv4)网络连接起来的应用程序之间通信</strong> - <strong>IPv6(AF_INET6)domain允许在使用因特网协议第六版(IPv6)网络连接起来的应用程序之间通信</strong></p>
-<p>这里我们主要对网络间通信做说明 <img src="/Linux系统编程-网络/socket_domain.png" width="600"></p>
-<p>同样在网络通信中socket支持两种形式的传输一个是<strong>流socket(TCP socket)</strong>，另一个是<strong>数据报socket(UDP socket)</strong>，顾名思义，<strong>它们在传输层走的协议分别是TCP和UDP</strong> <img src="/Linux系统编程-网络/socket_type.png" width="600"></p>
+<p>这里我们主要对网络间通信做说明 <img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/socket_domain.png" width="600"></p>
+<p>同样在网络通信中socket支持两种形式的传输一个是<strong>流socket(TCP socket)</strong>，另一个是<strong>数据报socket(UDP socket)</strong>，顾名思义，<strong>它们在传输层走的协议分别是TCP和UDP</strong> <img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/socket_type.png" width="600"></p>
 <h5 id="sockettcpudp服务器通信步骤">3.1 socket：TCP/UDP服务器通信步骤</h5>
 <p><strong>TCP服务器通信步骤：</strong></p>
 <ul>
 <li><strong>服务器：</strong>创建套接字 socket-&gt; 绑定 bind-&gt;监听 listen-&gt;提取 accept-&gt;读写-&gt;关闭</li>
-<li><strong>客户端</strong>：创建套接字 socket-&gt; 建立连接 connect <img src="/Linux系统编程-网络/client_server.png" width="500"></li>
+<li><strong>客户端</strong>：创建套接字 socket-&gt; 建立连接 connect <img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/client_server.png" width="500"></li>
 </ul>
 <p><strong>UDP服务器通信步骤：</strong></p>
 <ul>
@@ -489,10 +489,10 @@
 <h4 id="高并发技术io多路复用">5 高并发技术(IO多路复用)</h4>
 <h5 id="多路io转接复用服务器">5.1 多路IO转接(复用)服务器</h5>
 <p>多路IO转接服务器也叫做多任务IO服务器。<strong>该类服务器实现的主旨思想是，不再由应用程序自己监视客户端连接，取而代之由内核替应用程序监视文件描述符的属性变化，查看它们是否准备好执行I/O。</strong></p>
-<p>主要使用的方法有三种：select、poll、epoll <img src="/Linux系统编程-网络/compare.png" width="500"></p>
+<p>主要使用的方法有三种：select、poll、epoll <img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/compare.png" width="500"></p>
 <h5 id="select">5.2 select</h5>
 <h6 id="select原理">5.2.1 select原理</h6>
-<p><img src="/Linux系统编程-网络/select.png" width="600"> select拜托内核去监听<code>cfd</code>和<code>lfd</code>，在应用层上<strong>我们需要人为的备份一份<code>fd_set</code>集合称为<code>oldset</code>，用于每次监听传入的集合。</strong></p>
+<p><img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/select.png" width="600"> select拜托内核去监听<code>cfd</code>和<code>lfd</code>，在应用层上<strong>我们需要人为的备份一份<code>fd_set</code>集合称为<code>oldset</code>，用于每次监听传入的集合。</strong></p>
 <p><strong>select进入内核中后，将只会保留那些发生改变的文件描述符，并返回给应用层，此时，我们只需遍历一下返回的集合，就知道要做哪些操作（是读还是写，还是提取新<code>cfd</code>)。后再将更新后（既发生了lfd提取，如上图可增加7之后的文件描述符）或无需更新（未发生提取）的备份<code>oldset</code>传入select</strong>,再次监听。循环如此</p>
 <h6 id="select接口">5.2.2 select接口</h6>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">select的API</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/select.h&gt;</span></span></span><br><span class="line">       <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/time.h&gt;</span></span></span><br><span class="line">       <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line">       <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line">       <span class="function"><span class="type">int</span> <span class="title">select</span><span class="params">(<span class="type">int</span> nfds, fd_set *readfds, fd_set *writefds,</span></span></span><br><span class="line"><span class="params"><span class="function">                  fd_set *exceptfds, <span class="keyword">struct</span> timeval *timeout)</span></span>;</span><br><span class="line">功能: 监听多个文件描述符的属性变化(读,写,异常)</span><br><span class="line">     参数:</span><br><span class="line">    nfds  : 最大文件描述符+<span class="number">1</span>(select会遍历的文件描述符的取值范围，因为文件描述符是位图存储（默认共<span class="number">1024</span>个，<span class="number">0</span>、<span class="number">1</span>、<span class="number">2</span>默认是标准输入输出错误输出占有））</span><br><span class="line">    readfds : 需要监听的读的文件描述符存放集合</span><br><span class="line">    writefds :需要监听的写的文件描述符存放集合 </span><br><span class="line">    exceptfds : 需要监听的异常的文件描述符存放集合  </span><br><span class="line">    timeout: 多长时间监听一次   固定的时间,限时等待   <span class="literal">NULL</span> 永久监听</span><br><span class="line">    <span class="keyword">struct</span> timeval &#123;</span><br><span class="line">               <span class="type">long</span>    tv_sec;         <span class="comment">/* seconds */</span> 秒</span><br><span class="line">               <span class="type">long</span>    tv_usec;        <span class="comment">/* microseconds */</span>微妙</span><br><span class="line">           &#125;;</span><br><span class="line">返回值: 返回的是变化的文件描述符的个数</span><br><span class="line">注意: 变化的文件描述符会存在监听的集合中,未变化的文件描述符会从集合中删除</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="built_in">FD_CLR</span>(<span class="type">int</span> fd, fd_set *set);</span><br><span class="line"><span class="type">int</span>  <span class="built_in">FD_ISSET</span>(<span class="type">int</span> fd, fd_set *set);</span><br><span class="line"><span class="type">void</span> <span class="built_in">FD_SET</span>(<span class="type">int</span> fd, fd_set *set);</span><br><span class="line"><span class="type">void</span> <span class="built_in">FD_ZERO</span>(fd_set *set);</span><br></pre></td></tr></table></figure>
@@ -631,6 +631,7 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+    
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -891,24 +892,22 @@
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+<link rel="stylesheet" href="">
 
 <script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+  NexT.utils.getScript('', () => {
     var gitalk = new Gitalk({
-      clientID    : '',
-      clientSecret: '',
-      repo        : 'trluper.github.io',
-      owner       : '',
-      admin       : [''],
-      id          : '7086ad3c490cb2c50251cf8255fda684',
+      clientID: '123fe329fdbb06b0f1d1',
+      clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+      repo: 'trluper.github.io',
+      owner: 'trluper',
+      admin: ['trluper'],
+      id: '7086ad3c490cb2c50251cf8255fda684',
         language: '',
-      distractionFreeMode: 
+      distractionFreeMode: 'true'
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
-});
 </script>
 
 </body>

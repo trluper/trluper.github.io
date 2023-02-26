@@ -29,16 +29,16 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1. Git是什么 Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。Git原来是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/git使用教程/Git.png">
-<meta property="og:image" content="http://example.com/git使用教程/git-process.png">
-<meta property="og:image" content="http://example.com/git使用教程/Three.png">
-<meta property="og:image" content="http://example.com/git使用教程/git-command.png">
+<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png">
+<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-process.png">
+<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Three.png">
+<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-command.png">
 <meta property="article:published_time" content="2022-09-07T02:10:47.000Z">
 <meta property="article:modified_time" content="2023-02-24T13:59:10.264Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/git使用教程/Git.png">
+<meta name="twitter:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png">
 
 <link rel="canonical" href="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
 
@@ -290,7 +290,7 @@
 <li><p>2、<code>Git</code>把内容按元数据方式存储，而<code>SVN</code>是按文件：所有的资源控制系统都是把文件的元信息隐藏在一个类似 <code>.svn、.cvs</code>等的文件夹里。</p></li>
 <li><p>3、<code>Git</code>分支和<code>SVN</code>的分支不同：分支在 <code>SVN</code>中一点都不特别，其实它就是版本库中的另外一个目录。</p></li>
 <li><p>4、<code>Git</code>没有一个全局的版本号，而<code>SVN</code>有：目前为止这是跟<code>SVN</code>相比<code>Git</code>缺少的最大的一个特征。</p></li>
-<li><p>5、<code>Git</code>的内容完整性要优于<code>SVN</code>：<code>Git</code>的内容存储使用的是<code>SHA-1</code>哈希算法。这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。 <img src="/git使用教程/Git.png" width="500"></p></li>
+<li><p>5、<code>Git</code>的内容完整性要优于<code>SVN</code>：<code>Git</code>的内容存储使用的是<code>SHA-1</code>哈希算法。这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png" width="500"></p></li>
 </ul>
 <h4 id="git安装">2. Git安装</h4>
 <h5 id="linux下的git">2.1 Linux下的Git</h5>
@@ -320,14 +320,14 @@
 <li>如果其他人修改了，你可以更新资源。</li>
 <li>在提交前查看修改。</li>
 <li>提交修改。</li>
-<li>在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。 <img src="/git使用教程/git-process.png" width="500"></li>
+<li>在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-process.png" width="500"></li>
 </ul>
 <h4 id="git三个区和三个状态">4. git三个区和三个状态</h4>
 <p>我们先来理解下 Git 工作区、暂存区和版本库概念：</p>
 <ul>
 <li><strong>工作区</strong>：就是你在电脑里能看到的目录。</li>
 <li><strong>暂存区</strong>：英文叫<code>stage</code>或<code>index</code>。一般存放在<code>.git</code>目录下的<code>index</code>文件（<code>.git/index</code>）中，所以我们把暂存区有时也叫作索引（index）。</li>
-<li><p><strong>版本库</strong>：工作区有一个隐藏目录 <code>.git</code>，这个不算工作区，而是 <code>Git</code> 的版本库。 <img src="/git使用教程/Three.png" width="500"></p></li>
+<li><p><strong>版本库</strong>：工作区有一个隐藏目录 <code>.git</code>，这个不算工作区，而是 <code>Git</code> 的版本库。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Three.png" width="500"></p></li>
 <li>图中左侧为工作区，右侧为版本库。在版本库中标记为 <code>index</code>的区域是暂存区<code>stage/index</code>，标记为 <code>master</code>的是<code>master</code>分支所代表的目录树。</li>
 <li>图中我们可以看出此时<code>HEAD</code>实际是指向<code>master</code>分支的一个<code>游标</code>。所以图示的命令中出现<code>HEAD</code>的地方可以用<code>master</code>来替换。</li>
 <li>图中的<code>objects</code>标识的区域为<code>Git</code>的对象库，实际位于<code>.git/objects</code>目录下，里面包含了创建的各种对象及内容。</li>
@@ -347,7 +347,7 @@
 </ul>
 <p>如果当前目录下有几个文件想要纳入版本控制，需要先用<code>git add</code>命令告诉<code>Git</code>开始对这些文件进行跟踪，然后提交： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以下命令将目录下以 .c 结尾及 README 文件提交到仓库中。</span></span><br><span class="line">$ git add *.c</span><br><span class="line">$ git add README</span><br><span class="line">$ git commit -m <span class="string">&#x27;初始化项目版本&#x27;</span></span><br></pre></td></tr></table></figure> &gt; 注： 在 Linux 系统中，commit 信息使用单引号 <code>'</code>，Windows 系统，commit 信息使用双引号<code>&quot;</code>。 &gt;所以在 git bash 中<code>git commit -m '提交说明'</code>这样是可以的，在 Windows 命令行中就要使用双引号 &gt;<code>git commit -m &quot;提交说明&quot;</code>。</p>
 <h4 id="git的基本操作">6. Git的基本操作</h4>
-<p>Git 的工作就是创建和保存你项目的快照及与之后的快照进行对比。Git 常用的是以下 6 个命令：<code>git clone、git push、git add 、git commit、git checkout、git pull</code>，后面我们会详细介绍。 <img src="/git使用教程/git-command.png" width="500"></p>
+<p>Git 的工作就是创建和保存你项目的快照及与之后的快照进行对比。Git 常用的是以下 6 个命令：<code>git clone、git push、git add 、git commit、git checkout、git pull</code>，后面我们会详细介绍。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-command.png" width="500"></p>
 <ul>
 <li><code>workspace</code>：工作区</li>
 <li><code>staging area</code>：暂存区/缓存区</li>
@@ -517,6 +517,7 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+    
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -722,24 +723,22 @@
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+<link rel="stylesheet" href="">
 
 <script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+  NexT.utils.getScript('', () => {
     var gitalk = new Gitalk({
-      clientID    : '',
-      clientSecret: '',
-      repo        : 'trluper.github.io',
-      owner       : '',
-      admin       : [''],
-      id          : '65cacfc60f2a2508702130448964d33f',
+      clientID: '123fe329fdbb06b0f1d1',
+      clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+      repo: 'trluper.github.io',
+      owner: 'trluper',
+      admin: ['trluper'],
+      id: '65cacfc60f2a2508702130448964d33f',
         language: '',
-      distractionFreeMode: 
+      distractionFreeMode: 'true'
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
-});
 </script>
 
 </body>

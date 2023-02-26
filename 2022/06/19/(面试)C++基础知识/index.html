@@ -29,15 +29,15 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1. C++知识面试版_基础 1.1 编译过程  如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件 1.2 静态链接和动态链接 1.2.1 静态链接： 由链接器在链接时将库的内容加入到可执行程序中。  优点：对运行环境的依赖性较小，具有较好的兼容性 缺点：生成">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/(面试)C++基础知识/compile.png">
-<meta property="og:image" content="http://example.com/(面试)C++基础知识/funcCall.png">
-<meta property="og:image" content="http://example.com/(面试)C++基础知识/C++程序内存图.png">
+<meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png">
+<meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/funcCall.png">
+<meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.png">
 <meta property="article:published_time" content="2022-06-18T16:00:00.000Z">
 <meta property="article:modified_time" content="2023-02-26T03:05:49.476Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/(面试)C++基础知识/compile.png">
+<meta name="twitter:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png">
 
 <link rel="canonical" href="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
 
@@ -280,7 +280,7 @@
       
         <h3 id="c知识面试版_基础">1. C++知识面试版_基础</h3>
 <h4 id="编译过程">1.1 编译过程</h4>
-<p><img src="/(面试)C++基础知识/compile.png" width="600"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png" width="600"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
 <h4 id="静态链接和动态链接">1.2 静态链接和动态链接</h4>
 <h5 id="静态链接">1.2.1 静态链接：</h5>
 <p>由链接器在链接时将库的内容加入到可执行程序中。</p>
@@ -318,7 +318,7 @@
 <li>此时<code>esp</code>指向了第一步保存的下一条执行语句的地址，获取后回到main函数，此时<code>intFunAdd</code>函数执行完毕</li>
 <li><code>add esp,8</code>，将压入的两个参数去除，后将<code>eax</code>寄存器的返回值赋给相应变量</li>
 </ul>
-<p><img src="/(面试)C++基础知识/funcCall.png" width="600"></p>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/funcCall.png" width="600"></p>
 <h4 id="inline内联函数与普通函数的区别">1.4 inline内联函数与普通函数的区别</h4>
 <ul>
 <li>相当于把内联函数里面的内容写在调用内联函数的地方；</li>
@@ -342,7 +342,7 @@
 (e)在所有函数体外定义的static变量表示在该文件中有效，不能extern到别的文件用；
 (f)在函数体内定义的static表示只在该函数体内有效；
 (g)另外，函数中的&quot;adgfdf&quot;这样的字符串存放在常量区</code></pre>
-<p><img src="/(面试)C++基础知识/C++程序内存图.png" width="500"></p>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.png" width="500"></p>
 <h5 id="各中类型的变量在内存中的位置">1.6.1 各中类型的变量在内存中的位置</h5>
 <p>如static成员、局部变量、new分配的、static函数、virtual等在内存中的分布</p>
 <h4 id="static关键字的作用">1.7 static关键字的作用</h4>
@@ -456,6 +456,7 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+    
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -661,24 +662,22 @@
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+<link rel="stylesheet" href="">
 
 <script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+  NexT.utils.getScript('', () => {
     var gitalk = new Gitalk({
-      clientID    : '',
-      clientSecret: '',
-      repo        : 'trluper.github.io',
-      owner       : '',
-      admin       : [''],
-      id          : '6e8a70b795d714bcf37ee6d152f8fb6f',
+      clientID: '123fe329fdbb06b0f1d1',
+      clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+      repo: 'trluper.github.io',
+      owner: 'trluper',
+      admin: ['trluper'],
+      id: '6e8a70b795d714bcf37ee6d152f8fb6f',
         language: '',
-      distractionFreeMode: 
+      distractionFreeMode: 'true'
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
-});
 </script>
 
 </body>

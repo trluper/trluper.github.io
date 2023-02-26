@@ -410,6 +410,7 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+    
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -670,24 +671,22 @@ max(dp[x]+1)     当之前序列存在A[i]&gt;=A[x]时，\\
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+<link rel="stylesheet" href="">
 
 <script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+  NexT.utils.getScript('', () => {
     var gitalk = new Gitalk({
-      clientID    : '',
-      clientSecret: '',
-      repo        : 'trluper.github.io',
-      owner       : '',
-      admin       : [''],
-      id          : 'd0e0b4b91ee6d5d78bc405ca0ca8a3d7',
+      clientID: '123fe329fdbb06b0f1d1',
+      clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+      repo: 'trluper.github.io',
+      owner: 'trluper',
+      admin: ['trluper'],
+      id: 'd0e0b4b91ee6d5d78bc405ca0ca8a3d7',
         language: '',
-      distractionFreeMode: 
+      distractionFreeMode: 'true'
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
-});
 </script>
 
 </body>

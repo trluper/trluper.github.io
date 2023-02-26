@@ -29,18 +29,18 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1. get请求和post请求的区别 在实际应用中，get和post请求的区别主要有以下几个：  get请求用于从服务器上获得资源，而post请求用于向服务器提交数据 get将表单中的数据按照key&#x3D;value的形式，添加到action指定的URL后面，并且两者之间使用?连接，各个变量之间使用&amp;连接；post是将表单的数据放在HTTP协议的请求头或者消息体中，传递到action所指">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/计算机网络/TCP.png">
-<meta property="og:image" content="http://example.com/计算机网络/threeAndFour.png">
-<meta property="og:image" content="http://example.com/计算机网络/statusSwitch.png">
-<meta property="og:image" content="http://example.com/计算机网络/controlOfcrowd.png">
-<meta property="og:image" content="http://example.com/计算机网络/resend.png">
+<meta property="og:image" content="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP.png">
+<meta property="og:image" content="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/threeAndFour.png">
+<meta property="og:image" content="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/statusSwitch.png">
+<meta property="og:image" content="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/controlOfcrowd.png">
+<meta property="og:image" content="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/resend.png">
 <meta property="article:published_time" content="2022-08-07T13:34:12.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:04:59.736Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="计算机网络">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/计算机网络/TCP.png">
+<meta name="twitter:image" content="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP.png">
 
 <link rel="canonical" href="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
 
@@ -306,12 +306,12 @@
 <li><strong>首部开销</strong>：TCP首部开销大，首部20个字节。UDP首部开销小，8字节。（源端口，目的端口，数据长度，校验和）</li>
 <li><strong>TCP和UDP适用场景</strong>：从特点上我们已经知道，TCP是可靠的但传输速度慢，UDP 是不可靠的但传输速度快。因此在选用具体协议通信时，应该根据通信数据的要求而决定。</li>
 </ul>
-<p>若通信数据完整性需让位与通信实时性，则应该选用TCP 协议（如文件传输、重要状态的更新等）；反之，则使用 UDP 协议（如视频传输、实时通信等）。 <img src="/计算机网络/TCP.png" width="600"></p>
+<p>若通信数据完整性需让位与通信实时性，则应该选用TCP 协议（如文件传输、重要状态的更新等）；反之，则使用 UDP 协议（如视频传输、实时通信等）。 <img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/TCP.png" width="600"></p>
 <h4 id="tcp三次握手">3. TCP三次握手</h4>
 <ul>
 <li>只有<code>SYN</code>位置1表示连接请求。</li>
 <li>只有<code>ACK</code>置1表示<code>ACK</code>报文段，携带数据时会消耗序号<code>seq</code>，不携带则不消耗</li>
-<li><code>ACK</code>和<code>SYN</code>都置1，不能携带数据，但消耗1个序号<code>seq</code> <img src="/计算机网络/threeAndFour.png" width="600"></li>
+<li><code>ACK</code>和<code>SYN</code>都置1，不能携带数据，但消耗1个序号<code>seq</code> <img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/threeAndFour.png" width="600"></li>
 </ul>
 <h5 id="三次握手">3.1 三次握手</h5>
 <ul>
@@ -351,7 +351,7 @@
 <h5 id="为什么要4次挥手">4.3 为什么要4次挥手</h5>
 <p>因为主动关闭的一方是已经确定没有数据要发送了，而被动关闭的一方还未<code>FIN</code>报文，先回一个<code>ACK</code>确认报文，其在<code>FIN</code>发生前可能还要发送数据，只有等待数据发生完，才能回一个<code>FIN</code>报文，主动关闭方再回一个<code>ACK</code>确认,才能达到双向关闭，</p>
 <h4 id="tcp机的状态转移">5. TCP机的状态转移</h4>
-<p><img src="/计算机网络/statusSwitch.png" width="600"> [^上半部分为3次握手，下半部分为4次挥手，实线表示主动，虚线为被动，细线为特殊情况]</p>
+<p><img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/statusSwitch.png" width="600"> [^上半部分为3次握手，下半部分为4次挥手，实线表示主动，虚线为被动，细线为特殊情况]</p>
 <p><strong>状态解释：</strong></p>
 <ul>
 <li><code>CLOSED</code>：表示初始状态。</li>
@@ -376,14 +376,14 @@
 <li><p><strong>慢开始</strong>：最开始发送方的拥塞窗口为1，由小到大逐渐增大发送窗口和拥塞窗口。每经过一个传输轮次，拥塞窗口cwnd加倍。当cwnd超过慢开始门限，则使用拥塞避免算法，避免<code>cwnd</code>增长过大。</p></li>
 <li><p><strong>拥塞避免</strong>：每经过一个往返时间<code>RTT</code>，<code>cwnd</code>只增长1。在慢开始和拥塞避免的过程中，一旦发现网络拥塞（超时），就把慢开始门限设为当前值的一半，并且重新设置cwnd为1，重新慢启动。（乘法减小，加法增大）</p></li>
 <li><p><strong>快重传</strong>：接收方每次收到一个失序的报文段后就立即发出重复确认，发送方只要连续收到三个重复确认就立即重传（尽早重传未被确认的报文段）。</p></li>
-<li><p><strong>快恢复</strong>：当发送方连续收到了三个重复确认，就乘法减半（慢开始门限减半），并将当前的cwnd设置为慢开始门限，并且采用拥塞避免算法（连续收到了三个重复请求，说明当前网络可能没有拥塞）。 <img src="/计算机网络/controlOfcrowd.png" width="600"></p></li>
+<li><p><strong>快恢复</strong>：当发送方连续收到了三个重复确认，就乘法减半（慢开始门限减半），并将当前的cwnd设置为慢开始门限，并且采用拥塞避免算法（连续收到了三个重复请求，说明当前网络可能没有拥塞）。 <img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/controlOfcrowd.png" width="600"></p></li>
 </ul>
 <h4 id="tcp的可靠性保证">7. TCP的可靠性保证</h4>
 <p>TCP主要提供了<strong>检验和、序列号/确认应答、超时重传、最大消息长度、滑动窗口控制</strong>等方法实现了可靠性传输。</p>
 <ul>
 <li><p><strong>检验和</strong>：通过检验和的方式，接收端可以检测出来数据是否有差错和异常，假如有差错就会直接丢弃TCP段，重新发送。TCP在计算检验和时，会在TCP首部加上一个12字节的伪首部。检验和总共计算3部分：TCP首部、TCP数据、TCP伪首部</p></li>
 <li><p>最大长度：在建立TCP连接的时候，双方约定一个最大的长度（MSS）作为发送的单位，重传的时候也是以这个单位来进行重传。理想的情况下是该长度的数据刚好不被网络层分块。</p></li>
-<li><p><strong>滑动窗口：</strong>我们上面提到的超时重传的机制存在效率低下的问题，发送一个包到发送下一个包要经过一段时间才可以。这就提出了一个滑动窗口的概念:不必等等确认，发送端直接发送数据，在连续收到三个重复确认应答时，重新发生要求的序列号包 <img src="/计算机网络/resend.png" width="600"></p></li>
+<li><p><strong>滑动窗口：</strong>我们上面提到的超时重传的机制存在效率低下的问题，发送一个包到发送下一个包要经过一段时间才可以。这就提出了一个滑动窗口的概念:不必等等确认，发送端直接发送数据，在连续收到三个重复确认应答时，重新发生要求的序列号包 <img src="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/resend.png" width="600"></p></li>
 </ul>
 <h4 id="tcp的滑动窗口">8. TCP的滑动窗口</h4>
 <p>端对端的流量控制,也解决包乱序问题（数据包格式有SequenceNumber，是数据包的序号seq,ACK——用于确认收到，用来解决不丢包的问题)。每一次读取数据之后,回ack报文,报文中会携带当前缓冲区大小,用来告知对方发送的数据不能超过我接收的缓冲区大小。</p>
@@ -465,6 +465,7 @@
           </div>
           
     <div class="comments" id="gitalk-container"></div>
+    
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -670,24 +671,22 @@
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+<link rel="stylesheet" href="">
 
 <script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+  NexT.utils.getScript('', () => {
     var gitalk = new Gitalk({
-      clientID    : '',
-      clientSecret: '',
-      repo        : 'trluper.github.io',
-      owner       : '',
-      admin       : [''],
-      id          : '39a9348fbe4b79c8b57d10dac310d9e5',
+      clientID: '123fe329fdbb06b0f1d1',
+      clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+      repo: 'trluper.github.io',
+      owner: 'trluper',
+      admin: ['trluper'],
+      id: '39a9348fbe4b79c8b57d10dac310d9e5',
         language: '',
-      distractionFreeMode: 
+      distractionFreeMode: 'true'
     });
     gitalk.render('gitalk-container');
   }, window.Gitalk);
-});
 </script>
 
 </body>
