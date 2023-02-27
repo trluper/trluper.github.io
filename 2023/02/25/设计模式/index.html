@@ -33,8 +33,9 @@
 <meta property="og:image" content="http://example.com/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/factory.png">
 <meta property="og:image" content="http://example.com/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/abstract.png">
 <meta property="og:image" content="http://example.com/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/ab.png">
+<meta property="og:image" content="http://example.com/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/observer.png">
 <meta property="article:published_time" content="2023-02-25T02:08:24.000Z">
-<meta property="article:modified_time" content="2023-02-26T08:44:40.668Z">
+<meta property="article:modified_time" content="2023-02-27T04:06:17.817Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
@@ -235,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-26 16:44:40" itemprop="dateModified" datetime="2023-02-26T16:44:40+08:00">2023-02-26</time>
+                <time title="修改时间：2023-02-27 12:06:17" itemprop="dateModified" datetime="2023-02-27T12:06:17+08:00">2023-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,14 +261,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
+              <span>17k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>15 分钟</span>
             </span>
 
         </div>
@@ -292,17 +293,29 @@
 </ul></li>
 <li><p><strong>行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责</strong></p>
 <ul>
-<li>模版方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式。 <img src="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/GOF23.png" width="700"></li>
+<li>模版方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式。 <img src="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/GOF23.png" width="700"> <span id="more"></span></li>
 </ul></li>
 </ul>
-<h5 id="原则">1.1 原则</h5>
+<h5 id="六大原则">1.1 六大原则</h5>
 <ul>
-<li>单一职责原则(<code>SRP</code>)：一个类或者模块只负责完成一个职责（或者功能）。</li>
-<li>开闭原则(<code>OCP</code>)：软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的</li>
-<li>接口独立原则(<code>ISP</code>)：接口分离原则指在设计时采用多个与特定客户类有关的接口比采用一个通用的接口要好</li>
-<li>依赖倒置原则(<code>DIP</code>)：程序要依赖于抽象接口，不要依赖于具体实现</li>
+<li><p><strong>1、开闭原则（Open Close Principle）</strong></p>
+<p>开闭原则的意思是：<strong>对扩展开放，对修改关闭。在程序需要进行拓展的时候，不能去修改原有的代码</strong>，实现一个热插拔的效果。简言之，是为了使程序的扩展性好，易于维护和升级。想要达到这样的效果，我们需要使用接口和抽象类，后面的具体设计中我们会提到这点。</p></li>
+<li><p><strong>2、里氏代换原则（Liskov Substitution Principle）</strong></p>
+<p>里氏代换原则是面向对象设计的基本原则之一。 <strong>里氏代换原则中说，任何基类可以出现的地方，子类一定可以出现</strong>。LSP 是继承复用的基石，只有当派生类可以替换掉基类，且软件单位的功能不受到影响时，基类才能真正被复用，而派生类也能够在基类的基础上增加新的行为。里氏代换原则是对开闭原则的补充。实现开闭原则的关键步骤就是抽象化，而基类与子类的继承关系就是抽象化的具体实现，所以里氏代换原则是对实现抽象化的具体步骤的规范。</p></li>
+<li><p><strong>3、依赖倒转原则（Dependence Inversion Principle）</strong></p>
+<p>这个原则是开闭原则的基础，具体内容<strong>：针对接口编程，依赖于抽象而不依赖于具体。</strong></p></li>
+<li><p><strong>4、接口隔离原则（Interface Segregation Principle）</strong></p>
+<p>这个原则的意思是：<strong>使用多个隔离的接口，比使用单个接口要好。它还有另外一个意思是：降低类之间的耦合度</strong>。由此可见，其实设计模式就是从大型软件架构出发、便于升级和维护的软件设计思想，它强调降低依赖，降低耦合。</p></li>
+<li><p><strong>5、迪米特法则，又称最少知道原则（Demeter Principle）</strong></p>
+<p>最少知道原则是指：<strong>一个实体应当尽量少地与其他实体之间发生相互作用，使得系统功能模块相对独立</strong>。</p></li>
+<li><p><strong>6、合成复用原则（Composite Reuse Principle）</strong></p>
+<p>合成复用原则是指：<strong>尽量使用合成/聚合的方式，而不是使用继承</strong>。</p></li>
+</ul>
+<p><strong>其他：</strong></p>
+<ul>
 <li>高内聚：一个模块或一个类被设计成只支持一组相关的功能时，它具有高内聚。反之，被设计成一组不相关的功能时，我们说它具有低内聚。</li>
 <li>低耦合：每个个模块之间或类的关联性降到可控范围的最低</li>
+<li>单一职责原则(SRP)：一个类或者模块只负责完成一个职责（或者功能）。</li>
 </ul>
 <h4 id="单例模式">2 单例模式</h4>
 <p>保证证一个类只有一个实例，并且提供一个访问该实例的全局访问点。</p>
@@ -474,30 +487,80 @@
 <li>可以将抽象工厂和桥接模式搭配使用。 如果由桥接定义的抽象只能与特定实现合作， 这一模式搭配就非常有用。 在这种情况下， 抽象工厂可以对这些关系进行封装， 并且对客户端代码隐藏其复杂性。</li>
 <li>抽象工厂、 生成器和原型都可以用单例模式来实现。</li>
 </ul>
-<h4 id="观察者模式">5 观察者模式</h4>
-<h4 id="代理模式">6 代理模式</h4>
-<h4 id="策略模式">7 策略模式</h4>
-<h4 id="装饰模式">8 装饰模式</h4>
-<h4 id="适配器模式">9 适配器模式</h4>
-<h4 id="外观模式">10 外观模式</h4>
-<h4 id="命令模式">11 命令模式</h4>
-<h4 id="迭代器模式">12 迭代器模式</h4>
-<h4 id="模板方法模式">13 模板方法模式</h4>
-<h4 id="组合模式">14 组合模式</h4>
-<h4 id="状态模式">15 状态模式</h4>
-<h4 id="责任链模式">16 责任链模式</h4>
+<h4 id="建造者模式">5 建造者模式</h4>
+<h4 id="原型模式">6 原型模式</h4>
+<h4 id="适配器模式">7 适配器模式</h4>
+<h4 id="桥接模式">8 桥接模式</h4>
+<h4 id="装饰模式">9 装饰模式</h4>
+<h4 id="组合模式">10 组合模式</h4>
+<h4 id="外观模式">11 外观模式</h4>
+<h4 id="享元模式">12 享元模式</h4>
+<h4 id="代理模式">13 代理模式</h4>
+<h4 id="模板方法模式">14 模板方法模式</h4>
+<h4 id="命令模式">15 命令模式</h4>
+<h4 id="迭代器模式">16 迭代器模式</h4>
+<h4 id="观察者模式">17 观察者模式</h4>
+<p>我们可以把多个订阅者、客户称之为观察者； 需要同步给多个订阅者的数据封装到对象中，称之为目标。</p>
+<ul>
+<li><p><strong>意图</strong>：观察者模式主要用于1:N的通知。当一个对象（目标对象<code>Subject</code>或<code>Objservable</code>的状态变化时，它需要及时告知一系列对象（观察者对象<code>Observer</code>），令它们作出响应</p></li>
+<li><p><strong>主要解决：</strong>一个对象状态改变给其他对象通知的问题，而且要考虑到易用和低耦合，保证高度的协作。</p></li>
+<li><p><strong>何时使用</strong>：一个对象（目标对象）的状态发生改变，所有的依赖对象（观察者对象）都将得到通知，进行广播通知。</p></li>
+</ul>
+<p><strong>通知观察者的方式有：</strong></p>
+<ul>
+<li>推：每次都会把通知以广播方式发送给所有观察者，所有观察者只能被动接收</li>
+<li>拉：观察者只要知道有情况即可，至于什么时候获取内容，获取什么内容，都可以自主决定</li>
+</ul>
+<h5 id="实现">17.1 实现</h5>
+<p><img src="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/observer.png" width="600"></p>
+<ul>
+<li>首先是目标类，在目标类内定义一集合保存观察者对象，当目标类发生变化时，调用通知接口<code>Notify</code>通知观察者们</li>
+<li>观察者类（多个），收到通知会根据自身条件响应</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#icclude <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> namspace std;</span><br><span class="line"><span class="comment">//class targetSubject;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//观察者类：这里这举一个</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Observer</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Observer</span>();</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">Respond</span><span class="params">()</span></span>=<span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">StockObserver</span>:<span class="keyword">public</span> Observer</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	string name;</span><br><span class="line">	targetSubject* target;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">StockObserver</span>(string _name):<span class="built_in">name</span>(_name)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">Respond</span><span class="params">()</span></span>&#123;</span><br><span class="line">		cout&lt;&lt;name&lt;&lt;<span class="string">&quot;：服务器发生变化了,我要&quot;</span>&lt;&lt;target-&gt;action&lt;&lt;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//目标类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">targetSubject</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	string action;	<span class="comment">//状态</span></span><br><span class="line">	vector&lt;Observer*&gt; observers;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">targetSubject</span>(string _action):<span class="built_in">action</span>(_action)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">add</span><span class="params">(Observer* optr)</span></span>&#123;</span><br><span class="line">		observers.<span class="built_in">push_back</span>(optr);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Notify</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		vector&lt;Observer*&gt;::iterator p= observers.<span class="built_in">begin</span>();</span><br><span class="line">		<span class="keyword">while</span>(p!=observers.<span class="built_in">end</span>())</span><br><span class="line">		&#123;</span><br><span class="line">			(*p)-&gt;<span class="built_in">Respond</span>();</span><br><span class="line">			p++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">setaction</span><span class="params">(string _action)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>-&gt;action=_action;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">	targetSubject *p=<span class="keyword">new</span> <span class="built_in">targetSubject</span>(<span class="string">&quot;开始工作&quot;</span>);  <span class="comment">//创建通知者</span></span><br><span class="line">	<span class="comment">//观察者</span></span><br><span class="line">	StockObserver *s1= <span class="keyword">new</span> <span class="built_in">StockObserver</span>(<span class="string">&quot;小李&quot;</span>,p); </span><br><span class="line">	StockObserver *s2 = <span class="keyword">new</span> <span class="built_in">StockObserver</span>(<span class="string">&quot;小赵&quot;</span>,p); </span><br><span class="line">	<span class="comment">//加入通知队列</span></span><br><span class="line">	p-&gt;<span class="built_in">Add</span>(s1); </span><br><span class="line">	p-&gt;<span class="built_in">Add</span>(s2); </span><br><span class="line">	<span class="comment">//通知</span></span><br><span class="line">	p-&gt;<span class="built_in">Notify</span>(); </span><br><span class="line">	<span class="comment">//更改状态</span></span><br><span class="line">	p-&gt;<span class="built_in">setaction</span>(<span class="string">&quot;休息&quot;</span>);</span><br><span class="line">	<span class="comment">//通知</span></span><br><span class="line">	p-&gt;<span class="built_in">Notify</span>(); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="优缺点-1">17.2 优缺点</h5>
+<p><strong>优点：</strong></p>
+<ul>
+<li>1、观察者和被观察者是抽象耦合的。</li>
+<li>2、建立一套触发机制，A发生变化，与它相关的会收到这种变化通知，然后依据自身条件是否响应。</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>1、如果一个被观察者对象有很多的直接和间接的观察者的话，将所有的观察者都通知到会花费很多时间。</li>
+<li>2、如果在观察者和观察目标之间有循环依赖的话，观察目标会触发它们之间进行循环调用，可能导致系统崩溃。</li>
+<li>3、观察者模式没有相应的机制让观察者知道所观察的目标对象是怎么发生变化的，而仅仅只是知道观察目标发生了变化。</li>
+</ul>
+<h5 id="适用场景-1">17.3 适用场景</h5>
+<ul>
+<li><p>一个抽象模型有两个方面，其中一个方面依赖于另一个方面。将这些方面封装在独立的对象中使它们可以各自独立地改变和复用。</p></li>
+<li><p>一个对象的改变将导致其他一个或多个对象也发生改变，而不知道具体有多少对象将发生改变，可以降低对象之间的耦合度。</p></li>
+<li><p>一个对象必须通知其他对象，而并不知道这些对象是谁。</p></li>
+<li><p>需要在系统中创建一个触发链，A对象的行为将影响B对象，B对象的行为将影响C对象……，可以使用观察者模式创建一种链式触发机制。</p></li>
+</ul>
+<h4 id="中介者模式">18 中介者模式</h4>
+<h4 id="备忘录模式">19 备忘录模式</h4>
+<h4 id="解释器模式">20 解释器模式</h4>
+<h4 id="状态模式">21 状态模式</h4>
+<h4 id="策略模式">22 策略模式</h4>
+<h4 id="责任链模式">23 责任链模式</h4>
 <ul>
 <li><p>责任链模式在面向对象程式设计里是一种软件设计模式，它包含了一些命令对象和一系列的处理对象。每一个处理对象决定它能处理哪些客户端的哪些请求，它也知道如何将它不能处理的命令对象传递给该链中的下一个处理对象；</p></li>
 <li><p>由于责任链的创建完全在客户端，因此新增新的具体处理者对原有类库没有任何影响，只需添加新的类，然后在客户端调用时添加即可。 符合开闭原则。</p></li>
 <li><p>因此发出这个请求的客户端可以不知道链上的哪一个对象最终处理这个请求，只需要发送即可，这使得系统可以在不影响客户端的情况下动态地重新组织和分配责任</p></li>
 </ul>
-<h5 id="实现">16.1 实现</h5>
+<h5 id="实现-1">23.1 实现</h5>
 <p>责任链的实现方法有两种：</p>
 <ul>
 <li>链表方式定义职责链</li>
-<li><strong>非链表方式实现职责链：通过集合、数组生成职责链更加实用！</strong>实际上，很多项目中，每个具体的Handler并不是由开发团队定义的，而是项目上线后由外部单位追加的，所以使用链表方式定义COR链就很困难。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><strong>非链表方式实现职责链：通过集合、数组生成职责链更加实用！</strong>实际上，很多项目中，每个具体的Handler并不是由开发团队定义的，而是项目上线后由外部单位追加的，所以使用链表方式定义COR链就很困难。</li>
 </ul>
-<h5 id="优缺点-1">16.2 优缺点</h5>
+<p>下面代码以管理者为例：首先管理者为基类，其子类又经理、总监和普通员工,其责任链顺序为<code>经理-&gt;总监-&gt;普通员工</code>；基类声明了两个必须的接口：</p>
+<ul>
+<li><code>RequestHandler</code>：在该接口实现经过判断是处理请求，还是将请求传递给下一个,因此要重写，因此为虚函数</li>
+<li><code>setSuccessor</code>：该接口实现当前处理者能将请求传递给下一个处理者，即请求处理继任者，以此实现责任链的形式；不需重写</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//请求类：封装了责任链当中客户端发送的请确包：信息+哪个对象处理该请求的判断条件</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Request</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	string m_str;</span><br><span class="line">	<span class="type">int</span> m_number;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//责任链上对象的基类,</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Manager</span>&#123;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">	string name;</span><br><span class="line">	Manager* manager;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Manager</span>(string _name):<span class="built_in">name</span>(_name)&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//设置责任链上的后继者</span></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">setSuccessor</span><span class="params">(Manager* nextManager)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		manager=nextmanager;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//处理请求的核心业务函数</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">RequestHanlder</span><span class="params">(Request* request)</span></span>=<span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//经理</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CommonManager</span>:<span class="keyword">public</span> Manager</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">CommonManager</span>(string _name):<span class="built_in">Manager</span>(_name)&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//处理请求的核心业务函数</span></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">RequestHandler</span><span class="params">(Request* request)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(request-&gt;m_number&gt;<span class="number">0</span>&amp;&amp;request-&gt;m_numer&lt;<span class="number">10</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//该请求是由经理处理</span></span><br><span class="line">			<span class="built_in">Common_handler</span>(request-&gt;m_str);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//由下一个继任者处理</span></span><br><span class="line">			manager-&gt;<span class="built_in">RequestHandler</span>(request);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;；</span><br><span class="line"></span><br><span class="line"><span class="comment">//总监</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MajorDomo</span>:<span class="keyword">public</span> Manager</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">MajorDomo</span>(string _name):<span class="built_in">Manager</span>(_name)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">RequsetHanlder</span><span class="params">(Request* request)</span></span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(request-&gt;m_number&gt;<span class="number">10</span>&amp;&amp;request-&gt;m_numer&lt;<span class="number">20</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//该请求是由总监处理</span></span><br><span class="line">				<span class="built_in">Major_handler</span>(request-&gt;m_str);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				manager-&gt;<span class="built_in">RequestHandler</span>(request);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//普通员工</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">NormalEmployee</span>:<span class="keyword">public</span> Manager</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">NormalEmployee</span>(string _name):<span class="built_in">Maanager</span>(_name)&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">RequsetHanlder</span><span class="params">(Request* request)</span></span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(request-&gt;m_number&gt;=<span class="number">20</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//该请求是由普通处理</span></span><br><span class="line">				<span class="built_in">Normal_handler</span>(request-&gt;m_str);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				manager-&gt;<span class="built_in">RequestHandler</span>(request);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Manager* common=<span class="keyword">new</span> <span class="built_in">CommonManager</span>(<span class="string">&quot;张经理&quot;</span>)；</span><br><span class="line">	Manager* major=<span class="keyword">new</span> <span class="built_in">MajorDomo</span>(<span class="string">&quot;李总监&quot;</span>);</span><br><span class="line">	Manager* normal=<span class="keyword">new</span> <span class="built_in">NormalManager</span>(<span class="string">&quot;刘职员&quot;</span>);</span><br><span class="line">	<span class="comment">//设置后继者</span></span><br><span class="line">	common-&gt;<span class="built_in">SetSuccessor</span>(mojor);</span><br><span class="line">	major-&gt;<span class="built_in">SetSuccessor</span>(normal);</span><br><span class="line">	</span><br><span class="line">	Requesst* req=<span class="keyword">new</span> <span class="built_in">Request</span>();</span><br><span class="line">	req-&gt;m_number=<span class="number">23</span>;</span><br><span class="line">	req-&gt;m_str=<span class="string">&quot;video&quot;</span>;</span><br><span class="line">	common-&gt;<span class="built_in">RequestHanlder</span>(req);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="优缺点-2">23.2 优缺点</h5>
 <ul>
 <li>优点
 <ul>
@@ -510,7 +573,7 @@
 <li>部分请求可能未被处理</li>
 </ul></li>
 </ul>
-<h5 id="适用场景-1">16.3 适用场景</h5>
+<h5 id="适用场景-2">23.3 适用场景</h5>
 <ul>
 <li><p>当程序需要使用不同方式处理不同种类请求，而且请求类型和顺序预先未知时，可以使用责任链模式。</p></li>
 <li><p>该模式能将多个处理者连接成一条链。 接收到请求后， 它会 “询问” 每个处理者是否能够对其进行处理。 这样所有处理者都有机会来处理请求。</p></li>
@@ -519,7 +582,7 @@
 <li><p>如果所需处理者及其顺序必须在运行时进行改变， 可以使用责任链模式。</p></li>
 <li><p>如果在处理者类中有对引用成员变量的设定方法， 将能动态地插入和移除处理者， 或者改变其顺序。</p></li>
 </ul>
-<h5 id="与其他模式的关系-1">16.4 与其他模式的关系</h5>
+<h5 id="与其他模式的关系-1">23.4 与其他模式的关系</h5>
 <ul>
 <li><p>责任链模式、命令模式、中介者模式和观察者模式用于处理请求发送者和接收者之间的不同连接方式：</p></li>
 <li><p>责任链按照顺序将请求动态传递给一系列的潜在接收者， 直至其中一名接收者对请求进行处理。</p></li>
@@ -532,6 +595,7 @@
 <li><p>责任链和装饰模式的类结构非常相似。 两者都依赖递归组合将需要执行的操作传递给一系列对象。 但是， 两者有几点重要的不同之处。</p></li>
 <li><p>责任链的管理者可以相互独立地执行一切操作， 还可以随时停止传递请求。 另一方面， 各种装饰可以在遵循基本接口的情况下扩展对象的行为。 此外， 装饰无法中断请求的传递。</p></li>
 </ul>
+<h4 id="访问者模式">24 访问者模式</h4>
 
     </div>
 
@@ -633,7 +697,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">1 概览</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8E%9F%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 原则</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">2 单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A5%BF%E6%B1%89%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 饿汉式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A0%E9%94%81%E6%87%92%E6%B1%89%E6%A8%A1%E5%BC%8F%E5%8F%8C%E9%87%8D%E6%A3%80%E6%B5%8B%E9%94%81"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 加锁懒汉模式（双重检测锁）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E6%87%92%E6%B1%89%E5%8D%95%E4%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 静态局部变量的懒汉单例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#stdcall_once-%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 std::call_once 实现单例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 适用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">2.6.</span> <span class="nav-text">2. 6 优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 与其他设计模式的关系</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3 工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 简单工厂模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 工厂方法模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 工厂模式的优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">3.4.</span> <span class="nav-text">3. 4 工厂模式的应用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB-1"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 与其他设计模式的关系</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4 抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 抽象工厂的优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 抽象工厂适用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 与其他模式的关系</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">5 观察者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">6 代理模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">7 策略模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">8 装饰模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">9.</span> <span class="nav-text">9 适配器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">10.</span> <span class="nav-text">10 外观模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">11.</span> <span class="nav-text">11 命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">12.</span> <span class="nav-text">12 迭代器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.</span> <span class="nav-text">13 模板方法模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="nav-number">14.</span> <span class="nav-text">14 组合模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">15.</span> <span class="nav-text">15 状态模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F"><span class="nav-number">16.</span> <span class="nav-text">16 责任链模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">16.1.</span> <span class="nav-text">16.1 实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9-1"><span class="nav-number">16.2.</span> <span class="nav-text">16.2 优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="nav-number">16.3.</span> <span class="nav-text">16.3 适用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB-1"><span class="nav-number">16.4.</span> <span class="nav-text">16.4 与其他模式的关系</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">1 概览</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%AD%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 六大原则</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">2 单例模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A5%BF%E6%B1%89%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 饿汉式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A0%E9%94%81%E6%87%92%E6%B1%89%E6%A8%A1%E5%BC%8F%E5%8F%8C%E9%87%8D%E6%A3%80%E6%B5%8B%E9%94%81"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 加锁懒汉模式（双重检测锁）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E6%87%92%E6%B1%89%E5%8D%95%E4%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 静态局部变量的懒汉单例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#stdcall_once-%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 std::call_once 实现单例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 适用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">2.6.</span> <span class="nav-text">2. 6 优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 与其他设计模式的关系</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3 工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 简单工厂模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 工厂方法模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 工厂模式的优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">3.4.</span> <span class="nav-text">3. 4 工厂模式的应用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB-1"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 与其他设计模式的关系</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4 抽象工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 抽象工厂的优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 抽象工厂适用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 与其他模式的关系</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">5 建造者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">6 原型模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.</span> <span class="nav-text">7 适配器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">8 桥接模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F"><span class="nav-number">9.</span> <span class="nav-text">9 装饰模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="nav-number">10.</span> <span class="nav-text">10 组合模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">11.</span> <span class="nav-text">11 外观模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F"><span class="nav-number">12.</span> <span class="nav-text">12 享元模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.</span> <span class="nav-text">13 代理模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">14.</span> <span class="nav-text">14 模板方法模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F"><span class="nav-number">15.</span> <span class="nav-text">15 命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">16.</span> <span class="nav-text">16 迭代器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">17.</span> <span class="nav-text">17 观察者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">17.1.</span> <span class="nav-text">17.1 实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9-1"><span class="nav-number">17.2.</span> <span class="nav-text">17.2 优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="nav-number">17.3.</span> <span class="nav-text">17.3 适用场景</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">18.</span> <span class="nav-text">18 中介者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">19.</span> <span class="nav-text">19 备忘录模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">20.</span> <span class="nav-text">20 解释器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">21.</span> <span class="nav-text">21 状态模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">22.</span> <span class="nav-text">22 策略模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F"><span class="nav-number">23.</span> <span class="nav-text">23 责任链模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-1"><span class="nav-number">23.1.</span> <span class="nav-text">23.1 实现</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9-2"><span class="nav-number">23.2.</span> <span class="nav-text">23.2 优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF-2"><span class="nav-number">23.3.</span> <span class="nav-text">23.3 适用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%85%B3%E7%B3%BB-1"><span class="nav-number">23.4.</span> <span class="nav-text">23.4 与其他模式的关系</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">24.</span> <span class="nav-text">24 访问者模式</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -703,12 +767,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">648k</span>
+    <span title="站点总字数">653k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">9:49</span>
+    <span title="站点阅读时长">9:54</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
@@ -847,25 +911,31 @@
 
   
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
 
-<script>
-NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
-    var gitalk = new Gitalk({
-      clientID    : '123fe329fdbb06b0f1d1',
-      clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
-      repo        : 'trluper.github.io',
-      owner       : 'trluper',
-      admin       : ['trluper'],
-      id          : 'f93cba92f93a419b6fdf352e35f262e1',
-        language: '',
-      distractionFreeMode: true
-    });
-    gitalk.render('gitalk-container');
-  }, window.Gitalk);
-});
-</script>
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
 
 </body>
 </html>
