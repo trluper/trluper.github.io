@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1 C++中的锁 1.1 C++中的锁机制 C++中的锁机制以下几种：  互斥锁：包括std::mutex、std::recursive_mutex、std::timed_mutex、std::recursive_timed_mutex等。互斥锁用于保护共享资源，可以保证同一时刻只有一个线程访问共享资源。 读写锁：包括std::shared_mutex、std::shared_timed">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++并发编程(二):锁">
+<meta property="og:url" content="http://example.com/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%BA%8C-%E9%94%81/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1 C++中的锁 1.1 C++中的锁机制 C++中的锁机制以下几种：  互斥锁：包括std::mutex、std::recursive_mutex、std::timed_mutex、std::recursive_timed_mutex等。互斥锁用于保护共享资源，可以保证同一时刻只有一个线程访问共享资源。 读写锁：包括std::shared_mutex、std::shared_timed">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-04T11:06:38.000Z">
+<meta property="article:modified_time" content="2023-03-04T12:47:58.160Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%BA%8C-%E9%94%81/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>C++并发编程(二):锁 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%BA%8C-%E9%94%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++并发编程(二):锁
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-04 19:06:38 / 修改时间：20:47:58" itemprop="dateCreated datePublished" datetime="2023-03-04T19:06:38+08:00">2023-03-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="c中的锁">1 C++中的锁</h3>
+<h4 id="c中的锁机制">1.1 C++中的锁机制</h4>
+<p><strong>C++中的锁机制以下几种：</strong></p>
+<ul>
+<li><p>互斥锁：包括std::mutex、std::recursive_mutex、std::timed_mutex、std::recursive_timed_mutex等。互斥锁用于保护共享资源，可以保证同一时刻只有一个线程访问共享资源。</p></li>
+<li><p>读写锁：包括std::shared_mutex、std::shared_timed_mutex等。读写锁允许多个线程同时读取共享资源，但只允许一个线程写入共享资源。</p></li>
+<li><p>条件变量：包括std::condition_variable、std::condition_variable_any等。条件变量允许线程等待某个条件发生变化，只有当条件满足时才能继续执行。</p></li>
+<li><p>原子操作：包括std::atomic、std::atomic_flag等。原子操作用于保证某个操作的执行不会被其他线程中断，从而避免了数据竞争的发生。</p></li>
+<li><p>自旋锁：包括std::spin_lock、std::atomic_flag等。自旋锁在等待锁的过程中不断地循环检查锁是否可用，而不是放弃CPU，从而避免了线程上下文切换带来的开销。</p></li>
+<li><p>信号量：包括std::binary_semaphore、std::counting_semaphore等。信号量用于控制同时访问某个资源的线程数量，可以实现线程的互斥和同步。</p></li>
+</ul>
+<h4 id="悲观锁和乐观锁">1.2 悲观锁和乐观锁</h4>
+<p>在C++中，锁通常被分为两种类型：<strong>悲观锁和乐观锁</strong></p>
+<ul>
+<li>其中悲观锁是指在访问共享资源时先获取锁，防止其他线程同时修改该资源，适用于写操作多的场景。C++中的互斥锁就是一种悲观锁。</li>
+<li>而乐观锁则是在不加锁的情况下，尝试去读取和修改共享资源，如果遇到冲突，再使用重试等机制解决冲突，适用于读操作多于写操作的场景。
+<ul>
+<li>在C++中，可以使用atomic类型来实现乐观锁。atomic类型提供了对基本类型的原子操作，包括读、写、比较交换等。在进行原子操作时，它使用硬件原语实现同步，避免了使用锁所带来的额外开销和死锁的问题。</li>
+<li>除了atomic类型，C++11还引入了一些使用乐观锁的算法，如无锁队列和无锁哈希表等。这些算法使用原子操作来实现线程安全，同时充分利用了乐观锁的优势，避免了使用锁所带来的开销。</li>
+</ul></li>
+</ul>
+<h3 id="mutex互斥">2 Mutex：互斥</h3>
+<p>所有线程间共享数据的问题，都<strong>是修改数据导致的（竞争条件）</strong>。如果所有的共享数据都是只读的，就没问题，因为一个线程所读取的数据不受另一个线程是否正在读取相同的数据而影响</p>
+<h4 id="恶性条件竞争">2.1 恶性条件竞争</h4>
+<p>恶性条件竞争通常发生于多线程对多于一个的数据块的修改时，产生了非预想的执行效果，即竞态条件是多个线程同时访问共享资源，导致结果依赖于线程执行的顺序和时间。</p>
+<ul>
+<li><p>竞态条件（Race Condition）指的是多个线程访问共享变量时，最终的结果取决于多个线程的执行顺序。竞态条件不一定总是错误的，但它们可能导致非预期的结果。</p></li>
+<li><p>数据竞争（Data Race）指的是多个线程同时访问同一个共享变量，并且至少有一个线程对该变量进行了写操作。数据竞争是一种错误，因为它可能导致未定义的行为。</p></li>
+</ul>
+<p>在多线程编程中，竞态条件和数据竞争是常见的问题。解决这些问题的关键是使用同步机制。</p>
+<p><strong>避免恶性条件竞争：</strong></p>
+<ul>
+<li>要避免恶性的条件竞争，一种方法是就使用一定的手段，对线程共享的内存区域的数据结构采用某种保护机制，如使用锁</li>
+<li>另一种就是选择对该区域的数据结构和不变量的设计进行修改，如保证该区域为原子操作，，修改完的结构必须能完成一系列不可分割的变化，但是这种无锁的方法很难一定保证线程安全</li>
+<li>另一种处理条件竞争的方式是，<strong>使用事务(transacting)的方式去处理</strong>该数据共享区域</li>
+</ul>
+<span id="more"></span>
+<h4 id="mutex-头文件介绍">2.2 mutex 头文件介绍</h4>
+<p>mutex 又称互斥量，C++11 中与 mutex 相关的类（包括锁类型）和函数都声明在 <code>&lt;mutex&gt;</code> 头文件中，所以如果你需要使用 <code>std::mutex</code>，就必须包含<code>&lt;mutex&gt;</code>头文件。</p>
+<h5 id="mutex系列类四种">2.2.1 mutex系列类(四种)</h5>
+<ul>
+<li><code>std::mutex：</code>基本的 mutex 类。</li>
+<li><code>std::recursive_mutex：</code>递归 mutex 类。</li>
+<li><code>std::time_mutex：</code>定时 mutex 类。</li>
+<li><code>std::recursive_timed_mutex：</code>定时递归 mutex 类。</li>
+</ul>
+<h5 id="函数">2.2.2 函数</h5>
+<ul>
+<li><code>std::try_lock</code>：尝试同时对多个互斥量上锁。</li>
+<li><code>std::lock</code>：可以同时对多个互斥量上锁。</li>
+<li><code>std::call_once</code>：如果多个线程需要同时调用某个函数，<code>call_once</code> 可以保证多个线程对该函数只调用一次。</li>
+</ul>
+<h4 id="mutexc互斥锁">2.3 mutex:C++互斥锁</h4>
+<p>C++中通过实例化 <code>std::mutex</code> 创建互斥量，通过调用成员函数<code>lock()</code>进行上锁，<code>unlock()</code>进行解锁。对于互斥量，必须记住在每个线程执行完毕后必须去<code>unlock()</code>释放已获得的锁。</p>
+<p>值得一提的是，C++标准库为互斥量提供了一个RAII语法的模板类<code>std::lock_guard</code>和<code>std::unique_lock</code>。 - <code>std::lock_guard</code> ：其会在构造的时候提供已锁的互斥量，并在析构的时候进行解锁，此时就不用手动去解锁<code>unlock</code>，即使发生异常也会释放，从而保证了一个已锁的互斥量总是会被正确的解锁。 - <code>std::unique_lock</code>：<code>unique_lock</code>更加灵活，可以在任意的时候加锁或者解锁，因此其资源消耗也更大，通常是在有需要的时候（比如和条件变量配合使用，我们将在介绍条件变量的时候介绍这个用法）才会使用，否则用<code>lock_guard</code>。</p>
+<p><strong>std::mutex 的成员函数：</strong></p>
+<ul>
+<li><p>构造函数：<code>std::mutex</code>不允许拷贝构造，也不允许 <code>move</code> 拷贝，最初产生的 <code>mutex</code> 对象是处于 unlocked 状态的。</p></li>
+<li><code>lock()</code>：调用线程将锁住该互斥量。线程调用该函数会发生下面3种情况：
+<ul>
+<li>如果该互斥量当前没有被锁住，则调用线程将该互斥量锁住，直到调用 unlock 之前，该线程一直拥有该锁；</li>
+<li>如果当前互斥量被其他线程锁住，则当前的调用线程被阻塞住，直到 mutex 被释放；</li>
+<li>如果当前互斥量被当前调用线程锁住，则会产生死锁（deadlock）。</li>
+</ul></li>
+<li><p><code>unlock()</code>：释放对互斥量的所有权。</p></li>
+<li><code>try_lock()</code>：尝试锁住互斥量，如果互斥量被其他线程占有，则当前线程也不会被阻塞。线程调用该函数也会出现下面3种情况：
+<ul>
+<li>如果当前互斥量没有被其他线程占有，则该线程锁住互斥量，直到该线程调用 <code>unlock</code> 释放互斥量。</li>
+<li>如果当前互斥量被其他线程锁住，则当前调用线程返回 <code>false</code>，<strong>而并不会被阻塞掉。</strong></li>
+<li>如果当前互斥量被当前调用线程锁住，则会产生死锁（<code>deadlock</code>）。</li>
+</ul></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mutex&gt;</span></span></span><br><span class="line"></span><br><span class="line">std::list&lt;<span class="type">int</span>&gt; my_list;</span><br><span class="line"><span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">std::mutex my_mutex;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_to_list</span><span class="params">(<span class="type">int</span> new_value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">	<span class="comment">//使用std::lock_guard类模板，使用RAII机制</span></span><br><span class="line">		<span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">guard</span><span class="params">(my_mutex)</span></span>;</span><br><span class="line">		sum++;</span><br><span class="line">		my_list.<span class="built_in">push_back</span>(new_value);</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;线程插入值为：&quot;</span> &lt;&lt; new_value &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">std::vector&lt;std::thread&gt; <span class="title">thr</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">		thr[i] = std::<span class="built_in">thread</span>(add_to_list, i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span>&amp; t:thr) &#123;</span><br><span class="line">		t.<span class="built_in">join</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	std::cout &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> j : my_list)</span><br><span class="line">		std::cout &lt;&lt; j &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用互斥量保护数据，保证线程安全绝不简单，不是简简单单的在共享数据区域内加<code>lock</code>或<code>try_lock</code>或者<code>std::lock_guard</code>那样。<strong>一个迷失的指针或引用，将会让这种保护形同虚设</strong>：</p>
+<ul>
+<li>比如你的函数返回的是指针或者引用，这时候就得小心，</li>
+<li>同样当你成员函数指针或引用的方式来调用，也要小心</li>
+</ul>
+<h5 id="锁的粒度">2.3.1 锁的粒度</h5>
+<p>锁的粒度是用来描述通过一个锁保护着的数据量大小。一个细粒度锁(a fine-grained lock)能够保护较小的数据量，一个粗粒度锁(a coarse-grained lock)能够保护较多的数据量。选择粒度对于锁来说很重要：</p>
+<ul>
+<li><strong>为了保护对应的数据，保证锁有能力保护这些数据也很重要，</strong></li>
+<li><strong>但是锁的粒度太粗，就会导致锁竞争频繁，消耗不必要的资源，也会导致多线程并发收益不高</strong></li>
+</ul>
+<p>因此<strong>必须保证锁的粒度既可以保证线程安全也能保证并发的执行效率。</strong></p>
+<h4 id="死锁">2.4 死锁</h4>
+<p>死锁是指两个或两个以上的线程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。</p>
+<h5 id="死锁引起的原因">2.4.1 死锁引起的原因</h5>
+<ul>
+<li><p>竞争不可抢占资源引起死锁（不可抢占是指没有使用完的资源，不能被抢占）</p></li>
+<li><p>竞争可消耗资源引起死锁：有p1，p2，p3三个进程，p1向p2发送消息并接受p3发送的消息，p2向p3发送消息并接受p1的消息，p3向p1发送消息并接受p2的消息，如果设置是先接到消息后发送消息，则所有的消息都不能发送，这就造成死锁。</p></li>
+<li><p>进程推进顺序不当引起死锁：有进程p1，p2，都需要资源A，B，本来可以p1运行A --&gt; p1运行B --&gt; p2运行A --&gt; p2运行B，但是顺序换了，p1运行A时p2运行B，容易发生第一种死锁。互相抢占资源。</p></li>
+</ul>
+<h5 id="死锁的必要条件">2.4.2 死锁的必要条件</h5>
+<ul>
+<li><strong>互斥条件</strong>：某资源只能被一个进程使用，其他进程请求该资源时，只能等待，直到资源使用完毕后释放资源。</li>
+<li><strong>请求和保持条件</strong>：程序已经保持了至少一个资源，但是又提出了新要求，而这个资源被其他进程占用，自己占用资源却保持不放。</li>
+<li><strong>不可抢占条件</strong>：进程已获得的资源没有使用完，不能被抢占。</li>
+<li><strong>循环等待条件</strong>：必然存在一个循环链。</li>
+</ul>
+<h5 id="预防死锁的思路">2.4.3 预防死锁的思路</h5>
+<ul>
+<li><strong>预防死锁：</strong>破坏死锁的四个必要条件中的一个或多个来预防死锁。</li>
+<li><strong>避免死锁：</strong>和预防死锁的区别就是，在资源动态分配过程中，用某种方式防止系统进入不安全的状态。</li>
+<li><strong>检测死锁：</strong>运行时出现死锁，能及时发现死锁，把程序解脱出来</li>
+<li><strong>解除死锁</strong>：发生死锁后，解脱进程，通常撤销进程，回收资源，再分配给正处于阻塞状态的进程。</li>
+</ul>
+<h5 id="预防死锁的方法">2.4.4 预防死锁的方法</h5>
+<ul>
+<li><strong>破坏请求和保持条件</strong>
+<ul>
+<li><p><strong>协议1：</strong>所有进程开始前，必须一次性地申请所需的所有资源，这样运行期间就不会再提出资源要求，破坏了请求条件，即使有一种资源不能满足需求，也不会给它分配正在空闲的资源，这样它就没有资源，就破坏了保持条件，从而预防死锁的发生。</p></li>
+<li><p><strong>协议2：</strong>允许一个进程只获得初期的资源就开始运行，然后再把运行完的资源释放出来。然后再请求新的资源。</p></li>
+</ul></li>
+<li><p>** 破坏不可抢占条件**：当一个已经保持了某种不可抢占资源的进程，提出新资源请求不能被满足时，它必须释放已经保持的所有资源，以后需要时再重新申请 。</p></li>
+<li><p><strong>破坏循环等待条件：</strong>对系统中的所有资源类型进行线性排序，然后规定每个进程必须按序列号递增的顺序请求资源。假如进程请求到了一些序列号较高的资源，然后有请求一个序列较低的资源时，必须先释放相同和更高序号的资源后才能申请低序号的资源。多个同类资源必须一起请求。</p></li>
+</ul>
+<h4 id="recursive_mutex-介绍">2.5 <code>recursive_mutex</code> 介绍</h4>
+<p><code>std::recursive_mutex</code> 与 <code>std::mutex</code> 一样，也是一种可以被上锁的对象，但是和 <code>std::mutex</code> 不同的是，<strong><code>std::recursive_mutex</code> 允许同一个线程对互斥量多次上锁（即递归上锁），来获得对互斥量对象的多层所有权，<code>std::recursive_mutex</code> 释放互斥量时需要调用与该锁层次深度相同次数的 <code>unlock()</code>，可理解为 <code>lock()</code> 次数和 <code>unlock()</code> 次数相同</strong>，除此之外，<code>std::recursive_mutex</code> 的特性和 <code>std::mutex</code> 大致相同。</p>
+<h4 id="time_mutex-介绍">2.6 time_mutex 介绍</h4>
+<p><code>std::time_mutex</code> 比 <code>std::mutex</code> 多了两个成员函数，<code>try_lock_for()</code>，<code>try_lock_until()</code>。</p>
+<ul>
+<li><p><code>try_lock_for</code>：函数接受一个时间范围，表示在这一段时间范围之内线程如果没有获得锁则被阻塞住（与 <code>std::mutex</code> 的 <code>try_lock()</code> 不同，<code>try_lock()</code> 如果被调用时没有获得锁则直接返回 <code>false</code>），如果在此期间其他线程释放了锁，则该线程可以获得对斥量的锁，如果超时（即在指定时间内还是没有获得锁），则返回 <code>false</code>。</p></li>
+<li><p><code>try_lock_until</code>：函数则接受一个时间点作为参数，在指定时间点未到来之前线程如果没有获得锁则被阻塞住，如果在此期间其他线程释放了锁，则该线程可以获得对互斥量的锁，如果超时（即在指定时间内还是没有获得锁），则返回 <code>false</code>。</p></li>
+</ul>
+<h4 id="recursive_timed_mutex-介绍">2.7 <code>recursive_timed_mutex</code> 介绍</h4>
+<p>和 <code>std:recursive_mutex</code> 与 <code>std::mutex</code> 的关系一样，<code>std::recursive_timed_mutex</code> 的特性也可以从 <code>std::timed_mutex</code> 推导出来，感兴趣的同鞋可以自行查阅。</p>
+<h4 id="自旋锁">2.8 自旋锁</h4>
+<p><strong>自旋锁（spin lock）是一种多线程同步机制，它是在等待锁的过程中不断地循环检查锁是否可用，而不是放弃CPU，从而避免了线程上下文切换带来的开销。自旋锁适用于锁被占用的时间很短的场景，因为自旋锁在等待锁的过程中会一直占用CPU，当锁被占用的时间较长时，这种方式会浪费大量的CPU资源。在锁的持有时间较短的情况下，自旋锁可以在等待锁的过程中避免线程上下文切换的开销，从而提高性能。</strong></p>
+<p>自旋锁<code>std::spin_mutex</code>是C++17中的新特性，定义在<code>&lt;mutex&gt;</code>头文件中。需要使用编译器支持C++17的特性才能使用<code>std::spin_mutex</code>。</p>
+<p>在C++11中，可以使用std::atomic_flag来实现自旋锁，它是一个布尔类型的原子变量，但是在使用时需要注意以下几点：</p>
+<ul>
+<li><p>必须用 ATOMIC_FLAG_INIT 初始化 std::atomic_flag。</p></li>
+<li><p>由于 std::atomic_flag 只有两种状态（被设置或未被设置），所以我们可以使用 test_and_set 成员函数来实现自旋锁的加锁和解锁操作。</p></li>
+<li><p>由于自旋锁是一种忙等的锁，所以在使用 std::atomic_flag 实现自旋锁时需要避免死锁。</p></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atomic&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SpinLock</span> &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="built_in">SpinLock</span>() : <span class="built_in">flag_</span>(ATOMIC_FLAG_INIT) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">lock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (flag_.<span class="built_in">test_and_set</span>(std::memory_order_acquire)) &#123;</span><br><span class="line">      <span class="comment">// 自旋等待</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">void</span> <span class="title">unlock</span><span class="params">()</span> </span>&#123; flag_.<span class="built_in">clear</span>(std::memory_order_release); &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">  std::atomic_flag flag_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>test_and_set</code> 成员函数将 <code>flag_</code> 设置为<code>true</code> 并返回之前的值，如果返回的值为 <code>true</code>，则表示自旋等待；如果返回的值为 <code>false</code>，则表示自旋锁已经被当前线程占用，可以执行加锁操作。<code>clear</code> 成员函数将 <code>flag_</code> 设置为 <code>false</code>。</p>
+<p>需要注意的是，<code>std::atomic_flag</code> 对象的默认内存顺序是 <code>std::memory_order_seq_cst</code>，在使用时需要根据具体情况进行调整，例如在加锁时使用 <code>std::memory_order_acquire</code>，在解锁时使用 <code>std::memory_order_release</code>。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/04/volatile%E5%85%B3%E9%94%AE%E5%AD%97/" rel="prev" title="volatile关键字">
+      <i class="fa fa-chevron-left"></i> volatile关键字
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%89-%E5%90%8C%E6%AD%A5/" rel="next" title="C++并发编程(三):同步">
+      C++并发编程(三):同步 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E4%B8%AD%E7%9A%84%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text">1 C++中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E7%9A%84%E9%94%81%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 C++中的锁机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%82%B2%E8%A7%82%E9%94%81%E5%92%8C%E4%B9%90%E8%A7%82%E9%94%81"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 悲观锁和乐观锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutex%E4%BA%92%E6%96%A5"><span class="nav-number">2.</span> <span class="nav-text">2 Mutex：互斥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%81%B6%E6%80%A7%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 恶性条件竞争</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mutex-%E5%A4%B4%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 mutex 头文件介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mutex%E7%B3%BB%E5%88%97%E7%B1%BB%E5%9B%9B%E7%A7%8D"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 mutex系列类(四种)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mutexc%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 mutex:C++互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E7%B2%92%E5%BA%A6"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 锁的粒度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%BB%E9%94%81"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E5%BC%95%E8%B5%B7%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.4.1 死锁引起的原因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.4.2 死锁的必要条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.4.3 预防死锁的思路</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.4.</span> <span class="nav-text">2.4.4 预防死锁的方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recursive_mutex-%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 recursive_mutex 介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#time_mutex-%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 time_mutex 介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recursive_timed_mutex-%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 recursive_timed_mutex 介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 自旋锁</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">701k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">10:37</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+</body>
+</html>

@@ -24,14 +24,14 @@
 
   <meta name="description" content="读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本)   POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C C++标准多线程和Boost线程是类形式，这点要注意。  1 概览 1.1 认识并发 如下图，在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++并发">
+<meta property="og:title" content="C++并发编程(一):简介与线程">
 <meta property="og:url" content="http://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/index.html">
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本)   POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C C++标准多线程和Boost线程是类形式，这点要注意。  1 概览 1.1 认识并发 如下图，在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png">
 <meta property="article:published_time" content="2023-02-19T01:57:24.000Z">
-<meta property="article:modified_time" content="2023-02-28T04:14:18.205Z">
+<meta property="article:modified_time" content="2023-03-04T12:23:59.009Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -50,7 +50,7 @@
   };
 </script>
 
-  <title>C++并发 | Trluper</title>
+  <title>C++并发编程(一):简介与线程 | Trluper</title>
   
 
 
@@ -215,7 +215,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          C++并发
+          C++并发编程(一):简介与线程
         </h1>
 
         <div class="post-meta">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-28 12:14:18" itemprop="dateModified" datetime="2023-02-28T12:14:18+08:00">2023-02-28</time>
+                <time title="修改时间：2023-03-04 20:23:59" itemprop="dateModified" datetime="2023-03-04T20:23:59+08:00">2023-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,14 +257,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>14k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>13 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -312,6 +312,18 @@
 </ul>
 <p><strong><em>不使用并发场景</em></strong>：当<strong>发现<code>收益&lt;成本</code>时就不能使用。把新线程加入调度器、启动线程(线程的上下文切换)需要耗费CPU资源，当发现这些线程间的切换比处理时间还长，降低了效率，此时就不应该使用或者说不应该使用这么大熟练的线程。</strong>而且若你为每个线程分配一个1M的堆栈，只需要4098个线程就会用尽所有地址空间。</p>
 <h4 id="与-c11-多线程相关的头文件">1.4 与 C++11 多线程相关的头文件</h4>
+<h5 id="总览">1.4.1 总览</h5>
+<p><strong>以下是C++的一些并发编程相关的特性和工具：</strong></p>
+<ul>
+<li><p>线程：C++11引入了线程库，允许开发人员创建和管理线程。通过线程库，开发人员可以创建、启动和停止线程，并在线程之间共享数据。</p></li>
+<li><p>互斥量：互斥量是一种用于保护共享资源免受并发访问的机制。C++的互斥量可以通过std::mutex类来创建和管理，开发人员可以使用它来实现对共享资源的互斥访问。</p></li>
+<li><p>条件变量：条件变量是一种线程间同步的机制，允许线程等待某个特定条件的出现。C++的条件变量可以通过std::condition_variable类来创建和管理，开发人员可以使用它来实现线程之间的通信。</p></li>
+<li><p>原子操作：原子操作是一种线程间同步的机制，可以确保操作的原子性和可见性。C++的原子操作可以通过std::atomic类来创建和管理，开发人员可以使用它来实现对共享资源的原子操作。</p></li>
+<li><p>Futures和Promises：Futures和Promises是一种异步编程的机制，允许开发人员在一个线程中执行一个操作，并在另一个线程中等待操作完成。C++的Futures和Promises可以通过std::future和std::promise类来创建和管理。</p></li>
+<li><p>并行算法：C++标准库提供了一些并行算法，允许开发人员在多个线程上并行执行某些操作。其中一些算法包括std::for_each、std::accumulate、std::sort等。</p></li>
+</ul>
+<p>在并发编程时，开发人员需要特别注意避免数据竞争、死锁等问题，以确保程序的正确性和可靠性。</p>
+<h5 id="头文件总览">1.4.2 头文件总览</h5>
 <p>首先熟悉一下 C++11 的多线程模块的头文件吧。C++11 新标准中引入了多个头文件来支持多线程编程，他们分别是 <code>&lt;atomic&gt;</code>，<code>&lt;thread&gt;</code>，<code>&lt;mutex&gt;</code>，<code>&lt;condition_variable&gt;</code> 和 <code>&lt;future&gt;</code>。</p>
 <ul>
 <li><code>&lt;atomic&gt;</code>：该头文件用于原子操作，主要声明了两个类，<code>std::atomic</code> 和 <code>std::atomic_flag</code>，另外还声明了一套 C 风格的原子类型和与 C 兼容的原子操作的函数。</li>
@@ -407,8 +419,15 @@
 <p>如下面代码就是上面提到的<code>detach</code>情况，因传入为<code>const char*</code>，若线程还未完成切换，主线程就退出了，那么在字面值转化成 std::string 对象之前崩溃(oops)，从而导致线程的一些未定义行为</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> i,std::string <span class="type">const</span>&amp; s)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">oops</span><span class="params">(<span class="type">int</span> some_param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">char</span> buffer[<span class="number">1024</span>]; <span class="comment">// 1</span></span><br><span class="line">	<span class="built_in">sprintf</span>(buffer, <span class="string">&quot;%i&quot;</span>,some_param);</span><br><span class="line">	<span class="function">std::thread <span class="title">t</span><span class="params">(f,<span class="number">3</span>,buffer)</span></span>; <span class="comment">// 2</span></span><br><span class="line">	t.<span class="built_in">detach</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//修改</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> i,std::string <span class="type">const</span>&amp; s)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">not_oops</span><span class="params">(<span class="type">int</span> some_param)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">char</span> buffer[<span class="number">1024</span>];</span><br><span class="line">	<span class="built_in">sprintf</span>(buffer,<span class="string">&quot;%i&quot;</span>,some_param);</span><br><span class="line">	<span class="function">std::thread <span class="title">t</span><span class="params">(f,<span class="number">3</span>,std::string(buffer))</span></span>; <span class="comment">// 使用std::string，避免悬垂指针</span></span><br><span class="line">	t.<span class="built_in">detach</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>标准约定std::thread构造时向函数对象传递实际参数的拷贝（支持移动语义），而不是转发实际参数。即fun的形式参数是被a拷贝初始化的引用，而不是a的引用，所以形式参数a并不是main函数内a的引用，在fun内赋值自然不会改变main函数内a的值。<strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> &amp;a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a =<span class="number">1</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a =<span class="number">0</span> ;</span><br><span class="line">    <span class="function">std::thread <span class="title">t</span><span class="params">(fun,a)</span> </span>;</span><br><span class="line">    t.<span class="built_in">join</span> () ;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> </strong>如果你希望像c++以往“以引用的方式传参”，常用解决方案之一是使用std::ref，即std::thread(fun, std::ref(a));。参数要拷贝到线程独立内存中是默认的，即使参数是引用的形式，也可以在新线程中进行访问。但必须保证a在子线程执行完前a未被销毁** <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此时fun函数收到就是a的引用，而不是a拷贝初始化的引用，能够改变院长</span></span><br><span class="line">std::<span class="built_in">thread</span>(fun, std::<span class="built_in">ref</span>(a));</span><br></pre></td></tr></table></figure></li>
+<li>标准约定std::thread构造时向函数对象传递实际参数的拷贝（支持移动语义），而不是转发实际参数。即fun的形式参数是被a拷贝初始化的引用，而不是a的引用，所以形式参数a并不是main函数内a的引用，在fun内赋值自然不会改变main函数内a的值。<strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> &amp;a)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    a =<span class="number">1</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a =<span class="number">0</span> ;</span><br><span class="line">    <span class="function">std::thread <span class="title">t</span><span class="params">(fun,a)</span> </span>;</span><br><span class="line">    t.<span class="built_in">join</span> () ;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> </strong>如果你希望像c++以往“以引用的方式传参”，常用解决方案之一是使用<code>std::ref</code>，即<code>std::thread(fun, std::ref(a))</code>;。参数要拷贝到线程独立内存中是默认的，即使参数是引用的形式，也可以在新线程中进行访问。但必须保证a在子线程执行完前a未被销毁** <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此时fun函数收到就是a的引用，而不是a拷贝初始化的引用，能够改变院长</span></span><br><span class="line">std::<span class="built_in">thread</span>(fun, std::<span class="built_in">ref</span>(a));</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h4 id="线程传递局部参数">2.5.1 线程传递局部参数</h4>
+<p>如果要给各个线程传递局部参数，<code>thread::local_data</code> 是 C++20 新增的一个类模板，它提供了一种在多线程程序中为每个线程分配私有数据的方式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"></span><br><span class="line">std::<span class="keyword">thread_local</span> <span class="type">int</span> local_data = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">thread_func</span><span class="params">(<span class="type">const</span> std::string&amp; name)</span> </span>&#123;</span><br><span class="line">    local_data += <span class="number">1</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Thread &quot;</span> &lt;&lt; name &lt;&lt; <span class="string">&quot; local_data: &quot;</span> &lt;&lt; local_data &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">seconds</span>(<span class="number">1</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">std::thread <span class="title">t1</span><span class="params">(thread_func, <span class="string">&quot;A&quot;</span>)</span></span>;</span><br><span class="line">    <span class="function">std::thread <span class="title">t2</span><span class="params">(thread_func, <span class="string">&quot;B&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    t2.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个程序创建了两个线程，它们都调用了 <code>thread_func</code> 函数。在 <code>thread_func</code> 中，我们对 <code>local_data</code> 进行了自增并输出了当前线程的 <code>local_data</code> 值。由于 <code>local_data</code> 是使用 <code>thread_local</code> 修饰的，因此每个线程都会有一个独立的拷贝。</p>
+<blockquote>
+<p>需要注意的是，<code>thread_local</code> 变量的初始化是延迟的。这意味着在首次访问变量之前，它不会被初始化。这个特性有时候会带来一些麻烦，需要特别注意。 此外，由于 <code>thread_local</code> 变量的生命周期与线程相同，因此需要注意避免出现悬垂指针的情况。</p>
+</blockquote>
 <h4 id="转移线程所有权move">2.5 转移线程所有权<code>move</code></h4>
 <p>转移线程所有权是指<code>std::thread</code>支持移动<code>std::move</code>.执行线程的所有权可以在 <code>std::thread</code> 实例中移动，下面将展示一个例子。例子中，创建了两个执行线程，并且在 <code>std::thread</code> 实例之间(t1,t2和t3)转移所有权：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">some_function</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">some_other_function</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">std::thread <span class="title">t1</span><span class="params">(some_function)</span></span>; <span class="comment">// 1</span></span><br><span class="line">std::thread t2=std::<span class="built_in">move</span>(t1); <span class="comment">// 2</span></span><br><span class="line">t1=std::<span class="built_in">thread</span>(some_other_function); <span class="comment">// 3</span></span><br><span class="line">std::thread t3; <span class="comment">// 4</span></span><br><span class="line">t3=std::<span class="built_in">move</span>(t2); <span class="comment">// 5</span></span><br><span class="line">t1=std::<span class="built_in">move</span>(t3); <span class="comment">// 6 赋值操作将使程序崩溃</span></span><br></pre></td></tr></table></figure>
@@ -432,7 +451,7 @@
 <p>除了 <code>join，detach，joinable</code> 之外，<code>std::thread</code> 头文件还在 <code>std::this_thread</code> 命名空间下提供了一些辅助函数：</p>
 <ul>
 <li><code>get_id</code>: 返回当前线程的 id</li>
-<li><code>yield</code>: 告知调度器运行其他线程，可用于当前处于繁忙的等待状态</li>
+<li><code>yield</code>: 函数让出当前线程的执行权，让其他线程运行,即告知调度器运行其他线程，可用于当前处于繁忙的等待状态</li>
 <li><code>sleep_for</code>：给定时长，阻塞当前线程</li>
 <li><code>sleep_until</code>：阻塞当前线程至给定时间点</li>
 </ul>
@@ -442,104 +461,6 @@
 <li><p>如果将<code>std::this_thread::yield()</code> 上述语句修改为: <code>return</code>;，则将未使用完的 CPU ”时间片A”还给操作系统，再由操作系统调度，当前线程和其他线程一起开始抢CPU时间片。</p></li>
 </ul>
 <p><strong>因此 <code>yield</code> 使用的场景就是当当前线程运行条件不满足时调用，避免一个线程频繁与其他线程争抢 CPU 时间片, 从而导致多线程处理性能下降</strong>。sleep_for 也是让线程等待，需要等待若干时间</p>
-<h3 id="mutex互斥">3 Mutex：互斥</h3>
-<p>所有线程间共享数据的问题，都<strong>是修改数据导致的（竞争条件）</strong>。如果所有的共享数据都是只读的，就没问题，因为一个线程所读取的数据不受另一个线程是否正在读取相同的数据而影响</p>
-<h4 id="恶性条件竞争">3.1 恶性条件竞争</h4>
-<p>恶性条件竞争通常发生于多线程对多于一个的数据块的修改时，产生了非预想的执行效果。就比如:</p>
-<ul>
-<li>其中一个线程可能正在进行修改时，另一个线程就对数据块进行了访问，此时读取到的数据不同步</li>
-<li>其中一个线程可能正在进行修改时，另一个线程就对数据块也进行了修改，此时修改的数据也是不正确的</li>
-</ul>
-<p>避免恶性条件竞争：</p>
-<ul>
-<li>要避免恶性的条件竞争，一种方法是就使用一定的手段，对线程共享的内存区域的数据结构采用某种保护机制，如使用锁</li>
-<li>另一种就是选择对该区域的数据结构和不变量的设计进行修改，如保证该区域为原子操作，，修改完的结构必须能完成一系列不可分割的变化，但是这种无锁的方法很难一定保证线程安全</li>
-<li>另一种处理条件竞争的方式是，<strong>使用事务(transacting)的方式去处理</strong>该数据共享区域</li>
-</ul>
-<h4 id="mutex-头文件介绍">3.2 mutex 头文件介绍</h4>
-<p>mutex 又称互斥量，C++11 中与 mutex 相关的类（包括锁类型）和函数都声明在 <code>&lt;mutex&gt;</code> 头文件中，所以如果你需要使用 <code>std::mutex</code>，就必须包含<code>&lt;mutex&gt;</code>头文件。 ##### 2.2.1 mutex系列类(四种) - <code>std::mutex：</code>基本的 mutex 类。 - <code>std::recursive_mutex：</code>递归 mutex 类。 - <code>std::time_mutex：</code>定时 mutex 类。 - <code>std::recursive_timed_mutex：</code>定时递归 mutex 类。</p>
-<h5 id="函数">3.2.2 函数</h5>
-<ul>
-<li><code>std::try_lock</code>：尝试同时对多个互斥量上锁。</li>
-<li><code>std::lock</code>：可以同时对多个互斥量上锁。</li>
-<li><code>std::call_once</code>：如果多个线程需要同时调用某个函数，<code>call_once</code> 可以保证多个线程对该函数只调用一次。</li>
-</ul>
-<h4 id="mutexc互斥锁">3.3 mutex:C++互斥锁</h4>
-<p>C++中通过实例化 <code>std::mutex</code> 创建互斥量，通过调用成员函数<code>lock()</code>进行上锁，<code>unlock()</code>进行解锁。对于互斥量，必须记住在每个线程执行完毕后必须去<code>unlock()</code>释放已获得的锁。</p>
-<p>值得一提的是，C++标准库为互斥量提供了一个RAII语法的模板类<code>std::lock_guard</code>和<code>std::unique_lock</code>。 - <code>std::lock_guard</code> ：其会在构造的时候提供已锁的互斥量，并在析构的时候进行解锁，此时就不用手动去解锁<code>unlock</code>，即使发生异常也会释放，从而保证了一个已锁的互斥量总是会被正确的解锁。 - <code>std::unique_lock</code>：<code>unique_lock</code>更加灵活，可以在任意的时候加锁或者解锁，因此其资源消耗也更大，通常是在有需要的时候（比如和条件变量配合使用，我们将在介绍条件变量的时候介绍这个用法）才会使用，否则用<code>lock_guard</code>。</p>
-<p><strong>std::mutex 的成员函数：</strong></p>
-<ul>
-<li><p>构造函数：<code>std::mutex</code>不允许拷贝构造，也不允许 <code>move</code> 拷贝，最初产生的 <code>mutex</code> 对象是处于 unlocked 状态的。</p></li>
-<li><code>lock()</code>：调用线程将锁住该互斥量。线程调用该函数会发生下面3种情况：
-<ul>
-<li>如果该互斥量当前没有被锁住，则调用线程将该互斥量锁住，直到调用 unlock 之前，该线程一直拥有该锁；</li>
-<li>如果当前互斥量被其他线程锁住，则当前的调用线程被阻塞住，直到 mutex 被释放；</li>
-<li>如果当前互斥量被当前调用线程锁住，则会产生死锁（deadlock）。</li>
-</ul></li>
-<li><p><code>unlock()</code>：释放对互斥量的所有权。</p></li>
-<li><code>try_lock()</code>：尝试锁住互斥量，如果互斥量被其他线程占有，则当前线程也不会被阻塞。线程调用该函数也会出现下面3种情况：
-<ul>
-<li>如果当前互斥量没有被其他线程占有，则该线程锁住互斥量，直到该线程调用 <code>unlock</code> 释放互斥量。</li>
-<li>如果当前互斥量被其他线程锁住，则当前调用线程返回 <code>false</code>，<strong>而并不会被阻塞掉。</strong></li>
-<li>如果当前互斥量被当前调用线程锁住，则会产生死锁（<code>deadlock</code>）。</li>
-</ul></li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;list&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mutex&gt;</span></span></span><br><span class="line"></span><br><span class="line">std::list&lt;<span class="type">int</span>&gt; my_list;</span><br><span class="line"><span class="type">int</span> sum = <span class="number">0</span>;</span><br><span class="line">std::mutex my_mutex;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">add_to_list</span><span class="params">(<span class="type">int</span> new_value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">	<span class="comment">//使用std::lock_guard类模板，使用RAII机制</span></span><br><span class="line">		<span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">guard</span><span class="params">(my_mutex)</span></span>;</span><br><span class="line">		sum++;</span><br><span class="line">		my_list.<span class="built_in">push_back</span>(new_value);</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;线程插入值为：&quot;</span> &lt;&lt; new_value &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">std::vector&lt;std::thread&gt; <span class="title">thr</span><span class="params">(<span class="number">5</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">		thr[i] = std::<span class="built_in">thread</span>(add_to_list, i);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span>&amp; t:thr) &#123;</span><br><span class="line">		t.<span class="built_in">join</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	std::cout &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">auto</span> j : my_list)</span><br><span class="line">		std::cout &lt;&lt; j &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用互斥量保护数据，保证线程安全绝不简单，不是简简单单的在共享数据区域内加<code>lock</code>或<code>try_lock</code>或者<code>std::lock_guard</code>那样。<strong>一个迷失的指针或引用，将会让这种保护形同虚设</strong>：</p>
-<ul>
-<li>比如你的函数返回的是指针或者引用，这时候就得小心，</li>
-<li>同样当你成员函数指针或引用的方式来调用，也要小心</li>
-</ul>
-<h5 id="锁的粒度">3.3.1 锁的粒度</h5>
-<p>锁的粒度是用来描述通过一个锁保护着的数据量大小。一个细粒度锁(a fine-grained lock)能够保护较小的数据量，一个粗粒度锁(a coarse-grained lock)能够保护较多的数据量。选择粒度对于锁来说很重要：</p>
-<ul>
-<li><strong>为了保护对应的数据，保证锁有能力保护这些数据也很重要，</strong></li>
-<li><strong>但是锁的粒度太粗，就会导致锁竞争频繁，消耗不必要的资源，也会导致多线程并发收益不高</strong></li>
-</ul>
-<p>因此<strong>必须保证锁的粒度既可以保证线程安全也能保证并发的执行效率。</strong></p>
-<h4 id="死锁">3.4 死锁</h4>
-<p>死锁是指两个或两个以上的线程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。</p>
-<h5 id="死锁引起的原因">3.4.1 死锁引起的原因</h5>
-<ul>
-<li><p>竞争不可抢占资源引起死锁（不可抢占是指没有使用完的资源，不能被抢占）</p></li>
-<li><p>竞争可消耗资源引起死锁：有p1，p2，p3三个进程，p1向p2发送消息并接受p3发送的消息，p2向p3发送消息并接受p1的消息，p3向p1发送消息并接受p2的消息，如果设置是先接到消息后发送消息，则所有的消息都不能发送，这就造成死锁。</p></li>
-<li><p>进程推进顺序不当引起死锁：有进程p1，p2，都需要资源A，B，本来可以p1运行A --&gt; p1运行B --&gt; p2运行A --&gt; p2运行B，但是顺序换了，p1运行A时p2运行B，容易发生第一种死锁。互相抢占资源。</p></li>
-</ul>
-<h5 id="死锁的必要条件">3.4.2 死锁的必要条件</h5>
-<ul>
-<li><strong>互斥条件</strong>：某资源只能被一个进程使用，其他进程请求该资源时，只能等待，直到资源使用完毕后释放资源。</li>
-<li><strong>请求和保持条件</strong>：程序已经保持了至少一个资源，但是又提出了新要求，而这个资源被其他进程占用，自己占用资源却保持不放。</li>
-<li><strong>不可抢占条件</strong>：进程已获得的资源没有使用完，不能被抢占。</li>
-<li><strong>循环等待条件</strong>：必然存在一个循环链。</li>
-</ul>
-<h5 id="预防死锁的思路">3.4.3 预防死锁的思路</h5>
-<ul>
-<li><strong>预防死锁：</strong>破坏死锁的四个必要条件中的一个或多个来预防死锁。</li>
-<li><strong>避免死锁：</strong>和预防死锁的区别就是，在资源动态分配过程中，用某种方式防止系统进入不安全的状态。</li>
-<li><strong>检测死锁：</strong>运行时出现死锁，能及时发现死锁，把程序解脱出来</li>
-<li><strong>解除死锁</strong>：发生死锁后，解脱进程，通常撤销进程，回收资源，再分配给正处于阻塞状态的进程。</li>
-</ul>
-<h5 id="预防死锁的方法">3.4.4 预防死锁的方法</h5>
-<ul>
-<li><strong>破坏请求和保持条件</strong>
-<ul>
-<li><p><strong>协议1：</strong>所有进程开始前，必须一次性地申请所需的所有资源，这样运行期间就不会再提出资源要求，破坏了请求条件，即使有一种资源不能满足需求，也不会给它分配正在空闲的资源，这样它就没有资源，就破坏了保持条件，从而预防死锁的发生。</p></li>
-<li><p><strong>协议2：</strong>允许一个进程只获得初期的资源就开始运行，然后再把运行完的资源释放出来。然后再请求新的资源。</p></li>
-</ul></li>
-<li><p>** 破坏不可抢占条件**：当一个已经保持了某种不可抢占资源的进程，提出新资源请求不能被满足时，它必须释放已经保持的所有资源，以后需要时再重新申请 。</p></li>
-<li><p><strong>破坏循环等待条件：</strong>对系统中的所有资源类型进行线性排序，然后规定每个进程必须按序列号递增的顺序请求资源。假如进程请求到了一些序列号较高的资源，然后有请求一个序列较低的资源时，必须先释放相同和更高序号的资源后才能申请低序号的资源。多个同类资源必须一起请求。</p></li>
-</ul>
-<h4 id="recursive_mutex-介绍">3.5 <code>recursive_mutex</code> 介绍</h4>
-<p><code>std::recursive_mutex</code> 与 <code>std::mutex</code> 一样，也是一种可以被上锁的对象，但是和 <code>std::mutex</code> 不同的是，<strong><code>std::recursive_mutex</code> 允许同一个线程对互斥量多次上锁（即递归上锁），来获得对互斥量对象的多层所有权，<code>std::recursive_mutex</code> 释放互斥量时需要调用与该锁层次深度相同次数的 <code>unlock()</code>，可理解为 <code>lock()</code> 次数和 <code>unlock()</code> 次数相同</strong>，除此之外，<code>std::recursive_mutex</code> 的特性和 <code>std::mutex</code> 大致相同。</p>
-<h4 id="time_mutex-介绍">3.6 time_mutex 介绍</h4>
-<p><code>std::time_mutex</code> 比 <code>std::mutex</code> 多了两个成员函数，<code>try_lock_for()</code>，<code>try_lock_until()</code>。</p>
-<ul>
-<li><p><code>try_lock_for</code>：函数接受一个时间范围，表示在这一段时间范围之内线程如果没有获得锁则被阻塞住（与 <code>std::mutex</code> 的 <code>try_lock()</code> 不同，<code>try_lock()</code> 如果被调用时没有获得锁则直接返回 <code>false</code>），如果在此期间其他线程释放了锁，则该线程可以获得对斥量的锁，如果超时（即在指定时间内还是没有获得锁），则返回 <code>false</code>。</p></li>
-<li><p><code>try_lock_until</code>：函数则接受一个时间点作为参数，在指定时间点未到来之前线程如果没有获得锁则被阻塞住，如果在此期间其他线程释放了锁，则该线程可以获得对互斥量的锁，如果超时（即在指定时间内还是没有获得锁），则返回 <code>false</code>。</p></li>
-</ul>
-<h4 id="recursive_timed_mutex-介绍">3.7 <code>recursive_timed_mutex</code> 介绍</h4>
-<p>和 <code>std:recursive_mutex</code> 与 <code>std::mutex</code> 的关系一样，<code>std::recursive_timed_mutex</code> 的特性也可以从 <code>std::timed_mutex</code> 推导出来，感兴趣的同鞋可以自行查阅。</p>
-<h3 id="condition_variable同步">4 condition_variable：同步</h3>
 
     </div>
 
@@ -644,7 +565,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">1 概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86%E5%B9%B6%E5%8F%91"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 认识并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%80%94%E5%BE%84"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 并发途径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E8%A6%81%E4%BD%BF%E7%94%A8%E5%B9%B6%E5%8F%91"><span class="nav-number">1.3.</span> <span class="nav-text">1.3为何要使用并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8E-c11-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 与 C++11 多线程相关的头文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2 线程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#thread%E5%AF%B9%E8%B1%A1%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 thread对象:启动线程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B%E6%97%B6%E6%98%93%E9%94%99%E7%82%B9"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">2.1.1 启动线程时易错点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join%E7%AD%89%E5%BE%85%E7%BA%BF%E7%A8%8B%E5%AE%8C%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 join:等待线程完成</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%AD%89%E5%BE%85"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 特殊情况下的等待</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#detach%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 detach:后台运行线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%88%86%E7%A6%BB%E7%BA%BF%E7%A8%8B%E5%A4%84%E7%90%86%E6%96%87%E6%A1%A3"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 使用分离线程处理文档</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%91%E7%BA%BF%E7%A8%8B%E5%87%BD%E6%95%B0%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 向线程函数传递参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AC%E7%A7%BB%E7%BA%BF%E7%A8%8B%E6%89%80%E6%9C%89%E6%9D%83move"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 转移线程所有权move</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BA%BF%E7%A8%8B%E6%95%B0%E9%87%8F%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%A0%87%E8%AF%86id"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 查看线程数量和线程标识id</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 其他函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mutex%E4%BA%92%E6%96%A5"><span class="nav-number">3.</span> <span class="nav-text">3 Mutex：互斥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%81%B6%E6%80%A7%E6%9D%A1%E4%BB%B6%E7%AB%9E%E4%BA%89"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 恶性条件竞争</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mutex-%E5%A4%B4%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 mutex 头文件介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.2 函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mutexc%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 mutex:C++互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E7%B2%92%E5%BA%A6"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 锁的粒度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%BB%E9%94%81"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E5%BC%95%E8%B5%B7%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 死锁引起的原因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 死锁的必要条件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 预防死锁的思路</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">3.4.4.</span> <span class="nav-text">3.4.4 预防死锁的方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recursive_mutex-%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 recursive_mutex 介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#time_mutex-%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 time_mutex 介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#recursive_timed_mutex-%E4%BB%8B%E7%BB%8D"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 recursive_timed_mutex 介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#condition_variable%E5%90%8C%E6%AD%A5"><span class="nav-number">4.</span> <span class="nav-text">4 condition_variable：同步</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%A7%88"><span class="nav-number">1.</span> <span class="nav-text">1 概览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86%E5%B9%B6%E5%8F%91"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 认识并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%80%94%E5%BE%84"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 并发途径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E8%A6%81%E4%BD%BF%E7%94%A8%E5%B9%B6%E5%8F%91"><span class="nav-number">1.3.</span> <span class="nav-text">1.3为何要使用并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8E-c11-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9B%B8%E5%85%B3%E7%9A%84%E5%A4%B4%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 与 C++11 多线程相关的头文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 总览</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E6%80%BB%E8%A7%88"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2 头文件总览</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">2 线程管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#thread%E5%AF%B9%E8%B1%A1%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 thread对象:启动线程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E7%BA%BF%E7%A8%8B%E6%97%B6%E6%98%93%E9%94%99%E7%82%B9"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">2.1.1 启动线程时易错点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#join%E7%AD%89%E5%BE%85%E7%BA%BF%E7%A8%8B%E5%AE%8C%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 join:等待线程完成</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E7%AD%89%E5%BE%85"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 特殊情况下的等待</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#detach%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 detach:后台运行线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%88%86%E7%A6%BB%E7%BA%BF%E7%A8%8B%E5%A4%84%E7%90%86%E6%96%87%E6%A1%A3"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 使用分离线程处理文档</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%91%E7%BA%BF%E7%A8%8B%E5%87%BD%E6%95%B0%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 向线程函数传递参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E4%BC%A0%E9%80%92%E5%B1%80%E9%83%A8%E5%8F%82%E6%95%B0"><span class="nav-number">2.5.</span> <span class="nav-text">2.5.1 线程传递局部参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BD%AC%E7%A7%BB%E7%BA%BF%E7%A8%8B%E6%89%80%E6%9C%89%E6%9D%83move"><span class="nav-number">2.6.</span> <span class="nav-text">2.5 转移线程所有权move</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BA%BF%E7%A8%8B%E6%95%B0%E9%87%8F%E5%92%8C%E7%BA%BF%E7%A8%8B%E6%A0%87%E8%AF%86id"><span class="nav-number">2.7.</span> <span class="nav-text">2.6 查看线程数量和线程标识id</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="nav-number">2.8.</span> <span class="nav-text">2.7 其他函数</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -660,7 +581,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -714,12 +635,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">687k</span>
+    <span title="站点总字数">701k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:24</span>
+    <span title="站点阅读时长">10:37</span>
 </div>
 
         

@@ -194,6 +194,318 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">计算机网络</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-07 21:34:12" itemprop="dateCreated datePublished" datetime="2022-08-07T21:34:12+08:00">2022-08-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-24 22:04:59" itemprop="dateModified" datetime="2023-02-24T22:04:59+08:00">2023-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="get请求和post请求的区别">1. get请求和post请求的区别</h4>
+<p><strong>在实际应用中，get和post请求的区别主要有以下几个：</strong></p>
+<ul>
+<li><strong><code>get</code>请求用于从服务器上获得资源，而<code>post</code>请求用于向服务器提交数据</strong></li>
+<li><code>get</code>将表单中的数据按照<code>key=value</code>的形式，添加到<code>action</code>指定的<code>URL</code>后面，并且两者之间使用<code>?</code>连接，各个变量之间使用&amp;连接；post是将表单的数据放在HTTP协议的请求头或者消息体中，传递到action所指向的URL</li>
+<li><strong><code>get</code>传输的数据要受到URL长度的限制（最大长度是2048个字符）；而<code>post</code>可以传输大量数据，上传文件通常使用post</strong></li>
+<li><strong>使用<code>get</code>时参数会显示在地址栏上，如果这些数据不是敏感数据，那么可以使用<code>get</code>，对于敏感数据应使用<code>post</code></strong></li>
+<li><code>get</code>使用<code>MIME</code>类型<code>application/x-www-form-urlencoded</code>的URL编码（也叫百分号编码）文本格式传递参数，保证被传送的参数由遵循规范的文本组成，例如一个空格的编码是<code>%20</code></li>
+<li><strong><code>get</code>请求参数会被完整保留在浏览器历史记录里，而<code>post</code>中的参数不会被保留。</strong></li>
+</ul>
+<p><strong>但是在本质上，get和post请求没有区别：</strong></p>
+<p><code>get</code>和<code>post</code>是HTTP协议中的两种发送请求的方法，而HTTP是基于<code>TCP/IP</code>的关于数据如何在万维网中如何通信的协议。因此，<code>get</code>和<code>post</code>的底层也是<code>TCP/IP</code>,也就是说，<code>get</code>和<code>post</code>都是TCP链接。</p>
+<p><strong>此外，get和post还有一个重要的区别：</strong></p>
+<p><code>get</code>产生一个<code>TCP</code>数据包；<code>POST</code>产生两个TCP数据包。对于<code>get</code>方式的请求，浏览器会把<code>http header</code>和<code>data</code>一并发送出去，服务器响应200（返回数据）；而对于<code>post</code>，浏览器先发送<code>header</code>，服务器响应<code>100 continue</code>，浏览器再发送<code>data</code>，服务器响应<code>200 ok</code>（返回数据）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/" class="post-title-link" itemprop="url">高性能MySQL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-04 21:34:03" itemprop="dateCreated datePublished" datetime="2022-08-04T21:34:03+08:00">2022-08-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-24 22:04:11" itemprop="dateModified" datetime="2023-02-24T22:04:11+08:00">2023-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>16 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="mysql的架构">1. MySQL的架构</h4>
+<p>MySQL最重要最与众不同的就是它的存储引擎架构，这种架构设计将查询处理(<code>QUERY PROCESSING</code>)及其他系统任务和数据存储/提取相分离。在这里主要介绍MySQL的服务器架构、各种存储引擎之间的区别。</p>
+<h5 id="逻辑架构">1.1 逻辑架构</h5>
+<p>MySQL各组件协同工作的示意图如下：</p>
+<ul>
+<li>最上层的客户端不是MySQL独有的，像许多C/S结构都具有。</li>
+<li>第二层架构是大多数MySQL的核心服务功能所在的一层，如查询解析、分析、优化、缓存和所有的内置函数，所有跨存储引擎的功能也在这一层实现：存储过程、视图、触发器等。</li>
+<li>第三层包含了存储引擎，存储引擎负责MySQL中数据的存储和提取 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Fram.png" width="400"></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/30/MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/30/MySQL/" class="post-title-link" itemprop="url">MySQL</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-30 21:59:16" itemprop="dateCreated datePublished" datetime="2022-07-30T21:59:16+08:00">2022-07-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-24 22:01:02" itemprop="dateModified" datetime="2023-02-24T22:01:02+08:00">2023-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>25k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>23 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="了解sql">1. 了解SQL</h4>
+<h5 id="数据库基础">1.1 数据库基础</h5>
+<p>数据库是一个以某种有组织的方式存储的数据集合。<code>MySQL</code>数据库中只有一个用户，名为<code>root</code>，但是它可以有多个数据库，如下是与<code>Oracle</code>数据库的不同之处： <img src="/2022/07/30/MySQL/different.png" width="700"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/30/MySQL/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -883,310 +1195,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">数据结构(C++实现)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-12 22:05:56" itemprop="dateCreated datePublished" datetime="2022-07-12T22:05:56+08:00">2022-07-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 22:05:41" itemprop="dateModified" datetime="2023-02-24T22:05:41+08:00">2023-02-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>56k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>50 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="说在前面">1.说在前面</h4>
-<p>c++支持两种类--<strong>抽象类和具体类</strong>。一个抽象类包含着没有实现代码的成员函数（纯虚函数）。具体了类没有纯虚函数。只有具体类才可以实例化（但抽象类实例化指针和引用是运行的），即只能对具体类建立实例或对象。</p>
-<p><strong>在这里主要讲解各种数据结构的思想，列举抽象类接口和实现一部分具体类的接口功能。</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/12/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-C-%E5%AE%9E%E7%8E%B0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/11/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E6%A8%A1%E6%9D%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/11/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E6%A8%A1%E6%9D%BF/" class="post-title-link" itemprop="url">C++面向对象&模板</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-11 21:49:55" itemprop="dateCreated datePublished" datetime="2022-07-11T21:49:55+08:00">2022-07-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 21:58:14" itemprop="dateModified" datetime="2023-02-24T21:58:14+08:00">2023-02-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>28k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>25 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="面向对象程序设计">1. 面向对象程序设计</h4>
-<p>面向对象程序设计的核心思想是<strong>数据抽象、继承和动态绑定</strong>。通过数据抽象，我们可以将类的接口与实现相分离；使用继承。可以使用相似的类型对其关系建模；使用动态绑定，可以在一定程度上忽略相似类型的区别。</p>
-<ul>
-<li>1）继承：根部类为基类（相似于java的父类），其他继承于基类的类为派生类。</li>
-<li>2）虚函数：某些函数，基类希望它的派生类各自定义适合其自生的函数</li>
-<li>3）动态绑定：能使用同一代码分别处理基类和派生类。如虚函数运行版本由实参决定。</li>
-</ul>
-<h5 id="定义基类">1.1 定义基类</h5>
-<ul>
-<li>作为继承关系中根结点的类<strong>通常有定义了一个虚析构函数</strong>。</li>
-<li>基类中的成员函数分为两种：<strong>一是派生类要进行重写覆盖的函数，称为虚函数</strong>；<strong>二是希望直接继承而不改变的函数</strong>。当我们使用指针或引用调用虚函数时，该调用将被<strong>动态绑定</strong>。</li>
-<li>基类通过在其成员函数的声明语句之前加上关键字<code>virtual</code>使得函数执行<strong>动态绑定</strong>。其只能出现在类内部声明或定义中。</li>
-<li>派生类可以继承定义在基类中的成员，但是派生类的的成员函数不一定有权访问从基类继承而来的成员。派生类能访问公有成员，但不能访问私有成员。为解决这一问题，引入了新访问运算符：<code>protected</code>(派生类有权访问，禁止用户访问）</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/11/C-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-%E6%A8%A1%E6%9D%BF/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/07/c-primer%E5%89%8D%E9%83%A8%E5%88%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/07/c-primer%E5%89%8D%E9%83%A8%E5%88%86/" class="post-title-link" itemprop="url">c++基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-07 19:54:22" itemprop="dateCreated datePublished" datetime="2022-07-07T19:54:22+08:00">2022-07-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 21:57:13" itemprop="dateModified" datetime="2023-02-24T21:57:13+08:00">2023-02-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>90k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1:22</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="类型">1.类型</h4>
-<h5 id="基本内置类型">1.1 基本内置类型</h5>
-<p>基本内置类型有算术类型和空类型。算术类型分两类为整型和浮点型，下图显示了C++的算数类型: <img src="/2022/07/07/c-primer%E5%89%8D%E9%83%A8%E5%88%86/clipboard.png" width="600"></p>
-<h5 id="复合类型">1.2 复合类型</h5>
-<p>c++有几种复合类型：数组、结构、string、引用和指针。这里讨论引用和指针。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/07/07/c-primer%E5%89%8D%E9%83%A8%E5%88%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1258,7 +1266,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1312,12 +1320,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">687k</span>
+    <span title="站点总字数">701k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:24</span>
+    <span title="站点阅读时长">10:37</span>
 </div>
 
         
