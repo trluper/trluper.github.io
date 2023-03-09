@@ -22,16 +22,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="1 信息的存储 大多数的计算机使用8位的块，或者说是字节(byte)，作为最小的可寻址内存单位，而不是访问内存中单独的位。机器级程序将内存视为一个非常大的字节数组，我们称为虚拟内存，内存的每个字节都由一个唯一的数字来标识，即称为地址；所有可能的地址空间的集合就是虚拟地址空间。 顾名思义，虚拟地址空间只是一个展现给机器级程序的概念性映像。实际的实现(第九章：虚拟内存)是将DRAM、闪存、磁盘存储">
+<meta property="og:type" content="article">
 <meta property="og:title" content="深入理解计算机系统_信息表示和处理">
 <meta property="og:url" content="http://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1 信息的存储 大多数的计算机使用8位的块，或者说是字节(byte)，作为最小的可寻址内存单位，而不是访问内存中单独的位。机器级程序将内存视为一个非常大的字节数组，我们称为虚拟内存，内存的每个字节都由一个唯一的数字来标识，即称为地址；所有可能的地址空间的集合就是虚拟地址空间。 顾名思义，虚拟地址空间只是一个展现给机器级程序的概念性映像。实际的实现(第九章：虚拟内存)是将DRAM、闪存、磁盘存储">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bytenums.png">
+<meta property="og:image" content="http://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bigsmall.png">
+<meta property="og:image" content="http://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/same.png">
 <meta property="article:published_time" content="2023-03-02T03:09:05.000Z">
-<meta property="article:modified_time" content="2023-03-02T03:09:40.204Z">
+<meta property="article:modified_time" content="2023-03-07T13:01:20.384Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深入理解计算机系统">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bytenums.png">
 
 <link rel="canonical" href="http://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/">
 
@@ -220,10 +226,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-02 11:09:05 / 修改时间：11:09:40" itemprop="dateCreated datePublished" datetime="2023-03-02T11:09:05+08:00">2023-03-02</time>
+              <time title="创建时间：2023-03-02 11:09:05" itemprop="dateCreated datePublished" datetime="2023-03-02T11:09:05+08:00">2023-03-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-03-07 21:01:20" itemprop="dateModified" datetime="2023-03-07T21:01:20+08:00">2023-03-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -247,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>3.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -266,7 +278,154 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h3 id="信息的存储">1 信息的存储</h3>
+<p>大多数的计算机使用8位的块，或者说是字节(byte)，作为<strong>最小的可寻址内存单位</strong>，而不是访问内存中单独的位。机器级程序将<strong>内存视为一个非常大的字节数组，我们称为虚拟内存</strong>，内存的每个字节都由一个唯一的数字来标识，即称为<strong>地址</strong>；所有可能的地址空间的集合就是<strong>虚拟地址空间</strong>。</p>
+<p>顾名思义，虚拟地址空间只是一个展现给机器级程序的概念性映像。实际的实现(第九章：虚拟内存)是将DRAM、闪存、磁盘存储器、特殊硬件和操作系统软件结合起来，位程序提供一个看上去统一的字节数组。</p>
+<span id="more"></span>
+<h4 id="十六进制">1.1 十六进制</h4>
+<p>在机器世界当中是二进制的，而二进制和十六进制之间的转换比较简单直接，因此在讨论中我们通常不会去说二进制与十进制的转换。</p>
+<ul>
+<li>在C语言中，十六进程以<code>0x</code>或者<code>0X</code>开头，字符<code>A~F</code>代表<code>10~15</code>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a =<span class="number">0xa8</span>;</span><br></pre></td></tr></table></figure></li>
+<li>在C++中，延续了C的这个特点。同时<code>cout</code>对象有相应的十六进制输出方式</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>ostream成员函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>flags(fmtfl)</code></td>
+<td>当前格式状态全部替换为 <code>fmtfl</code>。注意，<code>fmtfl</code> 可以表示一种格式，也可以表示多种格式。</td>
+</tr>
+<tr class="even">
+<td><code>precision(n)</code></td>
+<td>设置输出浮点数的精度为 n。</td>
+</tr>
+<tr class="odd">
+<td><code>width(w)</code></td>
+<td>指定输出宽度为 <code>w</code> 个字符。</td>
+</tr>
+<tr class="even">
+<td><code>fill(c)</code></td>
+<td>在指定输出宽度的情况下，输出的宽度不足时用字符 c 填充（默认情况是用空格填充）。</td>
+</tr>
+<tr class="odd">
+<td><code>setf(fmtfl, mask)</code></td>
+<td>在当前格式的基础上，追加 <code>fmtfl</code> 格式，并删除 <code>mask</code> 格式。其中，<code>mask</code> 参数可以省略。</td>
+</tr>
+<tr class="even">
+<td><code>unsetf(mask)</code></td>
+<td>在当前格式的基础上，删除 mask 格式。</td>
+</tr>
+</tbody>
+</table>
+<p>其中，对于上表中 <code>flags()</code> 函数的 <code>fmtfl</code> 参数、<code>setf()</code> 函数中的 <code>fmtfl</code> 参数和 <code>mask</code> 参数以及 <code>unsetf()</code> 函数 <code>mask</code> 参数，可以选择下表中列出的这些值。</p>
+<table>
+<thead>
+<tr class="header">
+<th>标 志</th>
+<th>作 用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ios::boolapha</code></td>
+<td>把 true 和 false 输出为字符串</td>
+</tr>
+<tr class="even">
+<td><code>ios::left</code></td>
+<td>输出数据在本域宽范围内向左对齐</td>
+</tr>
+<tr class="odd">
+<td><code>ios::right</code></td>
+<td>输出数据在本域宽范围内向右对齐</td>
+</tr>
+<tr class="even">
+<td><code>ios::internal</code></td>
+<td>数值的符号位在域宽内左对齐，数值右对齐，中间由填充字符填充</td>
+</tr>
+<tr class="odd">
+<td><code>ios::dec</code></td>
+<td>设置整数的基数为 10</td>
+</tr>
+<tr class="even">
+<td><code>ios::oct</code></td>
+<td>设置整数的基数为 8</td>
+</tr>
+<tr class="odd">
+<td><code>ios::hex</code></td>
+<td>设置整数的基数为 16</td>
+</tr>
+<tr class="even">
+<td><code>ios::showbase</code></td>
+<td>强制输出整数的基数（八进制数以 0 开头，十六进制数以 0x 打头）</td>
+</tr>
+<tr class="odd">
+<td><code>ios::showpoint</code></td>
+<td>强制输出浮点数的小点和尾数 0</td>
+</tr>
+<tr class="even">
+<td><code>ios::uppercase</code></td>
+<td>在以科学记数法格式 E 和以十六进制输出字母时以大写表示</td>
+</tr>
+<tr class="odd">
+<td><code>ios::showpos</code></td>
+<td>对正数显示“+”号</td>
+</tr>
+<tr class="even">
+<td><code>ios::scientific</code></td>
+<td>浮点数以科学记数法格式输出</td>
+</tr>
+<tr class="odd">
+<td><code>ios::fixed</code></td>
+<td>浮点数以定点格式（小数形式）输出</td>
+</tr>
+<tr class="even">
+<td><code>ios::unitbuf</code></td>
+<td>每次输出之后刷新所有的流</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a=oxa8;</span><br><span class="line">cout.<span class="built_in">unsetf</span>(ios::dec)</span><br><span class="line">cout.<span class="built_in">setf</span>(ios::hex);</span><br><span class="line">cou&lt;&lt;a&lt;&lt;endl;</span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line">cout&lt;&lt;hex&lt;&lt;a&lt;&lt;endl;</span><br></pre></td></tr></table></figure>
+<h4 id="字数据大小">1.2 字数据大小</h4>
+<p>每台计算机都有有一个字长(word)，指明指针数据的标称大小，<strong>因为虚拟地址是以这样的一个字来编码的，所有字长决定的最重要的系统参数就是虚拟地址空间的最大空间</strong>，也就是说一个字长位m位的机器，虚拟地址空间的范围为<span class="math inline">\(0\)</span>~<span class="math inline">\(2^{(m-1)}\)</span>，即32为系统来说，器虚拟内存空间最大为4G，而64位最大可为16EB.</p>
+<p>64位机器先后兼容，可运行32位机器编码程序,因此对于下面的伪指令编译 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//32、64均可运行</span></span><br><span class="line">gcc -m32 prog.c</span><br><span class="line"><span class="comment">//只能在64运行</span></span><br><span class="line">gcc -m64 prog.c</span><br></pre></td></tr></table></figure></p>
+<p>值得一提的是各基础类型在不同机器的字节数： <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bytenums.png" width="700"></p>
+<ul>
+<li><code>int</code>不管在哪个机器上都是4字节</li>
+<li>而<code>long</code>在32位位4字节，在64位上位8字节</li>
+<li>另外为了克服这种在不同机器上字节长度不同的区别，IOS引入了数据大小固定，不随编译器设置带来的变化的类型，如<code>int32_t</code>和<code>int64_t</code>等等</li>
+<li>指针为4字节</li>
+</ul>
+<h4 id="寻址和字节顺序">1.3 寻址和字节顺序</h4>
+<p>对于跨域多字节的程序对象，必须有两个规则：</p>
+<ul>
+<li>这个对象的地址是什么：在几乎所有的机器上，多字节对象都被存储为连续的字节序列，<strong>对象的地址为所使用字节中最小的地址。</strong></li>
+<li>这个对象在内存中是如何排列这些字节的：排列ijie有两个通用的规则，一个是大端(网络字节序)，一个是小端(主机序);<strong>大端字节序在内存中按从最高有效位到最低有效位存储；而小端字节序在内存中按照从最低有效位到最高有效位存储</strong>
+<ul>
+<li>现有一个int型变量，位于初始地址为<code>0x100</code>，它的十六进制值为<code>0x01234567</code>，则大小端存储如下： <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bigsmall.png" width="700"></li>
+</ul></li>
+</ul>
+<p>试用一个程序来输出类型位<code>int</code>、<code>float</code>和<code>void*</code>的字节表示： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">char</span>* byte_pointer;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_bytes</span><span class="params">(byte_pointer start,size_tlen)</span></span>&#123;</span><br><span class="line">	<span class="type">size_t</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%2.x &quot;</span>,start[i]);	<span class="comment">//%2.x表示整数必须用两个16进制输出</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_int</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">show_bytes</span>((byte_pointer)&amp;x,<span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_float</span><span class="params">(<span class="type">float</span> x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">show_bytes</span>((byte_pointer)&amp;x,<span class="built_in">sizeof</span>(<span class="type">float</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_pointer</span><span class="params">(<span class="type">void</span>*x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">show_bytes</span>((byte_pointer)&amp;x,<span class="built_in">sizeof</span>(<span class="type">void</span>*));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> val=<span class="number">12345</span>;</span><br><span class="line">	<span class="type">float</span> fval=(<span class="type">float</span>)val;</span><br><span class="line">	<span class="type">int</span> *pval=&amp;val;</span><br><span class="line">	<span class="built_in">show_int</span>(val);</span><br><span class="line">	<span class="built_in">show_float</span>(fval);</span><br><span class="line">	<span class="built_in">show_pointer</span>(pval);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 输出： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">39</span> <span class="number">30</span> <span class="number">00</span> <span class="number">00</span></span><br><span class="line"><span class="number">00</span> e4 <span class="number">40</span> <span class="number">46</span></span><br><span class="line"><span class="number">74</span> f5 cf <span class="number">38</span> a3</span><br></pre></td></tr></table></figure> 可以很清楚的值得<code>int</code>是采用了小端字节序，<code>float</code>也是使用了小端，但数值比较奇怪，而指针的值是每次都可能会不一样的。</p>
+<p>对于<code>int</code>和<code>float</code>的值，看起来很不一样，但是我们把它按位展开，则发现下面有些许相似,如<code>*</code>号处： <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/same.png" width="700"></p>
+<p>这是IEEE单精度标准化的结果</p>
+<h4 id="表示字符串">1.4 表示字符串</h4>
+<p>C语言中字符串编码为一个以<code>null</code>(值为0)字符结尾的字符数组。<strong>并且每个字符都以标准编码来表示，如ASCII码</strong>。比如，我们若以字符串&quot;12345&quot;来运行<code>show_bytes</code>，得到的结果会是<code>31 32 33 34 35 00</code>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//0~9的数字x的ascii码正好对应0x3x,终止字符对应0x00</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* s = <span class="string">&quot;12345&quot;</span>;</span><br><span class="line"><span class="built_in">show_bytes</span>((byte_pointer)s, <span class="built_in">sizeof</span>(s));</span><br></pre></td></tr></table></figure> 输出： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">31</span> <span class="number">32</span> <span class="number">33</span> <span class="number">34</span> <span class="number">35</span> <span class="number">00</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="布尔运算">1.5 布尔运算</h4>
+<p>以下操作是按位运算：</p>
+<ul>
+<li><code>&amp;</code>代表位逻辑运算<code>AND</code></li>
+<li><code>|</code>代表位逻辑运算<code>OR</code></li>
+<li><code>^</code>代表位逻辑运算异或</li>
+<li><code>~</code>代表位逻辑运算非</li>
+<li><code>y&gt;&gt;x</code>对数字y右移x位，相当于<span class="math inline">\(y/2^2\)</span></li>
+<li><p><code>y&lt;&lt;x</code>对数字y左移x位,相当于<span class="math inline">\(y*2^2\)</span></p></li>
+<li><p>从位运算比普通运算效率更高，位运算能够高效率的完成数值的计算，因为机器本身就是基于二进制的存储和计算，所有的数值或者对象最终都要转化为二进制，对象的话，可能需要一些编解码的动作，位运算主要是针对数据运算的，把人们熟悉的数字转化为机器熟悉的数字，其中又牵扯到原码，反码和补码，补码的出现是为了减低机器运算的复杂度，把减法转变为加法，可以这么说机器运算只有加法和移位，乘法最终是通过加法和移位操作完成的，而除法首先转变为乘法。</p></li>
+<li><p>交换两个数字，不使用中间变量： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a^=b;	<span class="comment">//a=a^b;</span></span><br><span class="line">b^=a;	<span class="comment">//b=a^b^b=a</span></span><br><span class="line">a^=b;	<span class="comment">//a=a^b^a=b</span></span><br></pre></td></tr></table></figure></p></li>
+</ul>
 
     </div>
 
@@ -371,6 +530,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AD%98%E5%82%A8"><span class="nav-number">1.</span> <span class="nav-text">1 信息的存储</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 十六进制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E6%95%B0%E6%8D%AE%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 字数据大小</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BB%E5%9D%80%E5%92%8C%E5%AD%97%E8%8A%82%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 寻址和字节顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 表示字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 布尔运算</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -440,12 +600,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">723k</span>
+    <span title="站点总字数">736k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">10:57</span>
+    <span title="站点阅读时长">11:09</span>
 </div>
 
         
