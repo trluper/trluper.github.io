@@ -32,8 +32,11 @@
 <meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/someClick.png">
 <meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh_setting.png">
 <meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh.png">
+<meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/debug-button.png">
+<meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/launch.png">
+<meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/vstudio.png">
 <meta property="article:published_time" content="2022-09-07T01:46:11.000Z">
-<meta property="article:modified_time" content="2023-03-10T07:21:47.352Z">
+<meta property="article:modified_time" content="2023-03-11T15:26:00.394Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="VScode">
 <meta name="twitter:card" content="summary">
@@ -234,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-10 15:21:47" itemprop="dateModified" datetime="2023-03-10T15:21:47+08:00">2023-03-10</time>
+                <time title="修改时间：2023-03-11 23:26:00" itemprop="dateModified" datetime="2023-03-11T23:26:00+08:00">2023-03-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -449,7 +452,7 @@
 </table>
 <p>如果在编程中忘记了快捷键，也可以使用<code>Ctrl+K/Ctrl+S</code>来查看VSCode中全部快捷键。</p>
 <h3 id="插件安装">4. 插件安装</h3>
-<p>在输入框中输入想要安装的插件名称，点击安装即可，推荐安装的插件有： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、Bracket Pair Colorizer：给嵌套的各种括号加上不同的颜色。</span><br><span class="line"><span class="number">2</span>、Path Intellisense：智能路径提示，可以在你输入文件路径时智能提示。</span><br><span class="line"><span class="number">3</span>、Markdown Preview：实时预览 markdown。</span><br></pre></td></tr></table></figure></p>
+<p>在输入框中输入想要安装的插件名称，点击安装即可，推荐安装的插件有： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、Bracket Pair Colorizer：给嵌套的各种括号加上不同的颜色。</span><br><span class="line"><span class="number">2</span>、Path Intellisense：智能路径提示，可以在你输入文件路径时智能提示。</span><br><span class="line"><span class="number">3</span>、Markdown Preview：实时预览 markdown。</span><br><span class="line"><span class="number">4</span>、C/C++ <span class="keyword">for</span> Visual Studio Code：</span><br></pre></td></tr></table></figure></p>
 <h3 id="按照remote-ssh">5. 按照remote-ssh</h3>
 <p>remote-ssh支持你远程连接Linux、Mac环境，首先：</p>
 <ul>
@@ -457,7 +460,67 @@
 <li><code>ctrl+shift+p</code>打开万能键，输入<code>remote-ssh:setting</code>，设置你刚刚的<code>txt</code>路径： <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh.png" width="500"></li>
 <li>使用，在Vscode下方点击绿色<code>&gt;&lt;</code>，选择<code>connect to Host</code>即可，后续会要求验证你远端主机/虚拟机密码</li>
 </ul>
-<h3 id="section">6.</h3>
+<h3 id="tasks.json文件">6. tasks.json文件</h3>
+<p><strong><code>tasks.json</code>的作用是编译,</strong>创建一个<code>tasks.json</code>文件告诉VS代码如何构建(编译)程序。</p>
+<p><code>tasks.json</code>的主要作用就是执行类似 <code>gcc -g main.c -o main</code>的命令，需要注意的一点是，<code>tasks.json</code>的&quot;<code>label</code>&quot;参数值和<code>launch.json</code>的&quot;preLaunchTask&quot;参数值需要保持一致</p>
+<p>当第一次运行程序时且安装了C++ 扩展后，会创建<code>tasks.json</code>，可以在项目<code>.vscode</code>文件夹中找到它。<code>tasks.json</code>存储构建配置。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//task.json</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;tasks&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;cppbuild&quot;</span>,</span><br><span class="line">            <span class="string">&quot;label&quot;</span>: <span class="string">&quot;C/C++: g++.exe 生成活动文件&quot;</span>,</span><br><span class="line">            <span class="string">&quot;command&quot;</span>: <span class="string">&quot;D:\\Program Files\\msys2\\mingw64\\bin\\g++.exe&quot;</span>,</span><br><span class="line">            <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;-fdiagnostics-color=always&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-g&quot;</span>,</span><br><span class="line">                <span class="string">&quot;$&#123;file&#125;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-o&quot;</span>,</span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;options&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;cwd&quot;</span>: <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;problemMatcher&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;$gcc&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;group&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;kind&quot;</span>: <span class="string">&quot;build&quot;</span>,</span><br><span class="line">                <span class="string">&quot;isDefault&quot;</span>: <span class="literal">true</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;detail&quot;</span>: <span class="string">&quot;调试器生成的任务。&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;version&quot;</span>: <span class="string">&quot;2.0.0&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>command</code>:设置指定要运行的程序,此时是<code>g++</code></li>
+<li><code>args</code>：指定将传递给 <code>g++</code> 的命令行参数。这些参数必须按照编译器期望的顺序指定，相当于<code>g++ g main.cpp -o main</code>。你可能注意到了，内部的一些参数类似于正则表达式的形式，以下具体说明：Visual Studio Code 支持<strong>调试和任务配置文件中的变量替换以及一些选择设置</strong>，使用<code>$&#123;variableName&#125;</code>
+<ul>
+<li>预定义变量如下(假设你打开了文件·<code>/home/your-username/your-project/folder/file.ext</code>；·/home/your-username/your-project·作为根工作区打开的目录。)
+<ul>
+<li><code>&#123;userHome&#125;</code> - 用户主文件夹的路径<code>/home/your-username</code></li>
+<li><code>$&#123;workspaceFolder&#125;</code> - 在 VS Code 中打开的文件夹的路径<code>/home/your-username/your-project</code></li>
+<li><code>$&#123;workspaceFolderBasename&#125;</code> - 在 VS Code 中打开的文件夹的名称，没有任何斜杠 (/)<code>your-project</code></li>
+<li><code>$&#123;file&#125;</code> - 当前打开的文件<code>/home/your-username/your-project/folder/file.ext</code></li>
+<li><code>$&#123;fileWorkspaceFolder&#125;</code> - 当前打开文件的工作区文件夹<code>/home/your-username/your-project</code></li>
+<li><code>$&#123;relativeFile&#125;</code> - 当前打开的文件相对于workspaceFolder<code>folder/file.ext</code></li>
+<li><code>$&#123;relativeFileDirname&#125;</code> - 当前打开的文件相对于的目录名workspaceFolder——<code>folder</code></li>
+<li><code>$&#123;fileBasename&#125;</code> - 当前打开文件的基本名称<code>file.ext</code></li>
+<li><code>$&#123;fileBasenameNoExtension&#125;</code> - 当前打开的文件的基本名称，没有文件扩展名<code>file</code></li>
+<li><code>$&#123;fileExtname&#125;</code> - 当前打开文件的扩展名<code>.ext</code></li>
+<li><code>$&#123;fileDirname&#125;</code> - 当前打开文件的文件夹路径<code>/home/your-username/your-project/folder</code></li>
+<li><code>$&#123;fileDirnameBasename&#125;</code> - 当前打开文件的文件夹名称</li>
+<li><code>$&#123;cwd&#125;</code> - 启动 VS Code 时任务运行器的当前工作目录</li>
+<li><code>$&#123;lineNumber&#125;</code> - 活动文件中当前选定的行号</li>
+<li><code>$&#123;selectedText&#125;</code> - 活动文件中的当前选定文本</li>
+<li><code>$&#123;execPath&#125;</code> - 正在运行的 VS 代码可执行文件的路径</li>
+<li><code>$&#123;defaultBuildTask&#125;</code> - 默认构建任务的名称</li>
+<li><code>$&#123;pathSeparator&#125;</code> - 操作系统用来分隔文件路径中的组件的字符</li>
+</ul></li>
+</ul></li>
+<li><code>label</code>:将在任务列表中看到的；你可以随意命名。</li>
+<li><code>detail</code>:将在任务列表中作为任务描述的值。强烈建议重命名此值以将其与类似任务区分开来。</li>
+<li><code>group</code>:内部含有<code>kind=build</code>，为<code>true</code>时告诉vscode这个是构建文件;同时当<code>isDefault: true</code>时当前<code>tasks.json</code>为默认构建文件</li>
+</ul>
+<blockquote>
+<p>当你按下运行时，VScode将从中读取tasks.json以了解如何构建和运行程序。您可以在 中定义多个构建任务tasks.json，vscode将会使用默认的<code>tasks.json</code>进行构建编译</p>
+</blockquote>
+<h3 id="launch.json文件">7. launch.json文件</h3>
+<p>在c++编写程序中，最常用到的时<strong>调试</strong>这个功能，也就是我们所说的<code>Debug</code>。VScode支持调式，我们只需要按debug图标即可： <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/debug-button.png" width="100"></p>
+<p>但有时候我们需要自定义的调试，这时候就用到<code>launch.json</code>了。例如指定要在运行时传递给程序的参数。您可以在文件中定义自定义调试配置<code>launch.json</code>。要创建<code>launch.json</code>，请从播放按钮下拉菜单中选择添加调试配置。</p>
+<p>然后您会看到各种预定义调试配置的下拉列表。选择<code>C/C++: g++.exe build and debug active file</code>。 <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/launch.png" width="600"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//launch.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;0.2.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;configurations&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;C/C++: g++.exe build and debug active file&quot;</span>,</span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;cppdbg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;request&quot;</span>: <span class="string">&quot;launch&quot;</span>,</span><br><span class="line">      <span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span>,</span><br><span class="line">      <span class="string">&quot;args&quot;</span>: [],</span><br><span class="line">      <span class="string">&quot;stopAtEntry&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="string">&quot;cwd&quot;</span>: <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span>,</span><br><span class="line">      <span class="string">&quot;environment&quot;</span>: [],</span><br><span class="line">      <span class="string">&quot;externalConsole&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">      <span class="string">&quot;MIMode&quot;</span>: <span class="string">&quot;gdb&quot;</span>,</span><br><span class="line">      <span class="string">&quot;miDebuggerPath&quot;</span>: <span class="string">&quot;C:\\msys64\\mingw64\\bin\\gdb.exe&quot;</span>,</span><br><span class="line">      <span class="string">&quot;setupCommands&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">&quot;description&quot;</span>: <span class="string">&quot;Enable pretty-printing for gdb&quot;</span>,</span><br><span class="line">          <span class="string">&quot;text&quot;</span>: <span class="string">&quot;-enable-pretty-printing&quot;</span>,</span><br><span class="line">          <span class="string">&quot;ignoreFailures&quot;</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;preLaunchTask&quot;</span>: <span class="string">&quot;C/C++: g++.exe build active file&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> - <code>program</code>：指定要调试的程序。此处设置为活动文件文件夹 <code>($&#123;fileDirname&#125;)</code> 和活动文件名 - <code>args</code>：属性是要在运行时传递给程序的参数数组 - 默认情况下，C++ 扩展不会向您的源代码添加任何断点，并且该<code>stopAtEntry</code>值设置为<code>false</code>.</p>
+<blockquote>
+<p>从现在开始，播放按钮和F5将在启动您的程序进行调试时从您的文件中读取launch.json。</p>
+</blockquote>
+<h3 id="c_cpp_properties.json文件">8 c_cpp_properties.json文件</h3>
+<p>如果你想更多地控制<code>C/C++</code>扩展，你可以创建一个<code>c_cpp_properties.json</code>文件，它允许你更改设置，例如编译器的路径、包含路径、C++ 标准（默认为<code>C++17</code>）等等。</p>
+<p>您可以通过运行命令<code>C/C++</code> 查看 <code>C/ C++ Edit Configuration UI</code>，创建<code>c_cpp_properties.json</code>，并且查看相关参数说明 ( Ctrl+Shift+P )<code>&lt;img src=&quot;VScode教程/command.png&quot; width=600&gt; 将打开C/C++ 配置页面。当您在此处进行更改时，VS Code 会自动将它们写入文件夹.vscode中名为</code>c_cpp_properties.json<code>文件。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;configurations&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Win32&quot;</span>,</span><br><span class="line">            <span class="string">&quot;includePath&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;defines&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;_DEBUG&quot;</span>,</span><br><span class="line">                <span class="string">&quot;UNICODE&quot;</span>,</span><br><span class="line">                <span class="string">&quot;_UNICODE&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;compilerPath&quot;</span>: <span class="string">&quot;D:\\Program Files\\msys2\\mingw64\\bin\\g++.exe&quot;</span>,</span><br><span class="line">            <span class="string">&quot;cStandard&quot;</span>: <span class="string">&quot;c17&quot;</span>,</span><br><span class="line">            <span class="string">&quot;cppStandard&quot;</span>: <span class="string">&quot;gnu++17&quot;</span>,</span><br><span class="line">            <span class="string">&quot;intelliSenseMode&quot;</span>: <span class="string">&quot;windows-gcc-x64&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;version&quot;</span>: <span class="number">4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> -</code>includePath<code>：如果您的程序包含不在您的工作区或标准库路径中的头文件，您只需要添加到包含路径数组设置。 -</code>compilerPath<code>：这个扩展通过使用</code>campilerPath`来推断 C++ 标准库头文件的路径。当扩展知道在哪里可以找到这些文件时，它可以提供智能完成和转到定义导航等功能。其顺序是 - 首先检查 Microsoft Visual C++ 编译器 - 然后在 Windows Subsystem for Linux (WSL) 上寻找 g++ - 然后是 Mingw-w64 的 g++。</p>
+<h3 id="编译参数">9 编译参数</h3>
+<h3 id="vscode中main的参数传递">10 VScode中main的参数传递</h3>
+<p>VScode中给main函数传递参数是在<code>launch.json</code>中的args中，将要传递的写入数组中即可 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//launch.josn的args键值对</span></span><br><span class="line"> <span class="string">&quot;args&quot;</span>: [<span class="string">&quot;nihao&quot;</span>,<span class="string">&quot;trluper&quot;</span>],</span><br><span class="line"><span class="comment">//main</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;argc;++i)</span><br><span class="line">        cout&lt;&lt;argv[i]&lt;&lt;endl;</span><br></pre></td></tr></table></figure> 输出 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nihao</span><br><span class="line">trluper</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>对于Visual studio当中main函数的参数传递，在项目名称右击，点击<strong>属性-&gt;配置属性-&gt;调试-&gt;命令参数</strong> <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/vstudio.png" width="600"> 然后填入参数，多个参数的话<strong>以空格分开就好</strong></p>
+</blockquote>
+<h3 id="问题1">9 问题1</h3>
+<p>运行C++时出现： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Unable to start debugging. Unexpected GDB output from command <span class="string">&quot;-exec-run&quot;</span>. During startup program exited with code <span class="number">0xc0000139</span>.</span><br></pre></td></tr></table></figure> 之前配置了VSCode+Anaconda，将<code>conda</code>加入了环境变量，其中有一项是： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\pythonDeve\Anaconda\Library\mingw-w64\bin</span><br></pre></td></tr></table></figure> 其中含有一些c++的动态链接库，与mingw的动态链接库冲突 之前配置的时候，使得PowerShell启动时自动加载Anaconda的配置，并且VSCode自动激活了conda环境，然后就引发冲突了</p>
+<p>解决方法：</p>
+<ul>
+<li>方法一：只需要在 VSCode 的settings.json中加入这一行配置即可： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;python.terminal.activateEnvironment&quot;</span>: <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+<li>方法二：关闭conda环境在终端自动激活 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda config --set auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+</ul>
 
     </div>
 
@@ -562,7 +625,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8vscode"><span class="nav-number">1.</span> <span class="nav-text">1. 为什么使用VScode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E7%9A%84%E7%95%8C%E9%9D%A2%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">2. VScode的界面使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 用户设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.</span> <span class="nav-text">3. 常用快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8E%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">3.2 编辑器与窗口管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%96%87%E6%9C%AC%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.2.</span> <span class="nav-text">3.3 代码文本快捷键</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">4. 插件安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E7%85%A7remote-ssh"><span class="nav-number">5.</span> <span class="nav-text">5. 按照remote-ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section"><span class="nav-number">6.</span> <span class="nav-text">6.</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8vscode"><span class="nav-number">1.</span> <span class="nav-text">1. 为什么使用VScode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E7%9A%84%E7%95%8C%E9%9D%A2%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">2. VScode的界面使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 用户设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.</span> <span class="nav-text">3. 常用快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8E%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">3.2 编辑器与窗口管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%96%87%E6%9C%AC%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.2.</span> <span class="nav-text">3.3 代码文本快捷键</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">4. 插件安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E7%85%A7remote-ssh"><span class="nav-number">5.</span> <span class="nav-text">5. 按照remote-ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tasks.json%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">6. tasks.json文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#launch.json%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">7. launch.json文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c_cpp_properties.json%E6%96%87%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">8 c_cpp_properties.json文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0"><span class="nav-number">9.</span> <span class="nav-text">9 编译参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E4%B8%ADmain%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">10.</span> <span class="nav-text">10 VScode中main的参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%981"><span class="nav-number">11.</span> <span class="nav-text">9 问题1</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -632,12 +695,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">739k</span>
+    <span title="站点总字数">745k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">11:12</span>
+    <span title="站点阅读时长">11:18</span>
 </div>
 
         

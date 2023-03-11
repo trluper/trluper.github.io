@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/03/10/Msys2/file.png">
 <meta property="article:published_time" content="2023-03-10T15:24:13.000Z">
-<meta property="article:modified_time" content="2023-03-11T01:19:05.668Z">
+<meta property="article:modified_time" content="2023-03-11T01:29:30.063Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Msys2">
 <meta name="twitter:card" content="summary">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-11 09:19:05" itemprop="dateModified" datetime="2023-03-11T09:19:05+08:00">2023-03-11</time>
+                <time title="修改时间：2023-03-11 09:29:30" itemprop="dateModified" datetime="2023-03-11T09:29:30+08:00">2023-03-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -302,8 +302,10 @@
 </ul>
 <p>你可以把上面的 7个 东西都理解成一个 子系统。mingw32 跟 mingw64 是比较常用的子系统。</p>
 <blockquote>
-<p>其中<code>Msys2 MSYS</code>版本我们不做任何安装操作，一般只为同步更新软件库使用 #### 同步更新软件库 使用pacman -Syu同步更新软件库 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -Sys</span><br></pre></td></tr></table></figure> #### 搜索想要的软件包 <code>pacman -Ss *</code>查询云端仓库是否有某个软件，他会返回一些了该软件不同版本列表,<code>*</code>可为正则表达式字符串，指一个软件包名称。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pacman -Ss *</span><br><span class="line">如</span><br><span class="line">pacman -Ss gcc</span><br><span class="line">pacman -Ss gdb</span><br></pre></td></tr></table></figure></p>
+<p>其中<code>Msys2 MSYS</code>版本我们不做任何安装操作，一般只为同步更新软件库使用 #### 同步更新软件库 使用pacman -Syu同步更新软件库 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -Sys</span><br></pre></td></tr></table></figure></p>
 </blockquote>
+<h4 id="搜索想要的软件包">搜索想要的软件包</h4>
+<p><code>pacman -Ss *</code>查询云端仓库是否有某个软件，他会返回一些了该软件不同版本列表,<code>*</code>可为正则表达式字符串，指一个软件包名称。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pacman -Ss *</span><br><span class="line">如</span><br><span class="line">pacman -Ss gcc</span><br><span class="line">pacman -Ss gdb</span><br></pre></td></tr></table></figure></p>
 <h4 id="查看云端软件的具体信息">查看云端软件的具体信息</h4>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pacman -Si mingw-w64-x86_64-*</span><br><span class="line">如</span><br><span class="line">Trluper@DESKTOP<span class="number">-67</span>ADUGH MINGW64 ~</span><br><span class="line">$ pacman -Si mingw-w64-x86_64-gcc</span><br></pre></td></tr></table></figure>
 <h4 id="查询一个软件是否安装">查询一个软件是否安装</h4>
@@ -322,7 +324,8 @@
 <p>packman 安装一个软件的过程就是下载 已经编译好的 静态库，动态库或者 exe，跟一些配置相关的文件，放在指定的位置。</p>
 </blockquote>
 <h4 id="查缺失的文件">查缺失的文件</h4>
-<p>pacman 还有一个 命令比较常用，就是支持查找当前软件包缺失的文件。比如不小心删除了SDL 的 SDL2.dll 文件，怎么知道哪个文件不见了，可以用以下命令。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -Qk mingw-w64-x86_64-SDL2</span><br></pre></td></tr></table></figure> pacman 通常会自动帮我们处理软件的依赖，但如果想看一下 软件的依赖，可以使用以下命令。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pactree mingw-w64-x86_64-SDL2</span><br></pre></td></tr></table></figure></p>
+<p>pacman 还有一个 命令比较常用，就是支持查找当前软件包缺失的文件。比如不小心删除了SDL 的 SDL2.dll 文件，怎么知道哪个文件不见了，可以用以下命令。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -Qk mingw-w64-x86_64-SDL2</span><br></pre></td></tr></table></figure></p>
+<p>pacman 通常会自动帮我们处理软件的依赖，但如果想看一下 软件的依赖，可以使用以下命令。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pactree mingw-w64-x86_64-SDL2</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>文章来源： <a target="_blank" rel="noopener" href="https://juejin.cn/post/7108972340410581023">msys2包管理介绍</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/bcbobo21cn/article/details/129096275">初步使用msys2</a></p>
 </blockquote>
@@ -427,7 +430,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#msys2%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">msys2是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BA%91%E7%AB%AF%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%85%B7%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="nav-number">2.1.</span> <span class="nav-text">查看云端软件的具体信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%B8%80%E4%B8%AA%E8%BD%AF%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85"><span class="nav-number">2.2.</span> <span class="nav-text">查询一个软件是否安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9C%AC%E5%9C%B0%E5%B7%B2%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%85%B7%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="nav-number">2.3.</span> <span class="nav-text">查询本地已安装软件的具体信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9C%AC%E5%9C%B0%E5%B7%B2%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%89%80%E5%8C%85%E5%90%AB%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%97%E8%A1%A8"><span class="nav-number">2.4.</span> <span class="nav-text">查询本地已安装软件包所包含文件的列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.5.</span> <span class="nav-text">删除一个软件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85gcc"><span class="nav-number">2.6.</span> <span class="nav-text">安装gcc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85gdb"><span class="nav-number">2.7.</span> <span class="nav-text">安装gdb</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%BC%BA%E5%A4%B1%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">2.8.</span> <span class="nav-text">查缺失的文件</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#msys2%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">msys2是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">命令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%83%B3%E8%A6%81%E7%9A%84%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">2.1.</span> <span class="nav-text">搜索想要的软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BA%91%E7%AB%AF%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%85%B7%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="nav-number">2.2.</span> <span class="nav-text">查看云端软件的具体信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%B8%80%E4%B8%AA%E8%BD%AF%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85"><span class="nav-number">2.3.</span> <span class="nav-text">查询一个软件是否安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9C%AC%E5%9C%B0%E5%B7%B2%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%85%B7%E4%BD%93%E4%BF%A1%E6%81%AF"><span class="nav-number">2.4.</span> <span class="nav-text">查询本地已安装软件的具体信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%9C%AC%E5%9C%B0%E5%B7%B2%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85%E6%89%80%E5%8C%85%E5%90%AB%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%97%E8%A1%A8"><span class="nav-number">2.5.</span> <span class="nav-text">查询本地已安装软件包所包含文件的列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E4%B8%80%E4%B8%AA%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.6.</span> <span class="nav-text">删除一个软件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85gcc"><span class="nav-number">2.7.</span> <span class="nav-text">安装gcc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85gdb"><span class="nav-number">2.8.</span> <span class="nav-text">安装gdb</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%BC%BA%E5%A4%B1%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">2.9.</span> <span class="nav-text">查缺失的文件</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -497,12 +500,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">739k</span>
+    <span title="站点总字数">745k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">11:12</span>
+    <span title="站点阅读时长">11:18</span>
 </div>
 
         
