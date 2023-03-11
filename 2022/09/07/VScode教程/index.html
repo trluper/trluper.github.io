@@ -30,8 +30,10 @@
 <meta property="og:description" content="1. 为什么使用VScode VScode是微软推出一个轻量化编辑器，只需要下载相应的编译器和包即可支持C&#x2F;C++、java、python的编写。相对于VS来说，VScode更加的轻便、体积小，支持许多插件。 2. VScode的界面使用">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/someClick.png">
+<meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh_setting.png">
+<meta property="og:image" content="http://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh.png">
 <meta property="article:published_time" content="2022-09-07T01:46:11.000Z">
-<meta property="article:modified_time" content="2023-02-24T14:03:44.904Z">
+<meta property="article:modified_time" content="2023-03-10T07:21:47.352Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="VScode">
 <meta name="twitter:card" content="summary">
@@ -232,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 22:03:44" itemprop="dateModified" datetime="2023-02-24T22:03:44+08:00">2023-02-24</time>
+                <time title="修改时间：2023-03-10 15:21:47" itemprop="dateModified" datetime="2023-03-10T15:21:47+08:00">2023-03-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -276,15 +278,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="为什么使用vscode">1. 为什么使用VScode</h4>
+        <h3 id="为什么使用vscode">1. 为什么使用VScode</h3>
 <p>VScode是微软推出一个轻量化编辑器，只需要下载相应的编译器和包即可支持C/C++、java、python的编写。相对于VS来说，VScode更加的轻便、体积小，支持许多插件。</p>
-<h4 id="vscode的界面使用">2. VScode的界面使用</h4>
+<h3 id="vscode的界面使用">2. VScode的界面使用</h3>
 <p><img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/someClick.png" width="600"></p>
 <span id="more"></span>
-<h5 id="用户设置">2.1 用户设置</h5>
+<h4 id="用户设置">2.1 用户设置</h4>
 <p><code>文件File--首选项preferences--设置settings</code>，打开用户设置。VScode支持选择配置，也支持编辑<code>setting.json</code>文件修改默认配置 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">（<span class="number">1</span>）editor.fontsize用来设置字体大小，可以设置editor.fontsize : <span class="number">14</span>;</span><br><span class="line"></span><br><span class="line">（<span class="number">2</span>）files.autoSave这个属性是表示文件是否进行自动保存，推荐设置为onFocusChange——文件焦点变化时自动保存。</span><br><span class="line"></span><br><span class="line">（<span class="number">3</span>）editor.tabCompletion用来在出现推荐值时，按下Tab键是否自动填入最佳推荐值，推荐设置为on;</span><br><span class="line"></span><br><span class="line">（<span class="number">4</span>）editor.codeActionsOnSave中的source.organizeImports属性，这个属性能够在保存时，自动调整 <span class="keyword">import</span> 语句相关顺序，能够让你的 <span class="keyword">import</span> 语句按照字母顺序进行排列，推荐设置为<span class="literal">true</span>,即<span class="string">&quot;editor.codeActionsOnSave&quot;</span>: &#123; <span class="string">&quot;source.organizeImports&quot;</span>: <span class="literal">true</span> &#125;；</span><br><span class="line"></span><br><span class="line">（<span class="number">5</span>）editor.lineNumbers设置代码行号,即editor.lineNumbers ：<span class="literal">true</span>；</span><br></pre></td></tr></table></figure></p>
-<h4 id="常用快捷键">3. 常用快捷键</h4>
-<p>高效的使用vscode,记住一些常用的快捷键是必不可少的，这里罗列了一些常用的快捷键。 ##### 3.1 主命令</p>
+<h3 id="常用快捷键">3. 常用快捷键</h3>
+<p>高效的使用vscode,记住一些常用的快捷键是必不可少的，这里罗列了一些常用的快捷键。 #### 3.1 主命令</p>
 <table>
 <thead>
 <tr class="header">
@@ -303,7 +305,7 @@
 </tr>
 </tbody>
 </table>
-<h5 id="编辑器与窗口管理">3.2 编辑器与窗口管理</h5>
+<h4 id="编辑器与窗口管理">3.2 编辑器与窗口管理</h4>
 <table>
 <thead>
 <tr class="header">
@@ -374,7 +376,7 @@
 </tr>
 </tbody>
 </table>
-<h5 id="代码文本快捷键">3.3 代码文本快捷键</h5>
+<h4 id="代码文本快捷键">3.3 代码文本快捷键</h4>
 <table>
 <thead>
 <tr class="header">
@@ -446,8 +448,16 @@
 </tbody>
 </table>
 <p>如果在编程中忘记了快捷键，也可以使用<code>Ctrl+K/Ctrl+S</code>来查看VSCode中全部快捷键。</p>
-<h4 id="插件安装">4. 插件安装</h4>
+<h3 id="插件安装">4. 插件安装</h3>
 <p>在输入框中输入想要安装的插件名称，点击安装即可，推荐安装的插件有： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、Bracket Pair Colorizer：给嵌套的各种括号加上不同的颜色。</span><br><span class="line"><span class="number">2</span>、Path Intellisense：智能路径提示，可以在你输入文件路径时智能提示。</span><br><span class="line"><span class="number">3</span>、Markdown Preview：实时预览 markdown。</span><br></pre></td></tr></table></figure></p>
+<h3 id="按照remote-ssh">5. 按照remote-ssh</h3>
+<p>remote-ssh支持你远程连接Linux、Mac环境，首先：</p>
+<ul>
+<li>先安装<code>remote-ssh</code>插件，并创建一个<code>txt</code>文件,内容如下，<code>Hostname</code>为你远端ip地址，<code>user</code>为你的用户名 <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh_setting.png" width="500"></li>
+<li><code>ctrl+shift+p</code>打开万能键，输入<code>remote-ssh:setting</code>，设置你刚刚的<code>txt</code>路径： <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh.png" width="500"></li>
+<li>使用，在Vscode下方点击绿色<code>&gt;&lt;</code>，选择<code>connect to Host</code>即可，后续会要求验证你远端主机/虚拟机密码</li>
+</ul>
+<h3 id="section">6.</h3>
 
     </div>
 
@@ -552,7 +562,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8vscode"><span class="nav-number">1.</span> <span class="nav-text">1. 为什么使用VScode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vscode%E7%9A%84%E7%95%8C%E9%9D%A2%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">2. VScode的界面使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 用户设置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.</span> <span class="nav-text">3. 常用快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8E%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">3.2 编辑器与窗口管理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%96%87%E6%9C%AC%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.2.</span> <span class="nav-text">3.3 代码文本快捷键</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">4. 插件安装</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8vscode"><span class="nav-number">1.</span> <span class="nav-text">1. 为什么使用VScode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E7%9A%84%E7%95%8C%E9%9D%A2%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">2. VScode的界面使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 用户设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.</span> <span class="nav-text">3. 常用快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8E%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86"><span class="nav-number">3.1.</span> <span class="nav-text">3.2 编辑器与窗口管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%96%87%E6%9C%AC%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.2.</span> <span class="nav-text">3.3 代码文本快捷键</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">4. 插件安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E7%85%A7remote-ssh"><span class="nav-number">5.</span> <span class="nav-text">5. 按照remote-ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section"><span class="nav-number">6.</span> <span class="nav-text">6.</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -568,20 +578,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">52</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -622,12 +632,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">736k</span>
+    <span title="站点总字数">739k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">11:09</span>
+    <span title="站点阅读时长">11:12</span>
 </div>
 
         
