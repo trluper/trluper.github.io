@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Three.png">
 <meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-command.png">
 <meta property="article:published_time" content="2022-09-07T02:10:47.000Z">
-<meta property="article:modified_time" content="2023-03-12T12:26:36.456Z">
+<meta property="article:modified_time" content="2023-03-12T13:03:27.479Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-12 20:26:36" itemprop="dateModified" datetime="2023-03-12T20:26:36+08:00">2023-03-12</time>
+                <time title="修改时间：2023-03-12 21:03:27" itemprop="dateModified" datetime="2023-03-12T21:03:27+08:00">2023-03-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -260,14 +260,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.7k</span>
+              <span>8.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -320,6 +320,9 @@
 <li><p>如果你不想用原来的秘钥或者没有秘钥的话，直接进行下一步生成ssh公钥秘钥 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C 邮箱</span><br><span class="line"><span class="comment">//如下:</span></span><br><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ ssh-keygen -t rsa -C <span class="string">&quot;1229413537@qq.com&quot;</span></span><br><span class="line">Generating <span class="keyword">public</span>/<span class="keyword">private</span> rsa key pair.</span><br><span class="line"><span class="function">Enter file in which to save the <span class="title">key</span> <span class="params">(/home/trluper/.ssh/id_rsa)</span>: </span></span><br><span class="line"><span class="function">Created directory <span class="string">&#x27;/home/trluper/.ssh&#x27;</span>.</span></span><br><span class="line"><span class="function">Enter passphrase (empty for no passphrase): </span></span><br><span class="line"><span class="function">Enter same passphrase again: </span></span><br><span class="line"><span class="function">Your identification has been saved in /home/trluper/.ssh/id_rsa</span></span><br><span class="line"><span class="function">Your public key has been saved in /home/trluper/.ssh/id_rsa.pub</span></span><br><span class="line"><span class="function">The key fingerprint is:</span></span><br><span class="line"><span class="function">SHA256:<span class="number">1</span>Cj60kKeZzc8eMn1G09kN65qxVQ4FhyiKwumBElPf6I <span class="number">1229413537</span>@qq.com</span></span><br><span class="line"><span class="function">The key<span class="string">&#x27;s randomart image is:</span></span></span><br><span class="line"><span class="string"><span class="function">+---[RSA 3072]----+</span></span></span><br><span class="line"><span class="string"><span class="function">| . .       ..o+  |</span></span></span><br><span class="line"><span class="string"><span class="function">|. + .    o. .= . |</span></span></span><br><span class="line"><span class="string"><span class="function">| o . o..o.. . o  |</span></span></span><br><span class="line"><span class="string"><span class="function">|  . ..oo  .  .   |</span></span></span><br><span class="line"><span class="string"><span class="function">|   Eoo .S.. o o..|</span></span></span><br><span class="line"><span class="string"><span class="function">|  .oo+.+oo . =...|</span></span></span><br><span class="line"><span class="string"><span class="function">|   .= *.O   + .. |</span></span></span><br><span class="line"><span class="string"><span class="function">|     = o o . =.  |</span></span></span><br><span class="line"><span class="string"><span class="function">|          ..o..  |</span></span></span><br><span class="line"><span class="string"><span class="function">+----[SHA256]-----+</span></span></span><br></pre></td></tr></table></figure></p></li>
 <li><p>将公钥复制到github上，使用<code>ssh -T git@github.com</code>验证是否成功，成功会出现以下语句 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ ssh -T git@github.com</span><br><span class="line">Hi trluper! Yo<span class="string">u&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span></span><br></pre></td></tr></table></figure></p></li>
 </ul>
+<blockquote>
+<p>附加：如果上面的<code>ssh -T git@github.com</code>验证成功，但是git clone时出现错误： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:/home/CPP_project$ git clone git@github.com:qinguoyi/TinyWebServer.git</span><br><span class="line">git@github.com: <span class="function">Permission <span class="title">denied</span> <span class="params">(publickey)</span>.</span></span><br><span class="line"><span class="function">fatal: Could not read from remote repository.</span></span><br></pre></td></tr></table></figure> 则说明本节git仓库没有没有和这个ssh key关联，则依次执行： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查看密钥运行</span></span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:/home/trluper/.ssh<span class="meta"># eval</span></span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:/home/trluper/.ssh<span class="meta"># ssh-agent -s</span></span><br></pre></td></tr></table></figure> 输出： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SSH_AUTH_SOCK=/tmp/ssh-XXXXXX8U3b13/agent<span class="number">.259910</span>; <span class="keyword">export</span> SSH_AUTH_SOCK;</span><br><span class="line">SSH_AGENT_PID=<span class="number">259911</span>; <span class="keyword">export</span> SSH_AGENT_PID;</span><br><span class="line">echo Agent pid <span class="number">259911</span>;</span><br></pre></td></tr></table></figure> //把ssh添加到你的账号 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:/home/trluper/.ssh<span class="meta"># ssh-agent bash</span></span><br><span class="line">root@trluper-<span class="keyword">virtual</span>-machine:/home/trluper/.ssh<span class="meta"># ssh-add /home/trluper/.ssh/id_rsa</span></span><br></pre></td></tr></table></figure> 输出下述语句则说明添加成功 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Identity added: /home/trluper/.ssh/<span class="built_in">id_rsa</span> (<span class="number">1229413537</span>@qq.com)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
 <h4 id="git工作流程">3. git工作流程</h4>
 <p>git一般工作流程如下：</p>
 <ul>
@@ -641,7 +644,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">752k</span>
+    <span title="站点总字数">753k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
