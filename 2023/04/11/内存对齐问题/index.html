@@ -22,34 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1. Transformer是什么 Transformer是一个利用注意力机制来提高模型训练速度的模型。关于注意力机制可以参看这篇文章，trasnformer可以说是完全基于自注意力机制的一个深度学习模型，因为它适用于并行化计算，和它本身模型的复杂程度导致它在精度和性能上都要高于之前流行的RNN循环神经网络。 对于RNN来说它一般只关注附近的关系关联，而没有从全局寻找关系紧密的相关特征。因此对">
+  <meta name="description" content="内存对齐规则 在C&#x2F;C++中的结构体或类，存在内存对齐问题。内存对齐是为了方便计算机进行寻址，优化寻址速度的一个措施，其代价是消耗不必要的内存空间。 内存对齐遵循以下规则：  第一个成员在与结构体变量偏移量为0的地址处。 其他成员变量都放在对齐数（成员的大小和默认对齐数的较小值）的整数倍的地址处。  对齐数&#x3D;编译器默认的一个对齐数与该成员大小的较小值。（不同的编译器其默认对齐数不同，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Transformer">
-<meta property="og:url" content="http://example.com/2022/10/26/Transformer/index.html">
+<meta property="og:title" content="内存对齐问题">
+<meta property="og:url" content="http://example.com/2023/04/11/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Trluper">
-<meta property="og:description" content="1. Transformer是什么 Transformer是一个利用注意力机制来提高模型训练速度的模型。关于注意力机制可以参看这篇文章，trasnformer可以说是完全基于自注意力机制的一个深度学习模型，因为它适用于并行化计算，和它本身模型的复杂程度导致它在精度和性能上都要高于之前流行的RNN循环神经网络。 对于RNN来说它一般只关注附近的关系关联，而没有从全局寻找关系紧密的相关特征。因此对">
+<meta property="og:description" content="内存对齐规则 在C&#x2F;C++中的结构体或类，存在内存对齐问题。内存对齐是为了方便计算机进行寻址，优化寻址速度的一个措施，其代价是消耗不必要的内存空间。 内存对齐遵循以下规则：  第一个成员在与结构体变量偏移量为0的地址处。 其他成员变量都放在对齐数（成员的大小和默认对齐数的较小值）的整数倍的地址处。  对齐数&#x3D;编译器默认的一个对齐数与该成员大小的较小值。（不同的编译器其默认对齐数不同，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/Constitue.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/encorder.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/forward.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/Three.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/qk.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/score.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/softmax.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/cheng.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/out.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/comprehension.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/cat.png">
-<meta property="og:image" content="http://example.com/2022/10/26/Transformer/fc.png">
-<meta property="article:published_time" content="2022-10-26T02:38:28.000Z">
-<meta property="article:modified_time" content="2023-02-24T14:03:00.162Z">
+<meta property="article:published_time" content="2023-04-11T10:14:52.000Z">
+<meta property="article:modified_time" content="2023-04-11T10:52:02.525Z">
 <meta property="article:author" content="trluper">
-<meta property="article:tag" content="深度学习">
-<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/10/26/Transformer/Constitue.png">
 
-<link rel="canonical" href="http://example.com/2022/10/26/Transformer/">
+<link rel="canonical" href="http://example.com/2023/04/11/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98/">
 
 
 <script id="page-configurations">
@@ -62,7 +48,7 @@
   };
 </script>
 
-  <title>Transformer | Trluper</title>
+  <title>内存对齐问题 | Trluper</title>
   
 
 
@@ -214,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/26/Transformer/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/11/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -227,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Transformer
+          内存对齐问题
         </h1>
 
         <div class="post-meta">
@@ -236,27 +222,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2022-10-26 10:38:28" itemprop="dateCreated datePublished" datetime="2022-10-26T10:38:28+08:00">2022-10-26</time>
+              <time title="创建时间：2023-04-11 18:14:52 / 修改时间：18:52:02" itemprop="dateCreated datePublished" datetime="2023-04-11T18:14:52+08:00">2023-04-11</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 22:03:00" itemprop="dateModified" datetime="2023-02-24T22:03:00+08:00">2023-02-24</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Transformer/" itemprop="url" rel="index"><span itemprop="name">Transformer</span></a>
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
                 </span>
             </span>
 
@@ -273,14 +249,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2k</span>
+              <span>579</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -292,40 +268,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="transformer是什么">1. Transformer是什么</h4>
-<p><code>Transformer</code>是一个利用注意力机制来提高模型训练速度的模型。关于注意力机制可以参看<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/52119092">这篇文章</a>，<strong>trasnformer可以说是完全基于自注意力机制的一个深度学习模型</strong>，因为它适用于并行化计算，和它本身模型的复杂程度导致它在精度和性能上都要高于之前流行的RNN循环神经网络。</p>
-<p>对于RNN来说它一般只关注附近的关系关联，而没有从全局寻找关系紧密的相关特征。因此对于一些特定的场景，不能够很好的处理。而Transforme放眼全局,通过计算权重得到相应的向量，得到更为全面的特征</p>
-<span id="more"></span>
-<h4 id="transformer的构成">2. Transformer的构成</h4>
-<p>里面主要有两部分组成：<code>Encoder</code>和<code>Decoder</code> <img src="/2022/10/26/Transformer/Constitue.png" width="500"> 当我输入一个文本<code>机器学习</code>的时候，该文本数据会先经过一个叫Encoders的模块，对该文本进行编码，然后将编码后的数据再传入一个叫Decoders的模块进行解码，解码后就得到了翻译后的文本，对应的我们称Encoders为编码器，Decoders为解码器。</p>
-<p>这个编码模块里边，有很多小的编码器，一般情况下，<code>Encoders</code>里边有6个小编码器，同样的，<code>Decoders</code>里边有6个小解码器。 <img src="/2022/10/26/Transformer/encorder.png" width="500"></p>
-<p>放大一个encoder，发现里边的结构是一个自注意力机制加上一个前馈神经网络。 <img src="/2022/10/26/Transformer/forward.png" width="500"></p>
-<h4 id="encoder">3 Encoder</h4>
-<h5 id="self-attention的步骤">3.1 self-attention的步骤</h5>
-<p>这里我们以文本词向量为例。总结来说Transformer时将输入的特征信息以向量为一组，计算该向量与别的向量之间的紧密程度，即将Q与K进行点积得到权值值，经过softmax后得到所占的比重值，然后整合各向量的V*权重得到该向量的新的特征向量。</p>
+        <h3 id="内存对齐规则">内存对齐规则</h3>
+<p>在C/C++中的结构体或类，存在内存对齐问题。内存对齐是为了方便计算机进行寻址，优化寻址速度的一个措施，其代价是消耗不必要的内存空间。</p>
+<p>内存对齐遵循以下规则：</p>
 <ul>
-<li><p><code>transformer</code>首先将词向量乘上三个矩阵，得到三个新的向量，之所以乘上三个矩阵参数而不是直接用原本的词向量是因为这样增加更多的参数，提高模型效果。对于输入<code>X1</code>(机器)，乘上三个矩阵后分别得到<code>Q1,K1,V1</code>，同样的，对于输入<code>X2</code>(学习)，也乘上三个不同的矩阵得到<code>Q2,K2,V2</code>。Q维要去查询的，K为等着被查的，V为实际的特征信息 <img src="/2022/10/26/Transformer/Three.png" width="500"></p></li>
-<li><p>计算注意力得分了，这个得分是通过计算Q与各个单词的K向量的点积得到的。我们以X1为例，分别将Q1和K1、K2进行点积运算，假设分别得到得分112和96. <img src="/2022/10/26/Transformer/qk.png" width="500"></p></li>
-<li><p>将得分分别除以一个特定数值8（K向量的维度的平方根，这里以K向量的维度是64为例）这能让梯度更加稳定，则得到结果如下： <img src="/2022/10/26/Transformer/score.png" width="500"></p></li>
-<li><p>进行softmax运算得到，softmax主要将分数标准化，使他们都是正数并且加起来等于1 <img src="/2022/10/26/Transformer/softmax.png" width="500"></p></li>
-<li><p>V向量乘上softmax的结果，这个思想主要是为了保持我们想要关注的单词的值不变，而掩盖掉那些不相关的单词（例如将他们乘上很小的数字） <img src="/2022/10/26/Transformer/cheng.png" width="500"></p></li>
-<li><p>将带权重的各个V向量加起来，至此，产生在这个位置上（第一个单词）的self-attention层的输出，其余位置的self-attention输出也是同样的计算方式 <img src="/2022/10/26/Transformer/out.png" width="500"></p></li>
-</ul>
-<p>将上述的过程总结为一个公式就可以用下图表示： <img src="/2022/10/26/Transformer/comprehension.png" width="500"></p>
-<p>上面所举的例子我们可以发现每一个输入向量只是产生了一组Q、K、V，为了进一步提高自注意力的层的性能，产生了<strong>多头注意力机制，它通过不同的head得到多个特征表达式（理解为多个个互不干扰自的注意力机制运算，每一组的Q/K/V都不相同。然后，得到多个个不同的权重矩阵Z，每个权重矩阵被用来将输入向量投射到不同的表示子空间。），然后将所以特征拼接起来，得到更为丰富的输出，然后经过一层全连接实现降维。</strong></p>
-<p>如下我们得到了八个矩阵Z，将他们拼接: <img src="/2022/10/26/Transformer/cat.png" width="500"> 后进行全连接后得到我们作为前馈神经网络的输入： <img src="/2022/10/26/Transformer/fc.png" width="500"></p>
-<p><strong><em>注意：为了解决梯度消失的问题，在Encoders和Decoder中都是用了残差神经网络的结构，即每一个前馈神经网络的输入不光包含上述self-attention的输出Z，还包含最原始的输入。</em></strong></p>
-<h5 id="前馈神经网络">3.2 前馈神经网络</h5>
-<p>前馈神经网络的输入是self-attention的输出，即上图的Z,是一个矩阵，矩阵的维度是（序列长度×D词向量），之后前馈神经网络的输出也是同样的维度</p>
-<h4 id="decorder">4. Decorder</h4>
-<p>decoder中使用的也是同样的结构。也是首先对输出<code>machine learning</code>计算自注意力得分，不同的地方在于，进行过自注意力机制后，将self-attention的输出再与Decoders模块的输出计算一遍交叉注意力机制得分，之后，再进入前馈神经网络模块</p>
+<li><strong>第一个成员在与结构体变量偏移量为0的地址处。</strong></li>
+<li><strong>其他成员变量都放在对齐数（成员的大小和默认对齐数的较小值）的整数倍的地址处。</strong>
 <ul>
-<li>交叉注意力：指两个模块的矩阵进行注意力计算</li>
-<li>自注意力：指在同一模块内进行注意力计算</li>
+<li>对齐数=编译器默认的一个对齐数与该成员大小的较小值。（不同的编译器其默认对齐数不同，VS中默认的对齐数是8，在Linux中没有默认的对齐数）</li>
+<li>可以在程序开端声明<code>#pragma pack(数字)</code>来设置默认对齐值</li>
+</ul></li>
+<li><strong>结构体总大小为最大对齐数(每个成员变量都有一个对齐数 )的整数倍。</strong></li>
+<li><strong>如果嵌套了结构体的情况,嵌套的结构体对齐到自己的最大对齐数的整数倍处,结构体的整体大小就是所有最大对齐数(含嵌套结构体的对齐数)的整数倍。</strong></li>
 </ul>
-<h4 id="对位置应用认识">5. 对位置应用认识</h4>
-<p>上面所举的例子当中只是单纯的由Q、K、V得到权值计算拼接后的东西。但是思考一下下面两个句子： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chen Love wu</span><br><span class="line">wu love chen</span><br></pre></td></tr></table></figure> 这两个句子表达的意思事完全不同的，但是相应词的Q、K、V是一样的，经过计算后得到的特征也是一样。这就是所谓的在self-attention中每个词都会考虑整个序列的加权。所以其出现位置并不会对结果产生影响，相当于放哪都无所谓，但这跟实际就有些不符合了，我们希望模型对位置有额外的认识。</p>
-<p>因此我们希望能够对位置进行编码，一般对位置编码不进行更新（大佬作品，水论文可以更）</p>
+<p>示例：VS运行 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">test2</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> a;</span><br><span class="line">     <span class="type">double</span> c;</span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">testMemory</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> a;</span><br><span class="line">     <span class="type">long</span> b;</span><br><span class="line">     <span class="type">char</span> c;</span><br><span class="line">     <span class="keyword">struct</span> <span class="title class_">test2</span> l;</span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line">cout  &lt;&lt;<span class="built_in">sizeof</span>(test2) &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(testMemory) &lt;&lt; endl;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 输出: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span> <span class="number">32</span></span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -355,8 +311,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
-              <a href="/tags/Transformer/" rel="tag"># Transformer</a>
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
           </div>
 
         
@@ -365,13 +320,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/10/06/pytorch%E5%9F%BA%E7%A1%80/" rel="prev" title="pytorch基础">
-      <i class="fa fa-chevron-left"></i> pytorch基础
+    <a href="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" rel="prev" title="深入理解计算机系统-程序的机器级表示">
+      <i class="fa fa-chevron-left"></i> 深入理解计算机系统-程序的机器级表示
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/" rel="next" title="pytorch常用函数">
-      pytorch常用函数 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -431,7 +383,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#transformer%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">1. Transformer是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transformer%E7%9A%84%E6%9E%84%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">2. Transformer的构成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#encoder"><span class="nav-number">3.</span> <span class="nav-text">3 Encoder</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#self-attention%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 self-attention的步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 前馈神经网络</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#decorder"><span class="nav-number">4.</span> <span class="nav-text">4. Decorder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E4%BD%8D%E7%BD%AE%E5%BA%94%E7%94%A8%E8%AE%A4%E8%AF%86"><span class="nav-number">5.</span> <span class="nav-text">5. 对位置应用认识</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E8%A7%84%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">内存对齐规则</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -585,61 +537,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-          load: ['[tex]/mhchem'],
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-          packages: {'[+]': ['mhchem']},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 
