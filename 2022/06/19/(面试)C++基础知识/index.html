@@ -22,18 +22,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1. C++知识面试版_基础 1.1 编译过程  如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件 1.2 静态链接和动态链接 1.2.1 静态链接： 由链接器在链接时将库的内容加入到可执行程序中。  优点：对运行环境的依赖性较小，具有较好的兼容性 缺点：生成">
+  <meta name="description" content="1. C++知识面试版_基础 1.1 编译过程  如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件  预处理：预处理器会扫描源代码文件，根据以“#”开头的预处理指令执行一些文本替换和文件包含操作。例如，预处理器会把所有的#include指令替换为对应的头文件内容，并将">
 <meta property="og:type" content="article">
 <meta property="og:title" content="（面试）C++基础知识">
 <meta property="og:url" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
 <meta property="og:site_name" content="Trluper">
-<meta property="og:description" content="1. C++知识面试版_基础 1.1 编译过程  如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件 1.2 静态链接和动态链接 1.2.1 静态链接： 由链接器在链接时将库的内容加入到可执行程序中。  优点：对运行环境的依赖性较小，具有较好的兼容性 缺点：生成">
+<meta property="og:description" content="1. C++知识面试版_基础 1.1 编译过程  如上所示，一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件  预处理：预处理器会扫描源代码文件，根据以“#”开头的预处理指令执行一些文本替换和文件包含操作。例如，预处理器会把所有的#include指令替换为对应的头文件内容，并将">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png">
 <meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/funcCall.png">
 <meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.png">
+<meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/reference.png">
+<meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/cast.png">
 <meta property="article:published_time" content="2022-06-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-02-26T03:05:49.476Z">
+<meta property="article:modified_time" content="2023-03-21T09:30:29.961Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -234,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-26 11:05:49" itemprop="dateModified" datetime="2023-02-26T11:05:49+08:00">2023-02-26</time>
+                <time title="修改时间：2023-03-21 17:30:29" itemprop="dateModified" datetime="2023-03-21T17:30:29+08:00">2023-03-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +261,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
+              <span>9.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -281,18 +283,24 @@
         <h3 id="c知识面试版_基础">1. C++知识面试版_基础</h3>
 <h4 id="编译过程">1.1 编译过程</h4>
 <p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png" width="600"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
+<ul>
+<li><p>预处理：预处理器会扫描源代码文件，根据以“#”开头的预处理指令执行一些文本替换和文件包含操作。例如，预处理器会把所有的#include指令替换为对应的头文件内容，并将定义的宏展开。</p></li>
+<li><p>编译：编译器将经过预处理的源代码文件翻译成汇编代码，这是一种与具体机器体系结构相关的低级代码。</p></li>
+<li><p>汇编：汇编器将汇编代码转化为机器码，并生成一个目标文件（.obj 或 .o）。目标文件包含机器指令和一些元数据，如符号表和重定位信息。</p></li>
+<li><p>链接：链接器将目标文件与系统库和其他目标文件链接在一起，生成可执行文件。链接器主要完成两个任务：解析符号引用和地址重定位。符号引用指的是在不同目标文件中引用的同一全局变量或函数，链接器需要将其解析为同一个实体。地址重定位指的是在链接过程中，需要将不同目标文件中的函数和变量的地址进行调整，使得它们在最终的可执行文件中能够正确地链接到一起。</p></li>
+</ul>
 <h4 id="静态链接和动态链接">1.2 静态链接和动态链接</h4>
 <h5 id="静态链接">1.2.1 静态链接：</h5>
-<p>由链接器在链接时将库的内容加入到可执行程序中。</p>
+<p>链接器将目标文件和库文件的代码和数据全部拷贝到可执行文件中，形成一个独立的、包含所有必需代码和数据的可执行文件。在运行时，可执行文件不需要依赖外部库文件，所有需要的代码和数据都已经包含在可执行文件中</p>
 <ul>
-<li><strong>优点：对运行环境的依赖性较小，具有较好的兼容性</strong></li>
+<li><strong>优点：对运行环境的依赖性较小，具有较好的兼容性,方便分发和部署，不需要外部依赖</strong></li>
 <li><strong>缺点：生成的程序比较大，需要更多的系统资源，在装入内存时会消耗更多的时间；库函数有了更新，必须重新编译应用程序</strong></li>
 </ul>
 <h5 id="动态链接">1.2.2 动态链接</h5>
-<p>连接器在链接时仅仅建立与所需库函数的之间的链接关系，在程序运行时才将所需资源调入可执行程序。</p>
+<p>在动态链接中，库文件的代码和数据被保留在一个独立的文件中，被多个可执行文件共享。在链接时，链接器会将可执行文件中需要的库函数和数据的引用替换为动态链接库的符号表中对应的地址。在运行时，当程序调用一个需要动态链接库中的函数时，操作系统会将对应的库文件加载到内存中，并将调用转向库文件中的函数</p>
 <ul>
-<li><strong>优点：在需要的时候才会调入对应的资源函数；简化程序的升级；有着较小的程序体积；实现进程之间的资源共享（避免重复拷贝）</strong></li>
-<li><strong>缺点：依赖动态库，不能独立运行；动态库依赖版本问题严重</strong></li>
+<li><strong>优点：在需要的时候才会调入对应的资源函数；简化程序的升级；可执行文件小,节省磁盘空间；同时多个可执行文件可以共享同一个库文件，减少了内存占用</strong></li>
+<li><strong>缺点：依赖动态库，不能独立运行；动态库依赖版本问题严重。如果库文件版本或路径发生变化，可能会导致程序无法正常运行</strong></li>
 </ul>
 <p>注：前面我们编写的应用程序大量用到了标准库函数，系统默认采用动态链接的方式进行编译程序，若想采用静态编译，加入<code>-static</code>参数。</p>
 <span id="more"></span>
@@ -306,10 +314,19 @@
 <li><code>EBP</code>寄存器表明当前栈帧的栈底</li>
 <li><code>ESP</code>寄存器表明当前栈帧的栈顶</li>
 </ul>
-<p><strong>调用函数过程</strong></p>
+<p><strong>函数调用简概</strong>： 在C/C++中，函数调用的过程通常包括以下步骤：</p>
+<ul>
+<li><p>保存调用者寄存器的值（保存现场）：在调用函数之前，需要将调用者寄存器（如EAX、ECX、EDX等）的值保存起来，以便函数调用完成后能够正确地恢复。</p></li>
+<li><p>传递参数：将调用者的返回地址压入栈中以保证能返回原来的地址继续执行，这个返回地址指向调用者函数在执行完被调用函数后应该返回的下一条指令的地址。然后函数的参数通过栈或寄存器传递给被调用函数。对于较少的参数，通常会使用寄存器传递，而对于较多的参数，则会使用栈传递。</p></li>
+<li><p>跳转到被调用函数：在传递完参数后，通过跳转到被调用函数的入口地址开始执行被调用函数的代码。</p></li>
+<li><p>函数内部处理：被调用函数在执行时，将处理函数内部的逻辑，包括局部变量的分配和计算等操作，函数内部的变量通常会被分配在堆栈上。</p></li>
+<li><p>返回值：返回前从堆栈中弹出被调用函数的参数和局部变量，然后恢复调用者函数保存的寄存器值。函数返回时，返回值通常通过寄存器或者栈传递给调用者。</p></li>
+<li><p>恢复调用者寄存器的值：在函数调用完成后，需要将保存的调用者寄存器的值恢复到原来的状态，以便函数调用的后续代码能够正确地执行。</p></li>
+</ul>
+<p><strong>调用函数具体过程</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以此为例</span></span><br><span class="line"><span class="built_in">intFunAdd</span>(intiPara1, intiPara2) &#123;</span><br><span class="line">    intiAdd = <span class="number">7</span>; </span><br><span class="line">    intiResult = iPara1 + iPara2 + iAdd; </span><br><span class="line">    returniResult; </span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> main&#123;</span><br><span class="line">    intiVal1 = <span class="number">5</span>; intiVal2 = <span class="number">6</span>; </span><br><span class="line">    intiRes = <span class="built_in">FunAdd</span>(iVal1, iVal2); </span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;iRes: %dn&quot;</span>, iRes); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>将函数参数压入<code>push</code>栈中（从右到左），在跳入<code>call</code>该函数体执行前，会再压入一个数据，改数据是一个地址，是函数执行完后要返回的地址，也是我们程序中函数调用的下一条语句，即“保护现场”。</li>
+<li>将函数参数压入<code>push</code>栈中（从右到左），在跳入<code>call</code>该函数体执行前，会再压入一个数据，该数据是一个地址，是函数执行完后要返回的地址，也是我们程序中函数调用的下一条语句，即“保护现场”。</li>
 <li><code>push ebp</code>，进入函数后，压入一个旧<code>ebp</code>，该<code>ebp</code>是上一个函数的<code>ebp</code>。这样子就能通过<code>ebp-4</code>、<code>ebp-8</code>来获取参数。</li>
 <li><code>mov ebp, esp</code>，将此时的栈顶地址作为该函数的栈基址，确定被调函数的栈底</li>
 <li>执行函数将被调函数内的一些局部变量压栈。</li>
@@ -322,30 +339,55 @@
 <h4 id="inline内联函数与普通函数的区别">1.4 inline内联函数与普通函数的区别</h4>
 <ul>
 <li>相当于把内联函数里面的内容写在调用内联函数的地方；</li>
-<li>相当于不用执行进入函数的步骤，直接执行函数体；</li>
+<li>相当于不用执行调用函数的步骤，直接执行函数体；</li>
 <li>相当于宏，却比宏多了类型检查，真正具有函数特性；</li>
 <li>编译器一般不内联包含循环、递归、switch 等复杂操作的内联函数；</li>
 <li>在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数</li>
 </ul>
 <h5 id="内联函数与宏定义的区别">1.4.1 内联函数与宏定义的区别</h5>
+<ul>
+<li><p><strong>安全性</strong>：内联函数在编译期进行类型检查，因此比宏定义更安全。宏定义只是一个简单的文本替换，没有类型检查，可能会导致一些潜在的错误。</p></li>
+<li><p><strong>可读性</strong>：内联函数在代码中的表现形式更像是一个普通函数，可以使用调试器和其它工具进行跟踪和分析，代码的可读性更高。而宏定义的代码片段可能比较难以理解，也难以进行调试和分析。</p></li>
+<li><p><strong>换行</strong>：内联函数可以换行，而宏定义不可以。内联函数与普通函数的定义方式相同，可以在多个行中编写代码，并且可以使用代码块，使得代码更易于理解和维护。</p></li>
+<li><p><strong>函数特性</strong>：内联函数是C++中的一个特性，因此可以使用C++的函数特性，如函数重载、默认参数等。而宏定义只是一个简单的文本替换，不支持这些特性。</p></li>
+<li><p>对象代码生成：内联函数在编译期间将代码复制到调用点处，因此可以生成与普通函数相同的对象代码，而且比宏定义更灵活，可以根据参数类型生成不同的代码。而宏定义只是简单的文本替换，不能生成任何对象代码。</p></li>
+</ul>
+<p>综上所述，内联函数比宏定义更加安全、可读、易于维护，同时支持函数特性和对象代码生成，因此在C++中推荐使用内联函数来替代宏定义。</p>
 <h4 id="内存中的字节对齐">1.5 内存中的字节对齐</h4>
 <h4 id="c的内存模型">1.6 C++的内存模型</h4>
 <ul>
-<li><strong>C++分区：堆、栈、自由存储区、全局/静态存储区、常量存储区</strong></li>
-<li><strong>c/c++内存模型生命周期</strong>：自由存储区、动态区、静态区</li>
+<li><strong>C++分区：堆和栈(动态数据段）、共享存储区、全局/静态存储区、常量存储区</strong></li>
+<li><strong>c/c++内存模型生命周期</strong>：共享存储区、动态区、静态区</li>
 </ul>
+<blockquote>
+<p>静态数据段：.bss、.data和代码段 .bss段也称数据段，又细分为只读数据段和读写数据段 动态数据段：栈和堆</p>
+</blockquote>
 <p><strong><em>以下注意点：</em></strong></p>
 <pre><code>(a)函数体中定义的变量通常是在栈上；
-(b)用malloc, calloc, realloc等分配内存的函数分配得到的就是在堆上；
-(c)在所有函数体外定义的是全局量；
+(b)用malloc, calloc, realloc、new等分配内存的变量和对象的是在堆上；
+(c)在所有函数体外定义的是全局量,初始化的存储在.data段内，未初始化的则在.bss段；
 (d)加了static修饰符后不管在哪里都存放在全局区（静态区）；
-(e)在所有函数体外定义的static变量表示在该文件中有效，不能extern到别的文件用；
-(f)在函数体内定义的static表示只在该函数体内有效；
-(g)另外，函数中的&quot;adgfdf&quot;这样的字符串存放在常量区</code></pre>
+(e)在所有函数体外定义的static变量表示在该文件中有效，不能extern到别的文件用；</code></pre>
 <p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.png" width="500"></p>
 <h5 id="各中类型的变量在内存中的位置">1.6.1 各中类型的变量在内存中的位置</h5>
-<p>如static成员、局部变量、new分配的、static函数、virtual等在内存中的分布</p>
+<ul>
+<li><strong>全局/局部静态变量</strong>：而静态变量的存储位置在程序的全局数据段中，也称为<code>BSS</code>段（<code>Block Started by Symbol</code>）或者<code>Data</code>段。如果被初始化过，则存储在<code>.data</code>段，未初始化则存储在<code>.bss</code>段。<code>BSS</code>段是一段特殊的数据段，它存储所有被初始化为0或者未初始化的静态变量，这些为初始化的变量在程序启动时被自动初始化为0。
+<ul>
+<li>静态变量只会初始化一次</li>
+<li>静态变量的生命周期是程序运行期间都存在，但其作用域范围要依据其是全局和局部才能区分。</li>
+</ul></li>
+<li><strong>全局变量</strong>：同全局静态变量一样，存储在<code>data</code>或者<code>bss</code>段内。不同点就是全局变量默认外部可见，而static不可见(见1.7)。</li>
+<li>函数体中定义的局部变量存储在栈区，参数也是在栈中。</li>
+<li>用<code>malloc, calloc, realloc、new</code>等分配内存的变量和对象的是在堆上</li>
+<li><strong>全局常量</strong>：即<code>const</code>修饰全局变量的则存储在只读数据段</li>
+<li><strong>局部常量</strong>：其分配在栈区，所以可以通过地址来修改<code>const</code>局部变量。</li>
+</ul>
 <h4 id="static关键字的作用">1.7 static关键字的作用</h4>
+<ul>
+<li>因为static声明的变量和函数存在程序整个生命周期，因此被static声明的变量和函数，它们的可见性被限制在当前源文件中，这可以提高程序的安全性和可维护性（你也不能加<code>extern</code>关键字）</li>
+<li>staic修饰的变量只能初始化一次</li>
+<li>static修饰函数已有存储在代码段</li>
+</ul>
 <h5 id="全局静态变量编译时初始化存储在bssdata">1.7.1 全局静态变量（编译时初始化，存储在bss/data)</h5>
 <p>在全局变量前加上关键字<code>static</code>，全局变量就定义成一个全局静态变量。<strong>存储在静态存储区（未初始化<code>bss</code>或已初始化数据段<code>data</code>），在整个程序运行期间一直存在。</strong></p>
 <ul>
@@ -369,22 +411,148 @@
 <p><strong>静态成员函数和静态数据成员一样，它们都属于类的静态成员，它们都不是对象成员。因此，对静态成员的引用不需要用对象名。</strong></p>
 <p><strong>在静态成员函数中没有<code>this</code>指针，因此无法被<code>const</code>修饰</strong>。实现中不能直接引用类中声明明的非静态成员，但可以引用类中声明的静态成员（这点非常重要）。如果静态成员函数中要引用非静态成员时，要通过对象来引用。调用静态成员函数可通过<code>object.staticfunc()</code>也可以通过<code>class::staticfunc()</code>调用</p>
 <h4 id="const关键字">1.8 const关键字</h4>
-<h4 id="delete和new与cd的malloc区别">1.9 delete和new(与cd的malloc区别)</h4>
+<p><code>const</code>关键字是常量的意思，可以修饰变量、指针和引用，也可以修饰函数，在不同的修饰当中意思会不同,但总的意思是声明为常量，不可以更改：</p>
+<ul>
+<li><code>const</code>修饰变量：定义了该变量为常量，只允许初始化，不允许对其进行修改。</li>
+<li><code>const</code>修饰指针时，有两种情况：
+<ul>
+<li><strong>低层<code>const</code></strong>：指如<code>const int *b</code>或者<code>int const *b</code>，表示可以修改b的值（即指针），但是我们不能修改其指针指向的内容。</li>
+<li><strong>顶层<code>const</code></strong>:例如<code>int* const b</code>，表示我们不能修改b的值，但是我们可以修改其指针指向的内容</li>
+</ul></li>
+<li><code>const</code>修饰引用时：表示我们不能通过这个引用别名去修改值</li>
+<li><code>const</code>修饰函数时，也有两种情况：
+<ul>
+<li><code>const</code>修饰返回值：表示该函数返回的是一个const常量</li>
+<li><code>const</code>放在<code>()</code>后面：这种情况常用在类中，表明该成员函数不能改变成员变量的值的。（C++为了在特殊情况下也能改变值，可以将相应的成员变量声明为<code>mutable</code>)</li>
+</ul></li>
+</ul>
+<blockquote>
+<p><strong>注意：运行非const赋值给const，但不允许const赋值给非const，因为如果运行const赋值给非const，那么就很容易规避const的常量不可变机制，导致未知错误</strong></p>
+</blockquote>
+<h4 id="delete和new与c的malloc区别">1.9 delete和new(与c的malloc区别)</h4>
+<p><code>new</code>和<code>malloc</code>都是动态分配内存的关键字，它们之间的区别是：</p>
+<ul>
+<li><code>malloc</code>是一个库函数，而<code>new</code>是一个运算符重载,本质上是运算符为名称的函数。</li>
+<li><code>malloc</code>按照给定的字节数去分配堆内存；而<code>new</code>是依照数据类类型大小去分配堆内存，因此对于<code>new</code>，如果我们要分配多个堆内存，就要实验数组形式去分配，如<code>new int[20]</code></li>
+<li>因此，<code>malloc</code>返回的是一个原生为构造的堆内存，类型是<code>void*</code>；而<code>new</code>为运算符重载，会调用相应类型的构造函数构造相应的对象，返回的是对象指针。</li>
+<li><code>malloc</code>如果分配失败，则会返回一个NULL，没有其他的反应；而<code>new</code>分配失败则会抛出一个<code>bad_alloc</code>异常，指示此次内存分配失败</li>
+<li>为避免内存泄露，在使用完后必须去释放这些分配的内存。由<code>malloc</code>分配的内存必须使用<code>free</code>来释放；而<code>new</code>分配的，必须使用<code>delete</code>释放。</li>
+<li><code>free</code>只是单纯的释放该空间；<code>delete</code>则会先调用对象的析构函数再去释放内存。</li>
+</ul>
 <h4 id="sizeof一个空类大小即考察类的一些成员占不占类内存占多少">1.10 sizeof一个空类大小（即考察类的一些成员占不占类内存，占多少）</h4>
-<p><strong>虚函数表4字节，4字节对齐！比如</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fun</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">  <span class="type">char</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">sizeof</span>(A);/大小是<span class="number">8</span>，<span class="number">4</span>+<span class="number">1</span>+（对齐）<span class="number">3</span>=<span class="number">8</span></span><br><span class="line"><span class="comment">//static变量虽然属于类，但并不在类内开辟空间</span></span><br></pre></td></tr></table></figure> ##### 1.10。1 对指针和引用seziof，有什么区别 ##### 1.10.2 指针为啥是4字节，一定是4字节码，对指针做seziof的结果与什么相关</p>
+<ul>
+<li>空类不是<code>0</code>字节，而是<code>1</code>字节。这是因为空类也是可实例化的（实例化的过程就是内存中分配一块地址），为了区分每一个实例化的对象就必须有它们对应的独一无二的地址。因此编译器会给每一个空类隐式加上一个字节。</li>
+<li>类中若有虚函数则存在虚表指针，指针成员在<code>X86-64</code>会占8字节，在32位占4字节</li>
+<li>其他成员变量按照大小给定</li>
+<li><table>
+<thead>
+<tr class="header">
+<th>存在字节对齐(内存对齐)问题：</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>虚函数表4字节，4字节对齐！比如**</td>
+</tr>
+<tr class="even">
+<td>--code￼1--&gt;</td>
+</tr>
+</tbody>
+</table></li>
+</ul>
+<h5 id="对指针和引用sizeof有什么区别">1.10.1 对指针和引用sizeof，有什么区别</h5>
+<ul>
+<li>指针就是数据的地址，对指针做<code>sizeof</code>操作，返回的是指针的大小，在64位系统上，指针大小位8字节，而在32位机器上则是4字节。</li>
+<li>引用只是数据对象的一个别名，因此对引用做<code>sizeof</code>就是数据对象的大小</li>
+</ul>
+<blockquote>
+<p>引用的底层实现依然是指针，只不过在使用时没有表现出指针表现，而像是个普通变量 扩展： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> d=<span class="number">11.2</span>;</span><br><span class="line"><span class="type">int</span> a=d1）</span><br><span class="line"><span class="type">int</span> &amp;b=d（<span class="number">2</span>）</span><br></pre></td></tr></table></figure> 上面（1）操作合法，隐式的强制转化，向上转换。 上面（2）操作非法，这里引用的变量其实是一块临时空间，而临时空间是右值是不能修改的，这种引用的方式本质上其实就是权限的放大，因此编译不能通过 说到隐式强制转化，必须要提到其转换机理；正如下图所示，在发生隐式类型转换的时候，需要将<code>d</code>的值存到一个<code>int</code>类型的临时变量里，然后将这个临时变量的值赋予给<code>a</code>。 <img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/reference.png" width="300"></p>
+</blockquote>
+<h5 id="指针为啥是4字节一定是4字节吗对指针做seziof的结果与什么相关">1.10.2 指针为啥是4字节，一定是4字节吗，对指针做seziof的结果与什么相关</h5>
+<ul>
+<li>指针是地址，它字节数是一定的不改变的，由不同机器而定的。这样机器才能正确依照这样长度规则的知道正确的地址。</li>
+<li>不同的机器指针大小不一样，在64位系统中，指针的长度位8字节，而在32位中为4字节</li>
+</ul>
 <h4 id="c中指针和引用的区别">1.11 c++中指针和引用的区别</h4>
+<p>共同点:</p>
+<ul>
+<li>引用的底层实现机制仍然是指针，因此能够像指针一样，修改变量值会影响到原值。</li>
+</ul>
+<p>不同点：</p>
+<ul>
+<li>指针是地址，有自己的一块内存，里面的内容是指向所储存的数据的地址；因此对指针做<code>sizeof</code>操作返回的是指针大小4/8字节；对于指针，被<code>const</code>修饰时有两种完全不同的意思，一个是底层<code>const</code>,一个是顶层<code>const</code></li>
+<li>引用只是一个别名，对于做sizeof操作返回的是相应数据的大小；被const修饰，只有一种意思那就是，不能通过该引用变量修改原值，表明这是个引用常量。</li>
+<li>指针可以被初始化为<code>NULL</code>，而引用必须被初始化且必须是一个已有对象 的引用</li>
+<li>指针在使用中可以指向其它对象，但是引用只能是一个对象的引用，不能被改变</li>
+<li>指针可以有多级指针<code>**p</code>，而引用只有一级；</li>
+<li>指针和引用使用<code>++</code>运算符的意义不一样</li>
+</ul>
 <h4 id="c中的类型转换四个">1.12 c++中的类型转换（四个）</h4>
+<p>C++除了继承C的风格的<code>type Expression</code>转换外，还提供了四种cast转换：<code>static_cast</code>, <code>dynamic_cast</code>, <code>const_cast</code>, <code>reinterpret_cast</code>。</p>
+<ul>
+<li><code>static_cast&lt;type&gt;(expression)</code>:<code>static_cast</code>一般满足各种类型的转换，但不能将底层<code>const</code>转换为非<code>const</code>。同时该运算符没有进行运行时类型检查来保证转换的安全性。
+<ul>
+<li>用于类层次结构中基类和派生类之间指针或引用的转换。进行上行转换（把派生类的指针或引用转换成基类表示）是安全的；进行下行转换（把基类的指针或引用转换为派生类表示），<strong>由于没有动态类型检查，所以是不安全的。</strong></li>
+<li>用于基本数据类型之间的转换，如把int转换成char。这种转换的安全也要开发人员来保证</li>
+<li>把空指针转换成目标类型的空指针</li>
+<li>把任何类型的表达式转换为void类型。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> a=<span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> b=<span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(a);</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>dynamic_cast&lt;type&gt;</code>:<strong>用于动态类型转换。该运算符主要用于继承中有虚函数类层次之间的上行和下行转换，或者类之间的交叉转换，只能转指针或引用，并且是同一种表达方式（引用对引用，指针对指针）。类层次间的上下行转换效果和<code>static_cast</code>一样，但是下行转换时，<code>dynamic_cast</code>具有类型检查功能，比<code>static_cast</code>更安全。</strong>。向下转化时进行类型检查，如果失败，对于指针返回NULL，对于引用抛异常<code>bad_cast</code>。
+<ul>
+<li><p>向下转换(从父类转换为子类指针或引用)：<code>dynamic_cast&lt;son*&gt;(father)</code>,若<code>father</code>是一个基类指针或引用，但指向的是其子类<code>son</code>指针或引用，此时将其转为<code>son*</code>是安全的；若<code>father</code>是基类指针，但指向的不是子类<code>son</code>指针或引用，而是其自己，则返回NULL。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">son</span>:<span class="keyword">public</span> A&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">func</span><span class="params">()</span><span class="keyword">override</span></span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">A* a=<span class="keyword">new</span> <span class="built_in">son</span>();</span><br><span class="line">son* s=<span class="built_in">dynamic_cast</span>&lt;son*&gt;(a);	<span class="comment">//会执行动态类型检查</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>交叉转换（从一个父类转换为另一个父类的指针或引用）：在多继承当中的虚继承可以使用。</p></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>向上转换：指的是子类向基类的转换 向下转换：指的是基类向子类的转换(有动态类型检查，安全)。它通过判断在执行到该语句的时候变量的运行时类型和要转换的类型是否相同来判断是否能够进行向下转换</p>
+</blockquote>
+<ul>
+<li><code>const_cast</code>：该类型转换为只用来修改类型的const或volatile属性，除了const或volatile修饰外，其他类型要一致，。只能对是 <strong>引用 或者 指针 的变量添加或移除<code>const</code>。</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> a=<span class="number">11</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>* b=&amp;a;</span><br><span class="line"><span class="type">int</span>* c=<span class="built_in">const_cast</span>&lt;<span class="type">int</span>*&gt;(b);</span><br><span class="line">*c=<span class="number">20</span>;</span><br><span class="line">输出：</span><br><span class="line"><span class="number">11</span> <span class="number">00000034</span>CA9AF884</span><br><span class="line"><span class="number">20</span> <span class="number">00000034</span>CA9AF884</span><br><span class="line"><span class="number">20</span> <span class="number">00000034</span>CA9AF884</span><br></pre></td></tr></table></figure>
+<ul>
+<li>为什么<code>a\b\c指向同一个地址，c修改无法影响a呢？</code>：C++primer指出一旦我们去掉了某个对象的<code>const</code>性质，编绎器就不在阻止我们对该对象进行写操作了。如果对象本身不是一个常量，使用强制类型转换获得写权限是合法的行为。然而如果对象是一个常量，再使用<code>const_cast</code>执行写操作就会产生未定义的后果。</li>
+<li>因此我们不要这样子做：定义一个常量，再去修改一个常量这是不正确的</li>
+</ul></li>
+<li><code>reinterpret_cast</code>主要有三种强制转换用途：
+<ul>
+<li>改变指针或引用的类型、</li>
+<li>将指针或引用转换为一个足够长度的整形、</li>
+<li>将整型转换为指针或引用类型。 <img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/cast.png" width="600"></li>
+</ul></li>
+</ul>
 <h4 id="内存泄露问题如何检测解决">1.13 内存泄露问题，如何检测，解决</h4>
+<p>内存泄漏（Memory Leak）指的是程序在运行过程中分配的堆内存没有被释放，从而导致系统内存资源的浪费。内存泄漏问题可能会导致程序运行缓慢，甚至崩溃。以下是检测和解决内存泄漏问题的方法：</p>
+<ul>
+<li><p>使用内存检测工具：可以使用一些内存检测工具，如Valgrind、Dr. Memory等，这些工具可以帮助我们检测内存泄漏问题。这些工具会对程序进行内存跟踪，检测到内存泄漏时会给出相应的警告信息，以便开发人员及时解决问题。</p></li>
+<li><p>代码审查：对程序进行仔细的代码审查，查找可能存在内存泄漏的代码。可以在代码中添加跟踪内存分配和释放的日志信息，以便在程序运行时更容易定位问题。</p></li>
+<li><p>使用智能指针：C++11引入了智能指针，如std::shared_ptr和std::unique_ptr等，可以自动管理内存。智能指针可以帮助我们在不需要内存时自动释放它，避免出现内存泄漏问题。</p></li>
+<li><p>及时释放内存：在程序运行过程中，尽可能及时释放不需要的内存，可以通过手动释放、使用RAII（Resource Acquisition Is Initialization）等方式实现。</p></li>
+<li><p>代码重构：在进行代码重构时，可以考虑使用更高级别的语言特性和数据结构，如使用容器、智能指针等，以便更好地管理内存</p></li>
+</ul>
 <h4 id="野指针和悬空指针">1.14 野指针和悬空指针</h4>
 <h4 id="c中的智能指针">1.14 C++中的智能指针</h4>
 <h4 id="指针数组和数组指针">1.15 指针数组和数组指针</h4>
 <h4 id="一个函数它前面的const和在后面const的区别">1.16 一个函数它前面的const和在<code>()</code>后面const的区别</h4>
-<h4 id="section">1.17</h4>
+<ul>
+<li><code>const</code>修饰函数时，也有两种情况：
+<ul>
+<li><code>const</code>修饰返回值：表示该函数返回的是一个const常量</li>
+<li><code>const</code>放在<code>()</code>后面：这种情况常用在类中，表明该成员函数不能改变成员变量的值的。（C++为了在特殊情况下也能改变值，可以将相应的成员变量声明为<code>mutable</code>)</li>
+</ul></li>
+</ul>
+<h4 id="c的lambda表达式">1.17 C++的lambda表达式</h4>
+<h4 id="volatile">1.18 volatile</h4>
+<h4 id="auto关键字">1.19 auto关键字</h4>
+<h4 id="extern-c">1.20 extern c</h4>
+<h4 id="智能指针会内存泄露吗">1.21 智能指针会内存泄露吗</h4>
 <h3 id="c知识面试版_面向对象">2. C++知识面试版_面向对象</h3>
 <h4 id="c中的面向对象是什么">2.1 C++中的面向对象是什么</h4>
 <h4 id="struct和class的区别struct和union的区别">2.2 struct和class的区别、struct和union的区别</h4>
 <h4 id="c中为什么要有this指针哪些地方用到">2.3 C++中为什么要有this指针，哪些地方用到</h4>
 <h4 id="为什么要继承继承会有什么问题如何解决">2.4 为什么要继承，继承会有什么问题，如何解决？</h4>
+<h4 id="什么是纯虚函数作用">2.5 什么是纯虚函数，作用</h4>
+<h4 id="c空类默认函数">2.6 C++空类默认函数</h4>
+<h4 id="深拷贝和浅拷贝">2.7 深拷贝和浅拷贝</h4>
+<h4 id="封装特征封装整体的目的是">2.8 封装特征，封装整体的目的是</h4>
 <h4 id="c的多态机制虚函数和虚表">2.10 c++的多态机制（虚函数和虚表）</h4>
 <h4 id="重载重写和多态区别实现机制">2.11 重载、重写和多态区别，实现机制。</h4>
 <h4 id="构造函数能不能是虚函数什么函数为建议为虚函数什么函数不能为虚">2.12 构造函数能不能是虚函数（什么函数为建议为虚函数，什么函数不能为虚）</h4>
@@ -502,7 +670,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">1. C++知识面试版_基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 编译过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 静态链接和动态链接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 静态链接：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 动态链接</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 C++函数调用过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#inline%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E4%B8%8E%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 inline内联函数与普通函数的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E4%B8%8E%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 内联函数与宏定义的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 内存中的字节对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 C++的内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%84%E4%B8%AD%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%98%E9%87%8F%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 各中类型的变量在内存中的位置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#static%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 static关键字的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E7%BC%96%E8%AF%91%E6%97%B6%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AD%98%E5%82%A8%E5%9C%A8bssdata"><span class="nav-number">1.7.1.</span> <span class="nav-text">1.7.1 全局静态变量（编译时初始化，存储在bss&#x2F;data)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">1.7.2.</span> <span class="nav-text">1.7.2 局部静态变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.3.</span> <span class="nav-text">1.7.3 静态函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="nav-number">1.7.4.</span> <span class="nav-text">1.7.4 类的静态成员</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.5.</span> <span class="nav-text">1.7.5 类的静态函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.8.</span> <span class="nav-text">1.8 const关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#delete%E5%92%8Cnew%E4%B8%8Ecd%E7%9A%84malloc%E5%8C%BA%E5%88%AB"><span class="nav-number">1.9.</span> <span class="nav-text">1.9 delete和new(与cd的malloc区别)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sizeof%E4%B8%80%E4%B8%AA%E7%A9%BA%E7%B1%BB%E5%A4%A7%E5%B0%8F%E5%8D%B3%E8%80%83%E5%AF%9F%E7%B1%BB%E7%9A%84%E4%B8%80%E4%BA%9B%E6%88%90%E5%91%98%E5%8D%A0%E4%B8%8D%E5%8D%A0%E7%B1%BB%E5%86%85%E5%AD%98%E5%8D%A0%E5%A4%9A%E5%B0%91"><span class="nav-number">1.10.</span> <span class="nav-text">1.10 sizeof一个空类大小（即考察类的一些成员占不占类内存，占多少）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.11.</span> <span class="nav-text">1.11 c++中指针和引用的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%9B%9B%E4%B8%AA"><span class="nav-number">1.12.</span> <span class="nav-text">1.12 c++中的类型转换（四个）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E8%A7%A3%E5%86%B3"><span class="nav-number">1.13.</span> <span class="nav-text">1.13 内存泄露问题，如何检测，解决</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8E%E6%8C%87%E9%92%88%E5%92%8C%E6%82%AC%E7%A9%BA%E6%8C%87%E9%92%88"><span class="nav-number">1.14.</span> <span class="nav-text">1.14 野指针和悬空指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E7%9A%84%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="nav-number">1.15.</span> <span class="nav-text">1.14 C++中的智能指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84%E5%92%8C%E6%95%B0%E7%BB%84%E6%8C%87%E9%92%88"><span class="nav-number">1.16.</span> <span class="nav-text">1.15 指针数组和数组指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E5%AE%83%E5%89%8D%E9%9D%A2%E7%9A%84const%E5%92%8C%E5%9C%A8%E5%90%8E%E9%9D%A2const%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.17.</span> <span class="nav-text">1.16 一个函数它前面的const和在()后面const的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#section"><span class="nav-number">1.18.</span> <span class="nav-text">1.17</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">2. C++知识面试版_面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 C++中的面向对象是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#struct%E5%92%8Cclass%E7%9A%84%E5%8C%BA%E5%88%ABstruct%E5%92%8Cunion%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 struct和class的区别、struct和union的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89this%E6%8C%87%E9%92%88%E5%93%AA%E4%BA%9B%E5%9C%B0%E6%96%B9%E7%94%A8%E5%88%B0"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 C++中为什么要有this指针，哪些地方用到</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%BB%A7%E6%89%BF%E7%BB%A7%E6%89%BF%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 为什么要继承，继承会有什么问题，如何解决？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E7%9A%84%E5%A4%9A%E6%80%81%E6%9C%BA%E5%88%B6%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E8%99%9A%E8%A1%A8"><span class="nav-number">2.5.</span> <span class="nav-text">2.10 c++的多态机制（虚函数和虚表）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E9%87%8D%E5%86%99%E5%92%8C%E5%A4%9A%E6%80%81%E5%8C%BA%E5%88%AB%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">2.6.</span> <span class="nav-text">2.11 重载、重写和多态区别，实现机制。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E8%83%BD%E4%B8%8D%E8%83%BD%E6%98%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%BB%80%E4%B9%88%E5%87%BD%E6%95%B0%E4%B8%BA%E5%BB%BA%E8%AE%AE%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0%E4%BB%80%E4%B9%88%E5%87%BD%E6%95%B0%E4%B8%8D%E8%83%BD%E4%B8%BA%E8%99%9A"><span class="nav-number">2.7.</span> <span class="nav-text">2.12 构造函数能不能是虚函数（什么函数为建议为虚函数，什么函数不能为虚）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E8%A6%81%E4%B8%BA%E5%BC%95%E7%94%A8"><span class="nav-number">2.8.</span> <span class="nav-text">2.13 为什么拷贝构造函数的参数要为引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#inline%E8%83%BD%E4%B8%8D%E8%83%BD%E6%98%AF%E8%99%9A%E5%87%BD%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E5%91%A2"><span class="nav-number">2.9.</span> <span class="nav-text">2.14 inline能不能是虚函、友元函数呢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%99%E6%80%81%E8%81%94%E7%BC%96%E5%92%8C%E5%8A%A8%E6%80%81%E8%81%94%E7%BC%96"><span class="nav-number">2.10.</span> <span class="nav-text">2.15 什么是静态联编和动态联编</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8B%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8"><span class="nav-number">2.11.</span> <span class="nav-text">2.16 说一下初始化列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_stl%E5%AE%B9%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">3. C++知识面试版_STL容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vector%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 vector为什么会迭代器失效？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vector%E5%92%8Clist%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 vector和list的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8Bmap%E5%92%8Cset"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 说一下map和set。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E4%BA%86%E8%A7%A3%E5%90%97%E8%AF%B4%E4%B8%80%E4%B8%8B%E5%AE%83%E7%9A%84%E6%9C%BA%E5%88%B6"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 红黑树了解吗，说一下它的机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unordered_map%E5%92%8Cunordered_set%E5%91%A2"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 unordered_map和unordered_set呢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 迭代器相关</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_c11%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">4. C++知识面试版_c++11新特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_%E5%B9%B6%E5%8F%91"><span class="nav-number">5.</span> <span class="nav-text">5. C++知识面试版_并发</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">1. C++知识面试版_基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 编译过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%92%8C%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 静态链接和动态链接</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.1 静态链接：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2.2 动态链接</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 C++函数调用过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#inline%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E4%B8%8E%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 inline内联函数与普通函数的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E8%81%94%E5%87%BD%E6%95%B0%E4%B8%8E%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 内联函数与宏定义的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E5%AD%97%E8%8A%82%E5%AF%B9%E9%BD%90"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 内存中的字节对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E7%9A%84%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 C++的内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%84%E4%B8%AD%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%98%E9%87%8F%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 各中类型的变量在内存中的位置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#static%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 static关键字的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E7%BC%96%E8%AF%91%E6%97%B6%E5%88%9D%E5%A7%8B%E5%8C%96%E5%AD%98%E5%82%A8%E5%9C%A8bssdata"><span class="nav-number">1.7.1.</span> <span class="nav-text">1.7.1 全局静态变量（编译时初始化，存储在bss&#x2F;data)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F"><span class="nav-number">1.7.2.</span> <span class="nav-text">1.7.2 局部静态变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.3.</span> <span class="nav-text">1.7.3 静态函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E9%9D%99%E6%80%81%E6%88%90%E5%91%98"><span class="nav-number">1.7.4.</span> <span class="nav-text">1.7.4 类的静态成员</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.5.</span> <span class="nav-text">1.7.5 类的静态函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.8.</span> <span class="nav-text">1.8 const关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#delete%E5%92%8Cnew%E4%B8%8Ec%E7%9A%84malloc%E5%8C%BA%E5%88%AB"><span class="nav-number">1.9.</span> <span class="nav-text">1.9 delete和new(与c的malloc区别)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sizeof%E4%B8%80%E4%B8%AA%E7%A9%BA%E7%B1%BB%E5%A4%A7%E5%B0%8F%E5%8D%B3%E8%80%83%E5%AF%9F%E7%B1%BB%E7%9A%84%E4%B8%80%E4%BA%9B%E6%88%90%E5%91%98%E5%8D%A0%E4%B8%8D%E5%8D%A0%E7%B1%BB%E5%86%85%E5%AD%98%E5%8D%A0%E5%A4%9A%E5%B0%91"><span class="nav-number">1.10.</span> <span class="nav-text">1.10 sizeof一个空类大小（即考察类的一些成员占不占类内存，占多少）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AF%B9%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8sizeof%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="nav-number">1.10.1.</span> <span class="nav-text">1.10.1 对指针和引用sizeof，有什么区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E4%B8%BA%E5%95%A5%E6%98%AF4%E5%AD%97%E8%8A%82%E4%B8%80%E5%AE%9A%E6%98%AF4%E5%AD%97%E8%8A%82%E5%90%97%E5%AF%B9%E6%8C%87%E9%92%88%E5%81%9Aseziof%E7%9A%84%E7%BB%93%E6%9E%9C%E4%B8%8E%E4%BB%80%E4%B9%88%E7%9B%B8%E5%85%B3"><span class="nav-number">1.10.2.</span> <span class="nav-text">1.10.2 指针为啥是4字节，一定是4字节吗，对指针做seziof的结果与什么相关</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.11.</span> <span class="nav-text">1.11 c++中指针和引用的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E5%9B%9B%E4%B8%AA"><span class="nav-number">1.12.</span> <span class="nav-text">1.12 c++中的类型转换（四个）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E9%97%AE%E9%A2%98%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E8%A7%A3%E5%86%B3"><span class="nav-number">1.13.</span> <span class="nav-text">1.13 内存泄露问题，如何检测，解决</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8E%E6%8C%87%E9%92%88%E5%92%8C%E6%82%AC%E7%A9%BA%E6%8C%87%E9%92%88"><span class="nav-number">1.14.</span> <span class="nav-text">1.14 野指针和悬空指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E7%9A%84%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88"><span class="nav-number">1.15.</span> <span class="nav-text">1.14 C++中的智能指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84%E5%92%8C%E6%95%B0%E7%BB%84%E6%8C%87%E9%92%88"><span class="nav-number">1.16.</span> <span class="nav-text">1.15 指针数组和数组指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E5%AE%83%E5%89%8D%E9%9D%A2%E7%9A%84const%E5%92%8C%E5%9C%A8%E5%90%8E%E9%9D%A2const%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.17.</span> <span class="nav-text">1.16 一个函数它前面的const和在()后面const的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E7%9A%84lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.18.</span> <span class="nav-text">1.17 C++的lambda表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile"><span class="nav-number">1.19.</span> <span class="nav-text">1.18 volatile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#auto%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.20.</span> <span class="nav-text">1.19 auto关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#extern-c"><span class="nav-number">1.21.</span> <span class="nav-text">1.20 extern c</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88%E4%BC%9A%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E5%90%97"><span class="nav-number">1.22.</span> <span class="nav-text">1.21 智能指针会内存泄露吗</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">2. C++知识面试版_面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E7%9A%84%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 C++中的面向对象是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#struct%E5%92%8Cclass%E7%9A%84%E5%8C%BA%E5%88%ABstruct%E5%92%8Cunion%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 struct和class的区别、struct和union的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89this%E6%8C%87%E9%92%88%E5%93%AA%E4%BA%9B%E5%9C%B0%E6%96%B9%E7%94%A8%E5%88%B0"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 C++中为什么要有this指针，哪些地方用到</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%BB%A7%E6%89%BF%E7%BB%A7%E6%89%BF%E4%BC%9A%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 为什么要继承，继承会有什么问题，如何解决？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 什么是纯虚函数，作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E7%A9%BA%E7%B1%BB%E9%BB%98%E8%AE%A4%E5%87%BD%E6%95%B0"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 C++空类默认函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 深拷贝和浅拷贝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E7%89%B9%E5%BE%81%E5%B0%81%E8%A3%85%E6%95%B4%E4%BD%93%E7%9A%84%E7%9B%AE%E7%9A%84%E6%98%AF"><span class="nav-number">2.8.</span> <span class="nav-text">2.8 封装特征，封装整体的目的是</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c%E7%9A%84%E5%A4%9A%E6%80%81%E6%9C%BA%E5%88%B6%E8%99%9A%E5%87%BD%E6%95%B0%E5%92%8C%E8%99%9A%E8%A1%A8"><span class="nav-number">2.9.</span> <span class="nav-text">2.10 c++的多态机制（虚函数和虚表）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD%E9%87%8D%E5%86%99%E5%92%8C%E5%A4%9A%E6%80%81%E5%8C%BA%E5%88%AB%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">2.10.</span> <span class="nav-text">2.11 重载、重写和多态区别，实现机制。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E8%83%BD%E4%B8%8D%E8%83%BD%E6%98%AF%E8%99%9A%E5%87%BD%E6%95%B0%E4%BB%80%E4%B9%88%E5%87%BD%E6%95%B0%E4%B8%BA%E5%BB%BA%E8%AE%AE%E4%B8%BA%E8%99%9A%E5%87%BD%E6%95%B0%E4%BB%80%E4%B9%88%E5%87%BD%E6%95%B0%E4%B8%8D%E8%83%BD%E4%B8%BA%E8%99%9A"><span class="nav-number">2.11.</span> <span class="nav-text">2.12 构造函数能不能是虚函数（什么函数为建议为虚函数，什么函数不能为虚）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E8%A6%81%E4%B8%BA%E5%BC%95%E7%94%A8"><span class="nav-number">2.12.</span> <span class="nav-text">2.13 为什么拷贝构造函数的参数要为引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#inline%E8%83%BD%E4%B8%8D%E8%83%BD%E6%98%AF%E8%99%9A%E5%87%BD%E5%8F%8B%E5%85%83%E5%87%BD%E6%95%B0%E5%91%A2"><span class="nav-number">2.13.</span> <span class="nav-text">2.14 inline能不能是虚函、友元函数呢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%99%E6%80%81%E8%81%94%E7%BC%96%E5%92%8C%E5%8A%A8%E6%80%81%E8%81%94%E7%BC%96"><span class="nav-number">2.14.</span> <span class="nav-text">2.15 什么是静态联编和动态联编</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8B%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8"><span class="nav-number">2.15.</span> <span class="nav-text">2.16 说一下初始化列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_stl%E5%AE%B9%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">3. C++知识面试版_STL容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vector%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E8%BF%AD%E4%BB%A3%E5%99%A8%E5%A4%B1%E6%95%88"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 vector为什么会迭代器失效？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vector%E5%92%8Clist%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 vector和list的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8Bmap%E5%92%8Cset"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 说一下map和set。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%A2%E9%BB%91%E6%A0%91%E4%BA%86%E8%A7%A3%E5%90%97%E8%AF%B4%E4%B8%80%E4%B8%8B%E5%AE%83%E7%9A%84%E6%9C%BA%E5%88%B6"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 红黑树了解吗，说一下它的机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unordered_map%E5%92%8Cunordered_set%E5%91%A2"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 unordered_map和unordered_set呢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 迭代器相关</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_c11%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">4. C++知识面试版_c++11新特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E7%9F%A5%E8%AF%86%E9%9D%A2%E8%AF%95%E7%89%88_%E5%B9%B6%E5%8F%91"><span class="nav-number">5.</span> <span class="nav-text">5. C++知识面试版_并发</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -518,20 +686,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -572,12 +740,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">763k</span>
+    <span title="站点总字数">785k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">11:34</span>
+    <span title="站点阅读时长">11:54</span>
 </div>
 
         
