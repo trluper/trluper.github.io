@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="内存对齐规则 在C&#x2F;C++中的结构体或类，存在内存对齐问题。内存对齐是为了方便计算机进行寻址，优化寻址速度的一个措施，其代价是消耗不必要的内存空间。 内存对齐遵循以下规则：  第一个成员在与结构体变量偏移量为0的地址处。 其他成员变量都放在对齐数（成员的大小和默认对齐数的较小值）的整数倍的偏移地址处。  对齐数&#x3D;编译器默认的一个对齐数与该成员大小的较小值。（不同的编译器其默认对齐数不">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023/04/11/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98/me.png">
+<meta property="og:image" content="http://example.com/内存对齐问题/me.png">
 <meta property="article:published_time" content="2023-04-11T10:14:52.000Z">
 <meta property="article:modified_time" content="2023-04-13T02:24:55.266Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/04/11/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98/me.png">
+<meta name="twitter:image" content="http://example.com/内存对齐问题/me.png">
 
 <link rel="canonical" href="http://example.com/2023/04/11/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98/">
 
@@ -289,7 +289,7 @@
 <li><strong>结构体总大小为最大对齐数(每个成员变量都有一个对齐数 )的整数倍。</strong></li>
 <li><strong>如果嵌套了结构体的情况,嵌套的结构体对齐到自己的最大对齐数的整数倍处,结构体的整体大小就是所有最大对齐数(含嵌套结构体的对齐数)的整数倍。---&gt;最大对齐数肯定不超过默认对齐数</strong></li>
 </ul>
-<p>示例：VS运行（默认对齐数为8） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">test2</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> a;<span class="comment">//4--&gt;8，占0，1，2，3地址处，后续补4，5，6，7</span></span><br><span class="line">     <span class="type">double</span> c;<span class="comment">//8，但由于其只能放在与首地址偏移量为8的地址上，因此4，5，6，7作为填补空缺，它从8存储</span></span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">testMemory</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> a;<span class="comment">//4--&gt;8</span></span><br><span class="line">     <span class="type">long</span> b;<span class="comment">//8</span></span><br><span class="line">     <span class="type">char</span> c;<span class="comment">//1</span></span><br><span class="line">     <span class="keyword">struct</span> <span class="title class_">test2</span> l;<span class="comment">//16</span></span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line">cout  &lt;&lt;<span class="built_in">sizeof</span>(test2) &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(testMemory) &lt;&lt; endl;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 输出: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span> <span class="number">40</span></span><br></pre></td></tr></table></figure> <img src="/2023/04/11/%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E9%97%AE%E9%A2%98/me.png" widt="400"></p>
+<p>示例：VS运行（默认对齐数为8） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">test2</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> a;<span class="comment">//4--&gt;8，占0，1，2，3地址处，后续补4，5，6，7</span></span><br><span class="line">     <span class="type">double</span> c;<span class="comment">//8，但由于其只能放在与首地址偏移量为8的地址上，因此4，5，6，7作为填补空缺，它从8存储</span></span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">testMemory</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> a;<span class="comment">//4--&gt;8</span></span><br><span class="line">     <span class="type">long</span> b;<span class="comment">//8</span></span><br><span class="line">     <span class="type">char</span> c;<span class="comment">//1</span></span><br><span class="line">     <span class="keyword">struct</span> <span class="title class_">test2</span> l;<span class="comment">//16</span></span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line">cout  &lt;&lt;<span class="built_in">sizeof</span>(test2) &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; <span class="built_in">sizeof</span>(testMemory) &lt;&lt; endl;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 输出: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16</span> <span class="number">40</span></span><br></pre></td></tr></table></figure> <img src="/内存对齐问题/me.png" widt="400"></p>
 <h4 id="class类">class类</h4>
 <p>在C++中，class与struct是相同的，除了：</p>
 <ul>
@@ -469,12 +469,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">795k</span>
+    <span title="站点总字数">800k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:02</span>
+    <span title="站点阅读时长">12:07</span>
 </div>
 
         

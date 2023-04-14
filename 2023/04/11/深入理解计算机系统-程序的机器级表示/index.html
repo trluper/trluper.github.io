@@ -22,20 +22,34 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1 程序的机器级表示 在本章，会学习观察汇编代码和机器代码。说到汇编语言就不得不提编译器和汇编器。**编译器是基于编程语言规则、目标机器的指令集和操作系统遵循的惯例，经过一系列阶段如图：  gcc编译器以汇编代码的形式产生输出，然后gcc调用汇编器和链接器生成二进制机器文件和可执行文件">
+  <meta name="description" content="程序的机器级表示 在本章，会学习观察汇编代码和机器代码。说到汇编语言就不得不提编译器和汇编器。**编译器是基于编程语言规则、目标机器的指令集和操作系统遵循的惯例，经过一系列阶段如图：  gcc编译器以汇编代码的形式产生输出，然后gcc调用汇编器和链接器生成二进制机器文件和可执行文件。对于Linux机，可以使用 gcc -Og -S xxx.c来进行学习。因为参数-Og表明不进行优化，这可以让">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解计算机系统-程序的机器级表示">
 <meta property="og:url" content="http://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/index.html">
 <meta property="og:site_name" content="Trluper">
-<meta property="og:description" content="1 程序的机器级表示 在本章，会学习观察汇编代码和机器代码。说到汇编语言就不得不提编译器和汇编器。**编译器是基于编程语言规则、目标机器的指令集和操作系统遵循的惯例，经过一系列阶段如图：  gcc编译器以汇编代码的形式产生输出，然后gcc调用汇编器和链接器生成二进制机器文件和可执行文件">
+<meta property="og:description" content="程序的机器级表示 在本章，会学习观察汇编代码和机器代码。说到汇编语言就不得不提编译器和汇编器。**编译器是基于编程语言规则、目标机器的指令集和操作系统遵循的惯例，经过一系列阶段如图：  gcc编译器以汇编代码的形式产生输出，然后gcc调用汇编器和链接器生成二进制机器文件和可执行文件。对于Linux机，可以使用 gcc -Og -S xxx.c来进行学习。因为参数-Og表明不进行优化，这可以让">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/compile.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/compile.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/type.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/registers.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/operator.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/mov.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/movexample.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/movz.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/movs.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/stack.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/stackoperator.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/algorithmoperators.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/conditional.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/set.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/jump.png">
+<meta property="og:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/pcjump.png">
 <meta property="article:published_time" content="2023-04-11T00:59:24.000Z">
-<meta property="article:modified_time" content="2023-04-12T10:15:23.317Z">
+<meta property="article:modified_time" content="2023-04-14T06:56:16.790Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深入理解计算机系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/compile.png">
+<meta name="twitter:image" content="http://example.com/深入理解计算机系统-程序的机器级表示/compile.png">
 
 <link rel="canonical" href="http://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/">
 
@@ -232,7 +246,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-12 18:15:23" itemprop="dateModified" datetime="2023-04-12T18:15:23+08:00">2023-04-12</time>
+                <time title="修改时间：2023-04-14 14:56:16" itemprop="dateModified" datetime="2023-04-14T14:56:16+08:00">2023-04-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,14 +271,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>413</span>
+              <span>6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -276,10 +290,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="程序的机器级表示">1 程序的机器级表示</h3>
+        <h2 id="程序的机器级表示">程序的机器级表示</h2>
 <p>在本章，会学习观察汇编代码和机器代码。说到汇编语言就不得不提编译器和汇编器。**编译器是基于编程语言规则、目标机器的指令集和操作系统遵循的惯例，经过一系列阶段如图：</p>
-<p><img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/compile.png" width="700"></p>
-<p>gcc编译器以汇编代码的形式产生输出，然后gcc调用汇编器和链接器生成二进制机器文件和可执行文件</p>
+<p><img src="/深入理解计算机系统-程序的机器级表示/compile.png" width="700"></p>
+<p>gcc编译器以汇编代码的形式产生输出，然后gcc调用汇编器和链接器生成二进制机器文件和可执行文件。对于Linux机，可以使用 <code>gcc -Og -S xxx.c</code>来进行学习。因为参数-Og表明不进行优化，这可以让汇编代码尽可能地保持和C源码一样的顺序，位置，排列等。</p>
 <span id="more"></span>
 <p><strong>编译器的作用：</strong></p>
 <ul>
@@ -291,7 +305,99 @@
 <li><p>能够阅读和理解汇编是一项很重要的技能。当我们以适当的命令调用编译器时，编译器就会产生一个以汇编代码形式表示的输出文件，通过去阅读这些汇编代码，我们能够理解编译器的优化能力，并分析代码中隐含的低效率。</p></li>
 <li><p>了解不同线程时如何共享程序数据或保持数据私有的，以及准确指导如何阿紫哪里访问共享数据，这些在并发编程非常重要，这些信息在机器代码级是可见的，</p></li>
 </ul>
-<h4 id="section">1.1</h4>
+<h3 id="程序编码">1 程序编码</h3>
+<h4 id="机器级代码">1.1 机器级代码</h4>
+<p>对于机器编程来说，有两种很重要的抽象。一种是对于程序执行的抽象(使用指令集架构定义程序执行的具体情况)，一种是对于内存的抽象，使得整个虚拟地址空间在OS的加持下成为一个超大的可用数组。</p>
+<p>x86-64的机器代码和原始的C代码相差颇大，比如：</p>
+<ul>
+<li><p><strong>程序计数器(PC)</strong>在x86-64机中代表下一条指令的位置。</p></li>
+<li><p><strong>整数寄存器文件包含了16个命名的位置(就是寄存器可见的意思)，分别存储64位的值</strong>。寄存器可以用来存储地址(就像C语言的指针)，或者保存程序状态，再或者某些寄存器用于保存临时数据，列如过程调用的参数和局部变量，以及函数返回值。</p></li>
+<li><p><strong>条件码寄存器，用来实现控制和数据流中的条件变化，比如<code>if</code>和<code>while</code>语句。</strong></p></li>
+<li><p>一组向量寄存器可以用来存放一个或多个整数或浮点数值。</p></li>
+</ul>
+<h4 id="汇编文件的格式注解">1.2 汇编文件的格式注解</h4>
+<p>先看一个C文件，假如其定义如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">long</span> <span class="title">mult2</span><span class="params">(<span class="type">long</span>,<span class="type">long</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">multstore</span><span class="params">(<span class="type">long</span> x,<span class="type">long</span> y,<span class="type">long</span>* dest)</span></span>&#123;</span><br><span class="line">	<span class="type">long</span> t=<span class="built_in">mult2</span>(x,y);</span><br><span class="line">	*dest=t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 通过gcc命令: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -c mstore.c</span><br><span class="line"><span class="comment">//-Og告诉编译器使用符合原始C代码整体结构的机器代码的优化等级</span></span><br></pre></td></tr></table></figure> 得到<code>.s</code>汇编文件,完整内容如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	.file	<span class="string">&quot;010-mstore.c&quot;</span></span><br><span class="line">	.text</span><br><span class="line">	.globl multstore</span><br><span class="line">	.type	multstore,@function</span><br><span class="line">multstore:</span><br><span class="line">	pushq	%rbx</span><br><span class="line">	movq	%rdx,%rbx</span><br><span class="line">	call	mult2</span><br><span class="line">	movq	%rax,(%rbx)</span><br><span class="line">	popq	%rbx</span><br><span class="line">	ret</span><br><span class="line">	.size	multstore, .-multstore</span><br><span class="line">	.ident	<span class="string">&quot;GCC:(Ubuntu 4.8.1-2ubuntu1-12.04) 4.8.1&quot;</span></span><br><span class="line">	.section		.note.GNU-stack,<span class="string">&quot;&quot;</span>,@progbits</span><br></pre></td></tr></table></figure> 其中，以<code>.</code>开头的行为汇编器和链接器工作的伪指令。它描述了C语言种插入汇编的方法，对于一些应用程序来说，必须使用汇编代码来访问机器的低级特性：</p>
+<ul>
+<li>一种方法是用汇编代码编写整个函数，在链接阶段把它们和C程序链接起来</li>
+<li>另一种方法是利用GCC的支持，直接在C程序中嵌入汇编代码</li>
+</ul>
+<h3 id="数据格式和寄存器">2 数据格式和寄存器</h3>
+<h4 id="数据格式">2.1 数据格式</h4>
+<p>由于计算机发展是从16位到32位再到64位的，所以Intel使用字(word)表示16位数据类型，用双字(double word)表示32位数据类型，四字(quad word)表示64位数据类型。 <img src="/深入理解计算机系统-程序的机器级表示/type.png" width="700"> 一般而言，指令后面都会跟着一个后缀，表明操作数的大小。<strong>浮点数和整数使用的是完全不同的指令和寄存器。</strong></p>
+<h4 id="寄存器初识">2.2 寄存器初识</h4>
+<p>一个标准的x86-64CPU包含一组16个用来存储64位数据的通用寄存器。他们用来存储整数数据和指针. <img src="/深入理解计算机系统-程序的机器级表示/registers.png" width="700"> <strong>指令可以对这16个寄存器的低位字节存放的大小不同的有效数据进行操作。</strong>这些寄存器可以向前兼容，就是64位可以存储32位，16位和8位的数据，但是32位无法存储64位的数据，<strong>如果是大寄存器存小数据，那么只能存在低位中，高位有相对应的填充措施。</strong></p>
+<p>对于高位的数据填充，一般有两个策略：一是生成1字节和2字节的指令保持其他高位不变；生成4字节(2字)的指令会把高位填充为0。</p>
+<p>几个重要的寄存器：</p>
+<ul>
+<li><code>rax</code>:用来存储返回值</li>
+<li><code>rsp</code>:栈指针，用来指向运行时栈的结束位置,即当前运行栈的栈顶</li>
+</ul>
+<h3 id="访问信息">3 访问信息</h3>
+<h4 id="操作数指示符">3.1 操作数指示符</h4>
+<p>大多数指令都有一个或多个操作数，指出执行一个操作中要使用的源数据和目的地位置。源数据可以是立即数(常量)，寄存器，或从内存地址里读出；操作结果可以存放到寄存器或内存里。完整的表示方法如下： <img src="/深入理解计算机系统-程序的机器级表示/operator.png" width="700"> 在这张表里，只有前两个得到的是直接的值，其余都要翻译成内存地址来进行寻址操作然后取值。</p>
+<p>对于指令，习惯把它们划分成不同的类，每一类的指令作用相同，只是操作的数据大小不同。 #### 3.2 数据传送指令 先来看看数据传送指令，它有点像C语言的赋值运算。MOV类指令有四条指令，他们的主要区别是操作的数据大小不同： <img src="/深入理解计算机系统-程序的机器级表示/mov.png" width="700"> <strong>x86-64对于MOV指令加了一个限制，就是不能直接把一个值从内存的某个位置复制到另一个位置，而必须使用寄存器作为中介。</strong>MOV指令的后缀表明了操作数据的大小，也就是寄存器的大小，不管这个寄存器是源数据还是目的地址，都必须符合指令指定的大小。<strong>MOV指令只会更新目的操作数指定的寄存器字节或内存位置(就是只更新指定的低位字节)，高位字节有其他的设置，但是有一个例外，就是movl指令，当它把寄存器作为目的地址时，会把高32位设为0。</strong> <img src="/深入理解计算机系统-程序的机器级表示/movexample.png" width="700"></p>
+<ul>
+<li>常规的movq指令只能以表示32位补码的数字的立即数作为源数据利用符号扩展放到64位寄存器里去；<strong>movabsq能以任意64位立即数值作为源数据，并且只能以寄存器作为目的地址。</strong></li>
+<li>有两类指令，适用于把较小(位长)的源数据复制到较大(位长)的目的地时使用:
+<ul>
+<li>MOVZ使用0扩展位长；</li>
+<li>MOVS使用符号扩展位长，就是复制源数据的最高有效位。</li>
+</ul></li>
+</ul>
+<p><img src="/深入理解计算机系统-程序的机器级表示/movz.png" width="700"> <img src="/深入理解计算机系统-程序的机器级表示/movs.png" width="700"> <strong>它们的后两个字符表示位长，第一个指定了源数据的大小，第二个指定了目的的大小。</strong></p>
+<h4 id="压入和弹出数据">3.3 压入和弹出数据</h4>
+<p>这两个数据传送操作可以把数据压入栈中，以及从中弹出数据。<strong>在x86-64的机器中，程序栈存放在内存中的某个区域</strong>。<strong>栈向下增长，因此栈顶元素时所有栈元素里地址最小的</strong>。所以为了方便理解，栈是倒过来画的，也是向下增长的。 <img src="/深入理解计算机系统-程序的机器级表示/stack.png" width="700"> 涉及到栈的操作： <img src="/深入理解计算机系统-程序的机器级表示/stackoperator.png" width="700"> <code>pushq</code>指令的功能是把数据压入栈中，而<code>popq</code>是弹出指令。不过它们都涉及两个操作，<code>pushq</code>是首先在栈底指针<code>%rsp</code>里存着新的值得地址，然后设置内存中的这个位置得值为准备压入得数据。所以它的操作数是数据源，而<code>popq</code>则是首先把栈顶的值复制到操作数里，然后指针回退，也就是<code>+8</code>(栈顶指针<code>+8</code>意味着减小8字节的空间，因为它是向下增长，<code>+</code>的话就代表往上回去了)。这操作的都是8字节下，64位。</p>
+<p><strong>因为栈和程序代码以及其他形式的程序数据都是放在同一内存中，所以程序可以用标准的内存寻址方法访问栈内的任意位置。 </strong></p>
+<h3 id="算术和逻辑运算">4 算术和逻辑运算</h3>
+<p>下图给出了x86-64的一些整数和逻辑操作。大多数操作都分为了不同大小操作数的变种（只有lead没有其他大小的变种），比如<code>add</code>指令有<code>addb、addw、addl和addq</code>四种变种，分别表示对不同大小的操作数操作，它们一样可向下兼容，但不能向上兼容。 <img src="/深入理解计算机系统-程序的机器级表示/algorithmoperators.png" width="700"> 除了第一个<code>leaq</code>操作之外，其他的都会改变条件码</p>
+<h4 id="加载有效地址">4.1 加载有效地址</h4>
+<p>加载有效地址指令<code>leaq</code>实际上是<code>movq</code>指令的变形。<strong>它形式上是将内存数据读到寄存器，但实际上它根本没有引用内存，它并不是从指定位置读出数据，而是将有效地址写入到目的操作数。这就是C语言当中的<code>&amp;s</code>取地址操作符，也是产生指针的重要语句。</strong></p>
+<p>比<code>如leaq (%rdi,%rsi,4)</code>, <code>%rax</code>的操作结果是<code>R[rax] = R[rsi]*4+R[rdi]</code>。而不是<code>R[rax] = M[R[rsi]*4+R[rdi]]</code>。 #### 4.2 一元和二元操作 在上面的算术指令表中，第二组只有1个操作数就是一元操作，其他为二元操作。</p>
+<ul>
+<li>一元操作指令只有一个操作数，这个操作数既是源又是目的。所以它们就像C语言的自增，自减操作一样。</li>
+<li>对于二元操作，一般都是第二个操作数 减去/加上/除以/乘以/异或/或/且第一个操作数。注意，如果第二个操作数是内存地址，那么必须先从内存中读出值，再把结果写回内存。</li>
+</ul>
+<h4 id="移位操作">4.3 移位操作</h4>
+<p><strong>移位指令很特别，因为它们只允许以特定的寄存器作为操作数。一般来说，选择长度为8的寄存器就可以了，因为移位数值一定是无符号数，所以8位最长可以移动255位</strong>，可是255位长的计算机还没出现，所以一定够用了。</p>
+<p>在对位长为<span class="math inline">\(w\)</span>位的数据进行移位操作时，移位量是寄存器的低<span class="math inline">\(m\)</span>位决定的(也就是只有低<span class="math inline">\(m\)</span>位的值会被当做移位量，哪怕存放移位量的寄存器是8位，也可能只读取低3位的值，此时最多移动7位)，其中<span class="math inline">\(m=log2(w)m=log_2(w)m=log2​(w)\)</span>，高位会被忽略。</p>
+<p><code>SAL</code>和<code>SHL</code>执行逻辑移位，高位补0；SAR执行算术右移，补最高位，SHR执行逻辑右移，补0.移位操作的目的操作数可以是寄存器，也可以是内存地址。</p>
+<h3 id="控制">5 控制</h3>
+<p>机器代码提供两种基本的低级机制来实现有条件的行为：测试数据值，然后根据结果来改变控制流或数据流。</p>
+<h4 id="条件码">5.1 条件码</h4>
+<p><strong>除了整数寄存器，CPU还维护一组单个位的条件码寄存器，它们描述了最近的算术或逻辑操作的属性。</strong></p>
+<ul>
+<li><code>CF</code>:进位标志。最近的操作使得最高位产生了进位。可以用来检测无符号数的溢出。</li>
+<li><code>ZF</code>:零标志。表明最近的操作得出的结果为0。</li>
+<li><code>SF</code>:符号标志。最近的操作得到的结果是负数。</li>
+<li><code>OF</code>:溢出标志。最近的操作导致了一个补码的溢出——正溢出或负溢出。</li>
+</ul>
+<p>刚刚说的那些一元二元操作（除了<code>leaq</code>)以及移位操作，会改变条件码和寄存器的值。也有一些只改变条件码而不改变任何其他寄存器的操作：如下所示的<code>CMP</code>家族和<code>TEST</code>家族，它们仅仅根据两个操作数之差来设置条件码。除了只设置条件码而不进行目的寄存器的更新外，<code>CMP</code>和<code>SUB</code>指令是一样的。<code>TEST</code>指令的行为和<code>AND</code>指令一样，除了它们不会更改目的寄存器的值外。 <img src="/深入理解计算机系统-程序的机器级表示/conditional.png" width="700"></p>
+<h4 id="访问条件码">5.2 访问条件码</h4>
+<p>条件码通常不会直接读取，常用的使用方法有3种：</p>
+<ul>
+<li>一是可以根据条件码的某种组合将一个字节设置为0或1，</li>
+<li><strong>二是可以跳转到程序的其他某个部分，</strong></li>
+<li><strong>三是可以有条件地传送数据。</strong></li>
+</ul>
+<p>对于第一种情况，常用来实现<code>SET</code>指令，<code>SET</code>成员之间的区别就在于它们考虑的条件码组合是什么，这些指令的后缀指明了这一点，它们在此不作为寄存器长度要求来使用。 <img src="/深入理解计算机系统-程序的机器级表示/set.png" width="700"> 一般而言，<code>SET</code>指令存在于那些可以更改条件码的指令的后面，这样就可以读取到最新的值了，当然也可以不这么做。至于每个指令把目的操作数到底设置成了什么,可以通过条件码计算，也可以通过<code>a-b</code>(如果前面是<code>CMP b,a</code>)或<code>a+b</code>(如果前面是<code>TEST b,a</code>指令)的计算结果来判断。</p>
+<p>表格中的第三组只作用于有符号数操作，第四组只作用于无符号数操作。至于究竟用哪个，编译器会在编译期根据源码进行判断选择。条件跳转只能是直接跳转。</p>
+<h4 id="跳转指令">5.3 跳转指令</h4>
+<p>对于需要指定执行位置时，可以使用跳转指令。跳转的目的地通常使用一个标号指明。这些指令的命名格式和跳转条件和<code>SET</code>指令是一致的。 <img src="/深入理解计算机系统-程序的机器级表示/jump.png" width="700"> - 对于<code>jmp</code>指令来说，它是无条件跳转，它既可以是直接跳转，也可以是间接跳转，此时跳转目标从寄存器或内存位置中读出。</p>
+<h4 id="跳转指令编码">5.4 跳转指令编码</h4>
+<p>对于如何确定跳转的位置，有多种方法，但是最常用的是<code>PC</code>相对法。这种方法会把目标指令的地址和紧跟在跳转指令后面的指令的地址的差值作为值编码在跳转指令后面。 在执行<code>PC</code>相对寻址时，程序计数器的值是跳转指令后面的那条指令的地址。 <img src="/深入理解计算机系统-程序的机器级表示/pcjump.png" width="700"> 使用<code>PC</code>相对法进行编码，好处就是指令很简洁，而且目标代码可以不做修改就移植到别的机器上。</p>
+<h4 id="条件控制实现条件分支">5.5 条件控制实现条件分支</h4>
+<p>将条件表达式和语句<code>if-else</code>从C语言翻译成机器代码，最常用的方式就是结合有条件和无条件跳转。另一种方式使用数据的条件转移实现，这里是介绍<strong>控制的条件转移实现</strong>。其形式如下 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//c代码</span></span><br><span class="line"><span class="keyword">if</span>(test-expr)</span><br><span class="line">	then statement;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="keyword">else</span>-statement;</span><br><span class="line"><span class="comment">//接近于汇编的代码</span></span><br><span class="line">	t=test-expr;</span><br><span class="line">	<span class="keyword">if</span>(!t)</span><br><span class="line">		<span class="keyword">goto</span> <span class="literal">false</span>;</span><br><span class="line">	then-statement;</span><br><span class="line">	<span class="keyword">goto</span> done;</span><br><span class="line"><span class="literal">false</span>:</span><br><span class="line">	<span class="keyword">else</span>-statement;</span><br><span class="line">done:</span><br></pre></td></tr></table></figure> 也就是说，汇编器为<code>then-statement</code>和<code>else-statement</code>产生各自的代码块，他会插入条件和无条件分支，以保证能正确执行代码。</p>
+<h4 id="条件传送实现条件分支">5.6 条件传送实现条件分支</h4>
+<p>对于使用条件控制来实现条件转移，在现代处理器中可能会很低效。而可以通过使用数据的条件分支来实现高效，后者先计算出所有的分支的结果，再在最后进行条件判断，输出分支结果之一。</p>
+<p><strong>现代处理器使用了称为流水线的处理结构，使得一个时钟周期内可以处理多条指令的不同阶段操作。但是这种高效率依赖于流水线的满载，如果流水线空荡荡的那反而是降低了性能。于是需要CPU提前把指令填充到流水线，而有些指令没法提前填充，于是CPU使用它的预测算法，把那些未来的指令放到它可能被执行的流水线上。但是！一旦放错了，后果开销更大，此时因为指令的跳转，需要清空流水线，重新载入新的指令。当代CPU可以做到90%准确率，不过有时如果输入偏于随机的话，那么性能就下来了。</strong></p>
+<p>使用条件传送高效是因为它不需要预测结果，因为所有的可能结果全部完成运算，仅仅在最后输出时选择一个正确的结果就好，这就把预测取消了。同时因为取消了预测，此时控制流与输入数据无关，流水线一直是满载。就如<code>V=test-expr?then-statement:else-statement;</code>。在C中实现两种条件分支如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//用控制实现条件分支</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">absdiff</span><span class="params">(<span class="type">long</span> x,<span class="type">long</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">long</span> result;</span><br><span class="line">	<span class="keyword">if</span>(x&gt;y)</span><br><span class="line">		result=x-y;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		result=y-x;</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//用条件传送来实现条件分支</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">absdiff</span><span class="params">(<span class="type">long</span> x,<span class="type">long</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">long</span> xby=x-y;</span><br><span class="line">	<span class="type">long</span> xly=y-x;</span><br><span class="line">	<span class="type">long</span> ntest=x&gt;=y;</span><br><span class="line">	<span class="keyword">if</span>(ntest)</span><br><span class="line">		<span class="keyword">return</span> xby;</span><br><span class="line">	<span class="keyword">return</span> xly;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="循环">5.7 循环</h4>
+<h3 id="过程">6 过程*</h3>
+<h3 id="数组分配和访问">7 数组分配和访问</h3>
+<h3 id="异质的数据结构">8 异质的数据结构</h3>
+<h3 id="将数据与结构联合起来">9 将数据与结构联合起来</h3>
+<h3 id="浮点代码">10 浮点代码</h3>
+<p>文章部分来源： <a target="_blank" rel="noopener" href="https://juejin.cn/post/6855129008108273678">深入理解计算机系统-程序的机器级表示</a></p>
 
     </div>
 
@@ -396,7 +502,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.</span> <span class="nav-text">1 程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#section"><span class="nav-number">1.1.</span> <span class="nav-text">1.1</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.</span> <span class="nav-text">程序的机器级表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%BC%96%E7%A0%81"><span class="nav-number">1.1.</span> <span class="nav-text">1 程序编码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E7%BA%A7%E4%BB%A3%E7%A0%81"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 机器级代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E6%96%87%E4%BB%B6%E7%9A%84%E6%A0%BC%E5%BC%8F%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 汇编文件的格式注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E5%92%8C%E5%AF%84%E5%AD%98%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">2 数据格式和寄存器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 数据格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%88%9D%E8%AF%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 寄存器初识</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.</span> <span class="nav-text">3 访问信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8C%87%E7%A4%BA%E7%AC%A6"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 操作数指示符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%8B%E5%85%A5%E5%92%8C%E5%BC%B9%E5%87%BA%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.3 压入和弹出数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E5%92%8C%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="nav-number">1.4.</span> <span class="nav-text">4 算术和逻辑运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E6%9C%89%E6%95%88%E5%9C%B0%E5%9D%80"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 加载有效地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E4%BD%8D%E6%93%8D%E4%BD%9C"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.3 移位操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6"><span class="nav-number">1.5.</span> <span class="nav-text">5 控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E7%A0%81"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 条件码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%9D%A1%E4%BB%B6%E7%A0%81"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 访问条件码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 跳转指令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%B3%E8%BD%AC%E6%8C%87%E4%BB%A4%E7%BC%96%E7%A0%81"><span class="nav-number">1.5.4.</span> <span class="nav-text">5.4 跳转指令编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E6%8E%A7%E5%88%B6%E5%AE%9E%E7%8E%B0%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF"><span class="nav-number">1.5.5.</span> <span class="nav-text">5.5 条件控制实现条件分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E4%BC%A0%E9%80%81%E5%AE%9E%E7%8E%B0%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF"><span class="nav-number">1.5.6.</span> <span class="nav-text">5.6 条件传送实现条件分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.5.7.</span> <span class="nav-text">5.7 循环</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">1.6.</span> <span class="nav-text">6 过程*</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%88%86%E9%85%8D%E5%92%8C%E8%AE%BF%E9%97%AE"><span class="nav-number">1.7.</span> <span class="nav-text">7 数组分配和访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E8%B4%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">1.8.</span> <span class="nav-text">8 异质的数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E6%95%B0%E6%8D%AE%E4%B8%8E%E7%BB%93%E6%9E%84%E8%81%94%E5%90%88%E8%B5%B7%E6%9D%A5"><span class="nav-number">1.9.</span> <span class="nav-text">9 将数据与结构联合起来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E4%BB%A3%E7%A0%81"><span class="nav-number">1.10.</span> <span class="nav-text">10 浮点代码</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -466,12 +572,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">795k</span>
+    <span title="站点总字数">800k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:02</span>
+    <span title="站点阅读时长">12:07</span>
 </div>
 
         

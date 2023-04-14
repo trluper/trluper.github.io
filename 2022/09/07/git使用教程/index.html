@@ -29,25 +29,25 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1. Git是什么 Git 是一个开源的分布式版本控制系统，用于敏捷高效地处理任何或小或大的项目。Git原来是 Linus Torvalds 为了帮助管理 Linux 内核开发而开发的一个开放源码的版本控制软件。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-process.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Three.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-command.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/hard.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/mixed.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/soft.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/push.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/dev.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/dev_change.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/master.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/notice.png">
-<meta property="og:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/rebase.png">
+<meta property="og:image" content="http://example.com/git使用教程/Git.png">
+<meta property="og:image" content="http://example.com/git使用教程/git-process.png">
+<meta property="og:image" content="http://example.com/git使用教程/Three.png">
+<meta property="og:image" content="http://example.com/git使用教程/git-command.png">
+<meta property="og:image" content="http://example.com/git使用教程/hard.png">
+<meta property="og:image" content="http://example.com/git使用教程/mixed.png">
+<meta property="og:image" content="http://example.com/git使用教程/soft.png">
+<meta property="og:image" content="http://example.com/git使用教程/push.png">
+<meta property="og:image" content="http://example.com/git使用教程/dev.png">
+<meta property="og:image" content="http://example.com/git使用教程/dev_change.png">
+<meta property="og:image" content="http://example.com/git使用教程/master.png">
+<meta property="og:image" content="http://example.com/git使用教程/notice.png">
+<meta property="og:image" content="http://example.com/git使用教程/rebase.png">
 <meta property="article:published_time" content="2022-09-07T02:10:47.000Z">
 <meta property="article:modified_time" content="2023-03-15T08:54:57.158Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png">
+<meta name="twitter:image" content="http://example.com/git使用教程/Git.png">
 
 <link rel="canonical" href="http://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/">
 
@@ -299,7 +299,7 @@
 <li><p>2、<code>Git</code>把内容按元数据方式存储，而<code>SVN</code>是按文件：所有的资源控制系统都是把文件的元信息隐藏在一个类似 <code>.svn、.cvs</code>等的文件夹里。</p></li>
 <li><p>3、<code>Git</code>分支和<code>SVN</code>的分支不同：分支在 <code>SVN</code>中一点都不特别，其实它就是版本库中的另外一个目录。</p></li>
 <li><p>4、<code>Git</code>没有一个全局的版本号，而<code>SVN</code>有：目前为止这是跟<code>SVN</code>相比<code>Git</code>缺少的最大的一个特征。</p></li>
-<li><p>5、<code>Git</code>的内容完整性要优于<code>SVN</code>：<code>Git</code>的内容存储使用的是<code>SHA-1</code>哈希算法。这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Git.png" width="500"></p></li>
+<li><p>5、<code>Git</code>的内容完整性要优于<code>SVN</code>：<code>Git</code>的内容存储使用的是<code>SHA-1</code>哈希算法。这能确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。 <img src="/git使用教程/Git.png" width="500"></p></li>
 </ul>
 <h3 id="git安装">2. Git安装</h3>
 <h4 id="linux下的git">2.1 Linux下的Git</h4>
@@ -343,14 +343,14 @@
 <li>如果其他人修改了，你可以更新资源。</li>
 <li>在提交前查看修改。</li>
 <li>提交修改。</li>
-<li>在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-process.png" width="500"></li>
+<li>在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。 <img src="/git使用教程/git-process.png" width="500"></li>
 </ul>
 <h3 id="git三个区和三个状态">4. git三个区和三个状态</h3>
 <p>我们先来理解下 Git 工作区、暂存区和版本库概念：</p>
 <ul>
 <li><strong>工作区</strong>：就是你在电脑里能看到的目录。</li>
 <li><strong>暂存区</strong>：英文叫<code>stage</code>或<code>index</code>。一般存放在<code>.git</code>目录下的<code>index</code>文件（<code>.git/index</code>）中，所以我们把暂存区有时也叫作索引（index）。</li>
-<li><p><strong>版本库</strong>：工作区有一个隐藏目录 <code>.git</code>，这个不算工作区，而是 <code>Git</code> 的版本库。存储着所有提交的版本快照，并由当前分支引用的指针HEAD指向该分支最新一条提交 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/Three.png" width="500"></p></li>
+<li><p><strong>版本库</strong>：工作区有一个隐藏目录 <code>.git</code>，这个不算工作区，而是 <code>Git</code> 的版本库。存储着所有提交的版本快照，并由当前分支引用的指针HEAD指向该分支最新一条提交 <img src="/git使用教程/Three.png" width="500"></p></li>
 <li>图中左侧为工作区，右侧为版本库。在版本库中标记为 <code>index</code>的区域是暂存区<code>stage/index</code>，标记为 <code>master</code>的是<code>master</code>分支所代表的目录树。</li>
 <li>图中我们可以看出此时<code>HEAD</code>实际是指向<code>master</code>分支的一个<code>游标</code>。所以图示的命令中出现<code>HEAD</code>的地方可以用<code>master</code>来替换。</li>
 <li>图中的<code>objects</code>标识的区域为<code>Git</code>的对象库，实际位于<code>.git/objects</code>目录下，里面包含了创建的各种对象及内容。</li>
@@ -370,7 +370,7 @@
 </ul>
 <p>如果当前目录下有几个文件想要纳入版本控制，需要先用<code>git add</code>命令告诉<code>Git</code>开始对这些文件进行跟踪，然后提交： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以下命令将目录下以 .c 结尾及 README 文件提交到仓库中。</span></span><br><span class="line">$ git add *.c</span><br><span class="line">$ git add README</span><br><span class="line">$ git commit -m <span class="string">&#x27;初始化项目版本&#x27;</span></span><br></pre></td></tr></table></figure> &gt; 注： 在 Linux 系统中，commit 信息使用单引号 <code>'</code>，Windows 系统，commit 信息使用双引号<code>&quot;</code>。 &gt;所以在 git bash 中<code>git commit -m '提交说明'</code>这样是可以的，在 Windows 命令行中就要使用双引号 &gt;<code>git commit -m &quot;提交说明&quot;</code>。</p>
 <h3 id="git的基本操作">6. Git的基本操作</h3>
-<p>Git 的工作就是创建和保存你项目的快照及与之后的快照进行对比。Git 常用的是以下 6 个命令：<code>git clone、git push、git add 、git commit、git checkout、git pull</code>，后面我们会详细介绍。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/git-command.png" width="500"></p>
+<p>Git 的工作就是创建和保存你项目的快照及与之后的快照进行对比。Git 常用的是以下 6 个命令：<code>git clone、git push、git add 、git commit、git checkout、git pull</code>，后面我们会详细介绍。 <img src="/git使用教程/git-command.png" width="500"></p>
 <ul>
 <li><code>workspace</code>：工作区</li>
 <li><code>staging area</code>：暂存区/缓存区</li>
@@ -442,9 +442,9 @@
 <h5 id="git-reset命令">6.2.5 git reset命令</h5>
 <p><code>git reset</code> 命令用于回退版本，可以指定退回某一次提交的版本。语法格式如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset [--soft | --mixed | --hard] [HEAD/commit_id]</span><br><span class="line"><span class="comment">//回退指定版本号</span></span><br><span class="line">git reset -<span class="built_in">hard</span> (版本号) <span class="comment">//版本号没必要写全，前几位就可以了，Git会自动去找，版本号通过git log --pretty=oneline获取</span></span><br></pre></td></tr></table></figure></p>
 <ul>
-<li><p><code>--hard</code>：工作区、暂存区、本地仓库都会回滚到对应commit-id上 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/hard.png" width="400"></p></li>
-<li><p><code>–-mixed</code>为默认的，可以不用带该参数。使用该参数工作区代码不会受到影响，但是暂存区、本地仓库区的代码已经回滚到了YY对应的commit-id上。 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/mixed.png" width="400"></p></li>
-<li><p><code>--soft</code>:工作区和暂存区的代码不会受到影响，但是本地仓库的代码会回滚到YY对应的commit-id上 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/soft.png" width="400"></p></li>
+<li><p><code>--hard</code>：工作区、暂存区、本地仓库都会回滚到对应commit-id上 <img src="/git使用教程/hard.png" width="400"></p></li>
+<li><p><code>–-mixed</code>为默认的，可以不用带该参数。使用该参数工作区代码不会受到影响，但是暂存区、本地仓库区的代码已经回滚到了YY对应的commit-id上。 <img src="/git使用教程/mixed.png" width="400"></p></li>
+<li><p><code>--soft</code>:工作区和暂存区的代码不会受到影响，但是本地仓库的代码会回滚到YY对应的commit-id上 <img src="/git使用教程/soft.png" width="400"></p></li>
 </ul>
 <p>示例： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Trluper@DESKTOP<span class="number">-67</span>ADUGH MINGW64 ~/Desktop/<span class="built_in">gitTest</span> (master)</span><br><span class="line">$ git log  --pretty=oneline</span><br><span class="line"><span class="number">450f</span>4d7914f2db54bdab2eea422119e1fea7fafa (HEAD -&gt; master) 第二次commit</span><br><span class="line">b795d59de32dd11f307ecefa32b51c7dd8b901af commit test <span class="number">2</span></span><br><span class="line"></span><br><span class="line">Trluper@DESKTOP<span class="number">-67</span>ADUGH MINGW64 ~/Desktop/<span class="built_in">gitTest</span> (master)</span><br><span class="line">$ git reset --hard HEAD^</span><br><span class="line">HEAD is now at b795d59 commit test <span class="number">2</span></span><br></pre></td></tr></table></figure></p>
 <p><strong><em>注意：谨慎使用 <code>–-hard</code> 参数，它会删除回退点之前的所有日志提交记录。</em></strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Trluper@DESKTOP<span class="number">-67</span>ADUGH MINGW64 ~/Desktop/<span class="built_in">gitTest</span> ((<span class="number">8692</span>a93...))</span><br><span class="line">$ git log --pretty=oneline</span><br><span class="line"><span class="number">8692</span>a9397fb6fd23a262eb8f38997b549064a017 (HEAD) fix conflict</span><br><span class="line"><span class="number">0b</span>d22ddc1e7387bd4e97effa0a463056ce7be0dd master修改</span><br><span class="line"></span><br><span class="line"><span class="comment">//--hard回退到master修改</span></span><br><span class="line">Trluper@DESKTOP<span class="number">-67</span>ADUGH MINGW64 ~/Desktop/<span class="built_in">gitTest</span> ((<span class="number">8692</span>a93...))</span><br><span class="line">$ git reset --hard <span class="number">0b</span>d22ddc1e7387bd4e97effa0a463056ce7be0dd</span><br><span class="line">HEAD is now at <span class="number">0b</span>d22dd master修改</span><br><span class="line"></span><br><span class="line"><span class="comment">//再次查看日志：fix conflict记录已经没有了</span></span><br><span class="line">Trluper@DESKTOP<span class="number">-67</span>ADUGH MINGW64 ~/Desktop/<span class="built_in">gitTest</span> ((<span class="number">0b</span>d22dd...))</span><br><span class="line">$ git log --pretty=oneline</span><br><span class="line"><span class="number">0b</span>d22ddc1e7387bd4e97effa0a463056ce7be0dd (HEAD) master修改</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
@@ -538,7 +538,7 @@
 <li><code>--delete</code>:删除主机的分支可以使用 --delete 参数(一般不使用)</li>
 </ul>
 <blockquote>
-<p><strong><em>注意</em></strong>：一般来说在实际开发中，我们总会在远程仓库建立自己的分支，而不是直接<code>push</code>到master分支，这样<code>push</code>到自己分支，管理者看完修改对比并同意后才合并到<code>master</code>分支，这才是正确的做法 <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/push.png" width="600"></p>
+<p><strong><em>注意</em></strong>：一般来说在实际开发中，我们总会在远程仓库建立自己的分支，而不是直接<code>push</code>到master分支，这样<code>push</code>到自己分支，管理者看完修改对比并同意后才合并到<code>master</code>分支，这才是正确的做法 <img src="/git使用教程/push.png" width="600"></p>
 </blockquote>
 <h5 id="git-fetch-命令">6.4.2 <code>git fetch</code> 命令</h5>
 <p><code>git fetch</code> 命令用于从远程获取代码库。因为<code>git fetch</code>不会改变本地仓库的状态，该命令执行完后需要执行 <code>git merge</code> 远程分支到你本地仓库所在的分支。命令格式</p>
@@ -576,14 +576,14 @@
 <h4 id="详解分支管理">7.6 详解分支管理</h4>
 <p>假如你有两个分支<code>master</code>和<code>dev</code>:</p>
 <ul>
-<li><p>1、当你只是<code>checkout</code>切换一个分支，而对两个分支都没修改(在切换分支时一旦在工作区修改git会要求你在切换前<code>commit</code>)，那么各分支状态如下： <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/dev.png" width="400"></p></li>
-<li><p>2、现在你切换到了dev，并修改了三次，<code>commit</code>了三次，那么在本地仓库（版本库）会生成三次的哈希索引，且其分支记录指针图示如下： <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/dev_change.png" width="400"></p></li>
-<li>3、现在有另一种情况，你在<code>dev</code>修改，另一位同事对<code>master</code>分支做出修改，这时候就可能出现潜在问题，出现合并冲突： <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/master.png" width="400">
+<li><p>1、当你只是<code>checkout</code>切换一个分支，而对两个分支都没修改(在切换分支时一旦在工作区修改git会要求你在切换前<code>commit</code>)，那么各分支状态如下： <img src="/git使用教程/dev.png" width="400"></p></li>
+<li><p>2、现在你切换到了dev，并修改了三次，<code>commit</code>了三次，那么在本地仓库（版本库）会生成三次的哈希索引，且其分支记录指针图示如下： <img src="/git使用教程/dev_change.png" width="400"></p></li>
+<li>3、现在有另一种情况，你在<code>dev</code>修改，另一位同事对<code>master</code>分支做出修改，这时候就可能出现潜在问题，出现合并冲突： <img src="/git使用教程/master.png" width="400">
 <ul>
 <li><strong>如果你们的修改没有出现合并冲突，那么很好，你们可以愉快的执行<code>git merge dev</code>操作</strong></li>
 <li><strong>但如果你能出现冲突了(比如说修改了同一份文件、master创建一份新的代码文价)，你必须手动解决冲突，再去合并，非常好的一点是，git会提示冲突出现的位置</strong>。</li>
 </ul></li>
-<li><p>举例有一个<code>test.txt</code>文件，在<code>mater</code>添加了<code>master：修改</code>，在<code>test</code>分支添加<code>test：修改</code>,都各自commit，在执行合并操作时出现合并冲突： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Trluper@DESKTOP<span class="number">-67</span>ADUGH MINGW64 ~/Desktop/<span class="built_in">gitTest</span> (master)</span><br><span class="line">$ git merge test</span><br><span class="line">Auto-merging test.<span class="function">txt</span></span><br><span class="line"><span class="function"><span class="title">CONFLICT</span> <span class="params">(content)</span>: Merge conflict in test.txt</span></span><br><span class="line"><span class="function">Automatic merge failed;</span> fix conflicts <span class="keyword">and</span> then commit the result.</span><br></pre></td></tr></table></figure> <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/notice.png" width="600"></p></li>
+<li><p>举例有一个<code>test.txt</code>文件，在<code>mater</code>添加了<code>master：修改</code>，在<code>test</code>分支添加<code>test：修改</code>,都各自commit，在执行合并操作时出现合并冲突： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Trluper@DESKTOP<span class="number">-67</span>ADUGH MINGW64 ~/Desktop/<span class="built_in">gitTest</span> (master)</span><br><span class="line">$ git merge test</span><br><span class="line">Auto-merging test.<span class="function">txt</span></span><br><span class="line"><span class="function"><span class="title">CONFLICT</span> <span class="params">(content)</span>: Merge conflict in test.txt</span></span><br><span class="line"><span class="function">Automatic merge failed;</span> fix conflicts <span class="keyword">and</span> then commit the result.</span><br></pre></td></tr></table></figure> <img src="/git使用教程/notice.png" width="600"></p></li>
 </ul>
 <blockquote>
 <p><strong>合并冲突：</strong>冲突的产生是因为在合并的时候，不同分支修改了相同的位置。所以在合并的时候git不知道哪个到底是你想保留的，所以就提出疑问（冲突提醒）让你自己手动选择想要保留的内容，从而解决冲突。 <strong>解决冲突：</strong></p>
@@ -601,7 +601,7 @@
 <h3 id="git的merge和rebase区别">9 git的merge和rebase区别</h3>
 <p><code>merge</code>和<code>rebase</code>都是用来合并分支的。</p>
 <ul>
-<li><p>1.采用<code>merge</code>和<code>rebase</code>后，git log的区别：<code>merge</code>命令不会保留<code>merge</code>的分支的<code>commit</code>记录，<code>rebase</code>会保留所有的<code>commit</code>：（即<code>rebase: 合体</code> <code>merge: 脚手相连，肚皮是独立的</code>） <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/rebase.png" width="600"></p></li>
+<li><p>1.采用<code>merge</code>和<code>rebase</code>后，git log的区别：<code>merge</code>命令不会保留<code>merge</code>的分支的<code>commit</code>记录，<code>rebase</code>会保留所有的<code>commit</code>：（即<code>rebase: 合体</code> <code>merge: 脚手相连，肚皮是独立的</code>） <img src="/git使用教程/rebase.png" width="600"></p></li>
 <li><code>merge</code>和<code>rebase</code>应用场景：
 <ul>
 <li><strong><code>merge</code>一般用在<code>master</code>这种公共分支上</strong>。在多人开发同一个项目时，如果多人的开发分支有一定的命名规范，比如需求的版本号，那么在排查问题或者追溯需求时，会很方便；保存的日志记录轨迹清晰，回滚方便</li>
@@ -795,12 +795,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">795k</span>
+    <span title="站点总字数">800k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:02</span>
+    <span title="站点阅读时长">12:07</span>
 </div>
 
         
