@@ -476,7 +476,7 @@
 </ul></li>
 <li><p><strong>行为型模式：关注系统中对象之间的相互交互，研究系统在运行时对象之间的相互通信和协作，进一步明确对象的职责</strong></p>
 <ul>
-<li>模版方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式。 <img src="/设计模式/GOF23.png" width="700"></li></ul></li></ul>
+<li>模版方法模式、命令模式、迭代器模式、观察者模式、中介者模式、备忘录模式、解释器模式、状态模式、策略模式、职责链模式、访问者模式。 <img src="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/GOF23.png" width="700"></li></ul></li></ul>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/02/25/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#more" rel="contents">
@@ -574,7 +574,7 @@
           <h4 id="tcpip协议">1 TCP/IP协议</h4>
 <p>TCP/IP协议套件是一个分层联网协议，它包括因特网协议(ip)和位于其上层的各个协议层。</p>
 <h5 id="osi七层模型和tcpip模型">1.1 OSI七层模型和TCP/IP模型</h5>
-<p><img src="/Linux系统编程-网络/osi.png" width="500"> 各层协议主要有：</p>
+<p><img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/osi.png" width="500"> 各层协议主要有：</p>
 <ul>
 <li>应用层协议: FTP（文件传输协议）<strong>、HTTP（超文本传输协议）</strong>、NFS（网络文件系统）</li>
 <li><strong>传输层协议： TCP （传输控制协议）、UDP（用户数据报协议）</strong></li>
@@ -682,7 +682,7 @@
 </ul>
 <h3 id="概览">1 概览</h3>
 <h4 id="认识并发">1.1 认识并发</h4>
-<p>如下图，<strong>在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方式，让任务看起来是并行执行的</strong>。这种方式称为“任务切换(task switching)”。但是，实际上是并发形式的，因为任务切换得太快，以至于无法感觉到任务在何时会被暂时挂起 <img src="/C-并发/computer.png" width="500"> 系统每次从一个任务切换到另一个时都需要切换一次上下文(context switch)，任务切换也有时间开销。</p>
+<p>如下图，<strong>在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方式，让任务看起来是并行执行的</strong>。这种方式称为“任务切换(task switching)”。但是，实际上是并发形式的，因为任务切换得太快，以至于无法感觉到任务在何时会被暂时挂起 <img src="/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png" width="500"> 系统每次从一个任务切换到另一个时都需要切换一次上下文(context switch)，任务切换也有时间开销。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/02/19/C-%E5%B9%B6%E5%8F%91/#more" rel="contents">
@@ -1181,8 +1181,8 @@
           <h4 id="github上的博客域名挂靠">1. github上的博客域名挂靠</h4>
 <p>由于github是外国网站，存在者有时候节点ip无法访问到github，导致博客也登不上去，为了解决这个方法，可以使用域名进行挂靠。</p>
 <h5 id="域名设置">1.1 域名设置</h5>
-<p>域名购买可以买腾讯云、阿里喝华为的，这里以腾讯云为例子，点击<a target="_blank" rel="noopener" href="https://cloud.tencent.com/act/pro/domain_sales?fromSource=gwzcw.6927043.6927043.6927043&amp;utm_medium=cpc&amp;utm_id=gwzcw.6927043.6927043.6927043&amp;bd_vid=11616374416468829912">域名购买</a>。购买完成后，进入<a target="_blank" rel="noopener" href="https://console.cloud.tencent.com/domain">域名控制平台</a>-&gt;我的域名，进行设置： <img src="/blog域名挂靠/yuming.jpg"></p>
-<p>点击<strong>解析</strong>,进入如下页面： <img src="/blog域名挂靠/jiexi.jpg"> <strong>然后增加<code>CNAME</code>记录类型，其记录值为你的博客地址，如我的为<code>trluper.github.io</code></strong></p>
+<p>域名购买可以买腾讯云、阿里喝华为的，这里以腾讯云为例子，点击<a target="_blank" rel="noopener" href="https://cloud.tencent.com/act/pro/domain_sales?fromSource=gwzcw.6927043.6927043.6927043&amp;utm_medium=cpc&amp;utm_id=gwzcw.6927043.6927043.6927043&amp;bd_vid=11616374416468829912">域名购买</a>。购买完成后，进入<a target="_blank" rel="noopener" href="https://console.cloud.tencent.com/domain">域名控制平台</a>-&gt;我的域名，进行设置： <img src="/2022/12/16/blog/yuming.jpg"></p>
+<p>点击<strong>解析</strong>,进入如下页面： <img src="/2022/12/16/blog/jiexi.jpg"> <strong>然后增加<code>CNAME</code>记录类型，其记录值为你的博客地址，如我的为<code>trluper.github.io</code></strong></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/12/16/blog/#more" rel="contents">
@@ -1330,12 +1330,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">800k</span>
+    <span title="站点总字数">804k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:07</span>
+    <span title="站点阅读时长">12:11</span>
 </div>
 
         
