@@ -1032,7 +1032,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-13 10:20:44" itemprop="dateModified" datetime="2023-04-13T10:20:44+08:00">2023-04-13</time>
+                <time title="修改时间：2023-04-24 19:40:09" itemprop="dateModified" datetime="2023-04-24T19:40:09+08:00">2023-04-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1050,14 +1050,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
+              <span>19k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>17 分钟</span>
             </span>
 
         </div>
@@ -1073,10 +1073,10 @@
 <h4 id="编译过程">1.1 编译过程</h4>
 <p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png" width="600"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
 <ul>
-<li><p>预处理：预处理器会扫描源代码文件，根据以“#”开头的预处理指令执行一些文本替换和文件包含操作。例如，预处理器会把所有的#include指令替换为对应的头文件内容，并将定义的宏展开。</p></li>
-<li><p>编译：编译器将经过预处理的源代码文件翻译成汇编代码，这是一种与具体机器体系结构相关的低级代码。</p></li>
-<li><p>汇编：汇编器将汇编代码转化为机器码，并生成一个目标文件（.obj 或 .o）。目标文件包含机器指令和一些元数据，如符号表和重定位信息。</p></li>
-<li><p>链接：链接器将目标文件与系统库和其他目标文件链接在一起，生成可执行文件。链接器主要完成两个任务：解析符号引用和地址重定位。符号引用指的是在不同目标文件中引用的同一全局变量或函数，链接器需要将其解析为同一个实体。地址重定位指的是在链接过程中，需要将不同目标文件中的函数和变量的地址进行调整，使得它们在最终的可执行文件中能够正确地链接到一起。</p></li>
+<li><p>预处理：预处理器会扫描源代码文件，根据以“#”开头的预处理指令执行一些文本替换和文件包含操作。例如，预处理器会把所有的#include指令替换为对应的头文件内容，并将定义的宏展开。生成<code>.i</code>文件</p></li>
+<li><p>编译：编译器将经过预处理的源代码文件翻译成汇编代码，这是一种与具体机器体系结构相关的低级代码。生成<code>.s</code>文件</p></li>
+<li><p>汇编：汇编器将汇编代码转化为机器码，并生成一个目标文件（.obj 或 .o）。目标文件包含机器指令和一些元数据，如符号表和重定位信息。生成二进制<code>.o</code>文件</p></li>
+<li><p>链接：链接器将目标文件与系统库和其他目标文件链接在一起，生成可执行文件。链接器主要完成两个任务：解析符号引用和地址重定位。符号引用指的是在不同目标文件中引用的同一全局变量或函数，链接器需要将其解析为同一个实体。地址重定位指的是在链接过程中，需要将不同目标文件中的函数和变量的地址进行调整，使得它们在最终的可执行文件中能够正确地链接到一起。生成可执行文件</p></li>
 </ul>
 <h4 id="静态链接和动态链接">1.2 静态链接和动态链接</h4>
 <h5 id="静态链接">1.2.1 静态链接：</h5>
@@ -1239,12 +1239,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">812k</span>
+    <span title="站点总字数">827k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:18</span>
+    <span title="站点阅读时长">12:32</span>
 </div>
 
         
