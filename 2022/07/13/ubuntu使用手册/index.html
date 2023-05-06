@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/07/13/ubuntu%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/natapp.png">
 <meta property="article:published_time" content="2022-07-13T08:44:21.000Z">
-<meta property="article:modified_time" content="2023-02-24T14:03:11.101Z">
+<meta property="article:modified_time" content="2023-04-29T02:58:41.594Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="ubuntu">
 <meta name="twitter:card" content="summary">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-02-24 22:03:11" itemprop="dateModified" datetime="2023-02-24T22:03:11+08:00">2023-02-24</time>
+                <time title="修改时间：2023-04-29 10:58:41" itemprop="dateModified" datetime="2023-04-29T10:58:41+08:00">2023-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -257,14 +257,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.7k</span>
+              <span>4.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -285,6 +285,9 @@
 <li>软件安装<code>sudo dpkg -i xxx.deb</code></li>
 <li>软件卸载<code>sudo dpkg -r 软件名</code></li>
 </ul>
+<blockquote>
+<p>推荐安装的包： gcc、g++、vim、aptitude</p>
+</blockquote>
 <h5 id="安装net-tools网络工具">2.1 安装net-tools网络工具</h5>
 <p><code>net-tools</code>工具箱包括<code>arp, hostname, ifconfig, netstat, rarp, route, plipconfig, slattach, mii-tool and iptunnel and ipmaddr</code>等命令。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install net-tools</span><br></pre></td></tr></table></figure></p>
 <h5 id="安装ssh">2.2 安装ssh</h5>
@@ -319,6 +322,15 @@
 <li><p>将网络管理的缓存清除后重新开启即可 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo service network-manager stop</span><br><span class="line">sudo rm /var/lib/NetworkManager/NetworkManager.state</span><br><span class="line">sudo service network-manager start</span><br><span class="line">或</span><br><span class="line">sudo service NetworkManager stop</span><br><span class="line">sudo rm /var/lib/NetworkManager/NetworkManager.state</span><br><span class="line">sudo service NetworkManager start</span><br><span class="line">sudo vim /etc/NetworkManager/NetworkManager.conf #在这个文件中把第四行的<span class="literal">false</span>改成<span class="literal">true</span></span><br><span class="line">sudo service NetworkManager restart</span><br></pre></td></tr></table></figure></p></li>
 </ul>
 <h4 id="wsl的ubuntu安装">4.WSL的ubuntu安装</h4>
+<p>Windows可集成双系统，这里我们推荐使用一下方式来安装Linux系统：</p>
+<ul>
+<li>在官网下载压缩包后，更改后缀名为<code>zip</code>，之后解压即可</li>
+<li>解压后，执行<code>ubuntuxxxx.exe</code>，弹出终端后，设置你的用户名和密码即安装完成</li>
+<li>安装后<code>rootfs</code>即为你ubuntu的工作区间</li>
+</ul>
+<blockquote>
+<p>之所以推荐上述安装方式，是因为使用驱动安装是之间安装载C盘的，虽然可以转移但过程繁琐，之间使用压缩包方式更为简洁。</p>
+</blockquote>
 <h4 id="wsl下的ubuntu的ssh服务器">5. wsl下的ubuntu的ssh服务器</h4>
 <p><strong>如果你想用ssh连接远程window上的wsl，你是无法直接连接Linux的ssh的，必须通过走windows端口映射才行：</strong> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove openssh-server <span class="comment">#自带的有问题卸载</span></span><br><span class="line">sudo apt-get install openssh-server <span class="comment">#重新安装</span></span><br><span class="line">sudo vim /etc/ssh/sshd_config <span class="comment">#修改配置文件</span></span><br></pre></td></tr></table></figure> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置 去掉前面的“#”</span></span><br><span class="line">Port <span class="number">2222</span> <span class="comment"># 端口号 默认22，因为与Window系统自带SSH冲突故改为2222</span></span><br><span class="line">AddressFamily <span class="built_in">any</span></span><br><span class="line">ListenAddress <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line">ListenAddress ::</span><br><span class="line">PasswordAuthentication yes <span class="comment"># 是否允许使用密码登录 选“是”</span></span><br><span class="line"><span class="comment"># 其它配置没必要改变</span></span><br></pre></td></tr></table></figure> 生成成功后，我们在重启sshd，这样就可以了。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh --full-restart <span class="comment">#重启SSH服务</span></span><br></pre></td></tr></table></figure> <strong>端口映射：</strong>然后WLS2有一个问题，就是它相当于一个完整的虚拟机，所以IP地址与本机不一样，这就导致我们无法在别的设备上SSH连接</p>
 <p>解决办法就是把WSL2虚拟机的IP映射到本机上(假设本机windows的ip为192.168.1.3) <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">netsh interface portproxy <span class="built_in">set</span> v4tov4 listenport=<span class="number">12233</span> listenaddress=<span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span> connectport=<span class="number">2222</span> connectaddress=<span class="number">172.18</span><span class="number">.69</span><span class="number">.154</span></span><br><span class="line"><span class="comment"># listenport win10监听的端口号</span></span><br><span class="line"><span class="comment"># listenaddress win10监听的外网地址，0.0.0.0指所有地址</span></span><br><span class="line"><span class="comment"># connectport 映射的linux的端口 也就是ssh的开启端口</span></span><br><span class="line"><span class="comment"># connectaddress linux的ip</span></span><br><span class="line"><span class="comment"># 可以理解为，所有发往win11:192.168.1.3的12233端口的tcp信息都会转发到172.18.69.154:2222</span></span><br></pre></td></tr></table></figure></p>
@@ -326,6 +338,14 @@
 <h4 id="使用内透软件natapp">6. 使用内透软件natapp</h4>
 <p>内网内透通过将我们的本机的ubuntu服务器与natapp的服务器连接，以支持另一台主机通过不同网段也能够通过走natapp的服务器连接该ubuntu服务器。即内网穿透。</p>
 <p>在natapp中指定服务器地址即可，详细操作见<a target="_blank" rel="noopener" href="https://natapp.cn/tunnel/edit/16vldzyrj8">natapp官网</a> <img src="/2022/07/13/ubuntu%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C/natapp.png" width="700"> <strong><em>注：上面的ip地址和端口号中，如果你是连接wsl的那么就是window的ip地址和相应的端口映射号</em></strong></p>
+<h4 id="wsl出现cannot-execute-binary-file-exec-format-error">7. WSL出现<code>cannot execute binary file: Exec format error</code></h4>
+<p>出现上述无法执行二进制文件的错误，这是因为该程序的编译链中的GCC是32位版本，而wsl本身是不支持的，WSL64位（微软吊毛没有做向下兼容）。</p>
+<p>解决方法：可以使用<code>QEMU</code>来虚拟化内核来解决这个问题</p>
+<ul>
+<li><p>安装QEMU <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install qemu-user-<span class="type">static</span></span><br><span class="line">sudo update-binfmts --install i386 /usr/bin/qemu-i386-<span class="type">static</span> --magic <span class="string">&#x27;\x7fELF\x01\x01\x01\x03\x00\x00\x00\x00\x00\x00\x00\x00\x03\x00\x03\x00\x01\x00\x00\x00&#x27;</span> --mask <span class="string">&#x27;\xff\xff\xff\xff\xff\xff\xff\xfc\xff\xff\xff\xff\xff\xff\xff\xff\xf8\xff\xff\xff\xff\xff\xff\xff&#x27;</span></span><br></pre></td></tr></table></figure> 这些命令将通过执行<code>qemu-i386-static</code>来激活i386支持，并将配置文件放入<code>/var/lib/binfmts/</code>中，以供将来重新激活。</p></li>
+<li><p>每次重新启动WSL并需要i386支持时，都需要重新激活此功能 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service binfmt-support start</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<p>问题解决</p>
 
     </div>
 
@@ -430,7 +450,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ubuntu%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.</span> <span class="nav-text">1. Ubuntu常用快捷键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apt%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">2. apt安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85net-tools%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 安装net-tools网络工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ssh"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 安装ssh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#aptitude"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 aptitude</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85gccg"><span class="nav-number">2.4.</span> <span class="nav-text">2.3 安装gcc&#x2F;g++</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85vim"><span class="nav-number">2.5.</span> <span class="nav-text">2.4 安装vim</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85cmake"><span class="nav-number">2.6.</span> <span class="nav-text">2.5 安装Cmake</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BA%BF%E7%A8%8B%E5%BA%93"><span class="nav-number">2.7.</span> <span class="nav-text">2.6 第三方线程库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mysql%E5%AE%89%E8%A3%85"><span class="nav-number">2.8.</span> <span class="nav-text">2.7 MySQL安装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">3. 虚拟机网络问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wsl%E7%9A%84ubuntu%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">4.WSL的ubuntu安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wsl%E4%B8%8B%E7%9A%84ubuntu%E7%9A%84ssh%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">5. wsl下的ubuntu的ssh服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%86%85%E9%80%8F%E8%BD%AF%E4%BB%B6natapp"><span class="nav-number">6.</span> <span class="nav-text">6. 使用内透软件natapp</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#ubuntu%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">1.</span> <span class="nav-text">1. Ubuntu常用快捷键</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apt%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">2. apt安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85net-tools%E7%BD%91%E7%BB%9C%E5%B7%A5%E5%85%B7"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 安装net-tools网络工具</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ssh"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 安装ssh</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#aptitude"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 aptitude</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85gccg"><span class="nav-number">2.4.</span> <span class="nav-text">2.3 安装gcc&#x2F;g++</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85vim"><span class="nav-number">2.5.</span> <span class="nav-text">2.4 安装vim</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85cmake"><span class="nav-number">2.6.</span> <span class="nav-text">2.5 安装Cmake</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BA%BF%E7%A8%8B%E5%BA%93"><span class="nav-number">2.7.</span> <span class="nav-text">2.6 第三方线程库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#mysql%E5%AE%89%E8%A3%85"><span class="nav-number">2.8.</span> <span class="nav-text">2.7 MySQL安装</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">3. 虚拟机网络问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wsl%E7%9A%84ubuntu%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">4.WSL的ubuntu安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wsl%E4%B8%8B%E7%9A%84ubuntu%E7%9A%84ssh%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">5. wsl下的ubuntu的ssh服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%86%85%E9%80%8F%E8%BD%AF%E4%BB%B6natapp"><span class="nav-number">6.</span> <span class="nav-text">6. 使用内透软件natapp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#wsl%E5%87%BA%E7%8E%B0cannot-execute-binary-file-exec-format-error"><span class="nav-number">7.</span> <span class="nav-text">7. WSL出现cannot execute binary file: Exec format error</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -500,12 +520,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">827k</span>
+    <span title="站点总字数">841k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:32</span>
+    <span title="站点阅读时长">12:45</span>
 </div>
 
         
