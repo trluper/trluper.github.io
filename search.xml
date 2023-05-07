@@ -419,7 +419,7 @@
     <url>/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h3 id="c知识面试版_基础">1. C++知识面试版_基础</h3>
 <h4 id="编译过程">1.1 编译过程</h4>
-<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png" width="600"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
+<p><img src="/(面试)C++基础知识/compile.png" width="600"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
 <ul>
 <li><p>预处理：预处理器会扫描源代码文件，根据以“#”开头的预处理指令执行一些文本替换和文件包含操作。例如，预处理器会把所有的#include指令替换为对应的头文件内容，并将定义的宏展开。生成<code>.i</code>文件</p></li>
 <li><p>编译：编译器将经过预处理的源代码文件翻译成汇编代码，这是一种与具体机器体系结构相关的低级代码。生成<code>.s</code>文件</p></li>
@@ -449,7 +449,7 @@
 <li>在<strong>系统中程序执行的时候 栈都是从高地址往低地址增长的&lt;函数参数压栈，一般从右向左压栈</strong>（比如<code>__cdecl</code>函数调用约定）</li>
 <li><code>rip</code>寄存器存储当前执行指令的内存位置，也称为程序计数器pc</li>
 <li><code>rbp</code>寄存器表明当前栈帧的栈底</li>
-<li><code>rsp</code>寄存器表明当前栈帧的栈顶 <img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/registers.png" width="600"></li>
+<li><code>rsp</code>寄存器表明当前栈帧的栈顶 <img src="/(面试)C++基础知识/registers.png" width="600"></li>
 </ul>
 <p><strong>在C/C++中，函数调用的过程通常包括以下步骤：</strong>比如右调用者函数P，被调用函数Q</p>
 <ul>
@@ -459,10 +459,10 @@
 <li><p><strong>第四步</strong>：函数内部处理：被调用函数在执行时，保存需要保存的计数器值，然后将处理函数内部的逻辑，包括局部变量的分配和计算等操作，函数内部的变量通常会被分配在堆栈上。</p></li>
 <li><p><strong>第五步</strong>：返回值：当Q执行完毕后，若有返回值，则会把返回值存放在寄存器<code>%rax</code>处，之后释放自己栈帧，弹出返回地址和压入参数，恢复现场的寄存器值状态，使得程序能够无错误的继续执行下一条指令。</p></li>
 </ul>
-<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/StackofRun.png" width="600"></p>
+<p><img src="/(面试)C++基础知识/StackofRun.png" width="600"></p>
 <p><strong>调用函数具体过程</strong></p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//以此为例</span></span><br><span class="line"><span class="built_in">intFunAdd</span>(intiPara1, intiPara2) &#123;</span><br><span class="line">    intiAdd = <span class="number">7</span>; </span><br><span class="line">    intiResult = iPara1 + iPara2 + iAdd; </span><br><span class="line">    returniResult; </span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> main&#123;</span><br><span class="line">    intiVal1 = <span class="number">5</span>; intiVal2 = <span class="number">6</span>; </span><br><span class="line">    intiRes = <span class="built_in">FunAdd</span>(iVal1, iVal2); </span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;iRes: %dn&quot;</span>, iRes); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/funcCall.png" width="600"></p>
+<p><img src="/(面试)C++基础知识/funcCall.png" width="600"></p>
 <blockquote>
 <p><code>call</code>指令做了哪些事情 答：<code>call</code>指令只是函数调用的一部分指令，它做了一些函数调用的部分控制，并不是全部。<code>call</code>指令做两件事，一是将当前调用函数的下一条指令地址入栈，即保证被调用函数结束后返回能够继续正常执行。二是设置程序计数器PC(<code>%rip</code>)为被调用函数的入口地址，使得能正确跳转该函数执行。 怎么知道返回时栈顶指针恢复到哪呢？ 编译器会计算当前函数需要多少空间，这样通过add指令后恢复</p>
 </blockquote>
@@ -512,7 +512,7 @@
 (c)在所有函数体外定义的是全局量,初始化的存储在.data段内，未初始化的则在.bss段；
 (d)加了static修饰符后不管在哪里都存放在全局区（静态区）；
 (e)在所有函数体外定义的static变量表示在该文件中有效，不能extern到别的文件用；</code></pre>
-<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.png" width="500"></p>
+<p><img src="/(面试)C++基础知识/C++程序内存图.png" width="500"></p>
 <h5 id="各中类型的变量在内存中的位置">1.6.1 各中类型的变量在内存中的位置</h5>
 <ul>
 <li><strong>全局/局部静态变量</strong>：而静态变量的存储位置在程序的全局数据段中，也称为<code>BSS</code>段（<code>Block Started by Symbol</code>）或者<code>Data</code>段。如果被初始化过，则存储在<code>.data</code>段，未初始化则存储在<code>.bss</code>段。<code>BSS</code>段是一段特殊的数据段，它存储所有被初始化为0或者未初始化的静态变量，这些为初始化的变量在程序启动时被自动初始化为0。
@@ -627,7 +627,7 @@
 <li>引用只是数据对象的一个别名，因此对引用做<code>sizeof</code>就是数据对象的大小</li>
 </ul>
 <blockquote>
-<p>引用的底层实现依然是指针，只不过在使用时没有表现出指针表现，而像是个普通变量 扩展： <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">double</span> d=<span class="number">11.2</span>;</span><br><span class="line"><span class="type">int</span> a=d（<span class="number">1</span>）</span><br><span class="line"><span class="type">int</span> &amp;b=d（<span class="number">2</span>）</span><br></pre></td></tr></table></figure> 上面（1）操作合法，隐式的强制转化，向上转换。 上面（2）操作非法。如果合法，这里引用的变量其实是一块临时空间，而临时空间是右值是不能修改的，这种引用的方式本质上其实就是权限的放大，因此编译不能通过 说到隐式强制转化，必须要提到其转换机理；正如下图所示，在发生隐式类型转换的时候，需要将<code>d</code>的值存到一个<code>int</code>类型的临时变量里，然后将这个临时变量的值赋予给<code>a</code>。 <img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/reference.png" width="300"></p>
+<p>引用的底层实现依然是指针，只不过在使用时没有表现出指针表现，而像是个普通变量 扩展： <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">double</span> d=<span class="number">11.2</span>;</span><br><span class="line"><span class="type">int</span> a=d（<span class="number">1</span>）</span><br><span class="line"><span class="type">int</span> &amp;b=d（<span class="number">2</span>）</span><br></pre></td></tr></table></figure> 上面（1）操作合法，隐式的强制转化，向上转换。 上面（2）操作非法。如果合法，这里引用的变量其实是一块临时空间，而临时空间是右值是不能修改的，这种引用的方式本质上其实就是权限的放大，因此编译不能通过 说到隐式强制转化，必须要提到其转换机理；正如下图所示，在发生隐式类型转换的时候，需要将<code>d</code>的值存到一个<code>int</code>类型的临时变量里，然后将这个临时变量的值赋予给<code>a</code>。 <img src="/(面试)C++基础知识/reference.png" width="300"></p>
 </blockquote>
 <h5 id="指针为啥是4字节一定是4字节吗对指针做seziof的结果与什么相关">1.10.2 指针为啥是4字节，一定是4字节吗，对指针做seziof的结果与什么相关</h5>
 <ul>
@@ -677,7 +677,7 @@
 <ul>
 <li>改变指针或引用的类型、</li>
 <li>将指针或引用转换为一个足够长度的整形、</li>
-<li>将整型转换为指针或引用类型。 <img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/cast.png" width="600"></li>
+<li>将整型转换为指针或引用类型。 <img src="/(面试)C++基础知识/cast.png" width="600"></li>
 </ul></li>
 </ul>
 <h4 id="内存泄露问题如何检测解决">1.13 内存泄露问题，如何检测，解决</h4>
@@ -810,9 +810,10 @@
 <h4 id="如何用代码判断大小端存储">1.23 如何用代码判断大小端存储？</h4>
 <ul>
 <li><strong>大端：</strong>指在底位存储数据的高字节。大端也称网络字节序，在网络传输中总是采用大端法来传输的，因此对于小端主机接收到的网络数据，必须完成大小端的转换。</li>
-<li><strong>小端</strong>：指在底位(地址)存储数据的底字节。 <img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/bigorsmall.png" width="700"></li>
+<li><strong>小端</strong>：指在底位(地址)存储数据的底字节。 <img src="/(面试)C++基础知识/bigorsmall.png" width="700"></li>
 </ul>
 <p>那么如何识别本机的是采用哪种方法存储数据呢，可使用一下代码： <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">bigOrSmall</span><span class="params">(<span class="type">char</span> * c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,*c);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a=<span class="number">10</span>;</span><br><span class="line">	<span class="type">char</span>* c=(<span class="type">char</span>*)&amp;a;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;++i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">bigOrSmall</span>(c);</span><br><span class="line">		c+=<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 输出 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="number">10</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span></span><br></pre></td></tr></table></figure> 很明显可知本机是采用小端法</p>
+<h4 id="section">1.24</h4>
 <h3 id="c知识面试版_面向对象">2. C++知识面试版_面向对象</h3>
 <h4 id="c中的面向对象是什么">2.1 C++中的面向对象是什么</h4>
 <ul>
@@ -869,15 +870,151 @@
 <li>C++的非静态成员函数的第一个默认并且被隐藏的参数是<code>T *const register this</code>。比如我们在<code>Student</code>这个类里声明这样一个函数：<code>int SetName(const char *name)</code>;其实编译器处理的时候会变为 <code>int SetName(Student *const register this, const char *name)</code>;</li>
 </ul>
 <h4 id="为什么要继承继承会有什么问题如何解决">2.4 为什么要继承，继承会有什么问题，如何解决？</h4>
+<p>在面向对象的编程语言中，继承是极其重要的一个特性，这是因为通过继承：</p>
+<ul>
+<li>一是能够通过继承提高代码的复用性。在继承的基础上，子类能够复用父类的代码，并且能够在父类的代码基础上进行重写和功能扩展</li>
+<li>二是继承是实现多态的必要条件之一，没有继承，那么多态的就无法实现，通过继承我们才能实现基类指针指向子类对象，在运行阶段才确定类型。</li>
+</ul>
+<h5 id="菱形继承问题">2.4.1 菱形继承问题</h5>
+<p>继承当中存在菱形继承问题，所谓的菱形继承是指，比如我有基类<code>A</code>，子类<code>B</code>和<code>C</code>都继承于<code>A</code>，并在<code>A</code>的基础上实现一些自己的功能扩展，现在又有一个子类<code>D</code>，子类<code>D</code>为了能够得到B和C当中独有的方法，它要进行多继承，即继承<code>B</code>和<code>C</code>.如下图所示： <img src="/(面试)C++基础知识/lengxing.png" width="700"></p>
+<p>那么这种继承就带来一个问题，由于<code>B</code>和<code>C</code>分别都继承于<code>A</code>，那么D就会重复继承于<code>A</code>，那么<code>D</code>会有来自<code>A</code>的两份拷贝。这不仅会占用不必要的存储空间，也会造成命名冲突。</p>
+<ul>
+<li><strong>虚继承：继承方式前面加上 <code>virtual</code>关键字就是虚继承</strong>。虚继承用于解决多继承条件下的菱形继承问题（浪费存储空间、存在二义性）。 <strong>虚继承的目的是让某个类做出声明，承诺愿意共享它的基类。其中，这个被共享的基类就称为虚基类<code>（Virtual Base Class）</code>，本例中的<code>A</code> 就是一个虚基类</strong></li>
+</ul>
+<p>在C++中就存在虚继承关系的类：</p>
+<p><img src="/(面试)C++基础知识/xujucheng.png" width="700"></p>
+<ul>
+<li><strong>原理：</strong>虚继承底层实现原理与编译器相关，一般通过<strong>虚基类表指针<code>vbptr</code>和虚基类表实现</strong>，每个虚继承的子类都有一个虚基类表指针（占用一个指针的存储空间）和虚基类表（虚基类表在只读数据端内所以不占用类对象的存储空间，）（需要强调的是，虚基类依旧会在子类里面存在拷贝，只是仅仅最多存在一份而已，并不是不在子类里面了）；当虚继承的子类被当做父类继承时，虚基类表指针也会被继承，其指向虚基类表。 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">        虚继承（虚基类） </span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">      </span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>  </span></span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 基类A  </span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">A</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">    <span class="keyword">public</span>:  </span><br><span class="line">        <span class="type">int</span> dataA;  </span><br><span class="line">    &#125;;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">B</span> : <span class="keyword">virtual</span> <span class="keyword">public</span> A  </span><br><span class="line">    &#123;  </span><br><span class="line">    <span class="keyword">public</span>:  </span><br><span class="line">        <span class="type">int</span> dataB;  </span><br><span class="line">    &#125;;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">C</span> : <span class="keyword">virtual</span> <span class="keyword">public</span> A  </span><br><span class="line">    &#123;  </span><br><span class="line">    <span class="keyword">public</span>:  </span><br><span class="line">        <span class="type">int</span> dataC;  </span><br><span class="line">    &#125;;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">D</span> : <span class="keyword">public</span> B, <span class="keyword">public</span> C  </span><br><span class="line">    &#123;  </span><br><span class="line">    <span class="keyword">public</span>:  </span><br><span class="line">        <span class="type">int</span> dataD;  </span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>下面展示了无虚继承和有虚继承时的情况类D的内存消耗：(32位系统指针大小为4)24字节，注意有两个虚基类表指针。当<code>A</code>的数据多时，能够节省内存空间 <img src="/(面试)C++基础知识/vbptr.png" width="600"></p>
+<blockquote>
+<p>虚函数表指针、虚函数表和虚基类表指针、虚基类表是两码事，不要搞混，但它们的实现原理是相似的。 因此，对拥有虚函数表指针和虚基类表指针的类其会多消耗两个指针空间的大小</p>
+</blockquote>
 <h4 id="什么是纯虚函数作用">2.5 什么是纯虚函数，作用</h4>
+<p>纯虚函数是指在类中用<code>virtual</code>修饰，并用<code>=0</code>做声明的函数，即形式像<code>virtual coid func()=0;</code>的函数，这种虚函数就是纯虚函数。</p>
+<p>纯虚函数指示该函数并未定义，那么就指定该类不能被实例化，话句话说就是有纯虚函数的的类就是抽象基类，抽象基类不能实例化对象，必须通过继承重所有的纯虚函数后才能实例化对象。因此由纯虚函数构成的类只起到声明作用，告诉编程人员后续的继承工作要实现这些纯虚接口。因此纯虚函数更像是提供了一个模板规范，需要编程者自己实现逻辑功能</p>
 <h4 id="c空类默认函数">2.6 C++空类默认函数</h4>
+<p>在CPP类中存在一些合成的默认行为：</p>
+<ul>
+<li>如果没有显示的定义任何构造函数，也没有声明构造函数是删除的，那么就会合成默认的构造函数，该合成默认构造函数每有参数。</li>
+<li>如果没有实现拷贝构造函数，也没有声明是删除的，那么也会合成默认的拷贝构造函数</li>
+<li>与拷贝构造函数一样，在没有定义自己的拷贝运算符时，编译器会生成一个合成拷贝赋值运算符。</li>
+<li>如果没有显示定义析构函数，编译器会为它定义一个合成析构函数。</li>
+</ul>
+<p>在上面中是类中的一些默认合成的规则，但有时候也会存在合成拷贝赋值运算符会禁止该类型对象的赋值，这就要提到CPP中的<code>三五发法则</code>，三是指<strong>拷贝构造、拷贝赋值和析构</strong>,五是在三的基础上还有<strong>移动构造函数和移动赋值函数</strong></p>
+<p>一般来说，规范的编程中，在CPP的类中不是满足三就是满足五:</p>
+<ul>
+<li>当析构没有时，无法释放，那么其他的构造函数必定都是删除的，即禁止该对象进行拷贝、移动操作</li>
+<li>当有移动时，规范的类必是处于五法则，即5个构造函数都实现，能够拷贝、移动也能释放</li>
+<li>当有拷贝是，不是处于三就是处于五法则</li>
+</ul>
 <h4 id="深拷贝和浅拷贝">2.7 深拷贝和浅拷贝</h4>
+<ul>
+<li><p><strong>浅拷贝</strong>：浅拷贝是指在拷贝的过程中只是做简单的赋值操作，并未开辟新的内存空间。新变量和旧变量都指向的是一个内存区域，这样就会带来一个问题，那就是当多个纤拷贝构造函数，析构时会多次释放同一个分配的内存空间，这是不被编译器所运行的。 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Student</span>(<span class="type">const</span> <span class="type">char</span>* name,<span class="type">int</span> age)&#123;</span><br><span class="line">		pName=(<span class="type">char</span>*)<span class="built_in">malloc</span>(<span class="built_in">strlen</span>(name)+<span class="number">1</span>);</span><br><span class="line">		<span class="built_in">strcpy</span>(pName,name);</span><br><span class="line">		<span class="keyword">this</span>.age=age;</span><br><span class="line">	&#125;</span><br><span class="line">	~<span class="built_in">Student</span>()&#123;</span><br><span class="line">		<span class="keyword">if</span>(name!=<span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">free</span>(pName);</span><br><span class="line">			pName=<span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">char</span>* name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//执行</span></span><br><span class="line"><span class="function">Student <span class="title">s1</span><span class="params">(<span class="string">&quot;小明&quot;</span>，<span class="number">22</span>)</span>；</span></span><br><span class="line"><span class="function">Student <span class="title">s2</span><span class="params">(s1)</span></span>;		<span class="comment">//执行默认拷贝构造函数</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>深拷贝：解决浅拷贝带来的问题就是使用深拷贝，在拷贝过程中申请自己的内存空间，把值存 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//深拷贝</span></span><br><span class="line"><span class="built_in">Student</span>(<span class="type">const</span> Student &amp;stu)</span><br><span class="line">&#123;</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;自己的拷贝构造函数&quot;</span> &lt;&lt; endl;</span><br><span class="line">	<span class="comment">//1.申请空间</span></span><br><span class="line">	pName = (<span class="type">char</span>*)<span class="built_in">malloc</span>(<span class="built_in">strlen</span>(stu.pName) + <span class="number">1</span>);</span><br><span class="line">	<span class="comment">//2.拷贝数据</span></span><br><span class="line">	<span class="built_in">strcpy</span>(pName, stu.pName);</span><br><span class="line">	age = stu.age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p></li>
+</ul>
 <h4 id="封装特征封装整体的目的是">2.8 封装特征，封装整体的目的是</h4>
+<ul>
+<li><p><strong>封装：</strong>每个对象够包含它能进行操作所需的所有信息，这个特性称为封装，因此对象不必依赖其他对象来完成自己的操作。在CPP中涉及封装的三个关键字有<code>pibilc\private\protected</code></p></li>
+<li><strong>封装的目的：</strong>
+<ul>
+<li>(1)封装是对象的一种隐藏技术，其目的是将对象中的属性和方法组织起来。同时隐藏不想暴露的属性和方法及实现细节。</li>
+<li>(2)用户或其它对象不能看到也无法修改其实现。只能通过接口去调用对象的方法，达到互相通信的目的。</li>
+<li>(3)封装的目的在于将设计者与使用者分开。使用者不必知道实现的细节，只需要设计者提供的方法来访问对象。</li>
+</ul></li>
+<li><strong>封装的好处 ：</strong>
+<ul>
+<li>(1)良好的封装能减少耦合。</li>
+<li>(2)类内部的实现可以自由地修改。</li>
+<li>(3)类具有清晰的对外接口。</li>
+</ul></li>
+</ul>
+<h5 id="继承当中的pibilcprivateprotected限定词">2.8.1 继承当中的<code>pibilc\private\protected</code>限定词</h5>
+<p>派生类需要使用类派生列表来指出它是从哪个基类继承而来的，每个基类前面可以有三种访问说明符<code>public、private、protected</code>中的一个。它们不会对基类造成影响，这是限定该继承的子类：</p>
+<ul>
+<li><strong><code>pubulic</code>：子类的封装程度同基类一样</strong></li>
+<li><strong><code>protected</code>：如果基类当中存在<code>public</code>修饰的变量或函数，那么在子类当中会成为<code>protected</code>，<code>protected\private</code>不会改变</strong></li>
+<li><strong><code>private</code>：如果基类当中存在<code>public\proteced</code>修饰的变量或函数，那么在子类当中会成为<code>private</code>，<code>private</code>不会改变</strong></li>
+</ul>
+<p>即继承的三个访问说明符是限制子类的变量和函数，它们的可访问程度是依次递减调整的。</p>
+<h4 id="析构函数调用时机">2.9 析构函数调用时机</h4>
+<ul>
+<li>对象生命周期结束被销毁时</li>
+<li>delete指向对象的指针时，或者delete指向对象的基类类型的指针，而基类析构函数是虚函数</li>
+<li>对象<code>A</code>是对象<code>B</code>的成员，<code>B</code>的析构函数被调用时，对象<code>A</code>的析构函数也会被调用</li>
+</ul>
+<p><strong>什么时候调用析构函数：</strong></p>
+<ul>
+<li>无论何时一个对象被销毁，就会自动调用其析构函数</li>
+<li>变量离开作用域时被销毁</li>
+<li>当一个对象被销毁时，其成员被销毁</li>
+<li>容器被销毁时，其元素被销毁</li>
+<li>对于动态分配对象，当指向它的指针应用delete运算符时被销毁</li>
+<li>对于临时对象，当创建它的完整表达式结束时被销毁</li>
+</ul>
+<h4 id="构造函数和析构函数再有子类情况下子类的构造和析构顺序">2.10 构造函数和析构函数再有子类情况下，子类的构造和析构顺序</h4>
+<ul>
+<li><strong>构造函数</strong>：先执行父类的构造，再执行子类的构造</li>
+<li><strong>析构函数</strong>：先执行子类析构，再执行父类析构</li>
+</ul>
 <h4 id="c的多态机制实现原理虚函数和虚表">2.10 c++的多态机制实现原理（虚函数和虚表）</h4>
+<p>谈到多态，多态的实现主要分为<strong>静态多态和动态多态</strong>，<strong>静态多态主要是重载和模板</strong>，在编译的时候就已经确定；<strong>动态多态是用虚函数机制实现的</strong>，在运行期间动态绑定。</p>
+<ul>
+<li><p><strong>多态：</strong>动态多态是面向对象的一大特性，CPP中多态指的是指针所指向的的类型在编译时候是无法确定的，只有在运行的时候才能确定，执行的是动态绑定的机制，即同一个操作作用于不同的对象，可以有不同的解释，会产生不同的效果，这就是多态。多态的应用场景，举个例子就是一个父类类型的指针指向一个子类对象时候，使用父类的指针去调用子类中重写了的父类中的虚函数的时候，会调用子类重写过后的函数，在父类中声明为加了virtual关键字的函数，在子类中重写时候不需要加virtual也是虚函数。</p></li>
+<li><strong>实现原理：</strong>多态的实现原理依赖于<strong>继承</strong>和<strong>虚函数</strong>。 在有虚函数的类中，类的最开始部分都会维护一个<strong>虚函数表指针<code>vptr</code></strong>，这个指针指向一个虚函数表(该虚函数表存储在只读数据端中），表中放了虚函数的地址（虚函数指针），实际的虚函数在代码段<code>.text</code>中。当子类继承了父类的时候也会继承其虚函数表，当子类重写父类中虚函数时候，会将其继承到的虚函数表中的地址替换为重新写的函数地址。使用了虚函数，会增加访问内存开销，降低效率。 <img src="/(面试)C++基础知识/vptr.png" width="300"></li>
+<li><strong>作用：</strong>
+<ul>
+<li>可以解决项目中的紧耦合问题,提供程序的可扩展性</li>
+<li>应用程序不必为每一个子类的功能调用编写代码，只需要对抽象的父类进行处理，这样能够更好的实现接口重用</li>
+</ul></li>
+<li><strong>条件</strong>：
+<ul>
+<li>有继承</li>
+<li>重写父类的虚函数</li>
+<li>父类指针或引用指向子类对象</li>
+</ul></li>
+</ul>
 <h4 id="重载重写和多态区别实现机制">2.11 重载、重写和多态区别，实现机制。</h4>
+<ul>
+<li><strong>重载</strong>：是指在同一范围定义中的同名成员函数才存在重载关系。主<strong>要特点是函数名相同，参数类型和数目有所不同，不能出现参数个数和类型均相同</strong>。也不能仅仅依靠返回值不同来区分的函数，<strong>说到底就是函数名一样，参数个数或类型不同就是重载，返回值没有要求，可相同也可不同</strong>。重载和函数成员是否是虚函数无关。举个例子： <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">int</span> <span class="title">fun</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">double</span>, <span class="type">double</span>)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">fun</span><span class="params">(<span class="type">char</span>)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>重写</strong>：重写指的是在派生类中覆盖基类中的同名函数，重写就是重写函数体，要<strong>求基类函数必须是虚函数且，在CPP中可用<code>override</code>进行标志该函数是重写函数</strong>
+<ul>
+<li>与基类的虚函数有相同的参数个数</li>
+<li>与基类的虚函数有相同的参数类型</li>
+<li>与基类的虚函数有相同的返回值类型</li>
+</ul></li>
+<li><strong>重载与重写的区别：</strong>
+<ul>
+<li>重写是父类和子类之间的垂直关系，重载是不同函数之间的水平关系</li>
+<li>重写要求参数列表相同，重载则要求参数列表不同，返回值不要求</li>
+<li>重写关系中，调用方法根据对象类型决定，重载根据调用时实参表与形参表的对应关系来选择函数体</li>
+</ul></li>
+<li><strong>隐藏（hide）</strong>：隐藏指的是某些情况下，派生类中的函数屏蔽了基类中的同名函数，包括以下情况：
+<ul>
+<li><p>两个函数参数相同，但是基类函数不是虚函数。<strong>和重写的区别在于基类函数是否是虚函数</strong> <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//父类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;A中的fun函数&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//子类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> : <span class="keyword">public</span> A&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//隐藏父类的fun函数</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;B中的fun函数&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>两个函数参数不同，无论基类函数是不是虚函数，都会被隐藏。和重载的区别在于两个函数不在同一个类中。举个例子： <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//父类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">int</span> a)</span></span>&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;A中的fun函数&quot;</span> &lt;&lt; endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//子类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> : <span class="keyword">public</span> A&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">//隐藏父类的fun函数</span></span><br><span class="line">   <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fun</span><span class="params">(<span class="type">char</span>* a)</span></span>&#123;</span><br><span class="line">	   cout &lt;&lt; <span class="string">&quot;A中的fun函数&quot;</span> &lt;&lt; endl;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p></li>
+</ul></li>
+</ul>
 <h4 id="构造函数能不能是虚函数什么函数为建议为虚函数什么函数不能为虚">2.12 构造函数能不能是虚函数（什么函数为建议为虚函数，什么函数不能为虚）</h4>
+<p>我们知道，<strong>每个有虚函数的类都有属于自己的虚函数表<code>vtbl</code>，虚函数表在编译器构建好。当我们的派生类重写了虚函数，那么在虚表中就会替换掉父类的虚函数指针为子类的虚函数指针。当我们创建一个对象时，会在对象的内存模型中有自己的指向虚表的指针<code>vtpr</code>，对象通过虚表才知道调用的是哪一版本的虚函数</strong> <img src="/(面试)C++基础知识/vtpr.png" width="500"></p>
+<p>如果构造函数是虚函数,那么也会如上面的机制一样在虚表有一个指向自己构造函数版本的虚函数指针。现在有两个类<code>A</code>和<code>B</code>,<code>B</code>是<code>A</code>的派生类，在构造<code>B</code>的对象的时候发现继承于<code>A</code>的部分要先构造，它就要求调用<code>A</code>的构造函数，但是这些构造函数已经是虚函数了，而虚表指针必须是在构造一个对象的时候分配了内存才能得到，而你正在调用构造函数，<strong>这就陷入了一个矛盾的处境：你要用虚表指针<code>vtpr</code>去调用构造函数，而虚表指针<code>vtpr</code>只有当年调用构造申请了内存后才能得到，这形成了一个死结。</strong></p>
+<blockquote>
+<p><strong>附加：<code>vptr</code>的初始化工作早于构造函数中的初始化列表</strong></p>
+</blockquote>
+<h5 id="什么函数建议为虚函数什么函数不能为虚">2.12.1 什么函数建议为虚函数，什么函数不能为虚</h5>
+<ul>
+<li>析构函数我们都会在有继承的时候定义为虚函数，这是因为这样在动态晚绑定的时候才能准确的知道是析构哪个类的对象，调用哪个子类的析构函数去释放内存。</li>
+<li>构造函数不能为虚函数、普通非成员函数不能为虚函数、内联<code>inline</code>函数蹦年为虚函数、静态成员函数不能为虚函数，友元函数不能为虚函数</li>
+</ul>
 <h4 id="为什么拷贝构造函数的参数要为引用">2.13 为什么拷贝构造函数的参数要为引用</h4>
+<p><strong>因为在函数调用中，非引用类型的的参数要进行拷贝初始化；函数返回一个非引用类型，调用方的返回结果也是一个拷贝，所以拷贝函数此时被用来初始化非引用类型的数据。如果拷贝构造函数的参数不是引用类型都是类型形参，为获得它的实参，那么它自身就会无限的调用自身的死循环</strong>。P（442）</p>
 <h4 id="inline能不能是虚函友元函数呢">2.14 inline能不能是虚函、友元函数呢</h4>
+<p><strong>不能！</strong>，这是因为</p>
+<ul>
+<li>内联函数的存在是为了省掉函数调用时的开销，它会在编译的时候进行展开，二虚函数的实现是为了多态进行运行时的晚绑定。即内联函数就是为了在代码中直接展开，减少函数调用花费的代价，虚函数是为了在继承后进行晚绑定，在运行时对象能够准确的执行自己的动作，这是不可能统一的。（再说了，inline函数在编译时被展开，虚函数在运行时才能动态的邦定函数）</li>
+<li>因为友元函数（友元类）是不能被继承的（没有传递性）、是单向的，对于没有继承这一特性的函数来说没有虚函数这一种说法。</li>
+<li>普通函数（非成员函数）只能被<code>overload</code>，不能被<code>override</code>，声明为虚函数也没有什么意思，因此编译器会在编译时邦定函数。</li>
+</ul>
 <h4 id="什么是静态联编和动态联编">2.15 什么是静态联编和动态联编</h4>
 <ul>
 <li><strong>静态联编：</strong>编译器会根据函数调用的对象类型,在编译阶段就确定函数的调用地址，这就是静态联编（早绑定）</li>
@@ -886,6 +1023,17 @@
 <li><p>2.父类转换成子类（向下转换）：编译器认为指针的寻址范围扩大了，不安全</p></li>
 </ul>
 <h4 id="说一下初始化列表">2.16 说一下初始化列表</h4>
+<ul>
+<li><strong>初始化列表</strong>：冒号和花括号之间的部分。其负责为新创建的对象的一个或几个数据成员进行初始化。列表是是类内置成员的名字，其()括号内就为初始值（注意不是赋值而是初始化）。</li>
+<li><strong>注意：列表对成员变量的初始化是按其类内声明顺序初始化，而不是列表顺序</strong>。</li>
+<li><strong>使用初始化列表是直接初始化,因此具有更高的效率，而在函数体内是先初始化再赋值。存在效率的差异，如果是类对象，那么效率更低</strong></li>
+<li>构造函数的初始值列表解决了初始值必不可少的三种情况：
+<ul>
+<li>常量成员，因为常量只能初始化不能赋值，所以必须放在初始化列表里面</li>
+<li>引用类型，引用必须在定义的时候初始化，并且不能重新赋值，所以也要写在初始化列表里面 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//情况1\2</span></span><br><span class="line">Class  Test&#123;</span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">		<span class="built_in">Test</span>(<span class="type">int</span> ii);	<span class="comment">//构造函数</span></span><br><span class="line">	<span class="keyword">private</span>:</span><br><span class="line">		<span class="type">int</span> i;</span><br><span class="line">		<span class="type">const</span> <span class="type">int</span> ci;		<span class="comment">//未被初始化</span></span><br><span class="line">		<span class="type">int</span> &amp;ri;			<span class="comment">//未被初始化</span></span><br><span class="line">		<span class="type">const</span> <span class="type">int</span> cr=<span class="number">10</span>;	<span class="comment">//已类内初始化</span></span><br><span class="line">&#125;;</span><br><span class="line">Test:<span class="built_in">Test</span>(<span class="type">int</span> ii)&#123;</span><br><span class="line">	i=ii;</span><br><span class="line">	ci=ii;		<span class="comment">//错误，不能给const赋值</span></span><br><span class="line">	ri=i;			<span class="comment">//错误，引用必须创建时被初始化</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>没有默认构造函数的类类型，因为使用初始化列表可以不必调用默认构造函数来初始化。<strong>进入构造函数后，<code>test</code>就会首先被默认初始化然后赋值</strong>，但是Test类没有默认的构造函数从而出现错误，所以初始化只能放在列表中。 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span></span><br><span class="line">&#123;	<span class="comment">//无默认构造函数</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">Test</span> (<span class="type">int</span>, <span class="type">int</span>, <span class="type">int</span>)&#123;</span><br><span class="line">        cout &lt;&lt;<span class="string">&quot;Test&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line">    <span class="type">int</span> z;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Mytest</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Mytest</span>():<span class="built_in">test</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)&#123;       <span class="comment">//初始化ok</span></span><br><span class="line">        <span class="comment">//test(Test(1,2,3));//error: no match for call to &#x27;Test()&#x27;</span></span><br><span class="line">        <span class="comment">//test=Test(12,3,4);//error: no matching function for call to &#x27;Test::Test()&#x27;</span></span><br><span class="line">        <span class="comment">//test(1,2,3);//error: no match for call to &#x27;Test()&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Test test; <span class="comment">//声明</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
 <h4 id="c和c的区别">2.17 C++和C的区别</h4>
 <p>C++虽然是由C产生出来的，但是具有很多不同点：</p>
 <ul>
@@ -896,6 +1044,25 @@
 <li>在C++中，除了值和指针之外，新增了引用。引用型变量是其他变量的一个别名，我们可以认为他们只是名字不相同，其他都是相同的。</li>
 <li>在C++中为了防止内存泄露，引入了三大智能指针模板类；为了类型安全，出来继续使用C当风格的强制类型转换以外，还引入了四中强制类型转换<code>const_cast、static_cast、dynamic_cast和reinterpret_cast</code></li>
 <li>C++还增加了一些关键子如<code>auto、using、namespace</code>等</li>
+</ul>
+<h4 id="friend友元类和友元函数">2.18 friend友元类和友元函数</h4>
+<p>在类中，我们通过封装修饰符<code>private/protected</code>修饰相应的成员变量和函数，告诉编译器这些变量和函数不能被外部访问，<strong>但是，在某些情况，我们又希望这些变量和函数对特定的某个类或函数是可访问的，这时候就用到了友元函数和友元类。</strong></p>
+<ul>
+<li>通过在类中声明<code>friend class xxx</code>告诉编译器，<code>xxx</code>类是该类的友类，可以访问任一类中的变量，它的形式就好像这个<code>xxx</code>类在该类中一样</li>
+<li>通过在类声明<code>friend [returntype] funcName(args);</code>，告诉编译器<code>funcName</code>是友元函数</li>
+</ul>
+<p>因此对于友元其特性是：</p>
+<ul>
+<li><strong>能访问私有成员</strong></li>
+<li>破坏封装性</li>
+<li><strong>友元关系不可传递</strong></li>
+<li><strong>友元关系的单向性</strong></li>
+<li>友元声明的形式及数量不受限</li>
+</ul>
+<h4 id="模板类和类模板">2.19 模板类和类模板</h4>
+<ul>
+<li><p><strong>模板类</strong>：在编写中用<code>template</code>修饰，明白模板类他不是一个类，而是一个模板，只有实例化后的模板类才能是类。未实例化的模板类，编译器是无法知道其大小的，所以会略过编译。只有在实例化后，才会编译，在编译时会检查一些与模板无关的错误。同时，因为我们的编译器无法给为实例化的模板编译，如果把模板的声明放置<code>.h</code>，把实现发在<code>.cpp</code>文件，会发生链接错误，因为链接起找不到相应模板的实现，因为模板没有被实例化，当然也就找不到它的二进制文件。</p></li>
+<li><p><strong>类模板</strong>：类模板就是实例化后的模板类，通过传入任意符合要求的类型，最后实例化成一个具体的类。</p></li>
 </ul>
 <h3 id="c知识面试版_stl容器">3. C++知识面试版_STL容器</h3>
 <h4 id="vector为什么会迭代器失效">3.1 vector为什么会迭代器失效？</h4>
@@ -14499,6 +14666,49 @@ z_k=w^T_k+b_k
       <tags>
         <tag>面试</tag>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深入理解计算机系统——优化程序性能</title>
+    <url>/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/</url>
+    <content><![CDATA[<h3 id="导读">1 导读</h3>
+<p>程序优化涉及的范围实在是太广了，几乎每个层面都可以进行优化，比如撰写<编译器友好型>以及<缓存友好型>的程序，针对不同的目标硬件平台还可能进行特定的优化，等等，优化的难点在于你需要对系统有充分理解，当然了在你做优化之前<strong>首先要保证原始程序功能正确（并且有回归测试）</strong>，否则一切都是徒劳。</缓存友好型></编译器友好型></p>
+<blockquote>
+<p>文章来源<a href="https://fengmuzi2003.gitbook.io/csapp3e/di-5-zhang-cheng-xu-de-you-hua">CSAPP重点解读</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>深入理解计算机系统</category>
+      </categories>
+      <tags>
+        <tag>深入理解计算机系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深入理解计算机系统-优化程序性能</title>
+    <url>/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/</url>
+    <content><![CDATA[<h3 id="导读">1 导读</h3>
+<p>程序优化涉及的范围实在是太广了，几乎每个层面都可以进行优化，比如撰写<编译器友好型>以及<缓存友好型>的程序，针对不同的目标硬件平台还可能进行特定的优化，等等，优化的难点在于你需要对系统有充分理解，当然了在你做优化之前<strong>首先要保证原始程序功能正确（并且有回归测试）</strong>，否则一切都是徒劳。</缓存友好型></编译器友好型></p>
+<blockquote>
+<p>首先需要理解，哪些因素会影响程序的性能 <img src="/深入理解计算机系统-优化程序性能/influence.png" width="700"></p>
+</blockquote>
+<h3 id="优化思想">2 优化思想</h3>
+<ul>
+<li>不要在循环做重复的操作，即可在循环外的准备操作就不要在循环内使用</li>
+<li>位运算&lt;加减&lt;乘&lt;除</li>
+<li>优化存取操作，尽量少从内存取数据，在循环中能够从寄存器取就从寄存器取</li>
+<li>从以上方面优化程序的书写结构</li>
+</ul>
+<p><img src="/深入理解计算机系统-优化程序性能/op.png" width="700"> <img src="/深入理解计算机系统-优化程序性能/CPU.png" width="700"></p>
+<blockquote>
+<p>文章来源<a href="https://fengmuzi2003.gitbook.io/csapp3e/di-5-zhang-cheng-xu-de-you-hua">CSAPP重点解读</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>深入理解计算机系统</category>
+      </categories>
+      <tags>
+        <tag>深入理解计算机系统</tag>
       </tags>
   </entry>
 </search>
