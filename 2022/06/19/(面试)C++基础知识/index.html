@@ -43,7 +43,7 @@
 <meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/vptr.png">
 <meta property="og:image" content="http://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/vtpr.png">
 <meta property="article:published_time" content="2022-06-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-05-07T08:13:19.280Z">
+<meta property="article:modified_time" content="2023-05-07T11:57:08.098Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -244,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-07 16:13:19" itemprop="dateModified" datetime="2023-05-07T16:13:19+08:00">2023-05-07</time>
+                <time title="修改时间：2023-05-07 19:57:08" itemprop="dateModified" datetime="2023-05-07T19:57:08+08:00">2023-05-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -290,7 +290,7 @@
       
         <h3 id="c知识面试版_基础">1. C++知识面试版_基础</h3>
 <h4 id="编译过程">1.1 编译过程</h4>
-<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png" width="600"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png" width="700"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
 <ul>
 <li><p>预处理：预处理器会扫描源代码文件，根据以“#”开头的预处理指令执行一些文本替换和文件包含操作。例如，预处理器会把所有的#include指令替换为对应的头文件内容，并将定义的宏展开。生成<code>.i</code>文件</p></li>
 <li><p>编译：编译器将经过预处理的源代码文件翻译成汇编代码，这是一种与具体机器体系结构相关的低级代码。生成<code>.s</code>文件</p></li>
@@ -383,7 +383,7 @@
 (c)在所有函数体外定义的是全局量,初始化的存储在.data段内，未初始化的则在.bss段；
 (d)加了static修饰符后不管在哪里都存放在全局区（静态区）；
 (e)在所有函数体外定义的static变量表示在该文件中有效，不能extern到别的文件用；</code></pre>
-<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.png" width="500"></p>
+<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/C++程序内存图.png" width="700"></p>
 <h5 id="各中类型的变量在内存中的位置">1.6.1 各中类型的变量在内存中的位置</h5>
 <ul>
 <li><strong>全局/局部静态变量</strong>：而静态变量的存储位置在程序的全局数据段中，也称为<code>BSS</code>段（<code>Block Started by Symbol</code>）或者<code>Data</code>段。如果被初始化过，则存储在<code>.data</code>段，未初始化则存储在<code>.bss</code>段。<code>BSS</code>段是一段特殊的数据段，它存储所有被初始化为0或者未初始化的静态变量，这些为初始化的变量在程序启动时被自动初始化为0。
@@ -757,7 +757,7 @@
 <ul>
 <li><strong>原理：</strong>虚继承底层实现原理与编译器相关，一般通过<strong>虚基类表指针<code>vbptr</code>和虚基类表实现</strong>，每个虚继承的子类都有一个虚基类表指针（占用一个指针的存储空间）和虚基类表（虚基类表在只读数据端内所以不占用类对象的存储空间，）（需要强调的是，虚基类依旧会在子类里面存在拷贝，只是仅仅最多存在一份而已，并不是不在子类里面了）；当虚继承的子类被当做父类继承时，虚基类表指针也会被继承，其指向虚基类表。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">        虚继承（虚基类） </span></span><br><span class="line"><span class="comment">    */</span>  </span><br><span class="line">      </span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>  </span></span><br><span class="line">      </span><br><span class="line">    <span class="comment">// 基类A  </span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">A</span>  </span><br><span class="line">    &#123;  </span><br><span class="line">    <span class="keyword">public</span>:  </span><br><span class="line">        <span class="type">int</span> dataA;  </span><br><span class="line">    &#125;;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">B</span> : <span class="keyword">virtual</span> <span class="keyword">public</span> A  </span><br><span class="line">    &#123;  </span><br><span class="line">    <span class="keyword">public</span>:  </span><br><span class="line">        <span class="type">int</span> dataB;  </span><br><span class="line">    &#125;;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">C</span> : <span class="keyword">virtual</span> <span class="keyword">public</span> A  </span><br><span class="line">    &#123;  </span><br><span class="line">    <span class="keyword">public</span>:  </span><br><span class="line">        <span class="type">int</span> dataC;  </span><br><span class="line">    &#125;;  </span><br><span class="line">      </span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">D</span> : <span class="keyword">public</span> B, <span class="keyword">public</span> C  </span><br><span class="line">    &#123;  </span><br><span class="line">    <span class="keyword">public</span>:  </span><br><span class="line">        <span class="type">int</span> dataD;  </span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>下面展示了无虚继承和有虚继承时的情况类D的内存消耗：(32位系统指针大小为4)24字节，注意有两个虚基类表指针。当<code>A</code>的数据多时，能够节省内存空间 <img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/vbptr.png" width="600"></p>
+<p>下面展示了无虚继承和有虚继承时的情况类D的内存消耗：(32位系统指针大小为4)24字节，注意有两个虚基类表指针。当<code>A</code>的数据多时，能够节省内存空间 <img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/vbptr.png" width="700"></p>
 <blockquote>
 <p>虚函数表指针、虚函数表和虚基类表指针、虚基类表是两码事，不要搞混，但它们的实现原理是相似的。 因此，对拥有虚函数表指针和虚基类表指针的类其会多消耗两个指针空间的大小</p>
 </blockquote>
@@ -1115,12 +1115,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">850k</span>
+    <span title="站点总字数">857k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">12:52</span>
+    <span title="站点阅读时长">12:59</span>
 </div>
 
         
