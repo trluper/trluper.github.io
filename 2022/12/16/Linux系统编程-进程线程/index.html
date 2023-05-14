@@ -19,72 +19,72 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"trluper.gitee.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="1 进程概念 1.1 进程和线程的区别  进程：程序是存放在存储介质上的一个可执行文件，而进程是程序执行的过程。进程的状态是变化的，其包括进程的创建、调度和消亡。程序是静态的，进程是动态的。是CPU分配资源的最小单位 线程：线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。线程是CPU调度的最小单位">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux系统编程_进程">
-<meta property="og:url" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:url" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 进程概念 1.1 进程和线程的区别  进程：程序是存放在存储介质上的一个可执行文件，而进程是程序执行的过程。进程的状态是变化的，其包括进程的创建、调度和消亡。程序是静态的，进程是动态的。是CPU分配资源的最小单位 线程：线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。线程是CPU调度的最小单位">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/memory.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/parallel.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/concurrency.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/process.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/ps.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/status_ps.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/top.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getpid.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getppid.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getpgid.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/fork.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/relations.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/writecopy.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/runson.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/malloc.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/exit.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/wait.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/waitpid.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/exec.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/IPC.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/pipe.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/fpathconf.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/mkfifo.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/system%20v%20ipc.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/ipcs.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/POSIX.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/onetoone.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sharedmemory.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/location.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/map.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/filemmap.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/cross.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/mmap.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signal.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/kill.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/alarm.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/setitimer.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signalset.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/operateset.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigprocmask.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signalhunter.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/func_signal.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigaction.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigas.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/gprocess.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/hui.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/huihua.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/setsid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/memory.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/parallel.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/concurrency.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/process.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/ps.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/status_ps.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/top.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getpid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getppid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getpgid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/fork.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/relations.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/writecopy.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/runson.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/malloc.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/exit.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/wait.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/waitpid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/exec.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/IPC.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/pipe.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/fpathconf.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/mkfifo.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/system%20v%20ipc.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/ipcs.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/POSIX.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/onetoone.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sharedmemory.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/location.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/map.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/filemmap.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/cross.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/mmap.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signal.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/kill.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/alarm.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/setitimer.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signalset.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/operateset.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigprocmask.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signalhunter.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/func_signal.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigaction.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigas.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/gprocess.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/hui.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/huihua.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/setsid.png">
 <meta property="article:published_time" content="2022-12-16T07:20:41.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:07:33.184Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Linux coding">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/memory.png">
+<meta name="twitter:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/memory.png">
 
-<link rel="canonical" href="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">
+<link rel="canonical" href="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">
 
 
 <script id="page-configurations">
@@ -249,7 +249,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1048,12 +1048,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">861k</span>
+    <span title="站点总字数">867k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13:03</span>
+    <span title="站点阅读时长">13:08</span>
 </div>
 
         

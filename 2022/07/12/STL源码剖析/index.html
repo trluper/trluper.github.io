@@ -19,34 +19,34 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"trluper.gitee.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="1.STL概述 1.1 六大组件  容器：各种数据结构,如vector、list、deque、set、map等,用来存放数据 算法：各种常用的算法（冒泡，排序）,如sort、find、copy、for_each、search、erase 迭代器：扮演了容器与算法之间的胶合剂，是所谓的泛型指针 仿函数：行为类似函数，可作为算法的某种策略 适配器：一种用来修饰容器或者仿函数或迭代器接口的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="STL源码剖析">
-<meta property="og:url" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/index.html">
+<meta property="og:url" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/index.html">
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1.STL概述 1.1 六大组件  容器：各种数据结构,如vector、list、deque、set、map等,用来存放数据 算法：各种常用的算法（冒泡，排序）,如sort、find、copy、for_each、search、erase 迭代器：扮演了容器与算法之间的胶合剂，是所谓的泛型指针 仿函数：行为类似函数，可作为算法的某种策略 适配器：一种用来修饰容器或者仿函数或迭代器接口的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/memorypool.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/iterator.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/deque.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/dequemap.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/dequeiterator.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/heapSort.gif">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/priorityqueue.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/rbtreeiterator.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/hashtablelist.png">
-<meta property="og:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/quickSort.gif">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/memorypool.png">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/iterator.png">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/deque.png">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/dequemap.png">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/dequeiterator.png">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/heapSort.gif">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/priorityqueue.png">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/rbtreeiterator.png">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/hashtablelist.png">
+<meta property="og:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/quickSort.gif">
 <meta property="article:published_time" content="2022-07-12T14:15:12.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:02:44.605Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="STL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/memorypool.png">
+<meta name="twitter:image" content="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/memorypool.png">
 
-<link rel="canonical" href="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
+<link rel="canonical" href="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
 
 
 <script id="page-configurations">
@@ -211,7 +211,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://trluper.gitee.io/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/07/12/STL%E6%BA%90%E7%A0%81%E5%89%96%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1193,12 +1193,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">861k</span>
+    <span title="站点总字数">867k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13:03</span>
+    <span title="站点阅读时长">13:08</span>
 </div>
 
         
