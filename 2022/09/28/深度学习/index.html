@@ -19,33 +19,33 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"trluper.gitee.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="1.深度学习简述 为了学习一种好的表示，需要构建具有一定“深度”的模型，并通过学习算法来让模型自动学习出好的特征表示（从底层特征，到中层特征，再到高层特征），从而最终提升预测模型的准确率．所谓“深度”是指原始数据进行非线性特征转换的次数  深度学习是将原始的数据特征通过多步的特征转换得到一种特征表示，并进一步输入到预测函数得到最终结果．和“浅层学习”不同，深度学习需要解决的关键问题是贡献度分配">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习">
-<meta property="og:url" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:url" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1.深度学习简述 为了学习一种好的表示，需要构建具有一定“深度”的模型，并通过学习算法来让模型自动学习出好的特征表示（从底层特征，到中层特征，再到高层特征），从而最终提升预测模型的准确率．所谓“深度”是指原始数据进行非线性特征转换的次数  深度学习是将原始的数据特征通过多步的特征转换得到一种特征表示，并进一步输入到预测函数得到最终结果．和“浅层学习”不同，深度学习需要解决的关键问题是贡献度分配">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DL.png">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Neuron.png">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/sigmoid.png">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Relu.png">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/swish.png">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/neuralStructure.png">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Convolution.png">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/featureMap.png">
-<meta property="og:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/poolinglayer.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DL.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Neuron.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/sigmoid.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Relu.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/swish.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/neuralStructure.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Convolution.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/featureMap.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/poolinglayer.png">
 <meta property="article:published_time" content="2022-09-28T12:22:08.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:05:23.743Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深度学习算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DL.png">
+<meta name="twitter:image" content="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DL.png">
 
-<link rel="canonical" href="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+<link rel="canonical" href="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
 
 
 <script id="page-configurations">
@@ -210,7 +210,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+    <link itemprop="mainEntityOfPage" href="https://trluper.gitee.io/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">

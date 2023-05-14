@@ -19,13 +19,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"trluper.gitee.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="1 condition_variable：同步 上面的互斥锁只是在共享数据处执行保护操作，但是数据的同步，即线程对数据的操作的先后次序并不确定，当我们还想对线程同步时，必须采取一定的同步操作。条件变量是达到这个目的方法。 C++标准库对条件变量有两套实现：  std::condition_variable和 std::condition_variable_any 。这两个实现都包含在&amp;lt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++并发编程(三):同步">
-<meta property="og:url" content="http://example.com/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%89-%E5%90%8C%E6%AD%A5/index.html">
+<meta property="og:url" content="https://trluper.gitee.io/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%89-%E5%90%8C%E6%AD%A5/index.html">
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 condition_variable：同步 上面的互斥锁只是在共享数据处执行保护操作，但是数据的同步，即线程对数据的操作的先后次序并不确定，当我们还想对线程同步时，必须采取一定的同步操作。条件变量是达到这个目的方法。 C++标准库对条件变量有两套实现：  std::condition_variable和 std::condition_variable_any 。这两个实现都包含在&amp;lt">
 <meta property="og:locale" content="zh_CN">
@@ -35,7 +35,7 @@
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%89-%E5%90%8C%E6%AD%A5/">
+<link rel="canonical" href="https://trluper.gitee.io/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%89-%E5%90%8C%E6%AD%A5/">
 
 
 <script id="page-configurations">
@@ -200,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%89-%E5%90%8C%E6%AD%A5/">
+    <link itemprop="mainEntityOfPage" href="https://trluper.gitee.io/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%89-%E5%90%8C%E6%AD%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">

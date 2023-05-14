@@ -19,44 +19,44 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"trluper.gitee.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="1.基本概念 这里我们只对一些概念做简单介绍，让第一次接触的读者有一个大概的映像。后续会进行详细的讲述 ##### 1.1 操作系统的核心-内核 操作系统是指完整的软件包，它包括了用来管理和分配计算机资源的核心层软件，以及附带所有标准软件工具，诸如命令行解释器、图形用户界面、文件操作工具和文件编辑器等。其中最为重要的是其核心层软件——内核： 内核：内核执行的主要任务是进程调度、内存管理、提供系">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux系统编程_基础函数">
-<meta property="og:url" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/index.html">
+<meta property="og:url" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/index.html">
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1.基本概念 这里我们只对一些概念做简单介绍，让第一次接触的读者有一个大概的映像。后续会进行详细的讲述 ##### 1.1 操作系统的核心-内核 操作系统是指完整的软件包，它包括了用来管理和分配计算机资源的核心层软件，以及附带所有标准软件工具，诸如命令行解释器、图形用户界面、文件操作工具和文件编辑器等。其中最为重要的是其核心层软件——内核： 内核：内核执行的主要任务是进程调度、内存管理、提供系">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/system.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/root.jpg">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/linuxFile.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/libraryfunctions.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/statopen.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/mode.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/lseek.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/stat.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/statbuf.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/filetype.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/dup.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/dup2.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/fcntl.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/getcwd.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/chdir.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/opendir.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/closedir.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/readdir.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/dirent.png">
-<meta property="og:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/d_type.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/system.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/root.jpg">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/linuxFile.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/libraryfunctions.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/statopen.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/mode.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/lseek.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/stat.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/statbuf.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/filetype.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/dup.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/dup2.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/fcntl.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/getcwd.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/chdir.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/opendir.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/closedir.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/readdir.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/dirent.png">
+<meta property="og:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/d_type.png">
 <meta property="article:published_time" content="2022-12-16T07:20:24.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:07:19.194Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Linux coding">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/system.png">
+<meta name="twitter:image" content="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/system.png">
 
-<link rel="canonical" href="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/">
+<link rel="canonical" href="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/">
 
 
 <script id="page-configurations">
@@ -221,7 +221,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/">
+    <link itemprop="mainEntityOfPage" href="https://trluper.gitee.io/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
