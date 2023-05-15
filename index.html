@@ -217,10 +217,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-05-09 14:47:11 / 修改时间：15:05:19" itemprop="dateCreated datePublished" datetime="2023-05-09T14:47:11+08:00">2023-05-09</time>
+              <time title="创建时间：2023-05-09 14:47:11" itemprop="dateCreated datePublished" datetime="2023-05-09T14:47:11+08:00">2023-05-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-14 21:23:47" itemprop="dateModified" datetime="2023-05-14T21:23:47+08:00">2023-05-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -269,16 +275,14 @@
 <li>类似的，用主存来缓存磁盘文件中最近被使用的磁盘块。</li>
 <li>局部性原理在应用程序中也有应用，入<code>Web</code>浏览器将最近引用的文档放在本地磁盘上，利用的就是时间局部性。</li>
 </ul>
-<h3 id="磁盘调度算法">2 磁盘调度算法</h3>
-<p>读写一个传统磁盘块的时间的影响因素有：</p>
-<ul>
-<li><strong>旋转时间</strong>（主轴转动盘面，使得磁头移动到适当的扇区上）</li>
-<li><strong>寻道时间</strong>（制动手臂移动，使得磁头移动到适当的磁道上）</li>
-<li><strong>实际的数据传输时间</strong></li>
-</ul>
-<p>其中，寻道时间最长，因此磁盘调度的主要目标是使磁盘的平均寻道时间最短。</p>
-<h3 id="section">3</h3>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -328,7 +332,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-14 21:09:11" itemprop="dateModified" datetime="2023-05-14T21:09:11+08:00">2023-05-14</time>
+                <time title="修改时间：2023-05-14 21:24:55" itemprop="dateModified" datetime="2023-05-14T21:24:55+08:00">2023-05-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -381,112 +385,14 @@
 <li><p><strong>理解链接器帮助你理解其他重要系统概念</strong>。链接器产生的可执行目标文件咋子系统功能中扮演关键角色，如<strong>加载运行程序、虚拟内存、分页、内存映射。</strong></p></li>
 <li><p><strong>理解链接器将使你能够利用共享库</strong>。共享库和动态链接在现代操作系统日益重要，掌握如何动态链接原理极其重要。</p></li>
 </ul>
-<h4 id="编译器驱动程序">1.2 编译器驱动程序</h4>
-<p>我们将以下面两个源程序<code>main.c</code>和<code>sum.c</code>作为例子，来说明静态链接器<code>ld</code>的工作流程。 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/main.png" width="700"></p>
-<ul>
-<li><p>首先我们在<code>shell</code>输入以下命令来调用GCC驱动程序（下面分析以<code>main.c</code>为例）： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o prog main.c sum.c</span><br></pre></td></tr></table></figure> 下图概括了从源文件翻译成可执行文件时的行为（若想看这些步骤，加入<code>-v</code>): <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/staticlink.png" width="600"></p>
-<ul>
-<li>输入上述语句后，会先执行C预处理器<code>cpp</code>，它将源程序<code>main.c</code>经过宏替换、头文件展开后生成一个中间文件<code>main.i</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpp [other arguments] main.c /tmp/main.i</span><br></pre></td></tr></table></figure></li>
-<li>接下来，运行C编译器<code>ccl</code>，它将预处理后的文件<code>main.i</code>进行编译，生成汇编文件<code>main.s</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ccl /tmp/main.i -Og [other arguments] -o /tmp/main.s</span><br></pre></td></tr></table></figure></li>
-<li>接着，驱动程序运行汇编器<code>as</code>，它将汇编文件翻译成一个可重定位目标文件<code>mian.o</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">as [other arguments] -o tmp.main.o /tmp/main.s</span><br></pre></td></tr></table></figure></li>
-<li>同样方式得到<code>sum.o</code>。最后，运行链接器程序<code>ld</code>，将<code>main.o</code>和<code>sum.o</code>以及一些比如的系统目标文件组合起来，创建一个可执行文件<code>prog</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld -o prog [system object files <span class="keyword">and</span> args] /tmp/main.o tmp/sum.o</span><br></pre></td></tr></table></figure></li>
-</ul></li>
-</ul>
-<h4 id="静态链接器">1.3 静态链接器</h4>
-<p>静态链接器以一组可重定位目标文件和命令行参数作为输入，生成一个完全链接、可加载运行的可执行文件作为输出。<strong>输入的可重定位目标文件由各种代码和数据节组成</strong>。在构造可执行文件中，链接器主要完成两个任务：</p>
-<ul>
-<li><strong>符号解析：</strong>每个符号对应一个函数、一个全局变量和一个静态变量，符号解析的目的就是将每个符号引用正好和一个符号定义关联起来。那么当然在不同目标文件中引用的同一全局变量或函数，链接器需要将其解析为同一个实体。**</li>
-<li><strong>重定位</strong>：地址重定位指的是在链接过程中，需要将不同目标文件中的函数和变量的地址进行调整，使得它们在最终的可执行文件中能够正确地链接到一起。生成可执行文件</li>
-</ul>
-<p><strong>目标文件有三种形式：</strong></p>
-<ul>
-<li><strong>可重定位目标文件</strong>：包含二进制代码和数据，其形式可以在编译时与其他可重定位目标文件合并起来，创建一个可执行文件</li>
-<li><strong>可执行文件</strong>：包含二进制代码和数据，其形式可直接复制到内存并执行</li>
-<li><strong>共享目标文件</strong>：一种特殊类型的可重定位目标文件，可以在加载或者运行时被动态地加载进内存并链接。</li>
-</ul>
-<h4 id="可重定位目标文件">1.4 可重定位目标文件</h4>
-<p><img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/ELF.png" width="500"></p>
-<ul>
-<li><p><code>.text</code>段存放编译好的机器代码。查看机器代码，需要使用反汇编工具objdump将机器代码转换成汇编代码。由于4字节对齐，<code>.text</code>大小为0x51，实际占用空间大小为0x54。</p></li>
-<li><p><strong><code>.data</code>段用来存放已初始化的全局变量和静态变量的值。</strong></p></li>
-<li><p><strong><code>.bss</code>段存放未初始化的全局变量和静态变量，需要注意的是，被初始化为<code>0</code>的全局变量和静态变量也存放在bss中</strong>。<code>bss</code>可理解为<code>Better Save Space</code>。局部变量既不在<code>data</code>中，也不在<code>bss</code>中。实际上<code>bss</code>段并不占据实际的空间，它仅仅是只是一个占位符。</p></li>
-<li><p><strong><code>.rodata</code>段存放只读数据。例如 <code>printf</code>中的格式串和<code>switch</code>语句中的跳转表以及<code>const全局变量</code>就是存放在这个区域。</strong></p></li>
-<li><p><code>.symtab</code>符号表，它存放在程序中定义和引用的函数和全局变量的信息</p></li>
-</ul>
-<h4 id="符号和符号表">1.5 符号和符号表</h4>
-<p>每个可重定位模块<code>m</code>都有一个符号表、它包含<code>m</code>定义的和引用的符号的信息，在链接器上下文，有三种不同符号：</p>
-<ul>
-<li>全局符号：由模块<code>m</code>定义并能被其他模块引用的去安居符号，其对应于非静态的函数和全局变量</li>
-<li>外部符号：由其他模块定义被被模块<code>m</code>引用的去安居符号，称为外部符号，对应于其他模块定义的非静态C函数和全局变量</li>
-<li>局部符号：只被模块m定义和引用的局部符号，对应于static函数、static全局变量。这些符号在模块<code>m</code>中可见，单不能被其他模块引用</li>
-</ul>
-<blockquote>
-<p>局部变量由堆栈管理，因此链接器是不知道局部变量的，因此在链接器对变量的是对函数和全局变量</p>
-</blockquote>
-<p><strong>链接器解析多重定义的全局符号：</strong>对于全局符号，若有多个模块定义同名的全局符号的情况，会发生什么？</p>
-<p>首先编译器向汇编器输出每个全局符号，这些符号或是强或是弱，汇编器把这个信息隐含的编码在可重定位文件的符号表里。函数和以初始化的全局变量是强符号，未初始化的全局变量是弱符号，Linux有以下规则：</p>
-<ul>
-<li>不允许有多个同名的强符号</li>
-<li>如果有一个强符号和多个弱符号同名，那么选择强符号</li>
-<li>如果有多个弱符号同名，那么可任选一个</li>
-</ul>
-<h4 id="静态库">1.6 静态库</h4>
-<ul>
-<li><strong>静态库：将所有编译好的目标模块(<code>sum.o\mul.o</code>等待)打包成一个单独的文件，这个文件就是静态库</strong>。它可以用作链接器的输入，当链接器构造一个可执行文件时，它只复制静态库里被应用程序引用的目标模块。一般都以<code>libxxx.a</code>作为静态库标识</li>
-</ul>
-<p><strong>制作静态库</strong>：</p>
-<ul>
-<li>首先编译处<code>xxx.o文件</code></li>
-<li>接着利用AR工具打包<code>**.o</code>文件 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c add.c mul.c</span><br><span class="line">ar rcs libmath.a add.o mul.o</span><br></pre></td></tr></table></figure></li>
-<li>使用第三方静态库 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o main main.c -L. -lmath</span><br></pre></td></tr></table></figure> 示例如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ar rcs libmath.a mul.o sum.o Math.h</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ls</span><br><span class="line">Math.h  libmath.a  main.cpp  mul.cpp  mul.o  sum.cpp  sum.o</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -o main main.cpp -L. -lmath</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ls</span><br><span class="line">Math.h  libmath.a  main  main.cpp  mul.cpp  mul.o  sum.cpp  sum.o</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ./main</span><br><span class="line"><span class="number">5</span> <span class="number">6</span></span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ rm -rf Math.h</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ rm -rf main</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -o main main.cpp -L. -lmath</span><br><span class="line">main.cpp:<span class="number">2</span>:<span class="number">10</span>: fatal error: Math.h: No such file <span class="keyword">or</span> directory</span><br><span class="line"> <span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Math.h&quot;</span></span></span><br><span class="line">          ^~~~~~~~</span><br><span class="line">compilation terminated.</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ls</span><br><span class="line">libmath.a  main.cpp  mul.cpp  mul.o  sum.cpp  sum.o</span><br></pre></td></tr></table></figure></li>
-<li>从上面可看出，<code>-L.</code>表示从当前目录找该库；</li>
-<li>删除<code>Math.h</code>后出错，说明头文件寻找并不会在<code>libmath.a</code>寻找</li>
-</ul>
-<h5 id="链接器如何使用静态库来解析引用">1.6.1 链接器如何使用静态库来解析引用</h5>
-<p>在符号解析阶段，<strong>链接器会安装我们键入的命令行顺序从左到右来扫描可重定位文件和静态库存档文件</strong>，在这次扫描中，链接器会维护三个集合<code>E、U、D</code></p>
-<ul>
-<li><code>E</code>：可重定位目标文件集合，在这个集合的可重定位目标文件最后会被合并起来形成可执行文件</li>
-<li><code>U</code>：一个未解析符号（即应用了但尚未定义的符号）集合，这个集合扫描完成后，应该是空的，否则会程序终止，出现解析错误</li>
-<li><code>D</code>：已经定义的符号集合</li>
-</ul>
-<p>初始化上述的三个集合都为空，执行命令行：</p>
-<ul>
-<li>对于命令的每个文件<code>f</code>，链接器先判断是一个目标文件还是库存档文件。
-<ul>
-<li><strong>若<code>f</code>是目标文件，则会把<code>f</code>添加到<code>E</code>，并且修改<code>U\D</code>来来反映<code>f</code>中的符号定义和引用</strong></li>
-<li><strong>若<code>f</code>是静态库存档文件，那么链接器就尝试匹配<code>U</code>中未解析的符号和由存档文件成员定义的符号。如果某个存档文件成员<code>m</code>，定义了一个符号解析<code>U</code>中的一个引用，那么九将<code>m</code>加入到<code>E</code>中。对存档文件的成员目标文件依次进行这个过程，直到<code>U\D</code>都不再变化。此时，任何不在<code>E</code>中的成员目标文件被丢弃。</strong></li>
-</ul></li>
-<li>如果当前链接器完成命令行上输入文件的扫描后，<code>U</code>非空，链接器就会输出一个错误终止，否则，就是要E中目标文件构建合并可执行文件。</li>
-</ul>
-<p><strong>下面就是一个典型因命令行顺序不对，造成的解析引用错误（未定义引用错误）</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -L. -lmath -o main main.cpp</span><br><span class="line">/tmp/ccZFaj3X.o: In function `main<span class="number">&#x27;</span>:</span><br><span class="line">main.cpp:(.text+<span class="number">0x13</span>): undefined reference to `<span class="built_in">Sum</span>(<span class="type">int</span>, <span class="type">int</span>)&#x27;</span><br><span class="line">main.cpp:(.text+<span class="number">0x25</span>): undefined reference to `<span class="built_in">Mul</span>(<span class="type">int</span>, <span class="type">int</span>)&#x27;</span><br><span class="line">collect2: error: ld returned <span class="number">1</span> exit status</span><br></pre></td></tr></table></figure> 正确的命令行：</p>
-<ul>
-<li><strong>一般生成的可执行文件在最前面</strong></li>
-<li><strong>接着是各种源文件</strong></li>
-<li><strong>把库文件放在最后</strong></li>
-</ul>
-<h4 id="共享库">1.7 共享库</h4>
-<p>链接器将目标文件和库文件的代码和数据全部拷贝到可执行文件中，形成一个独立的、包含所有必需代码和数据的可执行文件。在运行时，可执行文件不需要依赖外部库文件，所有需要的代码和数据都已经包含在可执行文件中，因此</p>
-<ul>
-<li><strong>优点：对运行环境的依赖性较小，具有较好的兼容性,方便分发和部署，不需要外部依赖</strong></li>
-<li><strong>缺点：生成的程序比较大，需要更多的系统资源，在装入内存时会消耗更多的时间；库函数有了更新，必须重新编译应用程序</strong></li>
-</ul>
-<p>共享库是为了解决静态缺点的一种方法，<strong>共享库也是目标模块，在运行或加载时，可以加载带任意的内存地址，并行一个内存中的程序链接起来，这个过程称为动态链接</strong>。动态库在Linux当中未<code>libxxx.so</code>，在windows中称为<code>ddl</code></p>
-<p><img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/share.png" width="500"></p>
-<ul>
-<li>首先，在任何给定的文件系统中，对于一个库只有一个<code>so</code>文件，所有引用该库的可执行目标文件共享这个<code>.so</code>文件的代码和数据，而不是像静态库的内容那样复制和嵌入带引用它们的可执行文件中</li>
-<li>其次，在内存中，一个共享库的<code>.txt</code>节的一个副本可以被不同正在运行的进程共享。</li>
-</ul>
-<p>构造共享库 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fpic -o libmath.so sum.cpp mul.cpp</span><br></pre></td></tr></table></figure> 使用： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -shared -fpic -o libmath.so sum.cpp mul.cpp</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ls</span><br><span class="line">Math.h  libmath.a  libmath.so  main.cpp  mul.cpp  sum.cpp</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -o prog2 main.cpp ./libmath.so</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ./prog2</span><br></pre></td></tr></table></figure> <strong>动态库链接虽然克服了静态库的缺点，但是由于其依赖动态库，不能独立运行，因此动态库依赖版本问题严重。如果库文件版本或路径发生变化，可能会导致程序无法正常运行</strong></p>
-<h4 id="从应用程序中加载和链接共享库">1.8 从应用程序中加载和链接共享库</h4>
-<p>上面介绍的静态库和动态库链接都是在编译时链接到应用的，<strong>然而有些程序还可能在它运行时进行动态链接器加载和链接某个共享库，这就是运行时加载和链接。</strong></p>
-<ul>
-<li><strong>分发软件</strong>：微软应用常常利用共享库来分发软件更新。</li>
-<li><strong>高性能Web服务器</strong>：许多We服务器生成动态内容，比如个性化的Web页面、和广告标语。</li>
-</ul>
-<p>上面的思路是将每个生成动态内容的函数打包在共享库，当一个Web浏览器的请求到达时，服务器动态加载和链接适当的函数，然后直接调用它。</p>
-<p>Linux系统为动态链接器提供了一个简单的接口，允许应用程序在运行时加载和链接共享库 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlopen.png" width="700"> <code>dlsym</code>的函数参数是一个指向前面已经打开的共享库句柄和一个symbol，如果该名字存在，返回呼号地址，否则返回<code>NULL</code> <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlSYM.png" width="700"> <code>dlclose</code>果没有其他人在使用这个共享库，就关闭 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlclose.png" width="700"> <code>dlerror</code>打印调用三个函数最近的错误 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlerror.png" width="700"></p>
-<p>示例： <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example.png" width="700"> <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example2.png" width="700"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
