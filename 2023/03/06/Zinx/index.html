@@ -22,13 +22,15 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="1 Zinx框架 Zinx框架是一个简单的只有IO功能的框架，这个简单框架处理多IO、包括但不限于Socket IO。开发者能够通过重写抽象类方法在IO的各个处理阶段取实现自己的动作。框架也提供了多个具体类来覆盖包装常用的函数，包括TCP SOCKET、STDIN、STDOUT，这样你可以更加方便调用这些函数。 1.1 快速开始  调用ZinxKernel::ZinxKernelInit(">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Zinx">
 <meta property="og:url" content="https://example.com/2023/03/06/Zinx/index.html">
 <meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1 Zinx框架 Zinx框架是一个简单的只有IO功能的框架，这个简单框架处理多IO、包括但不限于Socket IO。开发者能够通过重写抽象类方法在IO的各个处理阶段取实现自己的动作。框架也提供了多个具体类来覆盖包装常用的函数，包括TCP SOCKET、STDIN、STDOUT，这样你可以更加方便调用这些函数。 1.1 快速开始  调用ZinxKernel::ZinxKernelInit(">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-03-06T11:25:57.000Z">
-<meta property="article:modified_time" content="2023-03-06T11:26:39.874Z">
+<meta property="article:modified_time" content="2023-05-29T07:56:19.503Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Zinx">
 <meta name="twitter:card" content="summary">
@@ -220,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-03-06 19:25:57 / 修改时间：19:26:39" itemprop="dateCreated datePublished" datetime="2023-03-06T19:25:57+08:00">2023-03-06</time>
+              <time title="创建时间：2023-03-06 19:25:57" itemprop="dateCreated datePublished" datetime="2023-03-06T19:25:57+08:00">2023-03-06</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-29 15:56:19" itemprop="dateModified" datetime="2023-05-29T15:56:19+08:00">2023-05-29</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -247,7 +255,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>391</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -266,7 +274,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h3 id="zinx框架">1 Zinx框架</h3>
+<p><code>Zinx</code>框架是一个简单的只有IO功能的框架，这个简单框架处理多IO、包括但不限于<code>Socket IO</code>。开发者能够通过重写抽象类方法在IO的各个处理阶段取实现自己的动作。框架也提供了多个具体类来覆盖包装常用的函数，包括<code>TCP SOCKET、STDIN、STDOUT</code>，这样你可以更加方便调用这些函数。</p>
+<h4 id="快速开始">1.1 快速开始</h4>
+<ul>
+<li>调用<code>ZinxKernel::ZinxKernelInit()</code>去初始化<strong>IO-调度内核</strong>。</li>
+<li>创建一个继承于<code>AZinxHandler</code>的类，并且重写<code>InternelHandle</code>。在这个函数中，你可以添加你自己的代码，它们将被用来处理来自<strong>输入通道处理字节流</strong>。当你重写了这个函数，你会使用一个宏<code>GET_REF2DATA</code>，他会将数据从 <code>IZinxMsg</code>转换为字节流信息<code>BytesMsg</code>。</li>
+<li>创建一个或多个继承<code>Ichannel</code>的类，并覆盖定义特定数据通道的操作所需的函数(一般为文件描述)。</li>
+</ul>
 
     </div>
 
@@ -371,6 +386,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#zinx%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">1 Zinx框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 快速开始</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -393,13 +409,13 @@
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -440,12 +456,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">872k</span>
+    <span title="站点总字数">921k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">13:13</span>
+    <span title="站点阅读时长">13:57</span>
 </div>
 
         
