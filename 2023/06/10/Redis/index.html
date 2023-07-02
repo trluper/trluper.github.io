@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="准备工作 安装Redis  在ubuntu安装Redis 1sudo apt-get install redis-server Redis服务器连接默认没有密码，可通过更改&#x2F;etc&#x2F;redis&#x2F;redis.conf内的# requirepass foobared来指定登录密码,比如去掉注释后更改密码为requirepass 123456，指定了密码为123456 123sudo vim &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis">
+<meta property="og:url" content="https://example.com/2023/06/10/Redis/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="准备工作 安装Redis  在ubuntu安装Redis 1sudo apt-get install redis-server Redis服务器连接默认没有密码，可通过更改&#x2F;etc&#x2F;redis&#x2F;redis.conf内的# requirepass foobared来指定登录密码,比如去掉注释后更改密码为requirepass 123456，指定了密码为123456 123sudo vim &#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/2023/06/10/Redis/sds.png">
+<meta property="og:image" content="https://example.com/2023/06/10/Redis/dict.png">
+<meta property="og:image" content="https://example.com/2023/06/10/Redis/five.png">
+<meta property="article:published_time" content="2023-06-10T04:18:36.000Z">
+<meta property="article:modified_time" content="2023-06-14T09:30:27.364Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2023/06/10/Redis/sds.png">
+
+<link rel="canonical" href="https://example.com/2023/06/10/Redis/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Redis | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/06/10/Redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redis
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-10 12:18:36" itemprop="dateCreated datePublished" datetime="2023-06-10T12:18:36+08:00">2023-06-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-14 17:30:27" itemprop="dateModified" datetime="2023-06-14T17:30:27+08:00">2023-06-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="准备工作">准备工作</h2>
+<h3 id="安装redis">安装Redis</h3>
+<ol type="1">
+<li>在ubuntu安装Redis <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install redis-server</span><br></pre></td></tr></table></figure></li>
+<li>Redis服务器连接默认没有密码，可通过更改<code>/etc/redis/redis.conf</code>内的<code># requirepass foobared</code>来指定登录密码,比如去掉注释后更改密码为<code>requirepass 123456</code>，指定了密码为<code>123456</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/redis/redis.conf</span><br><span class="line">#修改密码</span><br><span class="line">requirepass <span class="number">123456</span></span><br></pre></td></tr></table></figure></li>
+<li>运行远程连接redis，redis默认只允许本地连接，你可以通过注释掉<code>bind 127.0.0.1::1</code>来支持远程登录。</li>
+</ol>
+<span id="more"></span>
+<h3 id="redis服务器启动关闭和重启">Redis服务器启动、关闭和重启</h3>
+<p><strong>每次启动虚拟机，Redis服务器和MySQL服务器都不会启动，因此你需要手动启动</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#Redis</span><br><span class="line">/etc/init.d/redis-server start</span><br><span class="line">/etc/init.d/redis-server stop</span><br><span class="line">/etc/init.d/redis-server restart</span><br><span class="line">#Mysql</span><br><span class="line">service mysql start</span><br><span class="line">service mysql stop</span><br><span class="line">service mysql restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="进入数据库">进入数据库</h3>
+<p>进入数据库说白了就是通过客户端进入，无论时Mysql还是Redis下载server时都会自带本地的客户端 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">redis-cli</span><br><span class="line">#由于更改了密码登录，因此需要先密码认证</span><br><span class="line">auth <span class="number">123456</span></span><br><span class="line"><span class="meta">#ping测试是否连接，ping后会返回pong</span></span><br><span class="line">ping</span><br></pre></td></tr></table></figure></p>
+<h3 id="配置数据库">配置数据库</h3>
+<p><strong>当然，上面的密码配置和远程连接也可以在你进入数据库后配置,当然前提时你知道redis的语法</strong>。Redis 的配置文件位于 Redis 安装目录下，文件名为 <code>/etc/redis/redis.conf</code>。你可以通过<code>CONFIG</code>命令查看或设置配置项。</p>
+<ol type="1">
+<li><code>CONFIG get *</code>获取当前的配置 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CONFIG get *</span><br></pre></td></tr></table></figure></li>
+<li><code>CONFIG set</code>命令来修改配置 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CONFIG set requirepass <span class="string">&quot;123456&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>其各配置含义见<a target="_blank" rel="noopener" href="https://www.runoob.com/redis/redis-conf.html">Redis菜鸟教程</a></p>
+<h2 id="redis的特点">Redis的特点</h2>
+<p>Redis是一个键值（key-value）存储系统，即键值对非关系型数据库。Redis作为一个高性能的键值数据库，不仅在很大程度上弥补了memcached这类键值存储的不足，而且在部分场合下可以对关系数据库如Mysql起到很好的补充作用。Redis提供了Python、Ruby、Erlang、PHP客户端，使用很方便。</p>
+<p>Redis支持存储的值（value）类型包<strong>括string(字符串)、list(链表)、set(集合)和zset(有序集合)</strong>。这些数据类型都支持<code>push/pop、add/remove</code>以及<code>取交集、并集和差集</code>等丰富的操作，而且这些操作都是<strong>原子性的</strong>。在此基础上，Redis支持<strong>各种不同方式的排序</strong>。与memcached一样，<strong>为了保证效率，Redis中的数据都是缓存在内存中的，它会周期性地把更新的数据写入磁盘，或者把修改操作写入追加的记录文件；此外，Redis还实现了主从（master-slave）同步</strong></p>
+<h3 id="redis-与其他-key---value-缓存产品有以下三个特点">Redis 与其他 key - value 缓存产品有以下三个特点</h3>
+<ul>
+<li><strong>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</strong></li>
+<li><strong>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</strong></li>
+<li><strong>Redis支持数据的备份，即master-slave模式的数据备份。</strong></li>
+</ul>
+<h3 id="redis-优势">Redis 优势</h3>
+<ul>
+<li>性能极高 。Redis能读的速度是110000次/s,写的速度是81000次/s 。</li>
+<li><strong>丰富的数据类型</strong>。 Redis支持二进制案例的 <code>Strings, Lists, Hashes, Sets 及 Ordered Sets</code>数据类型操作。</li>
+<li><strong>操作的原子性。 Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。</strong></li>
+<li><strong>丰富的特性。Redis还支持 publish/subscribe, 通知, key 过期等等特性</strong></li>
+</ul>
+<h3 id="redis与其他key-value存储有什么不同">Redis与其他key-value存储有什么不同？</h3>
+<ul>
+<li><p><strong>Redis有着更为复杂的数据结构并且提供对他们的原子性操作，这是一个不同于其他数据库的进化路径</strong>。Redis的数据类型都是基于基本数据结构的同时对程序员透明，无需进行额外的抽象。</p></li>
+<li><p><strong>Redis运行在内存中但是可以持久化到磁盘，所以在对不同数据集进行高速读写时需要权衡内存，因为数据量不能大于硬件内存</strong>。在内存数据库方面的另一个优点是，相比在磁盘上相同的复杂的数据结构，在内存中操作起来非常简单，这样Redis可以做很多内部复杂性很强的事情。同时，在磁盘格式方面他们是紧凑的以追加的方式产生的，因为他们并不需要进行随机访问。</p></li>
+</ul>
+<h2 id="redis的数据结构">Redis的数据结构</h2>
+<p>Redis的低层数据结构：简单动态字符串、双向链表、字典、跳跃表、压缩列表等</p>
+<h3 id="简单动态字符串">简单动态字符串</h3>
+<p>Redis不是直接使用C语言传统的字符串表示，而是构建了一种名为<strong>简单动态字符串</strong>。说白了就是一结构体，里面提供<code>char[]、len、free</code>: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">sdshdr</span>&#123;</span><br><span class="line">	<span class="comment">//记录buf数组中已经使用的字节数量</span></span><br><span class="line">	<span class="type">int</span> len;</span><br><span class="line">	<span class="comment">//记录buf数组中未使用的字节数量</span></span><br><span class="line">	<span class="type">int</span> free;</span><br><span class="line">	<span class="comment">//字节数组，保存字符串</span></span><br><span class="line">	<span class="type">char</span> buf[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure> 依据上面的结构，SDS与C的字符数组相比，有： <img src="/2023/06/10/Redis/sds.png" width="700"> 因为SDS即使读取到空字符也能通过<code>len</code>识别是不是读到字符串末尾，因此时二进制安全的。对Redis来说，字符串：</p>
+<ul>
+<li><p>string 是 redis 最基本的类型，你可以理解成与 Memcached 一模一样的类型，一个 key 对应一个 value。</p></li>
+<li><p>string 类型是二进制安全的。意思是 redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象。</p></li>
+<li><p>string 类型是 Redis 最基本的数据类型，string 类型的值最大能存储 512MB。</p></li>
+</ul>
+<p>举例： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET trluper <span class="string">&quot;加油努力&quot;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="链表">链表</h3>
+<p><strong>当有一个列表键包含了数量比较多的元素，又或者列表中包含的元素都是比较长的额字符串时，Redis就会使用链表作为列表建的底层实现</strong>。</p>
+<p><strong>节点层结构：</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">listNode</span> &#123;</span><br><span class="line">    <span class="comment">// 前置节点</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">listNode</span> *prev;</span><br><span class="line">    <span class="comment">// 后置节点</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">listNode</span> *next;</span><br><span class="line">    <span class="comment">// 节点的值</span></span><br><span class="line">    <span class="type">void</span> *value;</span><br><span class="line">&#125; listNode;</span><br></pre></td></tr></table></figure></p>
+<p><strong>list底层结构</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">list</span> &#123;</span><br><span class="line">    <span class="comment">// 表头节点</span></span><br><span class="line">    listNode *head;</span><br><span class="line">    <span class="comment">// 表尾节点</span></span><br><span class="line">    listNode *tail;</span><br><span class="line">    <span class="comment">// 链表所包含的节点数量</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> len;</span><br><span class="line">    <span class="comment">// 节点值复制函数</span></span><br><span class="line">    <span class="type">void</span> *(*dup)(<span class="type">void</span> *ptr);</span><br><span class="line">    <span class="comment">// 节点值是放过函数</span></span><br><span class="line">    <span class="built_in">void</span> (*free)(<span class="type">void</span> *ptr);</span><br><span class="line">    <span class="comment">// 节点值对比函数</span></span><br><span class="line">    <span class="type">int</span>（*match）(<span class="type">void</span> *ptr, <span class="type">void</span> *key);</span><br><span class="line">&#125; list;</span><br></pre></td></tr></table></figure> <strong>特性</strong></p>
+<ul>
+<li>链表被广泛用于实现Redis的各种功能，比如列表建、发布与订阅、慢查询、监视器等。</li>
+<li>每个链表节点由一个listNode结构来表示，每个节点都有一个指向前置节点和后置节点的指针，所以Redis的链表实现是双端链表。</li>
+<li>每个链表使用一个list结构表示，这个结构带有表头节点指针、表尾节点指针，以及链表长度等信息。</li>
+<li>因为链表表头的前置节点和表尾节点的后置节点都指向NULL，所以Redis的链表实现是无环链表。</li>
+<li>通过为链表设置不同的类型特定函数，Redis的链表可以用于保存各种不同类型的值</li>
+</ul>
+<h3 id="字典">字典</h3>
+<p>Redis hash 是一个<code>string</code>类型的 <code>field（字段）</code> 和 <code>value（值）</code> 的映射表，hash 特别适合用于存储对象。Redis 中每个 hash 可以存储$ 2^{32} - 1 $键值对（40多亿）。</p>
+<p><strong>Redis的字典使用哈希表作为低层实现，一个哈希表里面可以有多个哈希表节点，而每个哈希表节点就保存了字典的一个键值对。</strong></p>
+<p><strong>字典结构</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">dict</span>&#123;</span><br><span class="line">	<span class="comment">//类型特定函数</span></span><br><span class="line">	dictType *type;</span><br><span class="line">	<span class="comment">//私有数据</span></span><br><span class="line">	<span class="type">void</span>* privdata;</span><br><span class="line">	<span class="comment">//哈希表</span></span><br><span class="line">	dictht ht[<span class="number">2</span>];</span><br><span class="line">	<span class="comment">//rehash索引</span></span><br><span class="line">	<span class="comment">//当rehash不能存在时，值为-1</span></span><br><span class="line">	<span class="type">int</span> trehashidx;</span><br><span class="line">&#125;dict;</span><br></pre></td></tr></table></figure></p>
+<p><strong>哈希表结构</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">dictht</span>&#123;</span><br><span class="line">	<span class="comment">//哈希表数组</span></span><br><span class="line">	dictEntry **table;</span><br><span class="line">	<span class="comment">//哈希表大小</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> size;</span><br><span class="line">	<span class="comment">//哈希表大小掩码，用于计算索引值</span></span><br><span class="line">	usigned <span class="type">long</span> sizemask;</span><br><span class="line">	<span class="comment">//该哈希表已有节点数量</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">long</span> used;</span><br><span class="line">&#125;dictht;</span><br></pre></td></tr></table></figure></p>
+<p><strong>哈希节点结构</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">dictEntry</span>&#123;</span><br><span class="line">	<span class="comment">//键</span></span><br><span class="line">	<span class="type">void</span>* key;</span><br><span class="line">	<span class="keyword">union</span>&#123;</span><br><span class="line">		<span class="type">void</span>* value;</span><br><span class="line">		uint64_ tu64;</span><br><span class="line">		int64_ ts64;</span><br><span class="line">	&#125;v;</span><br><span class="line">	<span class="comment">//指向下一个哈希表节点</span></span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">dictEntry</span> *next;</span><br><span class="line">&#125;dictEntry;</span><br></pre></td></tr></table></figure> 通过上面的两个结构定义就可以知道，字典以哈希表作为低层实现，首先通过传入的<code>key</code>值通过哈希计算，计算这个键值对应在<code>table</code>的哪个下标索引位置，之后采用<strong>链地址法</strong>来解决哈希冲突。 <img src="/2023/06/10/Redis/dict.png" width="700"></p>
+<p><strong>特性</strong></p>
+<ul>
+<li>字典被广泛用于实现Redis的各种功能，其中包括数据库和哈希键。</li>
+<li>Redis中的字典使用哈希表作为底层结构实现，每个字典带有两个哈希表，一个平时使用，另一个仅在进行rehash时使用。</li>
+<li>Redis使用MurmurHash2算法来计算键的哈希值。</li>
+<li>哈希表使用链地址法来解决键冲突</li>
+</ul>
+<h3 id="跳表">跳表</h3>
+<p>Redis使用跳跃表作为有序集合键的底层实现之一，如果一个有序集合的元素数量较多，或是比较长的字符串时，Redis就会使用跳表来作为有序集合键的底层实现。Redis跳表由<code>zskiplistNode</code>定义节点，<code>zskiplist</code>保存跳跃表节点的信息 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> &#123;</span><br><span class="line">    <span class="comment">// 后退指针</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> *backward;</span><br><span class="line">    <span class="comment">// 分值 权重</span></span><br><span class="line">    <span class="type">double</span> score;</span><br><span class="line">    <span class="comment">// 成员对象</span></span><br><span class="line">    robj *obj;</span><br><span class="line">    <span class="comment">// 层</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">zskiplistLevel</span> &#123;</span><br><span class="line">        <span class="comment">// 前进指针</span></span><br><span class="line">        <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> *forward;</span><br><span class="line">        <span class="comment">// 跨度</span></span><br><span class="line">        <span class="type">unsigned</span> <span class="type">int</span> span;</span><br><span class="line">    &#125; leval[];</span><br><span class="line">&#125; zskiplistNode;</span><br></pre></td></tr></table></figure> zskipList <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">zskiplist</span> &#123;</span><br><span class="line">    <span class="comment">// 表头节点和表尾节点</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">zskiplistNode</span> *header, *tail;</span><br><span class="line">    <span class="comment">// 表中节点的数量</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> length;</span><br><span class="line">    <span class="comment">// 表中层数最大的节点的层数</span></span><br><span class="line">    <span class="type">int</span> leval;</span><br><span class="line">&#125; zskiplist;</span><br></pre></td></tr></table></figure> <strong>特性</strong></p>
+<ul>
+<li>跳跃表是有序集合的底层实现之一</li>
+<li>Redis的跳跃表实现由zskiplist和zskiplistNode两个结构组成，其中zskiplist用于保存跳跃表信息（比如表头节点、表尾节点、长度），而zskiplistNode则用于表示跳跃表节点</li>
+<li>每个跳跃表节点的层高都是1至32之间的随机数</li>
+<li>在同一个跳跃表中，多个节点可以包含相同的分值，但每个节点的成员对象必须是唯一的。</li>
+<li>跳跃表中的节点按照分值大小进行排序，当分值相同时，节点按照成员对象的大小进行排序。</li>
+<li>跳表是一种实现起来很简单，单层多指针的链表，它查找效率很高，堪比优化过的二叉平衡树，且比平衡树的实现。</li>
+</ul>
+<h3 id="压缩列表">压缩列表</h3>
+<p>压缩列表(ziplist)是列表键和哈希键的底层实现之一。当一个列表键只包含少量列表项，并且每个列表项要么就是小整数值，要么就是长度比较短的字符串，那么Redis就会使用压缩列表来做列表键的底层实现。</p>
+<p><strong>特性</strong></p>
+<ul>
+<li>看他的名字就能看出来，是为了节省内存造的列表结构</li>
+</ul>
+<h2 id="对象redis的数据类型">对象（Redis的数据类型）</h2>
+<p>在上面，我们提到了Redis的五种数据结构，有<strong>简单动态字符串（SDS)、双端链表、字典、压缩列表、整数集合</strong>等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个<strong>对象系统，</strong>这个系统包含五种数据类型<strong><code>string（字符串）</code>，<code>hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)</code></strong>。Redis对象系统还实现了基于引用计数的内存回收和对象共享机制，从而节省内存和及时回收内存。 <img src="/2023/06/10/Redis/five.png" width="700"></p>
+<p>Redis支持五种数据类型：<code>string（字符串）</code>，<code>hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)</code>。</p>
+<h3 id="字符串">字符串</h3>
+<p>底层实现（内部编码）有3种:int（8字节长整型）/embstr（小于等于39字节字符串）/raw（大于39个字节字符串）</p>
+<h4 id="常用命令">常用命令</h4>
+<p>依据该数据结构，Redis支持字符串对象，Redis中每个对象的命令都有细微差异，因此你使用哪种命令就是使用哪个数据结构对象存储值。下列是字符串对象的命令：</p>
+<table style="width:86%;">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>序号</th>
+<th>命令及描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>SET key value</code>：设置指定 key 的值。</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>GET key</code>获取指定 key 的值。</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>GETRANGE key start end</code>返回 key 中字符串值的子字符</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><code>GETSET key value</code>将给定 key 的值设为 value ，并返回 key 的旧值(old value)。</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><code>GETBIT key offset</code>对 key 所储存的字符串值，获取指定偏移量上的位(bit)。</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><code>MGET key1 [key2..]</code>获取所有(一个或多个)给定 key 的值。</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><code>SETBIT key offset value</code>对 key 所储存的字符串值，设置或清除指定偏移量上的位(bit)。</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><code>SETEX key seconds value</code>将值 value 关联到 key ，并将 key 的过期时间设为 seconds (以秒为单位)。</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><code>SETNX key value</code>只有在 key 不存在时设置 key 的值。</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td><code>SETRANGE key offset value</code>用 value 参数覆写给定 key 所储存的字符串值，从偏移量 offset 开始。</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td><code>STRLEN key</code>返回 key 所储存的字符串值的长度。</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td><code>MSET key value [key value ...]</code>同时设置一个或多个 key-value 对。</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td><code>MSETNX key value [key value ...]</code>同时设置一个或多个 key-value 对，当且仅当所有给定 key 都不存在。</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td><code>PSETEX key milliseconds value</code>这个命令和 SETEX 命令相似，但它以毫秒为单位设置 key 的生存时间，而不是像 SETEX 命令那样，以秒为单位。</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td><code>INCR key</code>将 key 中储存的数字值增一。</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td><code>INCRBY key increment</code>将 key 所储存的值加上给定的增量值（increment） 。</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td><code>INCRBYFLOAT key increment</code>将 key 所储存的值加上给定的浮点增量值（increment） 。</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td><code>DECR key</code>将 key 中储存的数字值减一。</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td><code>DECRBY key decrementkey</code>所储存的值减去给定的减量值（decrement） 。</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td><code>APPEND key value如果 key</code> 已经存在并且是一个字符串， APPEND 命令将指定的 value 追加到该 key 原来值（value）的末尾。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>应用场景：共享session、分布式锁，计数器、限流。</p>
+</blockquote>
+<blockquote>
+<p><strong>Redis为什么选择SDS结构，而C语言原生的char[]不香吗？</strong></p>
+</blockquote>
+<blockquote>
+<ul>
+<li>SDS中，O(1)时间复杂度，就可以获取字符串长度；而C 字符串，需要遍历整个字符串，时间复杂度为O(n)</li>
+<li>SDS中，是二进制安全的，因此Redis的字符串可以存储任何序列。</li>
+</ul>
+</blockquote>
+<h3 id="列表">列表</h3>
+<p>底层实现（内部编码）：<code>ziplist</code>（压缩列表）、<code>linkedlist（</code>链表） #### 常用命令 |命令|作用| |----------------|------------------------------------------------------| |<code>LPUSH key value1 [value2]</code>|将一个或多个值插入到列表头部| |<code>LPUSHX key value</code>|将一个值插入到已存在的列表头部| |<code>RPUSH key value1 [value2]</code>|在列表中添加一个或多个值到列表尾部| |<code>RPUSHX key value</code>|为已存在的列表添加值| |<code>LSET key index value</code>|通过索引设置列表元素的值| |<code>BLPOP key1 [key2 ] timeout</code>|移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。| |<code>LINDEX key index</code>|通过索引获取列表中的元素| |<code>BRPOP key1 [key2 ] timeout</code>|移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。| |<code>LREM key count value</code>|移除列表元素| |<code>LRANGE key start stop</code>|获取列表指定范围内的元素| |<code>LPOP key</code>|移出并获取列表的第一个元素| |<code>RPOP key</code>|移除列表的最后一个元素，返回值为移除的元素。|</p>
+<blockquote>
+<p>应用场景：消息队列，文章列表,</p>
+</blockquote>
+<h3 id="哈希表">哈希表</h3>
+<h4 id="常用命令-1">常用命令</h4>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 71%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>HMSET key field1 value1 [field2 value2 ]</code></td>
+<td>同时将多个 field-value (域-值)对设置到哈希表 key 中。</td>
+</tr>
+<tr class="even">
+<td><code>HMSET key field1 value1 [field2 value2 ]</code></td>
+<td>同时将多个 field-value (域-值)对设置到哈希表 key 中。</td>
+</tr>
+<tr class="odd">
+<td><code>HMGET key field1 [field2]</code></td>
+<td>获取所有给定字段的值</td>
+</tr>
+<tr class="even">
+<td><code>HDEL key field1 [field2]</code></td>
+<td>删除一个或多个哈希表字段</td>
+</tr>
+<tr class="odd">
+<td><code>HEXISTS key field</code></td>
+<td>查看哈希表 key 中，指定的字段是否存在。</td>
+</tr>
+<tr class="even">
+<td><code>HKEYS key</code></td>
+<td>获取哈希表中的所有字段</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>内部编码：<code>ziplist</code>（压缩列表） 、<code>hashtable</code>（哈希表）</p>
+<p>应用场景：缓存用户信息等。</p>
+<p>注意点：如果开发使用<code>hgetall</code>，哈希元素比较多的话，可能导致Redis阻塞，可以使用<code>hscan</code>。而如果只是获取部分field，建议使用<code>hmget</code>。</p>
+</blockquote>
+<h3 id="集合">集合</h3>
+<p>集合（set）可以保存多个字符串元素，但是不允许有重复元素，并且集合中的元素是无序的，一个集合最多可以存储<span class="math inline">\(2^{32}-1\)</span>个元素，集合可以进行内部的增删改查和多个集合取交集，并集，差集.Redis 中集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。</p>
+<p>底层实现（内部编码）：<code>intset</code>（整数集合）、<code>hashtable</code>（哈希表）</p>
+<h4 id="常用命令-2">常用命令</h4>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SADD key member1 [member2]</code></td>
+<td>向集合添加一个或多个成员</td>
+</tr>
+<tr class="even">
+<td><code>SREM key member1 [member2]</code></td>
+<td>移除集合中一个或多个成员</td>
+</tr>
+<tr class="odd">
+<td><code>SISMEMBER key member</code></td>
+<td>判断 member 元素是否是集合 key 的成员</td>
+</tr>
+<tr class="even">
+<td><code>SPOP key</code></td>
+<td>移除并返回集合中的一个随机元素</td>
+</tr>
+<tr class="odd">
+<td><code>SDIFF key1 [key2]</code></td>
+<td>返回第一个集合与其他集合之间的差集。</td>
+</tr>
+<tr class="even">
+<td><code>SINTER key1 [key2]</code></td>
+<td>返回给定所有集合的交集</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注意点：<code>smembers</code>和<code>lrange、hgetall</code>都属于比较重的命令，如果元素过多存在阻塞Redis的可能性，可以使用<code>sscan</code>来完成。</p>
+<p>应用场景：用户标签,生成随机数抽奖、社交需求。</p>
+</blockquote>
+<h3 id="有序集合">有序集合</h3>
+<p>Redis 有序集合和集合一样也是 string 类型元素的集合,且不允许重复的成员。</p>
+<p><strong>不同的是每个元素都会关联一个 double 类型的分数。redis 正是通过分数来为集合中的成员进行从小到大的排序。适合做排行榜系统</strong></p>
+<p>有序集合的成员是唯一的,但分数(score)却可以重复。</p>
+<p>集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。 集合中最大的成员数为 <span class="math inline">\(2^{32} - 1\)</span> (4294967295, 每个集合可存储40多亿个成员)。</p>
+<blockquote>
+<p>在redis sorted sets里面当items内容大于64的时候同时使用了hash和skiplist两种设计实现。这也会为了排序和查找性能做的优化。所以如上可知： 添加和删除都需要修改skiplist，所以复杂度为O(log(n))。 但是如果仅仅是查找元素的话可以直接使用hash，其复杂度为O(1) 其他的range操作复杂度一般为O(log(n)) 当然如果是小于64的时候，因为是采用了ziplist的设计，其时间复杂度为O(n)</p>
+</blockquote>
+<h4 id="常用命令-3">常用命令</h4>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ZADD key score1 member1 [score2 member2]</code></td>
+<td>向有序集合添加一个或多个成员，或者更新已存在成员的分数</td>
+</tr>
+<tr class="even">
+<td><code>ZSCORE key member</code></td>
+<td>返回有序集中，成员的分数值</td>
+</tr>
+<tr class="odd">
+<td><code>ZCARD key</code></td>
+<td>获取有序集合的成员数</td>
+</tr>
+<tr class="even">
+<td><code>ZCOUNT key min max</code></td>
+<td>计算在有序集合中指定区间分数的成员数</td>
+</tr>
+<tr class="odd">
+<td><code>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT]</code></td>
+<td>通过分数返回有序集合指定区间内的成员</td>
+</tr>
+<tr class="even">
+<td><code>ZRANK key member</code></td>
+<td>返回有序集合中指定成员的索引</td>
+</tr>
+<tr class="odd">
+<td><code>ZREM key member [member ...]</code></td>
+<td>移除有序集合中的一个或多个成员</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>底层内部编码：<code>ziplist</code>（压缩列表）、<code>skiplist</code>（跳跃表） <strong>应用场景：排行榜，社交需求（如用户点赞）。</strong></p>
+</blockquote>
+<h3 id="键">键</h3>
+<p>Redis 键命令用于管理 redis 的键。</p>
+<table>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 89%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>序号</th>
+<th>命令及描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>DEL key</code>该命令用于在 <code>key</code> 存在时删除 key。</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>DUMP key</code>序列化给定 key ，并返回被序列化的值。</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><code>EXISTS key</code>检查给定 key 是否存在。</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><code>EXPIRE key seconds</code>为给定 key 设置过期时间，以秒计。</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><code>EXPIREAT key timestamp</code> EXPIREAT 的作用和 EXPIRE 类似，都用于为 key 设置过期时间。 不同在于 EXPIREAT 命令接受的时间参数是 UNIX 时间戳(unix timestamp)。</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><code>PEXPIRE key milliseconds</code>设置 key 的过期时间以毫秒计。</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><code>PEXPIREAT key milliseconds-timestamp</code>设置 key 过期时间的时间戳(unix timestamp) 以毫秒计</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><code>KEYS pattern</code>查找所有符合给定模式( pattern)的 key 。</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><code>MOVE key db</code>将当前数据库的 key 移动到给定的数据库 db 当中。</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td><code>PERSIST key</code>移除 key 的过期时间，key 将持久保持。</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td><code>PTTL key</code>以毫秒为单位返回 key 的剩余的过期时间。</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td><code>TTL key</code>以秒为单位，返回给定 key 的剩余生存时间(TTL, time to live)。</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td><code>RANDOMKEY</code>从当前数据库中随机返回一个 key 。</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td><code>RENAME key newkey</code>修改 key 的名称</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td><code>RENAMENX key newkey</code>仅当 newkey 不存在时，将 key 改名为 newkey 。</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td><code>SCAN cursor [MATCH pattern] [COUNT count]</code>迭代数据库中的数据库键。</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td><code>TYPE key</code>返回 key 所储存的值的类型。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>参考文献 菜鸟教程 《Redis设计与实现》</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/" rel="prev" title="CMU15-445-FALL2022-PROJECT_0">
+      <i class="fa fa-chevron-left"></i> CMU15-445-FALL2022-PROJECT_0
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="next" title="Redis数据库">
+      Redis数据库 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85redis"><span class="nav-number">1.1.</span> <span class="nav-text">安装Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%85%B3%E9%97%AD%E5%92%8C%E9%87%8D%E5%90%AF"><span class="nav-number">1.2.</span> <span class="nav-text">Redis服务器启动、关闭和重启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">进入数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.4.</span> <span class="nav-text">配置数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">Redis的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-%E4%B8%8E%E5%85%B6%E4%BB%96-key---value-%E7%BC%93%E5%AD%98%E4%BA%A7%E5%93%81%E6%9C%89%E4%BB%A5%E4%B8%8B%E4%B8%89%E4%B8%AA%E7%89%B9%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">Redis 与其他 key - value 缓存产品有以下三个特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-%E4%BC%98%E5%8A%BF"><span class="nav-number">2.2.</span> <span class="nav-text">Redis 优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis%E4%B8%8E%E5%85%B6%E4%BB%96key-value%E5%AD%98%E5%82%A8%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="nav-number">2.3.</span> <span class="nav-text">Redis与其他key-value存储有什么不同？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">Redis的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.1.</span> <span class="nav-text">简单动态字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">3.3.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E8%A1%A8"><span class="nav-number">3.4.</span> <span class="nav-text">跳表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8"><span class="nav-number">3.5.</span> <span class="nav-text">压缩列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">对象（Redis的数据类型）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.1.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.1.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8"><span class="nav-number">4.2.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-number">4.3.</span> <span class="nav-text">哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88"><span class="nav-number">4.4.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-2"><span class="nav-number">4.4.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">4.5.</span> <span class="nav-text">有序集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-3"><span class="nav-number">4.5.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%AE"><span class="nav-number">4.6.</span> <span class="nav-text">键</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">968k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">14:40</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

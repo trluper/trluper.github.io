@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1.深度学习简述 为了学习一种好的表示，需要构建具有一定“深度”的模型，并通过学习算法来让模型自动学习出好的特征表示（从底层特征，到中层特征，再到高层特征），从而最终提升预测模型的准确率．所谓“深度”是指原始数据进行非线性特征转换的次数  深度学习是将原始的数据特征通过多步的特征转换得到一种特征表示，并进一步输入到预测函数得到最终结果．和“浅层学习”不同，深度学习需要解决的关键问题是贡献度分配">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习">
+<meta property="og:url" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1.深度学习简述 为了学习一种好的表示，需要构建具有一定“深度”的模型，并通过学习算法来让模型自动学习出好的特征表示（从底层特征，到中层特征，再到高层特征），从而最终提升预测模型的准确率．所谓“深度”是指原始数据进行非线性特征转换的次数  深度学习是将原始的数据特征通过多步的特征转换得到一种特征表示，并进一步输入到预测函数得到最终结果．和“浅层学习”不同，深度学习需要解决的关键问题是贡献度分配">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DL.png">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Neuron.png">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/sigmoid.png">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Relu.png">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/swish.png">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/neuralStructure.png">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Convolution.png">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/featureMap.png">
+<meta property="og:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/poolinglayer.png">
+<meta property="article:published_time" content="2022-09-28T12:22:08.000Z">
+<meta property="article:modified_time" content="2023-02-24T14:05:23.743Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="深度学习算法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DL.png">
+
+<link rel="canonical" href="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深度学习 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-28 20:22:08" itemprop="dateCreated datePublished" datetime="2022-09-28T20:22:08+08:00">2022-09-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-24 22:05:23" itemprop="dateModified" datetime="2023-02-24T22:05:23+08:00">2023-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">深度学习算法</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="深度学习简述">1.深度学习简述</h4>
+<p>为了学习一种好的表示，需要构建具有一定“深度”的模型，并通过学习算法来让模型自动学习出好的特征表示（从底层特征，到中层特征，再到高层特征），从而最终提升预测模型的准确率．<strong>所谓“深度”是指原始数据进行非线性特征转换的次数</strong> <img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/DL.png" width="500"></p>
+<p>深度学习是将原始的数据特征通过多步的特征转换得到一种特征表示，并进一步输入到预测函数得到最终结果．和“浅层学习”不同，<strong>深度学习需要解决的关键问题是贡献度分配问题（Credit Assignment Problem，CAP）[Minsky,1961]</strong>，即一个系统中不同的组件（component）或其参数对最终系统输出结果的贡献或影响.从某种意义上讲，深度学习可以看作一种强化学习（Reinforcement Learning，RL），每个内部组件并不能直接得到监督信息，需要通过整个模型的最终监督信息（奖励）得到，并且有一定的延时性</p>
+<span id="more"></span>
+<p><strong>深度学习采用的模型主要是神经网络模型，其主要原因是神经网络模型可以使用误差反向传播算法，从而可以比较好地解决贡献度分配问题</strong>．</p>
+<h5 id="表示学习">1.1 表示学习</h5>
+<p>为了提高机器学习系统的准确率，我们就需要将输入信息转换为有效的特 征，或者更一般性地称为表示（Representation）。如果有一种算法可以自动地学习出有效的特征，并提高最终机器学习模型的性能，那么这种学习就可以叫作<strong>表示学习</strong>。</p>
+<p>表示学习的关键是解决<strong>语义鸿沟（Semantic Gap）问题</strong>．语义鸿沟问题是指输入数据的底层特征和高层语义信息之间的不一致性和差异性．比如给定一些关于“车”的图片，由于图片中每辆车的颜色和形状等属性都不尽相同，因此不同图片在像素级别上的表示（即底层特征）差异性也会非常大．但是我们理解这些图片是建立在比较抽象的高层语义概念上的．如果一个预测模型直接建立在底层特征之上，会导致对预测模型的能力要求过高．如果可以有一个好的表示在某种程度上能够反映出数据的高层语义特征，那么我们就能相对容易地构建后续的机器学习模型</p>
+<h6 id="局部和分布式表示">4.1.1 局部和分布式表示</h6>
+<p>在机器学习中，我们经常使用两种方式来表示特征：<strong>局部表示（Local Representation）和分布式表示（Distributed Representation）．</strong></p>
+<ul>
+<li><strong>局部表示</strong>：离散表示，one-Hot向量，单一值表示一个东西。
+<ul>
+<li><strong>优点：</strong>
+<ul>
+<li>这种离散的表示方式具有很好的解释性，有利于人工归纳和总结特征，并通过特征组合进行高效的特征工程</li>
+<li>通过多种特征组合得到的表示向量通常是稀疏的二值向量，当用于线性模型时计算效率非常高</li>
+</ul></li>
+<li><strong>缺点</strong>：
+<ul>
+<li>one-hot向量的维数很高，且不能扩展．如果有一种新的颜色，我们就需要增加一维来表示</li>
+<li>不同颜色之间的相似度都为0，即我们无法知道“红色”和“中国红”的相似度要高于“红色”和“黑色”的相似度</li>
+</ul></li>
+</ul></li>
+<li><strong>分布式表示</strong>：压缩、低维的稠密向量，使用多个值表示一个东西，如表示颜色的方法是用RGB值来表示颜色，不同颜色对应到R、G、B三维空间中一个点，这种表示方式叫作分布式表示
+<ul>
+<li>分布式表示的表示能力要强很多，分布式表示的向量维度一般都比较低．我们只需要用一个三维的稠密向量就可以表示所有颜色．并且，分布式表示也很容易表示新的颜色名．此外，不同颜色之间的相似度也很容易计算</li>
+</ul></li>
+</ul>
+<h5 id="端到端学习">1.2 端到端学习</h5>
+<p><strong>端到端学习（End-to-End Learning），也称端到端训练，是指在学习过程中不进行分模块或分阶段训练，直接优化任务的总体目标</strong>．在端到端学习中，一般不需要明确地给出不同模块或阶段的功能，中间过程不需要人为干预．端到端学习的训练数据为“输入-输出”对的形式，无须提供其他额外信息．因此，端到端学习和深度学习一样，都是要解决贡献度分配问题．目前，大部分采用神经网络模型的深度学习也可以看作一种端到端的学习</p>
+<h4 id="前馈神经网络">2. 前馈神经网络</h4>
+<h5 id="神经元">2.1 神经元</h5>
+<p>神经网络一般可以看作一个非线性模型，其基本组成单元为具有非线性激活函数的神经元，通过大量神经元之间的连接，使得神经网络成为一种高度非线性的模型．<strong>神经元之间的连接权重就是需要学习的参数，可以在机器学习的框架下通过梯度下降方法来进行学习</strong>． <img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Neuron.png" width="300"></p>
+<p>激活函数在神经元中非常重要的．为了增强网络的表示能力和学习能力，<strong>激活函数</strong>需要具备以下几点性质：</p>
+<ul>
+<li>（1） 连续并可导（允许少数点上不可导）的非线性函数．可导的激活函数可以直接利用数值优化的方法来学习网络参数．</li>
+<li>（2） 激活函数及其导函数要尽可能的简单，有利于提高网络计算效率．</li>
+<li>（3） 激活函数的导函数的值域要在一个合适的区间内，不能太大也不能太小，否则会影响训练的效率和稳定性．</li>
+</ul>
+<p>下面介绍几种在神经网络中常用的激活函数．</p>
+<h6 id="sigmoid函数">2.1.1 sigmoid函数</h6>
+<p><code>Sigmoid</code>型函数是指一类 S 型曲线函数，为两端饱和函数．常用的<code>Sigmoid</code>型函数<strong>有<code>Logistic</code>函数和<code>Tanh</code>函数</strong>．<strong>所谓饱和是指</strong>对于函数 <span class="math inline">\(f(x)\)</span>，若 <span class="math inline">\(x → −∞\)</span> 时，其导数 <span class="math inline">\(f^′(x) → 0\)</span>，则称其为左饱和．若<span class="math inline">\(x → +∞\)</span>时，其导数<span class="math inline">\(f′(x) → 0\)</span>，则称其为右饱和．当同时满足左、右饱和时，就称为两端饱和。</p>
+<p>在机器学习篇章我们以及介绍果LR函数： <span class="math display">\[
+σ(x)={1\over 1+exp(-x)}
+\]</span></p>
+<p><strong>Logistic 函数可以看成是一个“挤压”函数，把一个实数域的输入“挤压”到(0, 1)</strong>．当输入值在0附近时，Sigmoid型函数近似为线性函数；当输入值靠近两端时，对输入进行抑制．输入越小，越接近于 0；输入越大，越接近于 1．和感知器使用的阶跃激活函数相比，Logistic函数是连续可导的，其数学性质更好．</p>
+<p>因为Logistic函数的性质，使得装备了Logistic激活函数的神经元具有以下两点性质： - 1）其输出直接可以看作概率分布，使得神经网络可以更好地和统计学习模型进行结合． - 2）其可以看作一个软性门（Soft Gate），用来控制其他神经元输出信息的数量．</p>
+<p><img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/sigmoid.png" width="300"></p>
+<p><strong><code>Tanh</code>函数</strong>： <span class="math display">\[
+tanh(x)={exp(x)-exp(-x)\over exp(x)+exp(-x)}
+\]</span></p>
+<h6 id="relu函数">2.1.2 Relu函数</h6>
+<p>ReLU（Rectified Linear Unit，修正线性单元）是目前深度神经网络中经常使用的激活函数．<strong>ReLU实际上是一个斜坡（ramp）函数</strong>，定义为： <span class="math display">\[
+Relu(x)=\begin{cases}
+x&amp;x≥0\\
+0&amp;x&lt;0
+\end{cases}
+\]</span></p>
+<p><strong>优点：</strong></p>
+<ul>
+<li>采用 ReLU 的神经元只需要进行加、乘和比较的操作，计算上更加高效</li>
+<li>具有生物学合理性，比如单侧抑制、宽兴奋边界。Sigmoid 型激活函数会导致一个非稀疏的神经网络，而 ReLU 却具有很好的稀疏性，大约50%的神经元会处于激活状态</li>
+<li>在优化方面，相比于Sigmoid型函数的两端饱和，ReLU函数为左饱和函数，且在 $x &gt; 0 $时导数为 1，在一定程度上缓解了神经网络的梯度消失问题，加速梯度下降的收敛速度．</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>ReLU 函数的输出是非零中心化的，给后一层的神经网络引入偏置偏移，会影响梯度下降的效率</li>
+<li>ReLU 神经元在训练时比较容易“死亡”．在训练时，如果参数在一次不恰当的更新后，第一个隐藏层中的某个 ReLU 神经元在所有的训练数据上都不能被激活，那么这个神经元自身参数的梯度永远都会是0，在以后的训练过程中永远不能被激活．这种现象称为死亡 ReLU 问题</li>
+</ul>
+<p>为克服上述缺陷，几种变种Relu被广泛使用：</p>
+<ul>
+<li><p><strong>带泄露的Relu</strong>:带泄露的ReLU（Leaky ReLU）在输入 <span class="math inline">\(x&lt; 0\)</span>时，保持一个很小的梯度𝛾．这样当神经元非激活时也能有一个非零的梯度可以更新参数，避免永远不能被激活[Maas et al., 2013]．带泄露的ReLU的定义如下： <span class="math display">\[
+LeakyRelu(x)=\begin{cases}
+x&amp;x&gt;0\\
+γx&amp;x≤0
+\end{cases}
+\]</span> 其中<span class="math inline">\(γ\)</span>是一个很小的常数，如0.001</p></li>
+<li><p><strong>带参数的ReLU：</strong>带参数的 ReLU（Parametric ReLU，PReLU）引入一个可学习的参数，不同神经元可以有不同的参数 [He et al., 2015]．对于第<span class="math inline">\(i\)</span>个神经元，其 PReLU的定义为 <span class="math display">\[
+PRelu(x)=\begin{cases}
+x&amp;x&gt;0\\
+γ_ix&amp;x≤0
+\end{cases}
+\]</span> 其中<span class="math inline">\(γ_i\)</span>为 <span class="math inline">\(x≤ 0\)</span> 时函数的斜率．因此，PReLU 是非饱和函数．如果<span class="math inline">\(γ_i=0\)</span>，那么PReLU就退化为ReLU．如果<span class="math inline">\(γ_i\)</span>为一个很小的常数，则PReLU可以看作带泄露的ReLU．PReLU可以允许不同神经元具有不同的参数</p></li>
+<li><p><strong>ELU（Exponential Linear Unit，指数线性单元）</strong>：[Clevert et al., 2015] 是一个近似的零中心化的非线性函数，其定义为: <span class="math display">\[
+Elu(x)=\begin{cases}
+x&amp;x&gt;0\\
+γ(exp(x)-1)&amp;x≤0
+\end{cases}
+\]</span> 其中<span class="math inline">\(γ ≥ 0\)</span>是一个超参数，决定<span class="math inline">\(x≤ 0\)</span>时的饱和曲线，并调整输出均值在0附近</p></li>
+<li><p><strong>Softplus函数：</strong>Softplus 函数[Dugas et al., 2001] 可以看作 Rectifier 函数的平滑版本，其定义为 <span class="math display">\[
+softplus(x)=log(1+exp(x))
+\]</span> Softplus函数其导数刚好是Logistic函数．Softplus函数虽然也具有单侧抑制、宽兴奋边界的特性，却没有稀疏激活性 <img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Relu.png" width="400"></p></li>
+</ul>
+<h5 id="swish函数">2.1.3 Swish函数</h5>
+<p>Swish 函数[Ramachandran et al., 2017] 是一种<strong>自门控（Self-Gated）激活函数</strong>，定义为: <span class="math display">\[
+swish(x)=xσ(βx)
+\]</span> 其中<strong><span class="math inline">\(δ(⋅)\)</span>为 Logistic 函数</strong>，<span class="math inline">\(β\)</span>为可学习的参数或一个固定超参数.<span class="math inline">\(δ(⋅) ∈ (0, 1)\)</span>可以看作一种软性的门控机制．当<span class="math inline">\(δ(βx)\)</span>接近于1时，门处于“开”状态，激活函数的输出近似于<span class="math inline">\(x\)</span>本身；当<span class="math inline">\(δ(βx)\)</span>)接近于0时，门的状态为“关”，激活函数的输出近似于0． <img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/swish.png" width="400"></p>
+<p>Swish函数可以看作线性函数和ReLU函数之间的非线性插值函数，其程度由参数<span class="math inline">\(β\)</span>控制．</p>
+<h6 id="gelu函数">2.1.4 GELU函数</h6>
+<p>GELU（Gaussian Error Linear Unit，高斯误差线性单元）[Hendrycks et al.,2016] 也是一种通过<strong>门控机制来调整其输出值的激活函数</strong>，和 Swish 函数比较类似 <span class="math display">\[
+GELU(x)=xp(X≤x)
+\]</span> 其中<span class="math inline">\(p(X ≤ x)\)</span>是高斯分布<span class="math inline">\(N(μ, σ^2)\)</span>的累积分布函数，其中<span class="math inline">\(μ, σ\)</span>为超参数，一般设<span class="math inline">\(μ= 0, σ= 1\)</span>即可．由于高斯分布的累积分布函数为S型函数，因此GELU函数可以用Tanh函数或Logistic函数来近似， <span class="math display">\[
+GELU(x)=xσ(1.702x)
+\]</span></p>
+<h6 id="maxout单元">2.1.5 Maxout单元</h6>
+<p>Maxout 单元[Goodfellow et al., 2013] 也是一种<strong>分段线性函数函数</strong>。不同的是Sigmoid 、ReLU 等激活函数的输入是神经元的净输入<span class="math inline">\(z\)</span>，是一个标量而 Maxout 单元的输入是上一层神经元的全部原始输出，是一个向量<span class="math inline">\(x = [x_1; x_2; ⋯ ; x_D]\)</span>．</p>
+<p>每个Maxout单元有<span class="math inline">\(K\)</span>个权重向量$w_k ∈ ℝ^D <span class="math inline">\(和偏置\)</span>b_k(1 ≤ k ≤ K)<span class="math inline">\(．对于输入\)</span>x<span class="math inline">\(，可以得到\)</span>K<span class="math inline">\(个净输入\)</span>z_k, 1 ≤ k ≤ K$ <span class="math display">\[
+z_k=w^T_k+b_k
+\]</span> 其中<span class="math inline">\(w_k= [w_{k,1}, ⋯ , w_{k,D}]^T\)</span> 为第<span class="math inline">\(k\)</span>个权重向量</p>
+<h5 id="网络结构">2.2 网络结构</h5>
+<p>样通过一定的连接方式或信息传递方式进行协作的神经元可以看作一个网络，就是神经网络．．目前常用的神经网络结构有以下三种：</p>
+<ul>
+<li><p><strong>前馈网络</strong>：前馈网络中各个神经元按接收信息的先后分为不同的组．<strong>每一组可以看作一个神经层．每一层中的神经元接收前一层神经元的输出，并输出到下一层神经元．整个网络中的信息是朝一个方向传播</strong>，没有反向的信息传播，可以用一个有向无环路图表示。<strong>前馈网络包括全连接前馈网络和卷积神经网络等</strong>．</p></li>
+<li><p><strong>记忆网络</strong>：记忆网络，也称为反馈网络，<strong>网络中的神经元不但可以接收其他神经元的信息，也可以接收自己的历史信息．和前馈网络相比，记忆网络中的神经元具有记忆功能，在不同的时刻具有不同的状态．记忆神经网络中的信息传播可以是单向或双向传递</strong>。记忆网络包括循环神经网络、Hopfield 网络、玻尔兹曼机、受限玻尔兹曼机等</p></li>
+<li><p><strong>图网络</strong>：<strong>图网络是定义在图结构数据上的神经网络．图中每个节点都由一个或一组神经元构成．节点之间的连接可以是有向的，也可以是无向的．每个节点可以收到来自相邻节点或自身的信息</strong>。图网络是前馈网络和记忆网络的泛化，包含很多不同的实现方式，比如<em>图卷积网络（Graph Convolutional Network，<strong>GCN</strong>）[Kipf et al., 2016]、图注意力网络（Graph Attention Network，<strong>GAT</strong>）[Veličković et al., 2017]、消息传递神经网络（Message Passing Neural Network，<strong>MPNN</strong>）[Gilmer et al., 2017]等</em>． <img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/neuralStructure.png" width="500"></p></li>
+</ul>
+<h5 id="反向传播算法">2.3 反向传播算法</h5>
+<p>假设采用随机梯度下降进行神经网络参数学习，给定一个样本<span class="math inline">\((x, y)\)</span>，将其输入到神经网络模型中，得到网络输出为<span class="math inline">\(\tilde{𝒚}\)</span>．假设损失函数为$ ℒ(𝒚,)$，<strong>要进行参数学习就需要计算损失函数关于每个参数的导数</strong>．</p>
+<p>不失一般性，对第<span class="math inline">\(l\)</span>层中的参数<span class="math inline">\(W^{(l)}\)</span> 和<span class="math inline">\(b{(l)}\)</span>计算偏导数．因为<span class="math inline">\(𝜕ℒ(𝒚,\tilde{y})\over𝜕𝑾^{(𝑙)}\)</span>的计算涉及向量对矩阵的微分，十分繁琐，因此我们先计算<span class="math inline">\(ℒ(𝒚,\tilde{𝒚})\)</span> 关于参数矩阵中每个元素的偏导数$ ℒ(y,)w^{(l)}_{ij}$．根据链式法则: <span class="math display">\[
+{δℒ(𝒚,\tilde{y}) \over δw^{(l)}_{ij}}={δz^{(l)}\over δw^{(l)}_{ij} }{δℒ(𝒚,\tilde{y})\over δz^{(l)}} \\
+{δℒ(𝒚,\tilde{y}) \over δb^{(l)}}={δz^{(l)}\over δb^{(l)}}{δℒ(𝒚,\tilde{y})\over δz^{(l)}}
+\]</span> 上式的第二项都是目标函数关于第<span class="math inline">\(l\)</span>层的神经元<span class="math inline">\(z^{(l)}\)</span>的偏导数，称为误差项，可以一次计算得到．这样我们只需要计算三个偏导数，分别为<span class="math inline">\({δz^{(l)}\over δw^{(l)}_{ij}}、{δz^{(l)}\over δb^{(l)}}、{δℒ(𝒚,\tilde{y})\over δz^{(l)}}\)</span></p>
+<p>下面分别计算它们：</p>
+<ul>
+<li><span class="math inline">\({δz^{(l)}\over δw^{(l)}_{ij}}\)</span>：因为<span class="math inline">\(z=Wx+b\)</span>，则其导数为可以很方便计算得到</li>
+<li><span class="math inline">\({δℒ(𝒚,\tilde{y})\over δz^{(l)}}\)</span>：<strong>该偏导数表示第<span class="math inline">\(l\)</span>层神经元对最终损失的影响，也反映了最终损失对第<span class="math inline">\(l\)</span>层神经元的敏感度</strong>，因此一般称为误差项<span class="math inline">\(δ^{(l)}\)</span>，<strong>它也间接反映了神经元对网络的共享程度</strong>，是解决贡献的分配问题的一个指标。详细公式见书p94</li>
+</ul>
+<h5 id="梯度消失">2.4 梯度消失</h5>
+<p>上面可以知道在神经网络中误差反向传播的迭代公式为 <span class="math display">\[
+δ^{(l)}=f^{&#39;}_l(z^{(l)})⊙(W^{(l+1)})^Tδ^{(l+1)}
+\]</span> 误差从输出层反向传播时，在每一层都要乘以该层的激活函数的导数，当采取Sigmoid型激活函数时，由于其导数<code>&lt;1</code>,经过深度学习，一层一层下去，其误差项不断趋近于0，梯度就会不断衰减,甚至消失，导致网络难以训练.这就是<strong>梯度消失</strong></p>
+<p>在深度神经网络中，减轻梯度消失问题的方法有很多种．一种简单有效的方式是使用导数比较大的激活函数，比如ReLU等．</p>
+<h4 id="卷积神经网络">3 卷积神经网络</h4>
+<p>卷积神经网络（Convolutional Neural Network，CNN或ConvNet）是一种具有<strong>局部连接、权重共享</strong>等特性的深层前馈神经网络．卷积神经网络有个重要的专有词叫<strong>感受野</strong>，，即神经元只接受其所支配的刺激区域内的信号。卷积神经网络的出现解决了全连接前馈网络的两个问题<strong>参数太多</strong>和<strong>局部不变性特征</strong>。</p>
+<p><strong>目前的卷积神经网络一般是由卷积层、汇聚层和全连接层交叉堆叠而成的前馈神经网络．卷积神经网络有三个结构上的特性：局部连接、权重共享以及汇聚</strong>．这些特性使得卷积神经网络具有一定程度上的平移、缩放和旋转不变性．和前馈神经网络相比，<strong>卷积神经网络的参数更少</strong>．</p>
+<h5 id="卷积和卷积核">3.1 卷积和卷积核</h5>
+<p>卷积（Convolution），也叫褶积，是分析数学中一种重要的运算．在信号处理或图像处理中，经常使用一维或二维卷积．</p>
+<p>如二维卷积<span class="math inline">\(Y=W*X\)</span>为卷积操作，其中<span class="math inline">\(W\)</span>称为卷积核，<span class="math inline">\(X\)</span>为特征矩阵。 <img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/Convolution.png" width="400"></p>
+<h5 id="互相关">3.2 互相关</h5>
+<p>在机器学习和图像处理领域，卷积的主要功能是在一个图像（或某种特征）上滑动一个卷积核（即滤波器），通过卷积操作得到一组新的特征．在计算卷积的过程中，需要进行卷积核翻转。而在计算<strong>自相关</strong>时,则不需要翻转，所谓的翻转是对<strong>卷积核</strong>进行从上到下，从左到右的的颠倒。<strong>因此互相关和卷积的区别仅仅在于卷积核是否进行翻转</strong></p>
+<p>在深度学习中我们一般使用自相关，它也称为<strong>不翻转卷积</strong>。</p>
+<p><em>注：卷积核是否进行翻转和其特征抽取的能力无关．特别是当卷积核是可学习的参数时，卷积和互相关在能力上是等价的．因此，为了实现上（或描述上）的方便起见，我们用互相关来代替卷积</em></p>
+<h5 id="卷积神经网络-1">3.3 卷积神经网络</h5>
+<p>卷积神经网络一般由卷积层、汇聚层和全连接层构成．</p>
+<h6 id="卷积层">3.3.1 卷积层</h6>
+<p>卷积层的作用是提取一个局部区域的特征，<strong>不同的卷积核相当于不同的特征提取器</strong>。而图像为二维结构，因此为了更充分地利用图像的局部信息，通常将神经元组织为三维结构的神经层，其大小为高度M×宽度N×深度D，由<span class="math inline">\(D\)</span>个<span class="math inline">\(M × N\)</span>大小的特征映射构成。<strong>特征映射（Feature Map）为一幅图像（或其他特征映射）在经过卷积提取到的特征</strong>，每个特征映射可以作为一类抽取的图像特征．为了提高卷积网络的表示能力，可以在每一层使用多个不同的特征映射，以更好地表示图像的特征． <img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/featureMap.png" width="400"> <strong>在输入层，特征映射就是图像本身．如果是灰度图像，就是有一个特征映射，输入层的深度 <span class="math inline">\(D = 1\)</span>；如果是彩色图像，分别有 RGB 三个颜色通道的特征映射，输入层的深度<span class="math inline">\(D = 3\)</span>．</strong></p>
+<p>假设现在有一个卷积层的结构如下：</p>
+<ul>
+<li><p>输入特征映射组：<span class="math inline">\(X∈ ℝ^{M×N×D}\)</span>为三维张量（Tensor），其中每个切片（Slice）矩阵<span class="math inline">\(X^d ∈ ℝ^{M×N }\)</span>为一个输入特征映射，<span class="math inline">\(1 ≤ d ≤D\)</span>；</p></li>
+<li><p>输出特征映射组：<span class="math inline">\(y∈ ℝ^{M×N×P}\)</span>为三维张量，其中每个切片矩阵<span class="math inline">\(Y^p ∈ ℝ^{M×N}\)</span>为一个输出特征映射，<span class="math inline">\(1 ≤ p ≤ P\)</span>；</p></li>
+<li><p>卷积核：<span class="math inline">\(W∈ ℝ^{M×N×P×D}\)</span>为四维张量，其中每个切片矩阵<span class="math inline">\(W^{pd}∈ ℝ^{U×V}\)</span> 为一个二维卷积核，<span class="math inline">\(1 ≤ p ≤P , 1 ≤ d ≤ D\)</span>．</p></li>
+</ul>
+<p>因此参数个数为：每一个输出特征映射都需要<span class="math inline">\(D\)</span>个卷积核以及一个偏置．假设每个卷积核的大小为<span class="math inline">\(U × V\)</span>，那么输出<span class="math inline">\(P\)</span>个特征映射共需要<span class="math inline">\(P × D × (U × V ) + P\)</span> 个参数</p>
+<h6 id="池化层汇聚层">3.3.2 池化层(汇聚层)</h6>
+<p>卷积层虽然可以显著减少网络中连接的数量，但特征映射组中的神经元个数并没有显著减少．如果后面接一个分类器，分类器的输入维数依然很高，很容易出现过拟合．为了解决这个问题，可以在卷积层之后加上一个<strong>汇聚层</strong>，从而降低特征维数，避免过拟合．<strong>汇聚层（Pooling Layer）也叫子采样层（Subsampling Layer），其作用是进行特征选择，降低特征数量，从而减少参数数量</strong>，也叫<strong>池化</strong></p>
+<p>假设汇聚层的输入特征映射组为<span class="math inline">\(X∈ ℝ^{M×N×D}\)</span>，对于其中每一个特征映射<span class="math inline">\(X^d ∈ ℝ^{M×N }，1 ≤ d ≤D\)</span>，将其划分为很多区域，这些区域可以重叠，也可以不重叠．<strong>汇聚（Pooling）是指对每个区域进行下采样（Down Sampling）得到一个值，作为这个区域的概括．</strong></p>
+<p><strong>常用的池化(汇聚)函数有：</strong></p>
+<ul>
+<li>最大池化(最大汇聚)：对于一个区域，选择这个区域内所有神经元的最大活性值作为这个区域的表示，即<span class="math inline">\(x^d=max x_i\)</span></li>
+<li>平均池化(平均汇聚)：一般是取区域内所有神经元活性值的平均值，即<span class="math inline">\(y^d=avg(\sum x_i)\)</span></li>
+</ul>
+<p>下图给出了采样最大汇聚进行子采样操作的示例．可以看出，汇聚层不但可以有效地减少神经元的数量，还可以使得网络对一些小的局部形态改变保持不变性，并拥有更大的感受野． <img src="/2022/09/28/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/poolinglayer.png" width="400"></p>
+<h4 id="网络优化和正则化">4. 网络优化和正则化</h4>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95/" rel="tag"># 深度学习算法</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/09/18/python%E6%95%B0%E5%AD%A6%E5%BA%93/" rel="prev" title="python数学库">
+      <i class="fa fa-chevron-left"></i> python数学库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/10/06/pytorch%E5%9F%BA%E7%A1%80/" rel="next" title="pytorch基础">
+      pytorch基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AE%80%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1.深度学习简述</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 表示学习</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA"><span class="nav-number">1.1.1.</span> <span class="nav-text">4.1.1 局部和分布式表示</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AB%AF%E5%88%B0%E7%AB%AF%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 端到端学习</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">2.</span> <span class="nav-text">2. 前馈神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E5%85%83"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 神经元</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#sigmoid%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 sigmoid函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#relu%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 Relu函数</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#swish%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">2.1.3 Swish函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#gelu%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1.4 GELU函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#maxout%E5%8D%95%E5%85%83"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.1.5 Maxout单元</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">2.3.</span> <span class="nav-text">2.2 网络结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">2.3 反向传播算法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1"><span class="nav-number">2.5.</span> <span class="nav-text">2.4 梯度消失</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">3.</span> <span class="nav-text">3 卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%92%8C%E5%8D%B7%E7%A7%AF%E6%A0%B8"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 卷积和卷积核</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%92%E7%9B%B8%E5%85%B3"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 互相关</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C-1"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 卷积层</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B1%A0%E5%8C%96%E5%B1%82%E6%B1%87%E8%81%9A%E5%B1%82"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 池化层(汇聚层)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%E5%92%8C%E6%AD%A3%E5%88%99%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">4. 网络优化和正则化</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">968k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">14:40</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

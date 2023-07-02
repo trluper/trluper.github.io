@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1 链接器 1.1 链接是什么 链接是将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载到内存并执行。  链接可以执行与编译时，也就是源代码被翻译成机器代码时； 也可以执行与加载时，也就是在程序被加载器（loader)加载带内存并执行时 甚至也可执行于运行时，也就是有程序来执行  链接器在开发中是一个关键角色，因为它使得分离编译成为可能，我们不用将一个大型的应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统-链接">
+<meta property="og:url" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1 链接器 1.1 链接是什么 链接是将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载到内存并执行。  链接可以执行与编译时，也就是源代码被翻译成机器代码时； 也可以执行与加载时，也就是在程序被加载器（loader)加载带内存并执行时 甚至也可执行于运行时，也就是有程序来执行  链接器在开发中是一个关键角色，因为它使得分离编译成为可能，我们不用将一个大型的应用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/main.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/staticlink.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/ELF.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/share.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlopen.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/DLSYM.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlclose.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlerror.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example2.png">
+<meta property="article:published_time" content="2023-05-09T06:45:40.000Z">
+<meta property="article:modified_time" content="2023-05-14T13:24:55.744Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/main.png">
+
+<link rel="canonical" href="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深入理解计算机系统-链接 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深入理解计算机系统-链接
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-09 14:45:40" itemprop="dateCreated datePublished" datetime="2023-05-09T14:45:40+08:00">2023-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-14 21:24:55" itemprop="dateModified" datetime="2023-05-14T21:24:55+08:00">2023-05-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">深入理解计算机系统</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="链接器">1 链接器</h3>
+<h4 id="链接是什么">1.1 链接是什么</h4>
+<p><strong>链接是将各种代码和数据片段收集并组合成为一个单一文件的过程</strong>，这个文件可被加载到内存并执行。</p>
+<ul>
+<li>链接可以执行与编译时，也就是源代码被翻译成机器代码时；</li>
+<li>也可以执行与加载时，也就是在程序被加载器（loader)加载带内存并执行时</li>
+<li><strong>甚至也可执行于运行时，也就是有程序来执行</strong></li>
+</ul>
+<p>链接器在开发中是一个关键角色，因为它使得<strong>分离编译</strong>成为可能，我们不用将一个大型的应用程序组织为一个巨大的源文件，而是可以分解成更小、更好管理的模块。可以单独修改和编译这些模块。理解<strong>链接</strong>有以下的好处：</p>
+<ul>
+<li><p><strong>理解链接器将帮助你构造大型程序</strong>。构造大型程序的程序员经常会遇到<strong>缺少模块、库或者不兼容版本引起的链接器错误</strong>，当你理解了链接器如何<strong>解析引用、什么是库以及链接器是如何使用库来解析引用时，你就能够较好的解决这类问题</strong></p></li>
+<li><p><strong>理解链接器将帮助你避免一些危险的编程错误</strong>。Linux链接器解析引用时所做的决定可以不动声色影响你程序的正确性。在默认情况下，错误的定义多个全局变量的程序将通过链接器，而不产生任何警告信息。</p></li>
+<li><p><strong>理解链接器将帮助你理解语言的作用域规则是如何实现的</strong>。全局变量和局部变量、static变量和static函数，在低层到底有何区别？</p></li>
+<li><p><strong>理解链接器帮助你理解其他重要系统概念</strong>。链接器产生的可执行目标文件咋子系统功能中扮演关键角色，如<strong>加载运行程序、虚拟内存、分页、内存映射。</strong></p></li>
+<li><p><strong>理解链接器将使你能够利用共享库</strong>。共享库和动态链接在现代操作系统日益重要，掌握如何动态链接原理极其重要。</p></li>
+</ul>
+<span id="more"></span>
+<h4 id="编译器驱动程序">1.2 编译器驱动程序</h4>
+<p>我们将以下面两个源程序<code>main.c</code>和<code>sum.c</code>作为例子，来说明静态链接器<code>ld</code>的工作流程。 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/main.png" width="700"></p>
+<ul>
+<li><p>首先我们在<code>shell</code>输入以下命令来调用GCC驱动程序（下面分析以<code>main.c</code>为例）： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o prog main.c sum.c</span><br></pre></td></tr></table></figure> 下图概括了从源文件翻译成可执行文件时的行为（若想看这些步骤，加入<code>-v</code>): <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/staticlink.png" width="600"></p>
+<ul>
+<li>输入上述语句后，会先执行C预处理器<code>cpp</code>，它将源程序<code>main.c</code>经过宏替换、头文件展开后生成一个中间文件<code>main.i</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpp [other arguments] main.c /tmp/main.i</span><br></pre></td></tr></table></figure></li>
+<li>接下来，运行C编译器<code>ccl</code>，它将预处理后的文件<code>main.i</code>进行编译，生成汇编文件<code>main.s</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ccl /tmp/main.i -Og [other arguments] -o /tmp/main.s</span><br></pre></td></tr></table></figure></li>
+<li>接着，驱动程序运行汇编器<code>as</code>，它将汇编文件翻译成一个可重定位目标文件<code>mian.o</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">as [other arguments] -o tmp.main.o /tmp/main.s</span><br></pre></td></tr></table></figure></li>
+<li>同样方式得到<code>sum.o</code>。最后，运行链接器程序<code>ld</code>，将<code>main.o</code>和<code>sum.o</code>以及一些比如的系统目标文件组合起来，创建一个可执行文件<code>prog</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ld -o prog [system object files <span class="keyword">and</span> args] /tmp/main.o tmp/sum.o</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
+<h4 id="静态链接器">1.3 静态链接器</h4>
+<p>静态链接器以一组可重定位目标文件和命令行参数作为输入，生成一个完全链接、可加载运行的可执行文件作为输出。<strong>输入的可重定位目标文件由各种代码和数据节组成</strong>。在构造可执行文件中，链接器主要完成两个任务：</p>
+<ul>
+<li><strong>符号解析：</strong>每个符号对应一个函数、一个全局变量和一个静态变量，符号解析的目的就是将每个符号引用正好和一个符号定义关联起来。那么当然在不同目标文件中引用的同一全局变量或函数，链接器需要将其解析为同一个实体。**</li>
+<li><strong>重定位</strong>：地址重定位指的是在链接过程中，需要将不同目标文件中的函数和变量的地址进行调整，使得它们在最终的可执行文件中能够正确地链接到一起。生成可执行文件</li>
+</ul>
+<p><strong>目标文件有三种形式：</strong></p>
+<ul>
+<li><strong>可重定位目标文件</strong>：包含二进制代码和数据，其形式可以在编译时与其他可重定位目标文件合并起来，创建一个可执行文件</li>
+<li><strong>可执行文件</strong>：包含二进制代码和数据，其形式可直接复制到内存并执行</li>
+<li><strong>共享目标文件</strong>：一种特殊类型的可重定位目标文件，可以在加载或者运行时被动态地加载进内存并链接。</li>
+</ul>
+<h4 id="可重定位目标文件">1.4 可重定位目标文件</h4>
+<p><img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/ELF.png" width="500"></p>
+<ul>
+<li><p><code>.text</code>段存放编译好的机器代码。查看机器代码，需要使用反汇编工具objdump将机器代码转换成汇编代码。由于4字节对齐，<code>.text</code>大小为0x51，实际占用空间大小为0x54。</p></li>
+<li><p><strong><code>.data</code>段用来存放已初始化的全局变量和静态变量的值。</strong></p></li>
+<li><p><strong><code>.bss</code>段存放未初始化的全局变量和静态变量，需要注意的是，被初始化为<code>0</code>的全局变量和静态变量也存放在bss中</strong>。<code>bss</code>可理解为<code>Better Save Space</code>。局部变量既不在<code>data</code>中，也不在<code>bss</code>中。实际上<code>bss</code>段并不占据实际的空间，它仅仅是只是一个占位符。</p></li>
+<li><p><strong><code>.rodata</code>段存放只读数据。例如 <code>printf</code>中的格式串和<code>switch</code>语句中的跳转表以及<code>const全局变量</code>就是存放在这个区域。</strong></p></li>
+<li><p><code>.symtab</code>符号表，它存放在程序中定义和引用的函数和全局变量的信息</p></li>
+</ul>
+<h4 id="符号和符号表">1.5 符号和符号表</h4>
+<p>每个可重定位模块<code>m</code>都有一个符号表、它包含<code>m</code>定义的和引用的符号的信息，在链接器上下文，有三种不同符号：</p>
+<ul>
+<li>全局符号：由模块<code>m</code>定义并能被其他模块引用的去安居符号，其对应于非静态的函数和全局变量</li>
+<li>外部符号：由其他模块定义被被模块<code>m</code>引用的去安居符号，称为外部符号，对应于其他模块定义的非静态C函数和全局变量</li>
+<li>局部符号：只被模块m定义和引用的局部符号，对应于static函数、static全局变量。这些符号在模块<code>m</code>中可见，单不能被其他模块引用</li>
+</ul>
+<blockquote>
+<p>局部变量由堆栈管理，因此链接器是不知道局部变量的，因此在链接器对变量的是对函数和全局变量</p>
+</blockquote>
+<p><strong>链接器解析多重定义的全局符号：</strong>对于全局符号，若有多个模块定义同名的全局符号的情况，会发生什么？</p>
+<p>首先编译器向汇编器输出每个全局符号，这些符号或是强或是弱，汇编器把这个信息隐含的编码在可重定位文件的符号表里。函数和以初始化的全局变量是强符号，未初始化的全局变量是弱符号，Linux有以下规则：</p>
+<ul>
+<li>不允许有多个同名的强符号</li>
+<li>如果有一个强符号和多个弱符号同名，那么选择强符号</li>
+<li>如果有多个弱符号同名，那么可任选一个</li>
+</ul>
+<h4 id="静态库">1.6 静态库</h4>
+<ul>
+<li><strong>静态库：将所有编译好的目标模块(<code>sum.o\mul.o</code>等待)打包成一个单独的文件，这个文件就是静态库</strong>。它可以用作链接器的输入，当链接器构造一个可执行文件时，它只复制静态库里被应用程序引用的目标模块。一般都以<code>libxxx.a</code>作为静态库标识</li>
+</ul>
+<p><strong>制作静态库</strong>：</p>
+<ul>
+<li>首先编译处<code>xxx.o文件</code></li>
+<li>接着利用AR工具打包<code>**.o</code>文件 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -c add.c mul.c</span><br><span class="line">ar rcs libmath.a add.o mul.o</span><br></pre></td></tr></table></figure></li>
+<li>使用第三方静态库 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o main main.c -L. -lmath</span><br></pre></td></tr></table></figure> 示例如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ar rcs libmath.a mul.o sum.o Math.h</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ls</span><br><span class="line">Math.h  libmath.a  main.cpp  mul.cpp  mul.o  sum.cpp  sum.o</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -o main main.cpp -L. -lmath</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ls</span><br><span class="line">Math.h  libmath.a  main  main.cpp  mul.cpp  mul.o  sum.cpp  sum.o</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ./main</span><br><span class="line"><span class="number">5</span> <span class="number">6</span></span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ rm -rf Math.h</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ rm -rf main</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -o main main.cpp -L. -lmath</span><br><span class="line">main.cpp:<span class="number">2</span>:<span class="number">10</span>: fatal error: Math.h: No such file <span class="keyword">or</span> directory</span><br><span class="line"> <span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Math.h&quot;</span></span></span><br><span class="line">          ^~~~~~~~</span><br><span class="line">compilation terminated.</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ls</span><br><span class="line">libmath.a  main.cpp  mul.cpp  mul.o  sum.cpp  sum.o</span><br></pre></td></tr></table></figure></li>
+<li>从上面可看出，<code>-L.</code>表示从当前目录找该库；</li>
+<li>删除<code>Math.h</code>后出错，说明头文件寻找并不会在<code>libmath.a</code>寻找</li>
+</ul>
+<h5 id="链接器如何使用静态库来解析引用">1.6.1 链接器如何使用静态库来解析引用</h5>
+<p>在符号解析阶段，<strong>链接器会安装我们键入的命令行顺序从左到右来扫描可重定位文件和静态库存档文件</strong>，在这次扫描中，链接器会维护三个集合<code>E、U、D</code></p>
+<ul>
+<li><code>E</code>：可重定位目标文件集合，在这个集合的可重定位目标文件最后会被合并起来形成可执行文件</li>
+<li><code>U</code>：一个未解析符号（即应用了但尚未定义的符号）集合，这个集合扫描完成后，应该是空的，否则会程序终止，出现解析错误</li>
+<li><code>D</code>：已经定义的符号集合</li>
+</ul>
+<p>初始化上述的三个集合都为空，执行命令行：</p>
+<ul>
+<li>对于命令的每个文件<code>f</code>，链接器先判断是一个目标文件还是库存档文件。
+<ul>
+<li><strong>若<code>f</code>是目标文件，则会把<code>f</code>添加到<code>E</code>，并且修改<code>U\D</code>来来反映<code>f</code>中的符号定义和引用</strong></li>
+<li><strong>若<code>f</code>是静态库存档文件，那么链接器就尝试匹配<code>U</code>中未解析的符号和由存档文件成员定义的符号。如果某个存档文件成员<code>m</code>，定义了一个符号解析<code>U</code>中的一个引用，那么九将<code>m</code>加入到<code>E</code>中。对存档文件的成员目标文件依次进行这个过程，直到<code>U\D</code>都不再变化。此时，任何不在<code>E</code>中的成员目标文件被丢弃。</strong></li>
+</ul></li>
+<li>如果当前链接器完成命令行上输入文件的扫描后，<code>U</code>非空，链接器就会输出一个错误终止，否则，就是要E中目标文件构建合并可执行文件。</li>
+</ul>
+<p><strong>下面就是一个典型因命令行顺序不对，造成的解析引用错误（未定义引用错误）</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -L. -lmath -o main main.cpp</span><br><span class="line">/tmp/ccZFaj3X.o: In function `main<span class="number">&#x27;</span>:</span><br><span class="line">main.cpp:(.text+<span class="number">0x13</span>): undefined reference to `<span class="built_in">Sum</span>(<span class="type">int</span>, <span class="type">int</span>)&#x27;</span><br><span class="line">main.cpp:(.text+<span class="number">0x25</span>): undefined reference to `<span class="built_in">Mul</span>(<span class="type">int</span>, <span class="type">int</span>)&#x27;</span><br><span class="line">collect2: error: ld returned <span class="number">1</span> exit status</span><br></pre></td></tr></table></figure> 正确的命令行：</p>
+<ul>
+<li><strong>一般生成的可执行文件在最前面</strong></li>
+<li><strong>接着是各种源文件</strong></li>
+<li><strong>把库文件放在最后</strong></li>
+</ul>
+<h4 id="共享库">1.7 共享库</h4>
+<p>链接器将目标文件和库文件的代码和数据全部拷贝到可执行文件中，形成一个独立的、包含所有必需代码和数据的可执行文件。在运行时，可执行文件不需要依赖外部库文件，所有需要的代码和数据都已经包含在可执行文件中，因此</p>
+<ul>
+<li><strong>优点：对运行环境的依赖性较小，具有较好的兼容性,方便分发和部署，不需要外部依赖</strong></li>
+<li><strong>缺点：生成的程序比较大，需要更多的系统资源，在装入内存时会消耗更多的时间；库函数有了更新，必须重新编译应用程序</strong></li>
+</ul>
+<p>共享库是为了解决静态缺点的一种方法，<strong>共享库也是目标模块，在运行或加载时，可以加载带任意的内存地址，并行一个内存中的程序链接起来，这个过程称为动态链接</strong>。动态库在Linux当中未<code>libxxx.so</code>，在windows中称为<code>ddl</code></p>
+<p><img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/share.png" width="500"></p>
+<ul>
+<li>首先，在任何给定的文件系统中，对于一个库只有一个<code>so</code>文件，所有引用该库的可执行目标文件共享这个<code>.so</code>文件的代码和数据，而不是像静态库的内容那样复制和嵌入带引用它们的可执行文件中</li>
+<li>其次，在内存中，一个共享库的<code>.txt</code>节的一个副本可以被不同正在运行的进程共享。</li>
+</ul>
+<p>构造共享库 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fpic -o libmath.so sum.cpp mul.cpp</span><br></pre></td></tr></table></figure> 使用： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -shared -fpic -o libmath.so sum.cpp mul.cpp</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ls</span><br><span class="line">Math.h  libmath.a  libmath.so  main.cpp  mul.cpp  sum.cpp</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ g++ -o prog2 main.cpp ./libmath.so</span><br><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/code/link$ ./prog2</span><br></pre></td></tr></table></figure> <strong>动态库链接虽然克服了静态库的缺点，但是由于其依赖动态库，不能独立运行，因此动态库依赖版本问题严重。如果库文件版本或路径发生变化，可能会导致程序无法正常运行</strong></p>
+<h4 id="从应用程序中加载和链接共享库">1.8 从应用程序中加载和链接共享库</h4>
+<p>上面介绍的静态库和动态库链接都是在编译时链接到应用的，<strong>然而有些程序还可能在它运行时进行动态链接器加载和链接某个共享库，这就是运行时加载和链接。</strong></p>
+<ul>
+<li><strong>分发软件</strong>：微软应用常常利用共享库来分发软件更新。</li>
+<li><strong>高性能Web服务器</strong>：许多We服务器生成动态内容，比如个性化的Web页面、和广告标语。</li>
+</ul>
+<p>上面的思路是将每个生成动态内容的函数打包在共享库，当一个Web浏览器的请求到达时，服务器动态加载和链接适当的函数，然后直接调用它。</p>
+<p>Linux系统为动态链接器提供了一个简单的接口，允许应用程序在运行时加载和链接共享库 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlopen.png" width="700"> <code>dlsym</code>的函数参数是一个指向前面已经打开的共享库句柄和一个symbol，如果该名字存在，返回呼号地址，否则返回<code>NULL</code> <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/DLSYM.png" width="700"> <code>dlclose</code>果没有其他人在使用这个共享库，就关闭 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlclose.png" width="700"> <code>dlerror</code>打印调用三个函数最近的错误 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlerror.png" width="700"></p>
+<p>示例： <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example.png" width="700"> <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example2.png" width="700"></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag"># 深入理解计算机系统</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/" rel="prev" title="深入理解计算机系统-存储器层次结构">
+      <i class="fa fa-chevron-left"></i> 深入理解计算机系统-存储器层次结构
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="next" title="操作系统">
+      操作系统 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">1 链接器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 链接是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 编译器驱动程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 静态链接器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 可重定位目标文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%92%8C%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 符号和符号表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%BA%93"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 静态库</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E5%99%A8%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E5%BA%93%E6%9D%A5%E8%A7%A3%E6%9E%90%E5%BC%95%E7%94%A8"><span class="nav-number">1.6.1.</span> <span class="nav-text">1.6.1 链接器如何使用静态库来解析引用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 共享库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%92%8C%E9%93%BE%E6%8E%A5%E5%85%B1%E4%BA%AB%E5%BA%93"><span class="nav-number">1.8.</span> <span class="nav-text">1.8 从应用程序中加载和链接共享库</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">968k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">14:40</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

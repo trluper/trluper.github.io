@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1 线程（熟悉）  进程：程序是存放在存储介质上的一个可执行文件，而进程是程序执行的过程。进程的状态是变化的，其包括进程的创建、调度和消亡。因此程序是静态的，进程是动态的。是CPU分配资源的最小单位 线程：线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。线程是CPU调度的最小单位  1.1 进程和线程的区别  进程，直观点说，保存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统编程_线程">
+<meta property="og:url" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1 线程（熟悉）  进程：程序是存放在存储介质上的一个可执行文件，而进程是程序执行的过程。进程的状态是变化的，其包括进程的创建、调度和消亡。因此程序是静态的，进程是动态的。是CPU分配资源的最小单位 线程：线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。线程是CPU调度的最小单位  1.1 进程和线程的区别  进程，直观点说，保存">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/typeofpthread.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_create.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_join.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_detach.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_exit.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/quxiao.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/shuxing.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_attr.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/fengli.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_mutex_init.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_mutex_destroy.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_mutex_lock.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_mutex_unlock.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_init.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_destroy.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_rdlock.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_wrlock.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_unlock.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_cond_init.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_cond_destroy.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_cond_wait.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/abstime.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_cond_signal.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/signal_mutex.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/signal_sync.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_init.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_destroy.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_wait.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_post.png">
+<meta property="og:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_getvalue.png">
+<meta property="article:published_time" content="2023-02-18T02:14:24.000Z">
+<meta property="article:modified_time" content="2023-02-24T14:08:03.125Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="Linux coding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread.png">
+
+<link rel="canonical" href="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux系统编程_线程 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux系统编程_线程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-02-18 10:14:24" itemprop="dateCreated datePublished" datetime="2023-02-18T10:14:24+08:00">2023-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-24 22:08:03" itemprop="dateModified" datetime="2023-02-24T22:08:03+08:00">2023-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-coding/" itemprop="url" rel="index"><span itemprop="name">Linux coding</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="线程熟悉">1 线程（熟悉）</h4>
+<ul>
+<li><p><strong>进程：</strong>程序是存放在存储介质上的一个可执行文件，而进程是程序执行的过程。进程的状态是变化的，其包括进程的创建、调度和消亡。因此程序是静态的，进程是动态的。是CPU分配资源的最小单位</p></li>
+<li><p><strong>线程：</strong>线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。线程是CPU调度的最小单位</p></li>
+</ul>
+<h5 id="进程和线程的区别">1.1 进程和线程的区别</h5>
+<ul>
+<li><strong>进程</strong>，直观点说，保存在硬盘上的程序运行以后，会在内存空间里形成一个独立的内存体，这个内存体有自己的地址空间，有自己的堆，上级挂靠单位是操作系统。操作系统会以进程为单位，分配系统资源，所以我们也说，进程是CPU分配资源的最小单位。</li>
+</ul>
+<span id="more"></span>
+<ul>
+<li><p><strong>线程：</strong>线程存在与进程当中(进程可以认为是线程的容器)，<strong>线程是操作系统调度执行的最小单位。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源（如程序计数器，一组寄存器和栈），但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源，共享全局内存区域，包括初始话数据段data、未初始化数据段bss和堆内存段。（是为避免进程fork()产生写时拷贝的不必要时间和内存支出）</strong> <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread.png" width="400"></p></li>
+<li><strong>关系：</strong>
+<ul>
+<li>一个进程可有多个线程</li>
+<li>进程间的共享数据要依靠进程间通信工具，而线程在共享的全局内存区域很容易实现数据共享</li>
+<li>进程比线程消耗更多的计算机资源</li>
+<li>进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。</li>
+<li>进程间不会相互影响，而一个线程挂掉将导致整个进程挂掉</li>
+</ul></li>
+</ul>
+<h5 id="线程概览">1.2 线程概览</h5>
+<p>POSIX C的线程库<code>pthread</code>API定义了一干数据类型，下面列出了其中的一部分： <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/typeofpthread.png" width="500"> 进程可蜕变为线程。实际上，无论是创建进程的fork，还是创建线程的pthread_create，底层实现都是调用同一个内核函数<code>clone</code>。</p>
+<ul>
+<li>** Ø 如果复制对方的地址空间，那么就产出一个“进程”；---&gt;深拷贝**</li>
+<li>** Ø 如果共享对方的地址空间，就产生一个“线程”。---&gt;浅拷贝**</li>
+</ul>
+<p>Linux内核是不区分进程和线程的, 只在用户层面上进行区分。所以，线程所有操作函数<code>pthread_*</code>是库函数，而非系统调用。</p>
+<ul>
+<li><strong>线程共享资源包括有：</strong>
+<ul>
+<li><ol type="1">
+<li>文件描述符表</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>每种信号的处理方式</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>当前工作目录</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>用户ID和组ID</li>
+</ol></li>
+<li>5）内存地址空间<code>(.text/.data/.bss/heap/共享库)</code></li>
+</ul></li>
+<li><strong>线程非共享资源:</strong>
+<ul>
+<li><ol type="1">
+<li>线程id</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>处理器现场和栈指针(内核栈)</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>独立的线程栈空间(用户空间栈)</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>errno变量</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>信号屏蔽字</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>调度优先级</li>
+</ol></li>
+</ul></li>
+</ul>
+<p><strong><em>注：</em></strong>Linux中系统调用的错误都存储于<code>errno</code>中，<code>errno</code>由操作系统维护是一个全局整型变量，存储就近发生的错误，即下一次的错误码会覆盖掉上一次的错误。<strong><code>errno</code>是一个包含在<code>&lt;errno.h&gt;</code>中的预定义的外部int变量，用于表示最近一个函数调用是否产生了错误</strong>。但是显然，<code>errno</code>在多线程上会发生竞争，因此为适应多线程，各个线程独立拥有<code>errno</code>。简言概之，就是errno机制在保留Linux的报错方式同时，也是适应了多线程环境。</p>
+<h5 id="线程优缺点">1.3 线程优缺点</h5>
+<ul>
+<li><strong>优点：</strong>
+<ul>
+<li>Ø 提高程序并发性。</li>
+<li>Ø 开销小，共享全局内存区域</li>
+<li>Ø 数据通信、共享数据方便</li>
+</ul></li>
+<li><strong>缺点：</strong>
+<ul>
+<li>Ø 库函数，不稳定</li>
+<li>Ø 调试、编写困难、gdb不支持</li>
+<li>Ø 对信号支持不好</li>
+</ul></li>
+</ul>
+<p>优点相对突出，缺点均不是硬伤。Linux下由于实现方法导致进程、线程差别不是很大。 <strong><em>注意：gcc编译时要链接 -pthread</em></strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc <span class="number">5</span>pthread_self.c -pthread</span><br></pre></td></tr></table></figure></p>
+<h5 id="线程常用api">1.4 线程常用API</h5>
+<h6 id="pthread_self获取线程号">1.4.1 pthread_self：获取线程号</h6>
+<p>线程号只在它所属的进程环境中有效。一般来说应把<code>pthread_t</code>当作一结构体，而不是整型 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">pthread_t</span> <span class="title">pthread_self</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line"><span class="comment">/*功能：</span></span><br><span class="line"><span class="comment">	获取线程号</span></span><br><span class="line"><span class="comment">	返回值：调用线程的线程ID</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="pthread_equal线程号比较">1.4.2 pthread_equal：线程号比较</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">pthread_equal</span><span class="params">(<span class="type">pthread_t</span> t1,<span class="type">pthread_t</span> t2)</span></span>;</span><br><span class="line"><span class="comment">/*功能：</span></span><br><span class="line"><span class="comment">	判断线程号t1、t2是否相等，</span></span><br><span class="line"><span class="comment">	返回值：相等为非0，不等为0</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h6 id="pthread_create线程创建">1.4.3 pthread_create:线程创建</h6>
+<p>在一个线程中调用<code>pthread_create()</code>创建新的线程后，当前线程从<code>pthread_create()</code>返回继续往下执行，而新的线程所执行的代码由我们传给<code>pthread_create</code>的函数指针<code>start_routine</code>决定。 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_create.png" width="600"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//回调函数</span></span><br><span class="line"><span class="function"><span class="type">void</span>* <span class="title">thread_fun</span><span class="params">(<span class="type">void</span>* arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="type">int</span> num=*((<span class="type">int</span> *)arg);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;int the new thread:num=%d\n&quot;</span>,num);</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">pthread_t</span> tid;</span><br><span class="line">	<span class="type">int</span> test =<span class="number">100</span>;</span><br><span class="line">	<span class="comment">//创建线程</span></span><br><span class="line">	<span class="type">int</span> ret = <span class="built_in">pthread_create</span>(&amp;tid,<span class="literal">NULL</span>,thread_fun,(<span class="type">void</span>*)&amp;test);</span><br><span class="line">	<span class="keyword">if</span>(ret!=<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;error number:%d\n&quot;</span>,ret);</span><br><span class="line">		<span class="comment">//根据错误信号打印错误信息</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;error information:%s\n&quot;</span>,<span class="built_in">strerror</span>(ret));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> <strong><em>注：注：由于<code>pthread_create</code>的错误码不保存在<code>errno</code>中，因此不能直接用<code>perror()</code>打印错误信息，可以先用<code>strerror()</code>把错误码转换成错误信息再打印。</em></strong></p>
+<h6 id="pthread_join线程资源回收">1.4.4 pthread_join线程资源回收</h6>
+<p><strong>调用该函数的线程将挂起等待，直到id为tid的线程终止</strong>。tid线程以不同的方法终止，通过pthread_join得到的终止状态是不同的，总结如下：</p>
+<ul>
+<li><ol type="1">
+<li>如果<code>tid</code>线程通过return返回，<code>retval</code>所指向的单元里存放的是<code>tid</code>线程函数的返回值。</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>如果<code>thread</code>线程被别的线程调用<code>pthread_cancel</code>异常终止掉，<code>retval</code>所指向的单元里存放的是常数PTHREAD_CANCELED。</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>如果<code>thread</code>线程是自己调用<code>pthread_exit</code>终止的，<code>retval</code>所指向的单元存放的是传给<code>pthread_exit</code>的参数。 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_join.png" width="600"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> * <span class="title">thead</span><span class="params">(<span class="type">void</span>* arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">int</span> num =<span class="number">123</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;after 2 seconds, thread will return\n&quot;</span>);</span><br><span class="line">	<span class="built_in">sleep</span>(<span class="number">2</span>);</span><br><span class="line">	<span class="keyword">return</span> &amp;num;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">pthread_t</span> tid;</span><br><span class="line">	<span class="type">void</span> * value=<span class="literal">NULL</span>;</span><br><span class="line">	<span class="type">int</span> ret=<span class="number">0</span>;</span><br><span class="line">	<span class="comment">//创建线程</span></span><br><span class="line">	<span class="built_in">pthread_create</span>(&amp;tid,<span class="literal">NULL</span>,thread_fun,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//等待线程号为tid的线程，如果此线程结束就回收其资源</span></span><br><span class="line">	<span class="comment">//&amp;value保存线程退出的返回值</span></span><br><span class="line">	<span class="built_in">pthread_join</span>(tid,&amp;value);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;value=%d\n&quot;</span>,*(<span class="type">int</span>*)value);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol></li>
+</ul>
+<h6 id="pthread_detach线程分离">1.4.5 pthread_detach:线程分离</h6>
+<p><strong>一般情况下，线程终止后，其终止状态一直保留到其它线程调用pthread_join获取它的状态为止。但是线程也可以被置为detach状态，这样的线程一旦终止就立刻回收它占用的所有资源，而不保留终止状态</strong></p>
+<p>不能对一个已经处于detach状态的线程调用pthread_join，这样的调用将返回EINVAL错误。也就是说，如果已经对一个线程调用了pthread_detach就不能再调用pthread_join了。 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_detach.png" width="600"></p>
+<h6 id="pthread_exit线程退出">1.4.6 pthread_exit线程退出</h6>
+<p>在进程中我们可以调用exit函数或_exit函数来结束进程，在一个线程中我们可以通过以下三种在不终止整个进程的情况下停止它的控制流。</p>
+<ul>
+<li>线程从执行函数中返回。</li>
+<li>线程调用<code>pthread_exit</code>退出线程。</li>
+<li>线程可以被同一进程中的其它线程取消。 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_exit.png" width="600"></li>
+</ul>
+<h6 id="pthread_cancle">1.4.7 pthread_cancle</h6>
+<p>线程的取消并不是实时的，而又一定的延时。需要等待线程到达某个取消点(检查点)。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">pthread_cancel</span><span class="params">(<span class="type">pthread_t</span> thread)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">功能：杀死线程</span></span><br><span class="line"><span class="comment">参数：thread:目标线程ID</span></span><br><span class="line"><span class="comment">返回值：</span></span><br><span class="line"><span class="comment">	成功：0</span></span><br><span class="line"><span class="comment">	失败：错误编号</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure> <strong>取消点：</strong>是线程检查是否被取消，并按请求进行动作的一个位置。通常是一些系统调用creat，open，pause，close，read，write..... 执行命令man 7 pthreads可以查看具备这些取消点的系统调用列表。可粗略认为一个系统调用(进入内核)即为一个取消点。 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/quxiao.png" width="600"></p>
+<h5 id="线程属性">1.5 线程属性</h5>
+<p>Linux下线程的属性是可以根据实际项目需要，进行设置，之前我们讨论的线程都是采用线程的默认属性，默认属性已经可以解决绝大多数开发时遇到的问题。</p>
+<p>如我们对程序的性能提出更高的要求那么需要设置线程属性，比如可以通过设置线程栈的大小来降低内存的使用，增加最大线程个数。 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/shuxing.png" width="600"> <strong>主要结构体成员：</strong></p>
+<ul>
+<li><ol type="1">
+<li>线程分离状态</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>线程栈大小（默认平均分配）</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>线程栈警戒缓冲区大小（位于栈末尾）</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>线程栈最低地址</li>
+</ol></li>
+</ul>
+<p>属性值不能直接设置，须使用相关函数进行操作，初始化的函数为<code>pthread_attr_init</code>，这个函数必须在<code>pthread_create</code>函数之前调用。之后须用<code>pthread_attr_destroy</code>函数来释放资源。 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_attr.png" width="600"></p>
+<h6 id="线程分离状态">1.5.1 线程分离状态</h6>
+<p><strong>线程的分离状态决定一个线程以什么样的方式来终止自己。</strong></p>
+<ul>
+<li><p><strong>非分离状态</strong>：线程的默认属性是非分离状态，这种情况下，原有的线程等待创建的线程结束。只有当pthread_join()函数返回时，创建的线程才算终止，才能释放自己占用的系统资源。</p></li>
+<li><p><strong>分离状态</strong>：分离线程没有被其他的线程所等待，自己运行结束了，线程也就终止了，马上释放系统资源。应该根据自己的需要，选择适当的分离状态。 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/fengli.png" width="600"></p></li>
+</ul>
+<h4 id="线程同步之互斥锁">2. 线程同步之互斥锁</h4>
+<p>在多核CPU中，同时运行的多个任务可能：</p>
+<ul>
+<li>都需要访问/使用同一种资源，但对该资源操作不是原子操作，可能出现不可预知的错误</li>
+<li>多个任务之间有依赖关系，某个任务的运行依赖于另一个任务</li>
+</ul>
+<p><strong>同步和互斥就是用于解决这两个问题的。</strong></p>
+<ul>
+<li><p><strong>互斥：是指散步在不同任务之间的若干程序片断，当某个任务运行其中一个程序片段时，其它任务就不能运行它们之中的任一程序片段，只能等到该任务运行完这个程序片段后才可以运行</strong>。最基本的场景就是：一个公共资源同一时刻只能被一个进程或线程使用，多个进程或线程不能同时使用公共资源。</p></li>
+<li><p><strong>同步：是指散步在不同任务之间的若干程序片断，它们的运行必须严格按照规定的某种先后次序来运行，这种先后次序依赖于要完成的特定的任务。</strong>最基本的场景就是：两个或两个以上的进程或线程在运行过程中协同步调，按预定的先后次序运行。比如 A 任务的运行依赖于 B 任务产生的数据。</p></li>
+</ul>
+<h5 id="互斥锁保护对共享变量的访问">2.1 互斥锁：保护对共享变量的访问</h5>
+<p>在上面我们介绍过线程的<strong>主要优势就是能通过全局变量来共享信息，但是必须保证多个线程不会同时修改同一变量或者某一线程不会读取正由其他线程修改的变量</strong>。临界区即指访问某一共享资源代码片段时，这段代码片段的执行应为<strong>原子操作，即其他线程不能终止该片段执行</strong>，否则在没有进行互斥机制下会出错： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> glob=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span>* <span class="title">threadFunc</span><span class="params">(<span class="type">void</span>* arg)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> loops =*((<span class="type">int</span>*)arg);</span><br><span class="line">	<span class="type">int</span> loc,j;</span><br><span class="line">	<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;loops;j++)&#123;</span><br><span class="line">		loc=glob;</span><br><span class="line">		loc++;</span><br><span class="line">		glob=loc;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,cahr* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">pthread_t</span> t1,t2;</span><br><span class="line">	<span class="type">int</span> loops,s;</span><br><span class="line">	loops=<span class="number">10000</span>;</span><br><span class="line">	s=<span class="built_in">pthread_create</span>(&amp;t1,<span class="literal">NULL</span>,threadFunc,&amp;loops);</span><br><span class="line">	s=<span class="built_in">pthread_create</span>(&amp;t2,<span class="literal">NULL</span>,threadFunc,&amp;loops);</span><br><span class="line">	<span class="built_in">pthread_detach</span>(t1);</span><br><span class="line">	<span class="built_in">pthread_detach</span>(t2);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;glob=%d\n&quot;</span>,glob);</span><br><span class="line">	<span class="built_in">exit</span>(EXIT_SUCCESS);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> <strong>上述代码中<code>glob</code>按正常来说应该输出为20000，但是输出却是少于这个数的，就是因为多线程对共享区域执行非原子操作时出现的问题，必须使用互斥量</strong></p>
+<p>线程里有这么一把锁叫互斥锁（<code>mutex</code>），也叫互斥量，互斥锁是一种简单的加锁的方法来控制对共享资源的访问，互斥锁只有两种状态,即加锁(<code>lock</code>)和解锁(<code>unlock</code>)。互斥锁的操作流程如下：</p>
+<ul>
+<li>1）在访问共享资源后临界区域前，对互斥锁进行加锁。</li>
+<li>2）在访问完成后释放互斥锁导上的锁。</li>
+<li>3）对互斥锁进行加锁后，任何其他试图再次对互斥锁加锁的线程将会被阻塞，直到锁被释放。</li>
+</ul>
+<p>互斥锁的数据类型是： <code>pthread_mutex_t</code></p>
+<h5 id="互斥锁常用函数">2.2 互斥锁常用函数</h5>
+<h6 id="pthread_mutex_init函数初始化一个互斥锁">2.2.1 pthread_mutex_init()函数：初始化一个互斥锁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_mutex_init.png" width="600"> <strong><em><code>restrict</code>，C语言中的一种类型限定符（Type Qualifiers），用于告诉编译器，对象已经被指针所引用，不能通过除该指针外所有其他直接或间接的方式修改该对象的内容。</em></strong></p>
+<h6 id="pthread_mutex_destroy函数销毁互斥锁">2.2.2 pthread_mutex_destroy函数:销毁互斥锁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_mutex_destroy.png" width="600"></p>
+<h6 id="pthread_mutex_lock函数上锁">2.2.3 pthread_mutex_lock函数：上锁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_mutex_lock.png" width="600"></p>
+<h6 id="pthread_mutex_unlock函数解锁">2.2.4 pthread_mutex_unlock函数：解锁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_mutex_unlock.png" width="600"></p>
+<h6 id="示例打印机">2.2.5 示例：打印机</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">pthread_mutex_t</span> mutex;		<span class="comment">//互斥量</span></span><br><span class="line"><span class="comment">//打印机</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printer</span><span class="params">(<span class="type">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">pthread_mutex_lock</span>(&amp;mutex);		<span class="comment">//上锁</span></span><br><span class="line">	<span class="keyword">while</span>(*str!=<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">putchar</span>(*str);</span><br><span class="line">		<span class="built_in">fflush</span>(stdout);</span><br><span class="line">		str++;</span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="built_in">pthread_mutex_unlock</span>(&amp;mutex);	<span class="comment">//解锁</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//线程一</span></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">thread_fun_1</span><span class="params">(<span class="type">void</span>*arg)</span></span>&#123;</span><br><span class="line">	<span class="type">char</span>* str =<span class="string">&quot;hello&quot;</span>;</span><br><span class="line">	<span class="built_in">printer</span>(str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//线程二</span></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">thread_fun_2</span><span class="params">(<span class="type">void</span>* arg)</span></span>&#123;</span><br><span class="line">	<span class="type">char</span>* str=<span class="string">&quot;world&quot;</span>;</span><br><span class="line">	<span class="built_in">printer</span>(str);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">pthread_t</span> t1,t2;</span><br><span class="line">	<span class="comment">//初始化一个互斥锁</span></span><br><span class="line">	<span class="built_in">pthread_mutex_init</span>(&amp;mutex,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//创建两个线程，处理函数分别为thread_fun_1\thread_fun_2</span></span><br><span class="line">	s=<span class="built_in">pthread_create</span>(&amp;t1,<span class="literal">NULL</span>,thread_fun_1,<span class="literal">NULL</span>);</span><br><span class="line">	s=<span class="built_in">pthread_create</span>(&amp;t2,<span class="literal">NULL</span>,thread_fun_2,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">pthread_detach</span>(t1);</span><br><span class="line">	<span class="built_in">pthread_detach</span>(t2);</span><br><span class="line">	<span class="built_in">pthread_mutex_destroy</span>(&amp;mutex);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="死锁">2.3 死锁</h5>
+<p><strong>死锁是指两个或两个以上的线程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。</strong></p>
+<h6 id="死锁引起的原因">2.3.1 死锁引起的原因</h6>
+<ul>
+<li><strong>竞争不可抢占资源引起死锁（</strong>不可抢占是指没有使用完的资源，不能被抢占）</li>
+<li><strong>竞争可消耗资源引起死锁</strong>：有p1，p2，p3三个进程，p1向p2发送消息并接受p3发送的消息，p2向p3发送消息并接受p1的消息，p3向p1发送消息并接受p2的消息，如果设置是先接到消息后发送消息，则所有的消息都不能发送，这就造成死锁。</li>
+<li><strong>进程推进顺序不当引起死锁</strong>：有进程p1，p2，都需要资源A，B，本来可以p1运行A --&gt; p1运行B --&gt; p2运行A --&gt; p2运行B，但是顺序换了，p1运行A时p2运行B，容易发生第一种死锁。互相抢占资源。</li>
+</ul>
+<h6 id="死锁的必要条件">2.3.2 死锁的必要条件</h6>
+<ul>
+<li><strong>互斥条件：</strong>某资源只能被一个进程使用，其他进程请求该资源时，只能等待，直到资源使用完毕后释放资源。</li>
+<li><strong>请求和保持条件</strong>：程序已经保持了至少一个资源，但是又提出了新要求，而这个资源被其他进程占用，自己占用资源却保持不放。</li>
+<li><strong>不可抢占条件：</strong>进程已获得的资源没有使用完，不能被抢占。</li>
+<li><strong>循环等待条件：</strong>必然存在一个循环链。</li>
+</ul>
+<h6 id="预防死锁的思路">2.3.3 预防死锁的思路</h6>
+<ul>
+<li><strong>预防死锁：</strong>破坏死锁的四个必要条件中的一个或多个来预防死锁。</li>
+<li><strong>避免死锁</strong>：和预防死锁的区别就是，在资源动态分配过程中，用某种方式防止系统进入不安全的状态。</li>
+<li><strong>检测死锁</strong>：运行时出现死锁，能及时发现死锁，把程序解脱出来</li>
+<li><strong>解除死锁</strong>：发生死锁后，解脱进程，通常撤销进程，回收资源，再分配给正处于阻塞状态的进程。</li>
+</ul>
+<h6 id="预防死锁的方法">2.3.4 预防死锁的方法</h6>
+<ul>
+<li><strong>破坏请求和保持条件</strong>
+<ul>
+<li><strong>协议1：</strong>所有进程开始前，必须一次性地申请所需的所有资源，这样运行期间就不会再提出资源要求，破坏了请求条件，即使有一种资源不能满足需求，也不会给它分配正在空闲的资源，这样它就没有资源，就破坏了保持条件，从而预防死锁的发生。</li>
+<li><strong>协议2：</strong>允许一个进程只获得初期的资源就开始运行，然后再把运行完的资源释放出来。然后再请求新的资源。</li>
+</ul></li>
+<li><p>** 破坏不可抢占条件**：当一个已经保持了某种不可抢占资源的进程，提出新资源请求不能被满足时，它必须释放已经保持的所有资源，以后需要时再重新申请 。</p></li>
+<li><p><strong>破坏循环等待条件：</strong>对系统中的所有资源类型进行线性排序，然后规定每个进程必须按序列号递增的顺序请求资源。假如进程请求到了一些序列号较高的资源，然后有请求一个序列较低的资源时，必须先释放相同和更高序号的资源后才能申请低序号的资源。多个同类资源必须一起请求。</p></li>
+</ul>
+<h4 id="线程同步之读写锁">3 线程同步之读写锁</h4>
+<p>实际上多个线程同时读访问共享资源并不会导致问题。但互斥锁的排他性，导致其它进程或线程无法读取，为克服这个缺陷，就引入了读写锁。 在对数据的读写操作中，更多的是读操作，写操作较少，例如对数据库数据的读写应用。为了满足当前能够允许多个读出，但只允许一个写入的需求，线程提供了<strong>读写锁</strong>来实现。</p>
+<h5 id="读写锁的特点">3.1 读写锁的特点</h5>
+<ul>
+<li>1）如果有其它线程读数据，则允许其它线程执行读操作，但不允许写操作。</li>
+<li>2）如果有其它线程写数据，则其它线程都不允许读、写操作。</li>
+</ul>
+<p><strong>读写锁分为读锁和写锁，规则如下：</strong></p>
+<ul>
+<li>1）如果某线程申请了读锁，其它线程可以再申请读锁，但不能申请写锁。</li>
+<li>2）如果某线程申请了写锁，其它线程不能申请读锁，也不能申请写锁。</li>
+</ul>
+<p>POSIX 定义的读写锁的数据类型是： <code>pthread_rwlock_t</code></p>
+<h5 id="读写锁常用函数">3.2 读写锁常用函数</h5>
+<h6 id="pthread_rwlock_init函数初始化读写锁">3.2.1 pthread_rwlock_init函数：初始化读写锁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_init.png" width="600"></p>
+<h6 id="pthread_rwlock_destroy函数销毁读写锁">3.2.2 pthread_rwlock_destroy函数：销毁读写锁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_destroy.png" width="600"></p>
+<h6 id="pthread_rwlock_rdlock函数在读写锁上获取读锁">3.2.3 pthread_rwlock_rdlock函数：在读写锁上获取读锁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_rdlock.png" width="600"></p>
+<h6 id="pthread_rwlock_wrlock函数获取写锁">3.2.4 pthread_rwlock_wrlock函数：获取写锁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_wrlock.png" width="600"></p>
+<h5 id="pthread_rwlock_unlock函数解锁">3.2.5 pthread_rwlock_unlock函数：解锁</h5>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_rwlock_unlock.png" width="600"></p>
+<h4 id="线程同步之条件变量">4 线程同步之条件变量</h4>
+<p><strong>与互斥锁不同，条件变量是用来等待而不是用来上锁的，条件变量本身不是锁！条件变量用来自动阻塞一个线程，直到某特殊情况发生为止。通常条件变量和互斥锁同时使用。条件变量就共享变量的状态改变发出通知，而互斥量则提供对该共享变量访问的互斥</strong>。条件变量的类型: <code>pthread_cond_t</code></p>
+<p>条件变量的两个动作：</p>
+<ul>
+<li>条件不满, 阻塞线程</li>
+<li>当条件满足, 通知阻塞的线程开始工作</li>
+</ul>
+<p><strong>条件变量的优点是相较于mutex而言，条件变量可以减少竞争提升效率。如直接使用mutex，除了生产者、消费者之间要竞争互斥量以外，消费者之间也需要竞争互斥量，且如果汇聚（链表）中没有数据，消费者之间竞争互斥锁是无意义的还会浪费CPU资源。有了条件变量机制以后，只有生产者完成生产，才会引起消费者之间的竞争。提高了程序效率。</strong></p>
+<h5 id="条件变量常用函数">4.1 条件变量常用函数</h5>
+<h6 id="pthread_cond_init函数初始化条件变量">4.1.1 pthread_cond_init函数：初始化条件变量</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_cond_init.png" width="600"></p>
+<h6 id="pthread_cond_destroy函数销毁条件变量">4.1.2 pthread_cond_destroy函数：销毁条件变量</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_cond_destroy.png" width="600"></p>
+<h6 id="pthread_cond_wait函数阻塞等待">4.1.3 pthread_cond_wait函数：阻塞等待</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_cond_wait.png" width="600"> <strong>abstime补充说明：</strong> <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/abstime.png" width="600"></p>
+<h6 id="pthread_cond_signal函数唤醒至少一个阻塞在条件变量上的线程">4.1.4 pthread_cond_signal函数：唤醒至少一个阻塞在条件变量上的线程</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/pthread_cond_signal.png" width="600"></p>
+<h5 id="示例生产者消费者模型">4.2 示例：生产者消费者模型</h5>
+<p>线程同步典型的案例即为生产者消费者模型，而借助条件变量来实现这一模型，是比较常见的一种方法。 <strong>假定有两个线程，一个模拟生产者行为，一个模拟消费者行为。两个线程同时操作一个共享资源（一般称之为汇聚），生产向其中添加产品，消费者从中消费掉产品。</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//节点结构</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">node</span>&#123;</span><br><span class="line">	<span class="type">int</span> data;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">node</span>* next;</span><br><span class="line">&#125;Node;</span><br><span class="line"></span><br><span class="line"><span class="comment">//永远指向链表头部的指针</span></span><br><span class="line">Node* head=<span class="literal">NULL</span>;</span><br><span class="line"><span class="comment">//线程同步-互斥锁</span></span><br><span class="line"><span class="type">pthread_mutex_t</span> mutex;</span><br><span class="line"><span class="comment">//阻塞线程-条件变量</span></span><br><span class="line"><span class="type">pthread_cond_t</span> cond;</span><br><span class="line"><span class="comment">//生产者</span></span><br><span class="line"><span class="function"><span class="type">void</span>* <span class="title">producer</span><span class="params">(<span class="type">void</span>* arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//创建一个链表的节点</span></span><br><span class="line">		Node* pnew =(Node*)<span class="built_in">malloc</span>(<span class="built_in">seziof</span>(Node));</span><br><span class="line">		<span class="comment">//节点初始化</span></span><br><span class="line">		pnew-&gt;data=<span class="built_in">rand</span>()%<span class="number">1000</span>;</span><br><span class="line">		<span class="comment">//使用互斥锁保护共享数据</span></span><br><span class="line">		<span class="built_in">pthread_mutex_lock</span>(&amp;mutex);</span><br><span class="line">		pnew-&gt;next=head;</span><br><span class="line">		head=pnew;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;=====produce:%lu,%d\n&quot;</span>,<span class="built_in">pthread_self</span>(),pnew-&gt;data);</span><br><span class="line">		<span class="built_in">pthread_mutex_unlock</span>(&amp;mutex);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//通知条件变量阻塞线程，解除阻塞</span></span><br><span class="line">		<span class="built_in">pthread_cond_signal</span>(&amp;cond);</span><br><span class="line">		<span class="built_in">sleep</span>(<span class="built_in">rand</span>()%<span class="number">3</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//消费者</span></span><br><span class="line"><span class="function"><span class="type">void</span>* <span class="title">customer</span><span class="params">(<span class="type">void</span>* arg)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="built_in">pthread_mutex_lock</span>(&amp;mutex);</span><br><span class="line">		<span class="comment">//判断链表是否为空，空则阻塞等待</span></span><br><span class="line">		<span class="keyword">if</span>(head==<span class="literal">NULL</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//线程阻塞，释放互斥锁</span></span><br><span class="line">			<span class="built_in">pthread_cond_wait</span>(&amp;cond,&amp;mutex);</span><br><span class="line">			<span class="comment">//解除阻塞后，对互斥锁进行加锁</span></span><br><span class="line">		&#125;</span><br><span class="line">		Node* pdel=head;</span><br><span class="line">		head=head-&gt;next;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;----customer:%lu,&amp;d\n&quot;</span>,<span class="built_in">pthread_self</span>(),pdel-&gt;data);</span><br><span class="line">		<span class="built_in">free</span>(pdel);</span><br><span class="line">		<span class="built_in">pthread_mutex_unlock</span>(&amp;mutex);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//主函数入口</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">pthread_t</span> p1,p2;</span><br><span class="line">	<span class="comment">//init</span></span><br><span class="line">	<span class="built_in">pthread_mutex_init</span>(&amp;mutex,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">pthread_cond_init</span>(&amp;cond,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//创建生产者线程</span></span><br><span class="line">	<span class="built_in">pthread_create</span>(&amp;p1,<span class="literal">NULL</span>,producer,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//消费者线程</span></span><br><span class="line">	<span class="built_in">pthread_create</span>(&amp;p2,<span class="literal">NULL</span>,customer,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//阻塞回收子线程</span></span><br><span class="line">	<span class="built_in">pthread_join</span>(p1,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">pthread_join</span>(p2,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//销毁互斥锁、条件变量</span></span><br><span class="line">	<span class="built_in">pthread_mutex_destroy</span>(&amp;mutex);</span><br><span class="line">	<span class="built_in">pthread_mutex_destory</span>(&amp;cond);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="信号量">5 信号量</h4>
+<p>在进程模块我们已经介绍了POSIX信号量，这里我们再做一次介绍。</p>
+<ul>
+<li><p><strong>信号量广泛用于进程或线程间的同步和互斥，信号量本质上是一个非负的整数计数器，它被用来控制对公共资源的访问。编程时可根据操作信号量值的结果判断是否对公共资源具有访问的权限，当信号量值大于 0 时，则可以访问，否则将阻塞。</strong></p></li>
+<li><p>PV原语是对信号量的操作，一次 P 操作使信号量减１，一次 V 操作使信号量加１。信号量主要用于进程或线程间的同步和互斥这两种典型情况。</p></li>
+<li><p>信号量数据类型为：sem_t</p></li>
+</ul>
+<h5 id="信号量用于同步和互斥">5.1 信号量用于同步和互斥</h5>
+<p>信号量可用于同步和互斥情况，其用于两种环境分别如下所示：</p>
+<ul>
+<li>互斥 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/signal_mutex.png" width="400"></li>
+<li>同步 <img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/signal_sync.png" width="400"></li>
+</ul>
+<h5 id="未命名信号量常用函数">5.2 未命名信号量常用函数</h5>
+<h6 id="sem_init函数初始化">5.2.1 sem_init函数：初始化</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_init.png" width="600"></p>
+<h6 id="sem_destroy函数销毁">5.2.2 sem_destroy函数：销毁</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_destroy.png" width="600"></p>
+<h6 id="sem_wait函数信号量p操作减1">5.2.3 sem_wait函数：信号量p操作减1</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_wait.png" width="600"> <code>abs_timeout</code>补充说明： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">timespec</span>&#123;</span><br><span class="line">	<span class="type">time_t</span> tv_sec;		<span class="comment">//秒</span></span><br><span class="line">	<span class="type">long</span> tv_nsec;		<span class="comment">//纳秒</span></span><br><span class="line">&#125;；</span><br><span class="line"><span class="type">time_t</span> cur=<span class="built_in">time</span>(<span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">timespec</span> t;</span><br><span class="line">t.tv_sec=cur+<span class="number">1</span>;</span><br><span class="line"><span class="built_in">sem_timedwait</span>(&amp;cond,&amp;t);</span><br></pre></td></tr></table></figure></p>
+<h6 id="sem_post函数信号量v操作">5.2.4 sem_post函数：信号量v操作</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_post.png" width="600"></p>
+<h6 id="sem_getvalue获取信号量的值">5.2.5 sem_getvalue:获取信号量的值</h6>
+<p><img src="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/sem_getvalue.png" width="600"></p>
+<h5 id="示例打印机-1">5.3 示例：打印机</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">sem_t</span> sem;		<span class="comment">//信号量</span></span><br><span class="line"><span class="comment">//打印机</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">printer</span><span class="params">(<span class="type">char</span>* str)</span></span>&#123;</span><br><span class="line">	<span class="built_in">sem_wait</span>(&amp;sem);		<span class="comment">//上锁</span></span><br><span class="line">	<span class="keyword">while</span>(*str!=<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">putchar</span>(*str);</span><br><span class="line">		<span class="built_in">fflush</span>(stdout);</span><br><span class="line">		str++;</span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	<span class="built_in">sem_post</span>(&amp;sem);	<span class="comment">//解锁</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//线程一</span></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">thread_fun_1</span><span class="params">(<span class="type">void</span>*arg)</span></span>&#123;</span><br><span class="line">	<span class="type">char</span>* str =<span class="string">&quot;hello&quot;</span>;</span><br><span class="line">	<span class="built_in">printer</span>(str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//线程二</span></span><br><span class="line"><span class="function"><span class="type">void</span> *<span class="title">thread_fun_2</span><span class="params">(<span class="type">void</span>* arg)</span></span>&#123;</span><br><span class="line">	<span class="type">char</span>* str=<span class="string">&quot;world&quot;</span>;</span><br><span class="line">	<span class="built_in">printer</span>(str);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//main程序</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">pthread_t</span> t1,t2;</span><br><span class="line">	<span class="comment">//初始化一个未命名信号量,在线程间使用，初始值为1</span></span><br><span class="line">	<span class="built_in">sem_init</span>(&amp;sem,<span class="number">0</span>,<span class="number">1</span>);</span><br><span class="line">	<span class="comment">//创建两个线程</span></span><br><span class="line">	s=<span class="built_in">pthread_create</span>(&amp;t1,<span class="literal">NULL</span>,thread_fun_1,<span class="literal">NULL</span>);</span><br><span class="line">	s=<span class="built_in">pthread_create</span>(&amp;t2,<span class="literal">NULL</span>,thread_fun_2,<span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">pthread_detach</span>(t1);</span><br><span class="line">	<span class="built_in">pthread_detach</span>(t2);</span><br><span class="line">	<span class="built_in">pthread_mutex_destroy</span>(&amp;mutex);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="自旋锁">6 自旋锁</h4>
+<ul>
+<li>自旋锁：<code>spinlock</code>，<strong>在任何时刻同样只能有一个线程访问对象。但是当获取锁操作失败时，不会进入睡眠，而是会在原地自旋，直到锁被释放。这样节省了线程从睡眠状态到被唤醒期间的消耗，在加锁时间短暂的环境下会极大的提高效率。但如果加锁时间过长，则会非常浪费CPU资源。 </strong></li>
+</ul>
+<h4 id="线程安全">7 线程安全</h4>
+<ul>
+<li><strong>线程安全</strong>：当一个执行区域可供多个线程同时执行，没有出现错误时，我们成为线程安全的。换句话说就是函数可同时供多个线程同时调用，则为线程安全函数。</li>
+</ul>
+<p>下面代码就不是线程安全，因为当多个线程并发调用该函数时，<code>glob</code>的最终值不得而知，<strong>通常出现线程不安全的原因是因为使用了全局或静态变量</strong>： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> glob=<span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span>* <span class="title">threadFunc</span><span class="params">(<span class="type">void</span>* arg)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> loops =*((<span class="type">int</span>*)arg);</span><br><span class="line">	<span class="type">int</span> loc,j;</span><br><span class="line">	<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;loops;j++)&#123;</span><br><span class="line">		loc=glob;</span><br><span class="line">		loc++;</span><br><span class="line">		glob=loc;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 在多线程中保证线程安全的方法有：</p>
+<ul>
+<li>仅在函数中操作共享变量的代码前后加入互斥量，这样能实现大部分的线程安全；但由于互斥锁的加、解锁开销，也就带来了性能的下降。</li>
+<li>如果能避免使用全局或静态变量，可重入函数则无需使用互斥量即可实现线程安全</li>
+<li>对于单核CPU时，只需要保证对共享变量是原子操作即可保证线程安全；但多核CPU，则不行</li>
+</ul>
+<h5 id="可重入不不可重入">7.1 可重入不不可重入</h5>
+<ul>
+<li><p><strong>不可重入函数：</strong>不同任务调用这个函数时可能修改其他任务调用这个函数的数据，从而导致不可预料的后果。这样的函数是不安全的函数。如使用了静态的数据解够、malloc()和free、以及标准的I/O函数（因为带缓冲区）都是不可重入函数。</p></li>
+<li><p><strong>可重入函数</strong>：函数在被多个进程调度时，不必担心数据出错</p></li>
+<li><strong>保证函数的可重入性的方法：</strong>
+<ul>
+<li>在写函数时候尽量使用局部变量（例如寄存器、栈中的变量）；</li>
+<li>对于要使用的全局变量要加以保护（如采取关中断、信号量等互斥方法），这样构成的函数就一定是一个可重入的函数。</li>
+</ul></li>
+</ul>
+<h4 id="线程池">8 线程池</h4>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux-coding/" rel="tag"># Linux coding</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/" rel="prev" title="Linux系统编程_进程">
+      <i class="fa fa-chevron-left"></i> Linux系统编程_进程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/19/C-%E5%B9%B6%E5%8F%91/" rel="next" title="C++并发编程(一):简介与线程">
+      C++并发编程(一):简介与线程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%86%9F%E6%82%89"><span class="nav-number">1.</span> <span class="nav-text">1 线程（熟悉）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 进程和线程的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%A6%82%E8%A7%88"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 线程概览</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 线程优缺点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%B8%B8%E7%94%A8api"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 线程常用API</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_self%E8%8E%B7%E5%8F%96%E7%BA%BF%E7%A8%8B%E5%8F%B7"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 pthread_self：获取线程号</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_equal%E7%BA%BF%E7%A8%8B%E5%8F%B7%E6%AF%94%E8%BE%83"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2 pthread_equal：线程号比较</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_create%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA"><span class="nav-number">1.4.3.</span> <span class="nav-text">1.4.3 pthread_create:线程创建</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_join%E7%BA%BF%E7%A8%8B%E8%B5%84%E6%BA%90%E5%9B%9E%E6%94%B6"><span class="nav-number">1.4.4.</span> <span class="nav-text">1.4.4 pthread_join线程资源回收</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_detach%E7%BA%BF%E7%A8%8B%E5%88%86%E7%A6%BB"><span class="nav-number">1.4.5.</span> <span class="nav-text">1.4.5 pthread_detach:线程分离</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_exit%E7%BA%BF%E7%A8%8B%E9%80%80%E5%87%BA"><span class="nav-number">1.4.6.</span> <span class="nav-text">1.4.6 pthread_exit线程退出</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_cancle"><span class="nav-number">1.4.7.</span> <span class="nav-text">1.4.7 pthread_cancle</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 线程属性</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%88%86%E7%A6%BB%E7%8A%B6%E6%80%81"><span class="nav-number">1.5.1.</span> <span class="nav-text">1.5.1 线程分离状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%B9%8B%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">2. 线程同步之互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%92%E6%96%A5%E9%94%81%E4%BF%9D%E6%8A%A4%E5%AF%B9%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F%E7%9A%84%E8%AE%BF%E9%97%AE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 互斥锁：保护对共享变量的访问</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BA%92%E6%96%A5%E9%94%81%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 互斥锁常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_mutex_init%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 pthread_mutex_init()函数：初始化一个互斥锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_mutex_destroy%E5%87%BD%E6%95%B0%E9%94%80%E6%AF%81%E4%BA%92%E6%96%A5%E9%94%81"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 pthread_mutex_destroy函数:销毁互斥锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_mutex_lock%E5%87%BD%E6%95%B0%E4%B8%8A%E9%94%81"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 pthread_mutex_lock函数：上锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_mutex_unlock%E5%87%BD%E6%95%B0%E8%A7%A3%E9%94%81"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 pthread_mutex_unlock函数：解锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E6%89%93%E5%8D%B0%E6%9C%BA"><span class="nav-number">2.2.5.</span> <span class="nav-text">2.2.5 示例：打印机</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%AD%BB%E9%94%81"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E5%BC%95%E8%B5%B7%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 死锁引起的原因</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 死锁的必要条件</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 预防死锁的思路</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%A2%84%E9%98%B2%E6%AD%BB%E9%94%81%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.3.4.</span> <span class="nav-text">2.3.4 预防死锁的方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%B9%8B%E8%AF%BB%E5%86%99%E9%94%81"><span class="nav-number">3.</span> <span class="nav-text">3 线程同步之读写锁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E9%94%81%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 读写锁的特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E9%94%81%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 读写锁常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_rwlock_init%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E8%AF%BB%E5%86%99%E9%94%81"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 pthread_rwlock_init函数：初始化读写锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_rwlock_destroy%E5%87%BD%E6%95%B0%E9%94%80%E6%AF%81%E8%AF%BB%E5%86%99%E9%94%81"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 pthread_rwlock_destroy函数：销毁读写锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_rwlock_rdlock%E5%87%BD%E6%95%B0%E5%9C%A8%E8%AF%BB%E5%86%99%E9%94%81%E4%B8%8A%E8%8E%B7%E5%8F%96%E8%AF%BB%E9%94%81"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 pthread_rwlock_rdlock函数：在读写锁上获取读锁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_rwlock_wrlock%E5%87%BD%E6%95%B0%E8%8E%B7%E5%8F%96%E5%86%99%E9%94%81"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 pthread_rwlock_wrlock函数：获取写锁</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pthread_rwlock_unlock%E5%87%BD%E6%95%B0%E8%A7%A3%E9%94%81"><span class="nav-number">3.3.</span> <span class="nav-text">3.2.5 pthread_rwlock_unlock函数：解锁</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E4%B9%8B%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-number">4.</span> <span class="nav-text">4 线程同步之条件变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 条件变量常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_cond_init%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 pthread_cond_init函数：初始化条件变量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_cond_destroy%E5%87%BD%E6%95%B0%E9%94%80%E6%AF%81%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2 pthread_cond_destroy函数：销毁条件变量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_cond_wait%E5%87%BD%E6%95%B0%E9%98%BB%E5%A1%9E%E7%AD%89%E5%BE%85"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3 pthread_cond_wait函数：阻塞等待</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pthread_cond_signal%E5%87%BD%E6%95%B0%E5%94%A4%E9%86%92%E8%87%B3%E5%B0%91%E4%B8%80%E4%B8%AA%E9%98%BB%E5%A1%9E%E5%9C%A8%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E4%B8%8A%E7%9A%84%E7%BA%BF%E7%A8%8B"><span class="nav-number">4.1.4.</span> <span class="nav-text">4.1.4 pthread_cond_signal函数：唤醒至少一个阻塞在条件变量上的线程</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 示例：生产者消费者模型</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">5 信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%A8%E4%BA%8E%E5%90%8C%E6%AD%A5%E5%92%8C%E4%BA%92%E6%96%A5"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 信号量用于同步和互斥</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%AA%E5%91%BD%E5%90%8D%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 未命名信号量常用函数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#sem_init%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 sem_init函数：初始化</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sem_destroy%E5%87%BD%E6%95%B0%E9%94%80%E6%AF%81"><span class="nav-number">5.2.2.</span> <span class="nav-text">5.2.2 sem_destroy函数：销毁</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sem_wait%E5%87%BD%E6%95%B0%E4%BF%A1%E5%8F%B7%E9%87%8Fp%E6%93%8D%E4%BD%9C%E5%87%8F1"><span class="nav-number">5.2.3.</span> <span class="nav-text">5.2.3 sem_wait函数：信号量p操作减1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sem_post%E5%87%BD%E6%95%B0%E4%BF%A1%E5%8F%B7%E9%87%8Fv%E6%93%8D%E4%BD%9C"><span class="nav-number">5.2.4.</span> <span class="nav-text">5.2.4 sem_post函数：信号量v操作</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#sem_getvalue%E8%8E%B7%E5%8F%96%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9A%84%E5%80%BC"><span class="nav-number">5.2.5.</span> <span class="nav-text">5.2.5 sem_getvalue:获取信号量的值</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E6%89%93%E5%8D%B0%E6%9C%BA-1"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 示例：打印机</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E6%97%8B%E9%94%81"><span class="nav-number">6.</span> <span class="nav-text">6 自旋锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="nav-number">7.</span> <span class="nav-text">7 线程安全</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%AF%E9%87%8D%E5%85%A5%E4%B8%8D%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%85%A5"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 可重入不不可重入</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="nav-number">8.</span> <span class="nav-text">8 线程池</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">968k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">14:40</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

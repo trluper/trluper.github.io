@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. 为什么使用VScode VScode是微软推出一个轻量化编辑器，只需要下载相应的编译器和包即可支持C&#x2F;C++、java、python的编写。相对于VS来说，VScode更加的轻便、体积小，支持许多插件。 2. VScode的界面使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VScode教程">
+<meta property="og:url" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1. 为什么使用VScode VScode是微软推出一个轻量化编辑器，只需要下载相应的编译器和包即可支持C&#x2F;C++、java、python的编写。相对于VS来说，VScode更加的轻便、体积小，支持许多插件。 2. VScode的界面使用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/someClick.png">
+<meta property="og:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh_setting.png">
+<meta property="og:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh.png">
+<meta property="og:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/debug-button.png">
+<meta property="og:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/launch.png">
+<meta property="og:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/command.png">
+<meta property="og:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/vstudio.png">
+<meta property="og:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/CMake.png">
+<meta property="article:published_time" content="2022-09-07T01:46:11.000Z">
+<meta property="article:modified_time" content="2023-07-02T06:53:07.068Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="VScode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/someClick.png">
+
+<link rel="canonical" href="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>VScode教程 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/09/07/VScode%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VScode教程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-07 09:46:11" itemprop="dateCreated datePublished" datetime="2022-09-07T09:46:11+08:00">2022-09-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-07-02 14:53:07" itemprop="dateModified" datetime="2023-07-02T14:53:07+08:00">2023-07-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/VScode/" itemprop="url" rel="index"><span itemprop="name">VScode</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="为什么使用vscode">1. 为什么使用VScode</h3>
+<p>VScode是微软推出一个轻量化编辑器，只需要下载相应的编译器和包即可支持C/C++、java、python的编写。相对于VS来说，VScode更加的轻便、体积小，支持许多插件。</p>
+<h3 id="vscode的界面使用">2. VScode的界面使用</h3>
+<p><img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/someClick.png" width="600"></p>
+<span id="more"></span>
+<h4 id="用户设置">2.1 用户设置</h4>
+<p><code>文件File--首选项preferences--设置settings</code>，打开用户设置。VScode支持选择配置，也支持编辑<code>setting.json</code>文件修改默认配置 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">（<span class="number">1</span>）editor.fontsize用来设置字体大小，可以设置editor.fontsize : <span class="number">14</span>;</span><br><span class="line"></span><br><span class="line">（<span class="number">2</span>）files.autoSave这个属性是表示文件是否进行自动保存，推荐设置为onFocusChange——文件焦点变化时自动保存。</span><br><span class="line"></span><br><span class="line">（<span class="number">3</span>）editor.tabCompletion用来在出现推荐值时，按下Tab键是否自动填入最佳推荐值，推荐设置为on;</span><br><span class="line"></span><br><span class="line">（<span class="number">4</span>）editor.codeActionsOnSave中的source.organizeImports属性，这个属性能够在保存时，自动调整 <span class="keyword">import</span> 语句相关顺序，能够让你的 <span class="keyword">import</span> 语句按照字母顺序进行排列，推荐设置为<span class="literal">true</span>,即<span class="string">&quot;editor.codeActionsOnSave&quot;</span>: &#123; <span class="string">&quot;source.organizeImports&quot;</span>: <span class="literal">true</span> &#125;；</span><br><span class="line"></span><br><span class="line">（<span class="number">5</span>）editor.lineNumbers设置代码行号,即editor.lineNumbers ：<span class="literal">true</span>；</span><br></pre></td></tr></table></figure></p>
+<h3 id="常用快捷键">3. 常用快捷键</h3>
+<p>高效的使用vscode,记住一些常用的快捷键是必不可少的，这里罗列了一些常用的快捷键。</p>
+<h4 id="主命令">3.1 主命令</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+Shift+P</code></td>
+<td>俗称万能键，可以输入任何命令</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+P</code></td>
+<td>根据名称查找文件</td>
+</tr>
+</tbody>
+</table>
+<h4 id="编辑器与窗口管理">3.2 编辑器与窗口管理</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+N</code></td>
+<td><strong>新建文件</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Shift+N</code></td>
+<td><strong>打开一个新的VSCode编辑器</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+O</code></td>
+<td><strong>打开文件</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Shift+O</code></td>
+<td>打开文件夹</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+W</code></td>
+<td>关闭当前文件</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Shift+W 或 Alt+F4</code></td>
+<td>关闭当前VSCode编辑器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+\</code></td>
+<td>新建窗口显示代码（相当于复制当前代码到一个新的窗口；同一引用，修改一个文件，其他相同文件会一起改变）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Alt+→</code></td>
+<td>移动当前文件到右窗口，若没有右窗口，则创建一个新窗口</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+Alt+←</code></td>
+<td>移动当前文件到左窗口</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Tab</code></td>
+<td><strong>切换文件窗口</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+B</code></td>
+<td>显示/隐藏侧边栏</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl +/-</code></td>
+<td>放大/缩小编辑器窗口</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+Shift+E</code></td>
+<td>文件资源管理器（Explorer）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Shift+G</code></td>
+<td>git管理窗口（Source Control）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+Shift+X</code></td>
+<td>扩展（插件）管理窗口（Extentions）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="代码文本快捷键">3.3 代码文本快捷键</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+F</code></td>
+<td><strong>查找</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+H</code></td>
+<td><strong>查找替换</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+Shift+F</code></td>
+<td>全局查找</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Shift+H</code></td>
+<td>全局查找替换</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+D</code></td>
+<td>选中下一个匹配项</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Shift+L</code></td>
+<td>选中所有匹配项（秀儿）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+[</code></td>
+<td>向左缩进</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+]</code></td>
+<td>向右缩进</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Alt+Up</code></td>
+<td><strong>向上移动当前行</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Alt+Down</code></td>
+<td>向下移动当前行</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Shift+Alt+Up</code></td>
+<td><strong>向上复制当前行</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Shift+Alt+Down</code></td>
+<td>向下复制当前行</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Ctrl+Enter</code></td>
+<td><strong>在当前行下方插入空行（光标位置可以不在行尾）</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>Ctrl+Shift+Enter</code></td>
+<td>在当前行上方插入空行（光标位置可以不在行尾）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>Alt+Z</code></td>
+<td>切换内容是否自动换行（底部显示/隐藏滚动条</td>
+</tr>
+</tbody>
+</table>
+<p>如果在编程中忘记了快捷键，也可以使用<code>Ctrl+K/Ctrl+S</code>来查看VSCode中全部快捷键。</p>
+<h3 id="插件安装">4. 插件安装</h3>
+<p>在输入框中输入想要安装的插件名称，点击安装即可，推荐安装的插件有： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>、Bracket Pair Colorizer：给嵌套的各种括号加上不同的颜色。</span><br><span class="line"><span class="number">2</span>、Path Intellisense：智能路径提示，可以在你输入文件路径时智能提示。</span><br><span class="line"><span class="number">3</span>、Markdown Preview：实时预览 markdown。</span><br><span class="line"><span class="number">4</span>、C/C++ <span class="keyword">for</span> Visual Studio Code：</span><br><span class="line"><span class="number">5</span>、C-family Documentation Comments和Better Comments</span><br><span class="line"><span class="number">6</span>、CMake Tools：用于支持CMake进行编译系统的构建</span><br><span class="line"><span class="number">7</span>、CMake:C-family Documentation Comments用于自动生成C、C++语言风格的注释，笔者主要用在头文件的函数生命的时候，对函数接口添加描述。Better Comments则提供注释高亮功能</span><br><span class="line"><span class="number">8</span>、Git Graph:Git Graph主要是用来显示git log，UI比较好看，安装后使用命令Git Graph: <span class="function">View Git <span class="title">Graph</span> <span class="params">(git log)</span>查看，可以设置一个快捷键方便使用。</span></span><br><span class="line"><span class="function">9、Markdown Preview Enhanced：Markdown Preview Enhanced插件的预览功能比较强大，可在预览窗口选择主题，支持[TOC]标题列表，而且导出功能很好用</span></span><br><span class="line"><span class="function">10、Markmap：Markmap是一个基于开源项目markmap开发的vscode插件，画出来的思维导图非常非常的漂亮。使用的时候很简单，只需要简单的Markdown语法；在安装好之后，在.md文档编辑窗口的右上角就会多一个预览的图标Open as markmap，当然也可手动打开命令面板，输入Open as markmap</span></span><br><span class="line"><span class="function">11、Partial Diff：Partial Diff提供部分文本内容的比较，笔者经常用在重构函数的时候，用来比较两个比较类似的函数的实现。使用的时候先复制要比较的内容，然后选中要比较的另外的一部分内容，右键选择Compare Text with Clipboard，就会打开一个比较窗口。</span></span><br><span class="line"><span class="function">12、One Dark Pro：主题</span></span><br><span class="line"><span class="function">13、Material Icon Theme：图标</span></span><br><span class="line"><span class="function">14、C/C++ Project Generator：C/C++的项目生成</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="按照remote-ssh">5. 按照remote-ssh</h3>
+<p>remote-ssh支持你远程连接Linux、Mac环境，首先：</p>
+<ul>
+<li>先安装<code>remote-ssh</code>插件，并创建一个<code>txt</code>文件,内容如下，<code>Hostname</code>为你远端ip地址，<code>user</code>为你的用户名 <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh_setting.png" width="500"></li>
+<li><code>ctrl+shift+p</code>打开万能键，输入<code>remote-ssh:setting</code>，设置你刚刚的<code>txt</code>路径： <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/ssh.png" width="500"></li>
+<li>使用，在Vscode下方点击绿色<code>&gt;&lt;</code>，选择<code>connect to Host</code>即可，后续会要求验证你远端主机/虚拟机密码</li>
+</ul>
+<h3 id="tasks.json文件">6. tasks.json文件</h3>
+<p><strong><code>tasks.json</code>的作用是编译,</strong>创建一个<code>tasks.json</code>文件告诉VS代码如何构建(编译)程序。</p>
+<p><code>tasks.json</code>的主要作用就是执行类似 <code>gcc -g main.c -o main</code>的命令，需要注意的一点是，<code>tasks.json</code>的&quot;<code>label</code>&quot;参数值和<code>launch.json</code>的&quot;preLaunchTask&quot;参数值需要保持一致</p>
+<p>当第一次运行程序时且安装了C++ 扩展后，会创建<code>tasks.json</code>，可以在项目<code>.vscode</code>文件夹中找到它。<code>tasks.json</code>存储构建配置。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//task.json</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;tasks&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;type&quot;</span>: <span class="string">&quot;cppbuild&quot;</span>,	<span class="comment">//任务类型,Vscode将预定义变量转义解析后直接传给command;shell-&gt;先打开shell再输入命令,因此args会经过shell再次解析</span></span><br><span class="line">            <span class="string">&quot;label&quot;</span>: <span class="string">&quot;C/C++: g++ build active file&quot;</span>,	<span class="comment">//任务名称</span></span><br><span class="line">            <span class="string">&quot;command&quot;</span>: <span class="string">&quot;/usr/bin/g++&quot;</span>,	<span class="comment">//编译器路径</span></span><br><span class="line">            <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;-fdiagnostics-color=always&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-g&quot;</span>,</span><br><span class="line">                <span class="string">&quot;$&#123;file&#125;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;/home/project/testProject/test_vscode/src/leetcode.cpp&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-I&quot;</span>,</span><br><span class="line">                <span class="string">&quot;/home/project/testProject/test_vscode/include&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-o&quot;</span>,</span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;options&quot;</span>: &#123;</span><br><span class="line">                <span class="string">&quot;cwd&quot;</span>: <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;problemMatcher&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;$gcc&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;group&quot;</span>: &#123;<span class="comment">//包含很多task,归为group</span></span><br><span class="line">                <span class="string">&quot;kind&quot;</span>: <span class="string">&quot;build&quot;</span>,	<span class="comment">//表名该组任务类型是构建</span></span><br><span class="line">                <span class="string">&quot;isDefault&quot;</span>: <span class="literal">true</span>	<span class="comment">//表明此任务为此组任务中的默认任务</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">&quot;detail&quot;</span>: <span class="string">&quot;Task generated by Debugger.&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;version&quot;</span>: <span class="string">&quot;2.0.0&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>command</code>:设置指定要运行的程序,此时是<code>g++</code></li>
+<li><code>args</code>：指定将传递给 <code>g++</code> 的命令行参数。这些参数必须按照编译器期望的顺序指定，相当于<code>g++ g main.cpp -o main</code>。你可能注意到了，内部的一些参数类似于正则表达式的形式，以下具体说明：Visual Studio Code 支持<strong>调试和任务配置文件中的变量替换以及一些选择设置</strong>，使用<code>$&#123;variableName&#125;</code>
+<ul>
+<li>预定义变量如下(假设你打开了文件·<code>/home/your-username/your-project/folder/file.ext</code>；·/home/your-username/your-project·作为根工作区打开的目录。)
+<ul>
+<li><code>&#123;userHome&#125;</code> - 用户主文件夹的路径<code>/home/your-username</code></li>
+<li><strong><code>$&#123;workspaceFolder&#125;</code> - 在 VS Code 中打开的文件夹的路径<code>/home/your-username/your-project</code></strong></li>
+<li><strong><code>$&#123;workspaceFolderBasename&#125;</code> - 在 VS Code 中打开的文件夹的名称，没有任何斜杠 (/)<code>your-project</code></strong></li>
+<li><code>$&#123;file&#125;</code> - 当前打开的文件<code>/home/your-username/your-project/folder/file.ext</code></li>
+<li><strong><code>$&#123;fileWorkspaceFolder&#125;</code> - 当前打开文件的工作区文件夹<code>/home/your-username/your-project</code></strong></li>
+<li><code>$&#123;relativeFile&#125;</code> - 当前打开的文件相对于workspaceFolder<code>folder/file.ext</code></li>
+<li><code>$&#123;relativeFileDirname&#125;</code> - 当前打开的文件相对于的目录名workspaceFolder——<code>folder</code></li>
+<li><strong><code>$&#123;fileBasename&#125;</code> - 当前打开文件的基本名称<code>file.ext</code></strong></li>
+<li><strong><code>$&#123;fileBasenameNoExtension&#125;</code> - 当前打开的文件的基本名称，没有文件扩展名<code>file</code></strong></li>
+<li><code>$&#123;fileExtname&#125;</code> - 当前打开文件的扩展名<code>.ext</code></li>
+<li><strong><code>$&#123;fileDirname&#125;</code> - 当前打开文件的文件夹路径<code>/home/your-username/your-project/folder</code></strong></li>
+<li><code>$&#123;fileDirnameBasename&#125;</code> - 当前打开文件的文件夹名称</li>
+<li><code>$&#123;cwd&#125;</code> - 启动 VS Code 时任务运行器的当前工作目录</li>
+<li><code>$&#123;lineNumber&#125;</code> - 活动文件中当前选定的行号</li>
+<li><code>$&#123;selectedText&#125;</code> - 活动文件中的当前选定文本</li>
+<li><code>$&#123;execPath&#125;</code> - 正在运行的 VS 代码可执行文件的路径</li>
+<li><code>$&#123;defaultBuildTask&#125;</code> - 默认构建任务的名称</li>
+<li><code>$&#123;pathSeparator&#125;</code> - 操作系统用来分隔文件路径中的组件的字符</li>
+</ul></li>
+</ul></li>
+<li><code>label</code>:将在任务列表中看到的；你可以随意命名。</li>
+<li><code>detail</code>:将在任务列表中作为任务描述的值。强烈建议重命名此值以将其与类似任务区分开来。</li>
+<li><code>group</code>:内部含有<code>kind=build</code>，为<code>true</code>时告诉vscode这个是构建文件;同时当<code>isDefault: true</code>时当前<code>tasks.json</code>为默认构建文件</li>
+</ul>
+<blockquote>
+<p>当你按下运行时，VScode将从中读取tasks.json以了解如何构建和运行程序。您可以在 中定义多个构建任务tasks.json，vscode将会使用默认的<code>tasks.json</code>进行构建编译</p>
+</blockquote>
+<h3 id="launch.json文件">7. launch.json文件</h3>
+<p>在c++编写程序中，最常用到的时<strong>调试</strong>这个功能，也就是我们所说的<code>Debug</code>。VScode支持调式，我们只需要按debug图标即可： <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/debug-button.png" width="100"></p>
+<p>但有时候我们需要自定义的调试，这时候就用到<code>launch.json</code>了。例如指定要在运行时传递给程序的参数。您可以在文件中定义自定义调试配置<code>launch.json</code>。要创建<code>launch.json</code>，请从播放按钮下拉菜单中选择添加调试配置。</p>
+<p>然后您会看到各种预定义调试配置的下拉列表。选择<code>C/C++: g++.exe build and debug active file</code>。 <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/launch.png" width="600"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//launch.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;0.2.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;configurations&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;C/C++: g++.exe build and debug active file&quot;</span>,	<span class="comment">//launch的名称</span></span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;cppdbg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;request&quot;</span>: <span class="string">&quot;launch&quot;</span>,</span><br><span class="line">      <span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span>,	<span class="comment">//调试的可执行文件路径</span></span><br><span class="line">      <span class="string">&quot;args&quot;</span>: [],	<span class="comment">//传递给main函数的参数</span></span><br><span class="line">      <span class="string">&quot;stopAtEntry&quot;</span>: <span class="literal">false</span>,	<span class="comment">//是否在开始时就设置端点</span></span><br><span class="line">      <span class="string">&quot;cwd&quot;</span>: <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span>,	<span class="comment">//调试程序时的工作目录</span></span><br><span class="line">      <span class="string">&quot;environment&quot;</span>: [],		<span class="comment">//环境变量</span></span><br><span class="line">      <span class="string">&quot;externalConsole&quot;</span>: <span class="literal">false</span>,	<span class="comment">//true:cmd窗口; false:Vscode的内置终端输出</span></span><br><span class="line">      <span class="string">&quot;MIMode&quot;</span>: <span class="string">&quot;gdb&quot;</span>,			<span class="comment">//指定连接的调试器,</span></span><br><span class="line">      <span class="string">&quot;miDebuggerPath&quot;</span>: <span class="string">&quot;C:\\msys64\\mingw64\\bin\\gdb.exe&quot;</span>,	<span class="comment">//gdb所在路径</span></span><br><span class="line">      <span class="string">&quot;setupCommands&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">&quot;description&quot;</span>: <span class="string">&quot;Enable pretty-printing for gdb&quot;</span>,</span><br><span class="line">          <span class="string">&quot;text&quot;</span>: <span class="string">&quot;-enable-pretty-printing&quot;</span>,</span><br><span class="line">          <span class="string">&quot;ignoreFailures&quot;</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">      <span class="string">&quot;preLaunchTask&quot;</span>: <span class="string">&quot;C/C++: g++.exe build active file&quot;</span> <span class="comment">//调试开始前执行需要执行的任务,调试前要编译构建 名称要和tasks.json的label保持一致</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong><code>program</code>：指定要调试的可执行程序。即在调试中会使用该可执行文件进行调试debug操作，因此你的目录在调试前必须能够找到该可执行文件</strong></li>
+<li><code>args</code>：属性是要在运行时传递给程序的参数数组</li>
+<li>默认情况下，C++ 扩展不会向您的源代码添加任何断点，并且该<code>stopAtEntry</code>值设置为<code>false</code>.</li>
+<li><strong><code>preLaunchTask</code>：在调试前必须调用的<code>task.json</code>生成调试可执行文件，其后面的值就是<code>task.json</code>中的label，如果你不需要使用task.json来执行g++命令，你可以注释掉<code>&quot;preLaunchTask&quot;:</code>即可</strong></li>
+</ul>
+<blockquote>
+<p>从现在开始，播放按钮和F5将在启动您的程序进行调试时从您的文件中读取launch.json。</p>
+</blockquote>
+<h3 id="c_cpp_properties.json文件">8 c_cpp_properties.json文件</h3>
+<p>如果你想更多地控制<code>C/C++</code>扩展，你可以创建一个<code>c_cpp_properties.json</code>文件，它允许你更改设置，例如编译器的路径、包含路径、C++ 标准（默认为<code>C++17</code>）等等。</p>
+<p>您可以通过运行命令<code>C/C++</code> 查看 <code>C/ C++ Edit Configuration UI</code>，创建<code>c_cpp_properties.json</code>，并且查看相关参数说明 <code>( Ctrl+Shift+P )</code></p>
+<p><img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/command.png" width="600"></p>
+<p>将打开C/C++ 配置页面。当您在此处进行更改时，VS Code 会自动将它们写入文件夹.vscode中名为<code>c_cpp_properties.json</code>文件。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;configurations&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Linux&quot;</span>,</span><br><span class="line">            <span class="string">&quot;includePath&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;$&#123;workspaceFolder&#125;/**&quot;</span>,</span><br><span class="line">                <span class="string">&quot;/home/project/testProject/test_vscode/include/**&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="string">&quot;defines&quot;</span>: [],</span><br><span class="line">            <span class="string">&quot;compilerPath&quot;</span>: <span class="string">&quot;/usr/bin/g++&quot;</span>,</span><br><span class="line">            <span class="string">&quot;cStandard&quot;</span>: <span class="string">&quot;c11&quot;</span>,</span><br><span class="line">            <span class="string">&quot;cppStandard&quot;</span>: <span class="string">&quot;gnu++14&quot;</span>,</span><br><span class="line">            <span class="string">&quot;intelliSenseMode&quot;</span>: <span class="string">&quot;linux-gcc-x64&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;version&quot;</span>: <span class="number">4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>includePath</code>：如果您的程序包含不在您的工作区或标准库路径中的头文件，您只需要添加到包含路径数组设置。注意这一步仅仅是告诉vscode头文件在哪，方便debug，但是<code>gcc/g++</code>进行编译时并不知道。我们知道如果用<code>g++ main.cpp xxx.cpp -I 库路径 -o main</code>是直接可以编译成功的，那么我们只需要将告诉vscode使用我们自己定义的命令就可以了，那么对于自定义命令仍然是要在<code>task.json</code>中设置</li>
+<li><code>compilerPath</code>：这个扩展通过使用<code>campilerPath</code>来推断 C++ 标准库头文件的路径。当扩展知道在哪里可以找到这些文件时，它可以提供智能完成和转到定义导航等功能。其顺序是
+<ul>
+<li>首先检查 Microsoft Visual C++ 编译器</li>
+<li>然后在 Windows Subsystem for Linux (WSL) 上寻找 g++</li>
+<li>然后是 Mingw-w64 的 g++。</li>
+</ul></li>
+</ul>
+<h3 id="编译参数">9 编译参数</h3>
+<h3 id="vscode中main的参数传递">10 VScode中main的参数传递</h3>
+<ul>
+<li>VScode中给main函数传递参数是在<code>launch.json</code>中的args中，将要传递的写入数组中即可</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//launch.josn的args键值对</span></span><br><span class="line"> <span class="string">&quot;args&quot;</span>: [<span class="string">&quot;nihao&quot;</span>,<span class="string">&quot;trluper&quot;</span>],</span><br><span class="line"><span class="comment">//main</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;argc;++i)</span><br><span class="line">        cout&lt;&lt;argv[i]&lt;&lt;endl;</span><br></pre></td></tr></table></figure>
+<p>输出 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nihao</span><br><span class="line">trluper</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>命令行形式的则直接在可执行文件后面接参数,如<code>main nihao trluper</code></li>
+</ul>
+<blockquote>
+<p>对于Visual studio当中main函数的参数传递，在项目名称右击，点击<strong>属性-&gt;配置属性-&gt;调试-&gt;命令参数</strong> <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/vstudio.png" width="600"> 然后填入参数，多个参数的话<strong>以空格分开就好</strong></p>
+</blockquote>
+<h3 id="问题1">11 问题1</h3>
+<p>运行C++时出现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Unable to start debugging. Unexpected GDB output from command <span class="string">&quot;-exec-run&quot;</span>. During startup program exited with code <span class="number">0xc0000139</span>.</span><br></pre></td></tr></table></figure>
+<p>之前配置了VSCode+Anaconda，将<code>conda</code>加入了环境变量，其中有一项是： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\pythonDeve\Anaconda\Library\mingw-w64\bin</span><br></pre></td></tr></table></figure> 其中含有一些c++的动态链接库，与mingw的动态链接库冲突 之前配置的时候，使得PowerShell启动时自动加载Anaconda的配置，并且VSCode自动激活了conda环境，然后就引发冲突了</p>
+<p>解决方法：</p>
+<ul>
+<li>方法一：只需要在 VSCode 的settings.json中加入这一行配置即可： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;python.terminal.activateEnvironment&quot;</span>: <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+<li>方法二：关闭conda环境在终端自动激活 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda config --set auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="头文件问题fatal-error-no-such-file-or-directory">12 头文件问题：fatal error: No such file or directory</h3>
+<p>虽然在<code>c_cpp_properties.json的&quot;includepath&quot;的&quot;path&quot;</code>设置了头文件路径，但是这一步仅仅是告诉vscode头文件在哪，方便debug，但是<code>gcc</code>进行编译时并不知道。<strong>在命令行中我们知道，用<code>g++ main.cpp xxx.cpp -I 库路径 -o main</code>是可成功运行的，那么我们只需要对<code>VScode</code>运行这样的命令行即可,在<code>tasks.json</code>中设置<code>-I 路径</code> ：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;args&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;-fdiagnostics-color=always&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-g&quot;</span>,</span><br><span class="line">                <span class="string">&quot;$&#123;file&#125;&quot;</span>,</span><br><span class="line">                <span class="string">&quot;/home/project/testProject/test_vscode/src/leetcode.cpp&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-I&quot;</span>,</span><br><span class="line">                <span class="string">&quot;/home/project/testProject/test_vscode/include&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-o&quot;</span>,</span><br><span class="line">                <span class="string">&quot;$&#123;fileDirname&#125;/$&#123;fileBasenameNoExtension&#125;&quot;</span></span><br><span class="line">            ],</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>编写CMakeList.txt可以解决，这时候不需要改写<code>tasks.json</code>，只需要设置<code>c_cpp_properties.json的&quot;includepath&quot;的&quot;path&quot;</code>即可</p>
+</blockquote>
+<h3 id="cmake-tools">13 CMake Tools</h3>
+<h4 id="为什么用cmake">13.1 为什么用CMake</h4>
+<p>利用CMake tools 进行编译系统的构建，省去了编写<code>tasks.json\launch.json</code>或者Makefile的编写，能够处理以上绝大部分问题。大部分的大型项目都是采用<code>CMake</code>实现。</p>
+<p>对于一个庞大的CPP工程，我们可以不必写上面的<code>.vscode</code>文件夹，因此也就不必写那3个json文件。原因在于一个庞大的Cpp工程如果配置<code>tasks.json</code>然后用<code>gcc</code>或<code>g++</code>来编译，太过麻烦，他们更适合单一的文件编译，而通常<code>C++</code>工程通常较为庞大，因此更推荐编写<code>CMakeLists.txt</code>。 <img src="/2022/09/07/VScode%E6%95%99%E7%A8%8B/CMake.png" width="600"></p>
+<p><code>make</code>工具，它是一个自动化编译工具，用来批处理编译源文件，但是使用<code>make</code>工具进行编译需要编写一个规则文件，<code>make</code>依据它来批处理编译，这个文件就是<code>Makefile</code>，但是对于一个大工程，编写<code>Makefile</code>也是一件很复杂的事情，所以这时人们设计出<code>cmake</code>工具，它能够生成<code>Makefile</code>文件，随之而来的就是<code>CMakeLists.txt</code>文件，它是<code>cmake</code>所依据的规则，相对来说，<code>CMakeLists.txt</code>文件的编写要简单不少。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"># 最低CMake版本要求</span><br><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.5</span><span class="number">.1</span>)</span><br><span class="line"> </span><br><span class="line"># 项目名称</span><br><span class="line"><span class="built_in">project</span>(leetcode)</span><br><span class="line"> </span><br><span class="line">#添加debug信息，使得生成的可执行文件可以调试</span><br><span class="line"><span class="built_in">set</span>(CMAKE_BUILD_TYPE DEBUG)</span><br><span class="line">#可调试编译选项，这样才能命中断点</span><br><span class="line"><span class="built_in">add_definitions</span>(<span class="string">&quot;-Wall -g&quot;</span>)</span><br><span class="line">#使用通配符添加多个源文件</span><br><span class="line"><span class="built_in">file</span>(GLOB SRC_LIST <span class="string">&quot;src/*.c&quot;</span>)</span><br><span class="line"> </span><br><span class="line">#编译选项</span><br><span class="line"><span class="built_in">add_compile_options</span>(-std=c++<span class="number">11</span>)</span><br><span class="line"> </span><br><span class="line"># 头文件路径</span><br><span class="line"><span class="built_in">include_directories</span>(<span class="string">&quot;include&quot;</span>)</span><br><span class="line"> </span><br><span class="line">#链接库</span><br><span class="line"><span class="built_in">link_libraries</span>(event pthread) #相当于-lpthread -event</span><br><span class="line"> </span><br><span class="line"># 生成可执行的文件</span><br><span class="line"><span class="built_in">add_executable</span>(main src/main.cpp src/Convert.cpp)</span><br></pre></td></tr></table></figure>
+<p><strong><code>CMakeLists.txt</code>文件具有<code>c_cpp_properties.json、tasks.json</code>两个文件的功能，一般如果C++工程较小，可以编写<code>tasks.json</code>文件，否则更适合编写<code>CMakeLists.txt</code>文件。</strong>不过我还是推荐我们每次编写程序的时候编写一下<code>c_cpp_properties.json</code>，因为该文件中<code>includePath</code>参数可以很好指定头文件目录，这样就算没有<code>CMakeLists.txt</code>文件，我们在vscode编写程序的时候它也自动包含了头文件，这样就可以具有代码提示功能。而<code>CMakeLists.txt</code>中的库文件路径并不是太好指定(主要我目前对CMakeLists.txt还不是太了解)。如果我们需要在VS里调试的话，还是需要编写launch.json文件的。</p>
+<ul>
+<li><strong>因此在实际的代码开发中最好的搭配组合是<code>CMakeLists.txt</code>和<code>c_cpp_properties.json</code></strong></li>
+<li><strong>需要使用Vscode的调试时（不使用GDB命令行），则你要编写<code>launch.json</code>文件</strong></li>
+</ul>
+<h4 id="cmake流程">13.2 CMake流程</h4>
+<ul>
+<li>创建<code>CMakeLists.txt</code>文件，编写<code>CMakeLists.txt</code>文件，其编写语句可见<a href>CMake</a></li>
+<li><code>ctrl+shift+p</code>搜索<code>CMake:Configue</code>，选择对应的编译器，然后点击，之后在你的工程目录会多出<code>build</code>目录</li>
+<li>之后<code>cd</code>进入<code>build</code>目录，执行<code>cmake ..</code>和<code>make</code>后得到编译文件</li>
+</ul>
+<h4 id="vscode的调试">13.3 VScode的调试</h4>
+<p>要使用VSCode的调试，就必须写<code>lanuch.json</code>文件，这样你才可以按<code>F5</code>启动GDB调试，否则你只能以命令行的形式调试。然后选择这个<code>launch.json</code>进行调试，即你会在调试看到<code>leetcode debug</code>，选择它进行调试</p>
+<ul>
+<li>在这里你只需要保证launch.json`能够找到可执行文件即可</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//launch.json---</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;version&quot;</span>: <span class="string">&quot;0.2.0&quot;</span>,</span><br><span class="line">  <span class="string">&quot;configurations&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;leetcode debug&quot;</span>,	<span class="comment">//launch的名称</span></span><br><span class="line">      <span class="string">&quot;type&quot;</span>: <span class="string">&quot;cppdbg&quot;</span>,</span><br><span class="line">      <span class="string">&quot;request&quot;</span>: <span class="string">&quot;launch&quot;</span>,</span><br><span class="line">      <span class="string">&quot;program&quot;</span>: <span class="string">&quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;</span>,	<span class="comment">//调试的可执行文件路径</span></span><br><span class="line">      <span class="string">&quot;args&quot;</span>: [],	<span class="comment">//传递给main函数的参数</span></span><br><span class="line">      <span class="string">&quot;stopAtEntry&quot;</span>: <span class="literal">false</span>,	<span class="comment">//是否在开始时就设置端点</span></span><br><span class="line">      <span class="string">&quot;cwd&quot;</span>: <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span>,	<span class="comment">//调试程序时的工作目录</span></span><br><span class="line">      <span class="string">&quot;environment&quot;</span>: [],		<span class="comment">//环境变量</span></span><br><span class="line">      <span class="string">&quot;externalConsole&quot;</span>: <span class="literal">false</span>,	<span class="comment">//true:cmd窗口; false:Vscode的内置终端输出</span></span><br><span class="line">      <span class="string">&quot;MIMode&quot;</span>: <span class="string">&quot;gdb&quot;</span>,			<span class="comment">//指定连接的调试器,</span></span><br><span class="line">      <span class="string">&quot;miDebuggerPath&quot;</span>: <span class="string">&quot;C:\\msys64\\mingw64\\bin\\gdb.exe&quot;</span>,	<span class="comment">//gdb所在路径</span></span><br><span class="line">      <span class="string">&quot;setupCommands&quot;</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="string">&quot;description&quot;</span>: <span class="string">&quot;Enable pretty-printing for gdb&quot;</span>,</span><br><span class="line">          <span class="string">&quot;text&quot;</span>: <span class="string">&quot;-enable-pretty-printing&quot;</span>,</span><br><span class="line">          <span class="string">&quot;ignoreFailures&quot;</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">      ],</span><br><span class="line">     <span class="comment">// &quot;preLaunchTask&quot;: &quot;C/C++: g++.exe build active file&quot; //调试开始前执行需要执行的任务,调试前要编译构建 名称要和tasks.json的label保持一致</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="问题">13.3 问题</h4>
+<h5 id="出现vscode-基于-configurationprovider-设置提供的信息检测到-include-错误">13.3.1 出现vscode 基于 configurationProvider 设置提供的信息检测到 #include 错误。</h5>
+<p><strong>两个方法解决：</strong></p>
+<ul>
+<li><strong>方法1</strong>：这是由于CMake工程生成的<code>c_cpp_properties.json</code>当中会出现<code>&quot;configurationProvider&quot;: &quot;ms-vscode.cmake-tools&quot;</code>，将它注释掉即可 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//&quot;configurationProvider&quot;: &quot;ms-vscode.cmake-tools&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>方法2</strong>：这种情况需要在工作区settings.json中添加一个配置项，使配置的信息来源于cmake。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">“C_Cpp.<span class="keyword">default</span>.configurationProvider”: “ms-vscode.cmake-tools”</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="完整cmakelists.txt">13.4 完整CMakeLists.txt</h4>
+<p>下面是便捷的<code>CMakeLists.txt</code>，只要遵循之前的<strong>目录结构</strong>(include、src、，这个CMakeLists.txt在我们添加源文件的时候也不需要改动任何代码，可以自动生成工程文件名、可执行文件。需要指定的就是需要连接的动态链接库，一般小型程序也不用指定。还有就是这个工程到底是根据多个源文件生成一个可执行文件还是为每一个源文件都生成一个可执行文件。下面的CMakeLists.txt已经默认写好了，每次我们只需要根据自己的实际情况将选择即可。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VScode/" rel="tag"># VScode</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="prev" title="计算机网络">
+      <i class="fa fa-chevron-left"></i> 计算机网络
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/" rel="next" title="git">
+      git <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8vscode"><span class="nav-number">1.</span> <span class="nav-text">1. 为什么使用VScode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E7%9A%84%E7%95%8C%E9%9D%A2%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">2. VScode的界面使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 用户设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.</span> <span class="nav-text">3. 常用快捷键</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E5%91%BD%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 主命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%8E%E7%AA%97%E5%8F%A3%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 编辑器与窗口管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%96%87%E6%9C%AC%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 代码文本快捷键</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-number">4.</span> <span class="nav-text">4. 插件安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%89%E7%85%A7remote-ssh"><span class="nav-number">5.</span> <span class="nav-text">5. 按照remote-ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tasks.json%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">6. tasks.json文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#launch.json%E6%96%87%E4%BB%B6"><span class="nav-number">7.</span> <span class="nav-text">7. launch.json文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c_cpp_properties.json%E6%96%87%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">8 c_cpp_properties.json文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%8F%82%E6%95%B0"><span class="nav-number">9.</span> <span class="nav-text">9 编译参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vscode%E4%B8%ADmain%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">10.</span> <span class="nav-text">10 VScode中main的参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%981"><span class="nav-number">11.</span> <span class="nav-text">11 问题1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98fatal-error-no-such-file-or-directory"><span class="nav-number">12.</span> <span class="nav-text">12 头文件问题：fatal error: No such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake-tools"><span class="nav-number">13.</span> <span class="nav-text">13 CMake Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8cmake"><span class="nav-number">13.1.</span> <span class="nav-text">13.1 为什么用CMake</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cmake%E6%B5%81%E7%A8%8B"><span class="nav-number">13.2.</span> <span class="nav-text">13.2 CMake流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vscode%E7%9A%84%E8%B0%83%E8%AF%95"><span class="nav-number">13.3.</span> <span class="nav-text">13.3 VScode的调试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">13.4.</span> <span class="nav-text">13.3 问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0vscode-%E5%9F%BA%E4%BA%8E-configurationprovider-%E8%AE%BE%E7%BD%AE%E6%8F%90%E4%BE%9B%E7%9A%84%E4%BF%A1%E6%81%AF%E6%A3%80%E6%B5%8B%E5%88%B0-include-%E9%94%99%E8%AF%AF"><span class="nav-number">13.4.1.</span> <span class="nav-text">13.3.1 出现vscode 基于 configurationProvider 设置提供的信息检测到 #include 错误。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4cmakelists.txt"><span class="nav-number">13.5.</span> <span class="nav-text">13.4 完整CMakeLists.txt</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">968k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">14:40</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
