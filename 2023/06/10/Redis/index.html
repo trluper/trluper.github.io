@@ -32,8 +32,12 @@
 <meta property="og:image" content="https://example.com/2023/06/10/Redis/sds.png">
 <meta property="og:image" content="https://example.com/2023/06/10/Redis/dict.png">
 <meta property="og:image" content="https://example.com/2023/06/10/Redis/five.png">
+<meta property="og:image" content="https://example.com/2023/06/10/Redis/encoding.png">
+<meta property="og:image" content="https://example.com/2023/06/10/Redis/db.png">
+<meta property="og:image" content="https://example.com/2023/06/10/Redis/keyspace.png">
+<meta property="og:image" content="https://example.com/2023/06/10/Redis/livetime.png">
 <meta property="article:published_time" content="2023-06-10T04:18:36.000Z">
-<meta property="article:modified_time" content="2023-06-14T09:30:27.364Z">
+<meta property="article:modified_time" content="2023-07-08T01:26:24.181Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
@@ -234,7 +238,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-14 17:30:27" itemprop="dateModified" datetime="2023-06-14T17:30:27+08:00">2023-06-14</time>
+                <time title="修改时间：2023-07-08 09:26:24" itemprop="dateModified" datetime="2023-07-08T09:26:24+08:00">2023-07-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +263,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.3k</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -366,11 +370,31 @@
 <p>压缩列表(ziplist)是列表键和哈希键的底层实现之一。当一个列表键只包含少量列表项，并且每个列表项要么就是小整数值，要么就是长度比较短的字符串，那么Redis就会使用压缩列表来做列表键的底层实现。</p>
 <p><strong>特性</strong></p>
 <ul>
-<li>看他的名字就能看出来，是为了节省内存造的列表结构</li>
+<li>看他的名字就能看出来，是为了节省内存造的列表结构，由连续内存块组成的顺序型数据结构</li>
 </ul>
 <h2 id="对象redis的数据类型">对象（Redis的数据类型）</h2>
-<p>在上面，我们提到了Redis的五种数据结构，有<strong>简单动态字符串（SDS)、双端链表、字典、压缩列表、整数集合</strong>等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个<strong>对象系统，</strong>这个系统包含五种数据类型<strong><code>string（字符串）</code>，<code>hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)</code></strong>。Redis对象系统还实现了基于引用计数的内存回收和对象共享机制，从而节省内存和及时回收内存。 <img src="/2023/06/10/Redis/five.png" width="700"></p>
+<p>在上面，我们提到了Redis的五种数据结构，有<strong>简单动态字符串（SDS)、双端链表、字典、压缩列表、整数集合</strong>等。Redis并没有直接使用这些数据结构来实现键值对数据库，而是基于这些数据结构创建了一个<strong>对象系统，</strong>这个系统包含五种数据类型<strong><code>string（字符串）</code>，<code>hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)</code></strong>。 数据库之所以使用对象，是因为：</p>
+<ul>
+<li>Redis执行命令前，根据对象的类型判断一个对象是否可以执行给定的命令。</li>
+<li>另一个好处是，针对不同的使用场景，为对象设置了多种不同的数据结构实现，从而优化不同场景下的使用效率</li>
+<li>Redis对象系统还实现了基于引用计数的内存回收和对象共享机制，从而节省内存和及时回收内存。 <img src="/2023/06/10/Redis/five.png" width="700"></li>
+</ul>
 <p>Redis支持五种数据类型：<code>string（字符串）</code>，<code>hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)</code>。</p>
+<h3 id="对象编码">对象编码</h3>
+<p>Redis使用对象来表示数据库中的键和值，每次当在Redis的数据库中新建一个键值对时，我们至少会创建两个对象，一个<strong>对象用作键值的键，另一个对象用作键值的值</strong>。Redis中每个对象都由一个<code>redisObject</code>结构表示，有三个属性： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">redisObject</span>&#123;</span><br><span class="line">	<span class="comment">//类型</span></span><br><span class="line">	<span class="type">unsigned</span> type:<span class="number">4</span>;</span><br><span class="line">	<span class="comment">//编码</span></span><br><span class="line">	<span class="type">unsigned</span> encoding:<span class="number">4</span>;</span><br><span class="line">	<span class="comment">//指向低层实现数据结构的指针</span></span><br><span class="line">	<span class="type">void</span>* ptr;</span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>type</code>属性：记录对象类型，这个属性的值可为<code>REDIS_STRING\REDIS_LIST\REDIS_HASH\REDIS_SET\REDIS_ZSET</code>中的一个。对于Redis的键值来说，键总是一个<code>REDIS_STRING</code>类型即字符串类型，而值是可为5种中的一种。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">redis&gt;SET msg <span class="string">&quot;hello redis&quot;</span></span><br><span class="line">OK</span><br><span class="line">redis&gt;TYPE msg</span><br><span class="line">string</span><br></pre></td></tr></table></figure></li>
+<li><code>ptr</code>:指向对象的底层实现数据结构，而这些数据结构由对象的<code>encoding</code>属性决定。<code>encoding</code>属性记录对象所使用的编码，也就是这个对象用什么数据结构作为对象的底层实现。 <img src="/2023/06/10/Redis/encoding.png" width="700"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Redis&gt;SET msg <span class="string">&quot;hello redis&quot;</span></span><br><span class="line">redis&gt;OBJECT ENCODING msg</span><br><span class="line"><span class="string">&quot;embstr&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>通过<code>encoding</code>属性决定对象所使用的编码，而不是关联固定的数据结构作为底层实现，极大提升了Redis的灵活性和效率，因为Redis可以根据不同的使用场景来为一个对象设置不同的编码，从而优化对象在某一场景的效率，比如**在列表对象包含的元素较少时，Redis使用压缩列表作为底层实现</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>因为压缩列表比双端链表更节省内存，并且在元素较少时，在内存中以连续快的方式保持压缩列表比双端链表可以更快的被载入缓存中</li>
+<li>随着列表对象的包含的元素越来越多，使用压缩列表来保存元素的优势消失时，对象会将底层实现从压缩列表转为功能更强，也更适合保存大量元素的双端链表上面。</li>
+</ul>
+</blockquote>
 <h3 id="字符串">字符串</h3>
 <p>底层实现（内部编码）有3种:int（8字节长整型）/embstr（小于等于39字节字符串）/raw（大于39个字节字符串）</p>
 <h4 id="常用命令">常用命令</h4>
@@ -482,12 +506,71 @@
 </ul>
 </blockquote>
 <h3 id="列表">列表</h3>
-<p>底层实现（内部编码）：<code>ziplist</code>（压缩列表）、<code>linkedlist（</code>链表） #### 常用命令 |命令|作用| |----------------|------------------------------------------------------| |<code>LPUSH key value1 [value2]</code>|将一个或多个值插入到列表头部| |<code>LPUSHX key value</code>|将一个值插入到已存在的列表头部| |<code>RPUSH key value1 [value2]</code>|在列表中添加一个或多个值到列表尾部| |<code>RPUSHX key value</code>|为已存在的列表添加值| |<code>LSET key index value</code>|通过索引设置列表元素的值| |<code>BLPOP key1 [key2 ] timeout</code>|移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。| |<code>LINDEX key index</code>|通过索引获取列表中的元素| |<code>BRPOP key1 [key2 ] timeout</code>|移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。| |<code>LREM key count value</code>|移除列表元素| |<code>LRANGE key start stop</code>|获取列表指定范围内的元素| |<code>LPOP key</code>|移出并获取列表的第一个元素| |<code>RPOP key</code>|移除列表的最后一个元素，返回值为移除的元素。|</p>
+<p>底层实现（内部编码）：<code>ziplist</code>（压缩列表）、<code>linkedlist（</code>链表）</p>
+<h4 id="常用命令-1">常用命令</h4>
+<table>
+<thead>
+<tr class="header">
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>LPUSH key value1 [value2]</code></td>
+<td>将一个或多个值插入到列表头部</td>
+</tr>
+<tr class="even">
+<td><code>LPUSHX key value</code></td>
+<td>将一个值插入到已存在的列表头部</td>
+</tr>
+<tr class="odd">
+<td><code>RPUSH key value1 [value2]</code></td>
+<td>在列表中添加一个或多个值到列表尾部</td>
+</tr>
+<tr class="even">
+<td><code>RPUSHX key value</code></td>
+<td>为已存在的列表添加值</td>
+</tr>
+<tr class="odd">
+<td><code>LSET key index value</code></td>
+<td>通过索引设置列表元素的值</td>
+</tr>
+<tr class="even">
+<td><code>BLPOP key1 [key2 ] timeout</code></td>
+<td>移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</td>
+</tr>
+<tr class="odd">
+<td><code>LINDEX key index</code></td>
+<td>通过索引获取列表中的元素</td>
+</tr>
+<tr class="even">
+<td><code>BRPOP key1 [key2 ] timeout</code></td>
+<td>移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止。</td>
+</tr>
+<tr class="odd">
+<td><code>LREM key count value</code></td>
+<td>移除列表元素</td>
+</tr>
+<tr class="even">
+<td><code>LRANGE key start stop</code></td>
+<td>获取列表指定范围内的元素</td>
+</tr>
+<tr class="odd">
+<td><code>LPOP key</code></td>
+<td>移出并获取列表的第一个元素</td>
+</tr>
+<tr class="even">
+<td><code>RPOP key</code></td>
+<td>移除列表的最后一个元素，返回值为移除的元素。</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
 <p>应用场景：消息队列，文章列表,</p>
 </blockquote>
 <h3 id="哈希表">哈希表</h3>
-<h4 id="常用命令-1">常用命令</h4>
+<h4 id="常用命令-2">常用命令</h4>
 <table style="width:100%;">
 <colgroup>
 <col style="width: 28%">
@@ -534,7 +617,7 @@
 <h3 id="集合">集合</h3>
 <p>集合（set）可以保存多个字符串元素，但是不允许有重复元素，并且集合中的元素是无序的，一个集合最多可以存储<span class="math inline">\(2^{32}-1\)</span>个元素，集合可以进行内部的增删改查和多个集合取交集，并集，差集.Redis 中集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。</p>
 <p>底层实现（内部编码）：<code>intset</code>（整数集合）、<code>hashtable</code>（哈希表）</p>
-<h4 id="常用命令-2">常用命令</h4>
+<h4 id="常用命令-3">常用命令</h4>
 <table>
 <thead>
 <tr class="header">
@@ -581,7 +664,7 @@
 <blockquote>
 <p>在redis sorted sets里面当items内容大于64的时候同时使用了hash和skiplist两种设计实现。这也会为了排序和查找性能做的优化。所以如上可知： 添加和删除都需要修改skiplist，所以复杂度为O(log(n))。 但是如果仅仅是查找元素的话可以直接使用hash，其复杂度为O(1) 其他的range操作复杂度一般为O(log(n)) 当然如果是小于64的时候，因为是采用了ziplist的设计，其时间复杂度为O(n)</p>
 </blockquote>
-<h4 id="常用命令-3">常用命令</h4>
+<h4 id="常用命令-4">常用命令</h4>
 <table>
 <thead>
 <tr class="header">
@@ -707,6 +790,56 @@
 </tr>
 </tbody>
 </table>
+<h2 id="数据库">数据库</h2>
+<p>要熟悉Redis数据库，就必须理解Redis数据库的组织形式，这样才能建立对Redis的扎实概念，从理解出发认识Redsi。本节主要说明Redis服务器如何保存数据库、数据库如何管理键值对、服务器如何管理保存键的过期时间</p>
+<h3 id="服务器的数据库">服务器的数据库</h3>
+<p>Reids服务器将所有数据库都保存在服务器<code>redis.h/redisSever</code>结构体的<code>db</code>数组中。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">redisSever</span>&#123;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">	<span class="comment">//指示服务器的数据库数量</span></span><br><span class="line">	<span class="type">int</span> dbnum;</span><br><span class="line">	<span class="comment">//一个数组，保存服务器中所有的数据库</span></span><br><span class="line">	redisDB* db;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Redis客户端切换数据库，在RedisClient结构的db属性记录了客户端当前的目标数据库， <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">redisClient</span>&#123;</span><br><span class="line">&gt;<span class="comment">//...</span></span><br><span class="line">&gt;<span class="comment">//记录当前客户端正在使用的db数据库</span></span><br><span class="line">&gt;redisDB* db;</span><br><span class="line">&gt;&#125;;</span><br></pre></td></tr></table></figure> 我们可以通过<code>SELECT 数字</code>来切换至第几号数据库 <img src="/2023/06/10/Redis/db.png" width="700"></p>
+</blockquote>
+<h3 id="数据库的键空间">数据库的键空间</h3>
+<p>Redis是一个键值对数据库服务器，因此服务器中每个数据库中都由一个redis/redisDB结构体表示，<strong>其中的<code>dict</code>字典保存了数据库的所有键值对，我们将这个字典称为键空间</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">redisDb</span>&#123;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">	<span class="comment">//数据库的键空间</span></span><br><span class="line">	dict* dict;</span><br><span class="line">	<span class="comment">//过期字典</span></span><br><span class="line">	dice* expires;</span><br><span class="line">	<span class="comment">//....</span></span><br><span class="line">&#125;；</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>键空间的键也就是数据库的键也，每一个键都是一个字符串对象</li>
+<li>键空间的值也就是数据库的值，每个值可以是字符串、列表、哈希、集合和有序集合对象</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">redis&gt;SET msg <span class="string">&quot;hello world&quot;</span></span><br><span class="line">redis&gt;RPUSH alphabet <span class="string">&quot;a&quot;</span> <span class="string">&quot;b&quot;</span> <span class="string">&quot;c&quot;</span></span><br><span class="line">redis&gt;HSET book name <span class="string">&quot;Redis in Action&quot;</span></span><br><span class="line">redis&gt;HSET book author <span class="string">&quot;Josiah L. Carlson&quot;</span></span><br><span class="line">redis&gt;HSET book publisher <span class="string">&quot;Manning&quot;</span></span><br></pre></td></tr></table></figure>
+<p>在执行这些命令后，对应的数据库库键空间如下： <img src="/2023/06/10/Redis/keyspace.png" width="700"></p>
+<h3 id="键的生存时间">键的生存时间</h3>
+<p>为什么要设置键的生存时间，键的生存时间指的是再内存中的存在时间：</p>
+<ul>
+<li>如果缓存没有失效时间，对于读多写少的场景，如果产生脏数据会永远没有机会更新，还会存在冷数据的问题，一段时间内没有被访问过的数据也会持续占据内存空间，造成空间浪费。（空间使用率）</li>
+<li>如果时间设置的很短，缓存频繁失效，高并发下数据库压力会上升，严重情况可能会宕机。</li>
+<li>缓存失效时间要随机。如果所有的key失效时间同时失效，大量的请求直接落到DB上，这就是常说的缓存雪崩。</li>
+</ul>
+<p>Redis有四种不同的命令来设置键的生存时间：</p>
+<ul>
+<li><code>EXPIRE &lt;KEY&gt; &lt;TTL&gt;</code>命令将键KEY的生存时间设置为TTL秒</li>
+<li><code>PEXPIRE &lt;KEY&gt; &lt;TTL&gt;</code>命令将键KEY的生存时间设置为TTL毫秒</li>
+<li>`EXPIREAT <KEY> <timestamp>命令将key的过期时间设置为指定timestamp秒数时间戳</timestamp></KEY></li>
+<li><code>PEXPIRAT &lt;KEY&gt; &lt;timestam&gt;</code>命令将key的过期时间设置为指定timestamp毫秒数时间戳</li>
+</ul>
+<p>redisDb结构体还有一个名为<code>expires</code>字典保存数据库中所有键的过期时间，<code>expires</code>被称为过期字典：</p>
+<ul>
+<li>过期字典的键是一个指针，这个指针指向键空间的某个键对象</li>
+<li>过期字典的值是一个long long类型的整数，这个整数保存了键所指向的数据库键的过期时间。 <img src="/2023/06/10/Redis/livetime.png" width="700"></li>
+</ul>
+<h4 id="过期删除策略">过期删除策略</h4>
+<p>一个键过期了，redis服务器是采用什么策略将这些键从内存删除呢，一共有三个策略，<strong>redis采用了惰性删除和定期删除策略</strong>：</p>
+<ul>
+<li><strong>定时删除</strong>：在设置键的过期时间的同时，创建一个定时器，让定时器在键的过期时间来临时，立即执行对键的删除操作
+<ul>
+<li>定时删除策略对内存最友好，因为该策略是尽可能快的删除键；但缺点是对CPU最不友好，在过期键比较多的时候，删除过期键可能会占用CPU相当一部分时间。</li>
+</ul></li>
+<li><strong>惰性删除</strong>：放任键的过期不管，但是每次从键空间中获取键时，都会检查取得的键是否过期，如果过期的话，就删除该键；如果没有过期，就返回该键
+<ul>
+<li>惰性删除对CPU的来说是最友好的，因为程序只有在取出键时才对键进行过期检查，这保证了键的删除操作只在非做不可的时候进行，并且删除的键时当前处理的目标键。缺点是对内存最不友好，如果一个键已经过期，而这个键又仍然保留在数据库中，那么只要这个过期键不被删除，它所占用的内存就不会释放。</li>
+</ul></li>
+<li><strong>定期删除</strong>：每隔一段时间，程序就对数据库进行一次检查，删除里面过期的键。至于要删除多少个过期键，以及检查多少个数据库，由算法决定。
+<ul>
+<li><strong>定期删除是对定时删除和惰性删除的折中选择</strong>，</li>
+</ul></li>
+</ul>
 <blockquote>
 <p>参考文献 菜鸟教程 《Redis设计与实现》</p>
 </blockquote>
@@ -814,7 +947,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85redis"><span class="nav-number">1.1.</span> <span class="nav-text">安装Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%85%B3%E9%97%AD%E5%92%8C%E9%87%8D%E5%90%AF"><span class="nav-number">1.2.</span> <span class="nav-text">Redis服务器启动、关闭和重启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">进入数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.4.</span> <span class="nav-text">配置数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">Redis的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-%E4%B8%8E%E5%85%B6%E4%BB%96-key---value-%E7%BC%93%E5%AD%98%E4%BA%A7%E5%93%81%E6%9C%89%E4%BB%A5%E4%B8%8B%E4%B8%89%E4%B8%AA%E7%89%B9%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">Redis 与其他 key - value 缓存产品有以下三个特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-%E4%BC%98%E5%8A%BF"><span class="nav-number">2.2.</span> <span class="nav-text">Redis 优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis%E4%B8%8E%E5%85%B6%E4%BB%96key-value%E5%AD%98%E5%82%A8%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="nav-number">2.3.</span> <span class="nav-text">Redis与其他key-value存储有什么不同？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">Redis的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.1.</span> <span class="nav-text">简单动态字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">3.3.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E8%A1%A8"><span class="nav-number">3.4.</span> <span class="nav-text">跳表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8"><span class="nav-number">3.5.</span> <span class="nav-text">压缩列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">对象（Redis的数据类型）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.1.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.1.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8"><span class="nav-number">4.2.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-number">4.3.</span> <span class="nav-text">哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88"><span class="nav-number">4.4.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-2"><span class="nav-number">4.4.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">4.5.</span> <span class="nav-text">有序集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-3"><span class="nav-number">4.5.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%AE"><span class="nav-number">4.6.</span> <span class="nav-text">键</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85redis"><span class="nav-number">1.1.</span> <span class="nav-text">安装Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%85%B3%E9%97%AD%E5%92%8C%E9%87%8D%E5%90%AF"><span class="nav-number">1.2.</span> <span class="nav-text">Redis服务器启动、关闭和重启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.3.</span> <span class="nav-text">进入数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.4.</span> <span class="nav-text">配置数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">Redis的特点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-%E4%B8%8E%E5%85%B6%E4%BB%96-key---value-%E7%BC%93%E5%AD%98%E4%BA%A7%E5%93%81%E6%9C%89%E4%BB%A5%E4%B8%8B%E4%B8%89%E4%B8%AA%E7%89%B9%E7%82%B9"><span class="nav-number">2.1.</span> <span class="nav-text">Redis 与其他 key - value 缓存产品有以下三个特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-%E4%BC%98%E5%8A%BF"><span class="nav-number">2.2.</span> <span class="nav-text">Redis 优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#redis%E4%B8%8E%E5%85%B6%E4%BB%96key-value%E5%AD%98%E5%82%A8%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C"><span class="nav-number">2.3.</span> <span class="nav-text">Redis与其他key-value存储有什么不同？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">Redis的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">3.1.</span> <span class="nav-text">简单动态字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">3.3.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%B3%E8%A1%A8"><span class="nav-number">3.4.</span> <span class="nav-text">跳表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8"><span class="nav-number">3.5.</span> <span class="nav-text">压缩列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1redis%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">对象（Redis的数据类型）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A0%81"><span class="nav-number">4.1.</span> <span class="nav-text">对象编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.2.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.2.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8"><span class="nav-number">4.3.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-number">4.4.</span> <span class="nav-text">哈希表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-2"><span class="nav-number">4.4.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88"><span class="nav-number">4.5.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-3"><span class="nav-number">4.5.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">4.6.</span> <span class="nav-text">有序集合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-4"><span class="nav-number">4.6.1.</span> <span class="nav-text">常用命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%AE"><span class="nav-number">4.7.</span> <span class="nav-text">键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">5.</span> <span class="nav-text">数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">5.1.</span> <span class="nav-text">服务器的数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%94%AE%E7%A9%BA%E9%97%B4"><span class="nav-number">5.2.</span> <span class="nav-text">数据库的键空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%AE%E7%9A%84%E7%94%9F%E5%AD%98%E6%97%B6%E9%97%B4"><span class="nav-number">5.3.</span> <span class="nav-text">键的生存时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%87%E6%9C%9F%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5"><span class="nav-number">5.3.1.</span> <span class="nav-text">过期删除策略</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -884,12 +1017,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">968k</span>
+    <span title="站点总字数">1m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">14:40</span>
+    <span title="站点阅读时长">15:19</span>
 </div>
 
         
