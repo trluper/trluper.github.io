@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本)   POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C C++标准多线程和Boost线程是类形式，这点要注意。  1 概览 1.1 认识并发 如下图，在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png">
+<meta property="og:image" content="https://example.com/C-并发/computer.png">
 <meta property="article:published_time" content="2023-02-19T01:57:24.000Z">
 <meta property="article:modified_time" content="2023-03-04T12:23:59.009Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png">
+<meta name="twitter:image" content="https://example.com/C-并发/computer.png">
 
 <link rel="canonical" href="https://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/">
 
@@ -283,7 +283,7 @@
 </ul>
 <h3 id="概览">1 概览</h3>
 <h4 id="认识并发">1.1 认识并发</h4>
-<p>如下图，<strong>在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方式，让任务看起来是并行执行的</strong>。这种方式称为“任务切换(task switching)”。但是，实际上是并发形式的，因为任务切换得太快，以至于无法感觉到任务在何时会被暂时挂起 <img src="/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png" width="500"> 系统每次从一个任务切换到另一个时都需要切换一次上下文(context switch)，任务切换也有时间开销。</p>
+<p>如下图，<strong>在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方式，让任务看起来是并行执行的</strong>。这种方式称为“任务切换(task switching)”。但是，实际上是并发形式的，因为任务切换得太快，以至于无法感觉到任务在何时会被暂时挂起 <img src="/C-并发/computer.png" width="500"> 系统每次从一个任务切换到另一个时都需要切换一次上下文(context switch)，任务切换也有时间开销。</p>
 <span id="more"></span>
 <ul>
 <li>进行上下文的切换时，操作系统必须为当前运行的任务保存CPU的状态和指令指针，并计算出要切换到哪个任务，并为即将切换到的任务重新加载处理器状态。</li>
@@ -640,7 +640,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:25</span>
+    <span title="站点阅读时长">15:26</span>
 </div>
 
         

@@ -29,19 +29,19 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 信息的存储 大多数的计算机使用8位的块，或者说是字节(byte)，作为最小的可寻址内存单位，而不是访问内存中单独的位。机器级程序将内存视为一个非常大的字节数组，我们称为虚拟内存，内存的每个字节都由一个唯一的数字来标识，即称为地址；所有可能的地址空间的集合就是虚拟地址空间。 顾名思义，虚拟地址空间只是一个展现给机器级程序的概念性映像。实际的实现(第九章：虚拟内存)是将DRAM、闪存、磁盘存储">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bytenums.png">
-<meta property="og:image" content="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bigsmall.png">
-<meta property="og:image" content="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/same.png">
-<meta property="og:image" content="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/float.png">
-<meta property="og:image" content="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/normal.png">
-<meta property="og:image" content="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/same.png">
-<meta property="og:image" content="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/roundingoff.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-信息表示和处理/bytenums.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-信息表示和处理/bigsmall.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-信息表示和处理/same.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-信息表示和处理/float.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-信息表示和处理/normal.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-信息表示和处理/same.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-信息表示和处理/roundingoff.png">
 <meta property="article:published_time" content="2023-03-02T03:09:05.000Z">
 <meta property="article:modified_time" content="2023-04-11T00:52:57.862Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深入理解计算机系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bytenums.png">
+<meta name="twitter:image" content="https://example.com/深入理解计算机系统-信息表示和处理/bytenums.png">
 
 <link rel="canonical" href="https://example.com/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/">
 
@@ -397,7 +397,7 @@
 <h4 id="字数据大小">1.2 字数据大小</h4>
 <p>每台计算机都有有一个字长(word)，指明指针数据的标称大小，<strong>因为虚拟地址是以这样的一个字来编码的，所有字长决定的最重要的系统参数就是虚拟地址空间的最大空间</strong>，也就是说一个字长位m位的机器，虚拟地址空间的范围为<span class="math inline">\(0\)</span>~<span class="math inline">\(2^{(m-1)}\)</span>，即32为系统来说，器虚拟内存空间最大为4G，而64位最大可为16EB.</p>
 <p>64位机器先后兼容，可运行32位机器编码程序,因此对于下面的伪指令编译 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//32、64均可运行</span></span><br><span class="line">gcc -m32 prog.c</span><br><span class="line"><span class="comment">//只能在64运行</span></span><br><span class="line">gcc -m64 prog.c</span><br></pre></td></tr></table></figure></p>
-<p>值得一提的是各基础类型在不同机器的字节数： <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bytenums.png" width="700"></p>
+<p>值得一提的是各基础类型在不同机器的字节数： <img src="/深入理解计算机系统-信息表示和处理/bytenums.png" width="700"></p>
 <ul>
 <li><code>int</code>不管在哪个机器上都是4字节</li>
 <li>而<code>long</code>在32位位4字节，在64位上位8字节</li>
@@ -410,11 +410,11 @@
 <li>这个对象的地址是什么：在几乎所有的机器上，多字节对象都被存储为连续的字节序列，<strong>对象的地址为所使用字节中最小的地址。</strong></li>
 <li>这个对象在内存中是如何排列这些字节的：排列ijie有两个通用的规则，一个是大端(网络字节序)，一个是小端(主机序);<strong>大端字节序在内存中按从最高有效位到最低有效位存储；而小端字节序在内存中按照从最低有效位到最高有效位存储</strong>
 <ul>
-<li>现有一个int型变量，位于初始地址为<code>0x100</code>，它的十六进制值为<code>0x01234567</code>，则大小端存储如下： <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/bigsmall.png" width="700"></li>
+<li>现有一个int型变量，位于初始地址为<code>0x100</code>，它的十六进制值为<code>0x01234567</code>，则大小端存储如下： <img src="/深入理解计算机系统-信息表示和处理/bigsmall.png" width="700"></li>
 </ul></li>
 </ul>
 <p>试用一个程序来输出类型位<code>int</code>、<code>float</code>和<code>void*</code>的字节表示： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">unsigned</span> <span class="type">char</span>* byte_pointer;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_bytes</span><span class="params">(byte_pointer start,size_tlen)</span></span>&#123;</span><br><span class="line">	<span class="type">size_t</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;len;i++)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%2.x &quot;</span>,start[i]);	<span class="comment">//%2.x表示整数必须用两个16进制输出</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_int</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">show_bytes</span>((byte_pointer)&amp;x,<span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_float</span><span class="params">(<span class="type">float</span> x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">show_bytes</span>((byte_pointer)&amp;x,<span class="built_in">sizeof</span>(<span class="type">float</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_pointer</span><span class="params">(<span class="type">void</span>*x)</span></span>&#123;</span><br><span class="line">	<span class="built_in">show_bytes</span>((byte_pointer)&amp;x,<span class="built_in">sizeof</span>(<span class="type">void</span>*));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> val=<span class="number">12345</span>;</span><br><span class="line">	<span class="type">float</span> fval=(<span class="type">float</span>)val;</span><br><span class="line">	<span class="type">int</span> *pval=&amp;val;</span><br><span class="line">	<span class="built_in">show_int</span>(val);</span><br><span class="line">	<span class="built_in">show_float</span>(fval);</span><br><span class="line">	<span class="built_in">show_pointer</span>(pval);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 输出： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">39</span> <span class="number">30</span> <span class="number">00</span> <span class="number">00</span></span><br><span class="line"><span class="number">00</span> e4 <span class="number">40</span> <span class="number">46</span></span><br><span class="line"><span class="number">74</span> f5 cf <span class="number">38</span> a3</span><br></pre></td></tr></table></figure> 可以很清楚的值得<code>int</code>是采用了小端字节序，<code>float</code>也是使用了小端，但数值比较奇怪，而指针的值是每次都可能会不一样的。</p>
-<p>对于<code>int</code>和<code>float</code>的值，看起来很不一样，但是我们把它按位展开，则发现下面有些许相似,如<code>*</code>号处： <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/same.png" width="700"></p>
+<p>对于<code>int</code>和<code>float</code>的值，看起来很不一样，但是我们把它按位展开，则发现下面有些许相似,如<code>*</code>号处： <img src="/深入理解计算机系统-信息表示和处理/same.png" width="700"></p>
 <p>这是IEEE单精度标准化的结果</p>
 <h4 id="表示字符串">1.4 表示字符串</h4>
 <p>C语言中字符串编码为一个以<code>null</code>(值为0)字符结尾的字符数组。<strong>并且每个字符都以标准编码来表示，如ASCII码</strong>。比如，我们若以字符串&quot;12345&quot;来运行<code>show_bytes</code>，得到的结果会是<code>31 32 33 34 35 00</code>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//0~9的数字x的ascii码正好对应0x3x,终止字符对应0x00</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* s = <span class="string">&quot;12345&quot;</span>;</span><br><span class="line"><span class="built_in">show_bytes</span>((byte_pointer)s, <span class="built_in">sizeof</span>(s));</span><br></pre></td></tr></table></figure> 输出： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">31</span> <span class="number">32</span> <span class="number">33</span> <span class="number">34</span> <span class="number">35</span> <span class="number">00</span></span><br></pre></td></tr></table></figure></p>
@@ -475,7 +475,7 @@ Tmin&amp; x=Tmin\\
 <ul>
 <li><span class="math inline">\(s\)</span>为标符号位：标志当前浮点数是正数还是负数</li>
 <li><span class="math inline">\(M\)</span>为尾数：它是一个二进制小数，是frac字段的十进制表示。它的范围在规格化是值在<span class="math inline">\([1,2-\epsilon]\)</span>；在非规格化时值在<span class="math inline">\([0,1-\epsilon]\)</span></li>
-<li><span class="math inline">\(E\)</span>:为阶数，其值位阶码字段<span class="math inline">\(e_{k-1}e_{k-2}...e_0\)</span>的十进制值 <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/float.png" width="700"></li>
+<li><span class="math inline">\(E\)</span>:为阶数，其值位阶码字段<span class="math inline">\(e_{k-1}e_{k-2}...e_0\)</span>的十进制值 <img src="/深入理解计算机系统-信息表示和处理/float.png" width="700"></li>
 </ul>
 <blockquote>
 <p>对于单精度float来说，其位分布为：1--8--23 双精度double:位分布为1---11---52</p>
@@ -490,11 +490,11 @@ Tmin&amp; x=Tmin\\
 <li>特殊值：当阶码位模式均为1时，此时处于特殊值情况：
 <ul>
 <li>当小数域<code>frac</code>均为0时，此时表示值位无穷大，当<code>s=0</code>时是<span class="math inline">\(+∞\)</span>，当<code>s=1</code>时是<code>-∞</code></li>
-<li>当<code>frac</code>位非0时，此时结果值被表示位<code>NaN</code>,不是一个数。 <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/normal.png" width="700"></li>
+<li>当<code>frac</code>位非0时，此时结果值被表示位<code>NaN</code>,不是一个数。 <img src="/深入理解计算机系统-信息表示和处理/normal.png" width="700"></li>
 </ul></li>
 </ul>
 <h5 id="浮点数与整数的关系">1.10.2 浮点数与整数的关系</h5>
-<p>现在来看之前提到过的int和float的关系 <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/same.png" width="500"> 它们有相似的区域，这是怎么得来的呢，仔细观察，可由下面推得：</p>
+<p>现在来看之前提到过的int和float的关系 <img src="/深入理解计算机系统-信息表示和处理/same.png" width="500"> 它们有相似的区域，这是怎么得来的呢，仔细观察，可由下面推得：</p>
 <ul>
 <li>首先将int型数字左移13位得到<span class="math inline">\(1.1000000111001*2^{13}\)</span></li>
 <li>由于其<span class="math inline">\(E=13\)</span>，由其计算公式可知，<span class="math inline">\(e=E+Bias=13+127=140\)</span>，处于规格化，符号位为正</li>
@@ -503,7 +503,7 @@ Tmin&amp; x=Tmin\\
 <li>由于单精度，小数区域为23为，在其后面补10个0，得到<span class="math inline">\(01000110010000001110010000000000\)</span>,即如上图所示</li>
 </ul>
 <h5 id="浮点数的舍入">1.10.3 浮点数的舍入</h5>
-<p>因为表示方法限制了浮点数的范围和精度，所以浮点数运算只能近似地表示实数运算。在规范当中有四种舍入方式 <img src="/2023/03/02/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BF%A1%E6%81%AF%E8%A1%A8%E7%A4%BA%E5%92%8C%E5%A4%84%E7%90%86/roundingoff.png" width="600"></p>
+<p>因为表示方法限制了浮点数的范围和精度，所以浮点数运算只能近似地表示实数运算。在规范当中有四种舍入方式 <img src="/深入理解计算机系统-信息表示和处理/roundingoff.png" width="600"></p>
 <h5 id="c中的浮点数">1.10.4 C中的浮点数</h5>
 <p>C中提供了两种浮点数<code>float</code>和<code>double</code>。挡在<code>int、float和double</code>直接进行强制类型转换时，程序改变数值和位模式的原则如下：</p>
 <ul>
@@ -690,7 +690,7 @@ Tmin&amp; x=Tmin\\
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:25</span>
+    <span title="站点阅读时长">15:26</span>
 </div>
 
         

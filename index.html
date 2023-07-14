@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-13 17:06:25" itemprop="dateModified" datetime="2023-07-13T17:06:25+08:00">2023-07-13</time>
+                <time title="修改时间：2023-07-14 10:24:16" itemprop="dateModified" datetime="2023-07-14T10:24:16+08:00">2023-07-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,14 +247,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>49k</span>
+              <span>51k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>45 分钟</span>
+              <span>47 分钟</span>
             </span>
 
         </div>
@@ -459,12 +459,12 @@
 
       
           <h3 id="介绍">1 介绍</h3>
-<p>此次project0项目是实现一个键值对存储，数据结构由<strong>写时复制的字典树</strong>构成。实现的键-值存储可以存储映射到任何类型值的字符串键。键的值存储在表示该键的最后一个字符的节点中(又称终端节点)。例如，考虑在trie中插入kv对(&quot;ab&quot;， 1)和(&quot;ac&quot;， &quot;val&quot;)。 <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/keyvalue.png" width="500"></p>
+<p>此次project0项目是实现一个键值对存储，数据结构由<strong>写时复制的字典树</strong>构成。实现的键-值存储可以存储映射到任何类型值的字符串键。键的值存储在表示该键的最后一个字符的节点中(又称终端节点)。例如，考虑在trie中插入kv对(&quot;ab&quot;， 1)和(&quot;ac&quot;， &quot;val&quot;)。 <img src="/CMU15-445-FALL2023-PROJECT-0/keyvalue.png" width="500"></p>
 <h3 id="task1copy-on-write-trie">2 Task1:Copy-On-Write trie</h3>
 <ul>
-<li><p>在本任务中，只需要修改<code>trie .h</code>和<code>trie .cpp</code>来实现写时复制(copy-on-write) tree。<strong>在写即复制tree中，操作不会直接修改原始tree中的节点。相反，将为修改后的数据创建新节点，并为新修改的trie返回一个新根</strong>。写时复制(Copy-on-write)使我们能够在每次操作之后随时以最小的开销访问该树。考虑在上面的例子中插入<code>(&quot;ad&quot;， 2)</code>。我们通过重用原始树中的两个子节点来创建一个新的Node2，并创建一个新的值节点2。(见下图) <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new1.png" width="700"></p></li>
-<li><p>插入<code>(&quot;b&quot;， 3)</code>，我们将创建一个新的根，一个新的节点，并重用以前的节点。通过这种方式，我们可以在每次插入操作之前和之后获得树的内容。只要我们有根对象(Trie类)，我们就可以访问当时Trie中的数据。(见下图) <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new2.png" width="700"></p></li>
-<li><p>插入<code>(“a”，“abc”)</code>并删除<code>(“ab”，1)</code>，我们可以得到下面的trie。注意，父节点可以有值，并且在删除后需要清除所有不必要的节点。 <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new3.png" width="700"></p></li>
+<li><p>在本任务中，只需要修改<code>trie .h</code>和<code>trie .cpp</code>来实现写时复制(copy-on-write) tree。<strong>在写即复制tree中，操作不会直接修改原始tree中的节点。相反，将为修改后的数据创建新节点，并为新修改的trie返回一个新根</strong>。写时复制(Copy-on-write)使我们能够在每次操作之后随时以最小的开销访问该树。考虑在上面的例子中插入<code>(&quot;ad&quot;， 2)</code>。我们通过重用原始树中的两个子节点来创建一个新的Node2，并创建一个新的值节点2。(见下图) <img src="/CMU15-445-FALL2023-PROJECT-0/new1.png" width="700"></p></li>
+<li><p>插入<code>(&quot;b&quot;， 3)</code>，我们将创建一个新的根，一个新的节点，并重用以前的节点。通过这种方式，我们可以在每次插入操作之前和之后获得树的内容。只要我们有根对象(Trie类)，我们就可以访问当时Trie中的数据。(见下图) <img src="/CMU15-445-FALL2023-PROJECT-0/new2.png" width="700"></p></li>
+<li><p>插入<code>(“a”，“abc”)</code>并删除<code>(“ab”，1)</code>，我们可以得到下面的trie。注意，父节点可以有值，并且在删除后需要清除所有不必要的节点。 <img src="/CMU15-445-FALL2023-PROJECT-0/new3.png" width="700"></p></li>
 </ul>
 <p>因此，在这里你需要实现三个函数：</p>
 <ul>
@@ -561,7 +561,7 @@
       
           <h3 id="实验准备">1 实验准备</h3>
 <p><a target="_blank" rel="noopener" href="https://15445.courses.cs.cmu.edu/fall2022/homework1/">作业地址</a></p>
-<p>实验当中提供的数据库，其中表关系如下： <img src="/2023/05/21/CMU15-445-FALL2023-HOMEWORK1/schema.png" width="700"></p>
+<p>实验当中提供的数据库，其中表关系如下： <img src="/CMU15-445-FALL2023-HOMEWORK1/schema.png" width="700"></p>
 <p>索引创建如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">CREATE INDEX ix_people_name ON <span class="title">people</span> <span class="params">(name)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_titles_type ON <span class="title">titles</span> <span class="params">(type)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_titles_primary_title ON <span class="title">titles</span> <span class="params">(primary_title)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_titles_original_title ON <span class="title">titles</span> <span class="params">(original_title)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_akas_title_id ON <span class="title">akas</span> <span class="params">(title_id)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_akas_title ON <span class="title">akas</span> <span class="params">(title)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_crew_title_id ON <span class="title">crew</span> <span class="params">(title_id)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_crew_person_id ON <span class="title">crew</span> <span class="params">(person_id)</span></span>;</span><br></pre></td></tr></table></figure></p>
 <h3 id="sqlite3的一些特性">2 SQLite3的一些特性</h3>
 <ul>
@@ -721,7 +721,7 @@
 <p>虚拟内存是硬件异常、硬件地址翻译、主存和磁盘文件和内核软件的完美交互：</p>
 <h4 id="虚拟寻址和地址空间">1.1 虚拟寻址和地址空间</h4>
 <p>在计算机中每个字节都存在它唯一的地址，该地址就是<strong>物理地址</strong>，我们将通过真实物理地址进行寻址的方法称为<strong>物理地址</strong>。</p>
-<p>而虚拟地址，是指由CPU生成一个<strong>虚拟地址（VA）</strong>来访问主存，如下图，这个虚拟地址在送到内存之前会经过<code>MMU内存管理单元</code>来翻译成物理地址，在这里会结合到后面的<strong>页表</strong>来进行翻译。通过虚拟地址寻址的方式就是<strong>虚拟寻址</strong>。现在计算绝大部分都是使用<strong>寻你寻址</strong>。 <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/MMU.png" width="700"></p>
+<p>而虚拟地址，是指由CPU生成一个<strong>虚拟地址（VA）</strong>来访问主存，如下图，这个虚拟地址在送到内存之前会经过<code>MMU内存管理单元</code>来翻译成物理地址，在这里会结合到后面的<strong>页表</strong>来进行翻译。通过虚拟地址寻址的方式就是<strong>虚拟寻址</strong>。现在计算绝大部分都是使用<strong>寻你寻址</strong>。 <img src="/深入理解计算机系统-虚拟内存/MMU.png" width="700"></p>
 <p><strong>地址空间</strong>：</p>
 <ul>
 <li><strong>虚拟地址空间</strong>：虚拟地址空间一般以地址总线条数为基准，如32位的位<span class="math inline">\(2^{32}=4GB\)</span></li>
@@ -734,7 +734,7 @@
 <ul>
 <li><strong>未分配的：</strong>VM系统还没有分配的页，此时未分配的块没有任何数据和它们管理，因此此时不会占有任何磁盘空间</li>
 <li><strong>缓存的</strong>：当前缓存的虚拟页在占有磁盘中的空间，当然由于缓存到内存。内存当中也会占有一定内存空间</li>
-<li><strong>维缓存的</strong>：在磁盘中占用空间，但并未缓存在内存中，当然不占用内存(此时当CPU要寻址该页当中一个数据时，由于未缓存在内存中，就会造成<strong>缺页异常</strong>。) <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/VP.png" width="700"></li>
+<li><strong>维缓存的</strong>：在磁盘中占用空间，但并未缓存在内存中，当然不占用内存(此时当CPU要寻址该页当中一个数据时，由于未缓存在内存中，就会造成<strong>缺页异常</strong>。) <img src="/深入理解计算机系统-虚拟内存/VP.png" width="700"></li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -960,7 +960,7 @@
 <p>可以简单从下面两点来区别：</p>
 <ul>
 <li>操作系统的内核（Kernel）属于操作系统层面，而 CPU 属于硬件。</li>
-<li>CPU 主要提供运算，处理各种指令的能力。内核（Kernel）主要负责系统管理比如内存管理，它屏蔽了对硬件的操作。 <img src="/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/操作系统概念.png" width="500"></li>
+<li>CPU 主要提供运算，处理各种指令的能力。内核（Kernel）主要负责系统管理比如内存管理，它屏蔽了对硬件的操作。 <img src="/操作系统/操作系统概念.png" width="500"></li>
 </ul>
 <h3 id="操作系统的基本特性">2 操作系统的基本特性</h3>
 <p>操作系统的基本特性是<strong>并发性、共享性、虚拟性、异步性。</strong></p>
@@ -1007,7 +1007,7 @@
 <li>文件管理。完成文件的读、写、创建及删除等功能。</li>
 <li>进程控制。完成进程的创建、撤销、阻塞及唤醒等功能。</li>
 <li>进程通信。完成进程之间的消息传递或信号传递等功能。</li>
-<li>内存管理。完成内存的分配、回收以及获取作业占用内存区大小及地址等功能。 <img src="/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/systemcall.png" width="600"></li>
+<li>内存管理。完成内存的分配、回收以及获取作业占用内存区大小及地址等功能。 <img src="/操作系统/systemcall.png" width="600"></li>
 </ul>
 <h4 id="为什么要有用户态与内核态">为什么要有用户态与内核态?</h4>
 <p><strong>在 cpu 的所有指令中，有些指令是非常危险的，如果使用不当，将会造成系统崩溃等后果。为了避免这种情况发生，cpu 将指令划分为特权级(内核态)指令和非特权级(用户态)指令。</strong></p>
@@ -1250,7 +1250,7 @@
 </ul>
 <h4 id="随机访问存储器">1.1 随机访问存储器</h4>
 <p>随机访问存储器(RAM)有两类：静态和动态。静态RAM(SRAM)比动态DRAM(DRAM)更快，但也更贵，<strong>因此SRAM一般集成在CPU上作为高速缓存，DRAM则作为主存。</strong>断电以后，DRAM和SRAM都会丢失它们的信息</p>
-<p><strong>访问主存：</strong>每次CPU和主存之间的数据传送都是通过一系列的步骤来完成，这些步骤称为<strong>总线事务</strong>。<strong>读事务</strong>从主存传输数据到CPU，<strong>写事务</strong>从CPU传送数据到主存。总线是一组并行的导线，能携带地址、数据和控制信号。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/bus.png" width="600"></p>
+<p><strong>访问主存：</strong>每次CPU和主存之间的数据传送都是通过一系列的步骤来完成，这些步骤称为<strong>总线事务</strong>。<strong>读事务</strong>从主存传输数据到CPU，<strong>写事务</strong>从CPU传送数据到主存。总线是一组并行的导线，能携带地址、数据和控制信号。 <img src="/深入理解计算机系统-存储器层次结构/bus.png" width="600"></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/#more" rel="contents">
@@ -1348,7 +1348,7 @@
           <h3 id="导读">1 导读</h3>
 <p>程序优化涉及的范围实在是太广了，几乎每个层面都可以进行优化，比如撰写<编译器友好型>以及<缓存友好型>的程序，针对不同的目标硬件平台还可能进行特定的优化，等等，优化的难点在于你需要对系统有充分理解，当然了在你做优化之前<strong>首先要保证原始程序功能正确（并且有回归测试）</strong>，否则一切都是徒劳。</缓存友好型></编译器友好型></p>
 <blockquote>
-<p>首先需要理解，哪些因素会影响程序的性能 <img src="/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/influence.png" width="700"></p>
+<p>首先需要理解，哪些因素会影响程序的性能 <img src="/深入理解计算机系统-优化程序性能/influence.png" width="700"></p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
@@ -1502,7 +1502,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:25</span>
+    <span title="站点阅读时长">15:26</span>
 </div>
 
         

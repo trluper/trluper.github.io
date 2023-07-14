@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="7 lambda表达式 我们可以向一个算法传递任何类别可调用对象，如果可以对其使用调用运算符()，则称它为可调用的。c++中可调用对象有函数、函数指针、重载函数调用运算符类、lambda表达式。 一个lambda表达式表示一个可调用的代码单元，可将其理解为一个未命名的内联函数。一个lambda具有一个返回类型、一个参数列表和一个函数体(同函数一样）。与函数不同的是，lambda可定义在函数内部">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2023/03/07/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/lambda.png">
+<meta property="og:image" content="https://example.com/lambda表达式/lambda.png">
 <meta property="article:published_time" content="2023-03-07T07:21:31.000Z">
 <meta property="article:modified_time" content="2023-03-07T07:51:54.965Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2023/03/07/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/lambda.png">
+<meta name="twitter:image" content="https://example.com/lambda表达式/lambda.png">
 
 <link rel="canonical" href="https://example.com/2023/03/07/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
@@ -282,7 +282,7 @@
 <span id="more"></span>
 <p>可以忽略参数列表（等价于指定一个空参数列表）和返回类型（此时根据代码推断，有return返回相应类型，没有为void)，<strong>但必须包含捕获列表和函数体：</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> f=[] &#123;<span class="keyword">return</span> <span class="number">42</span>;&#125;;</span><br><span class="line">cout&lt;&lt;<span class="built_in">f</span>()&lt;&lt;endl;	<span class="comment">//调用时也有调用运算符()</span></span><br><span class="line"><span class="comment">//lambda不能设默认参数，因此一个lambda调用时实参数目必须与形参一一对应。</span></span><br><span class="line">[](<span class="type">const</span> string &amp;s1,<span class="type">const</span> string &amp;s2)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> s1.<span class="built_in">size</span>()&lt;s2.<span class="built_in">size</span>();	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h4 id="捕获规则">7.1捕获规则</h4>
-<p>lambda表达式的捕获列表有值捕获和引用捕获 <img src="/2023/03/07/lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/lambda.png" width="700"> <strong>我们可以在捕获列表中写一个<code>&amp;</code>或者<code>=</code>，指示编译器推断捕获列表。<code>&amp;</code>告诉编译器采用捕获引用方式，<code>=</code>则表示采用值捕获方式</strong>。我们希望对一部分变量采用值捕获，对其他变量采用引用捕获，可以混合使用隐式捕获和显式捕获：</p>
+<p>lambda表达式的捕获列表有值捕获和引用捕获 <img src="/lambda表达式/lambda.png" width="700"> <strong>我们可以在捕获列表中写一个<code>&amp;</code>或者<code>=</code>，指示编译器推断捕获列表。<code>&amp;</code>告诉编译器采用捕获引用方式，<code>=</code>则表示采用值捕获方式</strong>。我们希望对一部分变量采用值捕获，对其他变量采用引用捕获，可以混合使用隐式捕获和显式捕获：</p>
 <ul>
 <li>当混合使用隐式捕获和显式捕获时，捕获列表中的第一个元素必须是一个<code>&amp;</code>或<code>=</code>（必须隐式）</li>
 <li>当混合使用隐式捕获和显式捕获时，显式捕获的变量必须使用与隐式捕获不同的方式</li>
@@ -472,7 +472,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:25</span>
+    <span title="站点阅读时长">15:26</span>
 </div>
 
         

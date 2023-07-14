@@ -29,25 +29,25 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1. Transformer是什么 Transformer是一个利用注意力机制来提高模型训练速度的模型。关于注意力机制可以参看这篇文章，trasnformer可以说是完全基于自注意力机制的一个深度学习模型，因为它适用于并行化计算，和它本身模型的复杂程度导致它在精度和性能上都要高于之前流行的RNN循环神经网络。 对于RNN来说它一般只关注附近的关系关联，而没有从全局寻找关系紧密的相关特征。因此对">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/Constitue.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/encorder.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/forward.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/Three.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/qk.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/score.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/softmax.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/cheng.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/out.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/comprehension.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/cat.png">
-<meta property="og:image" content="https://example.com/2022/10/26/Transformer/fc.png">
+<meta property="og:image" content="https://example.com/Transformer/Constitue.png">
+<meta property="og:image" content="https://example.com/Transformer/encorder.png">
+<meta property="og:image" content="https://example.com/Transformer/forward.png">
+<meta property="og:image" content="https://example.com/Transformer/Three.png">
+<meta property="og:image" content="https://example.com/Transformer/qk.png">
+<meta property="og:image" content="https://example.com/Transformer/score.png">
+<meta property="og:image" content="https://example.com/Transformer/softmax.png">
+<meta property="og:image" content="https://example.com/Transformer/cheng.png">
+<meta property="og:image" content="https://example.com/Transformer/out.png">
+<meta property="og:image" content="https://example.com/Transformer/comprehension.png">
+<meta property="og:image" content="https://example.com/Transformer/cat.png">
+<meta property="og:image" content="https://example.com/Transformer/fc.png">
 <meta property="article:published_time" content="2022-10-26T02:38:28.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:03:00.162Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深度学习">
 <meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2022/10/26/Transformer/Constitue.png">
+<meta name="twitter:image" content="https://example.com/Transformer/Constitue.png">
 
 <link rel="canonical" href="https://example.com/2022/10/26/Transformer/">
 
@@ -297,23 +297,23 @@
 <p>对于RNN来说它一般只关注附近的关系关联，而没有从全局寻找关系紧密的相关特征。因此对于一些特定的场景，不能够很好的处理。而Transforme放眼全局,通过计算权重得到相应的向量，得到更为全面的特征</p>
 <span id="more"></span>
 <h4 id="transformer的构成">2. Transformer的构成</h4>
-<p>里面主要有两部分组成：<code>Encoder</code>和<code>Decoder</code> <img src="/2022/10/26/Transformer/Constitue.png" width="500"> 当我输入一个文本<code>机器学习</code>的时候，该文本数据会先经过一个叫Encoders的模块，对该文本进行编码，然后将编码后的数据再传入一个叫Decoders的模块进行解码，解码后就得到了翻译后的文本，对应的我们称Encoders为编码器，Decoders为解码器。</p>
-<p>这个编码模块里边，有很多小的编码器，一般情况下，<code>Encoders</code>里边有6个小编码器，同样的，<code>Decoders</code>里边有6个小解码器。 <img src="/2022/10/26/Transformer/encorder.png" width="500"></p>
-<p>放大一个encoder，发现里边的结构是一个自注意力机制加上一个前馈神经网络。 <img src="/2022/10/26/Transformer/forward.png" width="500"></p>
+<p>里面主要有两部分组成：<code>Encoder</code>和<code>Decoder</code> <img src="/Transformer/Constitue.png" width="500"> 当我输入一个文本<code>机器学习</code>的时候，该文本数据会先经过一个叫Encoders的模块，对该文本进行编码，然后将编码后的数据再传入一个叫Decoders的模块进行解码，解码后就得到了翻译后的文本，对应的我们称Encoders为编码器，Decoders为解码器。</p>
+<p>这个编码模块里边，有很多小的编码器，一般情况下，<code>Encoders</code>里边有6个小编码器，同样的，<code>Decoders</code>里边有6个小解码器。 <img src="/Transformer/encorder.png" width="500"></p>
+<p>放大一个encoder，发现里边的结构是一个自注意力机制加上一个前馈神经网络。 <img src="/Transformer/forward.png" width="500"></p>
 <h4 id="encoder">3 Encoder</h4>
 <h5 id="self-attention的步骤">3.1 self-attention的步骤</h5>
 <p>这里我们以文本词向量为例。总结来说Transformer时将输入的特征信息以向量为一组，计算该向量与别的向量之间的紧密程度，即将Q与K进行点积得到权值值，经过softmax后得到所占的比重值，然后整合各向量的V*权重得到该向量的新的特征向量。</p>
 <ul>
-<li><p><code>transformer</code>首先将词向量乘上三个矩阵，得到三个新的向量，之所以乘上三个矩阵参数而不是直接用原本的词向量是因为这样增加更多的参数，提高模型效果。对于输入<code>X1</code>(机器)，乘上三个矩阵后分别得到<code>Q1,K1,V1</code>，同样的，对于输入<code>X2</code>(学习)，也乘上三个不同的矩阵得到<code>Q2,K2,V2</code>。Q维要去查询的，K为等着被查的，V为实际的特征信息 <img src="/2022/10/26/Transformer/Three.png" width="500"></p></li>
-<li><p>计算注意力得分了，这个得分是通过计算Q与各个单词的K向量的点积得到的。我们以X1为例，分别将Q1和K1、K2进行点积运算，假设分别得到得分112和96. <img src="/2022/10/26/Transformer/qk.png" width="500"></p></li>
-<li><p>将得分分别除以一个特定数值8（K向量的维度的平方根，这里以K向量的维度是64为例）这能让梯度更加稳定，则得到结果如下： <img src="/2022/10/26/Transformer/score.png" width="500"></p></li>
-<li><p>进行softmax运算得到，softmax主要将分数标准化，使他们都是正数并且加起来等于1 <img src="/2022/10/26/Transformer/softmax.png" width="500"></p></li>
-<li><p>V向量乘上softmax的结果，这个思想主要是为了保持我们想要关注的单词的值不变，而掩盖掉那些不相关的单词（例如将他们乘上很小的数字） <img src="/2022/10/26/Transformer/cheng.png" width="500"></p></li>
-<li><p>将带权重的各个V向量加起来，至此，产生在这个位置上（第一个单词）的self-attention层的输出，其余位置的self-attention输出也是同样的计算方式 <img src="/2022/10/26/Transformer/out.png" width="500"></p></li>
+<li><p><code>transformer</code>首先将词向量乘上三个矩阵，得到三个新的向量，之所以乘上三个矩阵参数而不是直接用原本的词向量是因为这样增加更多的参数，提高模型效果。对于输入<code>X1</code>(机器)，乘上三个矩阵后分别得到<code>Q1,K1,V1</code>，同样的，对于输入<code>X2</code>(学习)，也乘上三个不同的矩阵得到<code>Q2,K2,V2</code>。Q维要去查询的，K为等着被查的，V为实际的特征信息 <img src="/Transformer/Three.png" width="500"></p></li>
+<li><p>计算注意力得分了，这个得分是通过计算Q与各个单词的K向量的点积得到的。我们以X1为例，分别将Q1和K1、K2进行点积运算，假设分别得到得分112和96. <img src="/Transformer/qk.png" width="500"></p></li>
+<li><p>将得分分别除以一个特定数值8（K向量的维度的平方根，这里以K向量的维度是64为例）这能让梯度更加稳定，则得到结果如下： <img src="/Transformer/score.png" width="500"></p></li>
+<li><p>进行softmax运算得到，softmax主要将分数标准化，使他们都是正数并且加起来等于1 <img src="/Transformer/softmax.png" width="500"></p></li>
+<li><p>V向量乘上softmax的结果，这个思想主要是为了保持我们想要关注的单词的值不变，而掩盖掉那些不相关的单词（例如将他们乘上很小的数字） <img src="/Transformer/cheng.png" width="500"></p></li>
+<li><p>将带权重的各个V向量加起来，至此，产生在这个位置上（第一个单词）的self-attention层的输出，其余位置的self-attention输出也是同样的计算方式 <img src="/Transformer/out.png" width="500"></p></li>
 </ul>
-<p>将上述的过程总结为一个公式就可以用下图表示： <img src="/2022/10/26/Transformer/comprehension.png" width="500"></p>
+<p>将上述的过程总结为一个公式就可以用下图表示： <img src="/Transformer/comprehension.png" width="500"></p>
 <p>上面所举的例子我们可以发现每一个输入向量只是产生了一组Q、K、V，为了进一步提高自注意力的层的性能，产生了<strong>多头注意力机制，它通过不同的head得到多个特征表达式（理解为多个个互不干扰自的注意力机制运算，每一组的Q/K/V都不相同。然后，得到多个个不同的权重矩阵Z，每个权重矩阵被用来将输入向量投射到不同的表示子空间。），然后将所以特征拼接起来，得到更为丰富的输出，然后经过一层全连接实现降维。</strong></p>
-<p>如下我们得到了八个矩阵Z，将他们拼接: <img src="/2022/10/26/Transformer/cat.png" width="500"> 后进行全连接后得到我们作为前馈神经网络的输入： <img src="/2022/10/26/Transformer/fc.png" width="500"></p>
+<p>如下我们得到了八个矩阵Z，将他们拼接: <img src="/Transformer/cat.png" width="500"> 后进行全连接后得到我们作为前馈神经网络的输入： <img src="/Transformer/fc.png" width="500"></p>
 <p><strong><em>注意：为了解决梯度消失的问题，在Encoders和Decoder中都是用了残差神经网络的结构，即每一个前馈神经网络的输入不光包含上述self-attention的输出Z，还包含最原始的输入。</em></strong></p>
 <h5 id="前馈神经网络">3.2 前馈神经网络</h5>
 <p>前馈神经网络的输入是self-attention的输出，即上图的Z,是一个矩阵，矩阵的维度是（序列长度×D词向量），之后前馈神经网络的输出也是同样的维度</p>
@@ -506,7 +506,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:25</span>
+    <span title="站点阅读时长">15:26</span>
 </div>
 
         
