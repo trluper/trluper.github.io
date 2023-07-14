@@ -29,15 +29,15 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="SSH（Secure Shell，安全外壳）是一种网络安全协议，通过加密和认证机制实现安全的访问和文件传输等业务。传统远程登录或文件传输方式，例如Telnet、FTP，使用明文传输数据，存在很多的安全隐患。随着人们对网络安全的重视，这些方式已经慢慢不被接受。SSH协议通过对网络数据进行加密和验证，在不安全的网络环境中提供了安全的登录和其他安全网络服务。作为Telnet和其他不安全远程shell协议">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/ssh/ssh_secret.png">
-<meta property="og:image" content="https://example.com/ssh/ssh_not.png">
-<meta property="og:image" content="https://example.com/ssh/ssh_renzhen.png">
+<meta property="og:image" content="https://example.com/2023/03/12/ssh/ssh_secret.png">
+<meta property="og:image" content="https://example.com/2023/03/12/ssh/ssh_not.png">
+<meta property="og:image" content="https://example.com/2023/03/12/ssh/ssh_renzhen.png">
 <meta property="article:published_time" content="2023-03-11T18:05:54.000Z">
 <meta property="article:modified_time" content="2023-03-12T13:03:13.844Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="SSH">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/ssh/ssh_secret.png">
+<meta name="twitter:image" content="https://example.com/2023/03/12/ssh/ssh_secret.png">
 
 <link rel="canonical" href="https://example.com/2023/03/12/ssh/">
 
@@ -295,8 +295,8 @@
 <p>提高安全性的基本方式就是加密，加密算法通过密钥将明文转换为密文进行安全传输。SSH在工作过程中结合使用了对称加密和非对称加密两种类型的算法，通过事先生成的SSH密钥来保证信息传输的安全性。</p>
 <h4 id="对称加密和非对称加密">对称加密和非对称加密</h4>
 <ul>
-<li><p><strong>对称加密算法使用同一个密钥对数据进行加密和解密</strong>。SSH连接建立过程中生成的会话密钥就是对称密钥，该对称密钥是由客户端和服务器端基于共享的部分信息和各自的私有数据使用密钥交换算法分别生成的。因为对称加密算法加解密的速度很快，所以适用于传输大量数据的场景。 <img src="/ssh/ssh_secret.png" width="600"></p></li>
-<li><p><strong>非对称加密的发送和接收需要使用一对关联的SSH密钥，公钥和私钥</strong>。<strong>私钥由生成的一方自己保管，公钥可以发送给任何请求通信的其他人</strong>。发送方用收到的公钥对自己的通信内容进行加密，只有接收方可以使用私钥进行解密获取通信内容。非对称加密的私钥不需要暴露在网络中，安全性大大增加，但是加解密的速度比对称密钥慢得多。 <img src="/ssh/ssh_not.png" width="600"></p></li>
+<li><p><strong>对称加密算法使用同一个密钥对数据进行加密和解密</strong>。SSH连接建立过程中生成的会话密钥就是对称密钥，该对称密钥是由客户端和服务器端基于共享的部分信息和各自的私有数据使用密钥交换算法分别生成的。因为对称加密算法加解密的速度很快，所以适用于传输大量数据的场景。 <img src="/2023/03/12/ssh/ssh_secret.png" width="600"></p></li>
+<li><p><strong>非对称加密的发送和接收需要使用一对关联的SSH密钥，公钥和私钥</strong>。<strong>私钥由生成的一方自己保管，公钥可以发送给任何请求通信的其他人</strong>。发送方用收到的公钥对自己的通信内容进行加密，只有接收方可以使用私钥进行解密获取通信内容。非对称加密的私钥不需要暴露在网络中，安全性大大增加，但是加解密的速度比对称密钥慢得多。 <img src="/2023/03/12/ssh/ssh_not.png" width="600"></p></li>
 </ul>
 <p><strong>SSH连接过程中的两个阶段使用了非对称加密</strong>:</p>
 <ul>
@@ -307,7 +307,7 @@
 <p><strong>SSH用户认证最基本的两种方式是密码认证和密钥认证。</strong></p>
 <ul>
 <li>密码认证是将自己的用户名和密码发送给服务器进行认证，这种方式比较简单，且每次登录都需要输入用户名和密码。</li>
-<li>密钥认证使用公钥私钥对进行身份验证，实现安全的免密登录，是一种广泛使用且推荐的登录方式。密钥认证的基本原理是服务器端使用客户端的公钥对随机内容加密，客户端使用自己的私钥解密并发送给服务器以证实自己的身份，具体的过程见下图。 <img src="/ssh/ssh_renzhen.png" width="600"></li>
+<li>密钥认证使用公钥私钥对进行身份验证，实现安全的免密登录，是一种广泛使用且推荐的登录方式。密钥认证的基本原理是服务器端使用客户端的公钥对随机内容加密，客户端使用自己的私钥解密并发送给服务器以证实自己的身份，具体的过程见下图。 <img src="/2023/03/12/ssh/ssh_renzhen.png" width="600"></li>
 </ul>
 <p><strong>SSH密钥认证登录流程</strong></p>
 <ul>

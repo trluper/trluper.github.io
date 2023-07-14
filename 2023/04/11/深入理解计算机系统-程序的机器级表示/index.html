@@ -29,34 +29,34 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="程序的机器级表示 在本章，会学习观察汇编代码和机器代码。说到汇编语言就不得不提编译器和汇编器。**编译器是基于编程语言规则、目标机器的指令集和操作系统遵循的惯例，经过一系列阶段如图：  gcc编译器以汇编代码的形式产生输出，然后gcc调用汇编器和链接器生成二进制机器文件和可执行文件。对于Linux机，可以使用 gcc -Og -S xxx.c来进行学习。因为参数-Og表明不进行优化，这可以让">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/compile.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/type.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/registers.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/operator.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/mov.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/movexample.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/movz.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/movs.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/stack.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/stackoperator.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/algorithmoperators.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/conditional.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/set.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/jump.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/pcjump.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/StackOfRun.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/call.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/Control.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/TransferData.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/pointer.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/float.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/movess.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/compile.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/type.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/registers.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/operator.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/mov.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/movexample.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/movz.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/movs.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/stack.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/stackoperator.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/algorithmoperators.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/conditional.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/set.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/jump.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/pcjump.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/StackOfRun.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/call.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/Control.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/TransferData.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/pointer.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/float.png">
+<meta property="og:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/movess.png">
 <meta property="article:published_time" content="2023-04-11T00:59:24.000Z">
 <meta property="article:modified_time" content="2023-04-27T09:08:27.080Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深入理解计算机系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/深入理解计算机系统-程序的机器级表示/compile.png">
+<meta name="twitter:image" content="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/compile.png">
 
 <link rel="canonical" href="https://example.com/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/">
 
@@ -299,7 +299,7 @@
       
         <h2 id="程序的机器级表示">程序的机器级表示</h2>
 <p>在本章，会学习观察汇编代码和机器代码。说到汇编语言就不得不提编译器和汇编器。**编译器是基于编程语言规则、目标机器的指令集和操作系统遵循的惯例，经过一系列阶段如图：</p>
-<p><img src="/深入理解计算机系统-程序的机器级表示/compile.png" width="700"></p>
+<p><img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/compile.png" width="700"></p>
 <p>gcc编译器以汇编代码的形式产生输出，然后gcc调用汇编器和链接器生成二进制机器文件和可执行文件。对于Linux机，可以使用 <code>gcc -Og -S xxx.c</code>来进行学习。因为参数-Og表明不进行优化，这可以让汇编代码尽可能地保持和C源码一样的顺序，位置，排列等。</p>
 <span id="more"></span>
 <p><strong>编译器的作用：</strong></p>
@@ -330,9 +330,9 @@
 </ul>
 <h3 id="数据格式和寄存器">2 数据格式和寄存器</h3>
 <h4 id="数据格式">2.1 数据格式</h4>
-<p>由于计算机发展是从16位到32位再到64位的，所以Intel使用字(word)表示16位数据类型，用双字(double word)表示32位数据类型，四字(quad word)表示64位数据类型。 <img src="/深入理解计算机系统-程序的机器级表示/type.png" width="700"> 一般而言，指令后面都会跟着一个后缀，表明操作数的大小。<strong>浮点数和整数使用的是完全不同的指令和寄存器。</strong></p>
+<p>由于计算机发展是从16位到32位再到64位的，所以Intel使用字(word)表示16位数据类型，用双字(double word)表示32位数据类型，四字(quad word)表示64位数据类型。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/type.png" width="700"> 一般而言，指令后面都会跟着一个后缀，表明操作数的大小。<strong>浮点数和整数使用的是完全不同的指令和寄存器。</strong></p>
 <h4 id="寄存器初识">2.2 寄存器初识</h4>
-<p>一个标准的x86-64CPU包含一组16个用来存储64位数据的通用寄存器。他们用来存储整数数据和指针. <img src="/深入理解计算机系统-程序的机器级表示/registers.png" width="700"> <strong>指令可以对这16个寄存器的低位字节存放的大小不同的有效数据进行操作。</strong>这些寄存器可以向前兼容，就是64位可以存储32位，16位和8位的数据，但是32位无法存储64位的数据，<strong>如果是大寄存器存小数据，那么只能存在低位中，高位有相对应的填充措施。</strong></p>
+<p>一个标准的x86-64CPU包含一组16个用来存储64位数据的通用寄存器。他们用来存储整数数据和指针. <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/registers.png" width="700"> <strong>指令可以对这16个寄存器的低位字节存放的大小不同的有效数据进行操作。</strong>这些寄存器可以向前兼容，就是64位可以存储32位，16位和8位的数据，但是32位无法存储64位的数据，<strong>如果是大寄存器存小数据，那么只能存在低位中，高位有相对应的填充措施。</strong></p>
 <p>对于高位的数据填充，一般有两个策略：一是生成1字节和2字节的指令保持其他高位不变；生成4字节(2字)的指令会把高位填充为0。</p>
 <p>几个重要的寄存器：</p>
 <ul>
@@ -341,8 +341,8 @@
 </ul>
 <h3 id="访问信息">3 访问信息</h3>
 <h4 id="操作数指示符">3.1 操作数指示符</h4>
-<p>大多数指令都有一个或多个操作数，指出执行一个操作中要使用的源数据和目的地位置。源数据可以是立即数(常量)，寄存器，或从内存地址里读出；操作结果可以存放到寄存器或内存里。完整的表示方法如下： <img src="/深入理解计算机系统-程序的机器级表示/operator.png" width="700"> 在这张表里，只有前两个得到的是直接的值，其余都要翻译成内存地址来进行寻址操作然后取值。</p>
-<p>对于指令，习惯把它们划分成不同的类，每一类的指令作用相同，只是操作的数据大小不同。 #### 3.2 数据传送指令 先来看看数据传送指令，它有点像C语言的赋值运算。MOV类指令有四条指令，他们的主要区别是操作的数据大小不同： <img src="/深入理解计算机系统-程序的机器级表示/mov.png" width="700"> <strong>x86-64对于MOV指令加了一个限制，就是不能直接把一个值从内存的某个位置复制到另一个位置，而必须使用寄存器作为中介。</strong>MOV指令的后缀表明了操作数据的大小，也就是寄存器的大小，不管这个寄存器是源数据还是目的地址，都必须符合指令指定的大小。<strong>MOV指令只会更新目的操作数指定的寄存器字节或内存位置(就是只更新指定的低位字节)，高位字节有其他的设置，但是有一个例外，就是movl指令，当它把寄存器作为目的地址时，会把高32位设为0。</strong> <img src="/深入理解计算机系统-程序的机器级表示/movexample.png" width="700"></p>
+<p>大多数指令都有一个或多个操作数，指出执行一个操作中要使用的源数据和目的地位置。源数据可以是立即数(常量)，寄存器，或从内存地址里读出；操作结果可以存放到寄存器或内存里。完整的表示方法如下： <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/operator.png" width="700"> 在这张表里，只有前两个得到的是直接的值，其余都要翻译成内存地址来进行寻址操作然后取值。</p>
+<p>对于指令，习惯把它们划分成不同的类，每一类的指令作用相同，只是操作的数据大小不同。 #### 3.2 数据传送指令 先来看看数据传送指令，它有点像C语言的赋值运算。MOV类指令有四条指令，他们的主要区别是操作的数据大小不同： <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/mov.png" width="700"> <strong>x86-64对于MOV指令加了一个限制，就是不能直接把一个值从内存的某个位置复制到另一个位置，而必须使用寄存器作为中介。</strong>MOV指令的后缀表明了操作数据的大小，也就是寄存器的大小，不管这个寄存器是源数据还是目的地址，都必须符合指令指定的大小。<strong>MOV指令只会更新目的操作数指定的寄存器字节或内存位置(就是只更新指定的低位字节)，高位字节有其他的设置，但是有一个例外，就是movl指令，当它把寄存器作为目的地址时，会把高32位设为0。</strong> <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/movexample.png" width="700"></p>
 <ul>
 <li>常规的movq指令只能以表示32位补码的数字的立即数作为源数据利用符号扩展放到64位寄存器里去；<strong>movabsq能以任意64位立即数值作为源数据，并且只能以寄存器作为目的地址。</strong></li>
 <li>有两类指令，适用于把较小(位长)的源数据复制到较大(位长)的目的地时使用:
@@ -351,12 +351,12 @@
 <li>MOVS使用符号扩展位长，就是复制源数据的最高有效位。</li>
 </ul></li>
 </ul>
-<p><img src="/深入理解计算机系统-程序的机器级表示/movz.png" width="700"> <img src="/深入理解计算机系统-程序的机器级表示/movs.png" width="700"> <strong>它们的后两个字符表示位长，第一个指定了源数据的大小，第二个指定了目的的大小。</strong></p>
+<p><img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/movz.png" width="700"> <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/movs.png" width="700"> <strong>它们的后两个字符表示位长，第一个指定了源数据的大小，第二个指定了目的的大小。</strong></p>
 <h4 id="压入和弹出数据">3.3 压入和弹出数据</h4>
-<p>这两个数据传送操作可以把数据压入栈中，以及从中弹出数据。<strong>在x86-64的机器中，程序栈存放在内存中的某个区域</strong>。<strong>栈向下增长，因此栈顶元素时所有栈元素里地址最小的</strong>。所以为了方便理解，栈是倒过来画的，也是向下增长的。 <img src="/深入理解计算机系统-程序的机器级表示/stack.png" width="700"> 涉及到栈的操作： <img src="/深入理解计算机系统-程序的机器级表示/stackoperator.png" width="700"> <code>pushq</code>指令的功能是把数据压入栈中，而<code>popq</code>是弹出指令。不过它们都涉及两个操作，<code>pushq</code>是首先在栈底指针<code>%rsp</code>里存着新的值得地址，然后设置内存中的这个位置得值为准备压入得数据。所以它的操作数是数据源，而<code>popq</code>则是首先把栈顶的值复制到操作数里，然后指针回退，也就是<code>+8</code>(栈顶指针<code>+8</code>意味着减小8字节的空间，因为它是向下增长，<code>+</code>的话就代表往上回去了)。这操作的都是8字节下，64位。</p>
+<p>这两个数据传送操作可以把数据压入栈中，以及从中弹出数据。<strong>在x86-64的机器中，程序栈存放在内存中的某个区域</strong>。<strong>栈向下增长，因此栈顶元素时所有栈元素里地址最小的</strong>。所以为了方便理解，栈是倒过来画的，也是向下增长的。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/stack.png" width="700"> 涉及到栈的操作： <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/stackoperator.png" width="700"> <code>pushq</code>指令的功能是把数据压入栈中，而<code>popq</code>是弹出指令。不过它们都涉及两个操作，<code>pushq</code>是首先在栈底指针<code>%rsp</code>里存着新的值得地址，然后设置内存中的这个位置得值为准备压入得数据。所以它的操作数是数据源，而<code>popq</code>则是首先把栈顶的值复制到操作数里，然后指针回退，也就是<code>+8</code>(栈顶指针<code>+8</code>意味着减小8字节的空间，因为它是向下增长，<code>+</code>的话就代表往上回去了)。这操作的都是8字节下，64位。</p>
 <p><strong>因为栈和程序代码以及其他形式的程序数据都是放在同一内存中，所以程序可以用标准的内存寻址方法访问栈内的任意位置。 </strong></p>
 <h3 id="算术和逻辑运算">4 算术和逻辑运算</h3>
-<p>下图给出了x86-64的一些整数和逻辑操作。大多数操作都分为了不同大小操作数的变种（只有lead没有其他大小的变种），比如<code>add</code>指令有<code>addb、addw、addl和addq</code>四种变种，分别表示对不同大小的操作数操作，它们一样可向下兼容，但不能向上兼容。 <img src="/深入理解计算机系统-程序的机器级表示/algorithmoperators.png" width="700"> 除了第一个<code>leaq</code>操作之外，其他的都会改变条件码</p>
+<p>下图给出了x86-64的一些整数和逻辑操作。大多数操作都分为了不同大小操作数的变种（只有lead没有其他大小的变种），比如<code>add</code>指令有<code>addb、addw、addl和addq</code>四种变种，分别表示对不同大小的操作数操作，它们一样可向下兼容，但不能向上兼容。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/algorithmoperators.png" width="700"> 除了第一个<code>leaq</code>操作之外，其他的都会改变条件码</p>
 <h4 id="加载有效地址">4.1 加载有效地址</h4>
 <p>加载有效地址指令<code>leaq</code>实际上是<code>movq</code>指令的变形。<strong>它形式上是将内存数据读到寄存器，但实际上它根本没有引用内存，它并不是从指定位置读出数据，而是将有效地址写入到目的操作数。这就是C语言当中的<code>&amp;s</code>取地址操作符，也是产生指针的重要语句。</strong></p>
 <p>比<code>如leaq (%rdi,%rsi,4)</code>, <code>%rax</code>的操作结果是<code>R[rax] = R[rsi]*4+R[rdi]</code>。而不是<code>R[rax] = M[R[rsi]*4+R[rdi]]</code>。 #### 4.2 一元和二元操作 在上面的算术指令表中，第二组只有1个操作数就是一元操作，其他为二元操作。</p>
@@ -378,7 +378,7 @@
 <li><code>SF</code>:符号标志。最近的操作得到的结果是负数。</li>
 <li><code>OF</code>:溢出标志。最近的操作导致了一个补码的溢出——正溢出或负溢出。</li>
 </ul>
-<p>刚刚说的那些一元二元操作（除了<code>leaq</code>)以及移位操作，会改变条件码和寄存器的值。也有一些只改变条件码而不改变任何其他寄存器的操作：如下所示的<code>CMP</code>家族和<code>TEST</code>家族，它们仅仅根据两个操作数之差来设置条件码。除了只设置条件码而不进行目的寄存器的更新外，<code>CMP</code>和<code>SUB</code>指令是一样的。<code>TEST</code>指令的行为和<code>AND</code>指令一样，除了它们不会更改目的寄存器的值外。 <img src="/深入理解计算机系统-程序的机器级表示/conditional.png" width="700"></p>
+<p>刚刚说的那些一元二元操作（除了<code>leaq</code>)以及移位操作，会改变条件码和寄存器的值。也有一些只改变条件码而不改变任何其他寄存器的操作：如下所示的<code>CMP</code>家族和<code>TEST</code>家族，它们仅仅根据两个操作数之差来设置条件码。除了只设置条件码而不进行目的寄存器的更新外，<code>CMP</code>和<code>SUB</code>指令是一样的。<code>TEST</code>指令的行为和<code>AND</code>指令一样，除了它们不会更改目的寄存器的值外。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/conditional.png" width="700"></p>
 <h4 id="访问条件码">5.2 访问条件码</h4>
 <p>条件码通常不会直接读取，常用的使用方法有3种：</p>
 <ul>
@@ -386,12 +386,12 @@
 <li><strong>二是可以跳转到程序的其他某个部分，</strong></li>
 <li><strong>三是可以有条件地传送数据。</strong></li>
 </ul>
-<p>对于第一种情况，常用来实现<code>SET</code>指令，<code>SET</code>成员之间的区别就在于它们考虑的条件码组合是什么，这些指令的后缀指明了这一点，它们在此不作为寄存器长度要求来使用。 <img src="/深入理解计算机系统-程序的机器级表示/set.png" width="700"> 一般而言，<code>SET</code>指令存在于那些可以更改条件码的指令的后面，这样就可以读取到最新的值了，当然也可以不这么做。至于每个指令把目的操作数到底设置成了什么,可以通过条件码计算，也可以通过<code>a-b</code>(如果前面是<code>CMP b,a</code>)或<code>a+b</code>(如果前面是<code>TEST b,a</code>指令)的计算结果来判断。</p>
+<p>对于第一种情况，常用来实现<code>SET</code>指令，<code>SET</code>成员之间的区别就在于它们考虑的条件码组合是什么，这些指令的后缀指明了这一点，它们在此不作为寄存器长度要求来使用。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/set.png" width="700"> 一般而言，<code>SET</code>指令存在于那些可以更改条件码的指令的后面，这样就可以读取到最新的值了，当然也可以不这么做。至于每个指令把目的操作数到底设置成了什么,可以通过条件码计算，也可以通过<code>a-b</code>(如果前面是<code>CMP b,a</code>)或<code>a+b</code>(如果前面是<code>TEST b,a</code>指令)的计算结果来判断。</p>
 <p>表格中的第三组只作用于有符号数操作，第四组只作用于无符号数操作。至于究竟用哪个，编译器会在编译期根据源码进行判断选择。条件跳转只能是直接跳转。</p>
 <h4 id="跳转指令">5.3 跳转指令</h4>
-<p>对于需要指定执行位置时，可以使用跳转指令。跳转的目的地通常使用一个标号指明。这些指令的命名格式和跳转条件和<code>SET</code>指令是一致的。 <img src="/深入理解计算机系统-程序的机器级表示/jump.png" width="700"> - 对于<code>jmp</code>指令来说，它是无条件跳转，它既可以是直接跳转，也可以是间接跳转，此时跳转目标从寄存器或内存位置中读出。</p>
+<p>对于需要指定执行位置时，可以使用跳转指令。跳转的目的地通常使用一个标号指明。这些指令的命名格式和跳转条件和<code>SET</code>指令是一致的。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/jump.png" width="700"> - 对于<code>jmp</code>指令来说，它是无条件跳转，它既可以是直接跳转，也可以是间接跳转，此时跳转目标从寄存器或内存位置中读出。</p>
 <h4 id="跳转指令编码">5.4 跳转指令编码</h4>
-<p>对于如何确定跳转的位置，有多种方法，但是最常用的是<code>PC</code>相对法。这种方法会把目标指令的地址和紧跟在跳转指令后面的指令的地址的差值作为值编码在跳转指令后面。 在执行<code>PC</code>相对寻址时，程序计数器的值是跳转指令后面的那条指令的地址。 <img src="/深入理解计算机系统-程序的机器级表示/pcjump.png" width="700"> 使用<code>PC</code>相对法进行编码，好处就是指令很简洁，而且目标代码可以不做修改就移植到别的机器上。</p>
+<p>对于如何确定跳转的位置，有多种方法，但是最常用的是<code>PC</code>相对法。这种方法会把目标指令的地址和紧跟在跳转指令后面的指令的地址的差值作为值编码在跳转指令后面。 在执行<code>PC</code>相对寻址时，程序计数器的值是跳转指令后面的那条指令的地址。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/pcjump.png" width="700"> 使用<code>PC</code>相对法进行编码，好处就是指令很简洁，而且目标代码可以不做修改就移植到别的机器上。</p>
 <h4 id="条件控制实现条件分支">5.5 条件控制实现条件分支</h4>
 <p>将条件表达式和语句<code>if-else</code>从C语言翻译成机器代码，最常用的方式就是结合有条件和无条件跳转。另一种方式使用数据的条件转移实现，这里是介绍<strong>控制的条件转移实现</strong>。其形式如下 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//c代码</span></span><br><span class="line"><span class="keyword">if</span>(test-expr)</span><br><span class="line">	then statement;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="keyword">else</span>-statement;</span><br><span class="line"><span class="comment">//接近于汇编的代码</span></span><br><span class="line">	t=test-expr;</span><br><span class="line">	<span class="keyword">if</span>(!t)</span><br><span class="line">		<span class="keyword">goto</span> <span class="literal">false</span>;</span><br><span class="line">	then-statement;</span><br><span class="line">	<span class="keyword">goto</span> done;</span><br><span class="line"><span class="literal">false</span>:</span><br><span class="line">	<span class="keyword">else</span>-statement;</span><br><span class="line">done:</span><br></pre></td></tr></table></figure> 也就是说，汇编器为<code>then-statement</code>和<code>else-statement</code>产生各自的代码块，他会插入条件和无条件分支，以保证能正确执行代码。</p>
 <h4 id="条件传送实现条件分支">5.6 条件传送实现条件分支</h4>
@@ -411,7 +411,7 @@
 <h4 id="运行时栈">6.1 运行时栈</h4>
 <p>程序是运行在内存中的，一般来说，<strong>内存里包括程序正文，程序运行堆栈</strong>。程序正文就是可执行机器代码，程序运行堆栈就是程序运行需要的额外空间，比如内存分配，数组，局部变量等。</p>
 <p><strong>C语言的内存管理采用栈的结构，先进后出的顺序。程序可以通过这种方式来管理它所需要的存储空间，当P调用Q时，会把Q添加到栈顶，然后运行结束通过改变rsp栈顶指针来释放。</strong>因此，程序可以用栈来管理它的过程所需要的存储空间<strong>，栈和寄存器存放在着传递控制和数据。</strong></p>
-<p>当x86-64程序需要的空间超过寄存器所能满足的时候，就会在栈上分配空间，这个部分称为过程的栈帧。 来看一个一般的程序堆栈结构： <img src="/深入理解计算机系统-程序的机器级表示/StackOfRun.png" width="700"></p>
+<p>当x86-64程序需要的空间超过寄存器所能满足的时候，就会在栈上分配空间，这个部分称为过程的栈帧。 来看一个一般的程序堆栈结构： <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/StackOfRun.png" width="700"></p>
 <ul>
 <li><p><strong><code>%rsp</code>：寄存器<code>%rsp</code>保存着栈指针，它指向栈顶(图中底部)</strong>，而前面提过，内存向下增长，所以把<code>%rsp</code>减少一个值就完成了对于空间的分配，加上一个值就是对空间的回收。</p></li>
 <li><p><strong>栈帧</strong>：每一个函数都有属于自己的栈帧，如图上的<code>Frame for calling function P</code>是调用者P函数的栈帧，<code>Earlier Frames</code>是之前的调用者较早栈帧，还有当前Q函数栈帧。栈帧主要又三个部分组成：<code>save registers</code>、<code>local variables</code>和<code>Argument build area</code></p></li>
@@ -421,15 +421,15 @@
 </ul>
 <h4 id="转移控制">6.2 转移控制</h4>
 <p><strong>将控制从函数<code>P</code>转移到函数<code>Q</code>只需简单的将程序计数器<code>PC</code>(<code>%rip</code>)设置为<code>Q</code>的代码起始位置即可，不过为了能够恢复现场，必须保存<code>P</code>的下一个执行指令地址。</strong></p>
-<p>对于过程Q的调用汇编上是通过<code>CALL</code>指令实现的。该指令后面跟着<code>Q</code>的地址。此时，过程P把PC设置成Q的地址，然后CALL指令会把将紧跟它的指令的地址压入栈中，这个就是返回地址，当<code>Q</code>调用<code>ret</code>指令进行返回时，会弹出这个返回地址，设置到<code>PC</code>(<code>%rip</code>)上。<code>call</code>的指令格式如下： <img src="/深入理解计算机系统-程序的机器级表示/call.png" width="700"></p>
-<p><code>call</code>指令有一个目标，即指明被调用过程起始指令地址。既可以是直接的，也可以是间接的。直接调用的目标是一个符号，间接调用的时<code>*</code>后面跟一个操作数指示符。 <img src="/深入理解计算机系统-程序的机器级表示/Control.png" width="700"> 上面的的图片详细展示了<code>mian--&gt;top(100)--&gt;leaf(95)</code>的调用和返回过程。</p>
+<p>对于过程Q的调用汇编上是通过<code>CALL</code>指令实现的。该指令后面跟着<code>Q</code>的地址。此时，过程P把PC设置成Q的地址，然后CALL指令会把将紧跟它的指令的地址压入栈中，这个就是返回地址，当<code>Q</code>调用<code>ret</code>指令进行返回时，会弹出这个返回地址，设置到<code>PC</code>(<code>%rip</code>)上。<code>call</code>的指令格式如下： <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/call.png" width="700"></p>
+<p><code>call</code>指令有一个目标，即指明被调用过程起始指令地址。既可以是直接的，也可以是间接的。直接调用的目标是一个符号，间接调用的时<code>*</code>后面跟一个操作数指示符。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/Control.png" width="700"> 上面的的图片详细展示了<code>mian--&gt;top(100)--&gt;leaf(95)</code>的调用和返回过程。</p>
 <ul>
 <li>在调用中<code>call</code>指令完成两个工程，将当前<code>pc</code>的下一个指令地址压入栈中，设置<code>pc</code>的跳转地址。</li>
 <li>在返回时，将返回值存入<code>%rax</code>，然后从栈中弹出返回地址设置到<code>pc</code>上，恢复栈顶指针的指向</li>
 </ul>
 <h4 id="数据传送">6.3 数据传送</h4>
 <p>当过程P调用过程Q时，P的代码必须首先设置参数，如果参数数目小于等于6个，直接设置在寄存器就可以；而Q在返回到P之前，必须首先设置%rax来实现返回值。</p>
-<p>在x86-64架构中，寄存器的使用是有顺序的，而且它们的名字取决于参数的大小。 <img src="/深入理解计算机系统-程序的机器级表示/TransferData.png" width="700"></p>
+<p>在x86-64架构中，寄存器的使用是有顺序的，而且它们的名字取决于参数的大小。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/TransferData.png" width="700"></p>
 <p>一旦参数到位，就可以调用CALL指令来把控制移交至Q了。</p>
 <blockquote>
 <p><strong>问题1：对于数组参数，是怎么传递的？</strong> 回答：对于数组，很明显8字节的寄存器是无法完全存储的。有数组知识可知，数组是连续的一系列内存，数组名是第一个元素的地址，因此寄存器可以存储数组的首地址，对于后续的元素通过变址寻址方式去访问。 <strong>问题2：对于像vector这样的数组，我们在没有按指针/引用的形式传递的时候，它会如何传参呢?</strong> 回答：我认为是会发生一份拷贝，将数组拷贝进参数区域传递给被调函数</p>
@@ -462,7 +462,7 @@
 <p>x86-64的数组引用指令可以简化对于数组的访问。假设数组的首地址放在<code>%rdx</code>中，而下标i放在<code>%rcx</code>中。那么指令 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">movl</span> (%rdx,%rcx,<span class="number">4</span>),%eax</span><br></pre></td></tr></table></figure> 会把元素i的值放在<code>%eax</code>中。其中的常数<code>4</code>代表数据大小，如果是<code>int64</code>类型，那么可以改成8。伸缩因子1，1，4，8覆盖了所有基本数据类型的大小。</p>
 <h4 id="指针运算">7.1 指针运算</h4>
 <p>C语言允许对指针进行运算，运算的结果会根据该指针引用的数据类型的大小进行伸缩。如果p是一个指向类型T的指针，p的值是<span class="math inline">\(x_p\)</span>，那么表达式<span class="math inline">\(p+i\)</span>的值就是<span class="math inline">\(x_p+L⋅i\)</span>，这里<span class="math inline">\(L\)</span>是数据类型T的大小。</p>
-<p>对于指针操作，有取地址符<code>&amp;</code>和解引用符<code>*</code>，在数组里，可以有些骚操作。比如<code>A[i]</code>等价于<code>*(A+i)</code>。 <img src="/深入理解计算机系统-程序的机器级表示/pointer.png" width="700"></p>
+<p>对于指针操作，有取地址符<code>&amp;</code>和解引用符<code>*</code>，在数组里，可以有些骚操作。比如<code>A[i]</code>等价于<code>*(A+i)</code>。 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/pointer.png" width="700"></p>
 <h4 id="变长数组">7.2 变长数组</h4>
 <p>C语言运行数组的维度是表达式，在数组被分配的时候才计算出来： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> A[expr][expre2];</span><br></pre></td></tr></table></figure> 这就意味者C语言支持边长数组，即数组的长度在编译的时候才能确定。</p>
 <h3 id="内存越界引用和缓冲区溢出">8 内存越界引用和缓冲区溢出</h3>
@@ -483,7 +483,7 @@
 <li>向函数传递浮点数据以及从中返回浮点数据。</li>
 <li>函数调用过程中保存寄存器的规则。</li>
 </ul>
-<p>说到浮点计算，就会提及x8664架构的浮点指令集。为了支持浮点计算，Intel和AMD对指令集追加了扩展，比如现在的AVX2标准。为了计算浮点数，计算机有这处理浮点数的寄存器： <img src="/深入理解计算机系统-程序的机器级表示/float.png" width="700"> 其中每个<code>XMM</code>寄存器都是对应的<code>YMM</code>寄存器的低128位。</p>
+<p>说到浮点计算，就会提及x8664架构的浮点指令集。为了支持浮点计算，Intel和AMD对指令集追加了扩展，比如现在的AVX2标准。为了计算浮点数，计算机有这处理浮点数的寄存器： <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/float.png" width="700"> 其中每个<code>XMM</code>寄存器都是对应的<code>YMM</code>寄存器的低128位。</p>
 <ul>
 <li><code>XMM</code>寄存器<code>%xmm0~%xmm7</code>，最多可以传递8个浮点数。按照参数列出的顺序使用这些寄存器，可以通过栈传递额外的浮点参数。</li>
 <li>函数使用寄存器<code>%xmm0</code>来返回浮点值。</li>
@@ -491,7 +491,7 @@
 </ul>
 <p>当调用过程时，参数到寄存器的映射取决于它们的类型和排列的顺序。</p>
 <h4 id="浮点传送和转换操作">10.1 浮点传送和转换操作</h4>
-<p>下表给出了一组在内存和<code>XMM</code>或者<code>YMM</code>寄存器之间不做任何转换的浮点数指令。引入内存的指标是<strong>标量指令</strong>，说明他们只对单个而不是一组封装豪的数据值进行操作 <img src="/深入理解计算机系统-程序的机器级表示/movess.png" width="700"></p>
+<p>下表给出了一组在内存和<code>XMM</code>或者<code>YMM</code>寄存器之间不做任何转换的浮点数指令。引入内存的指标是<strong>标量指令</strong>，说明他们只对单个而不是一组封装豪的数据值进行操作 <img src="/2023/04/11/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/movess.png" width="700"></p>
 <p>对于传送数据来说，程序复制整个寄存器或者只复制寄存器低位值既不会影响程序功能，也不会影响执行速度。所以使用这些指令还是针对标量数据的指令没有实质上的差别。</p>
 <p>把浮点数值换成整数时，指令会执行截断，把值向0进行舍入，这是C和大多数其他编程语言的要求。</p>
 <p>文章部分来源： <a target="_blank" rel="noopener" href="https://juejin.cn/post/6855129008108273678">深入理解计算机系统-程序的机器级表示</a></p>

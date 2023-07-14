@@ -29,15 +29,15 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 导读 程序优化涉及的范围实在是太广了，几乎每个层面都可以进行优化，比如撰写以及的程序，针对不同的目标硬件平台还可能进行特定的优化，等等，优化的难点在于你需要对系统有充分理解，当然了在你做优化之前首先要保证原始程序功能正确（并且有回归测试），否则一切都是徒劳。  首先需要理解，哪些因素会影响程序的性能">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-优化程序性能/influence.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-优化程序性能/op.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-优化程序性能/CPU.png">
+<meta property="og:image" content="https://example.com/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/influence.png">
+<meta property="og:image" content="https://example.com/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/op.png">
+<meta property="og:image" content="https://example.com/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/CPU.png">
 <meta property="article:published_time" content="2023-05-06T12:29:03.000Z">
 <meta property="article:modified_time" content="2023-05-07T13:30:55.067Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深入理解计算机系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/深入理解计算机系统-优化程序性能/influence.png">
+<meta name="twitter:image" content="https://example.com/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/influence.png">
 
 <link rel="canonical" href="https://example.com/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/">
 
@@ -281,7 +281,7 @@
         <h3 id="导读">1 导读</h3>
 <p>程序优化涉及的范围实在是太广了，几乎每个层面都可以进行优化，比如撰写<编译器友好型>以及<缓存友好型>的程序，针对不同的目标硬件平台还可能进行特定的优化，等等，优化的难点在于你需要对系统有充分理解，当然了在你做优化之前<strong>首先要保证原始程序功能正确（并且有回归测试）</strong>，否则一切都是徒劳。</缓存友好型></编译器友好型></p>
 <blockquote>
-<p>首先需要理解，哪些因素会影响程序的性能 <img src="/深入理解计算机系统-优化程序性能/influence.png" width="700"></p>
+<p>首先需要理解，哪些因素会影响程序的性能 <img src="/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/influence.png" width="700"></p>
 </blockquote>
 <span id="more"></span>
 <h3 id="优化思想">2 优化思想</h3>
@@ -291,7 +291,7 @@
 <li>优化存取操作，尽量少从内存取数据，在循环中能够从寄存器取就从寄存器取</li>
 <li>从以上方面优化程序的书写结构</li>
 </ul>
-<p><img src="/深入理解计算机系统-优化程序性能/op.png" width="700"> <img src="/深入理解计算机系统-优化程序性能/CPU.png" width="700"></p>
+<p><img src="/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/op.png" width="700"> <img src="/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/CPU.png" width="700"></p>
 <blockquote>
 <p>文章来源<a target="_blank" rel="noopener" href="https://fengmuzi2003.gitbook.io/csapp3e/di-5-zhang-cheng-xu-de-you-hua">CSAPP重点解读</a></p>
 </blockquote>
