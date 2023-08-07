@@ -194,6 +194,146 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/08/06/KMP%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/06/KMP%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">KMP算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-06 14:57:48" itemprop="dateCreated datePublished" datetime="2023-08-06T14:57:48+08:00">2023-08-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-07 23:41:49" itemprop="dateModified" datetime="2023-08-07T23:41:49+08:00">2023-08-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="什么是kmp算法">什么是KMP算法</h2>
+<p>KMP算法一种改进的模式匹配算法，是D.E.Knuth、J.H.Morris、V.R.Pratt于1977年联合 发表。<strong>KMP算法的作用是在一个已知字符串中查找子串的位置,也叫做串的模式匹配，后文主串和模式串匹配， 子串和模板串匹配。先在开头约定，本文用<code>pat</code>表示模式串，长度为 <code>M</code>，<code>txt</code> 表示文本串，长度为<code>N</code>。KMP 算法是在 <code>txt</code> 中查找子串 <code>pat</code>，如果存在，返回这个子串的起始索引，否则返回 <code>-1</code>。</strong></p>
+<p><strong>几个最基本的概念：</strong></p>
+<ul>
+<li>字符串的前缀：<strong>从主串下标0开始的子串称为主串的前缀</strong></li>
+<li>字符串的后缀：<strong>从主串下标大于0的位置到结尾的子串称为主串的后缀</strong></li>
+<li>目标串：也就是主串，简单说就是那条比较长的串<code>txt</code></li>
+<li>模式串：也就是那条短的，用来匹配的串<code>pat</code></li>
+<li>kmp算法的目的：在<span class="math inline">\(O(m+n)\)</span>的时间复杂度的内进行串匹配，也就是在目标串中找到模式串，并返回目标串中模式串的第一个字符下标</li>
+</ul>
+<h2 id="暴力做法">暴力做法</h2>
+<p>KMP可以解决串的模式匹配，但是一般我们解决这个问题首先想到的是暴力做，什么 也不管，直接两个for循环。暴力匹配也叫<strong>朴素的模式匹配</strong>。</p>
+<p>从主串和子串的第一个字符开始，将两字符串的字符一一比对，如果出现某个字符 不匹配，主串指针<code>i</code>回溯到第二个字符，子串指针<code>j</code>回溯到第一个字符再进行一一比对。如果出 现某个字符不匹配，主串回溯到第三个字符，子串回溯到第一个字符再进行一一比对…，一直到子串字符全部匹配成功。这样时间复杂度为<span class="math inline">\(O(N*M)\)</span> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//暴力解</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;N;++i)&#123;</span><br><span class="line">	<span class="type">int</span> cursor=i,j=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;j&lt;M;++j)&#123;</span><br><span class="line">		<span class="keyword">if</span>(pat[j]!=txt[cursor]) <span class="keyword">break</span>;</span><br><span class="line">		++cursor;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">if</span>(j==M) <span class="keyword">return</span> i;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="kmp算法">KMP算法</h2>
+<p>暴力解发的时间复杂度为<span class="math inline">\(O(N*M)\)</span>，是因为做了许多不必要的位置<code>i</code>的回溯。KMP算法正是对该暴力解的优化。它的改进在于：<strong>每当从某个起始位置开始一趟比较后，在匹配过程中出现失配，不回溯位置<code>i</code>，只回溯<code>j</code>指针</strong></p>
+<p>那么问题就是<strong>如果发生失配时，<code>j</code>进行回溯，<code>j</code>应该回溯到什么位置才能保证算法的正确性?</strong></p>
+<p>看到上述的解释，有点<strong>动态规划</strong>的味道了，但是在实际的过程中我们是对匹配串<code>pat</code>做相应的预处理来达到这种效果的。如果说，<code>j</code>不是回溯到<code>0</code>，而是回溯到模式串<code>pat</code>中间的某一个位置，<strong>那么怎么知道在应该回溯到<code>pat</code>的哪个位置呢</strong>，我们不先介绍<code>KMP</code>算法的<code>next</code>数组（KMP算法最核心的部分就是<code>next</code>数组了），因为直接介绍代码会很难理解。</p>
+<p>首先，得明白构造<code>next</code>数组的<strong>原理</strong>：<strong>其实就是从<code>pat</code>串出发，确定<code>pat</code>中出现的重复公共串，利用先前遍历的结果避免<code>j</code>回溯不必要的位置，</strong>这样就能在回溯中确定位置。</p>
+<h3 id="next数组的构建">next数组的构建</h3>
+<p>next数组的构建是从其<code>pat</code>的前缀和后缀相同串长度确定，换一句话说，<code>next[i]</code>指的是当前<code>pat[0:i]</code>范围内的前缀和后缀相同串的最长值，举个例子由<code>pat=abcabcd</code>:</p>
+<ul>
+<li>就比如<code>abcabcd</code>,此时<code>next</code>数组的长度是7，<code>next[0]</code>毫无疑问是<code>0</code>，因为它没有后缀</li>
+<li>要确定<code>next[2]</code>，可以清楚知道<code>abc</code>的其各前缀和各后缀都没有相同子串，因此<code>next[2]=0</code></li>
+<li>要确定<code>next[3]</code>，可以清楚知道<code>abca</code>存在前缀<code>abc</code>和后缀<code>a</code>的相同子串<code>a</code>，因此<code>next[3]=1</code>。这就是<code>next</code>数组的含义</li>
+</ul>
+<p>上面对每个<code>next[i]</code>数组的处理,要前缀和后缀相同串长度，需要经过多次比较确定，就比如<code>pat=abcabcd</code>,要确定<code>next[3]</code>:</p>
+<ul>
+<li>①前缀<code>a</code>,后缀<code>bca</code>的相同长度为<code>1</code></li>
+<li>②前缀<code>ab</code>,后缀<code>ca</code>的相同长度<code>1</code></li>
+<li>③前缀<code>abc</code>，后缀<code>a</code>的相同长度为1`</li>
+</ul>
+<p>因此<code>next</code>数组的确定，按暴力方法时间复杂度会达到<span class="math inline">\(O(M^2)\)</span>，这以暴力匹配没什么区别，因此必须想办法看是否有<code>O(m)</code>的方法来确定<code>next</code>数组</p>
+<h4 id="快速构建next">快速构建next</h4>
+<p>假设我们已经求得了<code>next[i-1]</code>的值，并且<code>next[i-1]=now</code>对应的最长前缀和后缀相等长度为<code>now</code>，那么我们再求<code>next[i]</code>的时候也会有两种情况,就比如<code>pat=abcabdddabcabc</code>： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//pat匹配串</span></span><br><span class="line">      <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span> <span class="number">5</span> <span class="number">6</span> <span class="number">7</span> <span class="number">8</span> <span class="number">9</span> <span class="number">10</span> <span class="number">11</span> <span class="number">12</span> <span class="number">13</span></span><br><span class="line">      a b c a b d d d a b c  a  b  c</span><br><span class="line">next  <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">2</span> <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>情况1：<code>pat[now]==pat[i]</code>，这种情况直接<code>next[i]=now+1</code></li>
+<li>情况2：<code>pat[now]!=pat[i]</code>。
+<ul>
+<li>这种情况，就比如要确定<code>next[13]</code>，由于<code>next[12]=5</code>,由于<code>pat[5]!=pat[13]</code>，因此不能为情况1，但也不能直接设置为0，需要沿着next回溯分析。</li>
+<li><strong>分析：</strong>当我们跳到<code>now=next[12]=5</code>时候，发现<code>pat[5]!=pat[13]</code>，这就说明<code>pat[now]</code>不符合，但是<code>pat[0:now-1]</code>前可能存在一个符合长度<code>0&lt;k&lt;5</code>的子串，那么我们得沿着next跳到下一个<code>now=next[now]</code>,比较<code>pat[now]是否与pat[13]相等</code>，上述步骤循环，直到<code>=(pat[now]==pat[i])时，next[i]=now+1</code>；或者<code>now=0且pat[now]!=pat[i]</code>,则<code>next[i]=0</code>。</li>
+<li><strong>示例1</strong>：就比如要确定<code>next[13]</code>，此时<code>now=pat[12]=5</code>，因为<code>pat[13]!=pat[now]</code>，更新<code>now=next[now-1]=2</code>,此时<code>now=2</code>,且<code>pat[13]==pat[now]</code>，所以<code>next[13]=now+1=3</code></li>
+<li><strong>示例2</strong>：再比如要确定<code>next[5]</code>，此时<code>now=[4]=2</code>,然而<code>pat[5]!=pat[now]</code>，因此更新<code>now=next[now-1]=0</code>,因为<code>now=0且pat[5]!=pat[now]</code>，因此<code>pat[5]=0</code></li>
+</ul></li>
+</ul>
+<p><strong>这样构建<code>next</code>数组的复杂度只有<code>O(M)</code></strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//确定next数组代码</span></span><br><span class="line">	<span class="type">int</span> m=pat.<span class="built_in">size</span>();</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt;<span class="built_in">next</span>(m,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,now=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(now&gt;<span class="number">0</span>&amp;&amp;pat[i]!=pat[now])&#123;</span><br><span class="line">			now=next[now<span class="number">-1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(pat[i]!=pat[now]) ++now;</span><br><span class="line">		next[i]=now;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>文章来源：</strong></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83334559">KMP算法详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/576363046">算法基础（六）：KMP算法详解（next数组详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45746505/article/details/127676153">KMP算法详解</a></p>
+</blockquote>
+<p>ps：东哥的KMP算法解析更像有限状态机的解题，容易理解，但总觉得失去了KMP原汁原味的解题思路以及最优的复杂度</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -225,7 +365,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-14 10:24:16" itemprop="dateModified" datetime="2023-07-14T10:24:16+08:00">2023-07-14</time>
+                <time title="修改时间：2023-07-14 15:12:20" itemprop="dateModified" datetime="2023-07-14T15:12:20+08:00">2023-07-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,7 +387,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>51k</span>
+              <span>52k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -266,7 +406,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="redis数据类型">1. Redis数据类型</h2>
+          <h2 id="概述一下你认识的redis">0概述一下你认识的Redis？</h2>
+<p>Redis本质上是一个Key-Value类型的内存数据库，很像memcached，整个数据库统统加载 在内存当中进行操作，定期通过异步操作把数据库数据flush到硬盘上进行保存。 因为是纯内存操作，Redis的性能非常出色，每秒可以处理超过 10万次读写操作，是已知性能 最快的Key-Value DB。 Redis的出色之处不仅仅是性能，Redis最大的魅力是支持保存多种数据结构，此外单个value 的最大限制是1GB，不像 memcached只能保存1MB的数据，因此Redis可以用来实现很多有用的功能。比方说用他的List来做FIFO双向链表，实现一个轻量级的高性 能消息队列服务，用他的Set可 以做高性能的tag系统等等。 另外Redis也可以对存入的Key-Value设置expire时间，因此也可以被当作一 个功能加强版的 memcached来用。 Redis的主要缺点是数据库容量受到物理内存的限制，不能用作海量数据 的高性能读写，因此Redis适合的场景主要局限在较小数据量的高性能操作和运算上。</p>
+<h2 id="redis数据类型">1. Redis数据类型</h2>
 <p>Redis提供了<code>String,Hash,List,Set,Zset</code>五种数据类型。</p>
 <h3 id="string">1.1 String</h3>
 <p><code>String</code>数据结构是最简单的<code>key-value</code>类型，<code>value</code>不仅可以是<code>String</code>,也可以是数字，包括整数，浮点数和二进制数。</p>
@@ -1273,105 +1415,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/" class="post-title-link" itemprop="url">深入理解计算机系统-优化程序性能</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-05-06 20:29:03" itemprop="dateCreated datePublished" datetime="2023-05-06T20:29:03+08:00">2023-05-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-07 21:30:55" itemprop="dateModified" datetime="2023-05-07T21:30:55+08:00">2023-05-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">深入理解计算机系统</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>574</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="导读">1 导读</h3>
-<p>程序优化涉及的范围实在是太广了，几乎每个层面都可以进行优化，比如撰写<编译器友好型>以及<缓存友好型>的程序，针对不同的目标硬件平台还可能进行特定的优化，等等，优化的难点在于你需要对系统有充分理解，当然了在你做优化之前<strong>首先要保证原始程序功能正确（并且有回归测试）</strong>，否则一切都是徒劳。</缓存友好型></编译器友好型></p>
-<blockquote>
-<p>首先需要理解，哪些因素会影响程序的性能 <img src="/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/influence.png" width="700"></p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1443,7 +1486,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-count">68</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1502,7 +1545,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15:26</span>
+    <span title="站点阅读时长">15:48</span>
 </div>
 
         
