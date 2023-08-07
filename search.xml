@@ -1515,6 +1515,7 @@
 <li>模式串：也就是那条短的，用来匹配的串<code>pat</code></li>
 <li>kmp算法的目的：在<span class="math inline">\(O(m+n)\)</span>的时间复杂度的内进行串匹配，也就是在目标串中找到模式串，并返回目标串中模式串的第一个字符下标</li>
 </ul>
+<span id="more"></span>
 <h2 id="暴力做法">暴力做法</h2>
 <p>KMP可以解决串的模式匹配，但是一般我们解决这个问题首先想到的是暴力做，什么 也不管，直接两个for循环。暴力匹配也叫<strong>朴素的模式匹配</strong>。</p>
 <p>从主串和子串的第一个字符开始，将两字符串的字符一一比对，如果出现某个字符 不匹配，主串指针<code>i</code>回溯到第二个字符，子串指针<code>j</code>回溯到第一个字符再进行一一比对。如果出 现某个字符不匹配，主串回溯到第三个字符，子串回溯到第一个字符再进行一一比对…，一直到子串字符全部匹配成功。这样时间复杂度为<span class="math inline">\(O(N*M)\)</span> <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//暴力解</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;N;++i)&#123;</span><br><span class="line">	<span class="type">int</span> cursor=i,j=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;j&lt;M;++j)&#123;</span><br><span class="line">		<span class="keyword">if</span>(pat[j]!=txt[cursor]) <span class="keyword">break</span>;</span><br><span class="line">		++cursor;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">if</span>(j==M) <span class="keyword">return</span> i;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
