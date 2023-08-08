@@ -30,7 +30,7 @@
 <meta property="og:description" content="什么是KMP算法 KMP算法一种改进的模式匹配算法，是D.E.Knuth、J.H.Morris、V.R.Pratt于1977年联合 发表。KMP算法的作用是在一个已知字符串中查找子串的位置,也叫做串的模式匹配，后文主串和模式串匹配， 子串和模板串匹配。先在开头约定，本文用pat表示模式串，长度为 M，txt 表示文本串，长度为N。KMP 算法是在 txt 中查找子串 pat，如果存在，返回这个子">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-06T06:57:48.000Z">
-<meta property="article:modified_time" content="2023-08-07T16:16:38.200Z">
+<meta property="article:modified_time" content="2023-08-08T04:05:53.047Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-08 00:16:38" itemprop="dateModified" datetime="2023-08-08T00:16:38+08:00">2023-08-08</time>
+                <time title="修改时间：2023-08-08 12:05:53" itemprop="dateModified" datetime="2023-08-08T12:05:53+08:00">2023-08-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,7 +255,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.3k</span>
+              <span>3.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -292,7 +292,7 @@
 <p>暴力解发的时间复杂度为<span class="math inline">\(O(N*M)\)</span>，是因为做了许多不必要的位置<code>i</code>的回溯。KMP算法正是对该暴力解的优化。它的改进在于：<strong>每当从某个起始位置开始一趟比较后，在匹配过程中出现失配，不回溯位置<code>i</code>，只回溯<code>j</code>指针</strong></p>
 <p>那么问题就是<strong>如果发生失配时，<code>j</code>进行回溯，<code>j</code>应该回溯到什么位置才能保证算法的正确性?</strong></p>
 <p>看到上述的解释，有点<strong>动态规划</strong>的味道了，但是在实际的过程中我们是对匹配串<code>pat</code>做相应的预处理来达到这种效果的。如果说，<code>j</code>不是回溯到<code>0</code>，而是回溯到模式串<code>pat</code>中间的某一个位置，<strong>那么怎么知道在应该回溯到<code>pat</code>的哪个位置呢</strong>，我们不先介绍<code>KMP</code>算法的<code>next</code>数组（KMP算法最核心的部分就是<code>next</code>数组了），因为直接介绍代码会很难理解。</p>
-<p>首先，得明白构造<code>next</code>数组的<strong>原理</strong>：<strong>其实就是从<code>pat</code>串出发，确定<code>pat</code>中出现的重复公共串，利用先前遍历的结果避免<code>j</code>回溯不必要的位置，</strong>这样就能在回溯中确定位置。</p>
+<p>首先，得明白构造<code>next</code>数组的<strong>原理</strong>：<strong>其实就是从<code>pat</code>串出发，确定<code>pat</code>中出现的重复公共串，利用先前遍历的结果避免<code>j</code>回溯不必要的位置，</strong>这样就能在回溯中确定位置。换句话说就是利用前后缀的相同字符处理。</p>
 <h3 id="next数组的构建">next数组的构建</h3>
 <p>next数组的构建是从其<code>pat</code>的前缀和后缀相同串长度确定，换一句话说，<code>next[i]</code>指的是当前<code>pat[0:i]</code>范围内的前缀和后缀相同串的最长值，举个例子由<code>pat=abcabcd</code>:</p>
 <ul>
@@ -313,20 +313,26 @@
 <li>情况1：<code>pat[now]==pat[i]</code>，这种情况直接<code>next[i]=now+1</code></li>
 <li>情况2：<code>pat[now]!=pat[i]</code>。
 <ul>
-<li>这种情况，就比如要确定<code>next[13]</code>，由于<code>next[12]=5</code>,由于<code>pat[5]!=pat[13]</code>，因此不能为情况1，但也不能直接设置为0，需要沿着next回溯分析。</li>
+<li>这种情况，就比如要确定<code>next[13]</code>，由于<code>next[12]=5</code>,由于<code>pat[5]!=pat[13]</code>，因此不能为情况1，但也不能直接设置为0，需要沿着next回溯分析，这是因为前缀<code>pat[0:now-1]</code>一定有重复。</li>
 <li><strong>分析：</strong>当我们跳到<code>now=next[12]=5</code>时候，发现<code>pat[5]!=pat[13]</code>，这就说明<code>pat[now]</code>不符合，但是<code>pat[0:now-1]</code>前可能存在一个符合长度<code>0&lt;k&lt;5</code>的子串，那么我们得沿着next跳到下一个<code>now=next[now]</code>,比较<code>pat[now]是否与pat[13]相等</code>，上述步骤循环，直到<code>=(pat[now]==pat[i])时，next[i]=now+1</code>；或者<code>now=0且pat[now]!=pat[i]</code>,则<code>next[i]=0</code>。</li>
 <li><strong>示例1</strong>：就比如要确定<code>next[13]</code>，此时<code>now=pat[12]=5</code>，因为<code>pat[13]!=pat[now]</code>，更新<code>now=next[now-1]=2</code>,此时<code>now=2</code>,且<code>pat[13]==pat[now]</code>，所以<code>next[13]=now+1=3</code></li>
-<li><strong>示例2</strong>：再比如要确定<code>next[5]</code>，此时<code>now=[4]=2</code>,然而<code>pat[5]!=pat[now]</code>，因此更新<code>now=next[now-1]=0</code>,因为<code>now=0且pat[5]!=pat[now]</code>，因此<code>pat[5]=0</code></li>
+<li><strong>示例2</strong>：再比如要确定<code>next[5]</code>，此时<code>now[4]=2</code>,然而<code>pat[5]!=pat[now]</code>，因此更新<code>now=next[now-1]=0</code>,因为<code>now=0且pat[5]!=pat[now]</code>，因此<code>pat[5]=0</code></li>
 </ul></li>
 </ul>
 <p><strong>这样构建<code>next</code>数组的复杂度只有<code>O(M)</code></strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//确定next数组代码</span></span><br><span class="line">	<span class="type">int</span> m=pat.<span class="built_in">size</span>();</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt;<span class="built_in">next</span>(m,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,now=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(now&gt;<span class="number">0</span>&amp;&amp;pat[i]!=pat[now])&#123;</span><br><span class="line">			now=next[now<span class="number">-1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(pat[i]!=pat[now]) ++now;</span><br><span class="line">		next[i]=now;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="kmp算法完整代码">KMP算法完整代码</h3>
 <p>有了上述的分析，我们可以较容易的写出KMP的完整代码，<strong>利用next数组进行匹配</strong>：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxReapting</span><span class="params">(string txt,string pat)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n=txt.<span class="built_in">size</span>(),m=pat.<span class="built_in">size</span>();</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt;<span class="built_in">next</span>(m,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,now=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(now&gt;<span class="number">0</span>&amp;&amp;pat[i]!=pat[now])&#123;</span><br><span class="line">			now=next[now<span class="number">-1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(pat[i]!=pat[now]) ++now;</span><br><span class="line">		next[i]=now;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> startIndex=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(j&amp;&amp;txt[i]!=pat[j]) j=next[j<span class="number">-1</span>];</span><br><span class="line">		<span class="keyword">if</span>(txt[i]==pat[j])&#123;</span><br><span class="line">			++j;</span><br><span class="line">			<span class="keyword">if</span>(j==m) <span class="keyword">return</span> i-m+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxReapting</span><span class="params">(string txt,string pat)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n=txt.<span class="built_in">size</span>(),m=pat.<span class="built_in">size</span>();</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt;<span class="built_in">next</span>(m,<span class="number">0</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>,now=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(now&gt;<span class="number">0</span>&amp;&amp;pat[i]!=pat[now])&#123;</span><br><span class="line">			now=next[now<span class="number">-1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(pat[i]==pat[now]) ++now;</span><br><span class="line">		next[i]=now;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> startIndex=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>;i&lt;n;++i)&#123;</span><br><span class="line">		<span class="keyword">while</span>(j&amp;&amp;txt[i]!=pat[j]) j=next[j<span class="number">-1</span>];</span><br><span class="line">		<span class="keyword">if</span>(txt[i]==pat[j])&#123;</span><br><span class="line">			++j;</span><br><span class="line">			<span class="keyword">if</span>(j==m) <span class="keyword">return</span> i-m+<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>首先是<code>for</code>循环，最多循环<code>m</code>次，对于<code>++j</code>这行代码，每次最多加一次，所以在这<code>m</code>次循环中，<code>j</code>最多加上<code>m</code>.下面再看其中的<code>while</code>循环。</p>
 <p><code>while</code>循环的功能就是把<code>j</code>往回跳，而由于最后<code>j &gt;= 0</code>所以，<strong>在<code>m</code>次<code>for</code>循环中，<code>j</code>最多回跳了<code>m</code>次，所以总的复杂度最多是<code>O(2m)</code>也就是<code>O(m)</code></strong></p>
 <p>从而kmp算法的整体复杂度就是<code>O(n + m)</code></p>
+<p>题目：</p>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/description/">leetcode 28KMP算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/repeated-substring-pattern/description/">leetcode 459重复子字符串</a></li>
+<li><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-palindrome/description/">leetcode 214最短回文串</a></li>
+</ol>
 <p><strong>文章来源：</strong></p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83334559">KMP算法详解</a></p>
