@@ -6540,7 +6540,7 @@
 <p>Redis6.0 的多线程默认是禁用的，只使用主线程。如需开启需要修改 redis 配置文件 redis.conf ： <figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line">&gt;io-threads-<span class="keyword">do</span>-reads <span class="literal">yes</span></span><br></pre></td></tr></table></figure> 开启多线程后，还需要设置线程数，否则是不生效的。同样需要修改 redis 配置文件 redis.conf : <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">io-threads 4 <span class="comment">#官网建议4核的机器建议设置为2或3个线程，8核的建议设置为6个线程</span></span></span><br></pre></td></tr></table></figure> 关于线程数的设置，官方有一个建议：4核的机器建议设置为2或3个线程，8核的建议设置为6个线程，线程数一定要小于机器核数。还需要注意的是，线程数并不是越大越好，官方认为超过了8个基本就没什么意义了。</p>
 </blockquote>
 <h3 id="redis-多线程实现机制">7.3 Redis 多线程实现机制</h3>
-<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis多线程实现机制.png" width="700"></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redisthread.png" width="500"></p>
 <blockquote>
 <p><strong>轮询调度算法(Round-Robin Scheduling)</strong>轮询调度算法的原理是每一次把来自用户的请求轮流分配给内部中的服务器，从1开始，直到N (内部服务器个数)，然后重新开始循环。</p>
 </blockquote>
