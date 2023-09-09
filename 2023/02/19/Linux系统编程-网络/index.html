@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/compare.png">
 <meta property="og:image" content="https://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/select.png">
 <meta property="article:published_time" content="2023-02-19T06:26:39.000Z">
-<meta property="article:modified_time" content="2023-03-10T05:58:48.984Z">
+<meta property="article:modified_time" content="2023-09-09T13:21:34.480Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Linux coding">
 <meta name="twitter:card" content="summary">
@@ -241,7 +241,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-10 13:58:48" itemprop="dateModified" datetime="2023-03-10T13:58:48+08:00">2023-03-10</time>
+                <time title="修改时间：2023-09-09 21:21:34" itemprop="dateModified" datetime="2023-09-09T21:21:34+08:00">2023-09-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -273,7 +273,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>20 分钟</span>
+              <span>21 分钟</span>
             </span>
 
         </div>
@@ -464,9 +464,15 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">connect</span><span class="params">(<span class="type">int</span> sockfd , <span class="type">const</span> <span class="keyword">struct</span> sockaddr *addr,</span></span></span><br><span class="line"><span class="params"><span class="function">                   <span class="type">socklen_t</span> addrlen)</span></span>;</span><br><span class="line">功能: 连接服务器</span><br><span class="line">sockfd:  socket套接字</span><br><span class="line">addr:  ipv4套接字结构体的地址</span><br><span class="line">addrlen: ipv4套接字结构体的长</span><br></pre></td></tr></table></figure>
 <h6 id="socket的发送接收函数">3.1.6 socket的发送接收函数</h6>
 <p>除了常用的<code>read</code>和<code>write</code>函数以外，还有专用于套接字的I/O系统调用<code>recv()</code>和<code>send()</code>(这些一般来说适用于TCP socket) <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">recv</span><span class="params">(<span class="type">int</span> sockfd, <span class="type">void</span> *buf, <span class="type">size_t</span> len, <span class="type">int</span> flags)</span></span>;<span class="comment">//flags==MSG_PEEK 读数据不会删除缓冲区的数据</span></span><br><span class="line"><span class="function"><span class="type">ssize_t</span> <span class="title">send</span><span class="params">(<span class="type">int</span> sockfd, <span class="type">const</span> <span class="type">void</span> *buf, <span class="type">size_t</span> len, <span class="type">int</span> flags)</span></span>;<span class="comment">//flags=1 紧急数据</span></span><br></pre></td></tr></table></figure> <strong>flag参数</strong>：(详细请查书)</p>
+<p>flags参数的取值和作用：</p>
 <ul>
-<li><code>MSG_DONTAIT：</code>让<code>recv</code>以非阻塞形式执行</li>
-<li><code>MSG_OOB</code>：在套接字上接收带外数据</li>
+<li><code>MSG_OOB</code>：用于接收带外数据。带外数据指的是在TCP流中紧急的和高优先级的数据，通常用于紧急情况下的通信，比如错误报告和紧急状态的消息。由于带外数据具有更高的优先级，因此接收到带外数据时，应该立即进行处理，而不应该等待完成之后再处理。MSG_OOB标志用于区分普通数据和带外数据，如果没有设置该标志，则recv函数仅能接收普通数据。</li>
+<li><code>MSG_PEEK</code>：将数据从套接字的接收缓冲区中读出，但不将其删除。也就是说，该标志会将数据复制到指定的缓冲区，但不会影响接收缓冲区的状态，下一次调用recv函数时，仍然可以接收到相同的数据。该标志通常用于预览数据，检查数据包头信息等。</li>
+<li><code>MSG_WAITALL</code>：指定接收数据的长度，直到接收到指定长度的数据包之后才返回，否则会一直等待直到接收到足够长度的数据包。该标记通常用于接收固定长度的报文。</li>
+<li><code>MSG_DONTWAIT</code>：设置非阻塞模式，使recv函数在没有接收到数据时立即返回，而不是一直等待直到有数据到来。在非阻塞模式下，recv函数返回-1并设置errno为EAGAIN表示没有数据可读。</li>
+<li><code>MSG_TRUNC</code>：指示接收缓冲区空间不足时丢弃数据，并返回接收到的数据长度。该标志通常用于确保缓冲区可以容纳完整的数据包，在缓冲区不够存放完整的数据包时，在不保存多余数据的情况下截断数据。</li>
+<li><code>MSG_ERRQUEUE</code>：用于处理错误消息，如果有错误消息需要发送给应用程序，就通过控制消息(CMSG)机制返回到应用程序中。</li>
+<li><code>MSG_NOSIGNAL</code>：如果在发送数据时连接已经中断，不产生SIGPIPE信号，返回-1并设置errno为EPIPE。默认情况下，当发送到已关闭的套接字时会产生SIGPIPE信号，如果设置了该标志，则可以避免信号的产生，而是以返回错误的方式通知应用程序连接已经中断。</li>
 </ul>
 <h5 id="示例简易客户端实现">3.2 示例：简易客户端实现</h5>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>*argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> sock_fd;</span><br><span class="line">	sock_fd=<span class="built_in">socket</span>(AF_INET,SOCK_STREAM,<span class="number">0</span>);</span><br><span class="line">	<span class="comment">//建立连接</span></span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> addr;</span><br><span class="line">	addr.sin_family = AF_INET;</span><br><span class="line">	addr.sin_port=<span class="built_in">htons</span>(<span class="number">8000</span>);</span><br><span class="line">	<span class="built_in">inet_pton</span>(AF_INET,<span class="string">&quot;169.254.128.147&quot;</span>,&amp;addr.sin_addr.s_addr);</span><br><span class="line">	<span class="type">int</span> ero=<span class="built_in">connect</span>(sock_fd,(<span class="keyword">struct</span> sockaddr*)&amp;addr,<span class="built_in">seziof</span>(addr));</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>!=ero)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;连接失败\n&quot;</span>);</span><br><span class="line">		<span class="built_in">perror</span>(<span class="string">&quot;connect&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">char</span> buf[<span class="number">1024</span>]=<span class="string">&quot;&quot;</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> n =<span class="built_in">read</span>(STDIN_FILENO,buf,<span class="built_in">seziof</span>(buf));</span><br><span class="line">		<span class="built_in">write</span>(sock_fd,buf,<span class="built_in">sizeof</span>(buf));</span><br><span class="line">		n= <span class="built_in">read</span>(sock_fd,buf,<span class="built_in">sizeof</span>(buf));</span><br><span class="line">		<span class="built_in">write</span>(STDOUT_FIFLENO,buf,n);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">close</span>(sock_fd);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -708,7 +714,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
