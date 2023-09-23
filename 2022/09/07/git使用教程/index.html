@@ -42,8 +42,9 @@
 <meta property="og:image" content="https://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/master.png">
 <meta property="og:image" content="https://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/notice.png">
 <meta property="og:image" content="https://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/rebase.png">
+<meta property="og:image" content="https://example.com/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/mergeandrebase.png">
 <meta property="article:published_time" content="2022-09-07T02:10:47.000Z">
-<meta property="article:modified_time" content="2023-03-15T08:54:57.158Z">
+<meta property="article:modified_time" content="2023-09-23T11:30:14.480Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -244,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-15 16:54:57" itemprop="dateModified" datetime="2023-03-15T16:54:57+08:00">2023-03-15</time>
+                <time title="修改时间：2023-09-23 19:30:14" itemprop="dateModified" datetime="2023-09-23T19:30:14+08:00">2023-09-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,7 +277,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>17 分钟</span>
+              <span>18 分钟</span>
             </span>
 
         </div>
@@ -601,14 +602,19 @@
 <h3 id="git的merge和rebase区别">9 git的merge和rebase区别</h3>
 <p><code>merge</code>和<code>rebase</code>都是用来合并分支的。</p>
 <ul>
-<li><p>1.采用<code>merge</code>和<code>rebase</code>后，git log的区别：<code>merge</code>命令不会保留<code>merge</code>的分支的<code>commit</code>记录，<code>rebase</code>会保留所有的<code>commit</code>：（即<code>rebase: 合体</code> <code>merge: 脚手相连，肚皮是独立的</code>） <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/rebase.png" width="600"></p></li>
+<li>1.采用<code>merge</code>和<code>rebase</code>后，git log的区别：
+<ul>
+<li>执行<code>merge</code>命令的分支会生成<code>merge</code>的提交记录，</li>
+<li>而<code>rebase</code>不会生成merge记录，但会保留所有的<code>commit</code>记录，话句话说就是将另一个分支作为当前分支的基线。（即<code>rebase: 合体</code> <code>merge: 脚手相连，肚皮是独立的</code>） <img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/rebase.png" width="600"></li>
+</ul></li>
 <li><code>merge</code>和<code>rebase</code>应用场景：
 <ul>
 <li><strong><code>merge</code>一般用在<code>master</code>这种公共分支上</strong>。在多人开发同一个项目时，如果多人的开发分支有一定的命名规范，比如需求的版本号，那么在排查问题或者追溯需求时，会很方便；保存的日志记录轨迹清晰，回滚方便</li>
 <li><strong>一般<code>rebase</code>基本法则是只对自己的的分支做</strong>，在自己的分支上若有多次提交，可以合并为一次提交，并强推上去，这样的话将自己的分支合入公共分支master的时候，分支树也很简明</li>
 </ul></li>
 </ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在master分支执行下面语句的意思：</span><br><span class="line">git merge dev：将dev代码合并至master</span><br><span class="line">git rebase dev：将master代码合并至dev</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在dev分支执行下面语句的意思：</span><br><span class="line">git merge master：将master代码合并至dev</span><br><span class="line">git rebase master：意思就是将master作为dev的新基线，换句话意思就是将master合并到dev</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/09/07/git%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B/mergeandrebase.png" width="700"></p>
 <blockquote>
 <p>扩展：当你本地仓库落后于远程仓库进行<code>commit</code> ,然后<code>pull</code>, 那会多生成一条<code>merge</code>记录, 这是非常错误的:</p>
 </blockquote>
@@ -620,6 +626,14 @@
 </blockquote>
 <p>关键是看自己本地有没有<code>commit</code>，因为<code>commit</code>已经进入了本地仓库了，是会被检测到，并记录的</p>
 <p><strong>应该要解决第二种情况：</strong>使用<code>git pull --rebase</code> ,使用<code>rebase</code>合并，避免产生记录</p>
+<p>因此一个合作项目的提交一般是这样的：（假设本地dev,远程自己的分支也是dev，远程主分支是master)</p>
+<ul>
+<li>从远程master拉取:<code>git pull --reabse [shortname] master</code></li>
+<li>本地commit:<code>git add .</code> ;<code>git commit -m &quot;dev&quot;</code></li>
+<li>看是否有冲突，有冲突解决冲突</li>
+<li>push到远程dev分支：<code>git push Trluper dev</code></li>
+<li>在远程仓库请求合并</li>
+</ul>
 <p>文章来源：<a target="_blank" rel="noopener" href="https://www.runoob.com/git/git-workflow.html">菜鸟教程</a></p>
 
     </div>
@@ -800,7 +814,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:34</span>
+    <span title="站点阅读时长">16:37</span>
 </div>
 
         
