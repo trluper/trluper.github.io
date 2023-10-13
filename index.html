@@ -194,6 +194,158 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">并查集</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-10-09 17:38:05" itemprop="dateCreated datePublished" datetime="2023-10-09T17:38:05+08:00">2023-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-10 00:34:30" itemprop="dateModified" datetime="2023-10-10T00:34:30+08:00">2023-10-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="并查集">并查集</h1>
+<p>在计算机科学中，并查集是一种树型的数据结构，用于处理一些不交集（Disjoint Sets）的合并及查询问题。有一个联合-查找算法（union-find algorithm）定义了两个用于此数据结构的操作：</p>
+<ul>
+<li><p><code>Find</code>：确定元素属于哪一个子集。这个确定方法就是不断向上查找找到它的根节点，它可以被用来确定两个元素是否属于同一子集。</p></li>
+<li><p><code>Union</code>：将两个子集合并成同一个集合。</p></li>
+</ul>
+<p><img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/isunion.png" width="600"></p>
+<p>由于支持这两种操作，一个不相交集也常被称为联合-查找数据结构（union-find data structure）或合并-查找集合（merge-find set）。其他的重要方法如<code>MakeSet</code>，用于建立单元素集合。有了这些方法，<strong>许多经典的划分问题可以被解决。</strong></p>
+<h1 id="并查集的引入">并查集的引入</h1>
+<p>并查集的重要思想在于，用集合中的一个元素代表集合。我曾看过一个有趣的比喻，把集合比喻成<strong>帮派</strong>，而代表元素则是<strong>帮主</strong>。接下来我们利用这个比喻，看看并查集是如何运作的。</p>
+<p>最开始，所有大侠各自为战。他们各自的帮主自然就是自己。（对于只有一个元素的集合，代表元素自然是唯一的那个元素） <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic1.png" width="600"></p>
+<p>现在1号和3号比武，假设1号赢了（这里具体谁赢暂时不重要），那么3号就认1号作帮主（合并1号和3号所在的集合，1号为代表元素）。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic2.png" width="600"></p>
+<p>现在2号想和3号比武（合并3号和2号所在的集合），但3号表示，别跟我打，让我帮主来收拾你（合并代表元素）。不妨设这次又是1号赢了，那么2号也认1号做帮主。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic3.png" width="600"></p>
+<p>现在我们假设4、5、6号也进行了一番帮派合并，江湖局势变成下面这样： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic4.png" width="600"></p>
+<p>现在假设2号想与6号比，跟刚刚说的一样，喊帮主1号和4号出来打一架（帮主真辛苦啊）。1号胜利后，4号认1号为帮主，当然他的手下也都是跟着投降了。好了，比喻结束了。如果你有一点图论基础，相信你已经觉察到，这是一个树状的结构，要寻找集合的代表元素，只需要一层一层往上访问父节点（图中箭头所指的圆），直达树的根节点（图中橙色的圆）即可。根节点的父节点是它自己。我们可以直接把它画成一棵树： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic5.png" width="500"></p>
+<p>用这种方法，我们可以写出最简单版本的并查集代码。</p>
+<h2 id="初始化">初始化</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">fa</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n; ++i)&#123;</span><br><span class="line">		fa[i]=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假如有编号为1, 2, 3, ..., n的n个元素，我们用一个数组fa[]来存储每个元素的父节点（因为每个元素有且只有一个父节点，所以这是可行的）。一开始，我们先将它们的父节点设为自己。</p>
+<h2 id="查询">查询</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span>&amp; x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(fa[x] == x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">find</span>(fa[x]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们用递归的写法实现对代表元素的查询：一层一层访问父节点，直至根节点（根节点的标志就是父节点是本身）。要判断两个元素是否属于同一个集合，只需要看它们的根节点是否相同即可。</p>
+<h2 id="合并">合并</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> i, <span class="type">int</span> j)</span> </span>&#123;</span><br><span class="line">    fa[<span class="built_in">find</span>(i)] = <span class="built_in">find</span>(j); <span class="comment">// 修改的是根节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合并操作也是很简单的，先找到两个集合的代表元素，然后将前者的父节点设为后者即可。当然也可以将后者的父节点设为前者，这里暂时不重要。本文末尾会给出一个更合理的比较方法。</p>
+<h1 id="路径压缩发生在查询时">路径压缩（发生在查询时）</h1>
+<p>随着merge次数的增加，形成的并查集可能会成为一条长长的链，随着链越来越长，我们想要从底部找到根节点的时间复杂度会成为线性。</p>
+<p>怎么解决呢？我们可以使用<strong>路径压缩</strong>的方法。既然我们只关心一个元素对应的<strong>根节点</strong>，那我们希望每个元素到根节点的路径尽可能短，最好只需要一步，那么这就是我们的<strong>路径压缩</strong>：</p>
+<p>思想是：在<strong>查询</strong>的过程中，把沿途的的每个节点的父节点都设为根节点，下一次查询时就可以以<span class="math inline">\(O(1)\)</span>获得根节点</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span>&amp; x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(fa[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		fa[x] = <span class="built_in">find</span>(fa[x]);</span><br><span class="line">		<span class="keyword">return</span> fa[x];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="按秩合并">按秩合并</h1>
+<p>有些人可能有一个误解，以为<strong>路径压缩</strong>优化后，并查集始终都是一个 菊花图 （只有两层的树的俗称）。但其实，由于路径压缩只在 <strong>查询</strong> 时进行，也只压缩 <strong>一条路径</strong>，所以并查集最终的结构仍然可能是比较复杂的。例如，现在我们有一棵较复杂的树需要与一个单元素的集合合并： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic6.png" width="500"> 假如这时我们要merge(7,8)，如果我们可以选择的话，是把7的父节点设为8好，还是把8的父节点设为7好呢？</p>
+<p>当然是后者。因为如果把7的父节点设为8，会使树的 深度（树中最长链的长度）加深，原来的树中每个元素到根节点的距离都变长了，之后我们寻找根节点的路径也就会相应变长。虽然我们有路径压缩，但路径压缩也是会消耗时间的。而把8的父节点设为7，则不会有这个问题，因为它没有影响到不相关的节点。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic7.png" width="500"></p>
+<p>这启发我们：<strong>我们应该把简单的树往复杂的树上合并，而不是相反。因为这样合并后，到根节点距离变长的节点个数比较少。</strong></p>
+<p>我们用一个数组<code>rank[]</code>记录每个根节点对应的树的深度（如果不是根节点，其rank相当于以它作为根节点的<strong>子树</strong>的深度）。一开始，把所有元素的rank（<strong>秩</strong>）设为1。合并时比较两个根节点，把rank较小者往较大者上合并。路径压缩和按秩合并如果一起使用，时间复杂度接近<code>O(n)</code>，但是会破坏rank的准确性。</p>
+<h2 id="初始化按秩合并">初始化（按秩合并）</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">fa</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">rank</span><span class="params">(n+<span class="number">1</span>,<span class="number">1</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n:==i)&#123;</span><br><span class="line">		fa[i]=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="合并-1">合并</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> j)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=<span class="built_in">find</span>(i),y=<span class="built_in">find</span>(j);</span><br><span class="line">	<span class="keyword">if</span>(rank[x]&lt;=rank[y])&#123;</span><br><span class="line">		fa[x] = y;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		fa[y] = x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(rank[x]==rank[y]&amp;&amp;x!=y)&#123;</span><br><span class="line">		rank[y]++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结">总结</h1>
+<ol type="1">
+<li>并查集主要解决的<strong>分组管理</strong>一类的问题，<strong>如果问题能抽象成组与组之间的问题，一般情况下可考虑并查集</strong>，并查集的常见思路</li>
+</ol>
+<blockquote>
+<p>是否在一个组； 在一个组的条件； 路径和组在图中都属于连通域，上述<code>组</code>均可替换为<code>路径</code>，问题不变；</p>
+</blockquote>
+<ol start="2" type="1">
+<li>并查集的主要难点：</li>
+</ol>
+<blockquote>
+<p><strong>Union</strong>时，有的问题已经告诉了分组的信息，有的问题则需要自行挖掘； 一般情况下，并查集底层为一个1d数组，有的问题需要对元素进行编号或者转化与之对应； 在不清楚并查集中到底会存放多少数据时，底层也可以<strong>map</strong>；</p>
+</blockquote>
+<ol start="3" type="1">
+<li><p>并查集功能是<strong>Union</strong>也就是将两个组合并成一个组，对于拆分的情况，可以逆序思考问题，例如<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/bricks-falling-when-hit/description/">leetcode803 打砖块</a></p></li>
+<li><p>根据问题，也可在并查集底层使用其他数据结构，帮助解决问题；</p></li>
+</ol>
+<h1 id="例题">例题</h1>
+<h2 id="等式方程的可满足性">等式方程的可满足性</h2>
+<h3 id="题目">题目</h3>
+<p>给定一个由表示变量之间关系的字符串方程组成的数组，每个字符串方程 <code>equations[i]</code> 的长度为<code>4</code>，并采用两种不同的形式之一：<code>&quot;a==b&quot;</code> 或 <code>&quot;a!=b&quot;</code>。在这里，<code>a</code> 和 <code>b</code> 是小写字母（不一定不同），表示单字母变量名。</p>
+<p>只有当可以将整数分配给变量名，以便满足所有给定的方程时才返回<code>true</code>，否则返回 <code>false</code>。</p>
+<h3 id="分析">分析</h3>
+<p>分析题目可知，可组等式方程或有关系或无关系，那么因此对所有的方程进行管理，该背景下可考虑使用并查集解决：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">lass UnionFind &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">parent</span><span class="params">(<span class="number">26</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">UnionFind</span>() &#123;</span><br><span class="line">		parent.<span class="built_in">resize</span>(<span class="number">26</span>);</span><br><span class="line">        <span class="comment">//对范围内的赋值0</span></span><br><span class="line">        <span class="built_in">iota</span>(parent.<span class="built_in">begin</span>(), parent.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (index == parent[index]) &#123;</span><br><span class="line">            <span class="keyword">return</span> index;</span><br><span class="line">        &#125;</span><br><span class="line">        parent[index] = <span class="built_in">find</span>(parent[index]);</span><br><span class="line">        <span class="keyword">return</span> parent[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">unite</span><span class="params">(<span class="type">int</span> index1, <span class="type">int</span> index2)</span> </span>&#123;</span><br><span class="line">        parent[<span class="built_in">find</span>(index1)] = <span class="built_in">find</span>(index2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">equationsPossible</span><span class="params">(vector&lt;string&gt;&amp; equations)</span> </span>&#123;</span><br><span class="line">        UnionFind uf;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> string&amp; str: equations) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[<span class="number">1</span>] == <span class="string">&#x27;=&#x27;</span>) &#123;</span><br><span class="line">                <span class="type">int</span> index1 = str[<span class="number">0</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="type">int</span> index2 = str[<span class="number">3</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                uf.<span class="built_in">unite</span>(index1, index2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> string&amp; str: equations) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[<span class="number">1</span>] == <span class="string">&#x27;!&#x27;</span>) &#123;</span><br><span class="line">                <span class="type">int</span> index1 = str[<span class="number">0</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="type">int</span> index2 = str[<span class="number">3</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (uf.<span class="built_in">find</span>(index1) == uf.<span class="built_in">find</span>(index2)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>参考文献： &gt;<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/433996968">并查集</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1093,120 +1245,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" class="post-title-link" itemprop="url">深入理解计算机系统-虚拟内存</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-05-17 12:44:28" itemprop="dateCreated datePublished" datetime="2023-05-17T12:44:28+08:00">2023-05-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-05-30 16:24:29" itemprop="dateModified" datetime="2023-05-30T16:24:29+08:00">2023-05-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">深入理解计算机系统</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="虚拟内存">1 虚拟内存</h3>
-<p>一个系统中的进程是与其他进程共享CPU和主存资源的。在之前我们明白一个进程会有4GB的内存，但实际中不可能为一个进程真实的分配这么多，否则对于8G的主存，只要两个进程就占满了。因此，计算机系统的设计者们引入了一中很聪明的做法——<strong>虚拟内存</strong>。</p>
-<p>虚拟内存是硬件异常、硬件地址翻译、主存和磁盘文件和内核软件的完美交互：</p>
-<h4 id="虚拟寻址和地址空间">1.1 虚拟寻址和地址空间</h4>
-<p>在计算机中每个字节都存在它唯一的地址，该地址就是<strong>物理地址</strong>，我们将通过真实物理地址进行寻址的方法称为<strong>物理地址</strong>。</p>
-<p>而虚拟地址，是指由CPU生成一个<strong>虚拟地址（VA）</strong>来访问主存，如下图，这个虚拟地址在送到内存之前会经过<code>MMU内存管理单元</code>来翻译成物理地址，在这里会结合到后面的<strong>页表</strong>来进行翻译。通过虚拟地址寻址的方式就是<strong>虚拟寻址</strong>。现在计算绝大部分都是使用<strong>寻你寻址</strong>。 <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/MMU.png" width="700"></p>
-<p><strong>地址空间</strong>：</p>
-<ul>
-<li><strong>虚拟地址空间</strong>：虚拟地址空间一般以地址总线条数为基准，如32位的位<span class="math inline">\(2^{32}=4GB\)</span></li>
-<li><strong>物理地址空间</strong>：对应与实际内存挡住的M字节，一般来说，物理地址空间由进程运行过程中所实际使用的内存大小所决定</li>
-</ul>
-<p>物理地址空间和虚拟地址空间是对应关系的，即由虚拟地址找到真实的物理地址。</p>
-<h4 id="虚拟内存是作为缓存的工具">1.2 虚拟内存是作为缓存的工具</h4>
-<p>在概念上，<strong>虚拟内存是指存放在磁盘上的N字节大小的内存区域，</strong>每个字节都要相应的虚拟地址，作物寻址索引。<strong>和存储结构的缓存一样，磁盘的数据也被分割成块，在这类为做区别称之为虚拟页，每个虚拟页大小由计算机系统决定为<span class="math inline">\(P=2^p\)</span></strong>，与之对应的是物理页，其大小也应该为<code>P</code>。</p>
-<p>在任何时刻，我们都不能实际真实一股脑的为进程分配全部的存储空间，因此虚拟页面分为三个不相交的子集：</p>
-<ul>
-<li><strong>未分配的：</strong>VM系统还没有分配的页，此时未分配的块没有任何数据和它们管理，因此此时不会占有任何磁盘空间</li>
-<li><strong>缓存的</strong>：当前缓存的虚拟页在占有磁盘中的空间，当然由于缓存到内存。内存当中也会占有一定内存空间</li>
-<li><strong>维缓存的</strong>：在磁盘中占用空间，但并未缓存在内存中，当然不占用内存(此时当CPU要寻址该页当中一个数据时，由于未缓存在内存中，就会造成<strong>缺页异常</strong>。) <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/VP.png" width="700"></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1278,7 +1316,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">71</span>
+          <span class="site-state-item-count">72</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1337,7 +1375,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:37</span>
+    <span title="站点阅读时长">16:47</span>
 </div>
 
         
