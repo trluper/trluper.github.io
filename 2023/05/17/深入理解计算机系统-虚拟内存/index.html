@@ -29,20 +29,20 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 虚拟内存 一个系统中的进程是与其他进程共享CPU和主存资源的。在之前我们明白一个进程会有4GB的内存，但实际中不可能为一个进程真实的分配这么多，否则对于8G的主存，只要两个进程就占满了。因此，计算机系统的设计者们引入了一中很聪明的做法——虚拟内存。 虚拟内存是硬件异常、硬件地址翻译、主存和磁盘文件和内核软件的完美交互： 1.1 虚拟寻址和地址空间 在计算机中每个字节都存在它唯一的地址，">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/MMU.png">
-<meta property="og:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/VP.png">
-<meta property="og:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/PTE.png">
-<meta property="og:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/aimed.png">
-<meta property="og:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/miss.png">
-<meta property="og:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/manyLevel.png">
-<meta property="og:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/shared.png">
-<meta property="og:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/private.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-虚拟内存/MMU.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-虚拟内存/VP.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-虚拟内存/PTE.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-虚拟内存/aimed.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-虚拟内存/miss.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-虚拟内存/manyLevel.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-虚拟内存/shared.png">
+<meta property="og:image" content="https://example.com/深入理解计算机系统-虚拟内存/private.png">
 <meta property="article:published_time" content="2023-05-17T04:44:28.000Z">
 <meta property="article:modified_time" content="2023-05-30T08:24:29.301Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深入理解计算机系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/MMU.png">
+<meta name="twitter:image" content="https://example.com/深入理解计算机系统-虚拟内存/MMU.png">
 
 <link rel="canonical" href="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/">
 
@@ -288,7 +288,7 @@
 <p>虚拟内存是硬件异常、硬件地址翻译、主存和磁盘文件和内核软件的完美交互：</p>
 <h4 id="虚拟寻址和地址空间">1.1 虚拟寻址和地址空间</h4>
 <p>在计算机中每个字节都存在它唯一的地址，该地址就是<strong>物理地址</strong>，我们将通过真实物理地址进行寻址的方法称为<strong>物理地址</strong>。</p>
-<p>而虚拟地址，是指由CPU生成一个<strong>虚拟地址（VA）</strong>来访问主存，如下图，这个虚拟地址在送到内存之前会经过<code>MMU内存管理单元</code>来翻译成物理地址，在这里会结合到后面的<strong>页表</strong>来进行翻译。通过虚拟地址寻址的方式就是<strong>虚拟寻址</strong>。现在计算绝大部分都是使用<strong>寻你寻址</strong>。 <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/MMU.png" width="700"></p>
+<p>而虚拟地址，是指由CPU生成一个<strong>虚拟地址（VA）</strong>来访问主存，如下图，这个虚拟地址在送到内存之前会经过<code>MMU内存管理单元</code>来翻译成物理地址，在这里会结合到后面的<strong>页表</strong>来进行翻译。通过虚拟地址寻址的方式就是<strong>虚拟寻址</strong>。现在计算绝大部分都是使用<strong>寻你寻址</strong>。 <img src="/深入理解计算机系统-虚拟内存/MMU.png" width="700"></p>
 <p><strong>地址空间</strong>：</p>
 <ul>
 <li><strong>虚拟地址空间</strong>：虚拟地址空间一般以地址总线条数为基准，如32位的位<span class="math inline">\(2^{32}=4GB\)</span></li>
@@ -301,7 +301,7 @@
 <ul>
 <li><strong>未分配的：</strong>VM系统还没有分配的页，此时未分配的块没有任何数据和它们管理，因此此时不会占有任何磁盘空间</li>
 <li><strong>缓存的</strong>：当前缓存的虚拟页在占有磁盘中的空间，当然由于缓存到内存。内存当中也会占有一定内存空间</li>
-<li><strong>维缓存的</strong>：在磁盘中占用空间，但并未缓存在内存中，当然不占用内存(此时当CPU要寻址该页当中一个数据时，由于未缓存在内存中，就会造成<strong>缺页异常</strong>。) <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/VP.png" width="700"></li>
+<li><strong>维缓存的</strong>：在磁盘中占用空间，但并未缓存在内存中，当然不占用内存(此时当CPU要寻址该页当中一个数据时，由于未缓存在内存中，就会造成<strong>缺页异常</strong>。) <img src="/深入理解计算机系统-虚拟内存/VP.png" width="700"></li>
 </ul>
 <span id="more"></span>
 <blockquote>
@@ -309,7 +309,7 @@
 </blockquote>
 <h4 id="页表">1.3 页表</h4>
 <p>虚拟内存系统必须以某种方法来判断一个虚拟页是否在主存DRAM上，如果时，还必须缺点在DRAM的哪个位置。若不命中，还必须知道它在磁盘的哪个位置，同时还必须用<strong>页调度算法</strong>在物理内存中牺牲一个页进行替换。</p>
-<p>上述的功能由软硬件共同结合作用，包括操作系统软件、MMU和重要的数据结构——<strong>页表</strong>。<strong>页表上是虚拟地址和物理页的关系，它常驻在主存上</strong>。每次地址翻译硬件将一个虚拟地址转为物理地址时，都会读取页表。页表的结构如下，页表就是<strong>页表条目<code>PTE</code>数组</strong> <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/PTE.png" width="500"> 在页表条目中会有三种情况，</p>
+<p>上述的功能由软硬件共同结合作用，包括操作系统软件、MMU和重要的数据结构——<strong>页表</strong>。<strong>页表上是虚拟地址和物理页的关系，它常驻在主存上</strong>。每次地址翻译硬件将一个虚拟地址转为物理地址时，都会读取页表。页表的结构如下，页表就是<strong>页表条目<code>PTE</code>数组</strong> <img src="/深入理解计算机系统-虚拟内存/PTE.png" width="500"> 在页表条目中会有三种情况，</p>
 <ul>
 <li><strong>缓存的：已经缓存的有效位会置<code>1</code>,同时后面存储着相应的物理页号。</strong></li>
 <li><strong>未缓存的</strong>：有效位置<code>0</code>,后面存储着在磁盘的地址。</li>
@@ -317,7 +317,7 @@
 </ul>
 <h4 id="页命中和缺页">1.4 页命中和缺页</h4>
 <ul>
-<li><p><strong>页命中：在上图中，当cpu想读包含在<code>VP2</code>中的虚拟内存的一个字时，VP2此时已被缓存在主存中，地址翻译硬件此时将虚拟地址的作为一个索引来定位页表的<code>PTE2</code>，并从内存中读取它。因为设置了有效位，地址翻译硬件知道<code>VP2</code>此时已经缓存在主存中。所有使用<code>PTE</code>中的物理页号来该数据的构造物理地址。</strong> <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/aimed.png" width="700"></p>
+<li><p><strong>页命中：在上图中，当cpu想读包含在<code>VP2</code>中的虚拟内存的一个字时，VP2此时已被缓存在主存中，地址翻译硬件此时将虚拟地址的作为一个索引来定位页表的<code>PTE2</code>，并从内存中读取它。因为设置了有效位，地址翻译硬件知道<code>VP2</code>此时已经缓存在主存中。所有使用<code>PTE</code>中的物理页号来该数据的构造物理地址。</strong> <img src="/深入理解计算机系统-虚拟内存/aimed.png" width="700"></p>
 <ul>
 <li><strong>步骤：</strong>
 <ul>
@@ -336,13 +336,13 @@
 <li>第四步：PTE的有效位是零，所以MMU回触发缺页异常，传递给CPU中的控制到操作系统内核中的缺页异常处理程序。</li>
 <li>第五步：缺页异常处理程序确定物理内存的牺牲页，如果这个页面已经被修改，则把它换出到磁盘</li>
 <li>第六步：缺页异常处理程序调入新的页面，并且更新页表对应的<code>PTE</code></li>
-<li>第七步：缺页异常处理程序返回到原来的进程，再次执行导致缺页的指令。 <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/miss.png" width="700"></li>
+<li>第七步：缺页异常处理程序返回到原来的进程，再次执行导致缺页的指令。 <img src="/深入理解计算机系统-虚拟内存/miss.png" width="700"></li>
 </ul></li>
 </ul></li>
 </ul>
 <h4 id="多级页表">1.5 多级页表</h4>
 <p>对于单级页表，无论是否分配，我们都要维护PTE,试想一下<code>32位</code>系统，页面大小是<code>4KB</code>和一个<code>4</code>字节的PTE，那么在内存中总需要用<span class="math inline">\(4GB/4KB*4byte=4MB\)</span>的页表，对于64位来说更加复杂。内存是计算机很稀缺的资源，我们当然不希望内存因为存储页表而耗费太多的内存，<strong>虚拟内存并不是所有都会分配使用，因此多级页表利用这个特性解决这个问题的。</strong></p>
-<p>下面展示的是二级页表，<strong>在一级页表中只有<code>1024</code>个PTE，它常驻内存，接下啦是二级页表，二级页表当中只有在一级页表中能够确定分配的才会驻存在内存，其他的未分配则不会生成，因此这样就能够大大节约内存</strong> <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/manyLevel.png" width="700"> 上图中只占用了内存<span class="math inline">\(1024*4Byte*4=16KB\)</span></p>
+<p>下面展示的是二级页表，<strong>在一级页表中只有<code>1024</code>个PTE，它常驻内存，接下啦是二级页表，二级页表当中只有在一级页表中能够确定分配的才会驻存在内存，其他的未分配则不会生成，因此这样就能够大大节约内存</strong> <img src="/深入理解计算机系统-虚拟内存/manyLevel.png" width="700"> 上图中只占用了内存<span class="math inline">\(1024*4Byte*4=16KB\)</span></p>
 <h4 id="局部性和页面分配">1.5 局部性和页面分配</h4>
 <p>上述的缺页异常，就是页未命中，不命中的惩罚代价是很大的，很可能会影响程序性能。然而实际上，虚拟内存工作的很好，这归公与我么之前提到的<strong>局部性原理</strong>。</p>
 <p>通过以页面形式进行缓存，来补偿未命中的惩罚。局部性原则保证了在任意时刻，程序将趋向于在一个较小的活动页面集合上活动，这个集合可称为<strong>常驻集合</strong>。</p>
@@ -362,8 +362,8 @@
 <h4 id="理解写时复制">1.7 理解写时复制</h4>
 <p>一个对象被樱色到虚拟内存中的区域，要么作为<strong>共享对象</strong>，要么作为<strong>私有对象</strong>。</p>
 <ul>
-<li><p><strong>共享对象：</strong>如果一个进程将一个共享对象映射到它的虚拟地址空间的一个区域，那么这个进程对这个区域的任何写操作，对于那些也把这个共享对象映射到虚拟内存内存的其他进程来说也是可见的 <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/shared.png" width="700"></p></li>
-<li><p><strong>私有对象</strong>：即对象进程私有，本进程的修改对其他进程不可见。值得一提的是私有对象使用了一种<strong>读时共享、写时复制</strong>的技术，以此节约了内存。<strong>当一个进程试图写一个私有对象，这个写操作就会触发一个保护故障，当故障处理程序注意到保护异常由于进程写私有区域时，它就会在物理内存创建一个新副本，更新页表条目指向这个新的副本，然后恢复这个页面的写权限</strong> <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/private.png" width="700"> &gt;<code>fork()</code>函数也时采用了<code>读时共享，写时复制</code>的技术。</p></li>
+<li><p><strong>共享对象：</strong>如果一个进程将一个共享对象映射到它的虚拟地址空间的一个区域，那么这个进程对这个区域的任何写操作，对于那些也把这个共享对象映射到虚拟内存内存的其他进程来说也是可见的 <img src="/深入理解计算机系统-虚拟内存/shared.png" width="700"></p></li>
+<li><p><strong>私有对象</strong>：即对象进程私有，本进程的修改对其他进程不可见。值得一提的是私有对象使用了一种<strong>读时共享、写时复制</strong>的技术，以此节约了内存。<strong>当一个进程试图写一个私有对象，这个写操作就会触发一个保护故障，当故障处理程序注意到保护异常由于进程写私有区域时，它就会在物理内存创建一个新副本，更新页表条目指向这个新的副本，然后恢复这个页面的写权限</strong> <img src="/深入理解计算机系统-虚拟内存/private.png" width="700"> &gt;<code>fork()</code>函数也时采用了<code>读时共享，写时复制</code>的技术。</p></li>
 </ul>
 
     </div>
@@ -485,20 +485,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -544,7 +544,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:48</span>
+    <span title="站点阅读时长">17:01</span>
 </div>
 
         

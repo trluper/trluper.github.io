@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1. 面向对象 1.1 类对象提供的默认行为 在python的面向对象模型种，要分清类对象和实例对象。类对象就是class定义了一个类只会，该类提供些行为就是类对象.而实例对象就是该类的实例。每次调用类，就会生成一个实例。 类对象提供的默认行为：  class语句创建类对象并将其赋值给变量名。就像def一样，class语句也是可执行语句，执行时会产生类对象，并赋值变量名 class语句的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/lengxing.png">
+<meta property="og:image" content="https://example.com/python面向对象/lengxing.png">
 <meta property="article:published_time" content="2022-06-30T10:24:44.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:01:59.539Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/lengxing.png">
+<meta name="twitter:image" content="https://example.com/python面向对象/lengxing.png">
 
 <link rel="canonical" href="https://example.com/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
 
@@ -523,7 +523,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Operate_database</span>():</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, host, port, user, password</span>):</span><br><span class="line">        self.host = host</span><br><span class="line">        self.port = port</span><br><span class="line">        self.user = user</span><br><span class="line">        self.password = password</span><br><span class="line"> </span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_passwrod</span>(<span class="params">salt, password</span>):</span><br><span class="line">        m = hashlib.md5(salt.encode(<span class="string">&#x27;utf-8&#x27;</span>))  <span class="comment"># 加盐处理</span></span><br><span class="line">        m.update(password.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> m.hexdigest()</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">hash_password = Operate_database.get_passwrod(<span class="string">&#x27;lala&#x27;</span>, <span class="string">&#x27;123456&#x27;</span>)  <span class="comment"># 通过类来调用</span></span><br><span class="line"><span class="built_in">print</span>(hash_password)</span><br><span class="line"></span><br><span class="line">p = Operate_database(<span class="string">&#x27;192.168.0.5&#x27;</span>, <span class="string">&#x27;3306&#x27;</span>, <span class="string">&#x27;abc&#x27;</span>, <span class="string">&#x27;123456&#x27;</span>)</span><br><span class="line">hash_password = p.get_passwrod(p.user, p.password)  <span class="comment"># 也可以通过对象调用</span></span><br><span class="line"><span class="built_in">print</span>(hash_password)</span><br></pre></td></tr></table></figure>
 <p>输出： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f7a1cc409ed6f51058c2b4a94a7e1956</span><br><span class="line">0659c7992e268962384eb17fafe88364</span><br></pre></td></tr></table></figure></p>
 <h5 id="棱形继承">1.10 棱形继承</h5>
-<p>在多层继承和多继承同时使用的情况下，就会出现复杂的继承关系，即重重复继乘，常说的<strong>菱形继承</strong> <img src="/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/lengxing.png" width="300"> 在这种结构中，在调用顺序上就出现了疑惑，调用顺序究竟是以下哪一种顺序呢,如果是深度，那么A会重复调用，造成不必要的消耗</p>
+<p>在多层继承和多继承同时使用的情况下，就会出现复杂的继承关系，即重重复继乘，常说的<strong>菱形继承</strong> <img src="/python面向对象/lengxing.png" width="300"> 在这种结构中，在调用顺序上就出现了疑惑，调用顺序究竟是以下哪一种顺序呢,如果是深度，那么A会重复调用，造成不必要的消耗</p>
 <ul>
 <li><code>D-&gt;B-&gt;A-&gt;C-&gt;A（深度优先）</code></li>
 <li><code>D-&gt;B-&gt;C-&gt;A（广度优先）</code></li>
@@ -681,20 +681,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -740,7 +740,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:48</span>
+    <span title="站点阅读时长">17:01</span>
 </div>
 
         

@@ -29,31 +29,31 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1. MySQL的架构 MySQL最重要最与众不同的就是它的存储引擎架构，这种架构设计将查询处理(QUERY PROCESSING)及其他系统任务和数据存储&#x2F;提取相分离。在这里主要介绍MySQL的服务器架构、各种存储引擎之间的区别。 1.1 逻辑架构 MySQL各组件协同工作的示意图如下：  最上层的客户端不是MySQL独有的，像许多C&#x2F;S结构都具有。 第二层架构是大多数MySQL的核">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Fram.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Lockrecord.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/gaplock.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/nextkeylocks.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/ilock.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/log.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/engine.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/qian.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/aindex.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/sqlRun.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/B+Tree.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/BTree.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/B+Tree.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/dirtyRead.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/notreaptread.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/InnoDB.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/MyISAM.png">
-<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/mainkey.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/Fram.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/Lockrecord.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/gaplock.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/nextkeylocks.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/ilock.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/log.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/engine.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/qian.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/aindex.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/sqlRun.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/B+Tree.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/BTree.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/B+Tree.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/dirtyRead.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/notreaptread.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/InnoDB.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/MyISAM.png">
+<meta property="og:image" content="https://example.com/高性能MySQL/mainkey.png">
 <meta property="article:published_time" content="2022-08-04T13:34:03.000Z">
 <meta property="article:modified_time" content="2023-07-12T10:15:23.299Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Fram.png">
+<meta name="twitter:image" content="https://example.com/高性能MySQL/Fram.png">
 
 <link rel="canonical" href="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/">
 
@@ -305,7 +305,7 @@
 <ul>
 <li>最上层的客户端不是MySQL独有的，像许多C/S结构都具有。</li>
 <li>第二层架构是大多数MySQL的核心服务功能所在的一层，如查询解析、分析、优化、缓存和所有的内置函数，所有跨存储引擎的功能也在这一层实现：存储过程、视图、触发器等。</li>
-<li>第三层包含了存储引擎，存储引擎负责MySQL中数据的存储和提取 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Fram.png" width="400"></li>
+<li>第三层包含了存储引擎，存储引擎负责MySQL中数据的存储和提取 <img src="/高性能MySQL/Fram.png" width="400"></li>
 </ul>
 <span id="more"></span>
 <h5 id="连接管理与安全性">1.1.1 连接管理与安全性</h5>
@@ -323,7 +323,7 @@
 <h4 id="并发控制">1.2 并发控制</h4>
 <p>在MySQL当中是在两个面讨论的并发控制：服务器层和存储引擎层。在并发场景下，如果不对并发进行控制，则会导致数据的损坏无效，一般来说我们都是用锁<code>lock</code>来对其进行控制。在MySQL中的锁有共享锁(<code>shared lock</code>)、排他锁(<code>exclusive lock</code>)，也叫读锁(<code>read lock</code>)和写锁(<code>write lock</code>)</p>
 <h3 id="锁">2. 锁</h3>
-<p>锁这个知识点比较繁杂，下图是对锁的各个概念范围进行分类： <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/Lockrecord.png" width="700"></p>
+<p>锁这个知识点比较繁杂，下图是对锁的各个概念范围进行分类： <img src="/高性能MySQL/Lockrecord.png" width="700"></p>
 <h4 id="锁类型兼容性">2.1 锁类型（兼容性）</h4>
 <p>对于读取内容来说一般不会发生什么问题，因为本线程没有对数据进行修改，<strong>但是试想一下你正在对读的使用，另一个人正在对数据进行写入，这时候问题就来了，你读的数据会是确定呢吗?答案肯定是不确定的</strong>，因此对于读操作也要注意。而写操作就更不用说了，每一次的写入都会改变数据，必定加入排斥锁。在MySQL中读锁即为共享锁，写锁即为排斥锁。</p>
 <ul>
@@ -416,7 +416,7 @@
 <li>使用普通索引锁定，或者使用多列唯一索引，或者使用唯一索引锁定多行记录。</li>
 <li>条件子句不为精确匹配，为范围</li>
 </ul>
-<p><strong>可能光说不好理解，看例子：</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建test表，id为主键索引</span></span><br><span class="line">CREATE TABLE `test` (</span><br><span class="line">  `id` <span class="built_in">int</span>(<span class="number">1</span>) NOT <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="built_in">varchar</span>(<span class="number">8</span>) DEFAULT <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="built_in">KEY</span> (`id`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"><span class="comment">//插入数据</span></span><br><span class="line">INSERT INTO `test` <span class="built_in">VALUES</span> (<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;小罗&#x27;</span>),(<span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;小黄&#x27;</span>),(<span class="string">&#x27;7&#x27;</span>, <span class="string">&#x27;小明&#x27;</span>),(<span class="string">&#x27;11&#x27;</span>, <span class="string">&#x27;小红&#x27;</span>);</span><br></pre></td></tr></table></figure> 上面的插入语句完成后，<code>test</code>表中存在的隐藏间隙如下： <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/gaplock.png" width="600"> 即有范围：<code>(-∞, 1]、(1, 5]、(5, 7]、(7, 11]、(11, +∞]</code>，那么当我使用下面语句的时候就会触发间隙锁 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">BEGIN;</span><br><span class="line">SELECT * FROM `test` WHERE `id` BETWEEN <span class="number">5</span> AND <span class="number">7</span> FOR UPDATE;</span><br><span class="line"><span class="comment">/* 事务2插入一条 id = 3，name = &#x27;小张1&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">3</span>, <span class="string">&#x27;小张1&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务3插入一条 id = 4，name = &#x27;小白&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">4</span>, <span class="string">&#x27;小白&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务4插入一条 id = 6，name = &#x27;小东&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">6</span>, <span class="string">&#x27;小东&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务5插入一条 id = 8， name = &#x27;大罗&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">8</span>, <span class="string">&#x27;大罗&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务6插入一条 id = 9， name = &#x27;大东&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">9</span>, <span class="string">&#x27;大东&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务7插入一条 id = 11， name = &#x27;李西&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">11</span>, <span class="string">&#x27;李西&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务8插入一条 id = 12， name = &#x27;张三&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">12</span>, <span class="string">&#x27;张三&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 提交事务1，释放事务1的锁 */</span></span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure> 从上面我们可以看到，<code>(5, 7]、(7, 11]</code>这两个区间被事务1锁住，在此期间的其他事务的插入操作失败，而其它区间，都可以正常插入数据。所以我们可以得出结论：当我们给 <code>(5, 7]</code>这个区间加锁的时候，会锁住 <code>(5, 7]、(7, 11]</code>这两个区间。</p>
+<p><strong>可能光说不好理解，看例子：</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建test表，id为主键索引</span></span><br><span class="line">CREATE TABLE `test` (</span><br><span class="line">  `id` <span class="built_in">int</span>(<span class="number">1</span>) NOT <span class="literal">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `name` <span class="built_in">varchar</span>(<span class="number">8</span>) DEFAULT <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="built_in">KEY</span> (`id`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8;</span><br><span class="line"><span class="comment">//插入数据</span></span><br><span class="line">INSERT INTO `test` <span class="built_in">VALUES</span> (<span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;小罗&#x27;</span>),(<span class="string">&#x27;5&#x27;</span>, <span class="string">&#x27;小黄&#x27;</span>),(<span class="string">&#x27;7&#x27;</span>, <span class="string">&#x27;小明&#x27;</span>),(<span class="string">&#x27;11&#x27;</span>, <span class="string">&#x27;小红&#x27;</span>);</span><br></pre></td></tr></table></figure> 上面的插入语句完成后，<code>test</code>表中存在的隐藏间隙如下： <img src="/高性能MySQL/gaplock.png" width="600"> 即有范围：<code>(-∞, 1]、(1, 5]、(5, 7]、(7, 11]、(11, +∞]</code>，那么当我使用下面语句的时候就会触发间隙锁 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">BEGIN;</span><br><span class="line">SELECT * FROM `test` WHERE `id` BETWEEN <span class="number">5</span> AND <span class="number">7</span> FOR UPDATE;</span><br><span class="line"><span class="comment">/* 事务2插入一条 id = 3，name = &#x27;小张1&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">3</span>, <span class="string">&#x27;小张1&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务3插入一条 id = 4，name = &#x27;小白&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">4</span>, <span class="string">&#x27;小白&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务4插入一条 id = 6，name = &#x27;小东&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">6</span>, <span class="string">&#x27;小东&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务5插入一条 id = 8， name = &#x27;大罗&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">8</span>, <span class="string">&#x27;大罗&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务6插入一条 id = 9， name = &#x27;大东&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">9</span>, <span class="string">&#x27;大东&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务7插入一条 id = 11， name = &#x27;李西&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">11</span>, <span class="string">&#x27;李西&#x27;</span>); # 阻塞</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 事务8插入一条 id = 12， name = &#x27;张三&#x27; 的数据 */</span></span><br><span class="line">INSERT INTO `test` (`id`, `name`) <span class="built_in">VALUES</span> (<span class="number">12</span>, <span class="string">&#x27;张三&#x27;</span>); # 正常执行</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 提交事务1，释放事务1的锁 */</span></span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure> 从上面我们可以看到，<code>(5, 7]、(7, 11]</code>这两个区间被事务1锁住，在此期间的其他事务的插入操作失败，而其它区间，都可以正常插入数据。所以我们可以得出结论：当我们给 <code>(5, 7]</code>这个区间加锁的时候，会锁住 <code>(5, 7]、(7, 11]</code>这两个区间。</p>
 <p><strong>间隙锁的缺点</strong>:</p>
 <ul>
 <li>间隙锁有一个比较致命的弱点，就是当锁定一个范围键值之后，即使某些不存在的键值也会被无辜的锁定，而造成在锁定的时候无法插入锁定键值范围内的任何数据。虽然解决了幻读，但在某些场景下这可能会对性能造成很大的危害</li>
@@ -431,7 +431,7 @@
 <h5 id="临键锁next-key-locks">2.4.3 临键锁（Next-Key Locks）</h5>
 <p><strong><code>Next-key locks</code>是记录锁和间隙锁的组合，它指的是加在某条记录以及这条记录前面间隙上的锁。</strong></p>
 <p>也可以理解为一种特殊的间隙锁，因此临建锁肯定也可以解决幻读的问题。 <strong>每个数据行上的非唯一索引列上都会存在一把临键锁，当某个事务持有该数据行的临键锁时，会锁住一段左开右闭区间的数据</strong>。需要强调的一点是，InnoDB 中行级锁是基于索引实现的，<strong>而临键锁只与非唯一索引列有关，在唯一索引列（包括主键索引）上不存在临键锁。</strong>即临键锁是对非唯一索引而言的。</p>
-<p>假设有如下表：InnoDB，RR隔离级别，<code>id</code>主键, <code>age</code>普通索引 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/nextkeylocks.png" width="600"> 则有<code>age</code>范围:<code>(-∞, 10],(10, 24],(24, 32],(32, 45],(45, +∞]</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/事务A执行下述语句</span><br><span class="line">-- 根据非唯一索引列 UPDATE 某条记录 </span><br><span class="line">UPDATE table SET name = Vladimir WHERE age = <span class="number">24</span>; </span><br><span class="line">-- 或根据非唯一索引列 锁住某条记录 </span><br><span class="line">SELECT * FROM table WHERE age = <span class="number">24</span> FOR UPDATE;</span><br><span class="line"><span class="comment">//事务B执行下述语句</span></span><br><span class="line"><span class="function">INSERT INTO table <span class="title">VALUES</span><span class="params">(<span class="number">100</span>, <span class="number">26</span>, <span class="string">&#x27;tianqi&#x27;</span>)</span></span>; </span><br></pre></td></tr></table></figure> 上面因为<code>age=26</code>恰好在<code>(24,32]范围内</code>,age为非唯一索引，使用临检索模式的行级锁，则不管事务A执行那个语句，事务B的插入语句总会阻塞。</p>
+<p>假设有如下表：InnoDB，RR隔离级别，<code>id</code>主键, <code>age</code>普通索引 <img src="/高性能MySQL/nextkeylocks.png" width="600"> 则有<code>age</code>范围:<code>(-∞, 10],(10, 24],(24, 32],(32, 45],(45, +∞]</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/事务A执行下述语句</span><br><span class="line">-- 根据非唯一索引列 UPDATE 某条记录 </span><br><span class="line">UPDATE table SET name = Vladimir WHERE age = <span class="number">24</span>; </span><br><span class="line">-- 或根据非唯一索引列 锁住某条记录 </span><br><span class="line">SELECT * FROM table WHERE age = <span class="number">24</span> FOR UPDATE;</span><br><span class="line"><span class="comment">//事务B执行下述语句</span></span><br><span class="line"><span class="function">INSERT INTO table <span class="title">VALUES</span><span class="params">(<span class="number">100</span>, <span class="number">26</span>, <span class="string">&#x27;tianqi&#x27;</span>)</span></span>; </span><br></pre></td></tr></table></figure> 上面因为<code>age=26</code>恰好在<code>(24,32]范围内</code>,age为非唯一索引，使用临检索模式的行级锁，则不管事务A执行那个语句，事务B的插入语句总会阻塞。</p>
 <p><strong>总结：</strong></p>
 <ul>
 <li><strong>InnoDB 中的行锁的实现依赖于索引，一旦某个加锁操作没有使用到索引，那么该锁就会退化为表锁。</strong></li>
@@ -489,7 +489,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>意向锁的存在目的是为了让InnoDB中的行锁和表锁能够更高效的共存</strong>。假设有下表，InnoDB，RR隔离级别 <code>id</code>是主键 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/ilock.png" width="500"></p>
+<p><strong>意向锁的存在目的是为了让InnoDB中的行锁和表锁能够更高效的共存</strong>。假设有下表，InnoDB，RR隔离级别 <code>id</code>是主键 <img src="/高性能MySQL/ilock.png" width="500"></p>
 <p>加入现在有事务<code>A</code>，进行了一条<code>SELECT * FROM users WHERE id = 6 FOR UPDATE;</code>但未提交，那么事务<code>A</code>会获得<code>id=6</code>的行级锁，且为记录排他锁，同时还有自动生成一个意向排他锁。</p>
 <p>这时候有个事务<code>B</code>,进行操作<code>LOCK TABLES users READ;</code>会失败，因为对于要表锁来说，必须要保证：</p>
 <ul>
@@ -520,7 +520,7 @@
 <p><strong>首先必须明白InnoDB存储引擎是以页为单位来管理存储空间的，真正访问页面之前，需要把在磁盘上的页缓存到内存中的缓存池之后才可以访问。所有的变更都必须先更新缓冲池中的数据，然后缓冲池中的脏页会以一定的频率被刷入磁盘（checkpoint机制），通过缓存池来优化cpu和磁盘之间的鸿沟。通过将数据的修改记录到事务日志并持久化，内存中修改的数据在后台可以慢慢地刷回磁盘，不要修改一次就马上刷回磁盘。减少了与磁盘间的IO;同样事务日志的持久性保证了事务的一致性和持久性（由事务的<code>redo日志</code>和<code>undo日志</code>来保证。）</strong></p>
 <ul>
 <li><p><strong><code>REDO LOG</code>称为重做日志 ，提供再写入操作，恢复提交事务修改的页操作，用来保证事务的持久性。</strong><code>redo</code>日志的存在使得我们再对表进行修改时会把这些修改写进日志里，然后再写入磁盘，只有日志写入成功，才算事务的提交完成，<strong>这样即使数据库发生宕机未刷新到磁盘，也可以通过<code>redo</code>日志恢复。</strong></p></li>
-<li><p><strong><code>UNDO LOG</code>称为 回滚日志 ，回滚行记录到某个特定版本，用来保证事务的原子性、一致性</strong>。有的DBA或许会认为<code>UNDO</code>是<code>REDO</code>的逆过程，其实不然。<code>undo log</code>是存储引擎(<code>innodb</code>)生成的日志，记录的是逻辑操作日志，比如对某一行数据进行了<code>insert</code>语句操作，那么<code>undo log</code>就记录一条与之相反的delete操作，主要用于事务回滚（<code>undo log</code>记录的是每个修改操作的逆操作）和一致性非锁定定读（<code>undo log</code>回滚行记录到某种特定的版本,mvcc，多版本并发控制）。 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/log.png" width="600"></p></li>
+<li><p><strong><code>UNDO LOG</code>称为 回滚日志 ，回滚行记录到某个特定版本，用来保证事务的原子性、一致性</strong>。有的DBA或许会认为<code>UNDO</code>是<code>REDO</code>的逆过程，其实不然。<code>undo log</code>是存储引擎(<code>innodb</code>)生成的日志，记录的是逻辑操作日志，比如对某一行数据进行了<code>insert</code>语句操作，那么<code>undo log</code>就记录一条与之相反的delete操作，主要用于事务回滚（<code>undo log</code>记录的是每个修改操作的逆操作）和一致性非锁定定读（<code>undo log</code>回滚行记录到某种特定的版本,mvcc，多版本并发控制）。 <img src="/高性能MySQL/log.png" width="600"></p></li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zuodaoyong/article/details/123454426">MySQL事务日志详解</a></p>
 <h3 id="多版本并发控制mvcc">4. 多版本并发控制MVCC</h3>
@@ -565,7 +565,7 @@
 <ul>
 <li>不支持事务，不支持外键</li>
 <li>支持表锁，不支持行锁</li>
-<li>占用空间小，访问速度快 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/engine.png" width="700"></li>
+<li>占用空间小，访问速度快 <img src="/高性能MySQL/engine.png" width="700"></li>
 </ul>
 <h3 id="mysql的索引">6. MySQL的索引</h3>
 <p>索引在MySQL中也叫<strong>键</strong>，是存储引擎用于快速找到记录的一种数据结构。因此索引对于数据库的性能非常关键，尤其是当表中的数据量越来越多时，索引对性能的影响愈发重要。总计索引的优点有三点：</p>
@@ -658,7 +658,7 @@
 </ul>
 <h5 id="前缀索引单列索引字符">6.4.1 前缀索引：单列索引（字符）</h5>
 <p><strong>有时候需要索引很长的字符列，但这会让索引变得大且慢</strong>。 一个策略是<strong>可以索引开始的部分字符，这样可以大大节约索引空间，从而提高索引效率</strong>。但是<strong>也会降低索引的选择性，其选择性是指不重复的索引值<code>d</code>和数据表的记录总数<code>T</code>的比值</strong>，即<span class="math inline">\(d/T\)</span>。</p>
-<p>如下面计算左前缀前几位时的选择性<code>left(city,7)</code>表示取<code>city</code>的前7位： <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/qian.png" width="700"></p>
+<p>如下面计算左前缀前几位时的选择性<code>left(city,7)</code>表示取<code>city</code>的前7位： <img src="/高性能MySQL/qian.png" width="700"></p>
 <p>根据上面的描述，我们应该用<code>city(7)</code>创建前缀索引 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table sakila.<span class="function">city_demo add <span class="title">key</span> <span class="params">(city(<span class="number">7</span>))</span></span>;</span><br></pre></td></tr></table></figure> <strong>优缺点：</strong>值得一提的是，前缀索引是一种能使索引更小、更快的有效办法，但缺点使MySQL无法使用前缀索引做<code>order by</code>和<code>group by</code>，也无法使用前缀索引做覆盖扫描。</p>
 <h5 id="选择合适的索引序列联合索引">6.4.2 选择合适的索引序列：联合索引</h5>
 <p>对于B+Tree多列索引来说，按照其最左前缀匹配原则，正确的的顺序依赖于使用哪些列选择性高，同时还有考虑如何更好的满足排序和分组的需要，即满足<code>order by\group by\distinct</code>查询子句的查询需求。</p>
@@ -672,7 +672,7 @@
 <li><strong>首先就是一张表只有有一个聚簇索引，但可以有多个非聚簇索引</strong></li>
 <li><strong>另外聚簇索引的叶子节点存储的是完整的行数据，而非聚簇索引的叶子节点存储的是其相应主键列的关键字值，因此使用非聚簇索引进行查询时，除了查询非聚簇索引得到主键关键字值外，还要利用该值进行回表查询聚簇索引，最终得到整个行数据</strong>，这也是非聚簇索引又叫二级索引的由来。</li>
 </ul>
-<p><img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/aindex.png" width="700"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用主键索引(聚簇索引)查询</span></span><br><span class="line">select * from table where ID = <span class="number">100</span>;</span><br><span class="line"><span class="comment">//使用非聚簇索引查询</span></span><br><span class="line">select * from table where k = <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/高性能MySQL/aindex.png" width="700"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用主键索引(聚簇索引)查询</span></span><br><span class="line">select * from table where ID = <span class="number">100</span>;</span><br><span class="line"><span class="comment">//使用非聚簇索引查询</span></span><br><span class="line">select * from table where k = <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
 <h5 id="聚簇索引的优缺点">6.5.2 聚簇索引的优缺点</h5>
 <p>聚簇索引可能对性能有帮助，但也会导致严重的问题，下面分析其优缺点</p>
 <p><strong>优点：</strong></p>
@@ -731,7 +731,7 @@
 <p><strong>因此对于查询语句也能够这样优化：将复杂的大的SQL语句切分成下查询语句，每个小查询功能完全一样，只完成一小部分，每次只返回一小部分的查询结果</strong>，达到”分而治之“的效果。</p>
 <p>比如说每个月我们都有执行下面的语句： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM messgaes WHERE created&lt;<span class="built_in">DATA_SUB</span>(<span class="built_in">NOW</span>(),INTERVAL <span class="number">3</span> MONTH);</span><br></pre></td></tr></table></figure> 那么我们可以使用下面切分后的语句 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rows_affected=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">	row_affected=<span class="built_in">do_query</span>(<span class="string">&quot;DELETE FROM messgaes WHERE created&lt;DATA_SUB(NOW(),INTERVAL 3 MONTH) LIMIT 10000&quot;</span>);</span><br><span class="line">&#125;where rows_affected&gt;<span class="number">0</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="查询执行过程">7.3 查询执行过程</h4>
-<p>我们要编写好的SQL语句，就必须知道MySQL是如何优化和执行查询的 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/sqlRun.png" width="700"> - 客户端发送一条查询给服务器 - 服务器先检查查询缓存，如果缓存命中，则立刻返回存储在缓存中的结果，否则进入下一阶段 - 服务器进行SQL解析，预处理、再由优化器生成对应的执行计划 - MySQL根据优化器生成的执行计划，再由存储引擎的API来执行查询 - 将结果返回给客户端</p>
+<p>我们要编写好的SQL语句，就必须知道MySQL是如何优化和执行查询的 <img src="/高性能MySQL/sqlRun.png" width="700"> - 客户端发送一条查询给服务器 - 服务器先检查查询缓存，如果缓存命中，则立刻返回存储在缓存中的结果，否则进入下一阶段 - 服务器进行SQL解析，预处理、再由优化器生成对应的执行计划 - MySQL根据优化器生成的执行计划，再由存储引擎的API来执行查询 - 将结果返回给客户端</p>
 <p>上面的每一步都是很复杂的，这里这是简述</p>
 <h4 id="查询优化处理">7.4 查询优化处理</h4>
 <h5 id="查询优化器">7.4.1 查询优化器</h5>
@@ -805,10 +805,10 @@
 <p>MySQL常用的数据结构是<code>B+ tree</code>。B+有两个重要的特点：</p>
 <ul>
 <li><strong>一是非叶子节点不存储数据，数据只在聚簇索引的叶子节点处存储（数据文件和索引文件聚合在一起）</strong>。这表面设计者可以在非叶子节点存储更多的索引，B+树层数小，更加宽胖，减少磁盘的IO，提升数据库的性能。</li>
-<li><strong>二是B+树的叶子节点间使用了双向链表指针连接起来</strong>。这为MySQL的范围查找提供了更好的性能。 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/B+Tree.png" width="700"> AVL树和红黑树基本都是存储在内存中才会使用的数据结构。在大规模数据数据存储的时候，显然不能将全部数据全部加载进内存，因此如果采用红黑树，就会造成频繁磁盘IO，效率低下。</li>
+<li><strong>二是B+树的叶子节点间使用了双向链表指针连接起来</strong>。这为MySQL的范围查找提供了更好的性能。 <img src="/高性能MySQL/B+Tree.png" width="700"> AVL树和红黑树基本都是存储在内存中才会使用的数据结构。在大规模数据数据存储的时候，显然不能将全部数据全部加载进内存，因此如果采用红黑树，就会造成频繁磁盘IO，效率低下。</li>
 </ul>
 <h5 id="那为啥不用b-tree而选择b-tree呢">8.7.1那为啥不用B Tree,而选择B+ tree呢？</h5>
-<p>首先我们要看一下两者结构的区别 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/BTree.png" width="700"> <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/B+Tree.png" width="700"></p>
+<p>首先我们要看一下两者结构的区别 <img src="/高性能MySQL/BTree.png" width="700"> <img src="/高性能MySQL/B+Tree.png" width="700"></p>
 <p>可以看到： - <strong>B Tree的除了叶子节点外树内会存储数据，而B+树只在叶子节点存储数据。</strong>计算机从磁盘中读取数据是按块读取，每一个节点的数据大小正好或恰好接近一块磁盘大小。那么对于B+树来说，因为非叶子节点不存储数据，那么它们就可以存储更多的关键字和下一层索引，因此B+树会比B树更加宽胖，层数少，此时所进行的磁盘IO次数更少，效率更好。 - <strong>B Tree的除了叶子节没有双向链指针，而B+树叶子节点有链指针连接起来。</strong>B+树对范围查询更加友好、效率更高，它只需要遍历叶子节点就能够遍历整颗树，而B树则需要做局部的中序遍历才可以。 那你知道为啥Mongodb用B Tree当索引，而不用B+ Tree么</p>
 <h5 id="那为啥mongodb用b-tree当索引而不用b-tree么">8.7.2 那为啥Mongodb用B Tree当索引，而不用B+ Tree么</h5>
 <p>这样从两个数据库的区别来说了，Mongodb是非关系性数据库，他用类Json格式来保存数据，它的数据更多的是聚合过的数据，因此对于MongoDB的查询更多关注单个查询，单个查询要优于MySQL；</p>
@@ -828,8 +828,8 @@
 </ul>
 <h4 id="脏读不可重复读和幻读">8.10 脏读、不可重复读和幻读</h4>
 <ul>
-<li><p>脏读：脏读指的是读到了其他事务未提交的数据，未提交意味着这些数据可能会回滚，也就是可能最终不会存到数据库中，也就是不存在的数据。读到了并不一定最终存在的数据，这就是脏读。（未提交读会出现脏读） <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/dirtyRead.png" width="700"></p></li>
-<li><p>不可重复读：不可重复读指的是在一个事务内，最开始读到的数据和事务结束前的任意时刻读到的同一批数据出现不一致的情况。就比如事务<code>A</code>多次读取同一数据，但事务<code>B</code> 在事务<code>A</code>多次读取的过程中，对数据作了更新并提交，导致事务<code>A</code>多次读取同一数据时，结果不一致。 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/notreaptread.png" width="700"></p></li>
+<li><p>脏读：脏读指的是读到了其他事务未提交的数据，未提交意味着这些数据可能会回滚，也就是可能最终不会存到数据库中，也就是不存在的数据。读到了并不一定最终存在的数据，这就是脏读。（未提交读会出现脏读） <img src="/高性能MySQL/dirtyRead.png" width="700"></p></li>
+<li><p>不可重复读：不可重复读指的是在一个事务内，最开始读到的数据和事务结束前的任意时刻读到的同一批数据出现不一致的情况。就比如事务<code>A</code>多次读取同一数据，但事务<code>B</code> 在事务<code>A</code>多次读取的过程中，对数据作了更新并提交，导致事务<code>A</code>多次读取同一数据时，结果不一致。 <img src="/高性能MySQL/notreaptread.png" width="700"></p></li>
 <li><p><strong>幻读</strong>：所谓的幻读就是指当某个事务在读取某个范围内的记录时，另一个事务又在该范围插入新的记录，当之前的事务再次读取该范围记录时，产生幻行。（即幻读是对于某个范围的插入而言）</p></li>
 </ul>
 <h5 id="不可重复读和幻读区别是什么">8.10.1 不可重复读和幻读区别是什么？</h5>
@@ -898,9 +898,9 @@
 <li><strong>存储结构</strong>：
 <ul>
 <li>InnoDB使用聚簇索引（clustered index）来存储表数据，因此数据文件是和（主键）索引绑在一起的，即数据文件和索引文件在一块。聚簇索引决定了表中数据的物理存储顺序，它与表的主键相关联。如果表没有显式定义主键，则InnoDB会选择一个唯一的非空索引来作为聚簇索引。因此，在InnoDB中，数据行按照聚簇索引的顺序进行存储。</li>
-<li>同时除了聚簇索引外，InnoDB还支持非聚簇索引（secondary index），也称为辅助索引。辅助索引存储了非主键列的索引数据，它的数据结构与B+树相似。 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/InnoDB.png" width="700"></li>
+<li>同时除了聚簇索引外，InnoDB还支持非聚簇索引（secondary index），也称为辅助索引。辅助索引存储了非主键列的索引数据，它的数据结构与B+树相似。 <img src="/高性能MySQL/InnoDB.png" width="700"></li>
 <li>MyISAM使用堆表（heap table）的存储方式，数据行在表中按照插入的顺序存储。因此，表数据在物理上没有特定的顺序，而是根据插入的时间顺序组织的，因此MyISAM的数据文件和索引文件独立存储。</li>
-<li>MyISAM使用B+树来存储索引数据。每个索引都是一个独立的B+树结构，包含索引列和指向对应数据行的指针。 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/MyISAM.png" width="700"></li>
+<li>MyISAM使用B+树来存储索引数据。每个索引都是一个独立的B+树结构，包含索引列和指向对应数据行的指针。 <img src="/高性能MySQL/MyISAM.png" width="700"></li>
 </ul></li>
 </ul>
 <p>综上所述，选择使用哪种存储引擎取决于您的具体需求。如果您需要支持事务、并发性能和数据完整性，并且对崩溃恢复有较高的要求，那么InnoDB是一个更好的选择。如果您对全文搜索有较高的需求，并且对空间占用和简单性要求较高，那么MyISAM可能更适合您的应用场景。请根据您的具体需求和考虑因素选择适合的存储引擎。</p>
@@ -921,7 +921,7 @@
 </ul></li>
 </ul>
 <h4 id="什么是主键什么是外键">8.15 什么是主键?什么是外键?</h4>
-<p><strong>主键是表格里的(一个或多个)字段，只用来定义表格里的行</strong>;主键里的值总是唯一的。外键是一个用来建立两个表格之间关系的约束。这种关系一般都涉及一个表格里的主键字段与另外一个表格(尽管可能是同一个表格)里的一系列相连的字段。那么这些相连的字段就是外键。 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/mainkey.png" width="700"> 主键在本表中是唯一的、不可为空的，外键可以重复可以唯空；外键和另一张表的主键关联，不能创建对应表中不存在的外键。</p>
+<p><strong>主键是表格里的(一个或多个)字段，只用来定义表格里的行</strong>;主键里的值总是唯一的。外键是一个用来建立两个表格之间关系的约束。这种关系一般都涉及一个表格里的主键字段与另外一个表格(尽管可能是同一个表格)里的一系列相连的字段。那么这些相连的字段就是外键。 <img src="/高性能MySQL/mainkey.png" width="700"> 主键在本表中是唯一的、不可为空的，外键可以重复可以唯空；外键和另一张表的主键关联，不能创建对应表中不存在的外键。</p>
 <h4 id="乐观锁和悲观锁">8.16 乐观锁和悲观锁</h4>
 <ul>
 <li><strong>乐观锁：</strong>每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在提交更新的时候会判断一下在此期间别人有没有去更新这个数据。乐观锁适用于读多写少的应用场景，这样可以提高吞吐量。它假设不会发生并发冲突，只在提交操作时检查是否违反数据完整性。一般都是通过版本号来识别</li>
@@ -1248,20 +1248,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1307,7 +1307,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:48</span>
+    <span title="站点阅读时长">17:01</span>
 </div>
 
         

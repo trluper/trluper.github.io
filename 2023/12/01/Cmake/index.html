@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Cmake CMake是很多项目首选的项目构建工具。其次，目前很多开发工具，比如VSCode，Clion都支持使用CMake构建项目。使用Cmake能够更加方便的用一个文件实现对C&#x2F;C++项目的维护管理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cmake">
+<meta property="og:url" content="https://example.com/2023/12/01/Cmake/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="Cmake CMake是很多项目首选的项目构建工具。其次，目前很多开发工具，比如VSCode，Clion都支持使用CMake构建项目。使用Cmake能够更加方便的用一个文件实现对C&#x2F;C++项目的维护管理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-12-01T08:06:24.000Z">
+<meta property="article:modified_time" content="2023-12-02T12:25:46.797Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="Cmake">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://example.com/2023/12/01/Cmake/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Cmake | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/12/01/Cmake/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Cmake
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-01 16:06:24" itemprop="dateCreated datePublished" datetime="2023-12-01T16:06:24+08:00">2023-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-12-02 20:25:46" itemprop="dateModified" datetime="2023-12-02T20:25:46+08:00">2023-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cmake/" itemprop="url" rel="index"><span itemprop="name">Cmake</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="cmake">Cmake</h1>
+<p>CMake是很多项目首选的项目构建工具。其次，目前很多开发工具，比如VSCode，Clion都支持使用CMake构建项目。使用Cmake能够更加方便的用一个文件实现对C/C++项目的维护管理。</p>
+<span id="more"></span>
+<h2 id="cmake自带变量">Cmake自带变量</h2>
+<ul>
+<li><p><code>CMAKE_C_STANDARD</code>：C语言标准版本 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(CMAKE_C_STANDARD <span class="number">11</span>)  #使用C11标准</span><br></pre></td></tr></table></figure></p></li>
+<li><code>CMAKE_CXX_FLAGS</code>：是 CMake 中用于设置 <code>C++</code> 编译器选项的变量。这个变量允许你向 <code>C++</code> 编译器传递额外的编译选项</li>
+<li><code>CMAKE_C_FLAGS</code>：是 CMake 中用于设置 <code>C</code> 编译器选项的变量。这个变量允许你向 <code>C</code> 编译器传递额外的编译选项 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS <span class="string">&quot;$ENV&#123;CXXFLAGS&#125; -rdynamic -O3 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations&quot;</span>)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_C_FLAGS <span class="string">&quot;$ENV&#123;CXXFLAGS&#125; -rdynamic -O3 -fPIC -ggdb -std=c11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations&quot;</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>$ENV{CXXFLAGS}: 这是从环境变量中获取 CXXFLAGS 的值，用于传递用户自定义的编译选项。</li>
+<li>rdynamic: 这个标志通常用于生成包含全局符号信息的可执行文件，以便在后期进行动态符号解析。</li>
+<li>O3: 启用较高级别的优化。</li>
+<li>fPIC: 生成位置独立的代码，通常用于共享库的构建。</li>
+<li>ggdb: 生成调试信息，以便在使用 GDB 进行调试时能够获取更多信息。</li>
+<li><code>std=c++11</code>: 设置 <code>C++</code>标准为 <code>C++11</code>。</li>
+<li>Wall: 启用警告信息。</li>
+<li>Wno-deprecated: 禁止关于已废弃特性的警告。</li>
+<li>Werror: 将警告视为错误，即编译过程中如果有警告会导致构建失败。</li>
+<li>Wno-unused-function: 禁止未使用的函数的警告。</li>
+<li>Wno-builtin-macro-redefined: 禁止宏被重新定义的警告。</li>
+<li>Wno-deprecated-declarations: 禁止有关已废弃声明的警告。</li>
+</ul></li>
+<li><p><code>CMAKE_VERBOSE_MAKEFILE</code>：用于控制 <code>Makefile</code> 的生成是否显示详细的构建信息。当 <code>CMAKE_VERBOSE_MAKEFILE</code> 被设置为<code>ON</code> 时，<code>Makefile</code>会生成更详细的构建信息，包括执行的编译命令等。当它被设置为 <code>OFF</code> 时，则只显示较少的构建信息 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(CMAKE_VERBOSE_MAKEFILE ON)</span><br></pre></td></tr></table></figure></p></li>
+<li><p><code>CMAKE_CURRENT_SOURCE_DIR</code>：CMakeLists.txt当前所在的文件路径。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#将 $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/cmake 添加到 CMAKE_MODULE_PATH 中，你可以告诉 CMake 在这个路径下查找自定义的 CMake 模块，以便在项目中使用这些模块。这对于引入额外的构建和配置逻辑非常有用</span><br><span class="line"><span class="built_in">set</span>(CMAKE_MODULE_PATH $&#123;CMAKE_MODULE_PATH&#125; $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/cmake)</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h2 id="cmake语句">Cmake语句</h2>
+<ul>
+<li><strong>命令</strong>：这里只介绍一些重要且常用的语句，<strong>Cmake命令大小写均支持，均能被识别，但是一般建议小写</strong></li>
+<li><strong>变量</strong>：变量是区分大小写的，变量可以使用<code>set()</code>命令赋值，也可以当作参数传给命令</li>
+</ul>
+<h3 id="一些必备的cmake命令">一些必备的Cmake命令</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cmake_minimum_required</span>(VERSION <span class="number">3.0</span>)	#设置cmake最低版本限制</span><br><span class="line">#项目名称</span><br><span class="line"><span class="built_in">project</span>(Trluper)</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span>(CMAKE_CXX_FLAGS <span class="string">&quot;$ENV&#123;CXXFLAGS&#125; -rdynamic -O3 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations&quot;</span>)</span><br><span class="line"><span class="built_in">set</span>(CMAKE_C_FLAGS <span class="string">&quot;$ENV&#123;CXXFLAGS&#125; -rdynamic -O3 -fPIC -ggdb -std=c11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="option">option</h3>
+<p>option() 命令用于定义构建选项，允许用户在构建项目时选择是否启用某些特性。这样可以使得项目更加灵活，适应不同的需求: - <code>&lt;option_variable&gt;</code>：定义的选项的变量名。 - <code>&quot;help string&quot;</code>：对选项的描述，将会在 ccmake 或 cmake-gui 中显示给用户。 - <code>[initial_value]</code>：可选参数，定义选项的初始值。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">option</span><span class="params">(&lt;option_variable&gt; <span class="string">&quot;help string&quot;</span> [initial_value])</span></span></span><br><span class="line"></span><br><span class="line">#定义了一个名为 BUILD_SHARED_LIBS 的构建选项，用于控制是否构建共享库</span><br><span class="line"><span class="function"><span class="title">option</span><span class="params">(BUILD_SHARED_LIBS <span class="string">&quot;Build shared libraries&quot;</span> ON)</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="find_package">find_package</h3>
+<p><code>find_package</code> 是 CMake 中用于查找第三方库的命令(查找原理配备第三方包<code>.CMake</code>文件的查找路径而且，第三方包提供了合适的 <code>.CMake</code> 配置文件），当执行一个<code>find_package</code>时会产生一<strong>系列变量</strong>,这里以<code>find_package(MySQL,REQUIRED)</code>为例：</p>
+<ul>
+<li><strong><code>MYSQL_FOUND:</code> 表示是否找到 MySQL。</strong></li>
+<li><strong><code>MYSQL_INCLUDE_DIR</code>: 包含 MySQL 头文件的路径。</strong></li>
+<li><strong><code>MYSQL_LIBRARY</code>: 包含 MySQL 库文件的完整路径。</strong></li>
+<li><code>MYSQL_VERSION_STRING</code>: MySQL 版本的字符串表示。</li>
+<li><code>MYSQL_DEFINITIONS</code>: 包含 MySQL 定义的一系列标志。</li>
+</ul>
+<p>执行完后，可以通过下述语句来引入一些头文件、库文件: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find_package</span>(MySQL REQUIRED)</span><br><span class="line"><span class="keyword">if</span>(MYSQL_FOUND)</span><br><span class="line">    <span class="built_in">include_directories</span>($&#123;MYSQL_INCLUDE_DIR&#125;)</span><br><span class="line">    <span class="built_in">target_link_libraries</span>(your_target $&#123;MYSQL_LIBRARY&#125;)</span><br><span class="line"><span class="keyword">else</span>()</span><br><span class="line">    <span class="built_in">message</span>(FATAL_ERROR <span class="string">&quot;MySQL not found!&quot;</span>)</span><br><span class="line"><span class="built_in">endif</span>()</span><br></pre></td></tr></table></figure></p>
+<h3 id="find_library">find_library</h3>
+<p><code>find_library</code> 用于在系统上查找特定的库文件 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find_library</span>(&lt;VAR&gt; name [path1 path2 ...])</span><br><span class="line">#在这个例子中，CMake 将搜索名为 libexample.so 的库文件，如果找到，则将其完整路径存储在 MY_LIB 变量中。</span><br><span class="line"><span class="built_in">find_library</span>(MY_LIB libexample.so /path/to/custom/lib)</span><br></pre></td></tr></table></figure></p>
+<h3 id="link_directories和target_link_directories">link_directories和target_link_directories</h3>
+<p>在 CMake 中，<strong><code>link_directories()</code> 和 <code>target_link_directories()</code> 都用于指定链接器在链接阶段查找库文件的路径,即在Cmake添加相应的库文件搜索路径</strong>，但有一些关键的区别： - <code>link_directories():</code> - 是一个全局命令，会影响整个 CMakeLists.txt 文件中的链接过程。 - 一旦调用，其作用范围延伸到后续的所有 <code>target_link_libraries()</code> 命令以及在该 <code>CMakeLists.txt</code> 文件中的所有目标。 - 不与具体目标关联，而是直接影响链接器在查找库文件时的路径。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#将/path/to/libs加入到库文件搜索路径</span><br><span class="line"><span class="built_in">link_directories</span>(/path/to/libs)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><code>target_link_directories():</code>
+<ul>
+<li>与具体的目标关联，只会影响指定目标的链接过程。</li>
+<li>可以在不同的目标上使用，每个目标可以指定自己的库文件查找路径，互不影响。</li>
+<li>推荐使用 target_link_directories()，因为它更为精确，只影响指定目标的链接过程。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#/path/to/libs加入到生成my_target_name时的库文件搜索路径</span><br><span class="line"><span class="built_in">target_link_directories</span>(my_target_name PUBLIC /path/to/libs)</span><br></pre></td></tr></table></figure></li>
+<li><code>PUBLIC:</code>表示这个路径（属性）<strong>会</strong>传递给目标的依赖项</li>
+<li><code>PRIVATE</code>:表示这个路径（属性）<strong>不会</strong>传递给目标的依赖项</li>
+</ul></li>
+</ul>
+<h3 id="link_libraries和target_link_libraries">link_libraries和target_link_libraries</h3>
+<p><code>link_libraries</code> 是一个在 CMake 中<strong>用于设置目标的链接库</strong>。它的作用是指定目标链接到的库，可以是库的名称或完整的路径。与<code>target_link_libraries</code>不同它是全局的链接到整个项目，而<code>target_link_libraries</code>指定了链接目标： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">project</span>(Trluper)</span><br><span class="line">#这句话表面pthread jsoncpp库文件会链接到整个项目</span><br><span class="line"><span class="built_in">link_libraries</span>(pthread jsoncpp)</span><br><span class="line"><span class="built_in">add_executable</span>(my_app main.cpp)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#指定连接目标</span><br><span class="line"><span class="built_in">add_executable</span>(my_app main.cpp)</span><br><span class="line"><span class="built_in">target_link_libraries</span>(my_app pthread jsoncpp)</span><br></pre></td></tr></table></figure></p>
+<h3 id="inlcude_directories和target_inlcude_directories">inlcude_directories和target_inlcude_directories</h3>
+<p><code>include_directories</code> 和 <code>target_include_directories</code> 都是 CMake 中用于<strong>指定头文件搜索路径</strong>的命令，但它们的作用范围不同。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 全局可见</span><br><span class="line"><span class="built_in">include_directories</span>(path1 path2 ...)</span><br><span class="line">#指定目标可见</span><br><span class="line"><span class="built_in">target_include_directories</span>(target_name PRIVATE path1 path2 ...)</span><br></pre></td></tr></table></figure></p>
+<h3 id="set">set</h3>
+<p>set命令用途广泛，<strong>用来设定一个变量的值</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span>(&lt;variable&gt; &lt;value&gt;... [PARENT_SCOPE])</span><br><span class="line">#将main.cc k.cc由SOURCED_DIR表示</span><br><span class="line"><span class="built_in">set</span>(SOURCE_DIR</span><br><span class="line">	main.cc</span><br><span class="line">	k.cc</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h3 id="add_library">add_library</h3>
+<p>add_library 是 CMake 中用于添加库的命令。它的基本语法如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_library</span>(&lt;name&gt; [STATIC | SHARED | MODULE]</span><br><span class="line">            [EXCLUDE_FROM_ALL]</span><br><span class="line">            source1 [source2 ...])</span><br></pre></td></tr></table></figure> - <name>: 库的名称，后续可用于链接。 - [STATIC | SHARED | MODULE]: 可选项，指定库的类型。默认是 STATIC，可以选择 SHARED（共享库）或 MODULE（在支持的平台上创建动态模块）。 - [EXCLUDE_FROM_ALL]: 可选项，将库排除在所有构建目标之外。 - source1 [source2 ...]: 源文件列表，用于构建库</name></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 创建一个静态库</span><br><span class="line"><span class="built_in">add_library</span>(my_static_lib STATIC source1.cpp source2.cpp)</span><br><span class="line"></span><br><span class="line"># 创建一个共享库</span><br><span class="line"><span class="built_in">add_library</span>(my_shared_lib SHARED source3.cpp source4.cpp)</span><br></pre></td></tr></table></figure>
+<h3 id="add_executable">add_executable</h3>
+<p>于添加一个可执行文件的构建目标。语法如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_executable</span>(&lt;name&gt; [source1] [source2 ...])</span><br><span class="line"># 创建一个可执行文件</span><br><span class="line"><span class="built_in">add_executable</span>(my_executable main.cpp helper.cpp)</span><br><span class="line">target_link-<span class="built_in">libraries</span>(pthread my_shared_lib)</span><br></pre></td></tr></table></figure></p>
+<h3 id="add_dependencies-命令">add_dependencies 命令</h3>
+<p>用于指定某个目标（可执行文件或者库文件）依赖于其他的目标。这里的目标必须是 <code>add_executable</code>、<code>add_library</code>、<code>add_custom_target</code> 命令创建的目标 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">add_dependencies</span>(target-name depend-target1 depend-target2 …)</span><br></pre></td></tr></table></figure></p>
+<h3 id="message">message</h3>
+<p>用于输出信息 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">message</span>([STATUS|WARNING|AUTHOR_WARNING|FATAL_ERROR|SEND_ERROR] “message todisplay”…)</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>(无) = 重要消息；</li>
+<li>STATUS = 非重要消息；</li>
+<li>WARNING = CMake 警告, 会继续执行；</li>
+<li>AUTHOR_WARNING = CMake 警告 (dev), 会继续执行；</li>
+<li>SEND_ERROR = CMake 错误, 继续执行，但是会跳过生成的步骤；</li>
+<li>FATAL_ERROR = CMake 错误, 终止所有处理过程；</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Cmake/" rel="tag"># Cmake</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/10/25/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E4%B8%8E%E6%A8%A1%E5%9E%8B/" rel="prev" title="数学建模方法与模型">
+      <i class="fa fa-chevron-left"></i> 数学建模方法与模型
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cmake"><span class="nav-number">1.</span> <span class="nav-text">Cmake</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake%E8%87%AA%E5%B8%A6%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.</span> <span class="nav-text">Cmake自带变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.2.</span> <span class="nav-text">Cmake语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%BF%85%E5%A4%87%E7%9A%84cmake%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.1.</span> <span class="nav-text">一些必备的Cmake命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#option"><span class="nav-number">1.2.2.</span> <span class="nav-text">option</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find_package"><span class="nav-number">1.2.3.</span> <span class="nav-text">find_package</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#find_library"><span class="nav-number">1.2.4.</span> <span class="nav-text">find_library</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#link_directories%E5%92%8Ctarget_link_directories"><span class="nav-number">1.2.5.</span> <span class="nav-text">link_directories和target_link_directories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#link_libraries%E5%92%8Ctarget_link_libraries"><span class="nav-number">1.2.6.</span> <span class="nav-text">link_libraries和target_link_libraries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inlcude_directories%E5%92%8Ctarget_inlcude_directories"><span class="nav-number">1.2.7.</span> <span class="nav-text">inlcude_directories和target_inlcude_directories</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">1.2.8.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add_library"><span class="nav-number">1.2.9.</span> <span class="nav-text">add_library</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add_executable"><span class="nav-number">1.2.10.</span> <span class="nav-text">add_executable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add_dependencies-%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.11.</span> <span class="nav-text">add_dependencies 命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#message"><span class="nav-number">1.2.12.</span> <span class="nav-text">message</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">74</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.1m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">17:01</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

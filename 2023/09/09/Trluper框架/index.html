@@ -29,16 +29,16 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 框架需求分析 本框架主要为适用于IO密集类型的服务器开发而设计，同时作为框架，一是对于开发者而言应该是简单容易上手层次分明，二是框架本身而言容易扩展，能够依据开发人员的需求添加业务处理。 为了保证框架能够实现基本的要求，其总体需求如下：  框架能够较好的应对并发场景。 开发人员基于该框架能够轻松的实现自己的业务处理逻辑。  接下来我们会一步一步的构建起这个框架，告诉大家这个框架是">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/Step1.png">
-<meta property="og:image" content="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/v0.2.png">
-<meta property="og:image" content="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/TrluperPro.png">
-<meta property="og:image" content="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/TVL.png">
+<meta property="og:image" content="https://example.com/Trluper框架/Step1.png">
+<meta property="og:image" content="https://example.com/Trluper框架/v0.2.png">
+<meta property="og:image" content="https://example.com/Trluper框架/TrluperPro.png">
+<meta property="og:image" content="https://example.com/Trluper框架/TVL.png">
 <meta property="article:published_time" content="2023-09-09T11:52:16.000Z">
 <meta property="article:modified_time" content="2023-09-22T13:29:28.299Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="项目">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/Step1.png">
+<meta name="twitter:image" content="https://example.com/Trluper框架/Step1.png">
 
 <link rel="canonical" href="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/">
 
@@ -292,7 +292,7 @@
 <p>对于<code>C++</code>来说，实现网络通信服务器，离不开<code>socket</code>和<code>epoll</code>。关于<code>epoll</code>大家可以看我的对<a target="_blank" rel="noopener" href="https://trluper.cn/2023/09/01/epoll/">epoll</a>的专题解析。<strong>这里简单简单介绍一些，服务器通过使用epoll，将对文件描述符的监听工作交给内核出处理，而不用自己另启一个线程取监听，一旦发送变换，就会返回文件描述符变化的数量和已经变化过的文件描述吗，后续我们只需遍历这个集合，判断是读事件还是写事件后进行处理</strong>。</p>
 <p>总结来说，<code>epoll</code>的引入使服务器能够及时的发现是否有数据需要处理，在一定程度上提高了并发度。</p>
 <p>在这里我们通过<code>socket</code>和<code>epoll</code>构建起一个简单<code>CS</code>架构：</p>
-<p><img src="/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/Step1.png" width="600"></p>
+<p><img src="/Trluper框架/Step1.png" width="600"></p>
 <ul>
 <li><strong>功能</strong>：
 <ul>
@@ -336,7 +336,7 @@
 <h1 id="实现连接层为每一个连接都提供自己的datafd管理读写分发">3 实现连接层：为每一个连接都提供自己的<code>datafd</code>管理读写分发</h1>
 <p>很好，我们已经构建了能够正常通信的基础服务器。但是上面的服务器中我们将<strong>读写</strong>在写在了<code>Server</code>中，每个客户端都执行相同的逻辑，而且业务扩展极难,这不符合我们的程序设计规则。</p>
 <p>因此我们希望每一个·<code>dataFd</code>都绑定有一个专门负责自己读写的类<code>Connections</code>，同时实现读写分离,便于后续的扩展。因此现在我们的框架架构应该是这样</p>
-<p><img src="/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/v0.2.png" width="600"></p>
+<p><img src="/Trluper框架/v0.2.png" width="600"></p>
 <p>因此，我们可以创建一个<code>Connections</code>类来维护每个客户端的通道，在<code>Connections</code>中执行消息的接收和发送。同时为了后续自定义消息类型的实现，我们还创建了<code>Message.h</code>头文件。那么有了</p>
 <h2 id="代码实现-1">代码实现</h2>
 <h3 id="a-abstarcthandle.h">A) AbstarctHandle.h</h3>
@@ -402,10 +402,10 @@
 <p>我们<strong>分别</strong>进入<strong><code>TEST</code>和<code>client\build</code>目录</strong>执行下述命令生成可执行文件<code>Server</code>和<code>client</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake ..</span><br><span class="line">make</span><br></pre></td></tr></table></figure></p>
 <p>执行可执行文件后，运行结果： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/Trluper/TEST$ ./Server</span><br><span class="line">Server start at IP:<span class="number">172.19</span><span class="number">.189</span><span class="number">.128</span> ,Port:<span class="number">8080</span></span><br><span class="line">新的客户端连接,ip：<span class="number">172.19</span><span class="number">.189</span><span class="number">.128</span></span><br><span class="line">&lt;-------------------------------------------------------------&gt;</span><br></pre></td></tr></table></figure> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">trluper@DESKTOP<span class="number">-67</span>ADUGH:/home/project/Trluper/client/build$ ./client</span><br><span class="line">你好，我是客户端<span class="number">1</span></span><br><span class="line">你好，我是客户端<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="实现数据层">5 实现数据层</h1>
-<p>截至目前为止，我们已经实现了服务器对于客户端数据的接收过程，能够通过<code>Server、Connections、Message</code>对请求做接收和简单处理。但实际的服务器过程中，我们对来自于客户端的请求，应该会经过<code>接收--&gt;数据处理--&gt;业务</code>的过程，处理完后再由<code>业务--&gt;数据处理--&gt;发送</code>过程。因此本服务器框架对一个请求的响应应如下如所示： <img src="/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/TrluperPro.png" width="1600"></p>
+<p>截至目前为止，我们已经实现了服务器对于客户端数据的接收过程，能够通过<code>Server、Connections、Message</code>对请求做接收和简单处理。但实际的服务器过程中，我们对来自于客户端的请求，应该会经过<code>接收--&gt;数据处理--&gt;业务</code>的过程，处理完后再由<code>业务--&gt;数据处理--&gt;发送</code>过程。因此本服务器框架对一个请求的响应应如下如所示： <img src="/Trluper框架/TrluperPro.png" width="1600"></p>
 <p>因此，我们现在需要实现数据层<code>DataProcess</code>处理来自连接层的消息和来自业务层的用户数据：</p>
 <ul>
-<li><strong>对于连接层的消息</strong>：目前服务器仅支持TCP，需要在数据层做粘包处理后，将一个完整请求打包成用户数据给业务层（反序列化）。 <img src="/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/TVL.png" width="1600"></li>
+<li><strong>对于连接层的消息</strong>：目前服务器仅支持TCP，需要在数据层做粘包处理后，将一个完整请求打包成用户数据给业务层（反序列化）。 <img src="/Trluper框架/TVL.png" width="1600"></li>
 <li><strong>对于业务层的数据</strong>：主要做序列化处理</li>
 </ul>
 <p><strong>因此数据处理层的工作就是对于来自连接层的数据进行粘包处理，然后转化为业务层能够识别的消息递交给业务应用层；能够对业务层下来的消息进行封装成请求给连接层发送；同时数据处理层能够很方便的支持protobuf的序列化和反序列化操作</strong></p>
@@ -567,20 +567,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -626,7 +626,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:48</span>
+    <span title="站点阅读时长">17:01</span>
 </div>
 
         

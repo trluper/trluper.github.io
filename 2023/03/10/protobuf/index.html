@@ -29,22 +29,22 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 Protobuf 概述 Protocol Buffer (简称Protobuf) 是Google出品的性能优异、跨语言、跨平台的序列化库。在网络通信和通用数据交换等应用场景中经常使用的技术是 JSON或 XML，在微服务架构中通常使用另外一个数据交换的协议的工具ProtoBuf。 ProtoBuf也是我们做微服务开发，进行Go进阶实战中，必知必会的知道点。 ProtoBuf全称：prot">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/protobuf的特点.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/protobuf的存储方式.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/wireType.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/varint.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/varint解码方式.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/string类型的value.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/string类型的value存储方式.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/嵌套message.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/不带packed的repeated存储方式.png">
-<meta property="og:image" content="https://example.com/2023/03/10/protobuf/带packed的repeated存储方式.png">
+<meta property="og:image" content="https://example.com/protobuf/protobuf的特点.png">
+<meta property="og:image" content="https://example.com/protobuf/protobuf的存储方式.png">
+<meta property="og:image" content="https://example.com/protobuf/wireType.png">
+<meta property="og:image" content="https://example.com/protobuf/varint.png">
+<meta property="og:image" content="https://example.com/protobuf/varint解码方式.png">
+<meta property="og:image" content="https://example.com/protobuf/string类型的value.png">
+<meta property="og:image" content="https://example.com/protobuf/string类型的value存储方式.png">
+<meta property="og:image" content="https://example.com/protobuf/嵌套message.png">
+<meta property="og:image" content="https://example.com/protobuf/不带packed的repeated存储方式.png">
+<meta property="og:image" content="https://example.com/protobuf/带packed的repeated存储方式.png">
 <meta property="article:published_time" content="2023-03-10T03:29:03.000Z">
 <meta property="article:modified_time" content="2023-09-22T03:04:16.843Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="protobuf">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2023/03/10/protobuf/protobuf的特点.png">
+<meta name="twitter:image" content="https://example.com/protobuf/protobuf的特点.png">
 
 <link rel="canonical" href="https://example.com/2023/03/10/protobuf/">
 
@@ -333,7 +333,7 @@
 </blockquote>
 <h2 id="protobuf是什么作用">4 protobuf是什么？作用？</h2>
 <p><strong>Protocol Buffers（简称 Protobuf）是一种轻便高效的能够序列化结构数据的协议工具</strong>，可以用于结构化数据串的序列化。适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。</p>
-<p>和<code>json\xml</code>最大的区别是json，ProtoBuf是经过编码压缩的二进制格式。 因此<code>ProtoBuf</code>相比于<code>json\XML</code>，其体积更小（3 ~ 10倍）、速度更快（20 ~ 100倍）、也更为简单。** <img src="/2023/03/10/protobuf/protobuf的特点.png" width="700"></p>
+<p>和<code>json\xml</code>最大的区别是json，ProtoBuf是经过编码压缩的二进制格式。 因此<code>ProtoBuf</code>相比于<code>json\XML</code>，其体积更小（3 ~ 10倍）、速度更快（20 ~ 100倍）、也更为简单。** <img src="/protobuf/protobuf的特点.png" width="700"></p>
 <h3 id="protocol-buffer-的序列化-和反序列化简单速度快的原因">Protocol Buffer 的序列化 和反序列化简单、速度快的原因</h3>
 <ul>
 <li>使用二进制的形式，比json用文本形式更接近计算机处理语言</li>
@@ -389,9 +389,9 @@
 </blockquote>
 <h2 id="protobuf的序列化和反序列化原理">5 protobuf的序列化和反序列化原理</h2>
 <p>protobuf之所以序列化和反序列化快，体积小，在于其采用了独特的编码，采用<code>T - L - V</code>的数据存储方式，减少了分隔符的使用，使得数据存储得紧凑。</p>
-<p>在protobuf，其使用<strong>标识 - 长度 - 字段值</strong> 表示每个字段，所有字段拼接成一个 字节流，从而 实现 编码存储 的功能 <img src="/2023/03/10/protobuf/protobuf的存储方式.png" width="700"></p>
+<p>在protobuf，其使用<strong>标识 - 长度 - 字段值</strong> 表示每个字段，所有字段拼接成一个 字节流，从而 实现 编码存储 的功能 <img src="/protobuf/protobuf的存储方式.png" width="700"></p>
 <ul>
-<li>Tag: field_number &lt;&lt; 3 | wire type <img src="/2023/03/10/protobuf/wireType.png" width="700"></li>
+<li>Tag: field_number &lt;&lt; 3 | wire type <img src="/protobuf/wireType.png" width="700"></li>
 <li>length:可选字段,目前只有类型2需要，例如字符串，length会存储字符串长度。</li>
 <li>value：不同类型的value值会有不同的编码方式。下面对每种类型进行逐一讲解。</li>
 </ul>
@@ -399,7 +399,7 @@
 <p>采用了两种编码方式：<strong><code>Varint &amp; Zigzag</code></strong></p>
 <h4 id="varint">varint</h4>
 <ul>
-<li><strong>Varint编码方式</strong>:一种变长的编码方式。将数据按7个bit为一组进行分组， 每分组前加1bit标示是否有下一组数据。依靠这种编码技术能够省去不必要的存储空间。 <img src="/2023/03/10/protobuf/varint.png" width="700"></li>
+<li><strong>Varint编码方式</strong>:一种变长的编码方式。将数据按7个bit为一组进行分组， 每分组前加1bit标示是否有下一组数据。依靠这种编码技术能够省去不必要的存储空间。 <img src="/protobuf/varint.png" width="700"></li>
 </ul>
 <blockquote>
 <p>这样就可以用更少的字节表示数字，达到压缩的目的。</p>
@@ -411,7 +411,7 @@
 </ul>
 </blockquote>
 <ul>
-<li><strong>Varint解码方式</strong> <img src="/2023/03/10/protobuf/varint解码方式.png" width="700"></li>
+<li><strong>Varint解码方式</strong> <img src="/protobuf/varint解码方式.png" width="700"></li>
 </ul>
 <h4 id="zigzag">Zigzag</h4>
 <p>Varint 编码方式的不足是如果采用 Varint编码方式 表示一个<strong>负数</strong>，那么一定需要 5 个 byte。<strong>因为最高位bit是1</strong>。例如int32类型 -1: <code>100000000    00000000   00000000 00000001</code>，使用varint编码<code>ceil(4*8/7) =  5</code></p>
@@ -428,14 +428,14 @@
 <li>通过packed修饰的 repeat 字段（即packed repeated fields）</li>
 </ul>
 <h4 id="string类型">String类型</h4>
-<p>字段值（即V） 采用UTF-8编码 <img src="/2023/03/10/protobuf/string类型的value.png" width="700"> <img src="/2023/03/10/protobuf/string类型的value存储方式.png" width="700"></p>
+<p>字段值（即V） 采用UTF-8编码 <img src="/protobuf/string类型的value.png" width="700"> <img src="/protobuf/string类型的value存储方式.png" width="700"></p>
 <h4 id="嵌套消息类型message">嵌套消息类型（Message）</h4>
-<p>即字面意思<strong>内部消息编码的T - L -V组成外部消息的v</strong> <img src="/2023/03/10/protobuf/嵌套message.png" width="700"></p>
+<p>即字面意思<strong>内部消息编码的T - L -V组成外部消息的v</strong> <img src="/protobuf/嵌套message.png" width="700"></p>
 <h4 id="通过packed修饰的-repeat-字段">通过packed修饰的 repeat 字段</h4>
-<p>repeated 修饰的字段有两种表达方式： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">message Test</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 表达方式1：不带packed=true</span></span><br><span class="line">    repeated int32 Car = <span class="number">4</span> ;</span><br><span class="line">    <span class="comment">// 表达方式2：带packed=true,proto 2.1 开始可使用</span></span><br><span class="line">    repeated int32 Car = <span class="number">4</span> [packed=<span class="literal">true</span>];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 在代码中给`repeated int32 Car`附上3个字段值：3、270、86942</span></span><br><span class="line">Test.setCar（<span class="number">3</span>）；</span><br><span class="line">Test.setCar（<span class="number">270</span>）；</span><br><span class="line">Test.setCar（<span class="number">86942</span>）；</span><br></pre></td></tr></table></figure> <img src="/2023/03/10/protobuf/不带packed的repeated存储方式.png" width="700"></p>
+<p>repeated 修饰的字段有两种表达方式： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">message Test</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// 表达方式1：不带packed=true</span></span><br><span class="line">    repeated int32 Car = <span class="number">4</span> ;</span><br><span class="line">    <span class="comment">// 表达方式2：带packed=true,proto 2.1 开始可使用</span></span><br><span class="line">    repeated int32 Car = <span class="number">4</span> [packed=<span class="literal">true</span>];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 在代码中给`repeated int32 Car`附上3个字段值：3、270、86942</span></span><br><span class="line">Test.setCar（<span class="number">3</span>）；</span><br><span class="line">Test.setCar（<span class="number">270</span>）；</span><br><span class="line">Test.setCar（<span class="number">86942</span>）；</span><br></pre></td></tr></table></figure> <img src="/protobuf/不带packed的repeated存储方式.png" width="700"></p>
 <ul>
 <li><p><strong>问题：</strong>对于同一个 repeated字段、多个字段值来说，他们的Tag都是相同的，会导致Tag的冗余，即相同的Tag存储多次；</p></li>
-<li><p>解决方案：采用带packed=true 的 repeated 字段存储方式，即将相同的 Tag 只存储一次、记一个长度Length字段 ：Tag - Length - Value -Value -Value。 <img src="/2023/03/10/protobuf/带packed的repeated存储方式.png" width="700"></p></li>
+<li><p>解决方案：采用带packed=true 的 repeated 字段存储方式，即将相同的 Tag 只存储一次、记一个长度Length字段 ：Tag - Length - Value -Value -Value。 <img src="/protobuf/带packed的repeated存储方式.png" width="700"></p></li>
 </ul>
 <p>通过采用带<code>packed=true</code> 的 <code>repeated</code> 字段存储方式，从而更好地压缩序列化后的数据长度。</p>
 <blockquote>
@@ -905,20 +905,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -964,7 +964,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:48</span>
+    <span title="站点阅读时长">17:01</span>
 </div>
 
         

@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1. torch 包 torch 包含了多维张量的数据结构以及基于其上的多种数学操作。另外，它也提供了多种工具，其中一些可以更有效地对张量和任意类型进行序列化。 它有 CUDA 的对应实现，可以在 NVIDIA GPU 上进行张量运算(计算能力&gt;&#x3D;2.0)。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/dialation.gif">
+<meta property="og:image" content="https://example.com/pytorch常用函数/dialation.gif">
 <meta property="article:published_time" content="2022-10-29T07:50:21.000Z">
 <meta property="article:modified_time" content="2023-02-24T14:02:23.494Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="pytorch">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/dialation.gif">
+<meta name="twitter:image" content="https://example.com/pytorch常用函数/dialation.gif">
 
 <link rel="canonical" href="https://example.com/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/">
 
@@ -428,7 +428,7 @@
 <li><code>groups(int, optional)</code> – 从输入通道到输出通道的阻塞连接数</li>
 <li><code>bias(bool, optional)</code> - 如果 bias=True，添加偏置</li>
 </ul>
-<p><img src="/2022/10/29/pytorch%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0/dialation.gif" width="400"> 上图是一个扩张率为2，尺寸为 3×3 的空洞卷积，感受野与5×5的卷积核相同，而且仅需要9个参数。在相同的计算条件下，空洞卷积提供了更大的感受野，获得更为丰富的上下文信息。</p>
+<p><img src="/pytorch常用函数/dialation.gif" width="400"> 上图是一个扩张率为2，尺寸为 3×3 的空洞卷积，感受野与5×5的卷积核相同，而且仅需要9个参数。在相同的计算条件下，空洞卷积提供了更大的感受野，获得更为丰富的上下文信息。</p>
 <h6 id="conv3d">2.2.3 Conv3d</h6>
 <p>三维卷积层, 输入的尺度是<code>(N, C_in,D,H,W)</code>，输出尺度<code>（N,C_out,D_out,H_out,W_out）</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.<span class="built_in">Conv3d</span>(in_channels, out_channels, kernel_size, stride=<span class="number">1</span>, padding=<span class="number">0</span>, dilation=<span class="number">1</span>, </span><br><span class="line">groups=<span class="number">1</span>, bias=True)</span><br></pre></td></tr></table></figure></p>
 <h6 id="convtranspose1d">2.2.4 ConvTranspose1d</h6>
@@ -633,20 +633,20 @@ x_{new}=(1-momentum)*x_{old}+momentum*x_{obser}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">72</span>
+          <span class="site-state-item-count">74</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -692,7 +692,7 @@ x_{new}=(1-momentum)*x_{old}+momentum*x_{obser}
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">16:48</span>
+    <span title="站点阅读时长">17:01</span>
 </div>
 
         
