@@ -29,22 +29,22 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 链接器 1.1 链接是什么 链接是将各种代码和数据片段收集并组合成为一个单一文件的过程，这个文件可被加载到内存并执行。  链接可以执行与编译时，也就是源代码被翻译成机器代码时； 也可以执行与加载时，也就是在程序被加载器（loader)加载带内存并执行时 甚至也可执行于运行时，也就是有程序来执行  链接器在开发中是一个关键角色，因为它使得分离编译成为可能，我们不用将一个大型的应用">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/main.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/staticlink.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/ELF.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/share.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/dlopen.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/DLSYM.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/dlclose.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/dlerror.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/example.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-链接/example2.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/main.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/staticlink.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/ELF.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/share.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlopen.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/DLSYM.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlclose.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlerror.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example.png">
+<meta property="og:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example2.png">
 <meta property="article:published_time" content="2023-05-09T06:45:40.000Z">
 <meta property="article:modified_time" content="2023-05-14T13:24:55.744Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深入理解计算机系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/深入理解计算机系统-链接/main.png">
+<meta name="twitter:image" content="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/main.png">
 
 <link rel="canonical" href="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/">
 
@@ -303,9 +303,9 @@
 </ul>
 <span id="more"></span>
 <h4 id="编译器驱动程序">1.2 编译器驱动程序</h4>
-<p>我们将以下面两个源程序<code>main.c</code>和<code>sum.c</code>作为例子，来说明静态链接器<code>ld</code>的工作流程。 <img src="/深入理解计算机系统-链接/main.png" width="700"></p>
+<p>我们将以下面两个源程序<code>main.c</code>和<code>sum.c</code>作为例子，来说明静态链接器<code>ld</code>的工作流程。 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/main.png" width="700"></p>
 <ul>
-<li><p>首先我们在<code>shell</code>输入以下命令来调用GCC驱动程序（下面分析以<code>main.c</code>为例）： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o prog main.c sum.c</span><br></pre></td></tr></table></figure> 下图概括了从源文件翻译成可执行文件时的行为（若想看这些步骤，加入<code>-v</code>): <img src="/深入理解计算机系统-链接/staticlink.png" width="600"></p>
+<li><p>首先我们在<code>shell</code>输入以下命令来调用GCC驱动程序（下面分析以<code>main.c</code>为例）： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -Og -o prog main.c sum.c</span><br></pre></td></tr></table></figure> 下图概括了从源文件翻译成可执行文件时的行为（若想看这些步骤，加入<code>-v</code>): <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/staticlink.png" width="600"></p>
 <ul>
 <li>输入上述语句后，会先执行C预处理器<code>cpp</code>，它将源程序<code>main.c</code>经过宏替换、头文件展开后生成一个中间文件<code>main.i</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cpp [other arguments] main.c /tmp/main.i</span><br></pre></td></tr></table></figure></li>
 <li>接下来，运行C编译器<code>ccl</code>，它将预处理后的文件<code>main.i</code>进行编译，生成汇编文件<code>main.s</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ccl /tmp/main.i -Og [other arguments] -o /tmp/main.s</span><br></pre></td></tr></table></figure></li>
@@ -326,7 +326,7 @@
 <li><strong>共享目标文件</strong>：一种特殊类型的可重定位目标文件，可以在加载或者运行时被动态地加载进内存并链接。</li>
 </ul>
 <h4 id="可重定位目标文件">1.4 可重定位目标文件</h4>
-<p><img src="/深入理解计算机系统-链接/ELF.png" width="500"></p>
+<p><img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/ELF.png" width="500"></p>
 <ul>
 <li><p><code>.text</code>段存放编译好的机器代码。查看机器代码，需要使用反汇编工具objdump将机器代码转换成汇编代码。由于4字节对齐，<code>.text</code>大小为0x51，实际占用空间大小为0x54。</p></li>
 <li><p><strong><code>.data</code>段用来存放已初始化的全局变量和静态变量的值。</strong></p></li>
@@ -392,7 +392,7 @@
 <li><strong>缺点：生成的程序比较大，需要更多的系统资源，在装入内存时会消耗更多的时间；库函数有了更新，必须重新编译应用程序</strong></li>
 </ul>
 <p>共享库是为了解决静态缺点的一种方法，<strong>共享库也是目标模块，在运行或加载时，可以加载带任意的内存地址，并行一个内存中的程序链接起来，这个过程称为动态链接</strong>。动态库在Linux当中未<code>libxxx.so</code>，在windows中称为<code>ddl</code></p>
-<p><img src="/深入理解计算机系统-链接/share.png" width="500"></p>
+<p><img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/share.png" width="500"></p>
 <ul>
 <li>首先，在任何给定的文件系统中，对于一个库只有一个<code>so</code>文件，所有引用该库的可执行目标文件共享这个<code>.so</code>文件的代码和数据，而不是像静态库的内容那样复制和嵌入带引用它们的可执行文件中</li>
 <li>其次，在内存中，一个共享库的<code>.txt</code>节的一个副本可以被不同正在运行的进程共享。</li>
@@ -405,8 +405,8 @@
 <li><strong>高性能Web服务器</strong>：许多We服务器生成动态内容，比如个性化的Web页面、和广告标语。</li>
 </ul>
 <p>上面的思路是将每个生成动态内容的函数打包在共享库，当一个Web浏览器的请求到达时，服务器动态加载和链接适当的函数，然后直接调用它。</p>
-<p>Linux系统为动态链接器提供了一个简单的接口，允许应用程序在运行时加载和链接共享库 <img src="/深入理解计算机系统-链接/dlopen.png" width="700"> <code>dlsym</code>的函数参数是一个指向前面已经打开的共享库句柄和一个symbol，如果该名字存在，返回呼号地址，否则返回<code>NULL</code> <img src="/深入理解计算机系统-链接/DLSYM.png" width="700"> <code>dlclose</code>果没有其他人在使用这个共享库，就关闭 <img src="/深入理解计算机系统-链接/dlclose.png" width="700"> <code>dlerror</code>打印调用三个函数最近的错误 <img src="/深入理解计算机系统-链接/dlerror.png" width="700"></p>
-<p>示例： <img src="/深入理解计算机系统-链接/example.png" width="700"> <img src="/深入理解计算机系统-链接/example2.png" width="700"></p>
+<p>Linux系统为动态链接器提供了一个简单的接口，允许应用程序在运行时加载和链接共享库 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlopen.png" width="700"> <code>dlsym</code>的函数参数是一个指向前面已经打开的共享库句柄和一个symbol，如果该名字存在，返回呼号地址，否则返回<code>NULL</code> <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/DLSYM.png" width="700"> <code>dlclose</code>果没有其他人在使用这个共享库，就关闭 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlclose.png" width="700"> <code>dlerror</code>打印调用三个函数最近的错误 <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/dlerror.png" width="700"></p>
+<p>示例： <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example.png" width="700"> <img src="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/example2.png" width="700"></p>
 
     </div>
 
@@ -586,7 +586,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:01</span>
+    <span title="站点阅读时长">17:03</span>
 </div>
 
         

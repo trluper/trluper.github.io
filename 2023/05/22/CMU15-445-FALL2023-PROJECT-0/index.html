@@ -29,16 +29,16 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 介绍 此次project0项目是实现一个键值对存储，数据结构由写时复制的字典树构成。实现的键-值存储可以存储映射到任何类型值的字符串键。键的值存储在表示该键的最后一个字符的节点中(又称终端节点)。例如，考虑在trie中插入kv对(&quot;ab&quot;， 1)和(&quot;ac&quot;， &quot;val&quot;)。  2 Task1:Copy-On-Write trie">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/CMU15-445-FALL2023-PROJECT-0/keyvalue.png">
-<meta property="og:image" content="https://example.com/CMU15-445-FALL2023-PROJECT-0/new1.png">
-<meta property="og:image" content="https://example.com/CMU15-445-FALL2023-PROJECT-0/new2.png">
-<meta property="og:image" content="https://example.com/CMU15-445-FALL2023-PROJECT-0/new3.png">
+<meta property="og:image" content="https://example.com/2023/05/22/CMU15-445-FALL2023-PROJECT-0/keyvalue.png">
+<meta property="og:image" content="https://example.com/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new1.png">
+<meta property="og:image" content="https://example.com/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new2.png">
+<meta property="og:image" content="https://example.com/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new3.png">
 <meta property="article:published_time" content="2023-05-22T00:47:02.000Z">
 <meta property="article:modified_time" content="2023-06-06T07:25:52.285Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="CMU15-445 lab">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/CMU15-445-FALL2023-PROJECT-0/keyvalue.png">
+<meta name="twitter:image" content="https://example.com/2023/05/22/CMU15-445-FALL2023-PROJECT-0/keyvalue.png">
 
 <link rel="canonical" href="https://example.com/2023/05/22/CMU15-445-FALL2023-PROJECT-0/">
 
@@ -271,12 +271,12 @@
 
       
         <h3 id="介绍">1 介绍</h3>
-<p>此次project0项目是实现一个键值对存储，数据结构由<strong>写时复制的字典树</strong>构成。实现的键-值存储可以存储映射到任何类型值的字符串键。键的值存储在表示该键的最后一个字符的节点中(又称终端节点)。例如，考虑在trie中插入kv对(&quot;ab&quot;， 1)和(&quot;ac&quot;， &quot;val&quot;)。 <img src="/CMU15-445-FALL2023-PROJECT-0/keyvalue.png" width="500"></p>
+<p>此次project0项目是实现一个键值对存储，数据结构由<strong>写时复制的字典树</strong>构成。实现的键-值存储可以存储映射到任何类型值的字符串键。键的值存储在表示该键的最后一个字符的节点中(又称终端节点)。例如，考虑在trie中插入kv对(&quot;ab&quot;， 1)和(&quot;ac&quot;， &quot;val&quot;)。 <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/keyvalue.png" width="500"></p>
 <h3 id="task1copy-on-write-trie">2 Task1:Copy-On-Write trie</h3>
 <ul>
-<li><p>在本任务中，只需要修改<code>trie .h</code>和<code>trie .cpp</code>来实现写时复制(copy-on-write) tree。<strong>在写即复制tree中，操作不会直接修改原始tree中的节点。相反，将为修改后的数据创建新节点，并为新修改的trie返回一个新根</strong>。写时复制(Copy-on-write)使我们能够在每次操作之后随时以最小的开销访问该树。考虑在上面的例子中插入<code>(&quot;ad&quot;， 2)</code>。我们通过重用原始树中的两个子节点来创建一个新的Node2，并创建一个新的值节点2。(见下图) <img src="/CMU15-445-FALL2023-PROJECT-0/new1.png" width="700"></p></li>
-<li><p>插入<code>(&quot;b&quot;， 3)</code>，我们将创建一个新的根，一个新的节点，并重用以前的节点。通过这种方式，我们可以在每次插入操作之前和之后获得树的内容。只要我们有根对象(Trie类)，我们就可以访问当时Trie中的数据。(见下图) <img src="/CMU15-445-FALL2023-PROJECT-0/new2.png" width="700"></p></li>
-<li><p>插入<code>(“a”，“abc”)</code>并删除<code>(“ab”，1)</code>，我们可以得到下面的trie。注意，父节点可以有值，并且在删除后需要清除所有不必要的节点。 <img src="/CMU15-445-FALL2023-PROJECT-0/new3.png" width="700"></p></li>
+<li><p>在本任务中，只需要修改<code>trie .h</code>和<code>trie .cpp</code>来实现写时复制(copy-on-write) tree。<strong>在写即复制tree中，操作不会直接修改原始tree中的节点。相反，将为修改后的数据创建新节点，并为新修改的trie返回一个新根</strong>。写时复制(Copy-on-write)使我们能够在每次操作之后随时以最小的开销访问该树。考虑在上面的例子中插入<code>(&quot;ad&quot;， 2)</code>。我们通过重用原始树中的两个子节点来创建一个新的Node2，并创建一个新的值节点2。(见下图) <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new1.png" width="700"></p></li>
+<li><p>插入<code>(&quot;b&quot;， 3)</code>，我们将创建一个新的根，一个新的节点，并重用以前的节点。通过这种方式，我们可以在每次插入操作之前和之后获得树的内容。只要我们有根对象(Trie类)，我们就可以访问当时Trie中的数据。(见下图) <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new2.png" width="700"></p></li>
+<li><p>插入<code>(“a”，“abc”)</code>并删除<code>(“ab”，1)</code>，我们可以得到下面的trie。注意，父节点可以有值，并且在删除后需要清除所有不必要的节点。 <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new3.png" width="700"></p></li>
 </ul>
 <p>因此，在这里你需要实现三个函数：</p>
 <ul>
@@ -472,7 +472,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:01</span>
+    <span title="站点阅读时长">17:03</span>
 </div>
 
         

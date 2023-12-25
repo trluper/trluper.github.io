@@ -29,25 +29,25 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="1 存储技术 作为一名程序员，你必须了解存储器的层次结构，因为它对应用程序的性能有着巨大的影响。  如果你的数据是在cpu寄存器上，那么指令执行期间在0个周期就能访问到 如果是在高速缓存中，需要4-75个周期 如果在主存，需要上百个周期 如果是在磁盘，那么就需要大约几千万个周期，时间大概是毫秒级，比主存慢10万倍，比高速缓存慢100万倍  1.1 随机访问存储器 随机访问存储器(">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/bus.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/disk.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/rwirte.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/SSD.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/SSDspead.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/local.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/localbad.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/hierarchy.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/cache.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/list.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/cachelevel.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/cacheWork.png">
-<meta property="og:image" content="https://example.com/深入理解计算机系统-存储器层次结构/cachegroup.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/bus.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/disk.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/rwirte.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/SSD.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/SSDspead.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/local.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/localbad.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/hierarchy.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cache.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/list.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cachelevel.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cacheWork.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cachegroup.png">
 <meta property="article:published_time" content="2023-05-07T13:15:21.000Z">
 <meta property="article:modified_time" content="2023-05-09T03:10:41.511Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="深入理解计算机系统">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/深入理解计算机系统-存储器层次结构/bus.png">
+<meta name="twitter:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/bus.png">
 
 <link rel="canonical" href="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/">
 
@@ -298,11 +298,11 @@
 </ul>
 <h4 id="随机访问存储器">1.1 随机访问存储器</h4>
 <p>随机访问存储器(RAM)有两类：静态和动态。静态RAM(SRAM)比动态DRAM(DRAM)更快，但也更贵，<strong>因此SRAM一般集成在CPU上作为高速缓存，DRAM则作为主存。</strong>断电以后，DRAM和SRAM都会丢失它们的信息</p>
-<p><strong>访问主存：</strong>每次CPU和主存之间的数据传送都是通过一系列的步骤来完成，这些步骤称为<strong>总线事务</strong>。<strong>读事务</strong>从主存传输数据到CPU，<strong>写事务</strong>从CPU传送数据到主存。总线是一组并行的导线，能携带地址、数据和控制信号。 <img src="/深入理解计算机系统-存储器层次结构/bus.png" width="600"></p>
+<p><strong>访问主存：</strong>每次CPU和主存之间的数据传送都是通过一系列的步骤来完成，这些步骤称为<strong>总线事务</strong>。<strong>读事务</strong>从主存传输数据到CPU，<strong>写事务</strong>从CPU传送数据到主存。总线是一组并行的导线，能携带地址、数据和控制信号。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/bus.png" width="600"></p>
 <span id="more"></span>
 <h4 id="磁盘">1.2 磁盘</h4>
 <p>磁盘由盘片构成，每个盘片有两面或者称为表面，表面覆盖着磁性记录材料。盘片中央有一个可以旋转的主轴，它使得盘片以固定的旋转速率旋转，通常在<code>5400-15000</code>转没分钟。</p>
-<p><strong>下图展示了一个典型的磁盘表面结构。每个表面都是由一组称为磁道的同心圆组成的。每个磁道被划分为一组扇区。每个扇区包含相等数量的数据位，通常是512个字节。扇区之间由一些间隙分隔开，这些间隙不存储数据位，它们用来存储标识扇区的格式化位</strong> <img src="/深入理解计算机系统-存储器层次结构/disk.png" width="700"></p>
+<p><strong>下图展示了一个典型的磁盘表面结构。每个表面都是由一组称为磁道的同心圆组成的。每个磁道被划分为一组扇区。每个扇区包含相等数量的数据位，通常是512个字节。扇区之间由一些间隙分隔开，这些间隙不存储数据位，它们用来存储标识扇区的格式化位</strong> <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/disk.png" width="700"></p>
 <ul>
 <li><strong>旋转磁盘</strong>：b图的整个装置被称为磁盘驱动器，也简称磁盘，为了与固态硬盘SSD区分，也叫旋转磁盘，SSD是没有移动结构的，也因为这种特性，SSD读取数据更快。</li>
 <li><strong>柱面</strong>：柱面是所有盘面上到主轴中心距离相等的磁道组合。</li>
@@ -319,7 +319,7 @@
 <h4 id="磁盘操作-磁盘用读写头来读写存储在磁性表面的位读写头的另一端连接到一个传动臂">1.4 磁盘操作* 磁盘用读/写头来读写存储在磁性表面的位，读写头的另一端连接到一个传动臂。</h4>
 <ul>
 <li><strong>寻道：通过沿着半径轴前后移动这个传动臂，驱动可以将读写头定位在盘面的任何磁道上，</strong></li>
-<li><strong>旋转</strong>：一旦读写头完成寻道定位在某个磁道上，驱动器就会等待期望的扇区的第一位旋转到读写头下，这样就能够读写数据 <img src="/深入理解计算机系统-存储器层次结构/rwirte.png" width="700"></li>
+<li><strong>旋转</strong>：一旦读写头完成寻道定位在某个磁道上，驱动器就会等待期望的扇区的第一位旋转到读写头下，这样就能够读写数据 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/rwirte.png" width="700"></li>
 </ul>
 <p>磁盘一扇区大小的块来读写数据，对扇区的访问时间由三个主要的部分：寻道时间、旋转时间和传送时间</p>
 <ul>
@@ -329,7 +329,7 @@
 </ul>
 <p>值得一提的是，磁盘操作中消耗时间的主要是寻道时间和旋转时间，传送时间所占的延迟是可忽略的的</p>
 <h4 id="固态硬盘">1.5 固态硬盘</h4>
-<p>固态硬盘是一种基于闪存的存储技术，一个SSD封装由一个或多个闪存芯片和闪存翻译层组成，闪存芯片代替传统的旋转磁盘中的器械驱动器，而闪存翻译层是一个硬件设备，扮演与磁盘控制器相同的角色。将对逻辑块的请求翻译成对低层物理设备的访问。 <img src="/深入理解计算机系统-存储器层次结构/SSD.png" width="700"> <img src="/深入理解计算机系统-存储器层次结构/SSDspead.png" width="700"></p>
+<p>固态硬盘是一种基于闪存的存储技术，一个SSD封装由一个或多个闪存芯片和闪存翻译层组成，闪存芯片代替传统的旋转磁盘中的器械驱动器，而闪存翻译层是一个硬件设备，扮演与磁盘控制器相同的角色。将对逻辑块的请求翻译成对低层物理设备的访问。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/SSD.png" width="700"> <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/SSDspead.png" width="700"></p>
 <h3 id="局部性-一个编写良好的计算机程序常常具有良好的局部性即他们更加倾向于引用邻近于其他最近引用过的数据项的数据项或者最近引用或的数据项本身这种特性常常称为局部性原理局部性由两种不同的形式时间局部性和空间局部性">2 局部性* 一个编写良好的计算机程序常常具有良好的<strong>局部性</strong>，即他们更加倾向于引用邻近于其他最近引用过的数据项的数据项，或者最近引用或的数据项本身，这种特性，常常称为<strong>局部性原理</strong>。局部性由两种不同的形式：<strong>时间局部性和空间局部性</strong></h3>
 <ul>
 <li><strong>时间局部性</strong>：被引用过一次的内存位置很有可能在不久的将来再次被多次引用。</li>
@@ -342,7 +342,7 @@
 <li>类似的，操作吸引还用主存来缓存磁盘文件中最近被使用的磁盘块。</li>
 <li>局部性原理在应用程序中也有应用，入<code>Web</code>浏览器将最近引用的文档放在本地磁盘上，利用的就是时间局部性。</li>
 </ul>
-<p>从上可以看出，局部性原理贯穿现代计算机系统的方方面面，因此设计局部性良好的程序是编程应该注意的事项。 <img src="/深入理解计算机系统-存储器层次结构/local.png" width="700"> <img src="/深入理解计算机系统-存储器层次结构/localbad.png" width="700"></p>
+<p>从上可以看出，局部性原理贯穿现代计算机系统的方方面面，因此设计局部性良好的程序是编程应该注意的事项。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/local.png" width="700"> <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/localbad.png" width="700"></p>
 <ul>
 <li><strong>原则</strong>：
 <ul>
@@ -352,8 +352,8 @@
 </ul></li>
 </ul>
 <h3 id="存储器的层次结构">3 存储器的层次结构</h3>
-<p>现代计算机系统都是使用了一种组织存储器系统的方法，称为<strong>存储器层次结构</strong>，从高层往低层走，存储设备变得更慢、更便宜和更大，在最高层，是少量的CPU寄存器，CPU可以在一个始终周期访问它们；接下啦是<code>L1~L3</code>的高速缓存。 <img src="/深入理解计算机系统-存储器层次结构/hierarchy.png" width="700"></p>
-<p>高速缓存<code>cache</code>是一个小而快速的存储设备，他作为存储在更大、也更慢的设备中的对象的缓冲区域。<strong>存储器层次结构的中心思想是，对于每个<code>K</code>，位于<code>K</code>层的更快更小的存储设备作为位于<code>K+1</code>层的更大更慢的存储设备的缓存。即层次结构的设计是为了每一层都缓存来自较低一层的数据对象</strong> <img src="/深入理解计算机系统-存储器层次结构/cache.png" width="700"> 数据总是以块大小为传送单元在第<code>K</code>层和第<code>K+1</code>层之间来回复制，这不过这个<code>块大小</code>在各层是不一样的，在<code>L0</code>和<code>L1</code>是一个字大小，在<code>L1</code>和<code>L2</code>是几十个字节。一般而言，层次结构中较低层的设备访问时间较长，因此为了补偿这些较长的访问时间，倾向于使用更大的块。</p>
+<p>现代计算机系统都是使用了一种组织存储器系统的方法，称为<strong>存储器层次结构</strong>，从高层往低层走，存储设备变得更慢、更便宜和更大，在最高层，是少量的CPU寄存器，CPU可以在一个始终周期访问它们；接下啦是<code>L1~L3</code>的高速缓存。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/hierarchy.png" width="700"></p>
+<p>高速缓存<code>cache</code>是一个小而快速的存储设备，他作为存储在更大、也更慢的设备中的对象的缓冲区域。<strong>存储器层次结构的中心思想是，对于每个<code>K</code>，位于<code>K</code>层的更快更小的存储设备作为位于<code>K+1</code>层的更大更慢的存储设备的缓存。即层次结构的设计是为了每一层都缓存来自较低一层的数据对象</strong> <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cache.png" width="700"> 数据总是以块大小为传送单元在第<code>K</code>层和第<code>K+1</code>层之间来回复制，这不过这个<code>块大小</code>在各层是不一样的，在<code>L0</code>和<code>L1</code>是一个字大小，在<code>L1</code>和<code>L2</code>是几十个字节。一般而言，层次结构中较低层的设备访问时间较长，因此为了补偿这些较长的访问时间，倾向于使用更大的块。</p>
 <p><strong>命中和未命中</strong>：说到缓存层次结构就必须提到缓存命中和未命中的情况。</p>
 <ul>
 <li><strong>缓存命中：</strong>当程序需要第<code>K+1</code>层的某个数据对象<code>d</code>时，它首先会正在当前存储在<code>k</code>层之前的存储层次中查找<code>d</code>，如果<code>d</code>刚好缓存在<code>K</code>层中，那么就是我们所说的<strong>缓存命中</strong>。缓存命中读数据明显会快于缓存未命中时的情形。</li>
@@ -366,13 +366,13 @@
 <p>缓存与局部性是浑然一体的，这时因为：</p>
 <ul>
 <li><strong>利用时间局部性原理</strong>：由于时间局部性，同一数据对象可能会被多次使用。一旦一个数据对象在第一次不命中是被复制到缓存中，我们期望后面对该目标有一系列的访问命中，因为缓存比低一层的存储设备更快，对后面的命中服务会比最开始的不命中快很多</li>
-<li><strong>利用空间局部性原理</strong>：块通常包含多个数据对象，。由于空间局部性，我们会期望后面对该块中其他对象的访问能够补偿不命中后复制该块的花费。 <img src="/深入理解计算机系统-存储器层次结构/list.png" width="700"></li>
+<li><strong>利用空间局部性原理</strong>：块通常包含多个数据对象，。由于空间局部性，我们会期望后面对该块中其他对象的访问能够补偿不命中后复制该块的花费。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/list.png" width="700"></li>
 </ul>
 <h3 id="高速缓存存储器">4.高速缓存存储器</h3>
-<p>高速缓存存储器因为可以缓存数据，那么这些数据是如何被寻址查找、替换的呢。在高速缓存存储器中存在四个参数：<code>S</code>标识有几组高速缓存存储器、<code>E</code>表示每组有多少行、<code>B</code>表示每行有<span class="math inline">\(2^B\)</span>字节数据块组成、m位标记位,即使用<span class="math inline">\((S,E,B,m)\)</span>： <img src="/深入理解计算机系统-存储器层次结构/cachelevel.png" width="700"></p>
-<p>在寻址的过程中通过确定<strong>所在的组S、查看有效位是否有效和标记为是否对应，如果满足上面三个，那么就说明数据在这个缓存区域内，通过行偏移地址得到该数据块的指定数据</strong>，如下面所示： <img src="/深入理解计算机系统-存储器层次结构/cacheWork.png" width="700"></p>
+<p>高速缓存存储器因为可以缓存数据，那么这些数据是如何被寻址查找、替换的呢。在高速缓存存储器中存在四个参数：<code>S</code>标识有几组高速缓存存储器、<code>E</code>表示每组有多少行、<code>B</code>表示每行有<span class="math inline">\(2^B\)</span>字节数据块组成、m位标记位,即使用<span class="math inline">\((S,E,B,m)\)</span>： <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cachelevel.png" width="700"></p>
+<p>在寻址的过程中通过确定<strong>所在的组S、查看有效位是否有效和标记为是否对应，如果满足上面三个，那么就说明数据在这个缓存区域内，通过行偏移地址得到该数据块的指定数据</strong>，如下面所示： <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cacheWork.png" width="700"></p>
 <ul>
-<li>从上面的结构我们可以分析知道，造成冲突不命中的情况是源于每个缓存组只有一行,即<code>E=1</code>，那么为了减小冲突不命中情况，可以增加行，此时称为组相联高速缓存 <img src="/深入理解计算机系统-存储器层次结构/cachegroup.png" width="700"></li>
+<li>从上面的结构我们可以分析知道，造成冲突不命中的情况是源于每个缓存组只有一行,即<code>E=1</code>，那么为了减小冲突不命中情况，可以增加行，此时称为组相联高速缓存 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cachegroup.png" width="700"></li>
 </ul>
 <h4 id="读写时情况">4.1 读写时情况</h4>
 <p><strong>高速缓存出现不命中时，由不命中带来的开销是很大的，为了弥补这种开销，计算机设计者们充分利用空间局部性，以数据块的形式进行缓存</strong>。</p>
@@ -600,7 +600,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:01</span>
+    <span title="站点阅读时长">17:03</span>
 </div>
 
         

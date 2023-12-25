@@ -29,50 +29,50 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="0概述一下你认识的Redis？ Redis本质上是一个Key-Value类型的内存数据库，很像memcached，整个数据库统统加载 在内存当中进行操作，定期通过异步操作把数据库数据flush到硬盘上进行保存。 因为是纯内存操作，Redis的性能非常出色，每秒可以处理超过 10万次读写操作，是已知性能 最快的Key-Value DB。 Redis的出色之处不仅仅是性能，Redis最大的魅力是支持">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/Redis数据库/redis事件处理器.png">
-<meta property="og:image" content="https://example.com/Redis数据库/redis一次通行过程.png">
-<meta property="og:image" content="https://example.com/Redis数据库/redisthread.png">
-<meta property="og:image" content="https://example.com/Redis数据库/redistp.png">
-<meta property="og:image" content="https://example.com/Redis数据库/redis过期时间实现原理.png">
-<meta property="og:image" content="https://example.com/Redis数据库/RDB.png">
-<meta property="og:image" content="https://example.com/Redis数据库/RDB03.png">
-<meta property="og:image" content="https://example.com/Redis数据库/saveparams.png">
-<meta property="og:image" content="https://example.com/Redis数据库/缓存雪崩解决方案.png">
-<meta property="og:image" content="https://example.com/Redis数据库/加入布隆过滤器后的缓存处理流程.png">
-<meta property="og:image" content="https://example.com/Redis数据库/Redis事务执行机制.png">
-<meta property="og:image" content="https://example.com/Redis数据库/watch.png">
-<meta property="og:image" content="https://example.com/Redis数据库/question.png">
-<meta property="og:image" content="https://example.com/Redis数据库/Redis与MySQL双写一致性保证.png">
-<meta property="og:image" content="https://example.com/Redis数据库/先写数据库再写缓存.png">
-<meta property="og:image" content="https://example.com/Redis数据库/cacheAside.png">
-<meta property="og:image" content="https://example.com/Redis数据库/special.png">
-<meta property="og:image" content="https://example.com/Redis数据库/binlog.png">
-<meta property="og:image" content="https://example.com/Redis数据库/单机锁和分布式锁.png">
-<meta property="og:image" content="https://example.com/Redis数据库/RedLock.png">
-<meta property="og:image" content="https://example.com/Redis数据库/加锁节点宕机.png">
-<meta property="og:image" content="https://example.com/Redis数据库/RedLock锁流程.png">
-<meta property="og:image" content="https://example.com/Redis数据库/使用Fencing解决锁不安全问题.png">
-<meta property="og:image" content="https://example.com/Redis数据库/master-slave.png">
-<meta property="og:image" content="https://example.com/Redis数据库/主从复制核心原理.png">
-<meta property="og:image" content="https://example.com/Redis数据库/哨兵监控原理.png">
-<meta property="og:image" content="https://example.com/Redis数据库/哨兵监控.png">
-<meta property="og:image" content="https://example.com/Redis数据库/Sentinel.png">
-<meta property="og:image" content="https://example.com/Redis数据库/哨兵和从节点建立联系.png">
-<meta property="og:image" content="https://example.com/Redis数据库/异步复制导致的数据丢失.png">
-<meta property="og:image" content="https://example.com/Redis数据库/槽分配.png">
-<meta property="og:image" content="https://example.com/Redis数据库/集中式.png">
-<meta property="og:image" content="https://example.com/Redis数据库/redis集群内节点通信.png">
-<meta property="og:image" content="https://example.com/Redis数据库/Redis集群数据迁移.png">
-<meta property="og:image" content="https://example.com/Redis数据库/Redis集群节点安全下线.png">
-<meta property="og:image" content="https://example.com/Redis数据库/ziplist结构图.png">
-<meta property="og:image" content="https://example.com/Redis数据库/跳跃表结构.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis事件处理器.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis一次通行过程.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redisthread.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redistp.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis过期时间实现原理.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RDB.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RDB03.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/saveparams.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/缓存雪崩解决方案.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/加入布隆过滤器后的缓存处理流程.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Redis事务执行机制.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/watch.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/question.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Redis与MySQL双写一致性保证.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/先写数据库再写缓存.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/cacheAside.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/special.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/binlog.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/单机锁和分布式锁.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RedLock.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/加锁节点宕机.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RedLock锁流程.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/使用Fencing解决锁不安全问题.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/master-slave.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/主从复制核心原理.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/哨兵监控原理.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/哨兵监控.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Sentinel.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/哨兵和从节点建立联系.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/异步复制导致的数据丢失.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/槽分配.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/集中式.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis集群内节点通信.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Redis集群数据迁移.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Redis集群节点安全下线.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/ziplist结构图.png">
+<meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/跳跃表结构.png">
 <meta property="article:published_time" content="2023-06-25T08:16:51.000Z">
 <meta property="article:modified_time" content="2023-09-02T04:04:18.023Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/Redis数据库/redis事件处理器.png">
+<meta name="twitter:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis事件处理器.png">
 
 <link rel="canonical" href="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/">
 
@@ -508,9 +508,9 @@
 <li>文件事件分派器</li>
 <li>事件处理器（连接应答处理器，命令请求处理器、命令回复处理器）</li>
 </ul>
-<p>多个socket可能会并发产生不同的操作，每个操作对应不同的文件事件，但是IO多路服用程序会监听多个socket，会将socket产生的事件放入队列中排队，事件分派器每次从队列中取出一个事件，把该事件交给对应的事件处理器进行处理。 <img src="/Redis数据库/redis事件处理器.png" width="700"></p>
+<p>多个socket可能会并发产生不同的操作，每个操作对应不同的文件事件，但是IO多路服用程序会监听多个socket，会将socket产生的事件放入队列中排队，事件分派器每次从队列中取出一个事件，把该事件交给对应的事件处理器进行处理。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis事件处理器.png" width="700"></p>
 <p>客户端与redis的一次通信过程如下：</p>
-<p><img src="/Redis数据库/redis一次通行过程.png" width="800"></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis一次通行过程.png" width="800"></p>
 <p>客户端<code>socket01</code>向<code>redis</code>的<code>server socket</code>请求建立连接，此时<code>server socket</code>会产生一个<code>AE_READBLE</code>事件，IO多路复用程序监听到<code>server socket</code>产生的事件后，将该事件压入队列中。文件事件分派器从队列中获取该事件，交给连接应答处理器。连接应答处理器会创建一个能与客户端通信的<code>socket01</code>,并将该<code>socket01</code>的<code>AE_READBLE</code>事件与命令请求处理器相关联。</p>
 <p>假设此时客户端发送了一个<code>set key value</code>请求，此时<code>redis</code>的<code>socket01</code>会产生<code>AE_READABLE</code>事件，IO多路复用程序将事件压入队列，此时事件分派器将事件交给命令请求处理器来处理。命令请求处理器读取<code>socket01</code>中的<code>key value</code>并在自己内存中完成<code>key value</code>的设置。操作完成后，它会将<code>socket01</code>的<code>AE_WRITABLE</code>事件与命令回复处理器相关联。</p>
 <p>如果此时客户端准备好接收返回结果了，那么redis中的<code>socket01</code>会产生一个<code>AE_WRITABLE</code>事件，同样压入队列中，事件分派器找到相关联的的命令回复处理器，由命令回复处理器对<code>socket01</code>输入本次操作的一个结果，比如ok，之后解除<code>socket01</code>的<code>AE_WRITABLE</code>事件与命令回复处理器的关联。</p>
@@ -582,7 +582,7 @@
 <p>Redis6.0 的多线程默认是禁用的，只使用主线程。如需开启需要修改 redis 配置文件 redis.conf ： <figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;io-threads-<span class="keyword">do</span>-reads <span class="literal">yes</span></span><br></pre></td></tr></table></figure> 开启多线程后，还需要设置线程数，否则是不生效的。同样需要修改 redis 配置文件 redis.conf : <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">io-threads 4 <span class="comment">#官网建议4核的机器建议设置为2或3个线程，8核的建议设置为6个线程</span></span></span><br></pre></td></tr></table></figure> 关于线程数的设置，官方有一个建议：4核的机器建议设置为2或3个线程，8核的建议设置为6个线程，线程数一定要小于机器核数。还需要注意的是，线程数并不是越大越好，官方认为超过了8个基本就没什么意义了。</p>
 </blockquote>
 <h3 id="redis-多线程实现机制">7.3 Redis 多线程实现机制</h3>
-<p><img src="/Redis数据库/redisthread.png" width="500"></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redisthread.png" width="500"></p>
 <blockquote>
 <p><strong>轮询调度算法(Round-Robin Scheduling)</strong>轮询调度算法的原理是每一次把来自用户的请求轮流分配给内部中的服务器，从1开始，直到N (内部服务器个数)，然后重新开始循环。</p>
 </blockquote>
@@ -595,7 +595,7 @@
 <li><p>主线程阻塞等待 IO 线程将数据回写 socket 完毕</p></li>
 <li><p>解除绑定</p></li>
 </ol>
-<p><img src="/Redis数据库/redistp.png" width="700"></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redistp.png" width="700"></p>
 <p>该设计有如下特点：</p>
 <ul>
 <li><p>IO 线程要么同时在读 socket，要么同时在写，不会同时读或写</p></li>
@@ -636,7 +636,7 @@
 <p>很多时候，我们的业务场景就是需要某个数据只在某一时间段内存在，比如我们的短信验证码可能只在1分钟内有效，用户登录的 token 可能只在 1 天内有效。</p>
 <p>如果使用传统的数据库来处理的话，一般都是自己判断过期，这样更麻烦并且性能要差很多。</p>
 <h2 id="redis-判断数据过期的原理">10 Redis 判断数据过期的原理</h2>
-<p>Redis 通过一个叫做过期字典（可以看作是hash表）来保存数据过期的时间。过期字典的键指向Redis数据库中的某个key(键)，过期字典的值是一个long long类型的整数，这个整数保存了key所指向的数据库键的过期时间（毫秒精度的UNIX时间戳）。 <img src="/Redis数据库/redis过期时间实现原理.png" width="800"></p>
+<p>Redis 通过一个叫做过期字典（可以看作是hash表）来保存数据过期的时间。过期字典的键指向Redis数据库中的某个key(键)，过期字典的值是一个long long类型的整数，这个整数保存了key所指向的数据库键的过期时间（毫秒精度的UNIX时间戳）。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis过期时间实现原理.png" width="800"></p>
 <p>过期字典是存储在redisDb结构里的： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">redisDb</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    dict *dict;     <span class="comment">//数据库键空间,保存着数据库中所有键值对</span></span><br><span class="line">    dict *expires   <span class="comment">// 过期字典,保存着键的过期时间</span></span><br><span class="line">    ...</span><br><span class="line">&#125; redisDb;</span><br></pre></td></tr></table></figure></p>
 <h2 id="redis过期键处理方式">11 redis过期键处理方式</h2>
 <p>Redis中有个设置时间过期的功能，即对存储在 redis 数据库中的值可以设置一个过期时间。作为一个缓存数据库，这是非常实用的。如一般项目中的<code>token</code>或者一些登录信息，尤其是短信验证码都是有时间限制的，按照传统的数据库处理方式，一般都是自己判断过期，这样无疑会严重影响项目性能。</p>
@@ -678,14 +678,14 @@
 <p><strong>Redis可以通过创建快照RDB来获得存储在某个时间点上数据的副本。RDB就是是一个紧凑压缩的二进制文件，代表Redis在某个时间点上的一个数据快照。同时因为RDB保存在磁盘上，所以即使Redis服务器进程退出，只要RDB存在，就能够还原数据库状态。因此非常适用于备份，全量复制等场景。</strong></p>
 <p>Redis创建快照之后，可以对快照进行备份，可以将快照复制到其他服务器从而创建具有相同数据的服务器副本（Redis主从结构，主要用来提高Redis性能），还可以将快照留在原地以便重启服务器的时候使用。<strong>快照持久化是Redis默认采用的持久化方式。</strong></p>
 <h4 id="rdb文件结构">14.1.1 RDB文件结构</h4>
-<p><img src="/Redis数据库/RDB.png" width="800"></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RDB.png" width="800"></p>
 <ul>
 <li><code>redis</code>:5字节，保存&quot;REDIS&quot;五个字符，以便在载入文件时，快速检查载入文件是否为RDB文件，5字节长度。</li>
 <li><code>db_version</code>:存储字符串形式整数，指示RDB文件的版本号，4字节长度。</li>
 <li><strong><code>databases</code></strong>:包含零个或多个数据库，以及各个数据库中的键值对数据。
 <ul>
 <li>如果服务器的数据库状态为空，那么这部分为空。</li>
-<li>非空，那么这个部分会根据数据库所保存的键值对数量、类型和内容不同来开辟空间。 <img src="/Redis数据库/RDB03.png" width="800"></li>
+<li>非空，那么这个部分会根据数据库所保存的键值对数量、类型和内容不同来开辟空间。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RDB03.png" width="800"></li>
 </ul></li>
 </ul>
 <h4 id="rdb文件的创建及自动触发">14.1.2 RDB文件的创建及自动触发</h4>
@@ -704,7 +704,7 @@
 <blockquote>
 <p>自动触发流程：</p>
 <ul>
-<li>其设置会保存在<code>redisSever</code>结构的<code>saveparams</code>下 <img src="/Redis数据库/saveparams.png" width="800"></li>
+<li>其设置会保存在<code>redisSever</code>结构的<code>saveparams</code>下 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/saveparams.png" width="800"></li>
 <li>处理<code>saveparams</code>，redis服务器还维护一个<code>dirty</code>计数器，以及<code>lastsave</code>属性，<code>dirty</code>计数器记录数据库记录了离上一次<code>save</code>或<code>bgsave</code>执行了多少次修改，<code>lastsave</code>是一个unix时间戳</li>
 <li>Redis周期性的执行一个操作函数<code>serverCron</code>,其中一项工作就是检查<code>save</code>或<code>bgsave</code>所设置的条件是否满足。满足则触发生成RDB操作。</li>
 </ul>
@@ -812,7 +812,7 @@
 <ul>
 <li><strong>事前：</strong>尽量保证整个 Redis 集群的高可用性，发现机器宕机尽快补上，选择合适的内存淘汰策略。</li>
 <li><strong>事中</strong>：本地<code>ehcache缓存 + hystrix限流&amp;降级</code>，避免MySQL崩掉， 通过加锁或者队列来控制读数据库写缓存的线程数量。比如对某个key只允许一个线程查询数据和写缓存，其他线程等待。</li>
-<li><strong>事后</strong>：利用 Redis 持久化机制保存的数据尽快恢复缓存 <img src="/Redis数据库/缓存雪崩解决方案.png" width="800"></li>
+<li><strong>事后</strong>：利用 Redis 持久化机制保存的数据尽快恢复缓存 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/缓存雪崩解决方案.png" width="800"></li>
 </ul>
 <h2 id="缓存穿透是什么如何解决">16 缓存穿透是什么，如何解决？</h2>
 <p><strong>缓存穿透是指查询一个一定不存在的数据，由于缓存不命中，接着查询数据库也无法查询出结果，因此也不会写入到缓存中，这将会导致每个查询都会去请求数据库，造成缓存穿透。</strong></p>
@@ -822,7 +822,7 @@
 <h4 id="方法一布隆过滤器">16.1.1 方法一：布隆过滤器</h4>
 <p>将所有可能存在的数据哈希到一个足够大的<code>bitmap</code>中，一个一定不存在的数据会被这个bitmap拦截掉，从而避免了对底层存储系统的查询压力。</p>
 <p>具体是这样做的：把所有可能存在的请求的值都存放在布隆过滤器中，当用户请求过来，先判断用户发来的请求的值是否存在于布隆过滤器中。不存在的话，直接返回请求参数错误信息给客户端，存在的话才会走下面的流程。即对所有可能查询的参数以hash形式存储，在控制层先进行校验，不符合则丢弃，从而避免了对底层存储系统的查询压力；</p>
-<p>流程如下： <img src="/Redis数据库/加入布隆过滤器后的缓存处理流程.png" width="800"></p>
+<p>流程如下： <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/加入布隆过滤器后的缓存处理流程.png" width="800"></p>
 <p>这里稍微科普一下布隆过滤器: &gt;布隆过滤器是引入了k(k&gt;1)k(k&gt;1)个相互独立的哈希函数，保证在给定的空间、误判率&gt;&gt;下，完成元素判重的过程。 它的优点是空间效率和查询时间都远远超过一般的算法，缺点是有一定的误识别率和删除困难。 &gt; &gt;该算法的核心思想就是利用多个不同的Hash函数来解决“冲突”。Hash存在一个冲突（碰撞）的问题，用同一个Hash得到的两个URL的值有可能相同。为了减少冲突，我们可以多引入几个Hash，如果通过其中的一个Hash值我们得出某元素不在集合中，那么该元素肯定不在集合中。只有在所有的Hash函数告诉我们该元素在集合中时，才能确定该元素存在于集合中。这便是布隆过滤器的基本思想，一般用于在大数据量的集合中判定某元素是否存在。</p>
 <h4 id="方法二缓存空对象">16.1.2 方法二：缓存空对象</h4>
 <p>当存储层不命中后，即使返回的空对象也将其缓存起来，同时会设置一个过期时间，之后再访问这个数据将会从缓存中获取，保护了后端数据源；如果一个查询返回的数据为空（不管是数据不存 在，还是系统故障），我们仍然把这个空结果进行缓存，但它的过期时间会很短，最长不超过五分钟。</p>
@@ -869,11 +869,11 @@
 <ul>
 <li>事务首先以<code>MULTI</code>命令开始，<code>MULTI</code>后接下来对键的操作命令都会入队列；</li>
 <li><code>EXEC</code>相当于提交事务执行</li>
-<li><code>WATCH</code>命令是一个乐观锁，它可以在<code>EXCE</code>命令执行之前，监视任意数量的数据库键；并在<code>EXCE</code>执行时，检查被监视的键是否至少有一个已经被修改过了，如果是的话，服务器拒绝执行事务，并向客户端返回代表事务执行失败的空回复。 <img src="/Redis数据库/Redis事务执行机制.png" width="700"></li>
+<li><code>WATCH</code>命令是一个乐观锁，它可以在<code>EXCE</code>命令执行之前，监视任意数量的数据库键；并在<code>EXCE</code>执行时，检查被监视的键是否至少有一个已经被修改过了，如果是的话，服务器拒绝执行事务，并向客户端返回代表事务执行失败的空回复。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Redis事务执行机制.png" width="700"></li>
 </ul>
 <h4 id="watch命令的乐观锁机制">WATCH命令的乐观锁机制</h4>
 <p>每个redis数据库都保存一个<code>watch_key</code>字典属性，这个字典保存着被<code>watch</code>的键和客户端形式的键值对。当某一个客户端执行<code>watch</code>某个键后，该字典就会进行记录，之后所有对数据库修改的命令，比如<code>SET、LPUSH、SADD、ZREM、DEL、</code>等等，都会调用<code>touchWatchKey</code>函数对<code>watch_key</code>字典进行检查，查看是否有客户端正在监视刚刚被修改的键，如果有，对应客户端的<code>REDIS_DIATY_CAS</code>标识被打开，表示这个客户端的事务安全性被破坏，那么服务器会拒绝执行这个客户端的对应事务，以此来保证事务安全性。</p>
-<p><img src="/Redis数据库/watch.png" width="700"> 上图表示，该数据库中的<code>name</code>被客户端<code>c1、c2</code>监视着，<code>age</code>被<code>c3</code>监视着，<code>address</code>被<code>c2、c4</code>监视着，在客户端<code>c10086</code>执行下述命令后，<code>name</code>和<code>age</code>也被<code>c100088</code>监视着。之 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//客户端c10086</span></span><br><span class="line">redis&gt;watch <span class="string">&quot;age&quot;</span> <span class="string">&quot;name&quot;</span></span><br><span class="line">OK</span><br><span class="line"><span class="comment">//开启事务</span></span><br><span class="line">redis&gt;MULTI</span><br><span class="line">OK</span><br><span class="line">redis&gt;SET <span class="string">&quot;name&quot;</span> <span class="string">&quot;trluper&quot;</span></span><br><span class="line">QUEUE</span><br><span class="line">redis&gt;<span class="built_in">EXCE</span></span><br><span class="line">(nil)</span><br><span class="line"><span class="comment">//nil说明有另一个客户端对name执行修改，服务器对c10086的该事务拒绝执行</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/watch.png" width="700"> 上图表示，该数据库中的<code>name</code>被客户端<code>c1、c2</code>监视着，<code>age</code>被<code>c3</code>监视着，<code>address</code>被<code>c2、c4</code>监视着，在客户端<code>c10086</code>执行下述命令后，<code>name</code>和<code>age</code>也被<code>c100088</code>监视着。之 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//客户端c10086</span></span><br><span class="line">redis&gt;watch <span class="string">&quot;age&quot;</span> <span class="string">&quot;name&quot;</span></span><br><span class="line">OK</span><br><span class="line"><span class="comment">//开启事务</span></span><br><span class="line">redis&gt;MULTI</span><br><span class="line">OK</span><br><span class="line">redis&gt;SET <span class="string">&quot;name&quot;</span> <span class="string">&quot;trluper&quot;</span></span><br><span class="line">QUEUE</span><br><span class="line">redis&gt;<span class="built_in">EXCE</span></span><br><span class="line">(nil)</span><br><span class="line"><span class="comment">//nil说明有另一个客户端对name执行修改，服务器对c10086的该事务拒绝执行</span></span><br></pre></td></tr></table></figure></p>
 <h2 id="redis事务">21 Redis事务</h2>
 <p>Redis提供了简单的事务功能，将一组需要执行的命令放到<code>multi</code>和<code>exec</code>之间，<code>multi</code>代表事务开始，<code>exec</code>代表事务结束，只有执行了<code>exec</code>后中间的命令才会被执行</p>
 <p>如果要停止事务的执行，可以使用<code>discard</code>命令代替<code>exec</code></p>
@@ -904,8 +904,8 @@
 <blockquote>
 <p>互联网公司非常喜欢问这道面试题因为缓存在互联网公司使用非常频繁 <strong>在高并发的业务场景下，数据库的性能瓶颈往往都是用户并发访问过大。所以，一般都使用Redis做一个缓冲操作，让请求先访问到Redis，而不是直接去访问MySQL等数据库，从而减少网络请求的延迟响应。</strong></p>
 </blockquote>
-<p>我们使用缓存的目的是为了提升查询的性能。大多数情况下，我们是这样使用缓存的： <img src="/Redis数据库/question.png" width="600"></p>
-<p>如果数据库中的某条数据，放入缓存之后，又立马被更新了，那么该如何更新缓存呢，这里就涉及到了双写问题。<strong>你只要用缓存，就可能会涉及到缓存与数据库双存储双写，你只要是双写，就一定会有数据一致性的问题，那么你如何解决一致性问题</strong>？要弄明白这个问题，并且能够理解各种情况，需要一步步的说明： <img src="/Redis数据库/Redis与MySQL双写一致性保证.png" width="600"></p>
+<p>我们使用缓存的目的是为了提升查询的性能。大多数情况下，我们是这样使用缓存的： <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/question.png" width="600"></p>
+<p>如果数据库中的某条数据，放入缓存之后，又立马被更新了，那么该如何更新缓存呢，这里就涉及到了双写问题。<strong>你只要用缓存，就可能会涉及到缓存与数据库双存储双写，你只要是双写，就一定会有数据一致性的问题，那么你如何解决一致性问题</strong>？要弄明白这个问题，并且能够理解各种情况，需要一步步的说明： <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Redis与MySQL双写一致性保证.png" width="600"></p>
 <h3 id="什么是一致性">22.1 什么是一致性</h3>
 <p><strong>一致性就是数据保持一致，在分布式系统中，可以理解为多个节点中数据的值是一致的。</strong></p>
 <ul>
@@ -919,7 +919,7 @@
 <li><p><strong>先写缓存，再写数据库</strong>：拒绝使用。试想某一个用户的每一次写操作，如果刚写完缓存，突然网络出现了异常，导致写数据库失败了。其结果是缓存更新成了最新数据，但数据库根本没有，这样缓存中的数据变成脏数据了。（就好像你往银行存款1000元，你是存进缓存了，但是没有进数据库，那么当银行因为某些原因缓存更新，发现你这1000块不翼而飞，这个问题极其严重）。</p></li>
 <li><strong>先写数据库，再写缓存</strong>：也不推荐使用，在高并发场景下，写数据库与写缓存不在同一事务中，如果写数据库成功，但写缓存失败，这就会导致数据库是新数据，而缓存是旧数据，两边数据不一致的情况。
 <ul>
-<li>另一个问题就是，多个写并发场景下，由于写缓存的网络卡顿，导致数据不一致 <img src="/Redis数据库/先写数据库再写缓存.png" width="600"></li>
+<li>另一个问题就是，多个写并发场景下，由于写缓存的网络卡顿，导致数据不一致 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/先写数据库再写缓存.png" width="600"></li>
 </ul></li>
 </ul>
 <h4 id="cache-aside-pattern旁路缓存模式">22.2.1 Cache Aside Pattern旁路缓存模式</h4>
@@ -928,10 +928,10 @@
 <li><strong>读的时候，先读缓存，缓存没有的话，就读数据库，然后取出数据后放入缓存，同时返回响应。</strong></li>
 <li><strong>更新的时候,先更新数据库，再删除缓存</strong></li>
 </ul>
-<p><img src="/Redis数据库/cacheAside.png" width="600"></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/cacheAside.png" width="600"></p>
 <p>但是旁路缓存模式也不是百分百的保证缓存与数据库一致，</p>
 <ul>
-<li><p><strong>问题：先更新数据库，再删除缓存，如果删除缓存失败了(删除命令阻塞在网络中），导致数据库中是新数据，缓存中是旧数据，就出现数据不一致的问题。</strong>假设存在下面这种情况<strong>缓存失效，查询先于写</strong>,： <img src="/Redis数据库/special.png" width="600"></p>
+<li><p><strong>问题：先更新数据库，再删除缓存，如果删除缓存失败了(删除命令阻塞在网络中），导致数据库中是新数据，缓存中是旧数据，就出现数据不一致的问题。</strong>假设存在下面这种情况<strong>缓存失效，查询先于写</strong>,： <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/special.png" width="600"></p>
 <ul>
 <li>缓存过期时间到了，自动失效。</li>
 <li>请求f查询缓存，发缓存中没有数据，查询数据库的旧值，但由于网络原因卡顿了，没有来得及更新缓存。</li>
@@ -966,7 +966,7 @@
 <li>读请求走Redis：热数据基本都在Redis</li>
 <li>写请求走MySQL: 增删改都操作MySQL</li>
 </ul>
-<p><img src="/Redis数据库/binlog.png" width="600"> 一旦MySQL中产生了新的写入、更新、删除等操作，就可以把binlog相关的消息推送至Redis，Redis再根据binlog中的记录，对Redis进行更新，就无需在从业务线去操作缓存内容。</p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/binlog.png" width="600"> 一旦MySQL中产生了新的写入、更新、删除等操作，就可以把binlog相关的消息推送至Redis，Redis再根据binlog中的记录，对Redis进行更新，就无需在从业务线去操作缓存内容。</p>
 <ol type="1">
 <li>mysql发生变更产生一条binlog</li>
 <li>binlog写进消息队列（MQ）</li>
@@ -978,7 +978,7 @@
 <p>很多时候复杂的缓存场景，缓存不是仅仅从数据库中取出来的值。可能是关联多张表的数据并通过计算才是缓存需要的值。并且，更新缓存的代价有时候很高。<strong>缓存存在的意义是优化查询速度，对于需要频繁写操作，而读操作很少的时候，每次进行数据库的修改，缓存也要随之更新，会造成系统吞吐的下降，但此时缓存并不会被频繁访问到，用到的缓存才去算缓存。</strong>删除缓存而不是更新缓存，是一种懒加载的思想，不是每次都重复更新缓存，只有用到的时候才去更新缓存，同时即使有大量的读请求，实际也就更新了一次，后面的请求不会重复读</p>
 <h2 id="redlock分布式锁">23 Redlock分布式锁</h2>
 <p>RedLock算法是Redis作者提出基于Redis在分布式锁的一种实现。在介绍RedLock之前，先来看看传统的单机锁和分布式锁的比较，还有常见的分布式锁实现方案。 ### 23.1 单机锁 vs 分布式锁 当我们的业务数据流量上来了之后，系统的架构就会从单机集中式系统升级位分布式架构。在单机系统高并发的情况下，我们直接使用内置的锁比如<code>Synchronize</code>或者是<code>ReentrantLock</code>或者<code>mutex</code>就可以实现业务需求。</p>
-<p><strong>这类锁属于单机锁，对于单机架构来说是完全够用的。但并不适用于在分布式架构中。用户请求通过负载均衡设备打在每个服务上面的，单机锁只能够限制打入到当前机器的请求，并不能限制整个分布式集群。</strong> <img src="/Redis数据库/单机锁和分布式锁.png" width="700"> 在分布式环境下，如果我们想要并发严格控制资源，那么就需要用到分布式锁。</p>
+<p><strong>这类锁属于单机锁，对于单机架构来说是完全够用的。但并不适用于在分布式架构中。用户请求通过负载均衡设备打在每个服务上面的，单机锁只能够限制打入到当前机器的请求，并不能限制整个分布式集群。</strong> <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/单机锁和分布式锁.png" width="700"> 在分布式环境下，如果我们想要并发严格控制资源，那么就需要用到分布式锁。</p>
 <h3 id="常见分布式锁实现">23.2 常见分布式锁实现</h3>
 <p>常见的分布式锁实现有基于<code>Redis、Mysql、Zookeeper</code>的。归根到底是因为这些中间件可以提供共享资源的一个能力。</p>
 <h4 id="redis">23.2.1 Redis</h4>
@@ -994,12 +994,12 @@
 <li>获取当前的时间戳</li>
 <li>使用同一个<code>Key</code>且带有超时时间，向<code>Redis</code>集群发出锁获取请求，并且给客户端也设置一个超时时间，防止<code>Redis</code>实例挂掉了之后客户端还傻傻等待。（客户端超时时间要比Key的超时时间要短）</li>
 <li>超过半数实例获取锁成功并且没有超过客户端超时时间（根据步骤1计算），那么就是视为客户端成功获取锁。</li>
-<li>如果获取锁失败，比如没有得到半数客户端加锁成功或者是超时了就视为获取锁失败，客户端需要向全部<code>Redis</code>实例发送解锁请求（del）。 <img src="/Redis数据库/RedLock.png" width="700"></li>
+<li>如果获取锁失败，比如没有得到半数客户端加锁成功或者是超时了就视为获取锁失败，客户端需要向全部<code>Redis</code>实例发送解锁请求（del）。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RedLock.png" width="700"></li>
 </ol>
 <h4 id="redlock是否真的能彻底解决分布式锁的问题呢">23.3.2 RedLock是否真的能彻底解决分布式锁的问题呢？</h4>
 <p>正常情况下，是可以解决分布式问题的。但是面对极端情况下，RedLock可能就不包熟了！</p>
 <ul>
-<li><strong>加锁的节点宕机情景</strong> <img src="/Redis数据库/加锁节点宕机.png" width="700">
+<li><strong>加锁的节点宕机情景</strong> <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/加锁节点宕机.png" width="700">
 <ul>
 <li><strong>解决办法：</strong>
 <ul>
@@ -1007,11 +1007,11 @@
 <li><strong>延迟启动</strong>。光靠持久化数据还不够，必须估计到数据还没有持久化到磁盘后就宕机的情况。此时我们可以采取延迟启动。Redis宕机之后不要立即重启，而是要等分布式锁中最长的Key的TTL（超时时间）过了之后再启动，保证全部Key都被强制解锁了。但这种方案需要用一个东西来存储每个分布式锁的TTL时间。</li>
 </ul></li>
 </ul></li>
-<li><p><strong>极端场景：由于Key在Redis中具有超时自动释放的机制，而客户端无法感知自己的锁失效了。</strong>那么就会出现一种情况，客户端<code>client1</code>获得分布式锁后，恰巧遇到客户端执行垃圾回收时GC中<code>STW(stop the world)</code>停顿机制导致客户端阻塞一段时间，此时<code>client1</code>失效，<code>client2</code>获得锁，而<code>client1</code>不知道自己的锁已经失效了，这时候<code>client1</code>再进行写时就会发生错误. <img src="/Redis数据库/RedLock锁流程.png" width="700"> &gt;除了GC停顿，还有很多原因可能导致进程pause。例如进程可能读取尚未进入内存的数据，所以它得到一个 page fault （错误页面）并且等待 page 被加载进缓存；还有可能你依赖于网络服务；或者其他进程占用 CPU；或者其他意外发生 SIGSTOP 等。</p>
+<li><p><strong>极端场景：由于Key在Redis中具有超时自动释放的机制，而客户端无法感知自己的锁失效了。</strong>那么就会出现一种情况，客户端<code>client1</code>获得分布式锁后，恰巧遇到客户端执行垃圾回收时GC中<code>STW(stop the world)</code>停顿机制导致客户端阻塞一段时间，此时<code>client1</code>失效，<code>client2</code>获得锁，而<code>client1</code>不知道自己的锁已经失效了，这时候<code>client1</code>再进行写时就会发生错误. <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RedLock锁流程.png" width="700"> &gt;除了GC停顿，还有很多原因可能导致进程pause。例如进程可能读取尚未进入内存的数据，所以它得到一个 page fault （错误页面）并且等待 page 被加载进缓存；还有可能你依赖于网络服务；或者其他进程占用 CPU；或者其他意外发生 SIGSTOP 等。</p>
 <ul>
 <li><strong>解决方法：</strong>
 <ul>
-<li>使用Fencing（栏栅）使锁变安全：领域大牛Martin提出在每次写操作时加入一个<code>fencing token</code>,这个场景下，<code>fencing token</code>可以是一个递增的数字（lock service可以做到），每次有client申请锁就递增一次： <img src="/Redis数据库/使用Fencing解决锁不安全问题.png" width="700"> <code>client1</code> 申请锁同时拿到<code>token33</code>，然后它进入长时间的停顿锁也过期了。<code>client2</code> 得到锁和<code>token34</code>写入数据，紧接着 <code>client1</code> 活过来之后尝试写入数据，自身<code>token33</code>比<code>34</code>小因此写入操作被拒绝。注意这需要存储层来检查<code>token</code>，但这并不难实现。如果使用<code>Zookeeper</code>作为<code>lock service</code>的话那么可以使用<code>zxid</code>作为递增数字。 但是对于<code>Redlock</code> ，没什么生成<code>fencing token</code>的方式，并且怎么修改<code>Redlock</code> 算法使其能产生<code>fencing toke</code>并不那么显而易见。因为产生<code>token</code>需要在集群中共享单调递增，除非在单节点Redis上完成但是这又没有高可靠性，需要引进一致性协议来让<code>Redlock</code> 产生可靠的<code>fencing token</code>。</li>
+<li>使用Fencing（栏栅）使锁变安全：领域大牛Martin提出在每次写操作时加入一个<code>fencing token</code>,这个场景下，<code>fencing token</code>可以是一个递增的数字（lock service可以做到），每次有client申请锁就递增一次： <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/使用Fencing解决锁不安全问题.png" width="700"> <code>client1</code> 申请锁同时拿到<code>token33</code>，然后它进入长时间的停顿锁也过期了。<code>client2</code> 得到锁和<code>token34</code>写入数据，紧接着 <code>client1</code> 活过来之后尝试写入数据，自身<code>token33</code>比<code>34</code>小因此写入操作被拒绝。注意这需要存储层来检查<code>token</code>，但这并不难实现。如果使用<code>Zookeeper</code>作为<code>lock service</code>的话那么可以使用<code>zxid</code>作为递增数字。 但是对于<code>Redlock</code> ，没什么生成<code>fencing token</code>的方式，并且怎么修改<code>Redlock</code> 算法使其能产生<code>fencing toke</code>并不那么显而易见。因为产生<code>token</code>需要在集群中共享单调递增，除非在单节点Redis上完成但是这又没有高可靠性，需要引进一致性协议来让<code>Redlock</code> 产生可靠的<code>fencing token</code>。</li>
 </ul></li>
 </ul></li>
 <li><p><strong>RedLock过于依赖时钟</strong>：在分布式架构中，其中的一个特点就是缺乏全局时钟。而RedLock的上锁机制依赖于分布式的时钟一致性，这存在很大的隐患。</p></li>
@@ -1044,7 +1044,7 @@
 <li>Redis 高可用，如果是做主从架构部署，那么加上哨兵就可以实现，任何一个实例宕机，可以进行主备切换。</li>
 </ul></li>
 </ul>
-<p><img src="/Redis数据库/master-slave.png" width="600"></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/master-slave.png" width="600"></p>
 <p><strong>Redis replication(redis主从复制) -&gt; 主从架构 -&gt; 读写分离 -&gt; 水平扩容支撑读高并发</strong></p>
 <blockquote>
 <p><strong>redis的文件事件</strong> 虽然文件事件处理器以单线程方式运行，但通过使用 I/O 多路复用程序来监听多个套接字，文件事件处理器既实现了高性能的网络通信模型应对并发场景，又可以很好地与 Redis 服务器中其他同样以单线程方式运行的模块进行对接。 <strong>Redis6.0的多线程</strong> Redis6.0 引入多线程主要是为了提高网络 IO 读写性能，因为这个算是 Redis 中的一个性能瓶颈（Redis 的瓶颈主要受限于内存和网络）。 虽然，Redis6.0 引入了多线程，但是 Redis 的多线程只是在网络数据的读写这类耗时操作上使用了， 执行命令仍然是单线程顺序执行。因此，也不需要担心线程安全问题。其原因概括来说就两点： - 可以充分利用服务器 CPU 资源，目前主线程只能利用一个核 - 多线程任务可以分摊 Redis 同步 IO 读写负荷</p>
@@ -1069,7 +1069,7 @@
 <li><p><code>slave node</code> 如果跟 <code>master node</code> 有网络故障，断开了连接，会自动重连，<strong>连接之后 <code>master node</code> 仅会复制给 <code>slave</code> 部分缺少的数据</strong>，也称为<strong>断点续传</strong>。</p></li>
 <li><p>在后续，<code>master node</code> 持续将写命令，异步执行<strong>增量复制</strong>给 slave node</p></li>
 </ul>
-<p><img src="/Redis数据库/主从复制核心原理.png" width="700"></p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/主从复制核心原理.png" width="700"></p>
 <h3 id="主从复制的断点续传">25.3 主从复制的断点续传</h3>
 <p>从 Redis2.8 开始，就支持主从复制的断点续传，如果主从复制过程中，网络连接断掉了，那么可以接着上次复制的地方，继续复制下去，而不是从头开始复制一份。</p>
 <p><code>master node</code> 会在内存中维护一个 <code>backlog</code>，<code>master</code> 和 <code>slave</code> 都会保存一个 <code>replication offset</code> 还有一个 <code>master run id</code>，<code>offset</code> 就是保存在 <code>backlog</code> 中的。如果 <code>master</code> 和 <code>slave</code> 网络连接断掉了，<code>slave</code> 会让 <code>master</code> 从上次 <code>replica offset</code> 开始继续复制，如果没有找到对应的<code>offset</code>，那么就会执行一次 <code>resynchronization</code>全量复制。</p>
@@ -1124,11 +1124,11 @@
 <li><p>每隔2秒，每个Sentinel会向Redis数据节点的 <code>__sentinel__:hello</code> 频道发送该 Sentinel 节点的信息，同时每个 Sentinel 节点也会订阅该频道，来了解其他 Sentinel 节点以及他们对主节点的判断 &gt;<strong>作用：</strong>发现新的Sentinel节点：通过订阅主节点的 <strong>sentinel</strong>：hello通道了解其他的Sentinel节点信息，如果是新加入的 Sentinel 节点，将该 Sentinel 节点信息保存起来，并与该 Sentinel 节点创建连接 &gt;<strong>Sentinel 节点之间交换主节点的状态，作为后面客观下线以及领导者选举的依据。</strong></p></li>
 <li><p><strong>每隔1秒，每个<code>Sentinel</code>节点会向主节点、从节点、其余<code>Sentinel</code>节点发送一条<code>ping</code>命令做一次心跳检测，来确认这些节点当前是否可达。</strong> &gt;<strong>作用：</strong>通过对上面的定时任务，Sentinel 节点对主节点、从节点，其余 Sentinel 节点都建立起连接，<strong>实现对每个节点的监控，这个定时任务是节点失败判定的重要依据。</strong></p></li>
 </ol>
-<p><img src="/Redis数据库/哨兵监控原理.png" width="700"> 如果主节点或者从节点没有在规定的时间内响应哨兵的 <code>PING</code> 命令，哨兵就会将它们标记为「主观下线」。这个「规定的时间」是配置项<code>down-after-milliseconds</code> 参数设定的，单位是毫秒。</p>
+<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/哨兵监控原理.png" width="700"> 如果主节点或者从节点没有在规定的时间内响应哨兵的 <code>PING</code> 命令，哨兵就会将它们标记为「主观下线」。这个「规定的时间」是配置项<code>down-after-milliseconds</code> 参数设定的，单位是毫秒。</p>
 <h3 id="如何判断主节点是否真的故障了">27.3 如何判断主节点是否真的故障了？</h3>
 <ul>
 <li><p><strong>主观下线</strong>：每个 Sentinel 节点每隔1秒对主节点、从节点、其他Sentinel节点发送ping命令做心脏检测，当这些节点超过 down-after-milliseconds 没有进行有效恢复时，Seintinel 节点会对该节点做失败判定，这个行为称为主观下线。</p></li>
-<li><p><strong>客观下线</strong>：当 <code>Sentinel</code> 主观下线的节点是主节点时，该 <code>Sentinel</code> 节点会通过 <code>sentinel</code>的 <code>is-master-down-by-addr</code>命令向其他 <code>Sentinel</code> 节点询问对主节点的判断。当超过 <code>quorum</code> 个数 <code>Sentinel</code> 节点认为主节点确实有问题，这时就会做出客观下线的决定 <img src="/Redis数据库/哨兵监控.png" width="700"></p></li>
+<li><p><strong>客观下线</strong>：当 <code>Sentinel</code> 主观下线的节点是主节点时，该 <code>Sentinel</code> 节点会通过 <code>sentinel</code>的 <code>is-master-down-by-addr</code>命令向其他 <code>Sentinel</code> 节点询问对主节点的判断。当超过 <code>quorum</code> 个数 <code>Sentinel</code> 节点认为主节点确实有问题，这时就会做出客观下线的决定 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/哨兵监控.png" width="700"></p></li>
 </ul>
 <blockquote>
 <p>PS：<code>quorum</code> 的值一般设置为哨兵个数的二分之一加1，例如 3 个哨兵就设置 2。</p>
@@ -1160,12 +1160,12 @@
 </blockquote>
 <h3 id="哨兵节点之间如何互相发现哨兵如何发现从节点哨兵集群如何建立的">27.6 哨兵节点之间如何互相发现，哨兵如何发现从节点(哨兵集群如何建立的？)</h3>
 <p>在设置哨兵集群时，只需要填下面这几个参数，设置主节点名字、主节点的 IP 地址和端口号以及 quorum 值,不需要填写哨兵间的连续： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sentienl monitor &lt;master-name&gt; &lt;ip&gt; &lt;redis-port&gt; &lt;quorum&gt;</span><br></pre></td></tr></table></figure> 这是因为<strong>哨兵节点之间是通过 Redis 的发布者/订阅者机制来相互发现的。在主从集群中，主节点上有一个名为<code>__sentinel__:hello</code>的频道，不同哨兵就是通过它来相互发现，实现互相通信的。</strong></p>
-<p>在下图中，哨兵<code>A</code>把自己的** IP 地址和端口的信息<strong>发布到<code>__sentinel__:hello</code>频道上，哨兵<code>B</code> 和<code>C</code>订阅了该频道。那么此时，哨兵<code>B</code>和<code>C</code>就可以从这个频道直接获取哨兵<code>A</code>的</strong> IP 地址和端口号**。然后，哨兵 <code>B、C</code>可以和哨兵<code>A</code>建立网络连接。通过这个方式，哨兵 B 和 C 也可以建立网络连接，这样一来，哨兵集群就形成了。 <img src="/Redis数据库/Sentinel.png" width="700"></p>
+<p>在下图中，哨兵<code>A</code>把自己的** IP 地址和端口的信息<strong>发布到<code>__sentinel__:hello</code>频道上，哨兵<code>B</code> 和<code>C</code>订阅了该频道。那么此时，哨兵<code>B</code>和<code>C</code>就可以从这个频道直接获取哨兵<code>A</code>的</strong> IP 地址和端口号**。然后，哨兵 <code>B、C</code>可以和哨兵<code>A</code>建立网络连接。通过这个方式，哨兵 B 和 C 也可以建立网络连接，这样一来，哨兵集群就形成了。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Sentinel.png" width="700"></p>
 <blockquote>
 <p>哨兵集群会对「从节点」的运行状态进行监控，那哨兵集群如何知道「从节点」的信息？</p>
 </blockquote>
 <p><strong>主节点知道所有「从节点」的信息，所以哨兵会每 10 秒一次的频率向主节点发送 INFO 命令来获取所有「从节点」的信息。</strong></p>
-<p>如下图所示，哨兵 B 给主节点发送 INFO 命令，主节点接受到这个命令后，就会把从节点列表返回给哨兵。接着，哨兵就可以根据从节点列表中的连接信息，和每个从节点建立连接，并在这个连接上持续地对从节点进行监控。哨兵 A 和 C 可以通过相同的方法和从节点建立连接。 <img src="/Redis数据库/哨兵和从节点建立联系.png" width="700"></p>
+<p>如下图所示，哨兵 B 给主节点发送 INFO 命令，主节点接受到这个命令后，就会把从节点列表返回给哨兵。接着，哨兵就可以根据从节点列表中的连接信息，和每个从节点建立连接，并在这个连接上持续地对从节点进行监控。哨兵 A 和 C 可以通过相同的方法和从节点建立连接。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/哨兵和从节点建立联系.png" width="700"></p>
 <p><strong>总结：通过 Redis 的发布者/订阅者机制，哨兵之间可以相互感知，然后组成集群，同时，哨兵又通过 INFO 命令，在主节点里获得了所有从节点连接信息，于是就能和从节点建立连接，并进行监控了。</strong></p>
 <h3 id="总结">27.7 总结</h3>
 <p>Redis 在 2.8 版本以后提供的<strong>哨兵（Sentinel）机制</strong>，它的<strong>作用是实现主从节点故障转移</strong>。它会监测主节点是否存活，如果发现主节点挂了，它就会选举一个从节点切换为主节点，并且把新主节点的相关信息通知给从节点和客户端。</p>
@@ -1175,7 +1175,7 @@
 <h3 id="导致数据丢失的两种情况">28.1 导致数据丢失的两种情况</h3>
 <p>主备切换的过程，可能会导致数据丢失：</p>
 <ul>
-<li><strong>异步复制导致的数据丢失：</strong>因为 <code>master-&gt;slave</code> 的复制是异步的，所以可能有部分数据还没复制到 <code>slave</code>，<code>master</code> 就宕机了，此时这部分数据就丢失了。 <img src="/Redis数据库/异步复制导致的数据丢失.png" width="700"></li>
+<li><strong>异步复制导致的数据丢失：</strong>因为 <code>master-&gt;slave</code> 的复制是异步的，所以可能有部分数据还没复制到 <code>slave</code>，<code>master</code> 就宕机了，此时这部分数据就丢失了。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/异步复制导致的数据丢失.png" width="700"></li>
 <li><strong>脑裂导致的数据丢失</strong>：某个 master 所在机器突然脱离了正常的网络，跟其他 slave 机器不能连接，但是实际上 master 还运行着。此时哨兵可能就会认为 master 宕机了，然后开启选举，将其他 slave 切换成了 master。这个时候，集群里就会有两个 master ，也就是所谓的脑裂。此时虽然某个 slave 被切换成了 master，但是可能 client 还没来得及切换到新的 master，还继续向旧 master 写数据。因此旧 master 再次恢复的时候，会被作为一个 slave 挂到新的 master 上去，自己的数据会清空，重新从新的 master 复制数据。而新的 master 并没有后来 client 写入的数据，因此，这部分数据也就丢失了</li>
 </ul>
 <h3 id="数据丢失问题的解决方案">28.2 数据丢失问题的解决方案</h3>
@@ -1188,7 +1188,7 @@
 <p><strong>redis集群是实现高可用的方式之一，它采用无中心节点方式实现，无需proxy代理，客户端直接与redis集群的每个节点连接，与主从复制集群模式只提供一个master不同，Redis集群会提供多个master节点提供写服务，每个master节点中存储的数据都不一样，这些数据通过数据分片的方式被自动分割到不同的master节点上实现水平扩容。</strong></p>
 <p><strong>同时为了保证集群的高可用，每个master节点还会添加slave节点，这样当某个master节点发生故障后，可以从它的slave节点中选举一个作为新的master节点继续提供服务。</strong></p>
 <h3 id="集群数据的是怎么分区存储的">29.1 集群数据的是怎么分区存储的？</h3>
-<p>因为redis集群使用多个master存储数据，每个master分片存储数据是不一样的。<strong>在<code>redis  Cluste</code>中一共会分为16384（<span class="math inline">\(2^{14}\)</span>）个槽</strong>，假如集群中有三个master，那么<code>master1</code>节点包含<span class="math inline">\(0~5500\)</span>号哈希槽，master2节点包含<span class="math inline">\(5501~11000\)</span>号哈希槽，master3节点包含<span class="math inline">\(11001~16384\)</span>号哈希槽: <img src="/Redis数据库/槽分配.png" width="700"></p>
+<p>因为redis集群使用多个master存储数据，每个master分片存储数据是不一样的。<strong>在<code>redis  Cluste</code>中一共会分为16384（<span class="math inline">\(2^{14}\)</span>）个槽</strong>，假如集群中有三个master，那么<code>master1</code>节点包含<span class="math inline">\(0~5500\)</span>号哈希槽，master2节点包含<span class="math inline">\(5501~11000\)</span>号哈希槽，master3节点包含<span class="math inline">\(11001~16384\)</span>号哈希槽: <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/槽分配.png" width="700"></p>
 <p>因为客户端是无中心节点实现，直接与每个节点连接，<code>key</code>是怎么存储的呢，它是对每个 <code>key</code> 计算 <code>CRC16</code> 值，然后对 <code>16384</code> 取模，可以获取 <code>key</code> 对应的 <code>hash slot</code>确定其节点。</p>
 <p>节点虚拟槽的特点：</p>
 <ul>
@@ -1200,7 +1200,7 @@
 <p>既然Redis集群中的数据是通过哈希槽的方式分开存储的，<strong>那么集群中每个节点都需要知道其他所有节点的元数据信息（包括当前集群状态、集群中各节点负责的哈希槽、集群中各节点的master-slave状态、集群中各节点的存活状态等）</strong></p>
 <p>集群元数据的维护有两种方式：<strong>集中式、Gossip 协议。Redis cluster 节点间采用 gossip 协议进行通信。</strong></p>
 <h4 id="集中式">29.2.1 集中式</h4>
-<p>集中式是将集群元数据（节点信息、故障等等）集中存储在某个节点上。集中式元数据集中存储的一个典型代表，就是大数据领域的 <code>storm</code> 。它是分布式的大数据实时计算引擎，是集中式的元数据存储的结构，底层基于 <code>zookeeper</code>（分布式协调的中间件）对所有元数据进行存储维护。 <img src="/Redis数据库/集中式.png" width="700"></p>
+<p>集中式是将集群元数据（节点信息、故障等等）集中存储在某个节点上。集中式元数据集中存储的一个典型代表，就是大数据领域的 <code>storm</code> 。它是分布式的大数据实时计算引擎，是集中式的元数据存储的结构，底层基于 <code>zookeeper</code>（分布式协调的中间件）对所有元数据进行存储维护。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/集中式.png" width="700"></p>
 <h4 id="gossip">gossip</h4>
 <p>Redis 维护集群元数据采用另一个方式， gossip 协议，所有节点都持有一份元数据，不同的节点如果出现了元数据的变更，就不断将元数据发送给其它的节点，让其它节点也进行元数据的变更。</p>
 <p>Gossip 协议工作原理就是节点彼此不断通信交换信息，一段时间后所有的节点都会知道集群完整的信息。</p>
@@ -1235,7 +1235,7 @@
 <li><p><strong>消息冗余：</strong>Gossip 协议规定，节点会定期随机选择周围节点发送消息，而收到消息的节点也会重复该步骤，因此就不可避免的存在消息重复发送给同一节点的情况，造成了消息的冗余，同时也增加了收到消息的节点的处理压力。而且，由于是定期发送而且不反馈，因此，即使节点收到了消息，还是会反复收到重复消息，加重了消息的冗余。</p></li>
 </ul>
 <h3 id="redis集群是怎么去选择节点来通信">29.4 Redis集群是怎么去选择节点来通信？</h3>
-<p>Redis集群内节点通信采用固定频率（定时任务每秒执行10次），并且随机选择选取5个节点找出最久没有通信的节点发送ping消息，用于保证 Gossip 信息交换的随机性。 <img src="/Redis数据库/redis集群内节点通信.png" width="700"></p>
+<p>Redis集群内节点通信采用固定频率（定时任务每秒执行10次），并且随机选择选取5个节点找出最久没有通信的节点发送ping消息，用于保证 Gossip 信息交换的随机性。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/redis集群内节点通信.png" width="700"></p>
 <h4 id="选择发送消息的节点数量">29.4.1 选择发送消息的节点数量</h4>
 <ul>
 <li>集群内每个节点维护定时任务默认每秒执行10次，每秒会随机选取5个节点找出最久没有通信的节点发送ping消息，用于保证 Gossip 信息交换的随机性。</li>
@@ -1294,7 +1294,7 @@
 <li>迁移slot到新节点。</li>
 </ol>
 <p>即首先启动一个集群模式下的 Redis 节点，然后通过与任意一个集群中的节点握手使得新的节点加入集群，最后再向新的节点分配它负责的 slot 以及向其迁移 slot 对应的数据。由于 Redis 采用 Gossip 协议，所以可以让新节点与任意一个现有集群节点握手，一段时间后整个集群都会知道新节点的加入。</p>
-<p>例如我们向该集群中新加入一个节点 6385。由于我们要追求负载均衡，所以加入后四个节点每个节点负责 4096 个slots，但是集群中原来的每个节点都负责 5462 个slots，所以 6379、6380、6381 节点都需要向新的节点 6385 迁移 1366 个slots。需要说明的是，Redis 集群并没有一个自动实现负载均衡的工具，把多少 slots 从哪个节点迁移到哪个节点完全是由用户自己来指定的。 <img src="/Redis数据库/Redis集群数据迁移.png" width="700"></p>
+<p>例如我们向该集群中新加入一个节点 6385。由于我们要追求负载均衡，所以加入后四个节点每个节点负责 4096 个slots，但是集群中原来的每个节点都负责 5462 个slots，所以 6379、6380、6381 节点都需要向新的节点 6385 迁移 1366 个slots。需要说明的是，Redis 集群并没有一个自动实现负载均衡的工具，把多少 slots 从哪个节点迁移到哪个节点完全是由用户自己来指定的。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Redis集群数据迁移.png" width="700"></p>
 <h4 id="设置节点迁入迁出状态解决路由困境">设置节点迁入迁出状态——解决路由困境</h4>
 <p><strong>每个 Redis 集群节点的<code>clusterState</code> 都会存储整个集群中 slot 和 Redis 节点的对应关系用于路由</strong>。当 6379 迁移 slot1 时，会首先标级该槽属于正在迁移的状态 IMGRATING，而同样 6385 也需要标记 slot1 属于正在导入的状态 IMPORTING。从实现上看，就是分别设置 migrating_slots_to 和 importing_slots_from 两个数组的对应 index 的值。迁入迁出的状态设置主要是为了方便数据路由的实现。在未完成迁移之前，集群中的所有节点都会将 slot1 的请求重定向到6379节点。</p>
 <p>而当 6379 把 slot1 标记为MIGRATING时，该节点会接收所有关于 slot1 的请求，但只有当请求中的 key 存在于 6379 中时该节点才会处理该请求。否则 6379 会把该请求通过 ASK 重定向到 slot1 的迁移目标节点，即 6385 节点。</p>
@@ -1307,7 +1307,7 @@
 </ul>
 <p>当迁移 slot1 结束后，slot1 就不再由 6379 负责而是交给 6385 节点负责。但是从其他节点的视角看，slot1 仍然由 6379 节点负责，他们接收到关于 slot1 的键的请求还是会路由到 6379 节点。所以迁移结束之后我们要向集群广播 slot1 由 6385 节点负责的消息，这样每个节点都会更新内部的路由数据，之后就可以正确的把 slot1 的键的请求路由到 6385 节点。需要说明的是，我们可以把上述的更新信息只告诉一个节点，那么随着各个节点信息的交换，一段时间后整个集群的所有节点都会更新路由。但是这样显然更新的延迟会很高，那些还没来得及更新的节点仍然会错误的把 slot1 的请求路由给 6379 节点。所以我们需要向每个节点进行广播消息。</p>
 <h3 id="集群收缩">33.2 集群收缩</h3>
-<p>集群收缩即让其中一些节点安全下线。所谓的安全下线指的是让一个节点下线之前我们需要把其负责的所有 slots 迁移到别的节点，否则该节点下线后其负责的 slots 就没法继续被服务了。节点下线的流程如下图所示： <img src="/Redis数据库/Redis集群节点安全下线.png" width="700"></p>
+<p>集群收缩即让其中一些节点安全下线。所谓的安全下线指的是让一个节点下线之前我们需要把其负责的所有 slots 迁移到别的节点，否则该节点下线后其负责的 slots 就没法继续被服务了。节点下线的流程如下图所示： <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/Redis集群节点安全下线.png" width="700"></p>
 <p>在上面的扩容完成后，集群中共有四个节点：6379、6380、6381、6385，我们以下线 6381 为例介绍下线的流程。下线 6381 节点首先需要把其上负责 slots 的数据分别迁移到三个节点上，然后通知所有集群中的节点忘记 6381 节点，最后 6381 节点关闭下线。</p>
 <p>Redis 的元数据在每个节点中都有一份，即每个 Redis 节点维护者从它的视角看过去集群中所有其他节点的状态。那么当集群中的所有其他节点接收到 CLUSTER FORGET <NODE id> 命令时会删除自己保存的 NODE_ID 对应的节点的状态，同时把 NODE_ID 对应的节点加入到黑名单中 60s。把一个节点放入黑名单意味着其他节点不会再去更新自己维护的该节点的信息，也就意味着当我们向集群中的所有节点发送CLUSTER FORGET 6381 后，6381节点 60s 内不能再次加入集群中。至此就完成了集群的缩容。</NODE></p>
 <h2 id="sorted-set即-zset-实现原理">34 Sorted Set（即 ZSet 实现原理）</h2>
@@ -1317,7 +1317,7 @@
 <li><strong><code>skiplist</code>(跳表)：</strong>当<code>ziplist</code>条件不满足时，有序集合会使用<code>skiplist</code>作为内部实现，因为此时<code>ziplist</code>的读写效率会下降</li>
 </ul>
 <h3 id="ziplist">ZipList</h3>
-<p><code>ziplist</code> 编码的 <code>Zset</code> 使用紧挨在一起的压缩列表节点来保存，第一个节点保存<code>member</code>，第二个保存 <code>score</code>。<code>ziplist</code> 内的集合元素按<code>score</code> 从小到大排序，其实质是一个双向链表。虽然元素是按 <code>score</code> 有序排序的， 但对 <code>ziplist</code> 的节点指针只能线性地移动，<strong>所以在 <code>REDIS_ENCODING_ZIPLIST</code> 编码的<code>Zset</code> 中， 查找某个给定元素的复杂度为 O(N)。</strong> <img src="/Redis数据库/ziplist结构图.png" width="700"></p>
+<p><code>ziplist</code> 编码的 <code>Zset</code> 使用紧挨在一起的压缩列表节点来保存，第一个节点保存<code>member</code>，第二个保存 <code>score</code>。<code>ziplist</code> 内的集合元素按<code>score</code> 从小到大排序，其实质是一个双向链表。虽然元素是按 <code>score</code> 有序排序的， 但对 <code>ziplist</code> 的节点指针只能线性地移动，<strong>所以在 <code>REDIS_ENCODING_ZIPLIST</code> 编码的<code>Zset</code> 中， 查找某个给定元素的复杂度为 O(N)。</strong> <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/ziplist结构图.png" width="700"></p>
 <h3 id="skiplist">Skiplist</h3>
 <p>skiplist 编码的 Zset 底层为一个被称为 zset 的结构体，这个结构体中包含一个字典和一个跳跃表。跳跃表按 score 从小到大保存所有集合元素，查找时间复杂度为平均 O(logN)，最坏 O(N) 。字典则保存着从 member 到 score 的映射，这样就可以用 O(1) 的复杂度来查找 member 对应的 score 值。虽然同时使用两种结构，但它们会通过指针来共享相同元素的 member 和 score，因此不会浪费额外的内存。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* zset结构体 */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">zset</span> &#123;</span><br><span class="line">    <span class="comment">// 字典，维护元素值和分值的映射关系</span></span><br><span class="line">    dict *dict;</span><br><span class="line">    <span class="comment">// 按分值对元素值排序序，支持O(logN)数量级的查找操作</span></span><br><span class="line">    zskiplist *zsl;</span><br><span class="line">&#125; zset;</span><br></pre></td></tr></table></figure></p>
 <h4 id="跳表数据结构">跳表数据结构</h4>
@@ -1330,7 +1330,7 @@
 <li>如果一个元素出现在 Level i 的链表中，则它在 Level i 之下的链表也都会出现。</li>
 <li>每个节点包含两个指针，一个指向同一链表中的下一个元素，一个指向下面一层的元素。</li>
 </ul>
-<p>跳表的查找会从顶层链表的头部元素开始，然后遍历该链表，直到找到元素大于或等于目标元素的节点，如果当前元素正好等于目标，那么就直接返回它。如果当前元素小于目标元素，那么就垂直下降到下一层继续搜索，如果当前元素大于目标或到达链表尾部，则移动到前一个节点的位置，然后垂直下降到下一层。正因为 Skiplist 的搜索过程会不断地从一层跳跃到下一层的，所以被称为跳跃表。 <img src="/Redis数据库/跳跃表结构.png" width="700"> 跳表是一个“概率型”的数据结构，指的就是跳表在插入操作时，元素的插入层数完全是随机指定的。实际上该决定插入层数的随机函数对跳表的查找性能有着很大影响，这并不是一个普通的服从均匀分布的随机数，它的计算过程如下：</p>
+<p>跳表的查找会从顶层链表的头部元素开始，然后遍历该链表，直到找到元素大于或等于目标元素的节点，如果当前元素正好等于目标，那么就直接返回它。如果当前元素小于目标元素，那么就垂直下降到下一层继续搜索，如果当前元素大于目标或到达链表尾部，则移动到前一个节点的位置，然后垂直下降到下一层。正因为 Skiplist 的搜索过程会不断地从一层跳跃到下一层的，所以被称为跳跃表。 <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/跳跃表结构.png" width="700"> 跳表是一个“概率型”的数据结构，指的就是跳表在插入操作时，元素的插入层数完全是随机指定的。实际上该决定插入层数的随机函数对跳表的查找性能有着很大影响，这并不是一个普通的服从均匀分布的随机数，它的计算过程如下：</p>
 <ul>
 <li>指定一个节点最大的层数 MaxLevel，指定一个概率 p， 层数 lvl 默认为 1 。</li>
 <li>生成一个 0~1 的随机数 r，若 r &lt; p，且 lvl &lt; MaxLevel ，则执行 lvl++。</li>
@@ -1578,7 +1578,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:01</span>
+    <span title="站点阅读时长">17:03</span>
 </div>
 
         

@@ -29,14 +29,14 @@
 <meta property="og:site_name" content="Trluper">
 <meta property="og:description" content="什么是Manacher算法(马拉车算法) Manachar算法主要是处理字符串中关于回文串的问题的，它本质上是对枚举中心法确定回文串的优化，使得算法可以在 O（n） 的时间处理出以字符串中每一个字符为中心的回文串半径。 由于回文字符串以其长度来分，可以分为奇回文（其长度为奇数）、偶回文（其长度为偶数），一般情况下需要分两种情况来寻找回文，马拉车算法为了简化这一步，对原始字符串进行了处理，在每一">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://example.com/Manacher算法/情况1.png">
-<meta property="og:image" content="https://example.com/Manacher算法/情况2.png">
+<meta property="og:image" content="https://example.com/2023/08/11/Manacher%E7%AE%97%E6%B3%95/情况1.png">
+<meta property="og:image" content="https://example.com/2023/08/11/Manacher%E7%AE%97%E6%B3%95/情况2.png">
 <meta property="article:published_time" content="2023-08-11T06:36:31.000Z">
 <meta property="article:modified_time" content="2023-08-11T16:00:27.795Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://example.com/Manacher算法/情况1.png">
+<meta name="twitter:image" content="https://example.com/2023/08/11/Manacher%E7%AE%97%E6%B3%95/情况1.png">
 
 <link rel="canonical" href="https://example.com/2023/08/11/Manacher%E7%AE%97%E6%B3%95/">
 
@@ -349,8 +349,8 @@
 <ul>
 <li><p><strong><span class="math inline">\(i&lt;r\)</span></strong>时，<strong>说明目前所求<span class="math inline">\(L[i]\)</span>在以<span class="math inline">\(s[k]\)</span>为对称中心的回文串内，我们就可以利用已有记录去求<span class="math inline">\(L[i]\)</span>。找到<code>i</code>关于<code>k</code>的对称点<span class="math inline">\(j=k-(i-k)=2k-i\)</span></strong>。比较<span class="math inline">\(L[j]\)</span>与<span class="math inline">\(r-i\)</span>的关系</p>
 <ul>
-<li><span class="math inline">\(L[j]&lt;r-i\)</span>：说明<span class="math inline">\(L[j]\)</span>的回文串在<span class="math inline">\(L[k]\)</span>内，由对称性推导就可以知道<span class="math inline">\(L[i]=L[j]\)</span>。如下图： <img src="/Manacher算法/情况1.png" wdith="400"></li>
-<li><span class="math inline">\(L[j]&gt;=r-i\)</span>：说明<span class="math inline">\(L[j]\)</span>的一部分回文串在<span class="math inline">\(L[k]\)</span>内，但超出的部分无法知道，需要一一暴力匹配，如下图： <img src="/Manacher算法/情况2.png" wdith="400"></li>
+<li><span class="math inline">\(L[j]&lt;r-i\)</span>：说明<span class="math inline">\(L[j]\)</span>的回文串在<span class="math inline">\(L[k]\)</span>内，由对称性推导就可以知道<span class="math inline">\(L[i]=L[j]\)</span>。如下图： <img src="/2023/08/11/Manacher%E7%AE%97%E6%B3%95/情况1.png" wdith="400"></li>
+<li><span class="math inline">\(L[j]&gt;=r-i\)</span>：说明<span class="math inline">\(L[j]\)</span>的一部分回文串在<span class="math inline">\(L[k]\)</span>内，但超出的部分无法知道，需要一一暴力匹配，如下图： <img src="/2023/08/11/Manacher%E7%AE%97%E6%B3%95/情况2.png" wdith="400"></li>
 </ul></li>
 <li><p><strong><span class="math inline">\(i&gt;=r\)</span></strong>时，<strong>说明目前所求<span class="math inline">\(L[i]\)</span>不在以<span class="math inline">\(s[k]\)</span>为对称中心的回文串内，因此需暴力匹配</strong></p></li>
 </ul>
@@ -537,7 +537,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:01</span>
+    <span title="站点阅读时长">17:03</span>
 </div>
 
         
