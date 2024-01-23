@@ -1013,7 +1013,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-19 18:05:27" itemprop="dateModified" datetime="2023-04-19T18:05:27+08:00">2023-04-19</time>
+                <time title="修改时间：2024-01-23 15:00:18" itemprop="dateModified" datetime="2024-01-23T15:00:18+08:00">2024-01-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1031,14 +1031,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.5k</span>
+              <span>18k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>16 分钟</span>
             </span>
 
         </div>
@@ -1051,19 +1051,14 @@
 
       
           <h4 id="get请求和post请求的区别">1. get请求和post请求的区别</h4>
-<p><strong>在实际应用中，get和post请求的区别主要有以下几个：</strong></p>
+<p><code>GET</code>和<code>POST</code>是 HTTP 协议中两种常用的请求方法，使用它们都可以跟服务器进行通讯，它们区别有以下几点：</p>
 <ul>
-<li><strong><code>get</code>请求用于从服务器上获得资源，而<code>post</code>请求用于向服务器提交数据</strong></li>
-<li><code>get</code>将表单中的数据按照<code>key=value</code>的形式，添加到<code>action</code>指定的<code>URL</code>后面，并且两者之间使用<code>?</code>连接，各个变量之间使用&amp;连接；post是将表单的数据放在HTTP协议的请求头或者消息体中，传递到action所指向的URL</li>
-<li><strong><code>get</code>传输的数据要受到URL长度的限制（最大长度是2048个字符）；而<code>post</code>可以传输大量数据，上传文件通常使用post</strong></li>
-<li><strong>使用<code>get</code>时参数会显示在地址栏上，如果这些数据不是敏感数据，那么可以使用<code>get</code>，对于敏感数据应使用<code>post</code></strong></li>
-<li><code>get</code>使用<code>MIME</code>类型<code>application/x-www-form-urlencoded</code>的URL编码（也叫百分号编码）文本格式传递参数，保证被传送的参数由遵循规范的文本组成，例如一个空格的编码是<code>%20</code></li>
-<li><strong><code>get</code>请求参数会被完整保留在浏览器历史记录里，而<code>post</code>中的参数不会被保留。</strong></li>
+<li>一般来说GET主要用来请求资源，而POST一般用于提交数据到服务器。因此对于GET来说如果有参数传递的话，会将参数直接拼接到URL（资源定位符）上；而对于POST来说，这些参数会写在请求消息体中。因此对于要传输一些敏感信息的话，get方法不是安全的，这种情况使用POST更好。</li>
+<li>此外，由于URL有长度限制，因此对于GET来说，其传递的数据长度会受到浏览器的限制（2048），而POST将数据放在消息体中，因此通常没有数据长度限制。</li>
+<li>还有就是GET方法得到常见如HTML、JS或者CSS这些资源会被浏览器缓存，如果下次传输的数据相同，那么他们就会返回缓存中的内容，以求更快的展示所需要的数据；而对于POST来说，Post请求不会进行缓存操作。</li>
+<li>另外呢GET产生一个TCP数据包，而POST可能会产生两个数据包（<strong>不是必然）</strong>，浏览器回先发送header，服务器响应100 continue后再发送data数据包，因此，Post在时间上的消耗一般会被Get要大</li>
+<li>Get请求可以直接进行回退和刷新，不会对用户和程序产生影响，但POST请求如果直接回滚和刷新的将会重新把数据提交。(缓存)</li>
 </ul>
-<p><strong>但是在本质上，get和post请求没有区别：</strong></p>
-<p><code>get</code>和<code>post</code>是HTTP协议中的两种发送请求的方法，而HTTP是基于<code>TCP/IP</code>的关于数据如何在万维网中如何通信的协议。因此，<code>get</code>和<code>post</code>的底层也是<code>TCP/IP</code>,也就是说，<code>get</code>和<code>post</code>都是TCP链接。</p>
-<p><strong>此外，get和post还有一个重要的区别：</strong></p>
-<p><code>get</code>产生一个<code>TCP</code>数据包；<code>POST</code>产生两个TCP数据包。对于<code>get</code>方式的请求，浏览器会把<code>http header</code>和<code>data</code>一并发送出去，服务器响应200（返回数据）；而对于<code>post</code>，浏览器先发送<code>header</code>，服务器响应<code>100 continue</code>，浏览器再发送<code>data</code>，服务器响应<code>200 ok</code>（返回数据）。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/08/07/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/#more" rel="contents">
@@ -1318,12 +1313,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.1m</span>
+    <span title="站点总字数">1.2m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:08</span>
+    <span title="站点阅读时长">17:27</span>
 </div>
 
         
