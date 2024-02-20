@@ -1115,7 +1115,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-02 12:04:18" itemprop="dateModified" datetime="2023-09-02T12:04:18+08:00">2023-09-02</time>
+                <time title="修改时间：2024-02-20 11:16:09" itemprop="dateModified" datetime="2024-02-20T11:16:09+08:00">2024-02-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1158,6 +1158,19 @@
       
           <h2 id="概述一下你认识的redis">0概述一下你认识的Redis？</h2>
 <p>Redis本质上是一个Key-Value类型的内存数据库，很像memcached，整个数据库统统加载 在内存当中进行操作，定期通过异步操作把数据库数据flush到硬盘上进行保存。 因为是纯内存操作，Redis的性能非常出色，每秒可以处理超过 10万次读写操作，是已知性能 最快的Key-Value DB。 Redis的出色之处不仅仅是性能，Redis最大的魅力是支持保存多种数据结构，此外单个value 的最大限制是1GB，不像 memcached只能保存1MB的数据，因此Redis可以用来实现很多有用的功能。比方说用他的List来做FIFO双向链表，实现一个轻量级的高性 能消息队列服务，用他的Set可 以做高性能的tag系统等等。 另外Redis也可以对存入的Key-Value设置expire时间，因此也可以被当作一 个功能加强版的 memcached来用。 Redis的主要缺点是数据库容量受到物理内存的限制，不能用作海量数据 的高性能读写，因此Redis适合的场景主要局限在较小数据量的高性能操作和运算上。</p>
+<h3 id="redis-与其他-key---value-缓存产品有以下三个特点">0.1 Redis 与其他 key - value 缓存产品有以下三个特点</h3>
+<ul>
+<li><strong>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</strong></li>
+<li><strong>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</strong></li>
+<li><strong>Redis支持数据的备份，即master-slave模式的数据备份。</strong></li>
+</ul>
+<h3 id="redis-优势">0.2 Redis 优势</h3>
+<ul>
+<li><strong>性能极高 。Redis能读的速度是110000次/s,写的速度是81000次/s 。</strong></li>
+<li><strong>丰富的数据类型。 Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets数据类型操作。</strong></li>
+<li><strong>操作的原子性。 Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。</strong></li>
+<li><strong>丰富的特性。Redis还支持 publish/subscribe, 通知, key 过期等等特性</strong></li>
+</ul>
 <h2 id="redis数据类型">1. Redis数据类型</h2>
 <p>Redis提供了<code>String,Hash,List,Set,Zset</code>五种数据类型。</p>
 <h3 id="string">1.1 String</h3>
@@ -1316,7 +1329,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:33</span>
+    <span title="站点阅读时长">17:35</span>
 </div>
 
         

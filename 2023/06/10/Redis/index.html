@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://example.com/2023/06/10/Redis/keyspace.png">
 <meta property="og:image" content="https://example.com/2023/06/10/Redis/livetime.png">
 <meta property="article:published_time" content="2023-06-10T04:18:36.000Z">
-<meta property="article:modified_time" content="2023-07-08T01:26:24.181Z">
+<meta property="article:modified_time" content="2024-02-20T06:50:03.838Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
@@ -238,7 +238,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-08 09:26:24" itemprop="dateModified" datetime="2023-07-08T09:26:24+08:00">2023-07-08</time>
+                <time title="修改时间：2024-02-20 14:50:03" itemprop="dateModified" datetime="2024-02-20T14:50:03+08:00">2024-02-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -367,8 +367,14 @@
 <li>跳表是一种实现起来很简单，单层多指针的链表，它查找效率很高，堪比优化过的二叉平衡树，且比平衡树的实现。</li>
 </ul>
 <h3 id="压缩列表">压缩列表</h3>
-<p>压缩列表(ziplist)是列表键和哈希键的底层实现之一。当一个列表键只包含少量列表项，并且每个列表项要么就是小整数值，要么就是长度比较短的字符串，那么Redis就会使用压缩列表来做列表键的底层实现。</p>
-<p><strong>特性</strong></p>
+<p><strong>压缩列表(ziplist)是列表键和哈希键的底层实现之一</strong>。当一个列表键只包含少量列表项，并且每个列表项要么就是小整数值，要么就是长度比较短的字符串，那么Redis就会使用压缩列表来做列表键的底层实现。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">ziplist</span> &#123;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> *zl;         <span class="comment">/* 压缩列表的地址 */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> zlbytes;       <span class="comment">/* 压缩列表已使用的字节数 */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> zltail_offset;<span class="comment">/* 尾节点偏移量 */</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> zllen;         <span class="comment">/* 压缩列表中节点的数量 */</span></span><br><span class="line">&#125; ziplist;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> <span class="title class_">zlentry</span> &#123;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> prevrawlensize, prevrawlen;	<span class="comment">//存储前一个节点的长度所需的字节数和长度。</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> lensize, len;	<span class="comment">//当前节点长度字段所需的字节数</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> headersize;	<span class="comment">//节点头部的总长度</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> encoding;		<span class="comment">//编码方式</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> *p;			<span class="comment">//指向当前节点值的指针</span></span><br><span class="line">&#125; zlentry;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>节省内存：相比与链表作为列表低层数据结构，压缩列表可以在一定程度上减少存储所需要的内存空间（不需要维护钱后驱指针）。【像listNode未存储元素时需要24字节，字典也是24，而压缩列表只需要6字节）</li>
+<li>快速访问：压缩列表因为是采用连续内存空间的存储方式，因此可以提供更快的访问速度，并且使用了连续内存指针，减少随机访问的开销</li>
+<li>支持存储多种数据类型：压缩列表可以存储不同类型的元素，如字符串、整数等等。</li>
+</ul>
+<p><strong>缺点</strong>： - <strong>可能存在扩容开销：当压缩列表需要插入更多元素是，由于内存空间连续，在扩容时会导致内存的重新分配和元素的拷贝操作。</strong> - <strong>存储压缩带来计算开销：为节省内存，压缩列表会压缩存储数据，而在读取时为了还原数据需要执行解压缩。</strong> - <strong>不适合数据量大的情况：压缩列表因为内存空间的连续，并且需要对数据进行压缩和解压缩操作，这对数据量大的情况下可能第一没有那么多的连续内存空间存储，第二压缩算法对于较大数据量情况下可能会导致存储和读取的效率变低。</strong></p>
 <ul>
 <li>看他的名字就能看出来，是为了节省内存造的列表结构，由连续内存块组成的顺序型数据结构</li>
 </ul>
@@ -1022,7 +1028,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:33</span>
+    <span title="站点阅读时长">17:35</span>
 </div>
 
         
