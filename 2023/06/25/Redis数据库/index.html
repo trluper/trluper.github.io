@@ -67,7 +67,7 @@
 <meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/ziplist结构图.png">
 <meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/跳跃表结构.png">
 <meta property="article:published_time" content="2023-06-25T08:16:51.000Z">
-<meta property="article:modified_time" content="2024-02-21T12:43:10.047Z">
+<meta property="article:modified_time" content="2024-02-22T01:28:38.025Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="Redis">
@@ -269,7 +269,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-21 20:43:10" itemprop="dateModified" datetime="2024-02-21T20:43:10+08:00">2024-02-21</time>
+                <time title="修改时间：2024-02-22 09:28:38" itemprop="dateModified" datetime="2024-02-22T09:28:38+08:00">2024-02-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1038,10 +1038,14 @@
 <h4 id="redlock是否真的能彻底解决分布式锁的问题呢">23.3.2 RedLock是否真的能彻底解决分布式锁的问题呢？</h4>
 <p>正常情况下，是可以解决分布式问题的。但是面对极端情况下，RedLock可能就不包熟了！</p>
 <ul>
-<li><strong>加锁的节点宕机情景</strong> 原本ClientA通过RedLock加锁成功在Redis_1、Redis_2、Redis_3实例上成功加锁！但过了一段时间后，Redis_3节点宕机掉后重启加入集群，但加锁的数据没了，此时被ClientB趁虚而入，在Redis_3、Redis_4、Redis_5节点成功超半数加锁，那么ClientA和ClientB同时持有锁，这个锁就不包熟了！</li>
-</ul>
-<p><img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/加锁节点宕机.png" width="700"> - <strong>解决办法：</strong> - <strong>持久化数据，</strong>使用AOF方式来存储数据，尽可能地保存全部锁的数据，当节点宕机之后也能保证重启之后锁依然在Redis中。AOF同步策略中，有每秒同步、每次同步。设置位每秒同步，每次进行写操作的时候都会写日志，就是效率优点低。 - <strong>延迟启动</strong>。光靠持久化数据还不够，必须估计到数据还没有持久化到磁盘后就宕机的情况。此时我们可以采取延迟启动。Redis宕机之后不要立即重启，而是要等分布式锁中最长的Key的TTL（超时时间）过了之后再启动，保证全部Key都被强制解锁了。但这种方案需要用一个东西来存储每个分布式锁的TTL时间。</p>
+<li><strong>加锁的节点宕机情景</strong> 原本ClientA通过RedLock加锁成功在Redis_1、Redis_2、Redis_3实例上成功加锁！但过了一段时间后，Redis_3节点宕机掉后重启加入集群，但加锁的数据没了，此时被ClientB趁虚而入，在Redis_3、Redis_4、Redis_5节点成功超半数加锁，那么ClientA和ClientB同时持有锁，这个锁就不包熟了！ <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/加锁节点宕机.png" width="700">
 <ul>
+<li><strong>解决办法：</strong>
+<ul>
+<li><strong>持久化数据，</strong>使用AOF方式来存储数据，尽可能地保存全部锁的数据，当节点宕机之后也能保证重启之后锁依然在Redis中。AOF同步策略中，有每秒同步、每次同步。设置位每秒同步，每次进行写操作的时候都会写日志，就是效率优点低。</li>
+<li><strong>延迟启动</strong>。光靠持久化数据还不够，必须估计到数据还没有持久化到磁盘后就宕机的情况。此时我们可以采取延迟启动。Redis宕机之后不要立即重启，而是要等分布式锁中最长的Key的TTL（超时时间）过了之后再启动，保证全部Key都被强制解锁了。但这种方案需要用一个东西来存储每个分布式锁的TTL时间。</li>
+</ul></li>
+</ul></li>
 <li><p><strong>极端场景二：由于Key在Redis中具有超时自动释放的机制，而客户端无法感知自己的锁失效了。</strong>那么就会出现一种情况，客户端<code>client1</code>获得分布式锁后，恰巧遇到客户端执行垃圾回收时GC中<code>STW(stop the world)</code>停顿机制导致客户端阻塞一段时间，此时<code>client1</code>失效，<code>client2</code>获得锁，而<code>client1</code>不知道自己的锁已经失效了，这时候<code>client1</code>再进行写时就会发生错误. <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/RedLock锁流程.png" width="700"> &gt;除了GC停顿，还有很多原因可能导致进程pause。例如进程可能读取尚未进入内存的数据，所以它得到一个 page fault （错误页面）并且等待 page 被加载进缓存；还有可能你依赖于网络服务；或者其他进程占用 CPU；或者其他意外发生 SIGSTOP 等。</p>
 <ul>
 <li><strong>解决方法：</strong>
@@ -1613,7 +1617,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">17:35</span>
+    <span title="站点阅读时长">17:43</span>
 </div>
 
         
