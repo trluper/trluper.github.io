@@ -50,7 +50,7 @@
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/mainkey.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/mysql查询流程.png">
 <meta property="article:published_time" content="2022-08-04T13:34:03.000Z">
-<meta property="article:modified_time" content="2024-02-28T02:56:31.736Z">
+<meta property="article:modified_time" content="2024-02-28T03:20:48.150Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="MySQL">
@@ -252,7 +252,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-28 10:56:31" itemprop="dateModified" datetime="2024-02-28T10:56:31+08:00">2024-02-28</time>
+                <time title="修改时间：2024-02-28 11:20:48" itemprop="dateModified" datetime="2024-02-28T11:20:48+08:00">2024-02-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -426,7 +426,7 @@
 </ul>
 <p><strong>间隙锁的作用：</strong></p>
 <ul>
-<li><strong><code>next-key-value</code>解决可重复读隔离级别下的幻读</strong></li>
+<li><strong><code>gap-lock</code>通过锁定前后一段间隙范围，可以解决可重复读隔离级别下的幻读的问题</strong></li>
 <li>为了数据恢复和复制的需要。</li>
 </ul>
 <p><strong><em>注意：可重复读级别下才会有间隙锁！还有如果对不存的记录操作即使使用<code>=</code>也会产生间隙锁，如<code>select id,name from test where id=3 for update;</code>,id=3是不存在的记录,此时会锁住区间[1,5]</em></strong></p>
@@ -438,7 +438,7 @@
 <ul>
 <li><strong>InnoDB 中的行锁的实现依赖于索引，一旦某个加锁操作没有使用到索引，那么该锁就会退化为表锁。</strong></li>
 <li><strong>记录锁</strong>存在于包括主键索引在内的唯一索引中，锁定单条索引记录。</li>
-<li><strong>间隙锁</strong>存在于非唯一索引中，对于唯一/主键索引需要范围查找或者查找不存在的值才会触发，锁定开区间范围内的一段间隔，它是基于临键锁实现的。</li>
+<li><strong>间隙锁</strong>存在于非唯一索引中，对于唯一/主键索引需要范围查找或者查找不存在的值才会触发，锁定开区间（间隙）范围内的一段间隔，它是基于临键锁实现的。</li>
 <li><strong>临键锁</strong>存在于非唯一索引中，对于唯一/主键索引需要范围查找或者查找不存在的值才会触发，它是一种特殊的间隙锁,是记录锁(Record Locks)和间隙锁(Gap Locks)的结合，锁定一段左开右闭的索引区间。 <img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/lock_gap_next.png" width="600"></li>
 </ul>
 <blockquote>
@@ -459,7 +459,7 @@
 <li>意向共享锁（IS）和 意向排他锁（IX）都是<strong>表锁</strong>。</li>
 <li><strong>意向锁是一种不与行级锁冲突的表级锁，这一点非常重要。它只会与非意向的表锁冲突</strong></li>
 <li><strong>意向锁与意向锁之间永远是兼容的</strong></li>
-<li>意向锁是<code>InnoDB</code>自动加的， 不需用户干预。当兵对表或对行加排他锁时，就会获得意向排他锁；加共享锁时，会获得意向共享锁。</li>
+<li>意向锁是<code>InnoDB</code>自动加的， 不需用户干预。当对表或对行加排他锁时，就会获得意向排他锁；加共享锁时，会获得意向共享锁。</li>
 <li>意向锁是在<code>InnoDB</code>下存在的内部锁，对于<code>MyISAM</code>而言 没有意向锁之说。</li>
 </ul>
 <table>
