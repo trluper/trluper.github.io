@@ -1115,7 +1115,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-04 11:21:27" itemprop="dateModified" datetime="2024-03-04T11:21:27+08:00">2024-03-04</time>
+                <time title="修改时间：2024-03-07 10:50:46" itemprop="dateModified" datetime="2024-03-07T10:50:46+08:00">2024-03-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1137,14 +1137,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>55k</span>
+              <span>62k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>50 分钟</span>
+              <span>56 分钟</span>
             </span>
 
         </div>
@@ -1175,7 +1175,12 @@
 <p>Redis提供了<code>String,Hash,List,Set,Zset</code>五种数据类型。</p>
 <h3 id="string">1.1 String</h3>
 <p><code>String</code>数据结构是最简单的<code>key-value</code>类型，<code>value</code>不仅可以是<code>String</code>,也可以是数字，包括整数，浮点数和二进制数。</p>
-<p><code>string</code> 数据结构是简单的 <code>key-value</code> 类型。虽然 Redis 是用 C 语言写的，但是 Redis 并没有使用 C 的字符串表示，而是自己构建了一种 <strong>简单动态字符串（simple dynamic string，SDS）</strong>。相比于 C 的原生字符串，Redis 的 SDS 不光可以保存文本数据还可以保存二进制数据，并且获取字符串长度复杂度为 O(1)（C 字符串为 O(N)）,除此之外，Redis 的 SDS API 是安全的，不会造成缓冲区溢出。</p>
+<p><code>string</code> 数据结构是简单的 <code>key-value</code> 类型。虽然 Redis 是用 C 语言写的，但是 Redis 并没有使用 C 的字符串表示，而是自己构建了一种 <strong>简单动态字符串（simple dynamic string，SDS）</strong>。相比于 C 的原生字符串：</p>
+<ul>
+<li><strong>Redis 的 SDS 不光可以保存文本数据还可以保存二进制数据</strong></li>
+<li><strong>并且获取字符串长度复杂度为 O(1)（C 字符串为 O(N)）</strong></li>
+<li><strong>除此之外，Redis 的 SDS API 是安全的，不会造成缓冲区溢出。因为 SDS 在拼接字符串之前会检查 SDS 空间是否满足要求，如果空间不够会自动扩容，所以不会导致缓冲区溢出的问题</strong></li>
+</ul>
 <p>主要的应用有：缓存，计数（比如用户的访问次数、热点文章的点赞转发数量等等），共享session和限速。</p>
           <!--noindex-->
             <div class="post-button">
@@ -1329,7 +1334,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">18:02</span>
+    <span title="站点阅读时长">18:09</span>
 </div>
 
         
