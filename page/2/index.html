@@ -329,7 +329,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-13 21:20:13" itemprop="dateModified" datetime="2024-03-13T21:20:13+08:00">2024-03-13</time>
+                <time title="修改时间：2024-03-17 17:23:37" itemprop="dateModified" datetime="2024-03-17T17:23:37+08:00">2024-03-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -347,14 +347,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -438,6 +438,15 @@
 <li>Consumer： 消息消费者，就是接受消息的程序</li>
 <li>Channel： 消息通道，在客户端的每个连接里，可建立多个channel，每个channel代表一个会话任务</li>
 </ul>
+<h3 id="什么原因会导致-mq-消息积压">8. 什么原因会导致 MQ 消息积压?</h3>
+<p>MQ消息积压是指生产者发送的消息在Broker端大量堆积，无法被消费者及时消费，导致业务功能无法正常使用。以下是一些导致MQ消息积压的常见原因：</p>
+<p>-** 流量变大而服务器配置偏低<strong>：当消息的产生速度大于消费速度时，如果RabbitMQ服务器配置较低，就可能导致消息积压。 - </strong>消费者故障<strong>：如果消费者出现宕机或网络问题，导致无法及时消费消息，消息会持续堆积。 - </strong>程序逻辑设计问题<strong>：如果生产者持续生产消息，但消费者由于某种原因（如处理逻辑耗时过长）消费能力不足，也会造成消息积压。 - </strong>新上线的消费者功能存在BUG<strong>：新上线的消费者功能如果有缺陷，可能导致消息无法被正常消费，从而引发消息堆积。 - </strong>配置不合理：<strong>消息队列的容量设置过小或消费者的线程数设置过少，都可能导致消息积压。 - </strong>生产者推送大量消息**：在特定场景下，如大促活动，生产者可能短时间内推送大量消息至Broker，如果消费者的消费能力不足以应对这种突发流量，也会导致消息堆积。</p>
+<p>了解决MQ消息积压问题，可以采取以下策略：</p>
+<ul>
+<li>扩容：纵向扩容，增加服务器资源，如内存和CPU；横向扩容，将单机改为集群模式，增加集群节点，并增加消费者数量。</li>
+<li>优化程序逻辑：确保生产者和消费者的逻辑设计合理，避免生产者过快生产消息或消费者处理消息过慢。</li>
+<li>监控和报警：建立有效的监控和报警机制，及时发现并解决消息积压问题。</li>
+</ul>
 <h3 id="有几百万消息持续积压几小时怎么办">8. 有几百万消息持续积压几小时，怎么办？</h3>
 <p>消息积压处理办法：<strong>临时紧急扩容</strong></p>
 <ul>
@@ -504,7 +513,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-16 22:08:34" itemprop="dateModified" datetime="2024-03-16T22:08:34+08:00">2024-03-16</time>
+                <time title="修改时间：2024-03-17 17:18:45" itemprop="dateModified" datetime="2024-03-17T17:18:45+08:00">2024-03-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -526,14 +535,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>63k</span>
+              <span>64k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>57 分钟</span>
+              <span>58 分钟</span>
             </span>
 
         </div>
@@ -1194,7 +1203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-11 11:48:25" itemprop="dateModified" datetime="2024-03-11T11:48:25+08:00">2024-03-11</time>
+                <time title="修改时间：2024-03-17 17:27:44" itemprop="dateModified" datetime="2024-03-17T17:27:44+08:00">2024-03-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1212,14 +1221,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>40k</span>
+              <span>41k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>36 分钟</span>
+              <span>38 分钟</span>
             </span>
 
         </div>
@@ -1597,7 +1606,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:04</span>
+    <span title="站点阅读时长">19:07</span>
 </div>
 
         
