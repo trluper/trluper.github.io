@@ -37,6 +37,7 @@
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/ilock.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/ReadView结构.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/log.png">
+<meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/redolog刷盘时机.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/ib_logfile.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/master_salve.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/two_stage.png">
@@ -63,7 +64,7 @@
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/mysql查询流程.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/condition.png">
 <meta property="article:published_time" content="2022-08-04T13:34:03.000Z">
-<meta property="article:modified_time" content="2024-03-09T05:52:09.276Z">
+<meta property="article:modified_time" content="2024-03-18T01:02:41.425Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="MySQL">
@@ -265,7 +266,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-09 13:52:09" itemprop="dateModified" datetime="2024-03-09T13:52:09+08:00">2024-03-09</time>
+                <time title="修改时间：2024-03-18 09:02:41" itemprop="dateModified" datetime="2024-03-18T09:02:41+08:00">2024-03-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -666,10 +667,11 @@
 <h4 id="innodb_flush_log_at_trx_commit-参数控制的是什么">4.8 innodb_flush_log_at_trx_commit 参数控制的是什么？</h4>
 <p>redo log buffer的一个刷盘策略是在每次事务提交后都会将里面的内容进行落盘，这是个默认行为（默认值为1）。除此之外，InnoDB 还提供了另外两种策略，由参数 innodb_flush_log_at_trx_commit 参数控制，可取的值有：0、1、2，<strong>默认值为 1</strong>，这三个值分别代表的策略如下：</p>
 <ul>
-<li>当设置该参数为 <code>0</code> 时，<strong>表示每次事务提交时 ，还是将 <code>redo log</code> 留在 <code>redo log buffer</code> 中 ，该模式下在事务提交时不会主动触发写入磁盘的操作</strong>。</li>
-<li>当设置该参数为 1 时，<strong>表示每次事务提交时，都将缓存在 <code>redo log buffer</code> 里的 <code>redo log</code> 直接持久化到磁盘，这样可以保证 MySQL 异常重启之后数据不会丢失</strong>。</li>
+<li>当设置该参数为 <code>0</code> 时，<strong>表示每次事务提交时 ，还是将 <code>redo log</code> 留在 <code>redo log buffer</code> 中 ，该模式下在事务提交时不会主动触发写入磁盘的操作</strong>。（异步）</li>
+<li>当设置该参数为 1 时，<strong>表示每次事务提交时，都将缓存在 <code>redo log buffer</code> 里的 <code>redo log</code> 直接持久化到磁盘，这样可以保证 MySQL 异常重启之后数据不会丢失</strong>。(同步刷新）)</li>
 <li>当设置该参数为 2 时，<strong>表示每次事务提交时，都只是缓存在 redo log buffer 里的 redo log 写到 redo log 文件，注意写入到「 redo log 文件」并不意味着写入到了磁盘</strong>，因为操作系统的文件系统中有个 Page Cache（如果你想了解 Page Cache，可以看这篇 (opens new window)），Page Cache 是专门用来缓存文件数据的，所以写入「 redo log文件」意味着写入到了操作系统的文件缓存。</li>
 </ul>
+<p><img src="/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/redolog刷盘时机.png" width="600"> &gt;可以看到异步刷新redo log的做法不能保证一致性（），因为在你还没有完成将redo log buffer刷入磁盘时宕机，就会丢失这些内存上的数据</p>
 <p>这三个参数的数据安全性和写入性能的比较如下：</p>
 <ul>
 <li>数据安全性：<strong>参数 1 &gt; 参数 2 &gt; 参数 0</strong></li>
@@ -1730,7 +1732,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:07</span>
+    <span title="站点阅读时长">19:08</span>
 </div>
 
         
