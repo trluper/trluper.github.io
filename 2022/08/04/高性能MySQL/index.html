@@ -64,7 +64,7 @@
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/mysql查询流程.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/condition.png">
 <meta property="article:published_time" content="2022-08-04T13:34:03.000Z">
-<meta property="article:modified_time" content="2024-03-18T01:02:41.425Z">
+<meta property="article:modified_time" content="2024-03-18T01:18:51.927Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="MySQL">
@@ -266,7 +266,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-18 09:02:41" itemprop="dateModified" datetime="2024-03-18T09:02:41+08:00">2024-03-18</time>
+                <time title="修改时间：2024-03-18 09:18:51" itemprop="dateModified" datetime="2024-03-18T09:18:51+08:00">2024-03-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -415,7 +415,7 @@
 </ul></li>
 <li><p><strong>解除死锁：</strong>产生死锁时，能够从死锁中解脱处理，比如一种策略超时退出。在MySQL中这个超时时间可以通过参数<code>innodb_lock_wait_timeout</code>来设置，默认为<code>50s</code>.</p></li>
 <li><p><strong>检查死锁：</strong>在MySQL种有这样的机制，线程发现死锁后，会主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。可将参数<code>innodb_deadlock_detect</code>设置为<code>on</code>，表示开启这个逻辑。但是它有额外负担的。每当一个事务被锁的时候，就要看看它所依赖的线程有没有被别人锁住，如此循环，消耗大。</p></li>
-<li><p><strong>一种特殊情况：</strong>在<code>REPEATABLE-READ</code>隔离级别下，如果两个线程同时对相同条件记录用<code>SELECT…FOR UPDATE</code>加排他锁，在没有符合该条件记录情况下，两个线程都会加锁成功。程序发现记录尚不存在，就试图插入一条新记录，如果两个线程都这么做，就会出现死锁。这种情况下，将隔离级别改成<code>READ COMMITTED</code>，就可避免问题。</p></li>
+<li><p><strong>一种特殊情况：</strong>在<code>REPEATABLE-READ</code>隔离级别下，如果两个线程同时对相同条件记录用<code>SELECT…FOR UPDATE</code>加排他锁，在没有符合该条件记录情况下，两个线程都会加锁成功。程序发现记录尚不存在，就试图插入一条新记录，如果两个线程都这么做，就会出现死锁。这种情况下，将隔离级别改成<code>READ COMMITTED</code>，就可避免问题。（这是两个事务都获得间隙锁（间隙锁之间兼容），但插入意向锁无法获取（）插入意向锁与间隙锁不兼容））</p></li>
 </ul>
 <h4 id="三种行级锁模式原理">2.4 三种行级锁模式（原理）</h4>
 <h5 id="记录锁">2.4.1 记录锁</h5>
