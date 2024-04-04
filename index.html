@@ -194,6 +194,367 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/04/02/go%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/02/go%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">go基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-02 22:47:56" itemprop="dateCreated datePublished" datetime="2024-04-02T22:47:56+08:00">2024-04-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-04 11:48:51" itemprop="dateModified" datetime="2024-04-04T11:48:51+08:00">2024-04-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index"><span itemprop="name">go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="go简述">1. go简述</h1>
+<h2 id="为什么要创造一门编程语言">1.1 为什么要创造一门编程语言</h2>
+<ul>
+<li>C/C++ 的发展速度无法跟上计算机发展的脚步，十多年来也没有出现一门与时代相符的主流系统编程语言，因此人们需要一门新的系统编程语言来弥补这个空缺，尤其是在计算机信息时代。</li>
+<li>相比计算机性能的提升，软件开发领域不被认为发展得足够快或者比硬件发展得更加成功（有许多项目均以失败告终），同时应用程序的体积始终在不断地扩大，这就迫切地需要一门具备更高层次概念的低级语言来突破现状。</li>
+<li>在 Go 语言出现之前，开发者们总是面临非常艰难的抉择，<strong>究竟是使用执行速度快但是编译速度并不理想的语</strong>言（如：C++），<strong>还是使用编译速度较快但执行效率不佳的语言</strong>（如：.NET、Java），或者说开发难度较低但执行速度一般的动态语言呢？显然，<strong>Go 语言在这 3 个条件之间做到了最佳的平衡：快速编译，高效执行，易于开发。</strong></li>
+</ul>
+<h2 id="go语言的发展目标">1.2 Go语言的发展目标</h2>
+<ul>
+<li>Go 语言的主要目标是将<strong>静态语言的安全性和高效性(C++)与动态语言的易开发性(python)</strong>进行有机结合，达到完美平衡，从而使编程变得更加有乐趣，而不是在艰难抉择中痛苦前行。</li>
+</ul>
+<p>因此<strong>，Go 语言是一门类型安全和内存安全的编程语言。虽然 Go 语言中仍有指针的存在，但并不允许进行指针运算。</strong></p>
+<ul>
+<li>Go 语言的另一个目标是对于<strong>网络通信、并发和并行编程的极佳支持</strong>，从而更好地利用大量的分布式和多核的计算机，这一点对于谷歌内部的使用来说就非常重要了。设计者通过** goroutine** 这种轻量级线程的概念来实现这个目标，然后通过** channel **来实现各个 goroutine 之间的通信。他们实现了分段栈增长和 goroutine 在线程基础上多路复用技术的自动化。</li>
+</ul>
+<p>这个特性显然是 Go 语言最强有力的部分，不仅支持了日益重要的多核与多处理器计算机，也弥补了现存编程语言在这方面所存在的不足。</p>
+<ul>
+<li>Go 语言中另一个非常重要的特性就是它的<strong>构建速度</strong>（编译和链接到机器代码的速度），一般情况下构建一个程序的时间只需要数百毫秒到几秒。作为大量使用<code>C++</code> 来构建基础设施的谷歌来说，无疑从根本上摆脱了 C++ 在构建速度上非常不理想的噩梦。这不仅极大地提升了开发者的生产力，同时也使得软件开发过程中的代码测试环节更加紧凑，而不必浪费大量的时间在等待程序的构建上。</li>
+</ul>
+<p>依赖管理是现今软件开发的一个重要组成部分，但是 C 语言中“头文件”的概念却导致越来越多因为依赖关系而使得构建一个大型的项目需要长达几个小时的时间。人们越来越需要一门具有严格的、简洁的依赖关系分析系统从而能够快速编译的编程语言。这正是 Go 语言采用<strong>包模型</strong>的根本原因，这个模型通过严格的依赖关系检查机制来加快程序构建的速度，提供了非常好的可量测性。</p>
+<p>整个 Go 语言标准库的编译时间一般都在** 20 **秒以内，其它的常规项目也只需要半秒钟的时间来完成编译工作。这种闪电般的编译速度甚至比编译 C 语言或者 Fortran 更加快，使得编译这一环节不再成为在软件开发中困扰开发人员的问题。在这之前，动态语言将快速编译作为自身的一大亮点，像<code>C++</code>那样的静态语言一般都有非常漫长的编译和链接工作。而同样作为静态语言的 Go 语言，通过自身优良的构建机制，成功地去除了这个弊端，使得程序的构建过程变得微不足道，拥有了像脚本语言和动态语言那样的高效开发的能力。</p>
+<ul>
+<li><p>另外<strong>，Go 语言在执行速度方面也可以与 C/C++ 相提并论。</strong></p></li>
+<li><p>由于<strong>内存问题</strong>（通常称为内存泄漏）长期以来一直伴随着 C++ 的开发者们，Go 语言的设计者们认为内存管理不应该是开发人员所需要考虑的问题。因此尽管 Go 语言像其它静态语言一样执行本地代码，但它依旧运行在某种意义上的<strong>虚拟机</strong>，以此来实现高效快速的<strong>垃圾回收</strong>（使用了一个简单的标记-清除算法）。</p></li>
+</ul>
+<p>尽管垃圾回收并不容易实现，但考虑这将是未来并发应用程序发展的一个重要组成部分，Go 语言的设计者们还是完成了这项艰难的任务。</p>
+<ul>
+<li><p>Go 语言还能够在运行时进行<strong>反射</strong>相关的操作。</p></li>
+<li><p>使用 <strong>go install </strong>能够很轻松地对第三方包进行部署。</p></li>
+<li><p>此外，Go 语言还支持调用由 C 语言编写的海量库文件（第 3.9 节），从而能够将过去开发的软件进行快速迁移。</p></li>
+</ul>
+<h2 id="语言的特性">1.3 语言的特性</h2>
+<p>Go 语言从本质上（程序和结构方面）来实现并发编程。</p>
+<p><strong>因为 Go 语言没有类和继承的概念</strong>，所以它和 Java 或 C++ 看起来并不相同。但是它通过<strong>接口 (interface) 的概念来实现多态性</strong>。Go 语言有一个清晰易懂的轻量级类型系统，在类型之间也没有层级之说。因此可以说这是一门混合型的语言。</p>
+<p>Go 语言使用<strong>静态类型</strong>，所以它是类型安全的一门语言，加上通过构建到本地代码，程序的执行速度也非常快。</p>
+<p>作为<strong>强类型语言</strong>，<strong>隐式的类型转换是不被允许的</strong>，记住一条原则：让所有的东西都是<strong>显式</strong>的。</p>
+<p>Go 语言其实也有一些<strong>动态语言的特性（通过关键字 var）</strong>，所以它对那些逃离 Java 和 .Net 世界而使用 Python、Ruby、PHP 和 JavaScript 的开发者们也具有很大的吸引力。</p>
+<p>Go 语言支持交叉编译，比如说你可以在运行 Linux 系统的计算机上开发运行 Windows 下运行的应用程序。这是第一门完全支持 UTF-8 的编程语言，这不仅体现在它可以处理使用 UTF-8 编码的字符串，就连它的源码文件格式都是使用的 UTF-8 编码。Go 语言做到了真正的国际化！</p>
+<h2 id="相关特性的缺失">1.4 相关特性的缺失</h2>
+<p>许多能够在大多数面向对象语言中使用的特性 Go 语言都没有支持，但其中的一部分可能会在未来被支持。</p>
+<ul>
+<li>为了简化设计，<strong>不支持函数重载和操作符重载</strong></li>
+<li>为了避免在 C/C++ 开发中的一些 Bug 和混乱，<strong>不支持隐式转换</strong></li>
+<li>Go 语言通过另一种途径实现面向对象设计（第 10-11 章）来放弃类和类型的继承</li>
+<li>尽管在接口的使用方面（第 11 章）可以实现类似变体类型的功能，但本身不支持变体类型</li>
+<li>不支持动态加载代码</li>
+<li>不支持动态链接库</li>
+<li>不支持泛型</li>
+<li>通过 recover() 和 panic() 来替代异常机制（第 13.2-13.3 节）</li>
+<li><strong>不支持静态变量</strong></li>
+</ul>
+<h2 id="linux上安装go">1.5 Linux上安装go</h2>
+<ul>
+<li>首先进入<a target="_blank" rel="noopener" href="https://golang.google.cn/dl/">go官网</a>下载指定的已编译好的源码包（ps:这里我的电脑是x86-64架构所以选择了`go1.22.1.linux-amd64.tar.gz，将其下载下来 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="comment">//golang.google.cn/dl/go1.22.1.linux-amd64.tar.gz</span></span><br></pre></td></tr></table></figure></li>
+<li>解压缩到指定路径 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar  -C /usr/lib/go/ -xvf go1<span class="number">.22</span><span class="number">.1</span>.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure></li>
+<li><p>建立软连接（可选) <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/lib/go/bin/go /usr/bin/go</span><br></pre></td></tr></table></figure></p></li>
+<li><p>之后我们需要能够让Linux能够找到<code>go</code>这个编译器，所以需要配置<code>~/.bashrc</code>文件 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> GOROOT=/usr/lib/go</span><br><span class="line"><span class="keyword">export</span> GOPATH=$PATH:$GOROOT/bin</span><br><span class="line"><span class="keyword">export</span> PATH=$PATH:/usr/bin</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h1 id="go项目搭建先识">2 Go项目搭建先识</h1>
+<h2 id="go的25个关键字和36个预定义标识符">2.1 Go的25个关键字和36个预定义标识符</h2>
+<p>Go语言的关键字保留很少，只有25个，之所以刻意地将 Go 代码中的关键字保持的这么少，是为了简化在编译过程第一步中的代码解：</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>break</td>
+<td>default</td>
+<td>func</td>
+<td>interface</td>
+<td>select</td>
+</tr>
+<tr class="even">
+<td>case</td>
+<td>defer</td>
+<td>go</td>
+<td>map</td>
+<td>struct</td>
+</tr>
+<tr class="odd">
+<td>chan</td>
+<td>else</td>
+<td>goto</td>
+<td>package</td>
+<td>switch</td>
+</tr>
+<tr class="even">
+<td>const</td>
+<td>fallthrough</td>
+<td>if</td>
+<td>range</td>
+<td>type</td>
+</tr>
+<tr class="odd">
+<td>continue</td>
+<td>for</td>
+<td>import</td>
+<td>return</td>
+<td>var</td>
+</tr>
+</tbody>
+</table>
+<p>除了以上介绍的这些关键字，Go 语言还有 36 个预定义标识符，其中包含了基本类型的名称和一些基本的内置函数（第 6.5 节），它们的作用都将在接下来的章节中进行进一步地讲解。</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>append</td>
+<td>bool</td>
+<td>byte</td>
+<td>cap</td>
+<td>close</td>
+<td>complex</td>
+<td>complex64</td>
+<td>complex128</td>
+<td>uint16</td>
+</tr>
+<tr class="even">
+<td>copy</td>
+<td>false</td>
+<td>float32</td>
+<td>float64</td>
+<td>imag</td>
+<td>int</td>
+<td>int8</td>
+<td>int16</td>
+<td>uint32</td>
+</tr>
+<tr class="odd">
+<td>int32</td>
+<td>int64</td>
+<td>iota</td>
+<td>len</td>
+<td>make</td>
+<td>new</td>
+<td>nil</td>
+<td>panic</td>
+<td>uint64</td>
+</tr>
+<tr class="even">
+<td>print</td>
+<td>println</td>
+<td>real</td>
+<td>recover</td>
+<td>string</td>
+<td>true</td>
+<td>uint</td>
+<td>uint8</td>
+<td>uintptr</td>
+</tr>
+</tbody>
+</table>
+<h2 id="包的概念导入与可见性">2.2 包的概念、导入与可见性</h2>
+<p><strong>包</strong>是结构化代码的一种方式：每个程序都由包（通常简称为 pkg）的概念组成，<strong>可以使用自身的包或者从其它包中导入内容。</strong></p>
+<p><strong>一个包可以由许多以 .go 为扩展名的源文件组成</strong>，因此文件名和包名一般来说都是不相同的。<strong>必须</strong>源文件中非注释的第一行指明这个文件属于哪个<strong>包</strong>： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br></pre></td></tr></table></figure> 一个应用程序可以包含不同的包，而且即使你只使用 main 包也不必把所有的代码都写在一个巨大的文件里：你可以用一些较小的文件，并且在每个文件非注释的第一行都使用 package main 来指明这些文件都属于 main 包。<strong>如果你打算编译包名不是为 main 的源文件，如 pack1，编译后产生的对象文件将会是 pack1.a 而不是可执行程序</strong>。另外要注意的是，所有的包名都应该使用小写字母。</p>
+<p>如果想要构建一个程序，则包和包内的文件都必须以<strong>正确的顺序</strong>进行编译。包的依赖关系决定了其构建顺序。</p>
+<p><strong>属于同一个包的源文件必须全部被一起编译</strong>，一个包即是编译时的一个<strong>单元</strong>，因此根据惯例，<strong>项目的每个目录都建议只包含一个包。</strong></p>
+<p>如果对一个包进行更改或重新编译，所有引用了这个包的客户端程序都必须全部重新编译。</p>
+<p>Go 中的包模型采用了<strong>显式依赖关系</strong>的机制来达到快速编译的目的，<strong>编译器</strong>会从后缀名为 <strong>.o</strong> 的对象文件（需要且只需要这个文件）中<strong>提取传递依赖类型</strong>的信息。</p>
+<p>如果 <code>A.go</code> 依赖 <code>B.go</code>，而<code>B.go</code>又依赖 <code>C.go</code>：</p>
+<ul>
+<li>编译 C.go, B.go, 然后是 A.go.</li>
+<li>为了编译 A.go, 编译器读取的是 B.o 而不是 C.o.</li>
+</ul>
+<p>这种机制对于编译大型的项目时可以显著地提升编译速度。每一段代码只会被编译一次</p>
+<h3 id="包的导入">2.2.1 包的导入</h3>
+<p>包的导入使用<code>import</code>,下面使用因式分解关键字导入包 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">&quot;fmt&quot;</span></span><br><span class="line">   <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure> &gt;当你导入多个包时，最好按照<strong>字母顺序排列包名</strong>，这样做更加清晰易读。</p>
+<h3 id="可见性规则">2.2.2 可见性规则</h3>
+<p>当标识符（包括常量、变量、类型、函数名、结构字段等等）以<strong>一个大写字母开头</strong>，如：Group1，那么使用这种形式的标识符的对象就可以被<strong>外部包</strong>的代码所使用（客户端程序需要先导入这个包），这被称为<strong>导出</strong>（像面向对象语言中的 <code>public</code>）；标识符如果以<strong>小写字母</strong>开头，则对包外是不可见的，但是它们在整个包的内部是可见并且可用的（像面向对象语言中的 private ）。</p>
+<p>因此，在<strong>导入</strong>一个外部包后，<strong>能够且只能够访问该包中导出的对象。</strong></p>
+<p>假设在包 <code>pack1</code> 中我们有一个变量或函数叫做<code>Thing</code>（以 T 开头，所以它能够被导出），那么在当前包中导入<code>pack1</code>包，<code>Thing</code> 就可以像面向对象语言那样使用点标记来调用：<code>pack1.Thing</code>（pack1 在这里是不可以省略的）。 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pack1</span><br><span class="line"></span><br><span class="line">pack1.Thing()</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果你导入了一个包却没有使用它，则会在构建程序时引发错误，如<code>imported and not used: xx</code>，这正是遵循了 Go 的格言：“没有不必要的代码！”。</p>
+</blockquote>
+<h2 id="函数">2.3 函数</h2>
+<ul>
+<li><p>这是定义一个函数<strong>最简单的格式</strong>： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">functionName</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure> 你可以在括号 () 中写入 0 个或多个函数的参数（使用逗号 , 分隔），每个参数的名称后面必须紧跟着该参数的类型。</p></li>
+<li><p><strong><code>main()</code></strong> 函数是每一个可执行程序所<strong>必须包含</strong>的，一般来说都是在启动后<strong>第一个执行</strong>的函数（如果有 init() 函数则会先执行该函数）。如果你的 main 包的源代码没有包含 main() 函数，则会引发<strong>构建错误</strong> <code>undefined: main.main</code></p>
+<p>go中的main() 函数既没<strong>有参数，也没有返回类型</strong>（与 C 家族中的其它语言恰好相反）。如果你不小心为 main() 函数添加了参数或者返回类型，将会引发构建错误： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="title">must</span> <span class="title">have</span> <span class="title">no</span> <span class="title">arguments</span> <span class="title">and</span> <span class="title">no</span> <span class="title">return</span> <span class="title">values</span> <span class="title">results</span>.</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong>go的函数体必须使用大括号 {} 括起来。</strong>，而且左大括号<code>&#123;</code> <strong>必须</strong>与方法的声明放在同一行，这是编译器的强制规定，否则你在使用 gofmt 时就会出现错误提示： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build-<span class="type">error</span>: syntax <span class="type">error</span>: unexpected semicolon or newline before &#123;</span><br></pre></td></tr></table></figure> &gt;（这是因为编译器会产生 func main() ; 这样的结果，很明显这是错误的） &gt; &gt;究其原因是因为：<strong>Go 语言虽然看起来不使用分号作为语句的结束，但实际上这一过程是由编译器自动完成，因此才会引发像上面这样的错误</strong></p></li>
+<li>符合规范的函数一般写成如下的形式： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">functionName</span><span class="params">(parameter_list)</span></span> (return_value_list) &#123;</span><br><span class="line">   …</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>parameter_list</code> 的形式为 <code>(param1 type1, param2 type2, …)</code></li>
+<li><code>return_value_list</code> 的形式为 <code>(ret1 type1, ret2 type2, …)</code></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>一个函数可以拥有多返回值，返回类型之间需要使用逗号分割，并使用小括号 () 将它们括起来，如：</p>
+</blockquote>
+<h2 id="注释">2.4 注释</h2>
+<p>go中的注释沿用了<code>c/c++</code>的注释风格，并且在此基础上提供了一个命令<code>godoc</code>,该命令从** Go 程序和包文件中提取顶级声明的首行注释以及每个对象的相关注释，并生成相关文档。**</p>
+<p>一般用法</p>
+<ul>
+<li><code>go doc package</code> 获取包的文档注释，例如：go doc fmt 会显示使用 godoc 生成的 fmt 包的文档注释。</li>
+<li><code>go doc package/subpackage</code> 获取子包的文档注释，例如：go doc container/list。</li>
+<li><code>go doc package function</code> 获取某个函数在某个包中的文档注释，例如：go doc fmt Printf 会显示有关 fmt.Printf() 的使用说明。</li>
+</ul>
+<p>这个工具只能获取在 Go 安装目录下 ../go/src 中的注释内容。此外，它还可以作为一个本地文档浏览 web 服务器。在命令行输入 godoc -http=:6060，然后使用浏览器打开 http://localhost:6060 后，你就可以看到本地文档浏览服务器提供的页面。</p>
+<h2 id="类型">2.5 类型</h2>
+<p>使用 <code>var</code> 声明的变量的值会<strong>自动初始化为该类型的零值</strong>。类型定义了某个变量的值的集合与可对其进行操作的集合。</p>
+<ul>
+<li>类型可以是基本类型，如：int、float、bool、string；</li>
+<li>结构化的（复合的），如：struct、array、切片 (slice)、map、通道 (channel)；</li>
+<li>只描述类型的行为的，如：interface。</li>
+</ul>
+<p>结构化的类型没有真正的值，它使用 <code>nil</code>作为默认值（在 Objective-C 中是 nil，在 Java 中是 null，在 C 和 C++ 中是 NULL 或 0）。值得注意的是，Go 语言中<strong>不存在类型继承</strong>。</p>
+<p>函数也可以是一个确定的类型，就是以函数作为返回类型。这种类型的声明要写在函数名和可选的参数列表之后 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回一个typeFunc类型的函数类型</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">FunctionName</span> <span class="params">(a typea, b typeb)</span></span> typeFunc</span><br></pre></td></tr></table></figure> 你可以在函数体中的某处返回使用类型为 typeFunc 的变量 <code>ret</code>返回： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> var</span><br></pre></td></tr></table></figure></p>
+<p>使用 type 关键字可以定义你自己的类型，你可能想要定义一个结构体（第 10 章），但是也可以定义一个已经存在的类型的别名，如： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> IZ <span class="type">int</span></span><br></pre></td></tr></table></figure> 如果你有多个类型需要定义，可以使用因式分解关键字的方式，例如： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> (</span><br><span class="line">   IZ <span class="type">int</span></span><br><span class="line">   FZ <span class="type">float64</span></span><br><span class="line">   STR <span class="type">string</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h2 id="go-程序的一般结构">2.6 Go 程序的一般结构</h2>
+<p>go的编写结构：</p>
+<ul>
+<li>在完成包的 <code>import</code> 之后，开始对常量、变量和类型的定义或声明。</li>
+<li>如果存在 <code>init()</code> 函数的话，则对该函数进行定义（这是一个特殊的函数，每个含有该函数的包都会首先执行这个函数）。</li>
+<li>如果当前包是 <code>main</code> 包，则定义 <code>main()</code> 函数。</li>
+<li>然后定义其余的函数，首先是类型的方法，接着是按照<code>main()</code>函数中先后调用的顺序来定义相关函数，如果有很多函数，则可以按照字母顺序来进行排序。</li>
+</ul>
+<p><strong>Go 程序的执行（程序启动）顺序如下：</strong></p>
+<ul>
+<li>按顺序导入所有被 main 包引用的其它包，然后在每个包中执行如下流程：</li>
+<li>如果该包又导入了其它的包，则从第一步开始递归执行，但是每个包只会被导入一次。</li>
+<li>然后以相反的顺序在每个包中初始化常量和变量，如果该包含有 init() 函数的话，则调用该函数。</li>
+<li>在完成这一切之后，main 也执行同样的过程，最后调用 main() 函数开始执行程序。</li>
+</ul>
+<h2 id="类型转换">2.7 类型转换</h2>
+<p>在必要以及可行的情况下，一个类型的值可以被转换成另一种类型的值。由于 Go 语言<strong>不存在隐式类型转换</strong>，因此所有的转换都必须<strong>显式</strong>说明，就像调用一个函数一样（类型在这里的作用可以看作是一种函数）： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">valueOfTypeB = typeB(valueOfTypeA)</span><br></pre></td></tr></table></figure> 当编译器捕捉到非法的类型转换时会引发编译时错误，否则将引发运行时错误。同样的一个取值范围较大的转换到取值范围较小的类型时会产生<strong>精度丢失</strong>问题</p>
+<h2 id="常量">2.8 常量</h2>
+<p>常量使用关键字 const 定义，用于存储不会改变的数据。存储在常量中的数据类型<strong>只可以</strong>是布尔型、数字型（整数型、浮点型和复数）和字符串型。常量的定义格式：<code>const identifier [type] = value</code>，例如： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Pi = <span class="number">3.14159</span></span><br></pre></td></tr></table></figure> 在 Go 语言中，你可以省略类型说明符 [type]，因为编译器可以根据变量的值来推断其类型。</p>
+<ul>
+<li>显式类型定义： const b string = &quot;abc&quot;</li>
+<li>隐式类型定义： const b = &quot;abc&quot;</li>
+</ul>
+<p>但是这种隐式定义必须是能够在编译时就能够确定的；你可以在其赋值表达式中涉及计算过程，但是所有用于计算的值必须在编<strong>译期间</strong>就能获得，否则就会出错 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">正确的做法：</span><br><span class="line"><span class="keyword">const</span> c1 = <span class="number">2</span>/<span class="number">3</span></span><br><span class="line">错误的做法：</span><br><span class="line"><span class="keyword">const</span> c2 = getNumber() <span class="comment">// 引发构建错误: getNumber() used as value</span></span><br></pre></td></tr></table></figure> 因为在编译期间<strong>自定义</strong>函数均属于未知，因此无法用于常量的赋值，但内置函数可以使用，如：len()。</p>
+<ul>
+<li>常量可以并行赋值 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> beef, two, c = <span class="string">&quot;eat&quot;</span>, <span class="number">2</span>, <span class="string">&quot;veg&quot;</span></span><br><span class="line"><span class="keyword">const</span> Monday, Tuesday, Wednesday, Thursday, Friday, Saturday = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	Monday, Tuesday, Wednesday = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br><span class="line">	Thursday, Friday, Saturday = <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+<li>常量还可以用作<strong>枚举</strong>： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	Unknown = <span class="number">0</span></span><br><span class="line">	Female = <span class="number">1</span></span><br><span class="line">	Male = <span class="number">2</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="变量">2.9 变量</h2>
+<p>声明变量的一般形式是使用<code>var</code>关键字：<code>var identifier type</code></p>
+<p>Go 和许多编程语言不同，它在声明变量时将变量的类型放在变量的名称之后。Go 为什么要选择这么做呢？</p>
+<ul>
+<li><p>首先，它是为了避免像 C 语言中那样含糊不清的声明形式，例如：<code>int* a, b;</code>。在这个例子中，只有 a 是指针而 b 不是。如果你想要这两个变量都是指针，则需要将它们分开书写。而在 Go 中，则可以很轻松地将它们都声明为指针类型 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a, b *<span class="type">int</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>其次，这种语法能够按照从左至右的顺序阅读，使得代码更加容易理解。 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="type">int</span></span><br><span class="line"><span class="keyword">var</span> b <span class="type">bool</span></span><br><span class="line"><span class="keyword">var</span> str <span class="type">string</span></span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<p>Go 编译器的智商已经高到可以根据变量的值来自动推断其类型，这有点像 Ruby 和 Python 这类动态语言，只不过它们是在运行时进行推断，<strong>而 Go 是在编译时就已经完成推断过程</strong>。因此，你还可以省略type使用下面的这些形式来声明及初始化变量： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">15</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="literal">false</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">&quot;Go says hello to the world!&quot;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="值类型和引用类型">2.9.1 值类型和引用类型</h3>
+<p>在go中的引用类型不同于<code>C++</code>中的引用定义，在 Go 语言中，<strong>指针</strong>属于引用类型，其它的引用类型还包括 <strong>slices</strong>（第 7 章），<strong>maps</strong>（第 8 章）和 <strong>channel</strong>（第 13 章）。被引用的变量会存储在<strong>堆中，以便进行垃圾回收，且比栈拥有更大的内存空间</strong>。。另一方面：</p>
+<ul>
+<li>像值类型的变量，go将它们存储在栈中</li>
+<li>对于引用类型，其存储在堆中，以便进行垃圾回收</li>
+</ul>
+<h3 id="初始化声明操作符">2.9.2 :=初始化声明操作符</h3>
+<p>我们知道可以在变量的初始化时省略变量的类型而由系统自动推断，因此有什么我们对一个变量直接做初始化，此时<code>var</code>关键句就显得多余了。所以当我么声明初始化一个变量的时候可以使用<code>:=</code>初始化声明操作符 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a,b:=<span class="number">50</span>,<span class="literal">false</span></span><br></pre></td></tr></table></figure> - <code>:=</code>不允许对以及声明过的变量使用，换一句话就是说<code>:=</code>只允许声明事初始化 - <code>:=</code>只允许对局部变量使用，不允许对全局变量进行声明赋值</p>
+<h2 id="init函数">2.10 init()函数</h2>
+<p>变量除了可以在全局声明中初始化，也可以在 init() 函数中初始化。这是一类非常特殊的函数，它不能够被人为调用，而是在每个包完成初始化后自动执行，并且执行优先级比 main() 函数高。</p>
+<p>每个源文件可以包含多个 init() 函数，同一个源文件中的 init() 函数会按照从上到下的顺序执行，如果一个包有多个源文件包含 init() 函数的话，则官方鼓励但不保证以文件名的顺序调用。初始化总是以单线程并且按照包的依赖关系顺序执行。</p>
+<p>一个可能的用途是在开始执行程序之前对数据进行检验或修复，以保证程序状态的正确性。</p>
+<h1 id="基本类型和运算符">3. 基本类型和运算符</h1>
+<p>go中的基本类型与C++差不多，都有布尔型bool、数字型(int和float32/64)和字符型(byte)。Go 语言支持整型和浮点型数字，并且原生支持复数，其中位的运算采用补码。</p>
+<p>Go 也有基于架构的类型，例如：int、uint 和 uintptr。这些类型的长度都是根据运行程序所在的操作系统类型所决定的：</p>
+<ul>
+<li>int 和 uint 在 32 位操作系统上，它们均使用 32 位（4 个字节），在 64 位操作系统上，它们均使用 64 位（8 个字节）。</li>
+<li>uintptr 的长度被设定为足够存放一个指针即可。</li>
+</ul>
+<p>Go 语言中<strong>没有 float 类型</strong>。（Go语言中只有 float32 和 float64）没有 double 类型。</p>
+<h2 id="复数类型">3.1 复数类型</h2>
+<p>这里值得一提的是go引入的复数<code>complex</code>。Go 拥有以下复数类型 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">complex64</span> (<span class="number">32</span> 位实数和虚数)</span><br><span class="line"><span class="type">complex128</span> (<span class="number">64</span> 位实数和虚数)</span><br></pre></td></tr></table></figure> 复数使用 re+imI 来表示，其中 re 代表实数部分，im 代表虚数部分，I 代表根号负 1。 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fvar c1 <span class="type">complex64</span> = <span class="number">5</span> + <span class="number">10i</span></span><br><span class="line"><span class="comment">//在使用格式化说明符时，可以使用 %v 来表示复数，但当你希望只表示其中的一个部分的时候需要使用 %f</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;The value is: %v&quot;</span>, c1)</span><br><span class="line"><span class="comment">// 输出： 5 + 10i</span></span><br></pre></td></tr></table></figure> 如果 re 和 im 的类型均为 float32，那么类型为 complex64 的复数 c 可以通过以下方式来获得： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c = <span class="built_in">complex</span>(re, im)</span><br></pre></td></tr></table></figure> 此外，函数 <code>real(c)</code> 和 <code>imag(c)</code> 可以分别获得相应的实数和虚数部分。</p>
+<blockquote>
+<p>复数支持和其它数字类型一样的运算。当你使用等号 == 或者不等号 != 对复数进行比较运算时，注意对精确度的把握。cmath 包中包含了一些操作复数的公共方法。如果你对内存的要求不是特别高，最好使用 complex128 作为计算类型，因为相关函数都使用这个类型的参数。</p>
+</blockquote>
+<h2 id="随机数">3.2 随机数</h2>
+<p>一些像游戏或者统计学类的应用需要用到随机数。<code>math/rand</code> 包实现了伪随机数的生成。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">package main</span></span><br><span class="line"><span class="function"><span class="title">import</span> <span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">	<span class="string">&quot;fmt&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">	<span class="string">&quot;math/rand&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">	<span class="string">&quot;time&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">func <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		a := rand.<span class="built_in">Int</span>()	<span class="comment">//随机生成Int范围随机数</span></span><br><span class="line">		fmt.<span class="built_in">Printf</span>(<span class="string">&quot;%d / &quot;</span>, a)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">		r := rand.<span class="built_in">Intn</span>(<span class="number">8</span>)	<span class="comment">//随机生成[0,8)随机数</span></span><br><span class="line">		fmt.<span class="built_in">Printf</span>(<span class="string">&quot;%d / &quot;</span>, r)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.<span class="built_in">Println</span>()</span><br><span class="line">	timens := <span class="built_in">int64</span>(time.<span class="built_in">Now</span>().<span class="built_in">Nanosecond</span>())</span><br><span class="line">	rand.<span class="built_in">Seed</span>(timens)	<span class="comment">//随机数种子</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		fmt.<span class="built_in">Printf</span>(<span class="string">&quot;%2.2f / &quot;</span>, <span class="number">100</span>*rand.<span class="built_in">Float32</span>())</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 函数 rand.Float32 和 rand.Float64 返回介于[0.0,1.0)之间的伪随机数，其中包括 0.0 但不包括 1.0。函数 rand.Intn 返回介于[0,n)之间的伪随机数。</p>
+<p>你可以使用 <strong>rand.Seed(value)</strong> 函数来提供伪随机数的生成种子，一般情况下都会使用当前时间的纳秒级数字</p>
+<h2 id="字符类型">3.3 字符类型</h2>
+<p>严格来说，字符类型并不是 Go 语言的一个类型，字符只是整数的特殊用例。<strong>byte 类型是 uint8 的别名</strong>，对于只占用 1 个字节的传统 ASCII 编码的字符来说，完全没有问题。例如：<code>var ch byte = 'A'</code>；字符使用单引号括起来。</p>
+<p>在 ASCII 码表中，'A' 的值是 65，而使用 16 进制表示则为 41，所以下面的写法是等效的： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//`\x`是十六进制表示法</span></span><br><span class="line"><span class="keyword">var</span> ch <span class="type">byte</span> = <span class="number">65</span> 或 <span class="keyword">var</span> ch <span class="type">byte</span> = <span class="string">&#x27;\x41&#x27;</span></span><br></pre></td></tr></table></figure> 另外一种可能的写法是<code>\</code>后面紧跟着<strong>长度</strong>为 3 的 <strong>八进制数</strong>，例如：\377。</p>
+<p>不过 Go 同样支持 Unicode（UTF-8），因此字符同样称为 Unicode 代码点或者 runes，并在内存中使用 int 来表示。在文档中，一般使用格式 <strong>U+hhhh</strong> 来表示，其中 h 表示一个 16 进制数。其实 <strong>rune </strong>也是 Go 当中的一个类型，并且是 <strong>int32</strong> 的别名。</p>
+在书写 Unicode 字符时，需要在 16 进制数之前加上前缀 
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2024/03/10/%E5%88%86%E5%B8%83%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -328,7 +689,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-22 13:34:30" itemprop="dateModified" datetime="2024-03-22T13:34:30+08:00">2024-03-22</time>
+                <time title="修改时间：2024-04-04 19:39:49" itemprop="dateModified" datetime="2024-04-04T19:39:49+08:00">2024-04-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -346,7 +707,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>16k</span>
+              <span>17k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -914,78 +1275,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/08/30/Go%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/08/30/Go%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">Go基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-08-30 22:37:11" itemprop="dateCreated datePublished" datetime="2023-08-30T22:37:11+08:00">2023-08-30</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2023/08/12/RabbitMQ/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1251,20 +1540,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">78</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1310,7 +1599,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:11</span>
+    <span title="站点阅读时长">19:24</span>
 </div>
 
         

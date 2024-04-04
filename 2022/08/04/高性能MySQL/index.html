@@ -64,7 +64,7 @@
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/mysql查询流程.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/condition.png">
 <meta property="article:published_time" content="2022-08-04T13:34:03.000Z">
-<meta property="article:modified_time" content="2024-03-18T01:18:51.927Z">
+<meta property="article:modified_time" content="2024-03-25T12:15:25.730Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="MySQL">
@@ -266,7 +266,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-18 09:18:51" itemprop="dateModified" datetime="2024-03-18T09:18:51+08:00">2024-03-18</time>
+                <time title="修改时间：2024-03-25 20:15:25" itemprop="dateModified" datetime="2024-03-25T20:15:25+08:00">2024-03-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1111,17 +1111,21 @@
 <p>当我们写了一条<code>sql</code>语句发现他的<code>type</code>是<code>ALL</code>的时候我们就要考虑一下怎么优化一下了，因为<code>ALL</code>是最差的，我们就需要琢磨一下怎么优化，当然优化到<code>system</code>是最好的，但是一般不会优化到这种程度：</p>
 <ul>
 <li>ALL:全表扫描</li>
-<li>index:只遍历索引树。
+<li>index:按B+树遍历索引树。
 <ul>
 <li>如果索引是查询的覆盖索引并且可以用于满足表中所需的所有数据，则仅扫描索引树。在这种情况下，该Extra列显示Using index。这种通常比All快。因为，索引文件通常比数据文件小，也就是虽然all和index都是读全表，但index是从索引中读取的，而all是从硬盘读的。</li>
-<li>按索引的顺序来查找数据行，执行了全表扫描。此时，explain的Extra列的结果不会出现Uses index。</li>
+<li>按索引的顺序来查找数据行。此时，explain的Extra列的结果不会出现Uses index。</li>
 </ul></li>
+<li>fulltext：使用FULLTEXT索引进行搜索。</li>
 <li>range:以范围的形式扫描索引(<code>in\&gt;\&lt;\&gt;=\&lt;=</code>等等可能会触发范围扫描索引)</li>
 <li>ref:可以用于单表扫描或者连接。如果是连接的话，驱动表的一条记录能够在被驱动表中通过非唯一（主键）属性所在索引中匹配多行数据，或者是在<strong>单表查询的时候通过非唯一（主键）属性所在索引中查到一行数据。</strong></li>
 <li>eq_ref:用于联表查询的情况，按联表的主键或唯一键联合查询。</li>
 <li>const:针对主键或唯一索引的等值查询扫描, 最多只返回一行数据。表示通过索引一次就找到了，const用于比较primary key或uique索引，因为只匹配一行数据，所以很快，如主键置于where列表中，MySQL就能将该查询转换为一个常量。</li>
 <li>system：当表只有一行记录时的查询类型，是const的特例</li>
 </ul>
+<blockquote>
+<p><strong>一般保证查询至少达到range级别，最好能达到ref。</strong></p>
+</blockquote>
 <p>EXTR列：</p>
 <ul>
 <li><strong>Using index：</strong>表示使用索引，如果只有 Using index，说明他没有查询到数据表，只用索引表就完成了这个查询，这个叫覆盖索引。如果同时出现Using where，代表使用索引来查找读取记录， 也是可以用到索引的，但是需要查询到数据表。</li>
@@ -1131,6 +1135,9 @@
 </li>
 <li><strong>Using temporary</strong>：表示为了得到结果，使用了临时表，这通常是出现在多表联合查询，结果排序的场合。</li>
 </ul>
+<blockquote>
+<p>子查询在MySQL中确实可能会创建临时表。当执行子查询时，MySQL需要为内层查询语句的查询结果建立一个临时表，然后外层查询语句从临时表中查询记录。这种执行方式会消耗过多的CPU和IO资源，并可能产生大量的慢查询。因此，子查询的执行效率通常不高。 为了优化性能，尽量避免在查询中使用子查询，特别是在返回结果集比较大的情况下。可以使用连接（JOIN）查询来替代子查询，因为连接查询不需要建立临时表，速度通常比子查询要快。如果查询中使用索引的话，性能会进一步提升。</p>
+</blockquote>
 <h4 id="mysql中为什么要有事务回滚机制">9.16 MySQL中为什么要有事务回滚机制？</h4>
 <p>而在 MySQL 中，<strong>恢复机制是通过回滚日志<code>undo log</code>实现的</strong>，所有事务进行的修改都会先记录到这个回滚日志中，然后在对数据库中的对应行进行写入。 当事务已经被提交之后，就无法再次回滚了。</p>
 <p><strong>回滚日志作用：</strong></p>
@@ -1673,20 +1680,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">77</span>
+          <span class="site-state-item-count">78</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1732,7 +1739,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:11</span>
+    <span title="站点阅读时长">19:24</span>
 </div>
 
         
