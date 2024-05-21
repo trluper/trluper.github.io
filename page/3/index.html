@@ -194,6 +194,314 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">操作系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-09 14:47:11" itemprop="dateCreated datePublished" datetime="2023-05-09T14:47:11+08:00">2023-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-16 12:45:21" itemprop="dateModified" datetime="2024-04-16T12:45:21+08:00">2024-04-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>45k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>41 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="操作系统的基本概念">1 操作系统的基本概念</h3>
+<ol type="1">
+<li><strong>操作系统（Operating System，简称 OS）是管理计算机硬件与软件资源的程序，是计算机的基石。</strong></li>
+<li>操作系统本质上是一个运行在计算机上的<strong>软件程序</strong> ，用于管理计算机硬件和软件资源。 举例：运行在你电脑上的所有应用程序都通过操作系统来调用系统内存以及磁盘等等硬件。</li>
+<li>操作系统存在屏蔽了硬件层的复杂性。 操作系统就像是硬件使用的负责人，统筹着各种相关事项。</li>
+<li><strong>操作系统的内核（Kernel）是操作系统的核心部分，它负责系统的内存管理，硬件设备的管理，文件系统的管理以及应用程序的管理。 </strong>内核是连接应用程序和硬件的桥梁，决定着系统的性能和稳定性。</li>
+</ol>
+<h4 id="操作系统的内核kernel">操作系统的内核（Kernel）</h4>
+<p>维基百科对于内核的解释： &gt;<strong>内核</strong>（英语：Kernel，又称核心）在计算机科学中是一个用来管理软件发出的数据 I/O（输入与输出）要求的电脑程序，将这些要求转译为数据处理的指令并交由中央处理器（CPU）及电脑中其他电子组件进行处理，是现代操作系统中最基本的部分。它是为众多应用程序提供对计算机硬件的安全访问的一部分软件，这种访问是有限的，并由内核决定一个程序在什么时候对某部分硬件操作多长时间。 <strong>直接对硬件操作是非常复杂的。所以内核通常提供一种硬件抽象的方法，来完成这些操作。有了这个，通过进程间通信机制及系统调用，应用进程可间接控制所需的硬件资源（特别是处理器及 IO 设备）。</strong></p>
+<blockquote>
+<p>早期计算机系统的设计中，还没有操作系统的内核这个概念。随着计算机系统的发展，操作系统内核的概念才渐渐明晰起来了!</p>
+</blockquote>
+<p><strong>简单概括两点：</strong></p>
+<ul>
+<li><strong>操作系统的内核（Kernel）是操作系统的核心部分，它负责系统的内存管理，硬件设备的管理，文件系统的管理以及应用程序的管理。</strong></li>
+<li>操作系统的内核是连接应用程序和硬件的桥梁，决定着操作系统的性能和稳定性。</li>
+</ul>
+<h4 id="中央处理器cpucentral-processing-unit">中央处理器（CPU，Central Processing Unit）</h4>
+<p>关于 CPU 简单概括三点：</p>
+<ul>
+<li><strong>CPU 是一台计算机的运算核心（Core）+控制核心（ Control Unit），可以称得上是计算机的大脑</strong>。</li>
+<li>** CPU 主要包括两个部分：控制器+运算器。**</li>
+<li><strong>CPU 的根本任务就是执行指令，对计算机来说最终都是一串由“0”和“1”组成的序列。</strong></li>
+</ul>
+<h4 id="cpu-vs-kernel内核">CPU vs Kernel(内核)</h4>
+<p>可以简单从下面两点来区别：</p>
+<ul>
+<li>操作系统的内核（Kernel）属于操作系统层面，而 CPU 属于硬件。</li>
+<li>CPU 主要提供运算，处理各种指令的能力。内核（Kernel）主要负责系统管理比如内存管理，它屏蔽了对硬件的操作。 <img src="/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/操作系统概念.png" width="500"></li>
+</ul>
+<h3 id="操作系统的基本特性">2 操作系统的基本特性</h3>
+<p>操作系统的基本特性是<strong>并发性、共享性、虚拟性、异步性。</strong></p>
+<h4 id="并发性">并发性</h4>
+<p><strong>并行性和并发性(Concurrence)是既相似又有区别的两个概念，</strong>并行性是指两个或多个事件在同一时刻发生；而并发性是指两个或多个事件在同一时间间隔内发生。在多道程序环境下，并发性是指在一段时间内宏观上有多个程序在同时运行，但在单处理机系统中，每一时刻却仅能有一道程序执行，故微观上这些程序只能是分时地交替执行。（宏观并发微观串行）</p>
+<p>并行需要硬件支持，如多流水线、多核处理器或者分布式计算系统</p>
+<p>操作系统通过引入进程和线程，使得程序能够并发运行。</p>
+<h4 id="共享性">共享性</h4>
+<p>指系统中的资源可供内存中多个并发执行的进程(线程)共同使用，相应地，把这种资源共同使用称为资源共享，或称为资源复用。目前主要实现资源共享的方式有：</p>
+<ul>
+<li>互斥共享方式</li>
+<li>同时访问方式</li>
+</ul>
+<h5 id="互斥共享方式">互斥共享方式</h5>
+<p>当一个进程 A 要访问某资源时，必须先提出请求。如果此时该资源空闲，系统便可将之分配给请求进程 A 使用。此后若再有其它进程也要访问该资源时(只要 A 未用完)，则必须等待。仅当 A 进程访问完并释放该资源后，才允许另一进程对该资源进行访问。我们把这种资源共享方式称为互斥式共享，而把在一段时间内只允许一个进程访问的资源称为临界资源或独占资源，例如打印机。</p>
+<h5 id="同时访问方式">同时访问方式</h5>
+<p>系统中还有另一类资源，允许在一段时间内由多个进程“同时”对它们进行访问。这里所谓的“同时”，在单处理机环境下往往是宏观上的，而在微观上，这些进程可能是交替地对该资源进行访问。典型的可供多个进程“同时”访问的资源是磁盘设备，一些用重入码编写的文件也可以被“同时”共享，即若干个用户同时访问该文件。</p>
+<h4 id="虚拟性">虚拟性</h4>
+<p>虚拟技术把一个物理实体转换为多个逻辑实体。</p>
+<p>主要有两种虚拟技术：<strong>时（时间）分复用技术和空（空间）分复用技术。</strong></p>
+<p><strong>多个进程能在同一个处理器上并发执行使用了时分复用技术</strong>，让每个进程轮流占用处理器，每次只执行一小个时间片并快速切换。</p>
+<p>虚拟内存使用了<strong>空分复用技术</strong>，它将物理内存抽象为地址空间，每个进程都有各自的地址空间。地址空间的页被映射到物理内存，地址空间的页并不需要全部在物理内存中，当使用到一个没有在物理内存的页时，执行页面置换算法，将该页置换到内存中。</p>
+<h4 id="异步性">异步性</h4>
+<p>在多道程序环境下允许多个进程并发执行，但只有进程在获得所需的资源后方能执行。在单处理机环境下，由于系统中只有一台处理机，因而每次只允许一个进程执行，其余进程只能等待。进程是以人们不可预知的速度向前推进，此即进程的异步性。</p>
+<h3 id="操作系统的基本功能">3 操作系统的基本功能</h3>
+<p>操作系统的基本功能包括<strong>进程管理、内存管理、文件管理、设备管理。</strong></p>
+<ul>
+<li><strong>进程管理</strong>：进程控制、进程同步、进程通信、死锁处理、处理机调度等</li>
+<li><strong>内存管理</strong>：内存分配、地址映射、内存保护与共享、虚拟内存等</li>
+<li><strong>文件管理</strong>：文件存储空间的管理、目录管理、文件读写管理和保护等</li>
+<li><strong>设备管理</strong>：完成用户I/O请求，方便用户使用各种设备，并提高设备的利用率，主要包括缓冲管理、设备管理、设备处理、虚拟设备等。</li>
+</ul>
+<h3 id="什么是系统调用用户态和系统态是">4 什么是系统调用/用户态和系统态是？</h3>
+<p>根据进程访问资源的特点，可以把进程在系统上的运行分为两个级别：</p>
+<ul>
+<li>** 用户态(user mode) **: 用户态运行的进程或程序可以直接读取用户程序的数据。</li>
+<li><strong>系统态(kernel mode)</strong>:可以简单的理解系统态运行的进程或程序几乎可以访问计算机的任何资源，不受限制。</li>
+</ul>
+<p>我们运行的程序基本都是运行在用户态，如果要调用操作系统提供的系统态级别的子功能，那就需要系统调用了！</p>
+<p>也就是说在运行的用户程序中，<strong>凡是与系统态级别的资源有关的操作（如文件管理、进程控制、内存管理等)，都必须通过系统调用方式向操作系统提出服务请求，并由操作系统代为完成。</strong></p>
+<p>这些系统调用按功能大致可分为如下几类：</p>
+<ul>
+<li>设备管理。完成设备的请求或释放，以及设备启动等功能。</li>
+<li>文件管理。完成文件的读、写、创建及删除等功能。</li>
+<li>进程控制。完成进程的创建、撤销、阻塞及唤醒等功能。</li>
+<li>进程通信。完成进程之间的消息传递或信号传递等功能。</li>
+<li>内存管理。完成内存的分配、回收以及获取作业占用内存区大小及地址等功能。 <img src="/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/systemcall.png" width="600"></li>
+</ul>
+<h4 id="为什么要有用户态与内核态">为什么要有用户态与内核态?</h4>
+<p><strong>在 cpu 的所有指令中，有些指令是非常危险的，如果使用不当，将会造成系统崩溃等后果。为了避免这种情况发生，cpu 将指令划分为特权级(内核态)指令和非特权级(用户态)指令。</strong></p>
+<p><strong>对于那些危险的指令只允许内核及其相关模块调用，对于那些不会造成危险的指令，就允许用户应用程序调用。</strong></p>
+<ul>
+<li>内核态(核心态,特权态): 内核态是操作系统内核运行的模式。 内核态控制计算机的硬件资源，如硬件设备，文件系统等等，并为上层应用程序提供执行环境。</li>
+<li>用户态: 用户态是用户应用程序运行的状态。 应用程序必须依托于内核态运行,因此用户态的操作权限比内核态是要低的，如磁盘，文件等，访问操作都是受限的。</li>
+<li>系统调用: 系统调用是操作系统为应用程序提供能够访问到内核态的资源的接口。</li>
+</ul>
+<h4 id="用户态切换到内核态的几种方式">用户态切换到内核态的几种方式</h4>
+<ul>
+<li><strong>系统调用:</strong> 系统调用是用户态主动要求切换到内核态的一种方式，用户应用程序通过操作系统调用内核为上层应用程序开放的接口来执行程序。</li>
+<li><strong>异常:</strong> 当 cpu 在执行用户态的应用程序时，发生了某些不可知的异常。于是当前用户态的应用进程切换到处理此异常的内核的程序中去。</li>
+<li><strong>硬件设备的中断:</strong> 当硬件设备完成用户请求后，会向 cpu 发出相应的中断信号，这时 cpu 会暂停执行下一条即将要执行的指令，转而去执行与中断信号对应的应用程序，如果先前执行的指令是用户态下程序的指令，那么这个转换过程也是用户态到内核台的转换。</li>
+</ul>
+<h3 id="计算机的局部性原理">5 计算机的局部性原理</h3>
+<p>一个编写良好的计算机程序常常具有良好的<strong>局部性</strong>，即他们更加倾向于引用邻近于其他最近引用过的数据项的数据项，或者最近引用或的数据项本身，这种特性，常常称为<strong>局部性原理</strong>。局部性由两种不同的形式：<strong>时间局部性和空间局部性</strong></p>
+<ul>
+<li><strong>时间局部性</strong>：被引用过一次的内存位置很有可能在不久的将来再次被多次引用。</li>
+<li><strong>空间局部性</strong>：一个内存被引用过了，那么极有可能在不久的将来会引用器附近的内存位置。在高速缓存中的表现形式是以<strong>数据块</strong>的形式进行缓存，弥补未命中时的惩罚</li>
+</ul>
+<p>我们应该理解局部性原理，因为一般而言，一个良好局部性的程序比局部性差的程序运行得更快，这是由现代计算机系统得设计结构所决定得，在现代计算系统得各个层次之哦你给，都引入了局部性原理：</p>
+<ul>
+<li>在硬件层，计算机设计者通过引入称为<strong>高速缓存存储器</strong>这样小而快得快速存储器来保存最近引用得指令和数据项，从而提高对主存得访问速度。</li>
+<li>在操作系统中，系统使用主存作为<strong>虚拟地址空间</strong>，来存储最近被引用得数据项，来避免因从磁盘取数据过慢而导致CPU资源的浪费</li>
+<li>类似的，用主存来缓存磁盘文件中最近被使用的磁盘块。</li>
+<li>局部性原理在应用程序中也有应用，入<code>Web</code>浏览器将最近引用的文档放在本地磁盘上，利用的就是时间局部性。</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/" class="post-title-link" itemprop="url">深入理解计算机系统-链接</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-09 14:45:40" itemprop="dateCreated datePublished" datetime="2023-05-09T14:45:40+08:00">2023-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-14 21:24:55" itemprop="dateModified" datetime="2023-05-14T21:24:55+08:00">2023-05-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">深入理解计算机系统</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="链接器">1 链接器</h3>
+<h4 id="链接是什么">1.1 链接是什么</h4>
+<p><strong>链接是将各种代码和数据片段收集并组合成为一个单一文件的过程</strong>，这个文件可被加载到内存并执行。</p>
+<ul>
+<li>链接可以执行与编译时，也就是源代码被翻译成机器代码时；</li>
+<li>也可以执行与加载时，也就是在程序被加载器（loader)加载带内存并执行时</li>
+<li><strong>甚至也可执行于运行时，也就是有程序来执行</strong></li>
+</ul>
+<p>链接器在开发中是一个关键角色，因为它使得<strong>分离编译</strong>成为可能，我们不用将一个大型的应用程序组织为一个巨大的源文件，而是可以分解成更小、更好管理的模块。可以单独修改和编译这些模块。理解<strong>链接</strong>有以下的好处：</p>
+<ul>
+<li><p><strong>理解链接器将帮助你构造大型程序</strong>。构造大型程序的程序员经常会遇到<strong>缺少模块、库或者不兼容版本引起的链接器错误</strong>，当你理解了链接器如何<strong>解析引用、什么是库以及链接器是如何使用库来解析引用时，你就能够较好的解决这类问题</strong></p></li>
+<li><p><strong>理解链接器将帮助你避免一些危险的编程错误</strong>。Linux链接器解析引用时所做的决定可以不动声色影响你程序的正确性。在默认情况下，错误的定义多个全局变量的程序将通过链接器，而不产生任何警告信息。</p></li>
+<li><p><strong>理解链接器将帮助你理解语言的作用域规则是如何实现的</strong>。全局变量和局部变量、static变量和static函数，在低层到底有何区别？</p></li>
+<li><p><strong>理解链接器帮助你理解其他重要系统概念</strong>。链接器产生的可执行目标文件咋子系统功能中扮演关键角色，如<strong>加载运行程序、虚拟内存、分页、内存映射。</strong></p></li>
+<li><p><strong>理解链接器将使你能够利用共享库</strong>。共享库和动态链接在现代操作系统日益重要，掌握如何动态链接原理极其重要。</p></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -960,196 +1268,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/12/ssh/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/12/ssh/" class="post-title-link" itemprop="url">SSH</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-03-12 02:05:54 / 修改时间：21:03:13" itemprop="dateCreated datePublished" datetime="2023-03-12T02:05:54+08:00">2023-03-12</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SSH/" itemprop="url" rel="index"><span itemprop="name">SSH</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>SSH（Secure Shell，安全外壳）是一种网络安全协议，通过加密和认证机制实现安全的访问和文件传输等业务。传统远程登录或文件传输方式，例如Telnet、FTP，使用明文传输数据，存在很多的安全隐患。随着人们对网络安全的重视，这些方式已经慢慢不被接受。SSH协议通过对网络数据进行加密和验证，在不安全的网络环境中提供了安全的登录和其他安全网络服务。作为Telnet和其他不安全远程shell协议的安全替代方案，目前SSH协议已经被全世界广泛使用，大多数设备都支持SSH功能。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/12/ssh/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/11/gcc-gdb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/11/gcc-gdb/" class="post-title-link" itemprop="url">gcc/gdb</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-03-11 23:28:36" itemprop="dateCreated datePublished" datetime="2023-03-11T23:28:36+08:00">2023-03-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-04-13 09:08:32" itemprop="dateModified" datetime="2023-04-13T09:08:32+08:00">2023-04-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/gcc/" itemprop="url" rel="index"><span itemprop="name">gcc</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="gcc和gcc编译器">7. GCC和gcc++编译器</h4>
-<h5 id="gcc和-gcc是两个不同的东西">7.1 gcc和 GCC是两个不同的东西</h5>
-<ul>
-<li><code>GCC:GNU Compiler Collection</code>(GUN 编译器集合)，它可以编译<code>C、C++、JAV、Fortran、Pascal、Object-C、Ada</code>等语言。</li>
-<li>因此<code>gcc</code>是<code>GCC</code>中的<code>GUN C Compiler</code>（C 编译器）；<code>g++</code>是<code>GCC</code>中的<code>GUN C++ Compiler</code>（<code>C++</code>编译器）。二者都可以编译<code>c</code>或<code>cpp</code>文件。只不过用<code>gcc</code>编译<code>c++</code>需要手动添加链接库</li>
-<li><strong>在编译阶段，<code>g++</code>会调用<code>gcc</code>，对于<code>c++</code>代码，两者是等价的，但是因为<code>gcc</code>命令不能自动和<code>C++</code>程序使用的库联接，所以通常使用用<code>g++</code>来编译以求自动完成链接。所以对于<code>C</code>语言程序的编译，我们应该使用<code>gcc</code> 指令，而编译<code>C++</code>程序则推荐使用<code>g++</code>指令</strong></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/11/gcc-gdb/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1221,20 +1339,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1280,7 +1398,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:28</span>
+    <span title="站点阅读时长">19:42</span>
 </div>
 
         

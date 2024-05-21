@@ -194,6 +194,293 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/17/openTelemtry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/17/openTelemtry/" class="post-title-link" itemprop="url">openTelemtry</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-17 14:57:25" itemprop="dateCreated datePublished" datetime="2024-05-17T14:57:25+08:00">2024-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-19 17:56:19" itemprop="dateModified" datetime="2024-05-19T17:56:19+08:00">2024-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opentelemtry/" itemprop="url" rel="index"><span itemprop="name">opentelemtry</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="什么是opentelemtry">1 什么是OpenTelemtry</h1>
+<p>OpenTelemetry，也称为 OTel，是一个供应商中立的开源可观测性框架 用于检测、生成、收集和导出遥测数据，例如<strong>跟踪（trace)、指标(metric)和日志(log)等signal（信号）</strong>。OpenTelemetry 是一个<strong>可观测性</strong>框架和工具包，旨在创建和管理遥测数据，例如跟踪、指标和日志。至关重要的是，OpenTelemetry 是供应商和 与工具无关，这意味着它可以与各种可观测性一起使用</p>
+<h2 id="什么是可观测性">1.1 什么是可观测性？</h2>
+<p><strong>可观测性</strong>是指通过检查系统的内部输出来了解系统内部状态的能力。在软件的上下文中，这意味着能够理解 通过检查系统的遥测数据来检查系统的内部状态，其中遥测数据包括<strong>跟踪、指标和日志</strong>。</p>
+<p>要使系统可观察，必须对其进行检测。也就是说，代码必须发出跟踪、指标或日志。然后，必须将检测的数据发送到可观测性后端</p>
+<h2 id="主要的otel组件">1.2 主要的OTel组件</h2>
+<p>OpenTelemetry由以下几个主要组件组成:</p>
+<ul>
+<li>A <a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/otel/">specification</a> for all components(所有组件的规范)</li>
+<li>A standard <a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/otlp/">protocol</a> that defines the shape of telemetry data(定义遥测数据结构的标准协议)</li>
+<li><a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/semconv/">Semantic conventions</a> that define a standard naming scheme for common telemetry data types(语义约定定义了通用遥测数据类型的标准命名方案)</li>
+<li>APIs that define how to generate telemetry data</li>
+<li>[Language SDKs][https://opentelemetry.io/docs/languages/] that implement the specification, APIs, and export of telemetry data(实现遥测数据规范、api和导出的语言sdk)</li>
+<li>A <a target="_blank" rel="noopener" href="https://opentelemetry.io/ecosystem/registry/">library ecosystem</a> that implements instrumentation for common libraries and frameworks(一个为通用库和框架实现插装的库生态系统)</li>
+<li>Automatic instrumentation components that generate telemetry data without requiring code changes</li>
+<li>The <a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/collector/">OpenTelemetry Collector</a>, a proxy that receives, processes, and exports telemetry data(OpenTelemetry收集器，一个接收、处理和导出遥测数据的代理)</li>
+<li>Various other tools, such as the OpenTelemetry Operator for Kubernetes, OpenTelemetry Helm Charts, and community assets for FaaS</li>
+</ul>
+<h1 id="opentelemtry的概念">2 OpenTelemtry的概念</h1>
+<h2 id="span跨度">2.1 Span(跨度)</h2>
+<p>跨度（span)表示一工作或者操作单元.它跟踪一个请求在造成特定操作，描绘了当时执行该操作发生的事情。范围包含名称、与时间相关的数据、结构化日志消息和其他元数据（即属性），以提供有关其跟踪的操作的信息</p>
+<h2 id="trace">2.2 trace</h2>
+<p>distributed trace也可以直接称为trace，它记录请求(由应用程序或最终用户发起)在通过多服务架构(如微服务和无服务器应用程序)传播时所采取的路径。</p>
+<p>如果不进行跟踪，很难确定分布式系统中性能问题的原因。它提高了应用程序或系统健康状况的可见性，并让我们调试难以在本地重现的行为。跟踪对于分布式系统来说是必不可少的，因为分布式系统通常存在不确定性问题，或者过于复杂而无法在本地重现。</p>
+<p>一个跟踪由一个或者多个Spans组成，第一个span是root跨度。每个根跨度代表一个从开始到结束的请求。父级下面的span提供了请求期间发生的事情(或者组成请求的步骤)的更深入的上下文。</p>
+<h2 id="上下文">2.3 上下文</h2>
+<p>通过上下文传播，<strong>信号（teace)</strong>可以关联彼此之间，无论它们在哪里生成。尽管不限于跟踪，但它允许跟踪建立关于任意分布在进程和网络边界的服务的系统的因果信息。</p>
+<p>我们通过两个子概念来定义上下文传播：上下文和传播。</p>
+<h3 id="上下文context">2.3.1 上下文（context)</h3>
+<p>上下文是一个对象，它包含发送和接收服务(或执行单元)将一个信号与另一个信号相关联的信息。</p>
+<p>例如，如果服务A调用服务B，那么服务A的一个span，其ID在上下文中，将被用作服务B创建的下一个span的父span。在上下文中的trace ID也将被用于服务B创建的下一个span，这表明该span与服务A的span属于同一个trace的一部分</p>
+<h3 id="传播propagation">2.3.2 传播Propagation</h3>
+<p>传播是在服务和进程之间移动上下文的机制。它序列化或反序列化上下文对象，并提供相关信息，以便从一个服务传播到另一个服务。传播通常由插装库处理，并且对用户是透明的，但是在需要手动传播上下文的情况下，可以使用传播api。</p>
+<p>OpenTelemetry维护了几个官方传播器（propagators）。默认传播程序使用W3C TraceContext规范指定的标头</p>
+<h2 id="signal信号">2.4 signal（信号）</h2>
+<p>OpenTelemetry的目的是收集、处理和导出信号。信号是系统输出，描述了平台上运行的操作系统和应用程序的底层活动。信号可以是你想要在特定时间点测量的东西，比如温度或内存使用情况，也可以是你想要跟踪的分布式系统组件中的事件。您可以将不同的信号组合在一起，以观察同一件技术在不同角度下的内部工作情况。</p>
+<p>OpenTelemetry目前支持跟踪(trace)、度量(metrics)、日志(log)和baggage。事件是一种特定类型的日志，配置文件由配置文件工作组负责处理。</p>
+<h3 id="traces">2.4.1 Traces</h3>
+<p>跟踪让我们了解了向应用程序发出请求时会发生什么。无论你的应用是带有单一数据库的单体应用，还是复杂的服务网格，跟踪对于理解请求在应用中接受的完整“路径”都是至关重要的。</p>
+<p>让我们通过三个span工作单元来探索这一点:</p>
+<ul>
+<li><p>hello span: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hello&quot;</span>,</span><br><span class="line">  <span class="string">&quot;context&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trace_id&quot;</span>: <span class="string">&quot;0x5b8aa5a2d2c872e8321cf37308d69df2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;span_id&quot;</span>: <span class="string">&quot;0x051581bf3cb55c13&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;parent_id&quot;</span>: null,</span><br><span class="line">  <span class="string">&quot;start_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114201Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;end_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114687Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;http.route&quot;</span>: <span class="string">&quot;some_route1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;events&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Guten Tag!&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114561Z&quot;</span>,</span><br><span class="line">      <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;event_attributes&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 这是根span，表示整个操作的开始和结束。注意，它有一个trace_id字段表示跟踪，但没有parent_id。这就是为什么你知道它是根span。</p></li>
+<li><p>hello-greetings span: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hello-greetings&quot;</span>,</span><br><span class="line">  <span class="string">&quot;context&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trace_id&quot;</span>: <span class="string">&quot;0x5b8aa5a2d2c872e8321cf37308d69df2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;span_id&quot;</span>: <span class="string">&quot;0x5fb397be34d26b51&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;parent_id&quot;</span>: <span class="string">&quot;0x051581bf3cb55c13&quot;</span>,</span><br><span class="line">  <span class="string">&quot;start_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114304Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;end_time&quot;</span>: <span class="string">&quot;2022-04-29T22:52:58.114561Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;http.route&quot;</span>: <span class="string">&quot;some_route2&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;events&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hey there!&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114561Z&quot;</span>,</span><br><span class="line">      <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;event_attributes&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;bye now!&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114585Z&quot;</span>,</span><br><span class="line">      <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;event_attributes&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 这个span封装了一些特定的任务，比如发送问候语，它的父级是hello span。注意，它与根span共享相同的trace_id，表明它是同一个跟踪的一部分。此外，它还有一个parent_id，与hello span的span_id匹配。</p></li>
+<li><p>hello-salutations span: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hello-salutations&quot;</span>,</span><br><span class="line">  <span class="string">&quot;context&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trace_id&quot;</span>: <span class="string">&quot;0x5b8aa5a2d2c872e8321cf37308d69df2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;span_id&quot;</span>: <span class="string">&quot;0x93564f51e1abe1c2&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;parent_id&quot;</span>: <span class="string">&quot;0x051581bf3cb55c13&quot;</span>,</span><br><span class="line">  <span class="string">&quot;start_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114492Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;end_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114631Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;http.route&quot;</span>: <span class="string">&quot;some_route3&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;events&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hey there!&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114561Z&quot;</span>,</span><br><span class="line">      <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;event_attributes&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 这个span表示跟踪中的第三个操作，和前一个一样，它是hello span的一个子元素。这也使它成为hello-greetings序列的兄弟。</p></li>
+</ul>
+<p>这三个JSON块共享相同的trace_id, parent_id字段表示层次结构。这就是一个Trace!</p>
+<p>您要注意的另一件事是，每个Span看起来像结构化日志。那是因为它就是这样!一种理解跟踪的方式是，它们是结构化日志的集合，包含上下文、相关性、层次结构等。然而，这些“结构化日志”可以来自不同的进程、服务、虚拟机、数据中心等。这就是允许跟踪表示任何系统的端到端视图的原因。</p>
+<p><strong>为了理解OpenTelemetry中的跟踪是如何工作的，让我们看看将在检测我们的代码中发挥作用的组件列表</strong>:</p>
+<ul>
+<li><p>Tracer provider :<strong>跟踪器提供者</strong>(有时称为TracerProvider)是跟踪程序的工厂。在大多数应用程序中，跟踪程序提供者初始化一次，其生命周期与应用程序的生命周期相匹配。跟踪器提供者初始化还包括资源和导出器初始化。这通常是OpenTelemetry跟踪的第一步。在某些语言sdk中，全局跟踪器提供程序已经为你初始化了</p></li>
+<li><p>Tracer（跟踪器）：跟踪者创建的span包含关于给定操作发生的更多信息，例如服务中的请求。跟踪器是从跟踪器提供程序创建的</p></li>
+<li><p>Trace Exporters(跟踪导出器）：跟踪导出器将跟踪发送给消费者。该使用者可以是调试和开发时的标准输出、OpenTelemetry收集器或您选择的任何开源或供应商后端</p></li>
+<li><p>Context Propagation(上下文传播）：上下文传播是支持分布式跟踪的核心概念。通过上下文传播，span可以相互关联并组装成一个trace，而不管span是在哪里生成的。要了解有关此主题的更多信息，请参阅关于上下文传播的概念页</p></li>
+<li>Span：span表示一个工作或操作单元。一个或多个span构成trace。在OpenTelemetry中，它们包含以下信息:
+<ul>
+<li>Name</li>
+<li>Parent span ID (empty for root spans)</li>
+<li>Start and End Timestamps</li>
+<li>Span Context</li>
+<li>Attributes(属性)</li>
+<li>Span Events</li>
+<li>Span Links</li>
+<li>Span Status</li>
+</ul></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;/v1/sys/health&quot;</span>,</span><br><span class="line">  <span class="string">&quot;context&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trace_id&quot;</span>: <span class="string">&quot;7bba9f33312b3dbb8b2c2c62bb7abe2d&quot;</span>,</span><br><span class="line">    <span class="string">&quot;span_id&quot;</span>: <span class="string">&quot;086e83747d0e381e&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;parent_id&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;start_time&quot;</span>: <span class="string">&quot;2021-10-22 16:04:01.209458162 +0000 UTC&quot;</span>,</span><br><span class="line">  <span class="string">&quot;end_time&quot;</span>: <span class="string">&quot;2021-10-22 16:04:01.209514132 +0000 UTC&quot;</span>,</span><br><span class="line">  <span class="string">&quot;status_code&quot;</span>: <span class="string">&quot;STATUS_CODE_OK&quot;</span>,</span><br><span class="line">  <span class="string">&quot;status_message&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;net.transport&quot;</span>: <span class="string">&quot;IP.TCP&quot;</span>,</span><br><span class="line">    <span class="string">&quot;net.peer.ip&quot;</span>: <span class="string">&quot;172.17.0.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;net.peer.port&quot;</span>: <span class="string">&quot;51820&quot;</span>,</span><br><span class="line">    <span class="string">&quot;net.host.ip&quot;</span>: <span class="string">&quot;10.177.2.152&quot;</span>,</span><br><span class="line">    <span class="string">&quot;net.host.port&quot;</span>: <span class="string">&quot;26040&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.method&quot;</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.target&quot;</span>: <span class="string">&quot;/v1/sys/health&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.server_name&quot;</span>: <span class="string">&quot;mortar-gateway&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.route&quot;</span>: <span class="string">&quot;/v1/sys/health&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.user_agent&quot;</span>: <span class="string">&quot;Consul Health Check&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.scheme&quot;</span>: <span class="string">&quot;http&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.host&quot;</span>: <span class="string">&quot;10.177.2.152:26040&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.flavor&quot;</span>: <span class="string">&quot;1.1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;events&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">      <span class="string">&quot;message&quot;</span>: <span class="string">&quot;OK&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2021-10-22 16:04:01.209512872 +0000 UTC&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="metrics">2.4.2 Metrics</h3>
+<p>度量是对运行时捕获的服务的度量。捕获测量数据的时刻称为度量事件(metrics event)，它不仅包括测量数据本身，还包括捕获测量数据的时间和相关的元数据。</p>
+<p>应用程序和请求度量是可用性和性能的重要指标。自定义指标可以洞察可用性指标如何影响用户体验或业务。收集到的数据可用于警报中断或触发调度决策，以在高需求时自动扩展部署。</p>
+<p>为了理解OpenTelemetry中的指标是如何工作的，让我们来看一组在检测我们的代码中发挥作用的组件。</p>
+<ul>
+<li><p>Meter Provider: 一个仪表供应商(有时称为MeterProvider)是一个仪表工厂。在大多数应用程序中，仪表提供者初始化一次，其生命周期与应用程序的生命周期相匹配。仪表提供者初始化还包括资源和出口商初始化。这通常是OpenTelemetry测量的第一步。在某些语言sdk中，已经为您初始化了全局Meter提供者</p></li>
+<li><p>Meter（计量器）: 计量器创建度量工具，在运行时捕获关于服务的度量。计量器（meter)是由Meter Provider创建的</p></li>
+<li><p>Metric Exporter：指标导出者将指标数据发送给消费者。此使用者可以是开发期间用于调试的标准输出、OpenTelemetry收集器或您选择的任何开源或供应商后端</p></li>
+<li>Metric Instruments：在OTel中，测量结果由度量工具给出，度量工具由一下元素完整定义
+<ul>
+<li>Name</li>
+<li>Kind</li>
+<li>Unit (optional)</li>
+<li>Description (optional) &gt;名称、单元和描述是由开发人员选择的，或者通过常见的语义约定(如请求和过程度量)定义的。</li>
+</ul></li>
+</ul>
+<p>测量工具类型可以有：</p>
+<ul>
+<li>计数器(Counter):随着时间累积的值——你可以把它想象成汽车上的里程表;它只会一直上升。</li>
+<li>异步计数器（Asynchronous Counter）:与计数器相同，但每次导出时收集一次。如果你不能访问连续的增量，只能访问聚合值，则可以使用。</li>
+<li>UpDownCounter(向上计数器):随着时间累积的值，也可以再次下降。一个例子可以是队列长度，它会随着队列中工作项的数量而增加或减少。</li>
+<li>异步UpDownCounter:与UpDownCounter相同，但每次导出时收集一次。如果用户无法访问连续的更改，只能访问聚合的值(例如，当前队列的大小)，则可以使用此选项。</li>
+<li><strong>测量仪器(Gauge):读取时测量当前值。车辆的燃油表就是一个例子。测量仪器是异步的。</strong></li>
+<li><strong>直方图(Histogram):客户端值的聚合，例如请求延迟。如果你对值统计感兴趣，直方图是一个不错的选择。例如:有多少请求耗时少于1秒</strong></li>
+</ul>
+<h3 id="logs">2.4.3 logs</h3>
+<p>日志是带有时间戳的文本记录，可以是结构化的(推荐)，也可以是非结构化的，包含元数据。在所有遥测信号中，日志是最大的遗产。大多数编程语言都有内置的日志功能或知名的、广泛使用的日志库。虽然日志是一个独立的数据源，但它们也可以附加到span上。在OpenTelemetry中，<strong>任何不属于分布式跟踪(trace)或度量(metrics)的数据都是日志</strong>。例如，事件是一种特定类型的日志。日志通常包含详细的调试/诊断信息，例如操作的输入、操作的结果和支持该操作的任何元数据。</p>
+<p>对于跟踪和度量，OpenTelemetry采用全新的设计方法，指定一个新的API，并在多个语言sdk中提供该API的完整实现。</p>
+<p>OpenTelemetry处理日志的方法是不同的。因为现有的日志解决方案在语言和操作生态系统中广泛存在，OpenTelemetry充当了这些日志、跟踪和度量信号以及其他OpenTelemetry组件之间的“桥梁”。事实上，由于这个原因，日志API被称为“日志桥API”。</p>
+<p>logs规范中有关于这一理念的更多细节。</p>
+<p>为了理解OpenTelemetry中的日志记录是如何工作的，让我们看看将在检测我们的代码中发挥作用的组件列表:</p>
+<ul>
+<li><p>log Appender: 作为应用程序开发人员，您不应该直接调用日志的Appender API，因为它是为日志库作者提供的用于构建日志appender / bridges的API。相反，您只需使用您首选的日志库并将其配置为使用日志appender(或日志桥接器)，它能够将日志发送到OpenTelemetry LogRecordExporter中。</p></li>
+<li><p>logger provider: LoggerProvider(有时称为LoggerProvider)是Logger的工厂。在大多数情况下，Logger Provider只初始化一次，其生命周期与应用的生命周期相匹配。日志提供者初始化还包括资源和导出器初始化</p></li>
+<li><p>logger: Logger创建日志记录。记录器是从日志提供程序创建的</p></li>
+<li><p>logger exporter:将日志记录发送给消费者。该使用者可以是调试和开发时的标准输出、OpenTelemetry收集器或您选择的任何开源或供应商后端</p></li>
+<li>Log Record: 日志记录表示对事件的记录。在OpenTelemetry中，日志记录包含两种字段:
+<ul>
+<li>指定类型和含义的命名顶级字段</li>
+<li>任意值和类型的Resource和attributes字段</li>
+</ul></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/04/16/%E8%99%9A%E6%8B%9F%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/16/%E8%99%9A%E6%8B%9F%E5%8C%96/" class="post-title-link" itemprop="url">虚拟化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-16 12:53:40 / 修改时间：13:06:14" itemprop="dateCreated datePublished" datetime="2024-04-16T12:53:40+08:00">2024-04-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">虚拟化</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>904</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="什么是虚拟化vmvare的实现原理是什么为什么能够在一个系统上虚拟化实现另一个系统">什么是虚拟化（VMVARE的实现原理是什么，为什么能够在一个系统上虚拟化实现另一个系统？）</h3>
+<p>VMware是一款强大的虚拟化软件，它能够在一个物理服务器上创建并运行多个虚拟机，每个虚拟机都像是独立的计算机系统，拥有自己的操作系统和应用程序。VMware实现虚拟化的原理主要基于以下几个关键组件和技术：</p>
+<ul>
+<li><p><strong>虚拟机监视器（Hypervisor）</strong>：VMware通过在物理服务器上安装虚拟机监视器（也被称为VMM或Hypervisor）来实现虚拟化。VMM是一个软件层，位于物理服务器和虚拟机之间，负责管理虚拟机的创建、启动、停止和运行。VMM能够抽象物理服务器的硬件资源，为虚拟机提供一个隔离的、安全的运行环境。</p></li>
+<li><p><strong>资源隔离</strong>：VMM通过创建逻辑分区来将物理服务器的计算资源（如处理器、内存、存储等）分配给不同的虚拟机。每个虚拟机都在自己的逻辑环境中运行，与其他虚拟机相互隔离。这种隔离性确保了每个虚拟机都能够独立运行，互不影响，从而提供了更高的安全性和可靠性。</p></li>
+<li><p><strong>资源共享</strong>：虚拟化平台利用资源池的概念，将物理服务器上的处理能力和存储容量整合在一起，然后动态地按需分配给虚拟机。这意味着物理资源可以根据虚拟机的需求进行灵活分配和调整，提高了资源的利用率和系统的灵活性。</p></li>
+<li><p><strong>虚拟硬件</strong>：VMware虚拟化可以模拟多种虚拟硬件设备，包括处理器、内存、磁盘、网络接口等。每个虚拟机都认为自己拥有独立的硬件资源，可以在其内部安装操作系统和应用程序。这种模拟使得虚拟机能够像真实计算机一样运行各种软件和服务。</p></li>
+<li><p><strong>内存和存储虚拟化</strong>：VMware使用内存分页技术将虚拟机的内存分成固定大小的页面，并映射到物理服务器的内存中。同时，它也将物理服务器的存储资源虚拟化为多个独立的虚拟存储设备，供虚拟机使用。</p></li>
+<li><p>** 迁移和克隆**：VMware还支持虚拟机的迁移和克隆操作，这意味着虚拟机可以在不同的物理服务器之间轻松迁移，或者创建虚拟机的副本以进行备份或扩展。</p></li>
+</ul>
+<p>通过上述技术和组件的协同工作，VMware能够在单一系统上实现多个虚拟系统的运行。这种虚拟化技术不仅提高了硬件资源的利用率，还简化了系统的管理和维护，使得用户可以更加灵活和高效地部署和管理应用程序和服务。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2024/04/02/go%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1271,204 +1558,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/08/12/RabbitMQ/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/08/12/RabbitMQ/" class="post-title-link" itemprop="url">RabbitMQ</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-08-12 22:56:31" itemprop="dateCreated datePublished" datetime="2023-08-12T22:56:31+08:00">2023-08-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-13 16:14:38" itemprop="dateModified" datetime="2024-03-13T16:14:38+08:00">2024-03-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">消息队列</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="安装">1 安装</h2>
-<ul>
-<li><p>1.在ubuntu上直接使用<code>apt-get install</code>安装 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install rabbitmq-server</span><br></pre></td></tr></table></figure></p></li>
-<li><p>2.启用RabbitMQ管理插件（可选）： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure> 启用后，可以通过浏览器访问http://<服务器IP>:15672来管理RabbitMQ（默认用户名和密码都是guest）。</服务器IP></p></li>
-<li><p>3.安装<code>C++</code>客户端库,为了使用<code>C++</code>与RabbitMQ进行交互,需要安装一个第三方库，这里用<code>SimpleAmqpClient</code>作为例子(如果你要<code>C++</code>程序要连接RabbitServer必须做的步骤) <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/alanxz/SimpleAmqpClient.git</span></span><br><span class="line">mkdir simpleamqpclient-build</span><br><span class="line">cd simpleamqpclient-build</span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure> 在cmake过程中如果报缺失什么依赖，直接安装就好，需要<code>Boost</code>库,<code>librabbitmq-dev</code>等等，<code>cmake..</code>成功后执行一下命令安装: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p></li>
-<li><p>4.启动Rabbit服务器 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service rabbitmq-server start</span><br></pre></td></tr></table></figure> 之后，我们可以从<code>localhost:5672</code>访问，用户名密码都默认是<code>guest</code> <img src="/2023/08/12/RabbitMQ/RabbitMQ_locahost.png" width="600"></p></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/08/12/RabbitMQ/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/08/11/Manacher%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/08/11/Manacher%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">Manacher算法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-08-11 14:36:31" itemprop="dateCreated datePublished" datetime="2023-08-11T14:36:31+08:00">2023-08-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-12 00:00:27" itemprop="dateModified" datetime="2023-08-12T00:00:27+08:00">2023-08-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="什么是manacher算法马拉车算法">什么是Manacher算法(马拉车算法)</h2>
-<p>Manachar算法主要是处理字符串中关于回文串的问题的，<strong>它本质上是对枚举中心法确定回文串的优化，使得算法可以在 <code>O（n）</code> 的时间处理出以字符串中每一个字符为中心的回文串半径。</strong></p>
-<p>由于回文字符串以其长度来分，可以分为奇回文（其长度为奇数）、偶回文（其长度为偶数），一般情况下需要分两种情况来寻找回文，<strong>马拉车算法为了简化这一步，对原始字符串进行了处理，在每一个字符的左右两边都加上特殊字符（肯定不存在于原字符串中的字符），让字符串变成一个奇回文简化算法</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/08/11/Manacher%E7%AE%97%E6%B3%95/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1540,20 +1629,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">78</span>
+          <span class="site-state-item-count">80</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1599,7 +1688,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:28</span>
+    <span title="站点阅读时长">19:42</span>
 </div>
 
         
