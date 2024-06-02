@@ -194,6 +194,784 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/27/%E5%89%8D%E7%AB%AF%E5%88%9D%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/27/%E5%89%8D%E7%AB%AF%E5%88%9D%E8%AF%86/" class="post-title-link" itemprop="url">前端初识</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-27 18:58:49" itemprop="dateCreated datePublished" datetime="2024-05-27T18:58:49+08:00">2024-05-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-28 11:35:41" itemprop="dateModified" datetime="2024-05-28T11:35:41+08:00">2024-05-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>14k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="css">1 CSS</h1>
+<p>css是一种用来为结构化文档（如 HTML 文档或 XML 应用）添加样式（字体、间距和颜色等）的计算机语言，CSS 文件扩展名为 <code>.css</code>。通过使用 CSS 我们可以大大提升网页开发的工作效率！其语法如下： <img src="/2024/05/27/%E5%89%8D%E7%AB%AF%E5%88%9D%E8%AF%86/2.png" width="500"></p>
+<ul>
+<li>选择器通常是需要改变样式的 <strong>HTML 元素</strong>。</li>
+<li>每条声明由一个<strong>属性和一个值</strong>组成。</li>
+<li>CSS声明总是以分号 <code>;</code> 结束，声明总以大括号 <code>&#123;&#125;</code> 括起来</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE <span class="selector-tag">html</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">html</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;utf-<span class="number">8</span>&quot;&gt; </span><br><span class="line">&lt;title&gt;菜鸟教程(runoob<span class="selector-class">.com</span>)&lt;/title&gt; </span><br><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">p</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="attribute">color</span>:red;</span><br><span class="line">	<span class="attribute">text-align</span>:center;</span><br><span class="line">&#125; </span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">p</span>&gt;Hello World!&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">p</span>&gt;这个段落采用CSS样式化。&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">html</span>&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>css的注释是同c++的<code>/* */</code></p>
+</blockquote>
+<h2 id="id-和-class-选择器">1.1 id 和 class 选择器</h2>
+<p>如果你要在为HTML的指定元素中设置CSS样式，你需要在元素中设置&quot;id&quot; 或者 &quot;class&quot;选择器(<strong>HTML元素以id属性来设置id选择器,CSS 中 id 选择器以 &quot;#&quot; 来定义。</strong>)。如以下的样式规则应用于元素属性 id=&quot;para1&quot;: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt; </span><br><span class="line">&lt;title&gt;菜鸟教程(runoob.com)&lt;/title&gt; </span><br><span class="line">&lt;style&gt;</span><br><span class="line">#para1</span><br><span class="line">&#123;</span><br><span class="line">	text-align:center;</span><br><span class="line">	color:red;</span><br><span class="line">&#125; </span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;p id=<span class="string">&quot;para1&quot;</span>&gt;Hello World!&lt;/p&gt;</span><br><span class="line">&lt;p&gt;这个段落不受该样式的影响。&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>class以<code>.类名</code>定义css代码段，然后body的所以该<code>类名</code>的元素都会应用这个css样式</li>
+</ul>
+<h2 id="html文件插入css文件的方法">1.2 html文件插入css文件的方法</h2>
+<p>当读到一个样式表时，浏览器会根据它来格式化 HTML 文档，那么除了上面在头部<code>&lt;style&gt;&lt;/style&gt;</code>出直接定义还有其他方法吗，当然！</p>
+<h3 id="外部样式表插入">1.2.1 外部样式表插入</h3>
+<p>加入你已经写好了单独的一个<code>css</code>文件，你可以通过链接方式导入，后续html会依照这个样式表信息渲染html。每个页面使用 <code>&lt;link&gt;</code> 标签链接到样式表。<strong><code>&lt;link&gt;</code>标签在（文档的）头部：</strong> <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;mystyle.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure> 浏览器会从文件<code>mystyle.css</code>中读到样式声明，并根据它来格式文档。</p>
+<h3 id="内部样式表">1.2.2 内部样式表</h3>
+<p>当单个文档需要特殊的样式时，就应该使用内部样式表。你可以使用<code>&lt;style&gt;</code>标签在文档头部定义内部样式表，就像这样（就是上面的例子）: <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">hr &#123;<span class="attribute">color</span>:sienna;&#125;</span></span><br><span class="line"><span class="language-css"><span class="selector-tag">p</span> &#123;<span class="attribute">margin-left</span>:<span class="number">20px</span>;&#125;</span></span><br><span class="line"><span class="language-css"><span class="selector-tag">body</span> &#123;<span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">&quot;images/back40.gif&quot;</span>);&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="内联样式">1.2.3 内联样式</h3>
+<p>由于要将表现和内容混杂在一起，内联样式会损失掉样式表的许多优势。请慎用这种方法，例如当样式仅需要在一个元素上应用一次时。</p>
+<p>要使用内联样式，你需要在相关的标签内使用样式（style）属性。Style 属性可以包含任何 CSS 属性。本例展示如何改变段落的颜色和左外边距： <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&quot;color:sienna;margin-left:20px&quot;</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="多重样式">1.2.4 多重样式</h3>
+<p>如果某些属性在不同的样式表中被同样的选择器定义，那么属性值将从更具体的样式表中被继承过来。</p>
+<ul>
+<li><p>例如，外部样式表拥有针对 h3 选择器的三个属性： <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">h3</span><br><span class="line">&#123;</span><br><span class="line">    color:red;</span><br><span class="line">    text-align:left;</span><br><span class="line">    font-size:8pt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p></li>
+<li>而内部样式表拥有针对 h3 选择器的两个属性： <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">h3</span><br><span class="line">&#123;</span><br><span class="line">    text-align:right;</span><br><span class="line">    font-size:20pt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>假如拥有内部样式表的这个页面同时与外部样式表链接，那么 h3 得到的样式是： <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">color:red;</span><br><span class="line">text-align:right;</span><br><span class="line">font-size:20pt;</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<p>多重样式优先级:<strong>（内联样式）Inline style &gt; （内部样式）Internal style sheet &gt;（外部样式）External style sheet &gt; 浏览器默认样式</strong></p>
+<h1 id="html">2 HTML</h1>
+<p>首先直接看一段html代码,这些都是每一个html文件固定必有的 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>菜鸟教程(runoob.com)<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>我的第一个标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>我的第一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>标签&lt;!DOCTYPE html&gt;</strong>：告诉浏览器表明这是一个html文件</li>
+<li><strong>标签对<code>&lt;html&gt;&lt;/html&gt;</code></strong>：表示这个html的起始和结束</li>
+<li><strong>标签对<code>&lt;head&gt;&lt;/head&gt;</code></strong>：表示头部信息，不会显示在页面上的信息
+<ul>
+<li>**标签<code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>：表示这个页面使用utf-8编码</li>
+<li>**标签对<code>&lt;title&gt;&lt;/title&gt;</code>：显示在你浏览器哪个窗口的信息</li>
+</ul></li>
+<li><p><strong><code>&lt;body&gt;&lt;/body&gt;</code></strong>：页面内容放置的区域，即页面可见的内容</p></li>
+<li>标签对的格式是这样的： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;标签关键字 属性=值...&gt;内容&lt;/标签关键字&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>单标签格式是这样的： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;标签关键字 属性=值...&gt;</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<blockquote>
+<ul>
+<li>其中属性是有固定的字符串构成的，比如上面的<strong>meta</strong>属性，一些常用属性我们会在后面详细介绍</li>
+</ul>
+对于中文网页需要使用
+<meta charset="utf-8">
+声明编码，否则会出现乱码。有些浏览器(如 360 浏览器)会设置 GBK 为默认编码，则你需要设置为
+<meta charset="gbk">
+<p>。</p>
+</blockquote>
+<h2 id="标签元素">2.1 标签（元素）</h2>
+<h3 id="标题元素">2.1.1 标题元素</h3>
+<p>HTML 标题（Heading）是标签对，是通过<code>&lt;h1&gt; - &lt;h6&gt;</code> 标签来定义，由1级标题到6级标题。 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是一个标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>这是一个标题<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>这是一个标题<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="段落元素">2.1.2 段落元素</h3>
+<p>HTML 段落是通过标签对<code>&lt;p&gt;</code> 来定义的。 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是另外一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="html-链接">2.1.3 HTML 链接</h3>
+<p>HTML 链接是通过标签对 <code>&lt;a&gt;</code> 来定义的。 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.runoob.com&quot;</span>&gt;</span>这是一个链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure> - <strong>href：</strong><code>href</code>属性中指定链接的地址。(后面介绍更多属性) - <strong>target:</strong>指定链接如何在浏览器中打开。常见的值包括 _blank（在新标签或窗口中打开链接）和 _self（在当前标签或窗口中打开链接）。 - <strong>title（可选）</strong>：提供链接的额外信息，通常在鼠标悬停在链接上时显示为工具提示。 - <strong>rel（可选）</strong>：指定与链接目标的关系，如 nofollow、noopener 等。</p>
+<h3 id="块级元素divdiv">2.1.4 块级元素<code>&lt;div&gt;&lt;/div&gt;</code></h3>
+<p><code>&lt;div&gt;&lt;/div&gt;</code>是一个块级元素，意味着会在其前后都创建一个换行，即它会占一行或多行，其后的内容会从新的一行还是。它非常有用，通常作为一个容器，来包含其他块级元素和行内元素，也常常与CSS一起使用，来控制页面布局、颜色和字体样式。</p>
+<blockquote>
+<p><code>&lt;span&gt;</code> 用来组合文档中的行内元素， 内联元素(inline)</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt; </span><br><span class="line">&lt;meta charset=<span class="string">&quot;utf-8&quot;</span>&gt; </span><br><span class="line">&lt;title&gt;菜鸟教程(runoob.com)&lt;/title&gt; </span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"> </span><br><span class="line">&lt;div id=<span class="string">&quot;container&quot;</span> style=<span class="string">&quot;width:500px&quot;</span>&gt;</span><br><span class="line"> </span><br><span class="line">	&lt;div id=<span class="string">&quot;header&quot;</span> style=<span class="string">&quot;background-color:#FFA500;&quot;</span>&gt;</span><br><span class="line">		&lt;h1 style=<span class="string">&quot;margin-bottom:0;&quot;</span>&gt;主要的网页标题&lt;/h1&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"> </span><br><span class="line">	&lt;div id=<span class="string">&quot;menu&quot;</span> style=<span class="string">&quot;background-color:#FFD700;height:200px;width:100px;float:left;&quot;</span>&gt;&lt;b&gt;菜单&lt;/b&gt;</span><br><span class="line">		&lt;br&gt;HTML</span><br><span class="line">		&lt;br&gt;CSS</span><br><span class="line">		&lt;br&gt;JavaScript</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"> </span><br><span class="line">	&lt;div id=<span class="string">&quot;content&quot;</span> style=<span class="string">&quot;background-color:#EEEEEE;height:200px;width:400px;float:left;&quot;</span>&gt;</span><br><span class="line">		内容在这里</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"> </span><br><span class="line">	&lt;div id=<span class="string">&quot;footer&quot;</span> style=<span class="string">&quot;background-color:#FFA500;clear:both;text-align:center;&quot;</span>&gt;</span><br><span class="line">		版权 © runoob.com</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/div&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/2024/05/27/%E5%89%8D%E7%AB%AF%E5%88%9D%E8%AF%86/1.png" width="500"></p>
+<h3 id="头部元素">2.1.5 头部元素</h3>
+<p><code>&lt;head&gt;</code>元素包含了所有的头部标签元素。在<code>&lt;head&gt;</code>元素中你可以<strong>插入脚本（scripts）, 样式文件（CSS），及各种meta信息。</strong></p>
+<p>可以添加在头部区域的元素标签为: <code>&lt;title&gt;, &lt;style&gt;, &lt;meta&gt;, &lt;link&gt;, &lt;script&gt;, &lt;noscript&gt; 和 &lt;base&gt;。</code></p>
+<ul>
+<li><code>&lt;base&gt;</code> 元素:描述了基本的链接地址/链接目标，该标签作为HTML文档中所有的链接标签的默认链接: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;base href=<span class="string">&quot;http://www.runoob.com/images/&quot;</span> target=<span class="string">&quot;_blank&quot;</span>&gt;</span><br><span class="line">&lt;/head&gt;</span><br></pre></td></tr></table></figure></li>
+<li><code>&lt;link&gt;</code> 元素:定义了文档与外部资源之间的关系。通常用于链接到样式表: <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;mystyle.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><code>&lt;style&gt;</code> 元素:定义了HTML文档的样式文件引用地址.你也可以直接添加样式来渲染 HTML 文档: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;style type=<span class="string">&quot;text/css&quot;</span>&gt;</span><br><span class="line">body &#123;</span><br><span class="line">    background-color:yellow;</span><br><span class="line">&#125;</span><br><span class="line">p &#123;</span><br><span class="line">    color:blue</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>&lt;meta&gt;</code> 元素:meta标签描述了一些基本的<strong>元数据</strong>。<code>&lt;meta&gt;</code> 标签提供了元数据.元数据也<strong>不显示在页面上，但会被浏览器解析</strong>。META 元素通常用于指定<strong>网页的描述，关键词，文件的最后修改时间，作者</strong>，和其他元数据。元数据可以使用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他Web服务。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta name=<span class="string">&quot;keywords&quot;</span> content=<span class="string">&quot;HTML, CSS, XML, XHTML, JavaScript&quot;</span>&gt;</span><br></pre></td></tr></table></figure></p></li>
+<li><p><code>&lt;script&gt;</code> 元素:<strong><code>&lt;script&gt;</code>标签用于加载脚本文件，如： JavaScript。</strong>(后续会详细讲)</p></li>
+</ul>
+<h3 id="表格">2.1.6 表格</h3>
+<p>HTML 表格由 <code>&lt;table&gt;</code> 标签来定义。HTML 表格是一种用于展示结构化数据的标记语言元素。每个表格均有若干行（由<code>&lt;tr&gt;</code>标签定义），每行被分割为若干单元格（由 <code>&lt;td&gt;</code>标签定义），表格可以包含标题行<code>（&lt;th&gt;）</code>用于定义列的标题。</p>
+<ul>
+<li>tr：tr 是 table row 的缩写，表示表格的一行。</li>
+<li>td：td 是 table data 的缩写，表示表格的数据单元格。</li>
+<li>th：th 是 table header的缩写，表示表格的表头单元格。</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">thead</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">th</span>&gt;</span>列标题1<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">th</span>&gt;</span>列标题2<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">th</span>&gt;</span>列标题3<span class="tag">&lt;/<span class="name">th</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">thead</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tbody</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>行1，列1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>行1，列2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>行1，列3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>行2，列1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>行2，列2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>行2，列3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tbody</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>以上的表格实例代码中，<code>&lt;table&gt;</code>元素表示整个表格，它包含两个主要部分：<code>&lt;thead&gt;</code>和<code>&lt;tbody&gt;。</code></p>
+<ul>
+<li><p><code>&lt;thead &gt;</code> 用于定义表格的标题部分: 在 <code>&lt;thead &gt;</code> 中，使用 <code>&lt;th &gt;</code>元素定义列的标题，以上实例中列标题分别为&quot;列标题1&quot;，&quot;列标题2&quot;和&quot;列标题3&quot;。</p></li>
+<li><code>&lt;tbody &gt;</code> 用于定义表格的主体部分: 在 <code>&lt;tbody &gt;</code> 中，使用 <code>&lt;tr &gt;</code> 元素定义行，并在每行中使用 <code>&lt;td &gt;</code> 元素定义单元格数据，以上实例中有两行数据，每行包含三个单元格。</li>
+<li><p><code>&lt;bordr&gt;</code>:边框属性，如果不定义边框属性，表格将不显示边框。有时这很有用，但是大多数时候，我们希望显示边框，值表示边框的宽带</p></li>
+</ul>
+<h3 id="列表">2.1.8 列表</h3>
+<ul>
+<li><code>&lt;ul&gt;</code>:无序列表 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;li&gt;Coffee&lt;/li&gt;</span><br><span class="line">&lt;li&gt;Milk&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure></li>
+<li><code>&lt;ol&gt;</code>:有序列表 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;ol&gt;</span><br><span class="line">&lt;li&gt;Coffee&lt;/li&gt;</span><br><span class="line">&lt;li&gt;Milk&lt;/li&gt;</span><br><span class="line">&lt;/ol&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="其他标签对">2.1.7 其他(标签对)</h3>
+<ul>
+<li>HTML支持定义水平线<code>&lt;hr&gt;</code></li>
+<li>定义注释：<code>&lt;!--...--&gt;</code></li>
+<li>定义粗体：<code>&lt;b&gt;</code></li>
+<li>定义斜体：<code>&lt;i&gt;</code></li>
+<li>定义小号字体：<code>&lt;small&gt;</code></li>
+<li>定义加重语气：<code>&lt;stong&gt;</code></li>
+<li>定义下标字：<code>&lt;sub&gt;</code></li>
+<li>定义插入字：<code>&lt;ins&gt;</code></li>
+<li>定义删除字:<code>&lt;del&gt;</code></li>
+<li>定义计算机代码:<code>&lt;code&gt;</code></li>
+<li>定义变量：<code>&lt;var&gt;</code></li>
+<li>定义预格式文本：<code>&lt;pre&gt;</code></li>
+<li>定义缩写：<code>&lt;abbr&gt;</code></li>
+<li>定义引用：<code>&lt;cite&gt;</code></li>
+</ul>
+<h3 id="表单">2.1.8 表单</h3>
+<p>表单是一个包含表单元素的区域。表单元素是允许用户在表单中输入内容，比如：文本域（textarea）、下拉列表（select）、单选框（radio-buttons）、复选框（checkbox） 等等。</p>
+<p>我们可以使用 <code>&lt;form&gt;</code>标签来创建表单:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;</span><br><span class="line">.</span><br><span class="line">input 元素</span><br><span class="line">.</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="输入元素单标签">2.1.9 输入元素（单标签）</h3>
+<p>多数情况下被用到的表单标签是输入标签 <code>&lt;input&gt;</code>。输入类型是由 type 属性定义。接下来我们介绍几种常用的输入类型。</p>
+<ul>
+<li><p>文本域（Text Fields）:文本域通过 <code>&lt;input type=&quot;text&quot;&gt;</code> 标签来设定，当用户要在表单中键入字母、数字等内容时，就会用到文本域。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;</span><br><span class="line">First name: &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;firstname&quot;</span>&gt;&lt;br&gt;</span><br><span class="line">Last name: &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;lastname&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>密码字段：密码字段通过标签 <input type="password"> 来定义: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;</span><br><span class="line">Password: &lt;input type=<span class="string">&quot;password&quot;</span> name=<span class="string">&quot;pwd&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>单选按钮（Radio Buttons）:<code>&lt;input type=&quot;radio&quot;&gt;</code>标签定义了表单的单选框选项: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;&quot;</span>&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;radio&quot;</span> name=<span class="string">&quot;sex&quot;</span> value=<span class="string">&quot;male&quot;</span>&gt;男&lt;br&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;radio&quot;</span> name=<span class="string">&quot;sex&quot;</span> value=<span class="string">&quot;female&quot;</span>&gt;女</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>复选框（Checkboxes）:<code>&lt;input type=&quot;checkbox&quot;&gt;</code>定义了复选框。复选框可以选取一个或多个选项： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;checkbox&quot;</span> name=<span class="string">&quot;vehicle&quot;</span> value=<span class="string">&quot;Bike&quot;</span>&gt;我喜欢自行车&lt;br&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;checkbox&quot;</span> name=<span class="string">&quot;vehicle&quot;</span> value=<span class="string">&quot;Car&quot;</span>&gt;我喜欢小汽车</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></p></li>
+<li>提交按钮(Submit):<input type="submit"> 定义了提交按钮。当用户单击确认按钮时，表单的内容会被传送到服务器。表<strong>单的动作属性 action 定义了服务端的文件名。action 属性会对接收到的用户输入数据进行相关的处理:</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;form name=<span class="string">&quot;input&quot;</span> action=<span class="string">&quot;html_form_action.php&quot;</span> method=<span class="string">&quot;get&quot;</span>&gt;</span><br><span class="line">Username: &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;user&quot;</span>&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;submit&quot;</span> value=<span class="string">&quot;Submit&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure> 假如您在上面的文本框内键入几个字母，然后点击确认按钮，那么输入数据会传送到 html_form_action.php 文件，该页面将显示出输入的结果。以上实例中有一个 method 属性，它用于定义表单数据的提交方式，可以是以下值：
+<ul>
+<li><p>post：指的是 HTTP POST 方法，表单数据会包含在表单体内然后发送给服务器，用于提交敏感数据，如用户名与密码等。</p></li>
+<li><p>get：默认值，指的是 HTTP GET 方法，表单数据会附加在 action 属性的 URL 中，并以 ?作为分隔符，一般用于不敏感信息，如分页等。例如：https://www.runoob.com/?page=1，这里的 page=1 就是 get 方法提交的数据。</p></li>
+</ul></li>
+</ul>
+<h3 id="按钮">2.1.9 按钮</h3>
+<p><code>&lt;button&gt;&lt;/button&gt;</code> 是HTML中的一个元素，用于创建一个可点击的按钮。这个元素通常用于提交表单、执行JavaScript代码或者触发其他类型的用户交互。</p>
+<ul>
+<li>提交表单：当<code>&lt;button&gt;</code>元素被放置在<code>&lt;form&gt;</code>元素内部，并且没有指定type属性或者type属性被设置为submit时，点击该按钮会提交表单。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=<span class="string">&quot;/submit_page&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;  </span><br><span class="line">    &lt;!-- 表单内容 --&gt;  </span><br><span class="line">    &lt;button type=<span class="string">&quot;submit&quot;</span>&gt;提交&lt;/button&gt;  </span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure></li>
+<li>执行JavaScript代码：你可以使用onclick属性为按钮指定一个JavaScript函数，当按钮被点击时，这个函数会被执行。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button onclick=<span class="string">&quot;alert(&#x27;按钮被点击了！&#x27;)&quot;</span>&gt;点击我&lt;/button&gt;</span><br></pre></td></tr></table></figure></li>
+<li>其他类型：<code>&lt;button&gt;</code>元素还有一个type属性，可以设置为reset（重置表单）或button（默认，不执行任何操作，除非指定了onclick）。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;form&gt;  </span><br><span class="line">    &lt;!-- 表单内容 --&gt;  </span><br><span class="line">    &lt;button type=<span class="string">&quot;reset&quot;</span>&gt;重置&lt;/button&gt;  </span><br><span class="line">&lt;/form&gt;  </span><br><span class="line">&lt;button type=<span class="string">&quot;button&quot;</span> onclick=<span class="string">&quot;alert(&#x27;我是一个普通按钮&#x27;)&quot;</span>&gt;点击我&lt;/button&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>与<code>&lt;input type=&quot;button&quot;&gt;</code>的区别：<code>&lt;button&gt;</code>元素与<code>&lt;input type=&quot;button&quot;&gt;</code>元素在功能上是相似的，但<code>&lt;button&gt;</code>元素在内容、样式和可访问性方面提供了更多的灵活性。</p>
+</blockquote>
+<h3 id="图像元素单标签">2.1.9 图像元素（单标签）</h3>
+<p>HTML 图像是通过标签 <code>&lt;img&gt;</code> 来定义的. <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=<span class="string">&quot;/images/logo.png&quot;</span> alt=<span class="string">&quot;图片不见啦&quot;</span> width=<span class="string">&quot;258&quot;</span> height=<span class="string">&quot;39&quot;</span>&gt;</span><br></pre></td></tr></table></figure> - src：图片的路径 - alt：图片加载失败时显示的文字</p>
+<h3 id="空元素单标签">2.1.10 空元素（单标签）</h3>
+<p>有一些标签是行内元素，一些是块元素，有时候我们会苦恼一些东西放在了同一行，这是空元素<code>&lt;br&gt;</code>就起作用了 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;br&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="属性">2.2 属性</h2>
+<table>
+<thead>
+<tr class="header">
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>class</code></td>
+<td>html元素定义一个或多个类名（classname）(类名从样式文件引入)</td>
+</tr>
+<tr class="even">
+<td><code>id</code></td>
+<td>定义元素的唯一id</td>
+</tr>
+<tr class="odd">
+<td><code>style</code></td>
+<td>规定元素的行内样式（inline style）</td>
+</tr>
+<tr class="even">
+<td><code>title</code></td>
+<td>描述了元素的额外信息 (作为工具条使用)</td>
+</tr>
+<tr class="odd">
+<td><code>accesskey</code></td>
+<td>设置访问元素的键盘快捷键。</td>
+</tr>
+<tr class="even">
+<td><code>contenteditable</code></td>
+<td>规定是否可编辑元素的内容。</td>
+</tr>
+<tr class="odd">
+<td><code>contextmenu</code></td>
+<td>指定一个元素的上下文菜单。当用户右击该元素，出现上下文菜单</td>
+</tr>
+</tbody>
+</table>
+<h1 id="javascript">3 javascript</h1>
+<p>JavaScript 是 web 开发人员必须学习的 3 门语言中的一门：</p>
+<ul>
+<li>HTML 定义了网页的内容</li>
+<li>CSS 描述了网页的布局</li>
+<li>JavaScript 控制了网页的行为</li>
+</ul>
+<p>使用必知：</p>
+<ul>
+<li>HTML 中的 Javascript 脚本代码必须位于 <code>&lt;script&gt;</code>与 <code>&lt;/script&gt;</code> 标签之间，告诉浏览器 JavaScript 在何处开始和结束。</li>
+<li>Javascript 脚本代码可被放置在 HTML 页面的<code>&lt;body&gt;</code> 和 <code>&lt;head&gt;</code> 部分中。
+<ul>
+<li>一般建议把它们放在 <code>&lt;head&gt;</code> 部分中，或者放在页面底部。这样就可以把它们安置到同一处位置，不会干扰页面的内容</li>
+<li>把一个 JavaScript 函数放置到 HTML 页面的
+<head>
+部分。该函数会在点击按钮时被调用： <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">function</span> <span class="title function_">myFunction</span>(<span class="params"></span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span>=<span class="string">&quot;我的第一个 JavaScript 函数&quot;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>我的 Web 页面<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span>一个段落<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;myFunction()&quot;</span>&gt;</span>尝试一下<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure></head></li>
+<li><code>&lt;body&gt;</code> 中的 JavaScript 函数。在本例中，我们把一个 JavaScript 函数放置到 HTML 页面的 <code>&lt;body&gt;</code> 部分。该函数会在点击按钮时被调用： <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>我的 Web 页面<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span>一个段落<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;button&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;myFunction()&quot;</span>&gt;</span>尝试一下<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">function</span> <span class="title function_">myFunction</span>(<span class="params"></span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;demo&quot;</span>).<span class="property">innerHTML</span>=<span class="string">&quot;我的第一个 JavaScript 函数&quot;</span>;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+<li>外部的 JavaScript:也可以把脚本保存到外部文件中。外部文件通常包含被多个网页使用的代码。外部 JavaScript 文件的文件扩展名是 .js。<strong>如需使用外部文件，请在<code>&lt;script&gt;</code>标签的 &quot;src&quot; 属性中设置该 .js 文件路径：</strong> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> html&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;myScript.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
+<h2 id="数据类型">3.1 数据类型</h2>
+<p>javascript同python一样使用动态类型，即不用声明变量的类型，它会根据表达式推断类型，此外统一使用<code>var</code>关键字来声明一个变量： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var x;               <span class="comment">// x 为 undefinedvar            </span></span><br><span class="line">x = <span class="number">5</span>;				 <span class="comment">// 现在 x 为数字</span></span><br><span class="line">var x = <span class="string">&quot;John&quot;</span>;      <span class="comment">// 现在 x 为字符串</span></span><br></pre></td></tr></table></figure></p>
+<p>在javascript中数据类型有：</p>
+<ul>
+<li><p><strong>值类型(基本类型)：</strong>字符串（String）、数字(Number)、布尔(Boolean)、空（Null）、未定义（Undefined）、Symbol。</p></li>
+<li><p><strong>引用数据类型（对象类型）：</strong>对象(Object)、数组(Array)、函数(Function)，<strong>还有两个特殊的对象</strong>正则（RegExp）和日期（Date</p></li>
+</ul>
+<h3 id="数组">3.1.1 数组</h3>
+<p>下面的代码创建名为 cars 的数组的三种方法： <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法1</span></span><br><span class="line"><span class="keyword">var</span> cars=<span class="keyword">new</span> <span class="title class_">Array</span>();</span><br><span class="line">cars[<span class="number">0</span>]=<span class="string">&quot;Saab&quot;</span>;</span><br><span class="line">cars[<span class="number">1</span>]=<span class="string">&quot;Volvo&quot;</span>;</span><br><span class="line">cars[<span class="number">2</span>]=<span class="string">&quot;BMW&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//方法2</span></span><br><span class="line"><span class="keyword">var</span> cars=<span class="keyword">new</span> <span class="title class_">Array</span>(<span class="string">&quot;Saab&quot;</span>,<span class="string">&quot;Volvo&quot;</span>,<span class="string">&quot;BMW&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//方法三</span></span><br><span class="line"><span class="keyword">var</span> cars=[<span class="string">&quot;Saab&quot;</span>,<span class="string">&quot;Volvo&quot;</span>,<span class="string">&quot;BMW&quot;</span>];</span><br></pre></td></tr></table></figure></p>
+<h3 id="javascript对象">3.1.2 javascript对象</h3>
+<p>javascript的对象概念不是c++/java等面向对象中的对象概念。<strong>在javascript中对象由花括号分隔。在括号内部，对象的属性以名称和值对的形式 (name : value) 来定义。属性由逗号分隔：</strong> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person=&#123;<span class="attr">firstname</span>:<span class="string">&quot;John&quot;</span>, <span class="attr">lastname</span>:<span class="string">&quot;Doe&quot;</span>, <span class="attr">id</span>:<span class="number">5566</span>&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>当然对象中的属性可以是函数，只要做好键值映射就好了： <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    <span class="attr">firstName</span>: <span class="string">&quot;John&quot;</span>,</span><br><span class="line">    lastName : <span class="string">&quot;Doe&quot;</span>,</span><br><span class="line">    id : <span class="number">5566</span>,</span><br><span class="line">    fullName : <span class="keyword">function</span>(<span class="params"></span>) </span><br><span class="line">	&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">firstName</span> + <span class="string">&quot; &quot;</span> + <span class="variable language_">this</span>.<span class="property">lastName</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>变量的生命周期</p>
+<ul>
+<li><p><strong>局部变量</strong>：在 JavaScript 函数内部声明的变量（使用 var）是局部变量，所以只能在函数内部访问它。（该变量的作用域是局部的）。您可以在不同的函数中使用名称相同的局部变量，因为只有声明过该变量的函数才能识别出该变量。只要函数运行完毕，本地变量就会被删除。</p></li>
+<li><p><strong>全局 JavaScript 变量：</strong>在函数外声明的变量是全局变量，网页上的所有脚本和函数都能访问它。</p></li>
+</ul>
+</blockquote>
+<p>在 JavaScript 中，函数内部的局部变量通常不可以直接被外部作用域访问，但有几种方式可以将函数内的局部变量暴露给外部作用域，具体如下：</p>
+<ul>
+<li><strong>通过全局对象：</strong>在函数内部，可以通过将局部变量赋值给 window 对象的属性来使其成为全局可访问的。例如，使用 window.a = a; 语句，可以在函数外部通过 window.a 访问到这个局部变量的值。</li>
+<li><strong>定义全局变量</strong>：<strong>在函数内部不使用 var、let 或 const 等关键字声明变量时，该变量会被视为全局变量，从而可以在函数外部访问</strong>。但这种做法通常不推荐，因为它可能导致意外的副作用和代码难以维护。</li>
+<li><strong>返回值：</strong>可以通过在函数内部使用 return 语句返回局部变量的值，然后在函数外部接收这个返回值。这样，虽然局部变量本身不会被暴露，但其值可以通过函数调用传递到外部。</li>
+<li><strong>闭包：</strong>JavaScript 中的闭包特性允许内部函数访问外部函数的局部变量。即使外部函数执行完毕后，其局部变量仍然可以被内部函数引用。</li>
+<li><strong>属性和方法</strong>：<strong>定义在全局作用域中的变量和函数都会变成 window 对象的属性和方法</strong>，因此可以在调用时省略 window，直接使用变量名或函数名。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/26/vue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/26/vue/" class="post-title-link" itemprop="url">vue</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-26 16:01:45" itemprop="dateCreated datePublished" datetime="2024-05-26T16:01:45+08:00">2024-05-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-29 17:24:31" itemprop="dateModified" datetime="2024-05-29T17:24:31+08:00">2024-05-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="vue简介">1 vue简介</h1>
+<p>Vue (发音为 /vjuː/，类似 view) 是一款用于构建用户界面的 JavaScript 框架。它基于标准 HTML、CSS 和 JavaScript 构建，并提供了一套声明式的、组件化的编程模型，帮助你高效地开发用户界面</p>
+<p>Vue 是一个框架，也是一个生态。其功能覆盖了大部分前端开发常见的需求。但 Web 世界是十分多样化的，不同的开发者在 Web 上构建的东西可能在形式和规模上会有很大的不同。考虑到这一点，Vue 的设计非常注重灵活性和“可以被逐步集成”这个特点。根据你的需求场景，你可以用不同的方式使用 Vue：</p>
+<ul>
+<li>无需构建步骤，渐进式增强静态的 HTML</li>
+<li>在任何页面中作为 Web Components 嵌入</li>
+<li>单页应用 (SPA)</li>
+<li>全栈 / 服务端渲染 (SSR)</li>
+<li>Jamstack / 静态站点生成 (SSG)</li>
+<li>开发桌面端、移动端、WebGL，甚至是命令行终端中的界面</li>
+</ul>
+<h1 id="安装和创建一个vue项目">2. 安装和创建一个vue项目</h1>
+<ul>
+<li>安装vue <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install vue@^<span class="number">2</span></span><br></pre></td></tr></table></figure></li>
+<li>全局安装<code>vue CLI</code>。Vue CLI是一个基于Node.js的全局npm包，它提供了标准化的项目结构和开发流程 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @vue/cli  </span><br></pre></td></tr></table></figure></li>
+<li>快速搭建vue应用</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vue create myproject-veutest --<span class="keyword">default</span></span><br><span class="line">cd myproject-veutest</span><br><span class="line">npm install</span><br><span class="line">npm run dev</span><br><span class="line">DONE  Compiled successfully in <span class="number">4388</span>ms</span><br><span class="line"></span><br><span class="line">&gt; Listening at http:<span class="comment">//localhost:8080</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>项目打包：打包 Vue 项目使用以下命令： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt;npm run build</span><br></pre></td></tr></table></figure> 执行完成后，会在 Vue 项目下生成一个 dist 目录，一般包含 index.html 文件及 static 目录，static 目录包含了静态文件 js、css 以及图片目录 images。</p>
+</blockquote>
+<h2 id="项目的目录结构">2.1 项目的目录结构</h2>
+<p>上面我们使用npm创建了项目，打开<code>myproject-vuetest</code>后，其目录有如下：</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 81%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>目录/文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>build</td>
+<td>项目构建(webpack)相关代码</td>
+</tr>
+<tr class="even">
+<td>config</td>
+<td>配置目录，包括端口号等。我们初学可以使用默认的。</td>
+</tr>
+<tr class="odd">
+<td>node_modules</td>
+<td>npm 加载的项目依赖模块</td>
+</tr>
+<tr class="even">
+<td>src</td>
+<td>这里是我们要开发的目录，基本上要做的事情都在这个目录里。里面包含了几个目录及文件：<br>assets：放置一些图片，如logo等。<br>components: 目录里面放了一个组件文件，可以不用。<br>App.vue: 项目入口文件，我们也可以直接将组件写这里，而不使用 components 目录。<br>main.js: 项目的核心文件。</td>
+</tr>
+<tr class="odd">
+<td>static</td>
+<td>静态资源目录，如图片、字体等。</td>
+</tr>
+<tr class="even">
+<td>test</td>
+<td>初始测试目录，可删除</td>
+</tr>
+<tr class="odd">
+<td>.xxxx文件</td>
+<td>这些是一些配置文件，包括语法配置，git配置等。</td>
+</tr>
+<tr class="even">
+<td>index.html</td>
+<td>首页入口文件，你可以添加一些 meta 信息或统计代码啥的。</td>
+</tr>
+<tr class="odd">
+<td>package.json</td>
+<td>项目配置文件。</td>
+</tr>
+<tr class="even">
+<td>README.md</td>
+<td>项目的说明文档，markdown 格式</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/22/django/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/22/django/" class="post-title-link" itemprop="url">django</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-22 21:11:32" itemprop="dateCreated datePublished" datetime="2024-05-22T21:11:32+08:00">2024-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-27 18:57:57" itemprop="dateModified" datetime="2024-05-27T18:57:57+08:00">2024-05-27</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="django-简介">1 Django 简介</h1>
+<h2 id="基本介绍">1.1 基本介绍</h2>
+<p>Django 是一个高级的 Python Web 框架，用于快速开发可维护和可扩展的 Web 应用程序。</p>
+<p>使用 Django，<strong>只要很少的代码</strong>，Python 的程序开发人员就可以轻松地完成一个正式网站所需要的大部分内容，并进一步开发出全功能的 Web 服务。</p>
+<p>Django 本身基于 <strong>MVC 模型</strong>，即 <strong>Model（模型）</strong>+ <strong>View（视图）</strong>+ <strong>Controller（控制器）</strong>设计模式，MVC 模式使后续对程序的修改和扩展简化，并且使程序某一部分的重复利用成为可能。</p>
+<p>Django想要理解，首先要明白的就是Django的大致组成，它大致由四部分组成，也就是提到的MTV模型：</p>
+<ul>
+<li><p><strong>Model（模型</strong>）：负责业务对象与数据库的对象（orm）</p></li>
+<li><p><strong>Template（模板）</strong>：负责把数据展示给用户（前端的东西）</p></li>
+<li><p><strong>View（视图）</strong>：负责业务逻辑，并在适当的时候会调用Model和Template</p></li>
+<li><p><strong>URL分发器</strong>：通过前台请求的url，来分配调到相应的函数操作，类似于网络中的路由表，控制网络的下一跳的地址。</p></li>
+</ul>
+<p><img src="/2024/05/22/django/1.png" width="500"></p>
+<ul>
+<li><p>1、浏览器输入url发送访问请求，首先到达django的URL控制器（urls.py）。</p></li>
+<li><p>2、URL控制器通过URL地址分配跳转到相应的View视图（views.py）中的对应函数。</p></li>
+<li><p>3、View视图如果需要访问数据库操作数据，需要实例化Model模型中的类（models.py），然后通过对类的操作就是对数据库的操作。</p></li>
+<li>4、
+<ul>
+<li>a）如果未创建数据库，Model模型里面是以面向对象的形式将每张数据表以类的方式创建出来，然后通过makemigrations就可以同步到数据库来进行表的创建和表关系的建立。</li>
+<li>b）如果已创建数据库，并且已经同步数据库，那么实例化类的对象，就可以操作数据库了。</li>
+</ul></li>
+<li><p>5、返回数据库请求的数据。</p></li>
+<li><p>6、上一步请求的数据实在View视图实例化类的地方接收数据。</p></li>
+<li><p>7、在View模型中，通过对数据的操作或者其他的相应操作、计算等，将数据参数传递到Template模板。</p></li>
+<li><p>8、将View模板中的数据接收，通过将其嵌入到前端页面的代码中，实现漂亮的可视化展示。</p></li>
+</ul>
+<h1 id="通过案例入门">2. 通过案例入门</h1>
+<p>如果这是你第一次使用 Django 的话，你需要一些初始化设置。也就是说，你需要用一些自动生成的代码配置一个 Django project —— 即一个 Django 项目实例需要的设置项集合，包括数据库配置、Django 配置和应用程序配置。<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/intro/tutorial01/">资料来源django中文文档</a></p>
+<p>打开命令行，cd 到一个你想放置你代码的目录，然后运行以下命令： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject mysite</span><br></pre></td></tr></table></figure> 这行代码将会在当前目录下创建一个 mysite 目录。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysite/</span><br><span class="line">    manage.py</span><br><span class="line">    mysite/</span><br><span class="line">        __init__.py</span><br><span class="line">        settings.py</span><br><span class="line">        urls.py</span><br><span class="line">        asgi.py</span><br><span class="line">        wsgi.py</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>最外层的 <strong>mysite/ </strong>根目录只是你项目的容器， 根目录名称对 Django 没有影响，你可以将它重命名为任何你喜欢的名称。</li>
+<li><strong>manage.py</strong>: 一个让你用各种方式管理 Django 项目的命令行工具。你可以阅读 django-admin 和 manage.py 获取所有 manage.py 的细节。(manage.py的作用个django-admin命令是一样的)</li>
+<li>里面一层的 <strong>mysite/</strong> 目录包含你的项目，它是一个纯 Python 包。它的名字就是当你引用它内部任何东西时需要用到的 Python 包名。 (比如 mysite.urls).</li>
+<li><strong>mysite/<strong>init</strong>.py</strong>：一个空文件，告诉 Python 这个目录应该被认为是一个 Python 包。如果你是 Python 初学者，阅读官方文档中的 更多关于包的知识。</li>
+<li><strong>mysite/settings.py：</strong>Django 项目的配置文件。如果你想知道这个文件是如何工作的，请查看 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/topics/settings/">Django 配置</a> 了解细节。</li>
+<li>** mysite/urls.py：**Django 项目的 URL 声明，就像你网站的“目录”。阅读 URL调度器 文档来获取更多关于 URL 的内容。</li>
+<li>** mysite/asgi.py：**作为你的项目的运行在 ASGI 兼容的 Web 服务器上的入口。阅读 如何使用 ASGI 来部署 了解更多细节。</li>
+<li><strong>mysite/wsgi.py</strong>：作为你的项目的运行在 WSGI 兼容的Web服务器上的入口。阅读 如何使用 WSGI 进行部署 了解更多细节。</li>
+</ul>
+<h2 id="django-配置settings.py">2.1 Django 配置<code>settings.py</code></h2>
+<p>Django 的配置文件包含 Django 应用的所有配置项。本文档介绍配置是如何生效的，以及哪些设置项是可配置的。首先知道<strong>配置文件</strong>仍然是一个使用模块级变量的一个 Python 文件。看一组例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ALLOWED_HOSTS = [<span class="string">&#x27;www.example.com&#x27;</span>]</span><br><span class="line">DEBUG = False</span><br><span class="line">DEFAULT_FROM_EMAIL = <span class="string">&#x27;webmaster@example.com&#x27;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果你将 DEBUG 设置为 False，同时你需要正确的设置 ALLOWED_HOSTS。</p>
+</blockquote>
+<p>因为配置文件是一个 Python 模块，所以要注意以下几项:</p>
+<ul>
+<li>不能有 Python 语法错误</li>
+<li>可以用 Python 语法实现动态配置，如<code>MY_SETTING = [str(i) for i in range(30)]</code></li>
+<li>可以从其他配置文件中引入变量</li>
+</ul>
+<h3 id="指定配置文件">2.1.1 指定配置文件</h3>
+<p>当你使用 Django 的时候，你必须告诉它你正在使用哪些设置。通过使用环境变量 <code>DJANGO_SETTINGS_MODULE</code> 来实现。</p>
+<p>DJANGO_SETTINGS_MODULE 的值是一个符合 Python 语法的路径，例如 mysite.settings。要注意配置模块应位于 Python 的 import 搜索路径中。</p>
+<p>使用<code>django-admin</code>或者<code>manage.py</code>时，你可以一次性设定环境变量，也可以在运行此工具时，显式地传入配置模块,如：</p>
+<ul>
+<li><p>1.在Linux的bash中使用export设置DJANGO_SETTINGS_MODULE的值位<code>mysite.settings</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> DJANGO_SETTINGS_MODULE=mysite.settings</span><br><span class="line">django-admin runserver</span><br></pre></td></tr></table></figure></p></li>
+<li><p>2.或者使用 <code>--settings</code>命令行参数指定配置模块路径: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin runserver --settings=mysite.settings</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<blockquote>
+<p>export命令是 shell 环境中用来设置或显示环境变量的命令，它在 Unix 和 Linux 系统中设置的环境变量是<strong>一次性</strong>的，这意味着它们只在当前的 shell 会话中有效。</p>
+</blockquote>
+<blockquote>
+<p>此外在服务器环境下，要通知WSGI应用当前使用的是哪个配置文件，用到 <strong>os.environ</strong>(当前环境变量字典，运行设置、获取和删除当前环境变量）:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">import</span> os</span><br><span class="line">&gt;os.environ[<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>] = <span class="string">&#x27;mysite.settings&#x27;</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="默认配置文件">2.1.2 默认配置文件</h3>
+<p>在无需配置的情况下，Django配置文件没必要定义任何配置项。因为每个配置项都有一个明确的默认值。默认值都保存在模块 <code>django/conf/global_settings.py</code>中。</p>
+<p>Django按如下算法编译配置模块:</p>
+<ul>
+<li>从 <code>global_settings.py</code>中加载配置项。</li>
+<li>从指定的配置文件中加载配置项，覆盖对应的全局配置项。</li>
+</ul>
+<blockquote>
+<p>注意: 配置文件中不要再重复引用 global_settings，因为这样做是多余的。</p>
+</blockquote>
+<h3 id="使用django的settings对象">2.1.3 使用django的settings对象</h3>
+<p><code>django.conf.settings</code>是一个对象，<strong>该对象是整合过默认配置<code>django/conf/global_settings.py</code>以及你自定义的指定配置文件后所产生的,即在settings对象中你自己的配置已经覆盖了默认配置了</strong>，记住！！<strong>它是一个对象，而不是一个模块</strong>，因此应是这样使用： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from django.conf <span class="keyword">import</span> settings</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> settings.DEBUG:</span><br><span class="line">    # Do something</span><br></pre></td></tr></table></figure></p>
+<h3 id="django的配置项列表">2.1.4 Django的配置项列表</h3>
+<p>既然是Django的配置，当然所使用的规则是由Django所规定，下面僵尸其配置关键<strong>key</strong></p>
+<ul>
+<li><p><strong><code>ABSOLUTE_URL_OVERRIDES</code>(默认：{}（空字典）)</strong>:将 <strong>&quot;app_label.model_name&quot;</strong>形式的字符串映射到接受模型对象并返回其 URL 的函数的字典。这是一种在每个预安装基础上插入或覆盖 <strong>get_absolute_url()</strong> 方法的方式（在此配置中使用的模型名称应全部为小写，与实际模型类名称的大小写无关。） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ABSOLUTE_URL_OVERRIDES = &#123;</span><br><span class="line">    <span class="string">&#x27;blogs.blog&#x27;</span>: lambda o: <span class="string">&quot;/blogs/%s/&quot;</span> % o.slug,</span><br><span class="line">    <span class="string">&#x27;news.story&#x27;</span>: lambda o: <span class="string">&quot;/stories/%s/%s/&quot;</span> % (o.pub_year, o.slug),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong>ADMINS（默认： <a href="#section"></a> （空列表））</strong>：所有收到代码错误通知的人的列表。当 DEBUG=False 和 AdminEmailHandler 中设置了 LOGGING 时（默认情况下是这样做的），Django 会将请求／响应周期中出现的异常的详细信息通过邮件发送给这些人。列表中的每个项目应该是一个元组 (全名, 电子邮件地址) <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[(<span class="string">&#x27;John&#x27;</span>, <span class="string">&#x27;john@example.com&#x27;</span>), (<span class="string">&#x27;Mary&#x27;</span>, <span class="string">&#x27;mary@example.com&#x27;</span>)]</span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong>ALLOWED_HOSTS(默认： <a href="#section"></a> （空列表）)</strong>:一个代表这个 Django 网站可以服务的主机／域名的字符串列表。这是一个安全措施，以防止 HTTP 主机头攻击 ，即使在许多看似安全的 Web 服务器配置下也有可能发生。</p></li>
+<li><p><strong>CSRF_COOKIE_DOMAIN(默认： None)</strong>:设置 CSRF cookie 时要使用的域。 这对于允许跨子域请求被排除在正常的跨站点请求伪造保护之外是很有用的。 它应该设置为一个字符串，如 &quot;.example.com&quot;，以允许一个子域上的表单的 POST 请求被另一个子域的视图所接受。</p></li>
+<li><p><strong>DATABASES(默认： {} （空字典）)</strong>:一个包含<strong>所有数据库</strong>配置的字典，用于 Django。它是一个嵌套的字典，其内容是将一个数据库别名映射到一个包含单个数据库选项的字典中。<strong>DATABASES 配置必须设置一个 default 数据库</strong>；也可以指定任何数量的其他数据库。最简单的配置文件是使用 SQLite 的单数据库配置。可以通过以下方式进行配置： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.sqlite3&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;mydatabase&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong>INSTALLED_APPS（默认： <a href="#section"></a> （空列表））：</strong>一个字符串的列表，表示在这个 Django 安装中所有被启用的应用程序。每一个字符串都应该是一个 Python 的点分隔路径。</p></li>
+</ul>
+<blockquote>
+<p>还有许多其他的配置key，详见<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/settings/">django配置项</a></p>
+</blockquote>
+<h3 id="动态配置django的配置">2.1.5 动态配置django的配置</h3>
+<p>上面讲的<code>DJANGO_SETTINGS_MODULE</code>和<code>--settings</code>都是你在启动django框架时传入配置文件给它，不允许你动态配置，即程序运行到某个片段时配置是不支持的，因此就有了<code>django.conf.settings.configure(default_settings, **settings)</code>函数，通过 configure() 可以设置任何配置项，每个参数对应一个值。参数名称必须大写，而且参数名必须是真实存在。没有在 configure() 中出现的设置项在随后用到时，仍会使用默认值。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from django.conf <span class="keyword">import</span> settings  </span><br><span class="line">  </span><br><span class="line"># 如果尚未配置settings，进行动态配置  </span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> settings.configured:  </span><br><span class="line">    settings.<span class="built_in">configure</span>(  </span><br><span class="line">        DATABASES=&#123;  </span><br><span class="line">            <span class="string">&#x27;default&#x27;</span>: &#123;  </span><br><span class="line">                <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.sqlite3&#x27;</span>,  </span><br><span class="line">                <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;:memory:&#x27;</span>,  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;,  </span><br><span class="line">        INSTALLED_APPS=[  </span><br><span class="line">            <span class="string">&#x27;myapp&#x27;</span>,  </span><br><span class="line">        ],  </span><br><span class="line">        # 其他必要的settings...  </span><br><span class="line">    )  </span><br><span class="line">  </span><br><span class="line"># 现在你可以导入并使用Django的模型和其他功能了  </span><br><span class="line">from myapp.models <span class="keyword">import</span> MyModel</span><br></pre></td></tr></table></figure> &gt;请注意，<strong>django.conf.settings.configure() 应该在Django的任何代码被加载之前调用，以确保Django的内部状态被正确初始化。一旦Django已经加载了settings（例如，通过DJANGO_SETTINGS_MODULE环境变量），再调用configure()方法将不会有任何效果</strong></p>
+<blockquote>
+<ul>
+<li>如果你没有设置 <code>DJANGO_SETTINGS_MODULE\--settings</code> 也没有调用 <code>configure()</code>，<strong>那么 Django 会在第一次访问配置项时抛出 ImportError 异常。</strong></li>
+<li>如果设置了 DJANGO_SETTINGS_MODULE，以某种方式访问配置的值，再 调用 configure() 的话，Django 将会抛出一个 RuntimeError 异常，表明已经设置了配置。</li>
+<li>重复调用 configure() 或是在访问任何一个配置项后再调用 configure()，也会引起错误。这意味着：确保要使用 configure() 或 DJANGO_SETTINGS_MODULE 其中一个，不要多，也不要少。</li>
+</ul>
+</blockquote>
+<h2 id="创建应用">2.2 创建应用</h2>
+<p>在使用<code>django-admin startproject mysite</code>生成一个djabgo项目后，你可以运行下述语句启动django服务器，通过浏览器访问 http://127.0.0.1:8000/ 。你将看到一个“祝贺”页面，有一只火箭正在发射。你成功了！ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py runserver</span><br></pre></td></tr></table></figure></p>
+<p>这是django默认的服务器，你需要根据你自己的需求搭建你自己的服务器项目，在django中，你要区分项目和应用</p>
+<blockquote>
+<p>项目和应用有什么区别？应用是一个专门做某件事的网络应用程序——比如博客系统，或者公共记录的数据库，或者小型的投票程序。项目则是一个网站使用的配置和应用的集合。项目可以包含很多个应用。应用可以被很多个项目使用。</p>
+</blockquote>
+<p>使用<code>startapp</code>来在一个项目创建app，你的应用可以存放在任何 Python 路径 中定义的路径。在这个教程中，我们将在你的 <code>manage.py</code> <strong>同级目录下创建投票应用,而不是在mysite下</strong>。这样它就可以作为顶级模块导入，而不是 mysite 的子模块。 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建一个名位poll的应用</span></span><br><span class="line">python manage.py startapp polls</span><br></pre></td></tr></table></figure> 这将会创建一个 polls 目录，它的目录结构大致如下： <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">polls/</span><br><span class="line">    __init__.py</span><br><span class="line">    admin.py</span><br><span class="line">    apps.py</span><br><span class="line">    migrations/</span><br><span class="line">        __init__.py</span><br><span class="line">    models.py</span><br><span class="line">    tests.py</span><br><span class="line">    views.py</span><br></pre></td></tr></table></figure> 这个目录结构包括了投票应用的全部内容。</p>
+<h3 id="编写视图">2.2.1 编写视图</h3>
+<p>让我们开始编写第一个视图吧。打开 polls/views.py，把下面这些 Python 代码输入进去： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from django.<span class="function">http <span class="keyword">import</span> HttpResponse</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">def <span class="title">index</span><span class="params">(request)</span>:</span></span><br><span class="line"><span class="function">    return HttpResponse(<span class="string">&quot;Hello, world. You&#x27;re at the polls index.&quot;</span>)</span></span><br></pre></td></tr></table></figure> 这是 Django 中最简单的视图。如果想看见效果，我们需要将一个 URL 映射到它——这就是我们需要 URLconf 的原因了。</p>
+<p>为了创建 URLconf，<strong>要在 polls 目录里新建一个 urls.py 文件</strong>。你的应用目录现在看起来应该是这样： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">polls/</span><br><span class="line">    __init__.py</span><br><span class="line">    admin.py</span><br><span class="line">    apps.py</span><br><span class="line">    migrations/</span><br><span class="line">        __init__.py</span><br><span class="line">    models.py</span><br><span class="line">    tests.py</span><br><span class="line">    urls.py</span><br><span class="line">    views.py</span><br></pre></td></tr></table></figure> 在 <strong>polls/urls.py </strong>中，输入如下代码： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.urls <span class="keyword">import</span> path</span><br><span class="line"></span><br><span class="line">from . <span class="keyword">import</span> views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="built_in">path</span>(<span class="string">&#x27;&#x27;, views.index, name=&#x27;</span>index<span class="number">&#x27;</span>),</span><br><span class="line">]</span><br></pre></td></tr></table></figure> 下一步是要在<strong>根 URLconf </strong>文件中指定我们创建的 polls.urls 模块。在 mysite/urls.py 文件的 urlpatterns 列表里插入一个 include()， 如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib <span class="keyword">import</span> admin</span><br><span class="line">from django.urls <span class="keyword">import</span> include, path</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    <span class="built_in">path</span>(<span class="string">&#x27;polls/&#x27;</span>, <span class="built_in">include</span>(<span class="string">&#x27;polls.urls&#x27;</span>)),</span><br><span class="line">    <span class="built_in">path</span>(<span class="string">&#x27;admin/&#x27;</span>, admin.site.urls),</span><br><span class="line">]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p><strong><code>include()</code></strong>：include()函数通常用于URL配置中，它允许你将一个URL配置（通常是一个urls.py模块）包含（或“引入”）到另一个URL配置中 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from django.urls <span class="keyword">import</span> include, path  </span><br><span class="line">urlpatterns = [  </span><br><span class="line">    <span class="built_in">path</span>(<span class="string">&#x27;some/path/&#x27;</span>, <span class="built_in">include</span>(<span class="string">&#x27;myapp.urls&#x27;</span>)),  </span><br><span class="line">    # ... 其他URL模式  </span><br><span class="line">]</span><br></pre></td></tr></table></figure></p></li>
+<li><strong>path</strong>函数：path 函数允许你以一种更简洁、可读的方式指定URL模式，而不需要使用正则表达式。它的基本语法如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">path</span>(route, view, name=None)</span><br></pre></td></tr></table></figure></li>
+<li><strong>route</strong>：一个字符串，描述URL的路径模式。它不支持正则表达式，只能使用字面字符串或者路径转换器。</li>
+<li><strong>view</strong>：当URL模式匹配成功时要调用的视图函数或者基于类的视图。</li>
+<li><p><strong>name</strong>：一个可选的名字字符串，<strong>用于在Django的模板、模型等地方引用这个URL模式。</strong></p></li>
+</ul>
+<h2 id="数据库配置">2.3 数据库配置</h2>
+<p>现在，打开 mysite/settings.py 。这是个包含了 Django 项目设置的 Python 模块。通常，这个配置文件使用 SQLite 作为默认数据库。如果你不熟悉数据库，或者只是想尝试下 Django，这是最简单的选择。Python 内置 SQLite，所以你无需安装额外东西来使用它。当你开始一个真正的项目时，你可能更倾向使用一个更具扩展性的数据库，例如 PostgreSQL，避免中途切换数据库这个令人头疼的问题。</p>
+<p><strong>如果你想使用其他数据库，你需要安装合适的 database bindings ，然后改变设置文件中 DATABASES 'default' 项目中的一些键值：</strong></p>
+<ul>
+<li>ENGINE -- 可选值有 <code>'django.db.backends.sqlite3'，'django.db.backends.postgresql'，'django.db.backends.mysql'，或 'django.db.backends.oracle'</code>。</li>
+<li>NAME -- 数据库的名称。如果你使用 SQLite，数据库将是你电脑上的一个文件，在这种情况下，NAME 应该是此文件完整的绝对路径，包括文件名。默认值 <code>BASE_DIR / 'db.sqlite3'</code> 将把数据库文件储存在项目的根目录</li>
+</ul>
+<blockquote>
+<p>如果你不使用 SQLite，则必须添加一些额外设置，比如 USER 、 PASSWORD 、 HOST 等等。想了解更多数据库设置方面的内容，请看上方的<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#std-setting-DATABASES">seting配置文档</a></p>
+</blockquote>
+<p>此外，关注一下文件头部的 INSTALLED_APPS 设置项。这里包括了会在你项目中启用的所有 Django 应用。应用能在多个项目中使用，你也可以打包并且发布应用，让别人使用它们。</p>
+<p>通常， INSTALLED_APPS 默认包括了以下 Django 的自带应用：</p>
+<ul>
+<li><code>django.contrib.admin</code> -- 管理员站点， 你很快就会使用它。</li>
+<li><code>django.contrib.auth</code> -- 认证授权系统。</li>
+<li><code>django.contrib.contenttypes</code> -- 内容类型框架。</li>
+<li><code>django.contrib.sessions</code> -- 会话框架。</li>
+<li><code>django.contrib.messages</code> -- 消息框架。</li>
+<li><code>django.contrib.staticfiles</code> -- 管理静态文件的框架。</li>
+</ul>
+<p>这些应用被默认启用是为了给常规项目提供方便。</p>
+<p>默认开启的某些应用需要至少一个数据表，所以，在使用他们之前需要在数据库中创建一些表。请执行以下命令： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py migrate</span><br></pre></td></tr></table></figure></p>
+<p>这个 <strong>migrate</strong> 命令查看 <strong><code>INSTALLED_APPS</code></strong> 配置，并根据 <code>mysite/settings.py</code> 文件中的数据库配置和随应用提供的数据库迁移文件（我们将在后面介绍这些），创建任何必要的数据库表。你会看到它应用的每一个迁移都有一个消息。如果你有兴趣，运行你的数据库的命令行客户端，输入 （PostgreSQL）， SHOW TABLES; （MariaDB，MySQL）， .tables （SQLite）或 SELECT TABLE_NAME FROM USER_TABLES; （Oracle）来显示 Django 创建的表。</p>
+<h3 id="创建模型">2.3.1 创建模型</h3>
+<p>在 Django 里写一个数据库驱动的 Web 应用的第一步是定义模型 - 也就是数据库结构设计和附加的其它元数据。</p>
+<p>在这个投票应用中，需要创建两个模型：问题 Question 和选项 Choice。Question 模型包括问题描述和发布时间。Choice 模型有两个字段，选项描述和当前得票数。每个选项属于一个问题。</p>
+<p>这些概念可以通过一个 Python 类来描述。按照下面的例子来编辑 polls/models.py 文件： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">from django.<span class="function">db <span class="keyword">import</span> models</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">class</span> <span class="title">Question</span><span class="params">(models.Model)</span>:</span></span><br><span class="line"><span class="function">    question_text =</span> models.<span class="built_in">CharField</span>(max_length=<span class="number">200</span>)</span><br><span class="line">    pub_date = models.<span class="built_in">DateTimeField</span>(<span class="string">&#x27;date published&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="built_in">Choice</span>(models.Model):</span><br><span class="line">    question = models.<span class="built_in">ForeignKey</span>(Question, on_delete=models.CASCADE)</span><br><span class="line">    choice_text = models.<span class="built_in">CharField</span>(max_length=<span class="number">200</span>)</span><br><span class="line">    votes = models.<span class="built_in">IntegerField</span>(<span class="keyword">default</span>=<span class="number">0</span>)</span><br></pre></td></tr></table></figure> 每个模型被表示为 django.db.models.Model 类的子类。<strong>每个模型有许多类变量，它们都表示模型里的一个数据库字段</strong>。</p>
+<p>每个字段都是 Field 类的实例:</p>
+<ul>
+<li><code>CharField</code>:表示数据库的字符串类型，如<code>varchar</code></li>
+<li><code>DateTimeField</code>:表示数据库的时间字段</li>
+<li><code>IntegerField</code>:表示数据库的整型字段</li>
+</ul>
+<blockquote>
+<p>我们使用 ForeignKey 定义了一个关系。这将告诉 Django，每个 Choice 对象都关联到一个 Question 对象</p>
+</blockquote>
+<h3 id="激活模型">2.3.2 激活模型</h3>
+<p>上面的一小段用于创建模型的代码给了 Django 很多信息，通过这些信息，Django 可以：</p>
+<ul>
+<li>为这个应用创建数据库 schema（生成 CREATE TABLE 语句）。</li>
+<li>创建可以与 Question 和 Choice 对象进行交互的 Python 数据库 API。</li>
+</ul>
+<p>但是首先得把 polls 应用安装到我们的项目里。</p>
+<p>为了在我们的工程中包含这个应用，我们需要在<strong>配置类</strong>的<code>INSTALLED_APPS</code>中添加设置。因为 <code>PollsConfig</code>类写在文件 <code>polls/apps.py</code>中，所以它的点式路径是 <code>'polls.apps.PollsConfig'</code>。在文件 <code>mysite/settings.py</code> 中<code>INSTALLED_APPS</code> 子项添加点式路径后，它看起来像这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &#x27;polls.apps.PollsConfig&#x27;,</span><br><span class="line">    &#x27;django.contrib.admin&#x27;,</span><br><span class="line">    &#x27;django.contrib.auth&#x27;,</span><br><span class="line">    &#x27;django.contrib.contenttypes&#x27;,</span><br><span class="line">    &#x27;django.contrib.sessions&#x27;,</span><br><span class="line">    &#x27;django.contrib.messages&#x27;,</span><br><span class="line">    &#x27;django.contrib.staticfiles&#x27;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>现在你的 Django 项目会包含 polls 应用。接着运行下面的命令： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py makemigrations polls</span><br></pre></td></tr></table></figure> 你将会看到类似于下面这样的输出： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Migrations <span class="keyword">for</span> <span class="string">&#x27;polls&#x27;</span>:</span><br><span class="line">  polls/migrations/<span class="number">0001</span>_initial.py</span><br><span class="line">    - Create model Question</span><br><span class="line">    - Create model Choice</span><br></pre></td></tr></table></figure> 通过运行 makemigrations 命令，Django 会检测你对模型文件的修改（在这种情况下，你已经取得了新的），并且把修改的部分储存为一次 迁移。(迁移是指Django 对于模型定义（也就是你的数据库结构）的变化的储存形式，而不是数据迁移,数据如果不是删除字段，一般不会丢失，使数据库平滑升级而不会丢失数据）</p>
+<p>django 有一个自动执行数据库迁移并同步管理你的数据库结构的命令 - 这个命令是 migrate，我们马上就会接触它 - 但是首先，让我们看看迁移命令会执行哪些 SQL 语句。sqlmigrate 命令接收一个迁移的名称，然后返回对应的 SQL： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python manage.py sqlmigrate polls <span class="number">0001</span></span><br></pre></td></tr></table></figure> 你将会看到下面这样的输出 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">BEGIN;</span><br><span class="line">--</span><br><span class="line">-- Create model Question</span><br><span class="line">--</span><br><span class="line">CREATE TABLE <span class="string">&quot;polls_question&quot;</span> (</span><br><span class="line">    <span class="string">&quot;id&quot;</span> bigint NOT <span class="literal">NULL</span> PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,</span><br><span class="line">    <span class="string">&quot;question_text&quot;</span> <span class="built_in">varchar</span>(<span class="number">200</span>) NOT <span class="literal">NULL</span>,</span><br><span class="line">    <span class="string">&quot;pub_date&quot;</span> timestamp with time zone NOT <span class="literal">NULL</span></span><br><span class="line">);</span><br><span class="line">--</span><br><span class="line">-- Create model Choice</span><br><span class="line">--</span><br><span class="line">CREATE TABLE <span class="string">&quot;polls_choice&quot;</span> (</span><br><span class="line">    <span class="string">&quot;id&quot;</span> bigint NOT <span class="literal">NULL</span> PRIMARY KEY GENERATED BY DEFAULT AS IDENTITY,</span><br><span class="line">    <span class="string">&quot;choice_text&quot;</span> <span class="built_in">varchar</span>(<span class="number">200</span>) NOT <span class="literal">NULL</span>,</span><br><span class="line">    <span class="string">&quot;votes&quot;</span> integer NOT <span class="literal">NULL</span>,</span><br><span class="line">    <span class="string">&quot;question_id&quot;</span> bigint NOT <span class="literal">NULL</span></span><br><span class="line">);</span><br><span class="line">ALTER TABLE <span class="string">&quot;polls_choice&quot;</span></span><br><span class="line">  ADD CONSTRAINT <span class="string">&quot;polls_choice_question_id_c5b4b260_fk_polls_question_id&quot;</span></span><br><span class="line">    <span class="function">FOREIGN <span class="title">KEY</span> <span class="params">(<span class="string">&quot;question_id&quot;</span>)</span></span></span><br><span class="line"><span class="function">    REFERENCES &quot;polls_question&quot; <span class="params">(<span class="string">&quot;id&quot;</span>)</span></span></span><br><span class="line"><span class="function">    DEFERRABLE INITIALLY DEFERRED</span>;</span><br><span class="line">CREATE INDEX <span class="string">&quot;polls_choice_question_id_c5b4b260&quot;</span> ON <span class="string">&quot;polls_choice&quot;</span> (<span class="string">&quot;question_id&quot;</span>);</span><br><span class="line"></span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure></p>
+<p>请注意以下几点：</p>
+<ul>
+<li>输出的内容和你使用的数据库有关，上面的输出示例使用的是 PostgreSQL。</li>
+<li>数据库的表名是由应用名(polls)和模型名的小写形式( question 和 choice)连接而来。（如果需要，你可以自定义此行为。）</li>
+<li>主键(IDs)会被自动创建。(当然，你也可以自定义。)</li>
+<li>默认的，Django 会在外键字段名后追加字符串 &quot;_id&quot; 。（同样，这也可以自定义。）</li>
+<li>外键关系由 FOREIGN KEY 生成。你不用关心 DEFERRABLE 部分，它只是告诉 PostgreSQL，请在事务全都执行完之后再创建外键关系。</li>
+<li><strong>这个 sqlmigrate 命令并没有真正在你的数据库中的执行迁移 - 相反，它只是把命令输出到屏幕上，</strong>让你看看 Django 认为需要执行哪些 SQL 语句。这在你想看看 Django 到底准备做什么，或者当你是数据库管理员，需要写脚本来批量处理数据库时会很有用</li>
+</ul>
+<p>现在，再次运行 <strong>migrate</strong> 命令，在数据库里创建新定义的模型的数据表： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ython manage.py migrate</span><br><span class="line">Operations to perform:</span><br><span class="line">  Apply all migrations: admin, auth, contenttypes, polls, sessions</span><br><span class="line">Running migrations:</span><br><span class="line">  Rendering model states... DONE</span><br><span class="line">  Applying polls<span class="number">.0001</span>_initial... OK</span><br></pre></td></tr></table></figure> 这个 migrate 命令选中所有还没有执行过的迁移（Django 通过在数据库中创建一个特殊的表 django_migrations 来跟踪执行过哪些迁移）并应用在数据库上 - 也就是将你对模型的更改同步到数据库结构上。</p>
+<p>迁移是非常强大的功能，它能让你在开发过程中持续的改变数据库结构而不需要重新删除和创建表 - 它专注于使数据库平滑升级而不会丢失数据。我们会在后面的教程中更加深入的学习这部分内容，<strong>现在，你只需要记住，改变模型需要这三步：</strong></p>
+<ul>
+<li>编辑 <code>models.py</code> 文件，改变模型。</li>
+<li>运行 <code>python manage.py makemigrations</code>为模型的改变生成迁移文件。</li>
+<li>运行 <code>python manage.py migrate</code>来应用数据库迁移。</li>
+</ul>
+<h3 id="api">2.3.3 API</h3>
+<p>执行上述<code>python manage.py migrate</code>命令后,django就为我们创建了与这些数据库表交换的python API，我们可以通过shell来初步尝试： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py shell</span><br></pre></td></tr></table></figure> &gt;我们使用这个命令而不是简单的使用“python”是因为 manage.py 会设置 DJANGO_SETTINGS_MODULE 环境变量，这个变量会让 Django 根据 mysite/settings.py 文件来设置 Python 包的导入路径。</p>
+<p>当你成功进入命令行后，来试试 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/topics/db/queries/">数据库 API</a> 吧：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from polls.models <span class="keyword">import</span> Choice, Question  # Import the model classes we just wrote.</span><br><span class="line"></span><br><span class="line"># No questions are in the system yet.</span><br><span class="line">&gt;&gt;&gt; Question.objects.<span class="built_in">all</span>()</span><br><span class="line">&lt;QuerySet []&gt;</span><br><span class="line"></span><br><span class="line"># Create a <span class="keyword">new</span> Question.</span><br><span class="line"># Support <span class="keyword">for</span> time zones is enabled in the <span class="keyword">default</span> settings file, so</span><br><span class="line"># Django expects a datetime with tzinfo <span class="keyword">for</span> pub_date. Use timezone.<span class="built_in">now</span>()</span><br><span class="line"><span class="meta"># instead of datetime.datetime.now() and it will do the right thing.</span></span><br><span class="line">&gt;&gt;&gt; from django.utils <span class="keyword">import</span> timezone</span><br><span class="line">&gt;&gt;&gt; q = <span class="built_in">Question</span>(question_text=<span class="string">&quot;What&#x27;s new?&quot;</span>, pub_date=timezone.<span class="built_in">now</span>())</span><br><span class="line"></span><br><span class="line"># Save the object into the database. You have to call <span class="built_in">save</span>() explicitly.</span><br><span class="line">&gt;&gt;&gt; q.<span class="built_in">save</span>()</span><br><span class="line"></span><br><span class="line"># Now it has an ID.</span><br><span class="line">&gt;&gt;&gt; q.id</span><br><span class="line"><span class="number">1</span></span><br><span class="line"></span><br><span class="line"># Access model field values via Python attributes.</span><br><span class="line">&gt;&gt;&gt; q.question_text</span><br><span class="line"><span class="string">&quot;What&#x27;s new?&quot;</span></span><br><span class="line">&gt;&gt;&gt; q.pub_date</span><br><span class="line">datetime.<span class="built_in">datetime</span>(<span class="number">2012</span>, <span class="number">2</span>, <span class="number">26</span>, <span class="number">13</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">775217</span>, tzinfo=datetime.timezone.utc)</span><br><span class="line"></span><br><span class="line"># Change values by changing the attributes, then calling <span class="built_in">save</span>().</span><br><span class="line">&gt;&gt;&gt; q.question_text = <span class="string">&quot;What&#x27;s up?&quot;</span></span><br><span class="line">&gt;&gt;&gt; q.<span class="built_in">save</span>()</span><br><span class="line"></span><br><span class="line"><span class="meta"># objects.all() displays all the questions in the database.</span></span><br><span class="line">&gt;&gt;&gt; Question.objects.<span class="built_in">all</span>()</span><br><span class="line">&lt;QuerySet [&lt;Question: Question <span class="built_in">object</span> (<span class="number">1</span>)&gt;]&gt;</span><br></pre></td></tr></table></figure>
+<p>等等!!!<code>&lt;Question: Question object (1)&gt;</code> 对于我们了解这个对象的细节没什么帮助。让我们通过编辑 <code>Question</code> 模型的代码（位于 <code>polls/models.py</code> 中）来修复这个问题。给 <code>Question</code> 和 <code>Choice</code> 增加 <code>__str__()</code>方法。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from django.<span class="function">db <span class="keyword">import</span> models</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="keyword">class</span> <span class="title">Question</span><span class="params">(models.Model)</span>:</span></span><br><span class="line"><span class="function">    # ...</span></span><br><span class="line"><span class="function">    def __str__(self):</span></span><br><span class="line"><span class="function">        return self.question_text</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">class Choice(models.Model):</span></span><br><span class="line"><span class="function">    # ...</span></span><br><span class="line"><span class="function">    def __str__(self):</span></span><br><span class="line"><span class="function">        return self.choice_text</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="编写更多的视图">2.4 编写更多的视图</h2>
+<h3 id="简单理解">2.4.1 简单理解</h3>
+<p>现在让我们向 polls/views.py 里添加更多视图。这些视图有一些不同，因为他们接收参数： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def detail(request, question_id):</span><br><span class="line">    return HttpResponse(&quot;You&#x27;re looking at question %s.&quot; % question_id)</span><br><span class="line"></span><br><span class="line">def results(request, question_id):</span><br><span class="line">    response = &quot;You&#x27;re looking at the results of question %s.&quot;</span><br><span class="line">    return HttpResponse(response % question_id)</span><br><span class="line"></span><br><span class="line">def vote(request, question_id):</span><br><span class="line">    return HttpResponse(&quot;You&#x27;re voting on question %s.&quot; % question_id)</span><br></pre></td></tr></table></figure> 把这些新视图添加进 polls.urls 模块里，只要添加几个 url() 函数调用就行： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from django.urls import path</span><br><span class="line"></span><br><span class="line">from . import views</span><br><span class="line"></span><br><span class="line">urlpatterns = [</span><br><span class="line">    # ex: /polls/</span><br><span class="line">    path(&#x27;&#x27;, views.index, name=&#x27;index&#x27;),</span><br><span class="line">    # ex: /polls/5/</span><br><span class="line">    path(&#x27;&lt;int:question_id&gt;/&#x27;, views.detail, name=&#x27;detail&#x27;),</span><br><span class="line">    # ex: /polls/5/results/</span><br><span class="line">    path(&#x27;&lt;int:question_id&gt;/results/&#x27;, views.results, name=&#x27;results&#x27;),</span><br><span class="line">    # ex: /polls/5/vote/</span><br><span class="line">    path(&#x27;&lt;int:question_id&gt;/vote/&#x27;, views.vote, name=&#x27;vote&#x27;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure> <strong>当你把这个<code>polls/urls.py</code>配置进根目录即<code>mysite/urls.py</code>时，启动服务器：</strong> 当某人请求你网站的某一页面时——比如说， &quot;/polls/34/&quot; ，Django 将会载入 mysite.urls 模块（因为这在配置项 ROOT_URLCONF 中设置了）。然后 Django 寻找名为 urlpatterns 变量并且按序匹配正则表达式。在找到匹配项 'polls/'，它切掉了匹配的文本（&quot;polls/&quot;），将剩余文本——&quot;34/&quot;，发送至 'polls.urls' URLconf 做进一步处理。在这里剩余文本匹配了 '<int:question_id>/'，使得我们 Django 以如下形式调用 detail(): <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">detail</span>(request=&lt;HttpRequest object&gt;, question_id=<span class="number">34</span>)</span><br></pre></td></tr></table></figure></int:question_id></p>
+<blockquote>
+<p><code>question_id=34 来自 &lt;int:question_id&gt;</code>。使用尖括号 &quot;获得&quot; 网址部分后发送给视图函数作为一个关键字参数。字符串的<code>question_id</code>部分定义了要使用的名字，用来识别相匹配的模式，而 int 部分是一种转换形式，用来确定应该匹配网址路径的什么模式。冒号 (:) 用来分隔转换形式和模式名。</p>
+</blockquote>
+<h3 id="写一个真正有用的视图">2.4.2 写一个真正有用的视图</h3>
+<p>每个视图必须要做的只有两件事：<strong>返回一个包含被请求页面内容的 HttpResponse 对象，或者抛出一个异常，比如 Http404 </strong>。至于你还想干些什么，随便你。</p>
+<p>你的视图可以从数据库里读取记录，可以使用一个模板引擎（比如 Django 自带的，或者其他第三方的），可以生成一个 PDF 文件，可以输出一个 XML，创建一个 ZIP 文件，你可以做任何你想做的事，使用任何你想用的 Python 库。</p>
+<p><strong>Django 只要求返回的是一个 HttpResponse ，或者抛出一个异常。</strong></p>
+<p>如下是问题投票的<code>views.py</code>需要的代码 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from django.http import HttpResponse</span><br><span class="line"></span><br><span class="line">from .models import Question</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    latest_question_list = Question.objects.order_by(&#x27;-pub_date&#x27;)[:5]</span><br><span class="line">    output = &#x27;, &#x27;.join([q.question_text for q in latest_question_list])</span><br><span class="line">    return HttpResponse(output)</span><br><span class="line"></span><br><span class="line"># Leave the rest of the views (detail, results, vote) unchanged</span><br></pre></td></tr></table></figure></p>
+<p>这里有个问题：页面的前端设计如果写死在视图函数的代码里的。如果你想改变页面的样子，你需要编辑 Python 代码。所以让我们使用** Django 的模板templates系统，专门负责前端设计**，只要创建一个视图，就可以将页面的设计从代码中分离出来。</p>
+<ul>
+<li>首先，<strong>在你的 polls 目录里创建一个 templates 目录</strong>。Django 将会在这个目录里查找模板文件</li>
+<li>项目的 <a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/ref/settings/#std-setting-TEMPLATES">TEMPLATES</a>配置项描述了 Django 如何载入和渲染模板。默认的设置文件设置了 DjangoTemplates 后端即<strong><code>BACKEND</code>为DjangoTemplates</strong>，并将 APP_DIRS 设置成了 True。这一选项将会让 DjangoTemplates 在每个 INSTALLED_APPS 文件夹中寻找 &quot;templates&quot; 子目录。这就是为什么尽管我们没有像在第二部分中那样修改 DIRS 设置，Django 也能正确找到 polls 的模板位置的原因。</li>
+<li>在你刚刚创建的 templates 目录里，<strong>再创建一个目录 polls</strong>，然后在其中新建一个文件 index.html 。换句话说，你的模板文件的路径应该是** polls/templates/polls/index.html 。因为<code>app_directories</code> 模板加载器是通过上述描述的方法运行的，所以 Django 可以引用到 polls/index.html 这一模板了。**</li>
+</ul>
+<blockquote>
+<p>为什么需要再创建一个polls文件:</p>
+<p>原因：虽然我们现在可以将模板文件直接放在 polls/templates 文件夹中（而不是再建立一个 polls 子文件夹），但是这样做不太好。<strong>Django 将会选择第一个匹配的模板文件，如果你有一个模板文件正好和另一个应用中的某个模板文件重名，Django 没有办法 区分 它们</strong>。我们需要帮助 Django 选择正确的模板，最好的方法就是把他们放入各自的应用 命名空间 中，也就是把这些模板放入一个和 自身 应用重名的子文件夹里。</p>
+</blockquote>
+<p>将下面的代码输入到刚刚创建的模板文件<code>index.html</code>中： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if latest_question_list %&#125;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">    &#123;% for question in latest_question_list %&#125;</span><br><span class="line">        &lt;li&gt;&lt;a href=&quot;/polls/&#123;&#123; question.id &#125;&#125;/&quot;&gt;&#123;&#123; question.question_text &#125;&#125;&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&#123;% else %&#125;</span><br><span class="line">    &lt;p&gt;No polls are available.&lt;/p&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后，让我们更新一下 polls/views.py 里的 index 视图来使用模板： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from django.http import HttpResponse</span><br><span class="line">from django.template import loader</span><br><span class="line"></span><br><span class="line">from .models import Question</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    latest_question_list = Question.objects.order_by(&#x27;-pub_date&#x27;)[:5]</span><br><span class="line">    template = loader.get_template(&#x27;polls/index.html&#x27;)</span><br><span class="line">    context = &#123;</span><br><span class="line">        &#x27;latest_question_list&#x27;: latest_question_list,</span><br><span class="line">    &#125;</span><br><span class="line">    return HttpResponse(template.render(context, request))</span><br></pre></td></tr></table></figure> 上述代码的作用是，载入 polls/index.html 模板文件，并且向它传递一个上下文(context)。这个上下文是一个字典，它将模板内的变量映射为 Python 对象。</p>
+<h3 id="render函数">2.4.3 render函数</h3>
+<p>「载入模板，填充上下文，再返回由它生成的 HttpResponse 对象」是一个非常常用的操作流程。于是 Django 提供了一个快捷函数,那就是render，有了render后，我们用它再次重写 index() 视图： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from django.shortcuts import render</span><br><span class="line"></span><br><span class="line">from .models import Question</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def index(request):</span><br><span class="line">    latest_question_list = Question.objects.order_by(&#x27;-pub_date&#x27;)[:5]</span><br><span class="line">    context = &#123;&#x27;latest_question_list&#x27;: latest_question_list&#125;</span><br><span class="line">    return render(request, &#x27;polls/index.html&#x27;, context)</span><br></pre></td></tr></table></figure></p>
+<h3 id="抛出-404-错误">2.4.4 抛出 404 错误</h3>
+<p>现在，我们来处理投票详情视图——它会显示指定投票的问题标题。下面是在<code>polls/views.py</code>这个视图的代码： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from django.http <span class="keyword">import</span> Http404</span><br><span class="line">from django.shortcuts <span class="keyword">import</span> render</span><br><span class="line"></span><br><span class="line">from .models <span class="keyword">import</span> Question</span><br><span class="line"># ...</span><br><span class="line"><span class="function">def <span class="title">detail</span><span class="params">(request, question_id)</span>:</span></span><br><span class="line"><span class="function">    try:</span></span><br><span class="line"><span class="function">        question =</span> Question.objects.<span class="built_in">get</span>(pk=question_id)</span><br><span class="line">    except Question.DoesNotExist:</span><br><span class="line">        <span class="function">raise <span class="title">Http404</span><span class="params">(<span class="string">&quot;Question does not exist&quot;</span>)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">return</span> <span class="title">render</span><span class="params">(request, <span class="string">&#x27;polls/detail.html&#x27;</span>, &#123;<span class="string">&#x27;question&#x27;</span>: question&#125;)</span></span></span><br></pre></td></tr></table></figure> 我们稍后再讨论你需要在 polls/detail.html 里输入什么，但是如果你想试试上面这段代码是否正常工作的话，你可以暂时把下面这段输进<code>polls/templates/polls/detail.html</code>： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;&#123;&#123; question.question_text &#125;&#125;&lt;/h1&gt;</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&#123;% for choice in question.choice_set.all %&#125;</span><br><span class="line">    &lt;li&gt;&#123;&#123; choice.choice_text &#125;&#125;&lt;/li&gt; </span><br><span class="line">&#123;% endfor %&#125;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure></p>
+<p>上面的html模板文件都是django定义的格式，在html语言的基础上加了支持，更多看<strong><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/zh-hans/4.1/topics/templates/">模板指南</a></strong></p>
+<h2 id="section"></h2>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/17/openTelemtry/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -225,7 +1003,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-19 17:56:19" itemprop="dateModified" datetime="2024-05-19T17:56:19+08:00">2024-05-19</time>
+                <time title="修改时间：2024-05-23 20:49:41" itemprop="dateModified" datetime="2024-05-23T20:49:41+08:00">2024-05-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,110 +1045,14 @@
 <h2 id="什么是可观测性">1.1 什么是可观测性？</h2>
 <p><strong>可观测性</strong>是指通过检查系统的内部输出来了解系统内部状态的能力。在软件的上下文中，这意味着能够理解 通过检查系统的遥测数据来检查系统的内部状态，其中遥测数据包括<strong>跟踪、指标和日志</strong>。</p>
 <p>要使系统可观察，必须对其进行检测。也就是说，代码必须发出跟踪、指标或日志。然后，必须将检测的数据发送到可观测性后端</p>
-<h2 id="主要的otel组件">1.2 主要的OTel组件</h2>
-<p>OpenTelemetry由以下几个主要组件组成:</p>
-<ul>
-<li>A <a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/otel/">specification</a> for all components(所有组件的规范)</li>
-<li>A standard <a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/otlp/">protocol</a> that defines the shape of telemetry data(定义遥测数据结构的标准协议)</li>
-<li><a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/specs/semconv/">Semantic conventions</a> that define a standard naming scheme for common telemetry data types(语义约定定义了通用遥测数据类型的标准命名方案)</li>
-<li>APIs that define how to generate telemetry data</li>
-<li>[Language SDKs][https://opentelemetry.io/docs/languages/] that implement the specification, APIs, and export of telemetry data(实现遥测数据规范、api和导出的语言sdk)</li>
-<li>A <a target="_blank" rel="noopener" href="https://opentelemetry.io/ecosystem/registry/">library ecosystem</a> that implements instrumentation for common libraries and frameworks(一个为通用库和框架实现插装的库生态系统)</li>
-<li>Automatic instrumentation components that generate telemetry data without requiring code changes</li>
-<li>The <a target="_blank" rel="noopener" href="https://opentelemetry.io/docs/collector/">OpenTelemetry Collector</a>, a proxy that receives, processes, and exports telemetry data(OpenTelemetry收集器，一个接收、处理和导出遥测数据的代理)</li>
-<li>Various other tools, such as the OpenTelemetry Operator for Kubernetes, OpenTelemetry Helm Charts, and community assets for FaaS</li>
-</ul>
-<h1 id="opentelemtry的概念">2 OpenTelemtry的概念</h1>
-<h2 id="span跨度">2.1 Span(跨度)</h2>
-<p>跨度（span)表示一工作或者操作单元.它跟踪一个请求在造成特定操作，描绘了当时执行该操作发生的事情。范围包含名称、与时间相关的数据、结构化日志消息和其他元数据（即属性），以提供有关其跟踪的操作的信息</p>
-<h2 id="trace">2.2 trace</h2>
-<p>distributed trace也可以直接称为trace，它记录请求(由应用程序或最终用户发起)在通过多服务架构(如微服务和无服务器应用程序)传播时所采取的路径。</p>
-<p>如果不进行跟踪，很难确定分布式系统中性能问题的原因。它提高了应用程序或系统健康状况的可见性，并让我们调试难以在本地重现的行为。跟踪对于分布式系统来说是必不可少的，因为分布式系统通常存在不确定性问题，或者过于复杂而无法在本地重现。</p>
-<p>一个跟踪由一个或者多个Spans组成，第一个span是root跨度。每个根跨度代表一个从开始到结束的请求。父级下面的span提供了请求期间发生的事情(或者组成请求的步骤)的更深入的上下文。</p>
-<h2 id="上下文">2.3 上下文</h2>
-<p>通过上下文传播，<strong>信号（teace)</strong>可以关联彼此之间，无论它们在哪里生成。尽管不限于跟踪，但它允许跟踪建立关于任意分布在进程和网络边界的服务的系统的因果信息。</p>
-<p>我们通过两个子概念来定义上下文传播：上下文和传播。</p>
-<h3 id="上下文context">2.3.1 上下文（context)</h3>
-<p>上下文是一个对象，它包含发送和接收服务(或执行单元)将一个信号与另一个信号相关联的信息。</p>
-<p>例如，如果服务A调用服务B，那么服务A的一个span，其ID在上下文中，将被用作服务B创建的下一个span的父span。在上下文中的trace ID也将被用于服务B创建的下一个span，这表明该span与服务A的span属于同一个trace的一部分</p>
-<h3 id="传播propagation">2.3.2 传播Propagation</h3>
-<p>传播是在服务和进程之间移动上下文的机制。它序列化或反序列化上下文对象，并提供相关信息，以便从一个服务传播到另一个服务。传播通常由插装库处理，并且对用户是透明的，但是在需要手动传播上下文的情况下，可以使用传播api。</p>
-<p>OpenTelemetry维护了几个官方传播器（propagators）。默认传播程序使用W3C TraceContext规范指定的标头</p>
-<h2 id="signal信号">2.4 signal（信号）</h2>
-<p>OpenTelemetry的目的是收集、处理和导出信号。信号是系统输出，描述了平台上运行的操作系统和应用程序的底层活动。信号可以是你想要在特定时间点测量的东西，比如温度或内存使用情况，也可以是你想要跟踪的分布式系统组件中的事件。您可以将不同的信号组合在一起，以观察同一件技术在不同角度下的内部工作情况。</p>
-<p>OpenTelemetry目前支持跟踪(trace)、度量(metrics)、日志(log)和baggage。事件是一种特定类型的日志，配置文件由配置文件工作组负责处理。</p>
-<h3 id="traces">2.4.1 Traces</h3>
-<p>跟踪让我们了解了向应用程序发出请求时会发生什么。无论你的应用是带有单一数据库的单体应用，还是复杂的服务网格，跟踪对于理解请求在应用中接受的完整“路径”都是至关重要的。</p>
-<p>让我们通过三个span工作单元来探索这一点:</p>
-<ul>
-<li><p>hello span: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hello&quot;</span>,</span><br><span class="line">  <span class="string">&quot;context&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trace_id&quot;</span>: <span class="string">&quot;0x5b8aa5a2d2c872e8321cf37308d69df2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;span_id&quot;</span>: <span class="string">&quot;0x051581bf3cb55c13&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;parent_id&quot;</span>: null,</span><br><span class="line">  <span class="string">&quot;start_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114201Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;end_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114687Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;http.route&quot;</span>: <span class="string">&quot;some_route1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;events&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Guten Tag!&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114561Z&quot;</span>,</span><br><span class="line">      <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;event_attributes&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 这是根span，表示整个操作的开始和结束。注意，它有一个trace_id字段表示跟踪，但没有parent_id。这就是为什么你知道它是根span。</p></li>
-<li><p>hello-greetings span: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hello-greetings&quot;</span>,</span><br><span class="line">  <span class="string">&quot;context&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trace_id&quot;</span>: <span class="string">&quot;0x5b8aa5a2d2c872e8321cf37308d69df2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;span_id&quot;</span>: <span class="string">&quot;0x5fb397be34d26b51&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;parent_id&quot;</span>: <span class="string">&quot;0x051581bf3cb55c13&quot;</span>,</span><br><span class="line">  <span class="string">&quot;start_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114304Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;end_time&quot;</span>: <span class="string">&quot;2022-04-29T22:52:58.114561Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;http.route&quot;</span>: <span class="string">&quot;some_route2&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;events&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hey there!&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114561Z&quot;</span>,</span><br><span class="line">      <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;event_attributes&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;bye now!&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114585Z&quot;</span>,</span><br><span class="line">      <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;event_attributes&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 这个span封装了一些特定的任务，比如发送问候语，它的父级是hello span。注意，它与根span共享相同的trace_id，表明它是同一个跟踪的一部分。此外，它还有一个parent_id，与hello span的span_id匹配。</p></li>
-<li><p>hello-salutations span: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hello-salutations&quot;</span>,</span><br><span class="line">  <span class="string">&quot;context&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trace_id&quot;</span>: <span class="string">&quot;0x5b8aa5a2d2c872e8321cf37308d69df2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;span_id&quot;</span>: <span class="string">&quot;0x93564f51e1abe1c2&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;parent_id&quot;</span>: <span class="string">&quot;0x051581bf3cb55c13&quot;</span>,</span><br><span class="line">  <span class="string">&quot;start_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114492Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;end_time&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114631Z&quot;</span>,</span><br><span class="line">  <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;http.route&quot;</span>: <span class="string">&quot;some_route3&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;events&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;hey there!&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2022-04-29T18:52:58.114561Z&quot;</span>,</span><br><span class="line">      <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;event_attributes&quot;</span>: <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 这个span表示跟踪中的第三个操作，和前一个一样，它是hello span的一个子元素。这也使它成为hello-greetings序列的兄弟。</p></li>
-</ul>
-<p>这三个JSON块共享相同的trace_id, parent_id字段表示层次结构。这就是一个Trace!</p>
-<p>您要注意的另一件事是，每个Span看起来像结构化日志。那是因为它就是这样!一种理解跟踪的方式是，它们是结构化日志的集合，包含上下文、相关性、层次结构等。然而，这些“结构化日志”可以来自不同的进程、服务、虚拟机、数据中心等。这就是允许跟踪表示任何系统的端到端视图的原因。</p>
-<p><strong>为了理解OpenTelemetry中的跟踪是如何工作的，让我们看看将在检测我们的代码中发挥作用的组件列表</strong>:</p>
-<ul>
-<li><p>Tracer provider :<strong>跟踪器提供者</strong>(有时称为TracerProvider)是跟踪程序的工厂。在大多数应用程序中，跟踪程序提供者初始化一次，其生命周期与应用程序的生命周期相匹配。跟踪器提供者初始化还包括资源和导出器初始化。这通常是OpenTelemetry跟踪的第一步。在某些语言sdk中，全局跟踪器提供程序已经为你初始化了</p></li>
-<li><p>Tracer（跟踪器）：跟踪者创建的span包含关于给定操作发生的更多信息，例如服务中的请求。跟踪器是从跟踪器提供程序创建的</p></li>
-<li><p>Trace Exporters(跟踪导出器）：跟踪导出器将跟踪发送给消费者。该使用者可以是调试和开发时的标准输出、OpenTelemetry收集器或您选择的任何开源或供应商后端</p></li>
-<li><p>Context Propagation(上下文传播）：上下文传播是支持分布式跟踪的核心概念。通过上下文传播，span可以相互关联并组装成一个trace，而不管span是在哪里生成的。要了解有关此主题的更多信息，请参阅关于上下文传播的概念页</p></li>
-<li>Span：span表示一个工作或操作单元。一个或多个span构成trace。在OpenTelemetry中，它们包含以下信息:
-<ul>
-<li>Name</li>
-<li>Parent span ID (empty for root spans)</li>
-<li>Start and End Timestamps</li>
-<li>Span Context</li>
-<li>Attributes(属性)</li>
-<li>Span Events</li>
-<li>Span Links</li>
-<li>Span Status</li>
-</ul></li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;/v1/sys/health&quot;</span>,</span><br><span class="line">  <span class="string">&quot;context&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trace_id&quot;</span>: <span class="string">&quot;7bba9f33312b3dbb8b2c2c62bb7abe2d&quot;</span>,</span><br><span class="line">    <span class="string">&quot;span_id&quot;</span>: <span class="string">&quot;086e83747d0e381e&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;parent_id&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;start_time&quot;</span>: <span class="string">&quot;2021-10-22 16:04:01.209458162 +0000 UTC&quot;</span>,</span><br><span class="line">  <span class="string">&quot;end_time&quot;</span>: <span class="string">&quot;2021-10-22 16:04:01.209514132 +0000 UTC&quot;</span>,</span><br><span class="line">  <span class="string">&quot;status_code&quot;</span>: <span class="string">&quot;STATUS_CODE_OK&quot;</span>,</span><br><span class="line">  <span class="string">&quot;status_message&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="string">&quot;attributes&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;net.transport&quot;</span>: <span class="string">&quot;IP.TCP&quot;</span>,</span><br><span class="line">    <span class="string">&quot;net.peer.ip&quot;</span>: <span class="string">&quot;172.17.0.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;net.peer.port&quot;</span>: <span class="string">&quot;51820&quot;</span>,</span><br><span class="line">    <span class="string">&quot;net.host.ip&quot;</span>: <span class="string">&quot;10.177.2.152&quot;</span>,</span><br><span class="line">    <span class="string">&quot;net.host.port&quot;</span>: <span class="string">&quot;26040&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.method&quot;</span>: <span class="string">&quot;GET&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.target&quot;</span>: <span class="string">&quot;/v1/sys/health&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.server_name&quot;</span>: <span class="string">&quot;mortar-gateway&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.route&quot;</span>: <span class="string">&quot;/v1/sys/health&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.user_agent&quot;</span>: <span class="string">&quot;Consul Health Check&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.scheme&quot;</span>: <span class="string">&quot;http&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.host&quot;</span>: <span class="string">&quot;10.177.2.152:26040&quot;</span>,</span><br><span class="line">    <span class="string">&quot;http.flavor&quot;</span>: <span class="string">&quot;1.1&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;events&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">      <span class="string">&quot;message&quot;</span>: <span class="string">&quot;OK&quot;</span>,</span><br><span class="line">      <span class="string">&quot;timestamp&quot;</span>: <span class="string">&quot;2021-10-22 16:04:01.209512872 +0000 UTC&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="metrics">2.4.2 Metrics</h3>
-<p>度量是对运行时捕获的服务的度量。捕获测量数据的时刻称为度量事件(metrics event)，它不仅包括测量数据本身，还包括捕获测量数据的时间和相关的元数据。</p>
-<p>应用程序和请求度量是可用性和性能的重要指标。自定义指标可以洞察可用性指标如何影响用户体验或业务。收集到的数据可用于警报中断或触发调度决策，以在高需求时自动扩展部署。</p>
-<p>为了理解OpenTelemetry中的指标是如何工作的，让我们来看一组在检测我们的代码中发挥作用的组件。</p>
-<ul>
-<li><p>Meter Provider: 一个仪表供应商(有时称为MeterProvider)是一个仪表工厂。在大多数应用程序中，仪表提供者初始化一次，其生命周期与应用程序的生命周期相匹配。仪表提供者初始化还包括资源和出口商初始化。这通常是OpenTelemetry测量的第一步。在某些语言sdk中，已经为您初始化了全局Meter提供者</p></li>
-<li><p>Meter（计量器）: 计量器创建度量工具，在运行时捕获关于服务的度量。计量器（meter)是由Meter Provider创建的</p></li>
-<li><p>Metric Exporter：指标导出者将指标数据发送给消费者。此使用者可以是开发期间用于调试的标准输出、OpenTelemetry收集器或您选择的任何开源或供应商后端</p></li>
-<li>Metric Instruments：在OTel中，测量结果由度量工具给出，度量工具由一下元素完整定义
-<ul>
-<li>Name</li>
-<li>Kind</li>
-<li>Unit (optional)</li>
-<li>Description (optional) &gt;名称、单元和描述是由开发人员选择的，或者通过常见的语义约定(如请求和过程度量)定义的。</li>
-</ul></li>
-</ul>
-<p>测量工具类型可以有：</p>
-<ul>
-<li>计数器(Counter):随着时间累积的值——你可以把它想象成汽车上的里程表;它只会一直上升。</li>
-<li>异步计数器（Asynchronous Counter）:与计数器相同，但每次导出时收集一次。如果你不能访问连续的增量，只能访问聚合值，则可以使用。</li>
-<li>UpDownCounter(向上计数器):随着时间累积的值，也可以再次下降。一个例子可以是队列长度，它会随着队列中工作项的数量而增加或减少。</li>
-<li>异步UpDownCounter:与UpDownCounter相同，但每次导出时收集一次。如果用户无法访问连续的更改，只能访问聚合的值(例如，当前队列的大小)，则可以使用此选项。</li>
-<li><strong>测量仪器(Gauge):读取时测量当前值。车辆的燃油表就是一个例子。测量仪器是异步的。</strong></li>
-<li><strong>直方图(Histogram):客户端值的聚合，例如请求延迟。如果你对值统计感兴趣，直方图是一个不错的选择。例如:有多少请求耗时少于1秒</strong></li>
-</ul>
-<h3 id="logs">2.4.3 logs</h3>
-<p>日志是带有时间戳的文本记录，可以是结构化的(推荐)，也可以是非结构化的，包含元数据。在所有遥测信号中，日志是最大的遗产。大多数编程语言都有内置的日志功能或知名的、广泛使用的日志库。虽然日志是一个独立的数据源，但它们也可以附加到span上。在OpenTelemetry中，<strong>任何不属于分布式跟踪(trace)或度量(metrics)的数据都是日志</strong>。例如，事件是一种特定类型的日志。日志通常包含详细的调试/诊断信息，例如操作的输入、操作的结果和支持该操作的任何元数据。</p>
-<p>对于跟踪和度量，OpenTelemetry采用全新的设计方法，指定一个新的API，并在多个语言sdk中提供该API的完整实现。</p>
-<p>OpenTelemetry处理日志的方法是不同的。因为现有的日志解决方案在语言和操作生态系统中广泛存在，OpenTelemetry充当了这些日志、跟踪和度量信号以及其他OpenTelemetry组件之间的“桥梁”。事实上，由于这个原因，日志API被称为“日志桥API”。</p>
-<p>logs规范中有关于这一理念的更多细节。</p>
-<p>为了理解OpenTelemetry中的日志记录是如何工作的，让我们看看将在检测我们的代码中发挥作用的组件列表:</p>
-<ul>
-<li><p>log Appender: 作为应用程序开发人员，您不应该直接调用日志的Appender API，因为它是为日志库作者提供的用于构建日志appender / bridges的API。相反，您只需使用您首选的日志库并将其配置为使用日志appender(或日志桥接器)，它能够将日志发送到OpenTelemetry LogRecordExporter中。</p></li>
-<li><p>logger provider: LoggerProvider(有时称为LoggerProvider)是Logger的工厂。在大多数情况下，Logger Provider只初始化一次，其生命周期与应用的生命周期相匹配。日志提供者初始化还包括资源和导出器初始化</p></li>
-<li><p>logger: Logger创建日志记录。记录器是从日志提供程序创建的</p></li>
-<li><p>logger exporter:将日志记录发送给消费者。该使用者可以是调试和开发时的标准输出、OpenTelemetry收集器或您选择的任何开源或供应商后端</p></li>
-<li>Log Record: 日志记录表示对事件的记录。在OpenTelemetry中，日志记录包含两种字段:
-<ul>
-<li>指定类型和含义的命名顶级字段</li>
-<li>任意值和类型的Resource和attributes字段</li>
-</ul></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/05/17/openTelemtry/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1232,336 +1914,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">并查集</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-10-09 17:38:05" itemprop="dateCreated datePublished" datetime="2023-10-09T17:38:05+08:00">2023-10-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 00:34:30" itemprop="dateModified" datetime="2023-10-10T00:34:30+08:00">2023-10-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="并查集">并查集</h1>
-<p>在计算机科学中，并查集是一种树型的数据结构，用于处理一些不交集（Disjoint Sets）的合并及查询问题。有一个联合-查找算法（union-find algorithm）定义了两个用于此数据结构的操作：</p>
-<ul>
-<li><p><code>Find</code>：确定元素属于哪一个子集。这个确定方法就是不断向上查找找到它的根节点，它可以被用来确定两个元素是否属于同一子集。</p></li>
-<li><p><code>Union</code>：将两个子集合并成同一个集合。</p></li>
-</ul>
-<p><img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/isunion.png" width="600"></p>
-<p>由于支持这两种操作，一个不相交集也常被称为联合-查找数据结构（union-find data structure）或合并-查找集合（merge-find set）。其他的重要方法如<code>MakeSet</code>，用于建立单元素集合。有了这些方法，<strong>许多经典的划分问题可以被解决。</strong></p>
-<h1 id="并查集的引入">并查集的引入</h1>
-<p>并查集的重要思想在于，用集合中的一个元素代表集合。我曾看过一个有趣的比喻，把集合比喻成<strong>帮派</strong>，而代表元素则是<strong>帮主</strong>。接下来我们利用这个比喻，看看并查集是如何运作的。</p>
-<p>最开始，所有大侠各自为战。他们各自的帮主自然就是自己。（对于只有一个元素的集合，代表元素自然是唯一的那个元素） <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic1.png" width="600"></p>
-<p>现在1号和3号比武，假设1号赢了（这里具体谁赢暂时不重要），那么3号就认1号作帮主（合并1号和3号所在的集合，1号为代表元素）。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic2.png" width="600"></p>
-<p>现在2号想和3号比武（合并3号和2号所在的集合），但3号表示，别跟我打，让我帮主来收拾你（合并代表元素）。不妨设这次又是1号赢了，那么2号也认1号做帮主。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic3.png" width="600"></p>
-<p>现在我们假设4、5、6号也进行了一番帮派合并，江湖局势变成下面这样： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic4.png" width="600"></p>
-<p>现在假设2号想与6号比，跟刚刚说的一样，喊帮主1号和4号出来打一架（帮主真辛苦啊）。1号胜利后，4号认1号为帮主，当然他的手下也都是跟着投降了。好了，比喻结束了。如果你有一点图论基础，相信你已经觉察到，这是一个树状的结构，要寻找集合的代表元素，只需要一层一层往上访问父节点（图中箭头所指的圆），直达树的根节点（图中橙色的圆）即可。根节点的父节点是它自己。我们可以直接把它画成一棵树： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic5.png" width="500"></p>
-<p>用这种方法，我们可以写出最简单版本的并查集代码。</p>
-<h2 id="初始化">初始化</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">fa</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n; ++i)&#123;</span><br><span class="line">		fa[i]=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>假如有编号为1, 2, 3, ..., n的n个元素，我们用一个数组fa[]来存储每个元素的父节点（因为每个元素有且只有一个父节点，所以这是可行的）。一开始，我们先将它们的父节点设为自己。</p>
-<h2 id="查询">查询</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span>&amp; x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(fa[x] == x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">find</span>(fa[x]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们用递归的写法实现对代表元素的查询：一层一层访问父节点，直至根节点（根节点的标志就是父节点是本身）。要判断两个元素是否属于同一个集合，只需要看它们的根节点是否相同即可。</p>
-<h2 id="合并">合并</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> i, <span class="type">int</span> j)</span> </span>&#123;</span><br><span class="line">    fa[<span class="built_in">find</span>(i)] = <span class="built_in">find</span>(j); <span class="comment">// 修改的是根节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>合并操作也是很简单的，先找到两个集合的代表元素，然后将前者的父节点设为后者即可。当然也可以将后者的父节点设为前者，这里暂时不重要。本文末尾会给出一个更合理的比较方法。</p>
-<h1 id="路径压缩发生在查询时">路径压缩（发生在查询时）</h1>
-<p>随着merge次数的增加，形成的并查集可能会成为一条长长的链，随着链越来越长，我们想要从底部找到根节点的时间复杂度会成为线性。</p>
-<p>怎么解决呢？我们可以使用<strong>路径压缩</strong>的方法。既然我们只关心一个元素对应的<strong>根节点</strong>，那我们希望每个元素到根节点的路径尽可能短，最好只需要一步，那么这就是我们的<strong>路径压缩</strong>：</p>
-<p>思想是：在<strong>查询</strong>的过程中，把沿途的的每个节点的父节点都设为根节点，下一次查询时就可以以<span class="math inline">\(O(1)\)</span>获得根节点</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span>&amp; x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(fa[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		fa[x] = <span class="built_in">find</span>(fa[x]);</span><br><span class="line">		<span class="keyword">return</span> fa[x];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="按秩合并">按秩合并</h1>
-<p>有些人可能有一个误解，以为<strong>路径压缩</strong>优化后，并查集始终都是一个 菊花图 （只有两层的树的俗称）。但其实，由于路径压缩只在 <strong>查询</strong> 时进行，也只压缩 <strong>一条路径</strong>，所以并查集最终的结构仍然可能是比较复杂的。例如，现在我们有一棵较复杂的树需要与一个单元素的集合合并： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic6.png" width="500"> 假如这时我们要merge(7,8)，如果我们可以选择的话，是把7的父节点设为8好，还是把8的父节点设为7好呢？</p>
-<p>当然是后者。因为如果把7的父节点设为8，会使树的 深度（树中最长链的长度）加深，原来的树中每个元素到根节点的距离都变长了，之后我们寻找根节点的路径也就会相应变长。虽然我们有路径压缩，但路径压缩也是会消耗时间的。而把8的父节点设为7，则不会有这个问题，因为它没有影响到不相关的节点。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic7.png" width="500"></p>
-<p>这启发我们：<strong>我们应该把简单的树往复杂的树上合并，而不是相反。因为这样合并后，到根节点距离变长的节点个数比较少。</strong></p>
-<p>我们用一个数组<code>rank[]</code>记录每个根节点对应的树的深度（如果不是根节点，其rank相当于以它作为根节点的<strong>子树</strong>的深度）。一开始，把所有元素的rank（<strong>秩</strong>）设为1。合并时比较两个根节点，把rank较小者往较大者上合并。路径压缩和按秩合并如果一起使用，时间复杂度接近<code>O(n)</code>，但是会破坏rank的准确性。</p>
-<h2 id="初始化按秩合并">初始化（按秩合并）</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">fa</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">rank</span><span class="params">(n+<span class="number">1</span>,<span class="number">1</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n:==i)&#123;</span><br><span class="line">		fa[i]=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="合并-1">合并</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> j)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=<span class="built_in">find</span>(i),y=<span class="built_in">find</span>(j);</span><br><span class="line">	<span class="keyword">if</span>(rank[x]&lt;=rank[y])&#123;</span><br><span class="line">		fa[x] = y;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		fa[y] = x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(rank[x]==rank[y]&amp;&amp;x!=y)&#123;</span><br><span class="line">		rank[y]++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="总结">总结</h1>
-<ol type="1">
-<li>并查集主要解决的<strong>分组管理</strong>一类的问题，<strong>如果问题能抽象成组与组之间的问题，一般情况下可考虑并查集</strong>，并查集的常见思路</li>
-</ol>
-<blockquote>
-<p>是否在一个组； 在一个组的条件； 路径和组在图中都属于连通域，上述<code>组</code>均可替换为<code>路径</code>，问题不变；</p>
-</blockquote>
-<ol start="2" type="1">
-<li>并查集的主要难点：</li>
-</ol>
-<blockquote>
-<p><strong>Union</strong>时，有的问题已经告诉了分组的信息，有的问题则需要自行挖掘； 一般情况下，并查集底层为一个1d数组，有的问题需要对元素进行编号或者转化与之对应； 在不清楚并查集中到底会存放多少数据时，底层也可以<strong>map</strong>；</p>
-</blockquote>
-<ol start="3" type="1">
-<li><p>并查集功能是<strong>Union</strong>也就是将两个组合并成一个组，对于拆分的情况，可以逆序思考问题，例如<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/bricks-falling-when-hit/description/">leetcode803 打砖块</a></p></li>
-<li><p>根据问题，也可在并查集底层使用其他数据结构，帮助解决问题；</p></li>
-</ol>
-<h1 id="例题">例题</h1>
-<h2 id="等式方程的可满足性">等式方程的可满足性</h2>
-<h3 id="题目">题目</h3>
-<p>给定一个由表示变量之间关系的字符串方程组成的数组，每个字符串方程 <code>equations[i]</code> 的长度为<code>4</code>，并采用两种不同的形式之一：<code>&quot;a==b&quot;</code> 或 <code>&quot;a!=b&quot;</code>。在这里，<code>a</code> 和 <code>b</code> 是小写字母（不一定不同），表示单字母变量名。</p>
-<p>只有当可以将整数分配给变量名，以便满足所有给定的方程时才返回<code>true</code>，否则返回 <code>false</code>。</p>
-<h3 id="分析">分析</h3>
-<p>分析题目可知，可组等式方程或有关系或无关系，那么因此对所有的方程进行管理，该背景下可考虑使用并查集解决：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">lass UnionFind &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">parent</span><span class="params">(<span class="number">26</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">UnionFind</span>() &#123;</span><br><span class="line">		parent.<span class="built_in">resize</span>(<span class="number">26</span>);</span><br><span class="line">        <span class="comment">//对范围内的赋值0</span></span><br><span class="line">        <span class="built_in">iota</span>(parent.<span class="built_in">begin</span>(), parent.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (index == parent[index]) &#123;</span><br><span class="line">            <span class="keyword">return</span> index;</span><br><span class="line">        &#125;</span><br><span class="line">        parent[index] = <span class="built_in">find</span>(parent[index]);</span><br><span class="line">        <span class="keyword">return</span> parent[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">unite</span><span class="params">(<span class="type">int</span> index1, <span class="type">int</span> index2)</span> </span>&#123;</span><br><span class="line">        parent[<span class="built_in">find</span>(index1)] = <span class="built_in">find</span>(index2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">equationsPossible</span><span class="params">(vector&lt;string&gt;&amp; equations)</span> </span>&#123;</span><br><span class="line">        UnionFind uf;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> string&amp; str: equations) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[<span class="number">1</span>] == <span class="string">&#x27;=&#x27;</span>) &#123;</span><br><span class="line">                <span class="type">int</span> index1 = str[<span class="number">0</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="type">int</span> index2 = str[<span class="number">3</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                uf.<span class="built_in">unite</span>(index1, index2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> string&amp; str: equations) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[<span class="number">1</span>] == <span class="string">&#x27;!&#x27;</span>) &#123;</span><br><span class="line">                <span class="type">int</span> index1 = str[<span class="number">0</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="type">int</span> index2 = str[<span class="number">3</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (uf.<span class="built_in">find</span>(index1) == uf.<span class="built_in">find</span>(index2)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>参考文献： &gt;<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/433996968">并查集</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Trluper框架</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-09-09 19:52:16" itemprop="dateCreated datePublished" datetime="2023-09-09T19:52:16+08:00">2023-09-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-22 21:29:28" itemprop="dateModified" datetime="2023-09-22T21:29:28+08:00">2023-09-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">项目</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>39k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>35 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="框架需求分析">1 框架需求分析</h1>
-<p>本框架主要为适用于IO密集类型的服务器开发而设计，<strong>同时作为框架，一是对于开发者而言应该是简单容易上手层次分明，二是框架本身而言容易扩展，能够依据开发人员的需求添加业务处理。</strong></p>
-<p>为了保证框架能够实现基本的要求，其总体需求如下：</p>
-<ul>
-<li>框架能够较好的应对并发场景。</li>
-<li>开发人员基于该框架能够轻松的实现自己的业务处理逻辑。</li>
-</ul>
-<p>接下来我们会一步一步的构建起这个框架，告诉大家这个框架是怎么实现的，而不是一下子出来一个完整的框架，让大家不知道怎么入手，同时也在这个过程中提出一些问题，让大家对框架更加熟悉，面试中能够回答出来一些关键点。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/09/01/epoll/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/01/epoll/" class="post-title-link" itemprop="url">epoll</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-09-01 18:10:43" itemprop="dateCreated datePublished" datetime="2023-09-01T18:10:43+08:00">2023-09-01</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1629,20 +1985,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">83</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1688,7 +2044,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:42</span>
+    <span title="站点阅读时长">20:13</span>
 </div>
 
         

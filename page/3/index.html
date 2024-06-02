@@ -194,6 +194,370 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/21/CMU15-445-FALL2023-HOMEWORK1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/21/CMU15-445-FALL2023-HOMEWORK1/" class="post-title-link" itemprop="url">CMU15-445-FALL2022-HOMEWORK1</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-21 15:37:00" itemprop="dateCreated datePublished" datetime="2023-05-21T15:37:00+08:00">2023-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-06 15:25:15" itemprop="dateModified" datetime="2023-06-06T15:25:15+08:00">2023-06-06</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="实验准备">1 实验准备</h3>
+<p><a target="_blank" rel="noopener" href="https://15445.courses.cs.cmu.edu/fall2022/homework1/">作业地址</a></p>
+<p>实验当中提供的数据库，其中表关系如下： <img src="/2023/05/21/CMU15-445-FALL2023-HOMEWORK1/schema.png" width="700"></p>
+<p>索引创建如下： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">CREATE INDEX ix_people_name ON <span class="title">people</span> <span class="params">(name)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_titles_type ON <span class="title">titles</span> <span class="params">(type)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_titles_primary_title ON <span class="title">titles</span> <span class="params">(primary_title)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_titles_original_title ON <span class="title">titles</span> <span class="params">(original_title)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_akas_title_id ON <span class="title">akas</span> <span class="params">(title_id)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_akas_title ON <span class="title">akas</span> <span class="params">(title)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_crew_title_id ON <span class="title">crew</span> <span class="params">(title_id)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_crew_person_id ON <span class="title">crew</span> <span class="params">(person_id)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h3 id="sqlite3的一些特性">2 SQLite3的一些特性</h3>
+<ul>
+<li><p><code>SQLite3</code>与<code>MySQL</code>的一些不同是一些命另和函数，其数据库的使用直接采用： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ls</span><br><span class="line">imdb-cmudb2022.db  placeholder</span><br><span class="line">$ sqlite3 imdb-cmudb2022.db</span><br></pre></td></tr></table></figure></p></li>
+<li><p>查看表： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlite&gt; .tables</span><br><span class="line">akas      crew      episodes  people    ratings   titles</span><br></pre></td></tr></table></figure></p></li>
+<li><p>查看表结构 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sqlite&gt; .<span class="function">schema people</span></span><br><span class="line"><span class="function">CREATE TABLE <span class="title">people</span> <span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">  person_id VARCHAR PRIMARY KEY,</span></span></span><br><span class="line"><span class="params"><span class="function">  name VARCHAR,</span></span></span><br><span class="line"><span class="params"><span class="function">  born INTEGER,</span></span></span><br><span class="line"><span class="params"><span class="function">  died INTEGER</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br><span class="line"><span class="function">CREATE INDEX ix_people_name ON <span class="title">people</span> <span class="params">(name)</span></span>;</span><br></pre></td></tr></table></figure></p></li>
+<li><p>更大命令使用<code>.help</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlite&gt; .help</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<blockquote>
+<p>注意，MySQL当中的一些函数，SQLite未必有，就如<code>concat</code>我就发现没有，SQLite使用<code>||</code>替代字符串拼接</p>
+</blockquote>
+<h3 id="实验问题">3 实验问题</h3>
+<blockquote>
+<p>2022 #### 3.1 <code>Q2 [5 points] (q2_sci_fi)</code> <code>Find the 10</code>Sci-Fi<code>works with the longest runtimes.</code> <strong><code>Details:</code></strong> <code>Print the title of the work, the premiere date, and the runtime. The column listing the runtime should be suffixed with the string &quot; (mins)&quot;, for example, if the runtime_mins value is</code>12<code>, you should output 12 (mins). Note a work is Sci-Fi even if it is categorized in multiple genres, as long as Sci-Fi is one of the genres.</code> <code>Your first row should look like this: Cicak-Man 2: Planet Hitam|2008|999 (mins)</code></p>
+</blockquote>
+<blockquote>
+<p>找出10个运行时间最长的“科幻”作品。输出其<code>primary_title、primiered、runtime_minutes</code>，其中<code>runtime_minutes</code>后边要接<code>(mins)</code>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT PRIMARY_TITLE,PREMIERED,(RUNTIME_MINUTES||<span class="string">&#x27; (mins)&#x27;</span> )</span><br><span class="line">FROM TITLES </span><br><span class="line">WHERE GENRES LIKE <span class="string">&#x27;%Sci-Fi&#x27;</span> </span><br><span class="line">order by RUNTIME_MINUTES DESC LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<h4 id="q3_oldest_people">3.2 <code>q3_oldest_people</code></h4>
+<p><code>Determine the oldest people in the dataset who were born in or after 1900. You should assume that a person without a known death year is still alive.</code> <strong>Details:</strong> <code>Print the name and age of each person. People should be ordered by a compound value of their age and secondly their name in alphabetical order. Return the first 20 results.</code></p>
+</blockquote>
+<blockquote>
+<p>Your output should have the format: <code>NAME|AGE</code></p>
+</blockquote>
+<blockquote>
+<p>找出出生于1900后（包含1900），年龄最大的20个人，按照年龄年龄和姓名的字母联合排序。注意没有死亡日期，证明还活着，你要能够处理这类数据 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select name,</span><br><span class="line"><span class="keyword">case</span></span><br><span class="line">    when died is null then <span class="number">2022</span>-born</span><br><span class="line">    <span class="keyword">else</span> died-born</span><br><span class="line">end as age</span><br><span class="line">from people</span><br><span class="line">where born&gt;=<span class="number">1900</span> order by age desc,name limit <span class="number">20</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>2023</p>
+</blockquote>
+<h4 id="q2_not_the_same_title">3.1 <code>q2_not_the_same_title</code></h4>
+<p><code>Find the 10 Action movies with the newest premiere date whose original title is not the same as its primary title.</code></p>
+<p><strong>Details:</strong> Print the premiere year, followed by the two titles in a special format. The column listing the two titles should be in the format of primary_title (original_title) Note a work is Action even if it is categorized in multiple genres, as long as Action is one of the genres. Also note that it's possible for the premiered year to be in the future. If multiple movies premiered in the same year, order them alphabetically. Your first row should look like this:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT PREMIERED,(PRIMARY_TITLE||<span class="string">&#x27; (&#x27;</span>||ORIGINAL_TITLE||<span class="string">&#x27;)&#x27;</span>) AS T </span><br><span class="line">FROM TITLES </span><br><span class="line">WHERE PRIMARY_TITLE!=ORIGINAL_TITLE </span><br><span class="line">	AND GENRES LIKE <span class="string">&#x27;%Action%&#x27;</span> </span><br><span class="line">order by PREMIERED DESC,T LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="q3_longest_running_tv">3.2 <code>q3_longest_running_tv</code></h4>
+<p><code>Find the top 20 longest running tv series.</code></p>
+<p><strong><code>Details</code>: </strong><code>Print the title and the years the series has been running for. The series must have a non NULL premiered year. If the ended date is NULL, assume it to be the current year (2023). If multiple tv series have been running the same number of years, order them alphabetically. Print the top 20 results.</code></p>
+<p>Your output should have the format: TITLE|YEARS_RUNNING Your first row should look like this:<code>Looney Tunes|93</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SELECT PRIMARY_TITLE,</span><br><span class="line">CASE </span><br><span class="line">	WHEN ENDED IS <span class="literal">NULL</span> THEN <span class="number">2023</span>-PREMIERED </span><br><span class="line">	ELSE ENDED-PREMIERED </span><br><span class="line">END AS YEARS_RUNNING </span><br><span class="line">FROM TITLES </span><br><span class="line">WHERE PREMIERED IS NOT <span class="literal">NULL</span> </span><br><span class="line">	AND TYPE=<span class="string">&#x27;tvSeries&#x27;</span> </span><br><span class="line">ORDER BY YEARS_RUNNING DESC,PRIMARY_TITLE LIMIT <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="q4_directors_in_each_decade">3.3 <code>q4_directors_in_each_decade</code></h4>
+<p>List the number directors born in each decade since 1900.(计算自1900年以来每10年出生的导演人数)</p>
+<p><strong>Details:</strong> Print the decade in a fancier format by constructing a string that looks like this: 1990s. Order the results by decade.</p>
+<p>Your output should look like this: <code>DECADE|NUM_DIRECTORS</code> Your first row should look like this: <code>1900s|376</code></p>
+<p><strong>分析：从事领域存储在<code>crew</code>表的<code>category</code>,其中人的出生时期存储在<code>people</code>表，两表通过<code>person_id</code>联结，<code>people</code>的为主键，<code>crew</code>的为外键</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SELECT decade || <span class="string">&#x27;s&#x27;</span>,</span><br><span class="line">    <span class="built_in">COUNT</span>(*)</span><br><span class="line"><span class="built_in">FROM</span> (</span><br><span class="line">        SELECT <span class="built_in">DISTINCT</span>(people.person_id),</span><br><span class="line">            <span class="built_in">FLOOR</span>(people.born / <span class="number">10</span>) * <span class="number">10</span> AS decade</span><br><span class="line">        FROM people</span><br><span class="line">            INNER JOIN crew ON crew.person_id = people.person_id</span><br><span class="line">        WHERE crew.category = <span class="string">&#x27;director&#x27;</span></span><br><span class="line">            AND people.born &gt;= <span class="number">1900</span></span><br><span class="line">    )</span><br><span class="line">GROUP BY decade</span><br><span class="line">ORDER BY decade;</span><br></pre></td></tr></table></figure>
+<p><strong>上面的group by decade1</strong>最重要，这样<code>count()</code>会以<code>decade</code>组区分进行统计</p>
+<h4 id="q5_german_type_ratings">3.4 <code>q5_german_type_ratings</code></h4>
+<p><code>Compute statistics about different type of works that has a German title</code>.(计算具有德语标题的不同类型作品的统计数据。) <strong><code>Details:</code></strong> <code>Compute the average (rounded to 2 decimal places), min, and max rating for each type of work that has a German title and the akas types is either imdbDisplay or original. Sort the output by the average rating of each title type.</code>(计算具有德语标题且<code>akas</code>类型为<code>imdbDisplay</code>或<code>original</code>的每种类型的作品的平均值(舍入到小数点后2位)、最小值和最大值。按每个标题类型的平均评分对输出进行排序。)</p>
+<p>Your output should have the format: <code>TITLE_TYPE|AVG_RATING|MIN_RATING|MAX_RATING</code> Your first row should look like this:<code>movie|6.65|3.4|8.2</code></p>
+<p><strong>分析：<code>titles</code>表、<code>akas</code>和<code>ratings</code>表通过<code>title_id</code>进行联结，其中<code>titles</code>中作为主键，<code>akas</code>和<code>ratings</code>作为外键。要求<code>akas.types in ('imdbDisplay','original') and akas.language='de'</code>,计算平均值、最大值、最小值</strong>。为三表查询</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT T.TYPE, <span class="built_in">ROUND</span>(<span class="built_in">AVG</span>(R.RATING),<span class="number">2</span>),<span class="built_in">MIN</span>(R.RATING),<span class="built_in">MAX</span>(R.RATING)</span><br><span class="line">FROM TITLES AS T</span><br><span class="line">	INNER JOIN AKAS AS A ON T.TITLE_ID=A.TITLE_ID</span><br><span class="line">	INNER JOIN RATINGS AS R ON T.TITLE_ID=R.TITLE_ID</span><br><span class="line">WHERE A.TYPES <span class="built_in">IN</span> (<span class="string">&#x27;imdbDisplay&#x27;</span>,<span class="string">&#x27;original&#x27;</span>)</span><br><span class="line">	AND A.LANGUAGE=<span class="string">&#x27;de&#x27;</span></span><br><span class="line">GROUP BY T.TYPE</span><br><span class="line">ORDER BY T.TYPE;</span><br></pre></td></tr></table></figure>
+<h4 id="q6_who_played_a_batman">3.5 <code>q6_who_played_a_batman</code></h4>
+<p><code>List the 10 highest rated actors who played a character named &quot;Batman&quot;.</code>(请列出出演过“蝙蝠侠”角色的10位评价最高的演员) <strong><code>Details:</code> </strong><code>Calculate the actor rating by taking the average rating of all their works. Return both the name of the actor and their rating and only list the top 10 results in order from highest to lowest rating. Round average rating to the nearest hundredth.</code>(通过取所有作品的平均评分来计算演员的评分。返回演员的名字和他们的评分，并且只按评分从高到低的顺序列出前10个结果。四舍五入平均评级到最接近的百分之一。)</p>
+<p>Make sure your output is formatted as follows: <code>Kayd Currier|8.05</code></p>
+<p><strong>分析</strong>：<code>name</code>在<code>people</code>表，<code>rating</code>在<code>ratings</code>表，<code>characters</code>在<code>crew</code>表，其中三者的联结依赖主外键，<code>ratings</code>和<code>crew</code>通过<code>title_id</code>联结，<code>crew</code>和<code>people</code>通过<code>person_id</code>联结，要求<code>crew.characters like '%Batman%'</code>。<strong>可将<code>people</code>和<code>crew</code>先用<code>person_id</code>进行内连接得到actor,然后利用actor与<code>ratings</code>连接</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">WITH actors <span class="title">AS</span> <span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    SELECT DISTINCT(crew.person_id) AS person_id,</span></span></span><br><span class="line"><span class="params"><span class="function">        people.name AS person_name</span></span></span><br><span class="line"><span class="params"><span class="function">    FROM crew</span></span></span><br><span class="line"><span class="params"><span class="function">        INNER JOIN people ON people.person_id = crew.person_id</span></span></span><br><span class="line"><span class="params"><span class="function">    WHERE crew.characters LIKE <span class="string">&#x27;%&quot;Batman&quot;%&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="function">        AND crew.category = <span class="string">&quot;actor&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span></span><br><span class="line"><span class="function">SELECT a.person_name,</span></span><br><span class="line"><span class="function">    <span class="title">ROUND</span><span class="params">(AVG(rating), <span class="number">2</span>)</span> AS average</span></span><br><span class="line"><span class="function">FROM actors AS a</span></span><br><span class="line"><span class="function">    INNER JOIN crew AS c ON c.person_id </span>= a.person_id</span><br><span class="line">    INNER JOIN ratings AS r ON c.title_id = r.title_id</span><br><span class="line">GROUP BY a.person_id</span><br><span class="line">ORDER BY average DESC</span><br><span class="line">LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>上述等价于： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SELECT A.name,<span class="built_in">ROUND</span>(<span class="built_in">AVG</span>(R.rating),<span class="number">2</span>) <span class="function">AS SCORE</span></span><br><span class="line"><span class="function"><span class="title">FROM</span> <span class="params">(SELECT DISTINCT(C.person_id),P.name,C.title_id</span></span></span><br><span class="line"><span class="params"><span class="function">	FROM crew AS C</span></span></span><br><span class="line"><span class="params"><span class="function">	INNER JOIN people AS P ON C.person_id=P.person_id</span></span></span><br><span class="line"><span class="params"><span class="function">	WHERE C.characters LIKE <span class="string">&#x27;%&quot;Batman&quot;%&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="function">		AND C.category = <span class="string">&#x27;actor&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="function">	)</span> AS A</span></span><br><span class="line"><span class="function">	INNER JOIN crew AS C ON C.person_id</span>=A.person_id</span><br><span class="line">	INNER JOIN ratings AS R ON C.title_id=R.title_id</span><br><span class="line">GROUP BY A.person_id</span><br><span class="line">ORDER BY SCORE DESC</span><br><span class="line">LIMIT <span class="number">10</span>;</span><br></pre></td></tr></table></figure></p>
+<h4 id="q7_born_with_prestige">3.6 <code>q7_born_with_prestige</code></h4>
+<p><code>List the number of actors or actress who were born on the year that &quot;The Prestige&quot; was premiered.</code>(列出在《致命魔术》首映那一年出生的演员人数。) <strong><code>Details</code>:</strong> <code>Print only the total number of actors born that year. For this question, determine distinct people by their person_id, not their names. Do not hard code the query.</code>(只打印当年出生的演员总数。对于这个问题，确定不同的人通过他们的person_id，而不是他们的名字。不要硬编码查询。)</p>
+<p><strong>分析</strong>：<code>born</code>在<code>people</code>表，<code>primary_title</code>在<code>title</code>表，因此需要将<code>crew</code>与<code>people</code>联结起来。加上条件<code>category IN ('actor', 'actress')和primary_title = 'The Prestige'</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">SELECT <span class="title">COUNT</span><span class="params">(DISTINCT(p.person_id))</span></span></span><br><span class="line"><span class="function">FROM people AS p</span></span><br><span class="line"><span class="function">    INNER JOIN crew AS c ON p.person_id </span>= c.person_id</span><br><span class="line">WHERE c.<span class="function">category <span class="title">IN</span> <span class="params">(<span class="string">&#x27;actor&#x27;</span>, <span class="string">&#x27;actress&#x27;</span>)</span></span></span><br><span class="line"><span class="function">    AND p.born <span class="title">IN</span> <span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        SELECT premiered</span></span></span><br><span class="line"><span class="params"><span class="function">        FROM titles</span></span></span><br><span class="line"><span class="params"><span class="function">        WHERE primary_title = <span class="string">&#x27;The Prestige&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="function">    )</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="q8_directing_rose.sql">3.7 <code>q8_directing_rose.sql</code></h4>
+<p><code>Find all the directors who have worked with an actress with first name &quot;Rose&quot;.</code>(找出所有与名字为“Rose”的女演员合作过的导演。) <strong><code>Details:</code></strong> <code>Print only the names of the directors in alphabetical order. Each name should only appear once in the output.</code></p>
+<p><strong>分析：</strong><code>category</code>在表<code>crew</code>,<code>name</code>在<code>people</code></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WITH</span> title_ids <span class="keyword">AS</span> (</span><br><span class="line">    <span class="keyword">SELECT</span> c.title_id <span class="keyword">AS</span> title_id</span><br><span class="line">    <span class="keyword">FROM</span> crew <span class="keyword">AS</span> c</span><br><span class="line">        <span class="keyword">INNER</span> <span class="keyword">JOIN</span> people <span class="keyword">AS</span> p <span class="keyword">ON</span> p.person_id = c.person_id</span><br><span class="line">    <span class="keyword">WHERE</span> p.name <span class="keyword">like</span> <span class="string">&#x27;Rose%&#x27;</span></span><br><span class="line">        <span class="keyword">AND</span> c.category = <span class="string">&#x27;actress&#x27;</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span>(p.name) <span class="keyword">AS</span> <span class="type">name</span></span><br><span class="line"><span class="keyword">FROM</span> title_ids <span class="keyword">AS</span> t</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> crew <span class="keyword">AS</span> c <span class="keyword">ON</span> t.title_id = c.title_id</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> people <span class="keyword">AS</span> p <span class="keyword">ON</span> p.person_id = c.person_id</span><br><span class="line"><span class="keyword">WHERE</span> c.category = <span class="string">&#x27;director&#x27;</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="type">name</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="section">3.8</h4>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" class="post-title-link" itemprop="url">深入理解计算机系统-虚拟内存</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-17 12:44:28" itemprop="dateCreated datePublished" datetime="2023-05-17T12:44:28+08:00">2023-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-30 16:24:29" itemprop="dateModified" datetime="2023-05-30T16:24:29+08:00">2023-05-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">深入理解计算机系统</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="虚拟内存">1 虚拟内存</h3>
+<p>一个系统中的进程是与其他进程共享CPU和主存资源的。在之前我们明白一个进程会有4GB的内存，但实际中不可能为一个进程真实的分配这么多，否则对于8G的主存，只要两个进程就占满了。因此，计算机系统的设计者们引入了一中很聪明的做法——<strong>虚拟内存</strong>。</p>
+<p>虚拟内存是硬件异常、硬件地址翻译、主存和磁盘文件和内核软件的完美交互：</p>
+<h4 id="虚拟寻址和地址空间">1.1 虚拟寻址和地址空间</h4>
+<p>在计算机中每个字节都存在它唯一的地址，该地址就是<strong>物理地址</strong>，我们将通过真实物理地址进行寻址的方法称为<strong>物理地址</strong>。</p>
+<p>而虚拟地址，是指由CPU生成一个<strong>虚拟地址（VA）</strong>来访问主存，如下图，这个虚拟地址在送到内存之前会经过<code>MMU内存管理单元</code>来翻译成物理地址，在这里会结合到后面的<strong>页表</strong>来进行翻译。通过虚拟地址寻址的方式就是<strong>虚拟寻址</strong>。现在计算绝大部分都是使用<strong>寻你寻址</strong>。 <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/MMU.png" width="700"></p>
+<p><strong>地址空间</strong>：</p>
+<ul>
+<li><strong>虚拟地址空间</strong>：虚拟地址空间一般以地址总线条数为基准，如32位的位<span class="math inline">\(2^{32}=4GB\)</span></li>
+<li><strong>物理地址空间</strong>：对应与实际内存挡住的M字节，一般来说，物理地址空间由进程运行过程中所实际使用的内存大小所决定</li>
+</ul>
+<p>物理地址空间和虚拟地址空间是对应关系的，即由虚拟地址找到真实的物理地址。</p>
+<h4 id="虚拟内存是作为缓存的工具">1.2 虚拟内存是作为缓存的工具</h4>
+<p>在概念上，<strong>虚拟内存是指存放在磁盘上的N字节大小的内存区域，</strong>每个字节都要相应的虚拟地址，作物寻址索引。<strong>和存储结构的缓存一样，磁盘的数据也被分割成块，在这类为做区别称之为虚拟页，每个虚拟页大小由计算机系统决定为<span class="math inline">\(P=2^p\)</span></strong>，与之对应的是物理页，其大小也应该为<code>P</code>。</p>
+<p>在任何时刻，我们都不能实际真实一股脑的为进程分配全部的存储空间，因此虚拟页面分为三个不相交的子集：</p>
+<ul>
+<li><strong>未分配的：</strong>VM系统还没有分配的页，此时未分配的块没有任何数据和它们管理，因此此时不会占有任何磁盘空间</li>
+<li><strong>缓存的</strong>：当前缓存的虚拟页在占有磁盘中的空间，当然由于缓存到内存。内存当中也会占有一定内存空间</li>
+<li><strong>维缓存的</strong>：在磁盘中占用空间，但并未缓存在内存中，当然不占用内存(此时当CPU要寻址该页当中一个数据时，由于未缓存在内存中，就会造成<strong>缺页异常</strong>。) <img src="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/VP.png" width="700"></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" class="post-title-link" itemprop="url">深入理解计算机系统-异常控制流</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-15 10:28:04" itemprop="dateCreated datePublished" datetime="2023-05-15T10:28:04+08:00">2023-05-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-16 10:19:19" itemprop="dateModified" datetime="2023-05-16T10:19:19+08:00">2023-05-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">深入理解计算机系统</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="异常控制流">1 异常控制流</h3>
+<p>现代系统通过使控制流发生突变来对这些情况做出反应，我们把这些突变称为异常控制流(ECF)。</p>
+<ul>
+<li>在硬件层，硬件检测到的事件会触发控制突然转移到异常处理程序；</li>
+<li>在操作系统层，内核通过<strong>上下文切换</strong>将控制从一个用户进程转移到另一个用户进程；</li>
+<li>在应用层，一个进程可发发送信号到另一个进程，而接受者会将控制突然转移到它的一个信号处理程序。</li>
+</ul>
+<p>作为程序员，理解ECF很重要：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/05/15/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/09/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1006,272 +1370,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/26/unity2d/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/26/unity2d/" class="post-title-link" itemprop="url">unity2d</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-03-26 22:09:19" itemprop="dateCreated datePublished" datetime="2023-03-26T22:09:19+08:00">2023-03-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-29 09:14:24" itemprop="dateModified" datetime="2023-03-29T09:14:24+08:00">2023-03-29</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>41</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="section">1</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/26/unity2d/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/23/C-%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/23/C-%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">C#基础</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-03-23 11:35:02" itemprop="dateCreated datePublished" datetime="2023-03-23T11:35:02+08:00">2023-03-23</time>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/23/unity%E5%88%9D%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/23/unity%E5%88%9D%E8%AF%86/" class="post-title-link" itemprop="url">unity初识</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-03-23 10:37:35" itemprop="dateCreated datePublished" datetime="2023-03-23T10:37:35+08:00">2023-03-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-29 09:14:19" itemprop="dateModified" datetime="2023-03-29T09:14:19+08:00">2023-03-29</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>41</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="section">1</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/23/unity%E5%88%9D%E8%AF%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1339,20 +1441,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">83</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1398,7 +1500,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:42</span>
+    <span title="站点阅读时长">20:13</span>
 </div>
 
         

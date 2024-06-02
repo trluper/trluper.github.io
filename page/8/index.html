@@ -194,6 +194,382 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/" class="post-title-link" itemprop="url">算法题解</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-30 21:30:13" itemprop="dateCreated datePublished" datetime="2022-07-30T21:30:13+08:00">2022-07-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-14 10:34:34" itemprop="dateModified" datetime="2023-10-14T10:34:34+08:00">2023-10-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>78k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1:11</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="刷题规划">0. 刷题规划</h2>
+<p>读者在看到这篇文章的时候不应该以本文的讲解顺序进行刷题。正常来说，按模块刷题是最好的，我的刷题是按照<strong>数组-&gt;链表-&gt;树-&gt;dp</strong>的循环进行，然后对各模块的方法进行总结，比如遇到 - <strong>数组一类</strong>的，其可使用的方法最多：<strong>二分查找、快慢指针、双指针、滑动窗口、前缀和数组、差分数组</strong>等。 - 遇到<strong>链表</strong>，那么<strong>快慢指针是最多的</strong>。 - 遇到<strong>树</strong>，那么递归（广度or深度）是最常用的形式、非递归遍历也要顺序，记住对称性解题方式。 - 遇到<strong>动态规划</strong>，先分类其是属于哪种形式的dp（<strong>线性dp、区间dp、背包dp和状压dp</strong>），然后确定dp含义，分析状态转移方程。 - 其他方法，比如**单调栈、单调队列的实现、拓扑排序、归并排序、KMP算法、分治、广度*等算法就就需要在刷题中不断掌握</p>
+<p><strong><em>注意：在解题中一定不要忽略暴力解，许多奇妙的解法就是从暴力解的思路上想出来的，一旦遇到一道不会优解的题，可以先想一想暴力解的思路，有什么地方可以优化暴力解，来达到降低时间复杂度的效果</em></strong></p>
+<h2 id="动态规划类">1. 动态规划类</h2>
+<p>动态规划的思想就是：<strong>如果一个问题能够由子问题一步步递推得来，即当前子问题的解将由上一次子问题的解推出，利用这种特性，使用一个数据结构<code>dp</code>来存储上一次子问题的结果，避免重复计算</strong>。</p>
+<p>所以动态规划最重要的有三点：</p>
+<ul>
+<li>确定dp的含义</li>
+<li>确定dp的初始状态</li>
+<li>确定dp间的状态转移方程</li>
+</ul>
+<p>知道上述三点，问题也就迎刃而解。在算法当中，常见的dp类型有<strong>线性dp、区间dp、背包dp和状压dp</strong>。下面将对这几个进行讲解。</p>
+<p><strong>总结</strong>：对于是否使用DP，那么就得看你能不能确定dp数组的含义，以及能够确定状态转移方程。</p>
+<p><strong>tips：</strong>做了比较多的题，通常许多的字符串dp类型的题目是区间dp，像回文串、编辑距离等待，二数组类型的dp，较多的是线性dp、多状态dp（状压dp)和背包dp类型</p>
+<h3 id="线性dp">1.1 线性DP</h3>
+<h4 id="打家劫舍">打家劫舍</h4>
+<p><strong>问题：</strong>你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。</p>
+<p>给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/30/%E7%AE%97%E6%B3%95%E9%A2%98%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/" class="post-title-link" itemprop="url">动态规划算法思想</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-29 13:56:14" itemprop="dateCreated datePublished" datetime="2022-07-29T13:56:14+08:00">2022-07-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-11 21:49:32" itemprop="dateModified" datetime="2023-11-11T21:49:32+08:00">2023-11-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="dp的思想">DP的思想</h1>
+<p>DP的由来是因为可以将一个问题由子问题得出：完整的问题可以由<strong>正方向</strong>得出（符合人的逻辑，自底向上），也可以由<strong>反方向</strong>得出（回溯，自顶向下），一般来说推荐<strong>正难则反</strong>，即推荐反向思考。</p>
+<p>所以dp问题最经典的解题思路四个步骤就是：<code>问题能否从结果往前递归回溯（即由上一个问题得到当前问题解）？</code>--&gt;<code>回溯+记忆化搜索（优化时间）</code>--&gt;<code>1:1翻译成递推，即dp形式</code>--&gt;<code>优化空间</code></p>
+<p><strong>回溯</strong>的方式更加容易且贴合dp的子问题递归，因此这里讲的是以反向方式来解决。（不去关心到达怎么解决，只关心当前状态是按什么方程由上一个状态得来的）</p>
+<p><strong>记忆化搜索</strong>：通过dfs的参数来决定创建的是几维数组，它也决定可了递推式中dp的维度</p>
+<ul>
+<li>线性DP：一般从前缀/后缀上进行转移</li>
+<li>区间DP：从小区间转移到大区间</li>
+</ul>
+<h2 id="线性dp">1 线性DP</h2>
+<p>线性DP，一般从前缀/后缀上进行转移。 ### 1.1 背包问题 本质还是选与不选 #### 0-1背包 0-1背包：有n个物品，第i个物品的体积为<code>w[i]</code>，价值为<code>v[i]</code>，每个物品至多选一个，求体积和不超过<code>capacity</code>时的最大价值和。</p>
+<p><strong>思路：</strong></p>
+<p>背包问题是dp的一个经典题型，涉及到一个当前元素<strong>选与不选</strong>： - 选：在剩余容量为<code>c-w[i]</code>时，从前i-1个物品得到的最大价值和 - 不选：在剩余容量<code>c</code>时，从前<code>i-1</code>个物品得到的最大价值和 - 取两者较大值。</p>
+<p><strong>边界问题：</strong> - <code>i&lt;0</code>或者<code>c&lt;0</code>时，需要返回0，次数代表没有其他商品可选，或者没有容量可以装了</p>
+<p><strong>记忆化搜索</strong>：通过dfs的参数来决定创建的是几维数组，它也决定可了递推式中dp的维度</p>
+<h5 id="回溯记忆化搜索">回溯+记忆化搜索</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxValue</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp;w,vector&lt;<span class="type">int</span>&gt;&amp;v,<span class="type">int</span> capacity)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n = w.<span class="built_in">size</span>();</span><br><span class="line">	<span class="comment">//数组存储已经得到过的dfs&#123;i,c)</span></span><br><span class="line">	vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">cache</span>(n,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(capacity+<span class="number">1</span>,<span class="number">-1</span>));</span><br><span class="line">	function&lt;<span class="type">int</span>(<span class="type">int</span>,<span class="type">int</span>)&gt; dfs = [&amp;](<span class="type">int</span> i,<span class="type">int</span> c)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i &lt; <span class="number">0</span>||c &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="type">int</span>&amp; res = cache[i][c];</span><br><span class="line">		<span class="keyword">if</span>(res!=<span class="number">-1</span>) <span class="keyword">return</span> res;</span><br><span class="line">		<span class="keyword">if</span>(c&gt;=w[i])&#123;</span><br><span class="line">			res = <span class="built_in">dfs</span>(i<span class="number">-1</span>,c-w[i])+v[i];</span><br><span class="line">		&#125;</span><br><span class="line">		res = <span class="built_in">max</span>(res,<span class="built_in">dfs</span>(i<span class="number">-1</span>,c));</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">dfs</span>(n<span class="number">-1</span>,capacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="递推">递推</h5>
+<p>讲上述的<code>“回溯+记忆化搜索”</code>进行1：1翻译可以得到递推，注意翻译过程中的边界条件如何实现（一般通过增加1个开额外的dp数组即可）</p>
+<p>上述中，用dp数组得到的递推式如下： <code>dp[i][c] = max(dp[i-1][c],dp[i-1][c-w[i]]+v[i])</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxValue</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp;w,vector&lt;<span class="type">int</span>&gt;&amp;v,<span class="type">int</span> capacity)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n = w.<span class="built_in">size</span>();</span><br><span class="line">	vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(capacity+<span class="number">1</span>,<span class="number">0</span>));	<span class="comment">//对边界条件和cache的翻译,i=0作为边界</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= capacity; ++j)&#123;</span><br><span class="line">			<span class="keyword">if</span>(j&gt;=w[i]) dp[i+<span class="number">1</span>][j] = dp[i][j-w[i]]+v[i];</span><br><span class="line">			dp[i+<span class="number">1</span>][j] = <span class="built_in">max</span>(dp[i+<span class="number">1</span>][j],dp[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[n][capacity];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>变体题目：</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/target-sum/">494.目标和</a></p>
+<h4 id="完全背包">完全背包</h4>
+<p>完全背包与01背包的不同点，只在于可以重复选择：</p>
+<h5 id="回溯记忆化搜索-1">回溯+记忆化搜索</h5>
+<p>只需要更改<code>res = dfs(i-1,c-w[i])+v[i];</code>为<code>res = dfs(i,c-w[i])+v[i];</code>即可 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxValue</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp;w,vector&lt;<span class="type">int</span>&gt;&amp;v,<span class="type">int</span> capacity)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> n = w.<span class="built_in">size</span>();</span><br><span class="line">	<span class="comment">//数组存储已经得到过的dfs&#123;i,c)</span></span><br><span class="line">	vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">cache</span>(n,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(capacity+<span class="number">1</span>,<span class="number">-1</span>));</span><br><span class="line">	function&lt;<span class="type">int</span>(<span class="type">int</span>,<span class="type">int</span>)&gt; dfs = [&amp;](<span class="type">int</span> i,<span class="type">int</span> c)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i &lt; <span class="number">0</span>||c &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="type">int</span>&amp; res = cache[i][c];</span><br><span class="line">		<span class="keyword">if</span>(res!=<span class="number">-1</span>) <span class="keyword">return</span> res;</span><br><span class="line">		<span class="keyword">if</span>(c&gt;=w[i])&#123;</span><br><span class="line">			res = <span class="built_in">dfs</span>(i,c-w[i])+v[i];</span><br><span class="line">		&#125;</span><br><span class="line">		res = <span class="built_in">max</span>(res,<span class="built_in">dfs</span>(i<span class="number">-1</span>,c));</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">dfs</span>(n<span class="number">-1</span>,capacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>变体题目： <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/coin-change/?envType=study-plan-v2&amp;envId=top-interview-150">332.零钱兑换</a></p>
+<h3 id="股票问题状态dp">1.2 股票问题(状态DP)</h3>
+<p>leetcode内由许多股票问题，这类成为状态机DP <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/">121.买卖股票的最佳时机</a> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/">122.买卖股票的最佳时机Ⅱ</a> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/">123.买卖股票的最佳时机Ⅲ</a> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/">188.买卖股票的最佳时机Ⅳ</a> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/">714.买卖股票的最佳时机含手续费</a> <a target="_blank" rel="noopener" href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/">309.买卖股票的最佳时机含冷冻期</a></p>
+<p>上面的题目均可由<strong>回溯+记忆化搜索</strong>的一个模板解决。</p>
+<h4 id="买卖股票的最佳时机">买卖股票的最佳时机Ⅱ</h4>
+<p>其题意就是就是至少交易0次，即可以交易无穷次。</p>
+<h5 id="回溯记忆化搜索-2">回溯+记忆化搜索</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxProfit</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">       <span class="type">int</span> n = prices.<span class="built_in">size</span>();</span><br><span class="line">       vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;<span class="built_in">cache</span>(n,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">2</span>,<span class="number">-1</span>));</span><br><span class="line">       function&lt;<span class="type">int</span>(<span class="type">int</span>,<span class="type">bool</span>)&gt;dfs = [&amp;](<span class="type">int</span> i,<span class="type">bool</span> hold)&#123;</span><br><span class="line">           <span class="keyword">if</span>(i&lt;<span class="number">0</span>) <span class="keyword">return</span> hold?INT_MIN/<span class="number">2</span>:<span class="number">0</span>; </span><br><span class="line">           <span class="type">int</span>&amp; res = cache[i][hold];</span><br><span class="line">           <span class="keyword">if</span>(res!=<span class="number">-1</span>) <span class="keyword">return</span> res;</span><br><span class="line">           <span class="keyword">if</span>(hold)</span><br><span class="line">               res = <span class="built_in">max</span>(<span class="built_in">dfs</span>(i<span class="number">-1</span>,<span class="literal">true</span>),<span class="built_in">dfs</span>(i<span class="number">-1</span>,<span class="literal">false</span>)-prices[i]);</span><br><span class="line">           <span class="keyword">else</span> </span><br><span class="line">               res = <span class="built_in">max</span>(<span class="built_in">dfs</span>(i<span class="number">-1</span>,<span class="literal">false</span>),<span class="built_in">dfs</span>(i<span class="number">-1</span>,<span class="literal">true</span>)+prices[i]);</span><br><span class="line">           cache[i][hold] = res;</span><br><span class="line">           <span class="keyword">return</span> res;</span><br><span class="line">       &#125;;</span><br><span class="line">       <span class="keyword">return</span> <span class="built_in">dfs</span>(n<span class="number">-1</span>,<span class="literal">false</span>);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="递推-1">递推</h5>
+<p>将<code>回溯+记忆化搜索</code>进行1：1翻译成递推（自底向上），则递推式：<code>dp(i,0)</code>表示前i个股票中当前未持有股票时的最大利润，dp(i,1)`表示前i个股票中当前持有股票时的最大利润，有：</p>
+<ul>
+<li><code>dp(i,0) = max(dp(i-1,0),dp(i-1,1)+prices[i])</code></li>
+<li><code>dp(i,1) = max(dp(i-1,1),dp(i-1,0)-prices[i])</code></li>
+</ul>
+<p>边界条件--&gt;即递推的初始状态: 只需要将<code>if(i&lt;0) return hold?INT_MIN/2:0;</code>这句话转换，因此我们为dp多开辟一个空间作为出发临界状态，即dp大小为<code>dp[n+1][2]</code></p>
+<ul>
+<li><code>dp[0][0] = 0</code></li>
+<li><code>dp[0][1] = INT_MIN/2</code></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxProfit</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> n = prices.<span class="built_in">size</span>();</span><br><span class="line">	vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(n+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">2</span>,<span class="number">-1</span>));</span><br><span class="line">	dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	dp[<span class="number">0</span>][<span class="number">1</span>] = INT_MIN/<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i &lt; n; ++i)&#123;</span><br><span class="line">		dp[i+<span class="number">1</span>][<span class="number">0</span>] = <span class="built_in">max</span>(dp[i][<span class="number">0</span>],dp[i][<span class="number">1</span>]+prices[i]);</span><br><span class="line">		dp[i+<span class="number">1</span>][<span class="number">1</span>] = <span class="built_in">max</span>(dp[i][<span class="number">1</span>],dp[i][<span class="number">0</span>] - prices[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[n][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="买卖股票的最佳时机-1">买卖股票的最佳时机Ⅳ</h4>
+<p>最多可以完成 k 笔交易。也就是说，你最多可以买 k 次，卖 k 次。只需要将上面的代码dfs添加一个参数j即可 ##### 回溯+记忆化搜索 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxProfit</span><span class="params">(<span class="type">int</span> k, vector&lt;<span class="type">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n = prices.<span class="built_in">size</span>();</span><br><span class="line">    <span class="type">int</span> cache[n][k+<span class="number">1</span>][<span class="number">2</span>];</span><br><span class="line">    <span class="built_in">memset</span>(cache,<span class="number">-1</span>,<span class="built_in">sizeof</span>(cache));</span><br><span class="line">    function&lt;<span class="type">int</span>(<span class="type">int</span>,<span class="type">int</span>,<span class="type">bool</span>)&gt; dfs = [&amp;](<span class="type">int</span> i,<span class="type">int</span> j,<span class="type">bool</span> hold)&#123;</span><br><span class="line">         <span class="keyword">if</span>(j&lt;<span class="number">0</span>) <span class="keyword">return</span> INT_MIN/<span class="number">2</span>;</span><br><span class="line">         <span class="keyword">if</span>(i&lt;<span class="number">0</span>) <span class="keyword">return</span> hold?INT_MIN/<span class="number">2</span>:<span class="number">0</span>;</span><br><span class="line">         <span class="type">int</span>&amp; res = cache[i][j][hold];</span><br><span class="line">         <span class="keyword">if</span>(res!=<span class="number">-1</span>) <span class="keyword">return</span> res;</span><br><span class="line">         <span class="keyword">if</span>(hold) res = <span class="built_in">max</span>(<span class="built_in">dfs</span>(i<span class="number">-1</span>,j,<span class="literal">true</span>),<span class="built_in">dfs</span>(i<span class="number">-1</span>,j,<span class="literal">false</span>)-prices[i]);</span><br><span class="line">         <span class="keyword">else</span> res = <span class="built_in">max</span>(<span class="built_in">dfs</span>(i<span class="number">-1</span>,j,<span class="literal">false</span>),<span class="built_in">dfs</span>(i<span class="number">-1</span>,j<span class="number">-1</span>,<span class="literal">true</span>)+prices[i]);</span><br><span class="line">         <span class="keyword">return</span> res;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">dfs</span>(n<span class="number">-1</span>,k,<span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="递推-2">递推</h5>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="type">int</span> <span class="title">maxProfit</span><span class="params">(<span class="type">int</span> k, vector&lt;<span class="type">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">     <span class="type">int</span> n = prices.<span class="built_in">size</span>();</span><br><span class="line">     <span class="type">int</span> dp[n+<span class="number">1</span>][k+<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line">     <span class="built_in">memset</span>(dp,INT_MIN+<span class="number">100000</span>,<span class="built_in">sizeof</span>(dp));<span class="comment">//①这句话就是边界条件返回的翻译</span></span><br><span class="line">     <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>;j&lt;=k+<span class="number">1</span>;++j)&#123;</span><br><span class="line">         dp[<span class="number">0</span>][j][<span class="number">0</span>] = <span class="number">0</span>;    <span class="comment">//②，①②这两句话就是边界条件返回的翻译</span></span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i)&#123;</span><br><span class="line">         <span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">1</span>; j &lt;= k+<span class="number">1</span>; ++j)&#123;</span><br><span class="line">             dp[i+<span class="number">1</span>][j][<span class="number">1</span>] = <span class="built_in">max</span>(dp[i][j][<span class="number">1</span>],dp[i][j][<span class="number">0</span>]-prices[i]);</span><br><span class="line">             dp[i+<span class="number">1</span>][j][<span class="number">0</span>] = <span class="built_in">max</span>(dp[i][j][<span class="number">0</span>],dp[i][j<span class="number">-1</span>][<span class="number">1</span>]+prices[i]);</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> dp[n][k+<span class="number">1</span>][<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>思考：恰好k次交易如何做，那就需要保证初始状态正好是从恰好0次交易出发，而不会由其他状态，因此只有<code>dp[0][1][0]=0</code> ，其他均为<code>INT_MIN+100000</code></p>
+<h4 id="买卖股票的最佳时机含冷冻期">买卖股票的最佳时机含冷冻期</h4>
+<p>直接秒 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">maxProfit</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> n =prices.<span class="built_in">size</span>();</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">cache</span>(n,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(<span class="number">2</span>,<span class="number">-1</span>));</span><br><span class="line">    function&lt;<span class="type">int</span>(<span class="type">int</span>,<span class="type">bool</span>)&gt; dfs = [&amp;](<span class="type">int</span> i,<span class="type">bool</span> hold)&#123;</span><br><span class="line">       <span class="keyword">if</span>(i&lt;<span class="number">0</span>) <span class="keyword">return</span> hold?INT_MIN/<span class="number">2</span>:<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span>&amp; res = cache[i][hold];</span><br><span class="line">        <span class="keyword">if</span>(res!=<span class="number">-1</span>) <span class="keyword">return</span> res;</span><br><span class="line">        <span class="comment">//买入的前一天不能卖出,卖出的前一天没有限制</span></span><br><span class="line">        <span class="keyword">if</span>(hold) res = <span class="built_in">max</span>(<span class="built_in">dfs</span>(i<span class="number">-1</span>,<span class="literal">true</span>),<span class="built_in">dfs</span>(i<span class="number">-2</span>,<span class="literal">false</span>)-prices[i]);</span><br><span class="line">        <span class="keyword">else</span> res = <span class="built_in">max</span>(<span class="built_in">dfs</span>(i<span class="number">-1</span>,<span class="literal">false</span>),<span class="built_in">dfs</span>(i<span class="number">-1</span>,<span class="literal">true</span>)+prices[i]);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">dfs</span>(n<span class="number">-1</span>,<span class="literal">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="最长公共子序列">1.3 最长公共子序列</h3>
+<p>从后缀转移进行转移，即：</p>
+<h4 id="回溯记忆搜索">回溯+记忆搜索</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(string text1, string text2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = text1.<span class="built_in">size</span>(),m = text2.<span class="built_in">size</span>();</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">cache</span>(n,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(m,<span class="number">-1</span>));</span><br><span class="line">        function&lt;<span class="type">int</span>(<span class="type">int</span>,<span class="type">int</span>)&gt; dfs = [&amp;](<span class="type">int</span> i,<span class="type">int</span> j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span>(j&lt;<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            <span class="type">int</span>&amp; res = cache[i][j];</span><br><span class="line">            <span class="keyword">if</span>(res!=<span class="number">-1</span>) <span class="keyword">return</span> res;</span><br><span class="line">            <span class="keyword">if</span>(text1[i]==text2[j]) res = <span class="built_in">dfs</span>(i<span class="number">-1</span>,j<span class="number">-1</span>)+<span class="number">1</span>;</span><br><span class="line">            res = <span class="built_in">max</span>(res,<span class="built_in">max</span>(<span class="built_in">dfs</span>(i<span class="number">-1</span>,j),<span class="built_in">dfs</span>(i,j<span class="number">-1</span>)));</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">dfs</span>(n<span class="number">-1</span>,m<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="递推-3">递推</h4>
+<p>将上面的回溯+记忆搜索进行1:1翻译， <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(string text1, string text2)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> m = text1.<span class="built_in">size</span>(),n=text2.<span class="built_in">size</span>();</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">dp</span>(m+<span class="number">1</span>,<span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n+<span class="number">1</span>,<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;m;++i)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;n;++j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(text1[i]==text2[j]) dp[i+<span class="number">1</span>][j+<span class="number">1</span>] = dp[i][j]+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> dp[i+<span class="number">1</span>][j+<span class="number">1</span>]=<span class="built_in">max</span>(dp[i][j+<span class="number">1</span>],dp[i+<span class="number">1</span>][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m][n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h2 id="区间dp">2 区间DP</h2>
+<ul>
+<li><strong>区间DP：从小区间转移到大区间</strong>，可为两类
+<ul>
+<li>选与不选：从两侧向内缩小文体规模---&gt;如最长回文子序列(回文串系列)</li>
+<li>枚举选哪个：分割成多个规模更小的子问题---&gt;如多边形三角部分的最低得分</li>
+</ul></li>
+</ul>
+<h2 id="动态规划">2. 动态规划</h2>
+<p>我们遇到的问题中，有很大一部分可以用动态规划<code>Dynamic Programming</code>来解。 解决这类问题可以很大地提升你的能力与技巧，我会试着帮助你理解如何使用DP来解题</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/29/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/07/28/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/28/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">排序算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-28 13:30:57" itemprop="dateCreated datePublished" datetime="2022-07-28T13:30:57+08:00">2022-07-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-09 14:30:36" itemprop="dateModified" datetime="2023-09-09T14:30:36+08:00">2023-09-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="算法总览">1. 算法总览</h4>
+<p>常见的排序算法有<strong>插入排序、选择排序、希尔排序、堆排序、冒泡排序、快速排序、归并排序和基数排序</strong>。常见排序算法可以分为两大类：</p>
+<ul>
+<li><strong>非线性时间比较类排序：通过比较来决定元素间的相对次序，由于其时间复杂度不能突破<code>O(nlogn)</code>，因此称为非线性时间比较类排序</strong>。</li>
+<li><strong>线性时间非比较类排序：</strong>不通过比较来决定元素间的相对次序，它可以突破基于比较排序的时间下界，以线性时间运行，因此称为线性时间非比较类排序。排序算法的时间复杂度如下： <img src="/2022/07/28/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/sort.png" width="700"></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/28/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2022/07/18/Makefile/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -893,332 +1269,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">python面向对象</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-06-30 18:24:44" itemprop="dateCreated datePublished" datetime="2022-06-30T18:24:44+08:00">2022-06-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-21 21:50:10" itemprop="dateModified" datetime="2024-05-21T21:50:10+08:00">2024-05-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>25k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>23 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="面向对象">1. 面向对象</h1>
-<p>相比于c++,python中的OOP理解和使用都较简单，其把隐藏的的语法杂质和复杂性都去掉了。 ## 1.1 类对象提供的默认行为 在python的面向对象模型种，要分清<strong>类对象</strong>和<strong>实例对象</strong>。类对象就是<code>class</code>定义了一个类只会，该类提供些行为就是类对象.而实例对象就是该类的实例。每次调用类，就会生成一个实例。 类对象提供的默认行为：</p>
-<ul>
-<li><code>class</code>语句创建类对象并将其赋值给变量名。就像<code>def</code>一样，class语句也是可执行语句，执行时会产生类对象，并赋值变量名</li>
-<li>class语句的赋值语句会创建类属性，像模块文件一样，class语句内的顶层的赋值语句（不在<code>def</code>内）会成为类对象的属性。</li>
-<li>类属性提供对象的状态（变量）和行为（函数）</li>
-<li>类仍然时模块内的属性。当<code>class</code>执行时，只是赋值语句而已，赋值了一个类对象</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/30/python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2022/06/24/python%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/24/python%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">python基础知识</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-06-24 09:07:58" itemprop="dateCreated datePublished" datetime="2022-06-24T09:07:58+08:00">2022-06-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-21 18:00:41" itemprop="dateModified" datetime="2024-05-21T18:00:41+08:00">2024-05-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>40k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>36 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="python的运行过程">1. python的运行过程</h4>
-<p><img src="/2022/06/24/python%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/4.png" width="600"></p>
-<h5 id="字节码编译">1.1 字节码编译</h5>
-<p>当程序运行时,Python内部会将源代码(.py文件中的程序)编译成所谓的字节码的形式,就是将每一行源代码语句从上到下翻译过来,翻译成一组字节码的指令.这些字节码可以提高执行速度;比起源代码语句,字节码要执行快的多。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/24/python%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">（面试）C++基础知识</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-06-19 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-19T00:00:00+08:00">2022-06-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-16 21:38:01" itemprop="dateModified" datetime="2024-03-16T21:38:01+08:00">2024-03-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>55k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>50 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="c知识面试版_基础">1. C++知识面试版_基础</h3>
-<h4 id="编译过程">1.1 编译过程</h4>
-<p><img src="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/compile.png" width="700"> 如上所示，<strong>一个c源文件会先经过预处理，将头文件展开、宏替换和去注释；然后经过编译器生成汇编文件，再有汇编器生成二进制文件，最后再经过链接器将函数库中相应的代码组合到目标文件</strong></p>
-<ul>
-<li><p>预处理：预处理器会扫描源代码文件，根据以“#”开头的预处理指令执行一些文本替换和文件包含操作。例如，预处理器会把所有的#include指令替换为对应的头文件内容，并将定义的宏展开。生成<code>.i</code>文件</p></li>
-<li><p>编译：编译器将经过预处理的源代码文件翻译成汇编代码，这是一种与具体机器体系结构相关的低级代码。生成<code>.s</code>文件</p></li>
-<li><p>汇编：汇编器将汇编代码转化为机器码，并生成一个目标文件（.obj 或 .o）。目标文件包含机器指令和一些元数据，如符号表和重定位信息。生成二进制<code>.o</code>文件</p></li>
-<li><strong>链接</strong>：链接器将目标文件与系统库和其他目标文件链接在一起，生成可执行文件。链接器主要完成两个任务：解析符号引用和地址重定位。
-<ul>
-<li><strong>符号解析：每个符号对应一个函数、一个全局变量或一个静态变量，符号解析的目的就是将每个符号引用正好和一个符号定义关联起来。那么当然在不同目标文件中引用的同一全局变量或函数，链接器需要将其解析为同一个实体。</strong></li>
-<li>地址重定位指的是在链接过程中，需要将不同目标文件中的函数和变量的地址进行调整，使得它们在最终的可执行文件中能够正确地链接到一起。生成可执行文件</li>
-</ul></li>
-</ul>
-<h4 id="静态链接和动态链接">1.2 静态链接和动态链接</h4>
-<h5 id="静态链接">1.2.1 静态链接：</h5>
-<p>链接器将目标文件和库文件的代码和数据全部拷贝到可执行文件中，形成一个独立的、包含所有必需代码和数据的可执行文件。在运行时，可执行文件不需要依赖外部库文件，所有需要的代码和数据都已经包含在可执行文件中</p>
-<ul>
-<li><strong>优点：对运行环境的依赖性较小，具有较好的兼容性,方便分发和部署，不需要外部依赖</strong></li>
-<li><strong>缺点：生成的程序比较大，需要更多的系统资源，在装入内存时会消耗更多的时间；库函数有了更新，必须重新编译应用程序</strong></li>
-</ul>
-<h5 id="动态链接">1.2.2 动态链接</h5>
-<p>在动态链接中，库文件的代码和数据被保留在一个独立的文件中，被多个可执行文件共享。在链接时，链接器会将可执行文件中需要的库函数和数据的引用替换为动态链接库的符号表中对应的地址。在运行时，当程序调用一个需要动态链接库中的函数时，操作系统会将对应的库文件加载到内存中，并将调用转向库文件中的函数</p>
-<ul>
-<li><strong>优点：在需要的时候才会调入对应的资源函数；简化程序的升级；可执行文件小,节省磁盘空间；同时多个可执行文件可以共享同一个库文件，减少了内存占用</strong></li>
-<li><strong>缺点：依赖动态库，不能独立运行；动态库依赖版本问题严重。如果库文件版本或路径发生变化，可能会导致程序无法正常运行</strong></li>
-</ul>
-<p>注：前面我们编写的应用程序大量用到了标准库函数，系统默认采用动态链接的方式进行编译程序，若想采用静态编译，加入<code>-static</code>参数。</p>
-<h5 id="运行是加载和链接共享库">1.2.3 运行是加载和链接共享库</h5>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/06/19/(%E9%9D%A2%E8%AF%95)C++%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1286,20 +1340,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">80</span>
+          <span class="site-state-item-count">83</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1345,7 +1399,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">19:42</span>
+    <span title="站点阅读时长">20:13</span>
 </div>
 
         
