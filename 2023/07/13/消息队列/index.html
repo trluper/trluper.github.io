@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. 消息队列的优缺点？  异步处理 - 相比于传统的串行、并行方式，消息队列使服务端能够异步处理请求，提高了系统吞吐量。 应用解耦 - 系统间通过消息通信，不用关心其他系统的处理。 流量削锋 - 可以通过消息队列长度控制请求量；可以缓解短时间内的高并发请求。 日志处理 - 解决大量日志传输。 消息通讯 - 消息队列一般都内置了高效的通信机制，因此也可以用在纯的消息通讯。比如实现点对点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="消息队列">
+<meta property="og:url" content="https://example.com/2023/07/13/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1. 消息队列的优缺点？  异步处理 - 相比于传统的串行、并行方式，消息队列使服务端能够异步处理请求，提高了系统吞吐量。 应用解耦 - 系统间通过消息通信，不用关心其他系统的处理。 流量削锋 - 可以通过消息队列长度控制请求量；可以缓解短时间内的高并发请求。 日志处理 - 解决大量日志传输。 消息通讯 - 消息队列一般都内置了高效的通信机制，因此也可以用在纯的消息通讯。比如实现点对点">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-13T08:18:14.000Z">
+<meta property="article:modified_time" content="2024-03-17T09:23:37.525Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://example.com/2023/07/13/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>消息队列 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/07/13/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          消息队列
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-07-13 16:18:14" itemprop="dateCreated datePublished" datetime="2023-07-13T16:18:14+08:00">2023-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-17 17:23:37" itemprop="dateModified" datetime="2024-03-17T17:23:37+08:00">2024-03-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="消息队列的优缺点">1. 消息队列的优缺点？</h3>
+<ul>
+<li><strong>异步处理</strong> - 相比于传统的串行、并行方式，消息队列使服务端能够异步处理请求，提高了系统吞吐量。</li>
+<li><strong>应用解耦</strong> - 系统间通过消息通信，不用关心其他系统的处理。</li>
+<li><strong>流量削锋</strong> - 可以通过消息队列长度控制请求量；可以缓解短时间内的高并发请求。</li>
+<li>日志处理 - 解决大量日志传输。</li>
+<li>消息通讯 - 消息队列一般都内置了高效的通信机制，因此也可以用在纯的消息通讯。比如实现点对点消息队列，或者聊天室等。</li>
+</ul>
+<h4 id="解耦异步削峰是什么">解耦、异步、削峰是什么？</h4>
+<ul>
+<li><strong>解耦：</strong>A 系统发送数据到 BCD 三个系统，通过接口调用发送。如果 E 系统也要这个数据呢？那如果 C 系统现在不需要了呢？A 系统负责人几乎崩溃…A 系统跟其它各种乱七八糟的系统严重耦合，A 系统产生一条比较关键的数据，很多系统都需要 A 系统将这个数据发送过来。如果使用 MQ，A 系统产生一条数据，发送到 MQ 里面去，哪个系统需要数据自己去 MQ 里面消费。如果新系统需要数据，直接从 MQ 里消费即可；如果某个系统不需要这条数据了，就取消对 MQ 消息的消费即可。这样下来，A 系统压根儿不需要去考虑要给谁发送数据，不需要维护这个代码，也不需要考虑人家是否调用成功、失败超时等情况。</li>
+</ul>
+<p>-** 异步：**A 系统接收一个请求，需要在自己本地写库，还需要在 BCD 三个系统写库，自己本地写库要 3ms，BCD 三个系统分别写库要 300ms、450ms、200ms。最终请求总延时是 3 + 300 + 450 + 200 = 953ms，接近 1s，用户感觉搞个什么东西，慢死了慢死了。用户通过浏览器发起请求。如果使用 MQ，那么 A 系统连续发送 3 条消息到 MQ 队列中，假如耗时 5ms，A 系统从接受一个请求到返回响应给用户，总时长是 3 + 5 = 8ms</p>
+<ul>
+<li><strong>削峰：</strong>将请求统统放到消息队列里去，服务器从消息队列中取任务，这样可以减少高峰时期对服务器压力。</li>
+</ul>
+<h4 id="缺点">缺点</h4>
+<ul>
+<li><strong>系统可用性降低：</strong>加入个消息队列进去，那消息队列宕机了了，你的系统也就无法使用。因此，系统可用性会降低；</li>
+<li><strong>系统复杂度提高：</strong>加入了消息队列，要多考虑很多方面的问题，比如如何保证消息不被重复消费、如何保证消息可靠性传输等。因此，需要考虑的东西更多，复杂性增大。</li>
+</ul>
+<h3 id="rabbitmq怎么保证消息的可靠性">2. RabbitMQ怎么保证消息的可靠性？</h3>
+<p>RabbitMQ消息的传输会经过三个阶段从生成者到Rabbit服务器的队列再到消费者，因此我们在三个阶段采取来保证消息的可靠性：</p>
+<ul>
+<li><p><strong>生产者丢失数据：</strong>在消息还未到达RabbitMQ服务器上时，未防止RabbitMQ服务器宕机导致的消息丢失，我们可以将信道设置成 confirm 模式（发送方确认模式）一旦channel进入confirm模式，所有在该信道上发布的消息都将会被指派一个唯一的ID（从1开始），一旦消息被投递到所有匹配的队列之后；rabbitMQ就会发送一个ACK给生产者（包含消息的唯一ID），这就使得生产者知道消息已经正确到达目的队列了；如果rabbitMQ没能处理该消息，则会发送一个Nack消息给你，你可以进行重试操作。 &gt;- 另外一个方案是走事务机制，送消息前，开启事务（channel.txSelect()）,然后发送消息，如果发送过程中出现什么异常，事务就会回滚（channel.txRollback()）,如果发送成功则提交事务（channel.txCommit()）。然而，这种方式有个缺点：吞吐量下降；</p></li>
+<li><p><strong>消息队列丢数据</strong>：开启RabbitMQ的持久化策略，将消息持久化进磁盘。和confirm机制配合使用，你可以在消息持久化磁盘后，再给生产者发送一个Ack信号。这样，如果消息持久化磁盘之前，rabbitMQ阵亡了，那么生产者收不到Ack信号，生产者会自动重发。 &gt;操作和简单：1、将queue的持久化标识durable设置为true,则代表是一个持久的队列；2、 发送消息的时候将deliveryMode=2</p></li>
+<li><p><strong>消费者丢失数据</strong>：消费者丢数据一般是因为采用了自动确认消息模式，我们将它改为手动确认即可</p></li>
+</ul>
+<h3 id="交换机exchange有哪些模式">3. 交换机Exchange有哪些模式</h3>
+<ul>
+<li><strong>fanout交换器：</strong>它会把所有发送到该交换器的消息路由到所有与该交换器绑定的队列中；</li>
+<li><strong>direct交换器：</strong>direct类型的交换器路由规则很简单，它会把消息路由到那些Routing_Key完全匹配的队列中；</li>
+<li><strong>topic交换器：</strong>匹配规则比direct更灵活。</li>
+<li><strong>headers交换器：</strong>根据发送消息内容的headers属性进⾏匹配（由于性能很差，不实⽤）</li>
+</ul>
+<h3 id="消息基于什么传输">3. 消息基于什么传输？</h3>
+<p>由于TCP连接的创建和销毁开销较大，且并发数受系统资源限制，会造成性能瓶颈。 RabbitMQ使⽤信道的方式来传输数据。信道是建⽴在真实的TCP连接内的虚拟连接，且每条 TCP连接上的信道数量没有限制。</p>
+<ul>
+<li>RabbitMQ采用类似非阻塞IO（Non-blocking I/O）做法，选择TCP连接复⽤，不仅可以减少性能开销，同时也便于管理。</li>
+<li>每个线程把持一个信道，所以信道复用了Connection的TCP连接。同时RabbitMQ可以确保每个线程的私密性，就像拥有独立的连接一样。</li>
+</ul>
+<h3 id="如何避免消息重复投递或重复消费">4. 如何避免消息重复投递或重复消费？</h3>
+<p>消费端处理消息的业务逻辑保持幂等性。只要保持幂等性，不管来多少条重复消息，最后处理的结果都一样。<strong>如保证每条消息都有唯一编号且保证消息处理成功与去重表的日志同时出现。利用一张日志表来记录已经处理成功的消息的 ID，如果新到的消息 ID 已经在日志表中，那么就不再处理这条消息。</strong></p>
+<h3 id="如何保证消息的顺序">5. 如何保证消息的顺序</h3>
+<ul>
+<li>（1）保证生产者 - MQServer - 消费者是一对一对一的关系。 缺陷：
+<ul>
+<li>并行度就会成为消息系统的瓶颈（吞吐量不够）</li>
+<li>更多的异常处理，比如：只要消费端出现问题，就会导致整个处理流程阻塞，我们不得不花费更多的精力来解决阻塞的问题。</li>
+</ul></li>
+<li><strong>（2）通过合理的设计或者将问题分解来规避。</strong>
+<ul>
+<li>不关注乱序的应用实际大量存在</li>
+<li>队列无序并不意味着消息无序 所以从业务层面来保证消息的顺序而不仅仅是依赖于消息系统，是一种更合理的方式。</li>
+</ul></li>
+</ul>
+<h3 id="如果有一个消息一直得不到消费比如客户端宕机且设置手动确认然后一直未手动确认此时怎么办">6. 如果有一个消息一直得不到消费，比如客户端宕机且设置手动确认，然后一直未手动确认，此时怎么办？</h3>
+<p>在RabbitMQ中，当消费者未正常消费消息，由于未收到来自消费者的确认，就会进行重试策略，但重试策略必须有一个次数，不然一直有这样的消息得不到消费，一直占用队列资源就造成吞吐量的低下。</p>
+<p>因此当一个消息在队列中达到一定的重试次数后仍然无法被成功处理，或者因为某些原因（如TTL过期、队列达到最大长度等）被队列拒绝返回<code>nack</code>时，RabbitMQ可以将这些消息发送到另一个交换机（Dead Letter Exchange），进而路由到一个专门的队列（Dead Letter Queue, DLQ），即<strong>死信队列</strong>。</p>
+<p><strong>DLQ中的消息代表了那些经过多次尝试仍无法被成功处理的消息。你可以有一个专门的消费者来监听DLQ，并对这些消息进行进一步的处理，例如记录日志、发送告警或者进行人工干预。</strong></p>
+<h3 id="rabbitmq基本概念">7. RabbitMQ基本概念</h3>
+<ul>
+<li>Broker： 简单来说就是消息队列服务器实体</li>
+<li>Exchange： 消息交换机，它指定消息按什么规则，路由到哪个队列</li>
+<li>Queue： 消息队列载体，每个消息都会被投入到一个或多个队列</li>
+<li>Binding： 绑定，它的作用就是把exchange和queue按照路由规则绑定起来</li>
+<li>Routing Key： 路由关键字，exchange根据这个关键字进行消息投递</li>
+<li>VHost： vhost 可以理解为虚拟 broker ，即 mini-RabbitMQ server。其内部均含有独立的 queue、exchange 和 binding 等，但最最重要的是，其拥有独立的权限系统，可以做到 vhost 范围的用户控制。当然，从 RabbitMQ 的全局角度，vhost 可以作为不同权限隔离的手段（一个典型的例子就是不同的应用可以跑在不同的 vhost 中）。</li>
+<li>Producer： 消息生产者，就是投递消息的程序</li>
+<li>Consumer： 消息消费者，就是接受消息的程序</li>
+<li>Channel： 消息通道，在客户端的每个连接里，可建立多个channel，每个channel代表一个会话任务</li>
+</ul>
+<h3 id="什么原因会导致-mq-消息积压">8. 什么原因会导致 MQ 消息积压?</h3>
+<p>MQ消息积压是指生产者发送的消息在Broker端大量堆积，无法被消费者及时消费，导致业务功能无法正常使用。以下是一些导致MQ消息积压的常见原因：</p>
+<p>-** 流量变大而服务器配置偏低<strong>：当消息的产生速度大于消费速度时，如果RabbitMQ服务器配置较低，就可能导致消息积压。 - </strong>消费者故障<strong>：如果消费者出现宕机或网络问题，导致无法及时消费消息，消息会持续堆积。 - </strong>程序逻辑设计问题<strong>：如果生产者持续生产消息，但消费者由于某种原因（如处理逻辑耗时过长）消费能力不足，也会造成消息积压。 - </strong>新上线的消费者功能存在BUG<strong>：新上线的消费者功能如果有缺陷，可能导致消息无法被正常消费，从而引发消息堆积。 - </strong>配置不合理：<strong>消息队列的容量设置过小或消费者的线程数设置过少，都可能导致消息积压。 - </strong>生产者推送大量消息**：在特定场景下，如大促活动，生产者可能短时间内推送大量消息至Broker，如果消费者的消费能力不足以应对这种突发流量，也会导致消息堆积。</p>
+<p>了解决MQ消息积压问题，可以采取以下策略：</p>
+<ul>
+<li>扩容：纵向扩容，增加服务器资源，如内存和CPU；横向扩容，将单机改为集群模式，增加集群节点，并增加消费者数量。</li>
+<li>优化程序逻辑：确保生产者和消费者的逻辑设计合理，避免生产者过快生产消息或消费者处理消息过慢。</li>
+<li>监控和报警：建立有效的监控和报警机制，及时发现并解决消息积压问题。</li>
+</ul>
+<h3 id="有几百万消息持续积压几小时怎么办">8. 有几百万消息持续积压几小时，怎么办？</h3>
+<p>消息积压处理办法：<strong>临时紧急扩容</strong></p>
+<ul>
+<li>1.先修复 consumer 的问题，确保其恢复消费速度，然后将现有 cnosumer 都停掉。</li>
+<li>2.新建一个<code>topic</code>,临时建立好原先 10 倍的 queue 数量。</li>
+<li>3.然后写一个临时的分发数据的 consumer 程序，这个程序部署上去消费积压的数据，消费之后不做耗时的处理，直接均匀轮询写入临时建立好的 10 倍数量的 queue。</li>
+<li>4.接着临时征用 10 倍的机器来部署 consumer，每一批 consumer 消费一个临时 queue 的数据。这种做法相当于是临时将 queue 资源和 consumer 资源扩大 10 倍，以正常的 10 倍速度来消费数据</li>
+<li>5.等快速消费完积压数据之后，得恢复原先部署的架构，重新用原先的 consumer 机器来消费消息。</li>
+</ul>
+<h3 id="与其他消息队列的区别比较">9 与其他消息队列的区别比较？</h3>
+<p><strong>ctiveMQ：</strong>的社区算是比较成熟，但是较目前来说，ActiveMQ 的性能比较差，而且版本迭代很慢，不推荐使用。</p>
+<p><strong>RabbitMQ：</strong>在吞吐量方面虽然稍逊于 Kafka 和 RocketMQ ，但是由于它基于 erlang 开发，所以并发能力很强，性能极其好，延时很低，达到微秒级。但是也因为 RabbitMQ 基于 erlang 开发，所以国内很少有公司有实力做erlang源码级别的研究和定制。如果业务场景对并发量要求不是太高（十万级、百万级），那这四种消息队列中，RabbitMQ 一定是你的首选。如果是大数据领域的实时计算、日志采集等场景，用 Kafka 是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。</p>
+<p><strong>RocketMQ</strong>：阿里出品，Java 系开源项目，源代码我们可以直接阅读，然后可以定制自己公司的 MQ，并且 RocketMQ 有阿里巴巴的实际业务场景的实战考验。RocketMQ 社区活跃度相对较为一般，不过也还可以，文档相对来说简单一些，然后接口这块不是按照标准 JMS 规范走的有些系统要迁移需要修改大量代码。还有就是阿里出台的技术，你得做好这个技术万一被抛弃，社区黄掉的风险，那如果你们公司有技术实力我觉得用RocketMQ 挺好的。</p>
+<p><strong>kafka：</strong>特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms 级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时 kafka 最好是支撑较少的 topic 数量即可，保证其超高吞吐量。kafka 唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。</p>
+<h3 id="rabbitmq-上的个-queue-中存放的-message-是否有数量限制">10 RabbitMQ 上的⼀个 queue 中存放的 message 是否有数量限制？</h3>
+<p>可以认为是没有限制，因为限制取决于机器的内存，但是消息过多会导致处理效率的下降。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="prev" title="Redis数据库">
+      <i class="fa fa-chevron-left"></i> Redis数据库
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/06/KMP%E7%AE%97%E6%B3%95/" rel="next" title="KMP算法">
+      KMP算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">1. 消息队列的优缺点？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E8%80%A6%E5%BC%82%E6%AD%A5%E5%89%8A%E5%B3%B0%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">解耦、异步、削峰是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rabbitmq%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E6%B6%88%E6%81%AF%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">2. RabbitMQ怎么保证消息的可靠性？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BAexchange%E6%9C%89%E5%93%AA%E4%BA%9B%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3. 交换机Exchange有哪些模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%9F%BA%E4%BA%8E%E4%BB%80%E4%B9%88%E4%BC%A0%E8%BE%93"><span class="nav-number">4.</span> <span class="nav-text">3. 消息基于什么传输？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%8A%95%E9%80%92%E6%88%96%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9"><span class="nav-number">5.</span> <span class="nav-text">4. 如何避免消息重复投递或重复消费？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%B6%88%E6%81%AF%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="nav-number">6.</span> <span class="nav-text">5. 如何保证消息的顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E6%9C%89%E4%B8%80%E4%B8%AA%E6%B6%88%E6%81%AF%E4%B8%80%E7%9B%B4%E5%BE%97%E4%B8%8D%E5%88%B0%E6%B6%88%E8%B4%B9%E6%AF%94%E5%A6%82%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AE%95%E6%9C%BA%E4%B8%94%E8%AE%BE%E7%BD%AE%E6%89%8B%E5%8A%A8%E7%A1%AE%E8%AE%A4%E7%84%B6%E5%90%8E%E4%B8%80%E7%9B%B4%E6%9C%AA%E6%89%8B%E5%8A%A8%E7%A1%AE%E8%AE%A4%E6%AD%A4%E6%97%B6%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-number">7.</span> <span class="nav-text">6. 如果有一个消息一直得不到消费，比如客户端宕机且设置手动确认，然后一直未手动确认，此时怎么办？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rabbitmq%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">8.</span> <span class="nav-text">7. RabbitMQ基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E5%8E%9F%E5%9B%A0%E4%BC%9A%E5%AF%BC%E8%87%B4-mq-%E6%B6%88%E6%81%AF%E7%A7%AF%E5%8E%8B"><span class="nav-number">9.</span> <span class="nav-text">8. 什么原因会导致 MQ 消息积压?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%87%A0%E7%99%BE%E4%B8%87%E6%B6%88%E6%81%AF%E6%8C%81%E7%BB%AD%E7%A7%AF%E5%8E%8B%E5%87%A0%E5%B0%8F%E6%97%B6%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="nav-number">10.</span> <span class="nav-text">8. 有几百万消息持续积压几小时，怎么办？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E5%85%B6%E4%BB%96%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%8C%BA%E5%88%AB%E6%AF%94%E8%BE%83"><span class="nav-number">11.</span> <span class="nav-text">9 与其他消息队列的区别比较？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rabbitmq-%E4%B8%8A%E7%9A%84%E4%B8%AA-queue-%E4%B8%AD%E5%AD%98%E6%94%BE%E7%9A%84-message-%E6%98%AF%E5%90%A6%E6%9C%89%E6%95%B0%E9%87%8F%E9%99%90%E5%88%B6"><span class="nav-number">12.</span> <span class="nav-text">10 RabbitMQ 上的⼀个 queue 中存放的 message 是否有数量限制？</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">20:25</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

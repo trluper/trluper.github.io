@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="SSH（Secure Shell，安全外壳）是一种网络安全协议，通过加密和认证机制实现安全的访问和文件传输等业务。传统远程登录或文件传输方式，例如Telnet、FTP，使用明文传输数据，存在很多的安全隐患。随着人们对网络安全的重视，这些方式已经慢慢不被接受。SSH协议通过对网络数据进行加密和验证，在不安全的网络环境中提供了安全的登录和其他安全网络服务。作为Telnet和其他不安全远程shell协议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH">
+<meta property="og:url" content="https://example.com/2023/03/12/ssh/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="SSH（Secure Shell，安全外壳）是一种网络安全协议，通过加密和认证机制实现安全的访问和文件传输等业务。传统远程登录或文件传输方式，例如Telnet、FTP，使用明文传输数据，存在很多的安全隐患。随着人们对网络安全的重视，这些方式已经慢慢不被接受。SSH协议通过对网络数据进行加密和验证，在不安全的网络环境中提供了安全的登录和其他安全网络服务。作为Telnet和其他不安全远程shell协议">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/2023/03/12/ssh/ssh_secret.png">
+<meta property="og:image" content="https://example.com/2023/03/12/ssh/ssh_not.png">
+<meta property="og:image" content="https://example.com/2023/03/12/ssh/ssh_renzhen.png">
+<meta property="article:published_time" content="2023-03-11T18:05:54.000Z">
+<meta property="article:modified_time" content="2023-03-12T13:03:13.844Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="SSH">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2023/03/12/ssh/ssh_secret.png">
+
+<link rel="canonical" href="https://example.com/2023/03/12/ssh/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SSH | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/12/ssh/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SSH
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-12 02:05:54 / 修改时间：21:03:13" itemprop="dateCreated datePublished" datetime="2023-03-12T02:05:54+08:00">2023-03-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SSH/" itemprop="url" rel="index"><span itemprop="name">SSH</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>SSH（Secure Shell，安全外壳）是一种网络安全协议，通过加密和认证机制实现安全的访问和文件传输等业务。传统远程登录或文件传输方式，例如Telnet、FTP，使用明文传输数据，存在很多的安全隐患。随着人们对网络安全的重视，这些方式已经慢慢不被接受。SSH协议通过对网络数据进行加密和验证，在不安全的网络环境中提供了安全的登录和其他安全网络服务。作为Telnet和其他不安全远程shell协议的安全替代方案，目前SSH协议已经被全世界广泛使用，大多数设备都支持SSH功能。</p>
+<span id="more"></span>
+<h3 id="ssh是工作流程">SSH是工作流程</h3>
+<p>SSH由服务器和客户端组成，在整个通信过程中，为建立安全的SSH通道，会经历如下几个阶段：</p>
+<ul>
+<li><p><strong>连接建立</strong> SSH服务器在指定的端口(默认22)侦听客户端的连接请求，在客户端向服务器发起连接请求后，双方建立一个TCP连接。</p></li>
+<li><p>版本协商 SSH协议目前存在SSH1.X（SSH2.0之前的版本）和SSH2.0版本。SSH2.0协议相比SSH1.X协议来说，在结构上做了扩展，可以支持更多的认证方法和密钥交换方法，同时提高了服务能力。SSH服务器和客户端通过协商确定最终使用的SSH版本号。</p></li>
+<li><p>算法协商 SSH支持多种加密算法，双方根据各自支持的算法，协商出最终用于产生会话密钥的密钥交换算法、用于数据信息加密的加密算法、用于进行数字签名和认证的公钥算法以及用于数据完整性保护的HMAC算法。</p></li>
+<li><p>密钥交换 服务器和客户端通过密钥交换算法，动态生成共享的会话密钥和会话ID，建立加密通道。会话密钥主要用于后续数据传输的加密，会话ID用于在认证过程中标识该SSH连接。</p></li>
+<li><p>用户认证 SSH客户端向服务器端发起认证请求，服务器端对客户端进行认证。SSH支持以下几种认证方式：</p>
+<ul>
+<li><p>密码（password）认证：客户端通过用户名和密码的方式进行认证，将加密后的用户名和密码发送给服务器，服务器解密后与本地保存的用户名和密码进行对比，并向客户端返回认证成功或失败的消息。</p></li>
+<li><p>密钥（publickey）认证：客户端通过用户名，公钥以及公钥算法等信息来与服务器进行认证。</p></li>
+<li><p>password-publickey认证：指用户需要同时满足密码认证和密钥认证才能登录。</p></li>
+<li><p>all认证：只要满足密码认证和密钥认证其中一种即可。</p></li>
+</ul></li>
+<li><p>会话请求 认证通过后，SSH客户端向服务器端发送会话请求，请求服务器提供某种类型的服务，即请求与服务器建立相应的会话。</p></li>
+<li><p>会话交互 会话建立后，SSH服务器端和客户端在该会话上进行数据信息的交互。</p></li>
+</ul>
+<h3 id="ssh密钥">SSH密钥</h3>
+<p>提高安全性的基本方式就是加密，加密算法通过密钥将明文转换为密文进行安全传输。SSH在工作过程中结合使用了对称加密和非对称加密两种类型的算法，通过事先生成的SSH密钥来保证信息传输的安全性。</p>
+<h4 id="对称加密和非对称加密">对称加密和非对称加密</h4>
+<ul>
+<li><p><strong>对称加密算法使用同一个密钥对数据进行加密和解密</strong>。SSH连接建立过程中生成的会话密钥就是对称密钥，该对称密钥是由客户端和服务器端基于共享的部分信息和各自的私有数据使用密钥交换算法分别生成的。因为对称加密算法加解密的速度很快，所以适用于传输大量数据的场景。 <img src="/2023/03/12/ssh/ssh_secret.png" width="600"></p></li>
+<li><p><strong>非对称加密的发送和接收需要使用一对关联的SSH密钥，公钥和私钥</strong>。<strong>私钥由生成的一方自己保管，公钥可以发送给任何请求通信的其他人</strong>。发送方用收到的公钥对自己的通信内容进行加密，只有接收方可以使用私钥进行解密获取通信内容。非对称加密的私钥不需要暴露在网络中，安全性大大增加，但是加解密的速度比对称密钥慢得多。 <img src="/2023/03/12/ssh/ssh_not.png" width="600"></p></li>
+</ul>
+<p><strong>SSH连接过程中的两个阶段使用了非对称加密</strong>:</p>
+<ul>
+<li>一个是在密钥交换阶段，服务器和客户端都生成了自己临时的公钥和私钥，用于计算出同一个用于后续加密通信内容的会话密钥。</li>
+<li>另外一个就是在用户认证阶段，利用只有匹配的私钥可以唯一解密公钥加密的内容这一特点，通过客户端的公钥私钥对验证客户端的身份</li>
+</ul>
+<h4 id="密钥认证">密钥认证</h4>
+<p><strong>SSH用户认证最基本的两种方式是密码认证和密钥认证。</strong></p>
+<ul>
+<li>密码认证是将自己的用户名和密码发送给服务器进行认证，这种方式比较简单，且每次登录都需要输入用户名和密码。</li>
+<li>密钥认证使用公钥私钥对进行身份验证，实现安全的免密登录，是一种广泛使用且推荐的登录方式。密钥认证的基本原理是服务器端使用客户端的公钥对随机内容加密，客户端使用自己的私钥解密并发送给服务器以证实自己的身份，具体的过程见下图。 <img src="/2023/03/12/ssh/ssh_renzhen.png" width="600"></li>
+</ul>
+<p><strong>SSH密钥认证登录流程</strong></p>
+<ul>
+<li><p>在进行SSH连接之前，SSH客户端需要先生成自己的公钥私钥对，并将自己的公钥存放在SSH服务器上。</p></li>
+<li><p>SSH客户端发送登录请求，SSH服务器就会根据请求中的用户名等信息在本地搜索客户端的公钥，并用这个公钥加密一个随机数发送给客户端。</p></li>
+<li><p>客户端使用自己的私钥对返回信息进行解密，并发送给服务器。</p></li>
+<li><p>服务器验证客户端解密的信息是否正确，如果正确则认证通过。</p></li>
+</ul>
+<h3 id="ssh密钥认证操作">ssh密钥认证操作</h3>
+<p>基于密钥的认证主要优点在于，与密码认证相比，它不易遭受暴力破解攻击，且在服务器被攻破的情况下也不会泄露您的有效凭证。不仅如此，与传统的密码认证相比，SSH 密钥认证也可以更加便利。当与被称作 SSH agent 的程序共用时，SSH 密钥可以让您无需记住或输入每个系统的密码，就能够连接到一个或多个服务器。要是有<code>ssh</code>，得安装<code>openssh</code>软件包</p>
+<h4 id="背景">背景</h4>
+<p>SSH 密钥都是成对生成的，其一称为公钥，另一则称为私钥。私钥只由您所知，必须安全保管。相对地，公钥可以向您想连接的任何 SSH 服务器自由地共享。</p>
+<p>如果一个 SSH 服务器在文件中存有您的公钥，并收到了您的连接请求，就会使用您的公钥构建一个质询问题并发送给您。这一质询问题是一条加密信息，必须得到正确应答，服务器才能允许您访问。这条编码信息特别安全是在于，只有私钥持有者才能理解它。公钥可以用来加密信息，但不能用来解密同一条信息。只有您，私钥的持有者，能够正确理解这一质询问题并产生合适的应答。</p>
+<p><strong>这一质询-应答过程发生在后台，对用户不可见。只要您持有私钥（一般存放在 <code>~/ .ssh</code> 目录下），您的 SSH 客户端就应当能够向服务器回复正确的应答。</strong></p>
+<h4 id="生成密钥对">生成密钥对</h4>
+<p>通过运行<code>ssh-keygen</code> 命令可以生成密钥对，默认为3072位的<code>RSA</code>（以及 <code>SHA256</code>），<code>ssh-keygen</code>(1) 手册页称其“一般被认为充足”且应当兼容于几乎所有客户端和服务器：</p>
+<ul>
+<li>可以使用<code>-a</code> 开关来指定密码加密的 KDF rounds 数量。</li>
+<li>也可以用 <code>-C</code> 开关对公钥添加可选的注释栏，从而在 <code>~/.ssh/known_hosts</code>、<code>~/.ssh/authorized_keys</code> 以及 <code>ssh-add -L</code> 输出等处更轻松地辨识它。例如： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -C <span class="string">&quot;$(whoami)@$(uname -n)-$(date -I)&quot;</span></span><br></pre></td></tr></table></figure> 会添加一条注释，说明是哪个用户何时在哪台机器上创建的密钥。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ ssh-keygen -t rsa -C <span class="string">&quot;1229413537@qq.com&quot;</span></span><br><span class="line">Generating <span class="keyword">public</span>/<span class="keyword">private</span> rsa key pair.</span><br><span class="line"><span class="function">Enter file in which to save the <span class="title">key</span> <span class="params">(/home/trluper/.ssh/id_rsa)</span>: </span></span><br><span class="line"><span class="function">Created directory <span class="string">&#x27;/home/trluper/.ssh&#x27;</span>.</span></span><br><span class="line"><span class="function">Enter passphrase (empty for no passphrase): </span></span><br><span class="line"><span class="function">Enter same passphrase again: </span></span><br><span class="line"><span class="function">Your identification has been saved in /home/trluper/.ssh/id_rsa</span></span><br><span class="line"><span class="function">Your public key has been saved in /home/trluper/.ssh/id_rsa.pub</span></span><br><span class="line"><span class="function">The key fingerprint is:</span></span><br><span class="line"><span class="function">SHA256:<span class="number">1</span>Cj60kKeZzc8eMn1G09kN65qxVQ4FhyiKwumBElPf6I <span class="number">1229413537</span>@qq.com</span></span><br><span class="line"><span class="function">The key<span class="string">&#x27;s randomart image is:</span></span></span><br><span class="line"><span class="string"><span class="function">+---[RSA 3072]----+</span></span></span><br><span class="line"><span class="string"><span class="function">| . .       ..o+  |</span></span></span><br><span class="line"><span class="string"><span class="function">|. + .    o. .= . |</span></span></span><br><span class="line"><span class="string"><span class="function">| o . o..o.. . o  |</span></span></span><br><span class="line"><span class="string"><span class="function">|  . ..oo  .  .   |</span></span></span><br><span class="line"><span class="string"><span class="function">|   Eoo .S.. o o..|</span></span></span><br><span class="line"><span class="string"><span class="function">|  .oo+.+oo . =...|</span></span></span><br><span class="line"><span class="string"><span class="function">|   .= *.O   + .. |</span></span></span><br><span class="line"><span class="string"><span class="function">|     = o o . =.  |</span></span></span><br><span class="line"><span class="string"><span class="function">|          ..o..  |</span></span></span><br><span class="line"><span class="string"><span class="function">+----[SHA256]-----+</span></span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p><strong>OpenSSH（对于认证密钥）支持数种签名算法，按照所采用的数学性质可分为两类：</strong></p>
+</blockquote>
+<blockquote>
+<ul>
+<li>DSA 以及 RSA，依赖于对两个大质数之积进行分解的实际困难；</li>
+<li>ECDSA 以及 Ed25519，依赖于椭圆曲线离散对数问题。（例）</li>
+</ul>
+</blockquote>
+<h4 id="选择密钥存储位置以及密码短语">选择密钥存储位置以及密码短语</h4>
+<p>运行 ssh-keygen 时，它会询问您希望的私钥文件名称及位置。默认情况下，密钥保存到 <code>~/.ssh</code> 目录下，并根据所使用的加密类型命名。为使下文中的示例代码正确工作，建议您接受默认的名称和位置。</p>
+<p>当系统向您询问密码短语时，如果您在乎私钥的安全性，请选择难以猜到的密码。更长、更随机的密码一般会更强，当私钥落入贼人之手时更不容易被破解掉。</p>
+<p>在没有密码短语的情况下生成私钥也是可能的。虽然也许很方便，但您需要明白随之而来的风险。在没有密码短语的情况下，您的私钥会以未加密形式存储在硬盘上。任何能接触到您私钥文件的人之后都能够在您使用基于密钥认证连接的任何 SSH 服务器面前冒用您的身份。更进一步，没有密码短语，您也必须信任 root 用户，因为他可以绕过文件权限并能够随时访问您未加密的私钥文件。</p>
+<blockquote>
+<p><strong>注意：</strong> 从前，私钥密码都是以一种不安全的方式编码的：仅一遍 MD5 散列。OpenSSH 6.5及之后版本支持一种新的、更安全的格式来编码您的私钥。从 OpenSSH 版本7.8开始默认使用该格式。Ed25519 密钥一直采用新的编码格式。只需按下节所述更改密钥的密码短语即可升级到新格式。</p>
+</blockquote>
+<h4 id="不修改密钥对的情况下修改密码短语">不修改密钥对的情况下修改密码短语</h4>
+<p>如果不希望使用原本选择的 SSH 密钥密码短语或者必须更换，可以使用 ssh-keygen 命令来修改密码短语，而无需改动实际密钥。此法也可用于将密码编码格式改为新标准。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -f ~/.ssh/id_rsa -p</span><br></pre></td></tr></table></figure></p>
+<h4 id="管理多组密钥对">管理多组密钥对</h4>
+<p>对多台主机使用同一 SSH 密钥对是可能的，尽管受到争议</p>
+<p>另一方面，使用您 <code>OpenSSH</code> 配置文件中的 <code>IdentityFile</code> 指令，为多台主机管理不同的密钥对就比较容易了 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/.ssh/config</span><br><span class="line">Host SERVER1</span><br><span class="line">   IdentitiesOnly yes</span><br><span class="line">   IdentityFile ~/.ssh/id_rsa_SERVER1</span><br><span class="line"></span><br><span class="line">Host SERVER2</span><br><span class="line">   IdentitiesOnly yes</span><br><span class="line">   IdentityFile ~/.ssh/id_ed25519_SERVER2</span><br></pre></td></tr></table></figure></p>
+<h4 id="将公钥复制到远程服务器上">将公钥复制到远程服务器上</h4>
+<p>创建好密钥对之后，您需要将公钥上传到远程服务器上，以便用于 SSH 密钥认证登录。公钥文件名和私钥文件名相同，只不过公钥文件带有扩展名 .pub 而私钥文件名则没有。千万不要将私钥上传，私钥应该保存在本地。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/ .ssh/id_rsa.pub</span><br></pre></td></tr></table></figure> 如： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">trluper@trluper-<span class="keyword">virtual</span>-machine:~$ cat /home/trluper/.ssh/id_rsa.pub </span><br><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwAs3b8z/btHZJ5MeySPVGwKk87JIlNn5Ch6ve8upJwT9AXe/wKdT1Neb7yEWlNlha4VktZdxetlGTq/XVmyb7v5JEnfB7j4byf0/SW4gMCOQeHEwj56+sYe6AxQDGD60FitSaGfcQzhaM89e39o2u1V1hbPO7MsDyTF1pN3V6VS5TStgmWkUSYtVIsbro0u5VjKkRqIYkt8Pyy6CzXky7DBAx8j5lTZN42Ll/hk17huxuP7lGexwumsqR4PPNlhh5QVXAeapDTgzvNL9wDG4MzTjBiyjqzPkijojJqp7dbZIejxvlFzl7ZxiYxRs/V/zt2RfW5iu2OBfUPnXwgGJR1MNCUp0mE45hSmnlkioN81Lo/UQYEBE9oHtS3HGEy8HyNIHL6KDQei2zxwn38GadUvxLbiC0SkNNk8PW+Bi8WK6b941YhaXyTW8tGgzctXcZYKi0TXJA2HuvbTSR+zdj3NT7SxwNwJPuqDPwsrDYjV8PESGDqeMNj2W4kD3kes8= <span class="number">1229413537</span>@qq.com</span><br></pre></td></tr></table></figure> 输出后将公钥复制到你的github服务器上，至于其他的服务器，请参考文章来源操作</p>
+<blockquote>
+<p><strong>参考来源：</strong> <a target="_blank" rel="noopener" href="https://wiki.archlinuxcn.org/wiki/SSH_%E5%AF%86%E9%92%A5">SSH 密钥</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SSH/" rel="tag"># SSH</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/03/11/gcc-gdb/" rel="prev" title="gcc/gdb">
+      <i class="fa fa-chevron-left"></i> gcc/gdb
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/23/unity%E5%88%9D%E8%AF%86/" rel="next" title="unity初识">
+      unity初识 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh%E6%98%AF%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">SSH是工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh%E5%AF%86%E9%92%A5"><span class="nav-number">2.</span> <span class="nav-text">SSH密钥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E5%92%8C%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="nav-number">2.1.</span> <span class="nav-text">对称加密和非对称加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%86%E9%92%A5%E8%AE%A4%E8%AF%81"><span class="nav-number">2.2.</span> <span class="nav-text">密钥认证</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh%E5%AF%86%E9%92%A5%E8%AE%A4%E8%AF%81%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">ssh密钥认证操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">3.1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="nav-number">3.2.</span> <span class="nav-text">生成密钥对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%AF%86%E9%92%A5%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE%E4%BB%A5%E5%8F%8A%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD"><span class="nav-number">3.3.</span> <span class="nav-text">选择密钥存储位置以及密码短语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E4%BF%AE%E6%94%B9%E5%AF%86%E9%92%A5%E5%AF%B9%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E7%9F%AD%E8%AF%AD"><span class="nav-number">3.4.</span> <span class="nav-text">不修改密钥对的情况下修改密码短语</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E5%A4%9A%E7%BB%84%E5%AF%86%E9%92%A5%E5%AF%B9"><span class="nav-number">3.5.</span> <span class="nav-text">管理多组密钥对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E5%85%AC%E9%92%A5%E5%A4%8D%E5%88%B6%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A"><span class="nav-number">3.6.</span> <span class="nav-text">将公钥复制到远程服务器上</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">20:25</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

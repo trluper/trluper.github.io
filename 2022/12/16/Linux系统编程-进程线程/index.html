@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1 进程概念 1.1 进程和线程的区别  进程：程序是存放在存储介质上的一个可执行文件，而进程是程序执行的过程。进程的状态是变化的，其包括进程的创建、调度和消亡。程序是静态的，进程是动态的。是CPU分配资源的最小单位 线程：线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。线程是CPU调度的最小单位">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux系统编程_进程">
+<meta property="og:url" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1 进程概念 1.1 进程和线程的区别  进程：程序是存放在存储介质上的一个可执行文件，而进程是程序执行的过程。进程的状态是变化的，其包括进程的创建、调度和消亡。程序是静态的，进程是动态的。是CPU分配资源的最小单位 线程：线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。线程是CPU调度的最小单位">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/memory.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/parallel.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/concurrency.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/process.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/ps.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/status_ps.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/top.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getpid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getppid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getpgid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/fork.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/relations.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/writecopy.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/runson.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/malloc.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/exit.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/wait.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/waitpid.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/exec.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/IPC.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/pipe.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/fpathconf.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/mkfifo.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/system%20v%20ipc.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/ipcs.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/POSIX.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/onetoone.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sharedmemory.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/location.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/map.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/filemmap.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/cross.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/mmap.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signal.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/kill.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/alarm.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/setitimer.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signalset.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/operateset.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigprocmask.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signalhunter.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/func_signal.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigaction.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigas.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/gprocess.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/hui.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/huihua.png">
+<meta property="og:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/setsid.png">
+<meta property="article:published_time" content="2022-12-16T07:20:41.000Z">
+<meta property="article:modified_time" content="2023-02-24T14:07:33.184Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="Linux coding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/memory.png">
+
+<link rel="canonical" href="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Linux系统编程_进程 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux系统编程_进程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-16 15:20:41" itemprop="dateCreated datePublished" datetime="2022-12-16T15:20:41+08:00">2022-12-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-02-24 22:07:33" itemprop="dateModified" datetime="2023-02-24T22:07:33+08:00">2023-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux-coding/" itemprop="url" rel="index"><span itemprop="name">Linux coding</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>28k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>26 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="进程概念">1 进程概念</h4>
+<h5 id="进程和线程的区别">1.1 进程和线程的区别</h5>
+<ul>
+<li><strong>进程：</strong>程序是存放在存储介质上的一个可执行文件，而进程是程序执行的过程。进程的状态是变化的，其包括进程的创建、调度和消亡。程序是静态的，进程是动态的。是CPU分配资源的最小单位</li>
+<li><strong>线程：</strong>线程（thread）是操作系统能够进行运算调度的最小单位，它被包含在进程之中，是进程中的实际运作单位。线程是CPU调度的最小单位</li>
+</ul>
+<span id="more"></span>
+<p><strong>关系：</strong></p>
+<ul>
+<li>一个进程可有多个线程</li>
+<li>进程间很难共享数据，线程很容易实现数据共享</li>
+<li>进程比线程消耗更多的计算机资源</li>
+<li>进程使用的内存地址可以上锁，即一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。</li>
+<li><p>进程间不会相互影响，一个线程挂掉将导致整个进程挂掉</p></li>
+<li><p>进程，直观点说，保存在硬盘上的程序运行以后，会在内存空间里形成一个独立的内存体，这个内存体有自己的地址空间，有自己的堆，上级挂靠单位是操作系统。操作系统会以进程为单位，分配系统资源，所以我们也说，进程是CPU分配资源的最小单位。</p></li>
+</ul>
+<p><strong>总结：</strong></p>
+<ul>
+<li>线程存在与进程当中(进程可以认为是线程的容器)，是操作系统调度执行的最小单位。说通俗点，线程就是干活的，轻量级进程。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源（如程序计数器，一组寄存器和栈），但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。（是为避免进程fork()产生写时拷贝的不必要时间和内存支出） <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/memory.png" width="400"></li>
+</ul>
+<h5 id="并行和并发">1.2 并行和并发</h5>
+<ul>
+<li><strong>并行(parallel)</strong>：指在同一时刻，有多条指令在多个处理器上同时执行。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/parallel.png" width="400"></li>
+<li><strong>并发(concurrency)：</strong>指在同一时刻只能有一条指令执行，但多个进程指令被快速的轮换执行，使得在宏观上具有多个进程同时执行的效果，但在微观上并不是同时执行的，只是把时间分成若干段，使多个进程快速交替的执行 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/concurrency.png" width="400"></li>
+</ul>
+<h5 id="进程的状态">1.3 进程的状态</h5>
+<p>在五态模型中，进程分为<strong>新建态、终止态，运行态，就绪态，阻塞态</strong>. <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/process.png" width="500"></p>
+<ul>
+<li><p><strong>创建状态：</strong>进程在创建时需要申请一个空白PCB，向其中填写控制和管理进程的信息，完成资源分配。如果创建工作无法完成，比如资源无法满足，就无法被调度运行，把此时进程所处状态称为创建状态</p></li>
+<li><p><strong>就绪状态</strong>：进程已经准备好，已分配到所需资源，只要分配到CPU就能够立即运行</p></li>
+<li><p><strong>执行状态</strong>：进程处于就绪状态被调度后，进程进入执行状态</p></li>
+<li><p><strong>阻塞状态</strong>：正在执行的进程由于某些事件（I/O请求，申请缓存区失败）而暂时无法运行，进程受到阻塞。在满足请求时进入就绪状态等待系统调用</p></li>
+<li><p><strong>终止状态</strong>：进程结束，或出现错误，或被系统终止，进入终止状态。无法再执行</p></li>
+</ul>
+<h5 id="孤儿进程和僵尸进程">1.4 孤儿进程和僵尸进程</h5>
+<ul>
+<li><p><strong>孤儿进程</strong>：父进程运行结束，但子进程还在运行（未运行结束）的子进程就称为孤儿进程（Orphan Process）。每当出现一个孤儿进程的时候，内核就把孤儿进程的父进程设置为 <code>init</code> ，而 <code>init</code> 进程会循环地 <code>wait()</code> 它的已经退出的子进程。孤儿进程不会有什么危害。</p></li>
+<li><p><strong>僵尸进程：</strong>进程终止，父进程尚未回收，子进程残留资源（PCB）存放于内核中，变成僵尸（Zombie）进程。这样就会导致一个问题，如果进程不调用<code>wait()</code> 或 <code>waitpid()</code> 的话， 那么保留的那段信息就不会释放，其进程号就会一直被占用。因此一定要回收进程号。</p></li>
+</ul>
+<h6 id="避免僵尸进程的方法">1.4.1 避免僵尸进程的方法</h6>
+<ul>
+<li><strong>SIGCHID产生条件</strong>：
+<ul>
+<li>子进程终止时</li>
+<li>子进程接收到SIGSTOP信号停止时</li>
+<li>子进程处在停止态，接受到SIGCONT后唤醒时</li>
+</ul></li>
+<li><strong>避免方法</strong>
+<ul>
+<li>最简单的方法，父进程通过<code>wait()</code>和 <code>waitpid()</code> 等函数等待子进程结束，但是，这会导致父进程挂起。</li>
+<li>如果父进程要处理的事情很多，不能够挂起，通过<code>signal()</code>函数人为处理信号 SIGCHLD ， 只要有子进程退出自动调用指定好的回调函数，因为子进程结束后， 父进程会收到该信号 SIGCHLD ，可以在其回调函数里调用<code>wait()</code>或<code>waitpid()</code>回收。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">sig_child</span><span class="params">(<span class="type">int</span> signo)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">pid_t</span> pid;</span><br><span class="line">	<span class="comment">//处理僵尸进程，-1代表等待任意一个子进程，WNOHANG代表不阻塞</span></span><br><span class="line">	<span class="keyword">while</span>((pid=<span class="built_in">waitpid</span>(<span class="number">-1</span>,<span class="literal">NULL</span>,WNOHANG))&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;child %d terminated\n&quot;</span>,pid);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	....</span><br><span class="line">	<span class="comment">//捕捉子进程退出信号，只有子进程退出，触犯SIGCHLD,自动调用sig_child</span></span><br><span class="line">	<span class="built_in">signal</span>(SIGCHLD,sig_child);</span><br><span class="line">	<span class="comment">//创建子进程，执行相应任务</span></span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>交由内核处理</strong>：如果父进程不关心子进程什么时候结束，那么可以用<code>signal(SIGCHLD, SIG_IGN)</code>通知内核，自己对子进程的结束不感兴趣，父进程忽略此信号，那么子进程结束后，内核会回收，并不再给父进程发送信号。</li>
+</ul></li>
+</ul>
+<h5 id="进程相关命令">1.5 进程相关命令</h5>
+<h6 id="ps命令">1.5.1 ps命令</h6>
+<p>进程是一个具有一定独立功能的程序，它是操作系统动态执行的基本单元。<code>ps</code>命令可以查看进程的详细状况，常用选项(选项可以不加<code>“-”</code>)如下: <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/ps.png" width="600"></p>
+<p>进程的状态表示： <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/status_ps.png" width="600"></p>
+<h6 id="top命令">1.5.2 top命令</h6>
+<p><code>top</code>命令用来动态显示运行中的进程。<code>top</code>命令能够在运行后，在指定的时间间隔更新显示信息。可以在使用<code>top</code>命令时加上<code>-d</code>来指定显示信息更新的时间间隔。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/top.png" width="600"></p>
+<h6 id="kill命令">1.5.3 kill命令</h6>
+<p><code>kill</code>命令指定进程号的进程，需要配合<code>ps</code>使用。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill [-signal] pid</span><br></pre></td></tr></table></figure> 信号值从0到15，其中9为绝对终止，可以处理一般信号无法终止的进程。</p>
+<h6 id="killall命令">1.5.4 killall命令</h6>
+<p>通过进程名字杀死进程 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">killall [选项]  name</span><br><span class="line"><span class="meta"># killall -9 php-fpm          <span class="comment">//结束所有的 php-fpm 进程</span></span></span><br></pre></td></tr></table></figure></p>
+<h4 id="进程函数">2 进程函数</h4>
+<h5 id="进程号">2.1 进程号</h5>
+<p>每个进程都要唯一标识号码，我们称为进程号，后续的许多工作我们都要使用到进程号来指定哪个进程。</p>
+<ul>
+<li>** 进程号（PID）：**标识进程的一个非负整型数。</li>
+<li><strong>父进程号（PPID）</strong>：任何进程（ 除 init 进程）都是由另一个进程创建，该进程称为被创建进程的父进程，对应的进程号称为父进程号（PPID）。如，A 进程创建了 B 进程，A 的进程号就是 B 进程的父进程号。</li>
+<li>** 进程组号（PGID）：**进程组是一个或多个进程的集合。他们之间相互关联，进程组可以接收同一终端的各种信号，关联的进程有一个进程组号（PGID） ，默认的情况下，当前的进程号会当做当前的进程组号</li>
+</ul>
+<h6 id="getpid函数">2.1.1 getpid函数</h6>
+<p><code>getpdid</code>函数的作用是获取当前进程的进程号 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getpid.png" width="600"></p>
+<h6 id="getppid函数">2.1.2 getppid函数</h6>
+<p><code>getppid</code>函数作用是获取当前调用该函数进程的父进程号。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getppid.png" width="500"></p>
+<h6 id="getpgid函数">2.1.3 getpgid函数</h6>
+<p><code>getpgid</code>函数获取指定进程的进程组号 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/getpgid.png" width="600"></p>
+<h5 id="进程创建">2.2 进程创建</h5>
+<p>系统允许一个进程创建新进程，新进程即为子进程，子进程还可以创建新的子进程，形成进程树结构模型 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/fork.png" width="600"></p>
+<h6 id="父子进程的关系">2.2.1 父子进程的关系</h6>
+<p>使用<code>fork()</code>函数得到的子进程是父进程的一个复制品，它从父进程处拷贝整个进程的虚拟内存空间：<strong>包括进程上下文（进程执行活动全过程的静态描述）、进程堆栈、打开的文件描述符、信号控制设定、进程优先级、进程组号等。</strong>子进程所独有的只有它的<strong>进程号，计时器等（只有小量信息）</strong>。因此，使用 fork() 函数的代价是很大的。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/relations.png" width="400"></p>
+<p><strong>幸运的是，Linux 的<code>fork()</code>使用是通过</strong>写时拷贝 (copy- on-write) *实现。写时拷贝是一种可以推迟甚至避免拷贝数据的技术。内核此时并不复制整个进程的地址空间，而是让父子进程共享同一个内存地址空间。只用在需要写入的时候才会复制地址空间从而使各个进程拥有各自的地址空间。也就是说，资源的复制是在需要写入的时候才会进行，在此之前，只有以只读方式共享同一物理内存。** <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/writecopy.png" width="500"></p>
+<p><code>fork</code>之后父子进程共享文件，<code>fork</code>产生的子进程与父进程具有相同的文件文件描述符指向相同的文件表，引用计数增加，共享文件的偏移指针。(后面会讲到父子进程的地址空间)</p>
+<h6 id="区分父子进程">2.2.2 区分父子进程</h6>
+<p>子进程是父进程的一个复制品，可以简单认为父子进程的代码一样的。利用<code>fork()</code>函数被调用一次，但返回两次。两次返回的区别是：子进程的返回值是<code>0</code>，而父进程的返回值则是新子进程的进程<code>ID</code>。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">pid_t</span> pid;</span><br><span class="line">	pid=fork();</span><br><span class="line">	<span class="keyword">if</span>(pid&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">perror</span>(<span class="string">&quot;fork&quot;</span>);</span><br><span class="line">		<span class="built_in">sleep</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>==pid)&#123;</span><br><span class="line">		<span class="comment">//子进程</span></span><br><span class="line">		<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;I am son\n&quot;</span>);</span><br><span class="line">			<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">	<span class="comment">//父进程</span></span><br><span class="line">		<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;I am father\n&quot;</span>);</span><br><span class="line">			<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 注意的是，在子进程的地址空间里，子进程是从 fork() 这个函数后才开始执行代码 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/runson.png" width="500"></p>
+<h6 id="父子进程的地址空间">2.2.3 父子进程的地址空间</h6>
+<p>父子进程各自的地址空间是独立的。通过上面的写时拷贝/读时共享机制介绍得知，在子进程修改变量 a，b 的值，并不影响到父进程 a，b 的值。（写时拷贝） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//全局变量</span></span><br><span class="line"><span class="type">int</span> a=<span class="number">10</span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> b= <span class="number">20</span>;</span><br><span class="line">	<span class="type">pid_t</span> pid;</span><br><span class="line">	pid=fork();</span><br><span class="line">	<span class="keyword">if</span>(pid&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">perror</span>(<span class="string">&quot;fork error\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>==pid)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;son: a=%d, b=%d\n&quot;</span>,a,b); <span class="comment">//son: a=10，b=20</span></span><br><span class="line">		a=<span class="number">111</span>;</span><br><span class="line">		b=<span class="number">222</span>;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;son: a=%d, b=%d\n&quot;</span>,a,b); <span class="comment">//son: a=111，b=222</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">1</span>);	<span class="comment">//保证子进程先运行</span></span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&quot;father: a=%d, b=%d\n&quot;</span>,a,b);<span class="comment">//father: a=10，b=20</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 同理，子进程睡眠，父进程写也是如此。<strong>堆区分配空间也一样，但要注意，要释放两次：</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p=(<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">NULL</span>==p)&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;malloc failed...\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">memset</span>(p,<span class="number">0</span>,<span class="built_in">sizeof</span>(<span class="type">int</span>));</span><br><span class="line">*p=<span class="number">200</span>;</span><br><span class="line">num=<span class="number">100</span>;</span><br><span class="line">var=<span class="number">88</span>;</span><br><span class="line">pid=fork();</span><br><span class="line"><span class="keyword">if</span>(<span class="number">-1</span>==pid)&#123;</span><br><span class="line">	<span class="built_in">perror</span>(<span class="string">&quot;fork&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="number">0</span>==pid)&#123;</span><br><span class="line">	<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;子进程睡醒之后 *p=%d&quot;</span> num=%d var=%d\n<span class="string">&quot;,*p,num,var); //200 100 88</span></span><br><span class="line"><span class="string">	free(p);</span></span><br><span class="line"><span class="string">	p=NULL;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">else if(pid&gt;0)&#123;</span></span><br><span class="line"><span class="string">	printf(&quot;</span>父进程执行前：*p=%d<span class="string">&quot; num=%d var=%d\n&quot;</span>,*p,num,var);<span class="comment">//200 100 88</span></span><br><span class="line">	<span class="comment">//执行写入，会进行拷贝</span></span><br><span class="line">	var++;</span><br><span class="line">	num++;</span><br><span class="line">	*p++;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;父进程执行后：*p=%d&quot;</span> num=%d var=%d\n<span class="string">&quot;,*p,num,var); //201 101 89</span></span><br><span class="line"><span class="string">	free(p);</span></span><br><span class="line"><span class="string">	p=NULL;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+<p>2次分配，2次释放<code>（valgrind 查看)</code> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/malloc.png" width="500"></p>
+<h5 id="进程退出">2.3 进程退出</h5>
+<h6 id="进程退出函数">2.3.1 进程退出函数</h6>
+<p><code>exit()</code>和<code>exit()</code>函数功能和用法是一样的，无非时所包含的头文件不一样，还有的区别就是：<code>exit()</code>属于标准库函数，<code>_exit()</code>属于系统调用函数。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/exit.png" width="600"></p>
+<h6 id="等待子进程退出函数">2.3.2 等待子进程退出函数</h6>
+<p><code>wait()</code> 和 <code>waitpid()</code> 函数的功能一样，区别在于，<code>wait()</code> 函数会阻塞，<code>waitpid()</code> 可以设置不阻塞，<code>waitpid()</code> 还可以指定等待哪个子进程结束。</p>
+<ul>
+<li><p>①wait函数 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/wait.png" width="600"> <strong>调用 <code>wait()</code> 函数的进程会挂起（阻塞），直到它的一个子进程退出或收到一个不能被忽视的信号时才被唤醒（相当于继续往下执行）</strong>。若调用进程没有子进程，该函数立即返回；若它的子进程已经结束，该函数同样会立即返回，并且会回收那个早已结束进程的资源。所以，<code>wait()</code>函数的主要功能为回收已经结束子进程的资源。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">pid_t</span> pid;</span><br><span class="line">	pid=fork();</span><br><span class="line">	<span class="keyword">if</span>(pid&lt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">perror</span>(<span class="string">&quot;fork&quot;</span>);</span><br><span class="line">		<span class="built_in">sleep</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>==pid)&#123;</span><br><span class="line">		<span class="comment">//子进程</span></span><br><span class="line">		<span class="type">int</span> i=<span class="number">3</span>;</span><br><span class="line">		<span class="keyword">while</span>(i)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;I am son,i am doing something\n&quot;</span>);</span><br><span class="line">			i--;</span><br><span class="line">			<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//子进程终止</span></span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//父进程执行</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;I am waiting for son\n&quot;</span>);</span><br><span class="line">	<span class="type">int</span> status;</span><br><span class="line">	<span class="type">int</span> ret = <span class="built_in">wait</span>(&amp;status);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Now,son has done all thing\n&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 对于<code>wait(&amp;status)</code>函数获取到的<code>status</code>状态，我们可使用已定义好的宏查看其子进程返回的是什么状态(分为三种）：</p>
+<ul>
+<li><ol type="1">
+<li><code>WIFEXITED(status)</code>：判断进程是否正常结束，若正常结束；使用此宏<code>WEXITSTATUS(status)</code>获取进程退出状态 (exit的参数)</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li><code>WIFSIGNALED(status)</code>：判断进程是否异常终止，若是；使用此宏<code>WTERMSIG(status)</code>取得使进程终止的那个信号的编号。</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li><code>WIFSTOPPED(status)</code>:判断进程是否处于暂停状态，若是；使用此宏<code>WSTOPSIG(status)</code>取得使进程暂停的那个信号的编号。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">WIFEXITED</span>(status))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;子进程退出状态码：%d\n&quot;</span>,<span class="built_in">WEXITSTATUS</span>(status));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">WIFSIGNALED</span>(status))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;子进程被信号%d杀死了\n&quot;</span>,<span class="built_in">WTERMSIG</span>(status));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">WIFSTOPPED</span>(status))</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;子进程被信号%d暂停了\n&quot;</span>,<span class="built_in">WSTOPSIG</span>(status));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol></li>
+</ul></li>
+<li><p>②waitpid函数 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/waitpid.png" width="600"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//父进程执行</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;I am waiting for son\n&quot;</span>);</span><br><span class="line">ret=<span class="built_in">waitpid</span>(<span class="number">-1</span>,&amp;status,WNOHANG);</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h6 id="进程替换">2.3.3 进程替换</h6>
+<p>Linux 平台，我们可以通过<code>./</code> 运行，让一个可执行程序成为一个进程。但是，如果我们本来就运行着一个程序（进程），我们如何在这个进程内部启动一个外部程序，由内核将这个外部程序读入内存，使其执行起来成为一个进程？这里我们通过 <code>exec</code> 函数族实现。</p>
+<p><code>exec</code> 指的是一组函数，一共有 6个 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/exec.png" width="600"></p>
+<ul>
+<li><strong>其中只有 <code>execve()</code> 是真正意义上的系统调用，其它都是在此基础上经过包装的库函数。</strong></li>
+<li><code>exec</code>函数族的作用是根据指定的文件名或目录名找到可执行文件，并用它来取代调用进程的内容，换句话说，就是在调用进程内部执行一个可执行文件。</li>
+<li>进程调用一种 <code>exec</code>函数时，该进程完全由新程序替换，而新程序则从其<code>main</code>函数开始执行。因为调用 <code>exec</code> 并不创建新进程，所以前后的进程 ID （当然还有父进程号、进程组号、当前工作目录……）并未改变。<code>exec</code> 只是用另一个新程序替换了当前进程的正文、数据、堆和栈段（进程替换）。</li>
+</ul>
+<h4 id="进程间通信重要">3 进程间通信(重要)</h4>
+<p>进程间通信主要包括管道、FIFO、系统IPC（消息队列、共享内存、信号量）、Socket、；进程同步主要有信号量、文件锁、互斥锁、条件变量； <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/IPC.png" width="500"></p>
+<h5 id="通信方式的选择">3.1 通信方式的选择</h5>
+<p>要依据应用选择进程间的通信方式，就必须了解各个进程通信方式的特点。在数据传输工具当中，有几点要注意：</p>
+<ul>
+<li>一些数据传输工具主要以字节流形式传输(如管道、流socket、FIFO)，另一些则是面向消息的(如消息队列、数据报socket)。</li>
+<li>System V和POSIX消息队列特有的一个特性就是它们能够给消息赋一个数值类型或优先级，这样传递消息的顺序可以与发生消息的顺序不同了。</li>
+<li>管道、FIFO、Socket使用文件描述符来实现，这样这些传输工具就能够使用I/O多路复用进行控制，而那些使用标识符的则无法使用该技术。（注意区分文件描述符和IPC标识符，文件描述符是一个进程特性，标识符则是对象的一个属性并且全局可见）</li>
+<li>POSIX消息队列提供了一个通知工具，当一条消息进入一个之前为空的队列中时可以使用它来向进程发送信号或实例化一个新线程</li>
+<li>管道、匿名内存映射等一些IPC工具只允许有关系的进程进行互相通信</li>
+</ul>
+<h5 id="管道">3.2 管道</h5>
+<p>管道主要包括<strong>无名管道(pipe)和命名管道(FIFO)</strong>。</p>
+<ul>
+<li>无名管道：可用于具有亲缘关系的父子进程间的通信，</li>
+<li>有名管道：除了具有管道所具有的功能外，它还允许无亲缘关系进程间的通信。</li>
+</ul>
+<h6 id="无名管道pipe">3.2.1 无名管道PIPE</h6>
+<p>管道也叫无名管道，所有的 UNIX 系统都支持这种通信机制。 具有如下特点：</p>
+<ul>
+<li><ol type="1">
+<li>半双工，数据在同一时刻只能在一个方向上流动。</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>数据只能从管道的一端写入，从另一端读出。</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>写入管道中的数据遵循先入先出的规则。</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>管道所传送的数据是无格式的，它是字节流形式，这要求管道的读出方与写入方必须事先约定好数据的格式，如多少字节算一个消息等。</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>管道不是普通的文件，不属于某个文件系统，其只存在于内存中。</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>管道在内存中对应一个缓冲区，有其容量限制。不同的系统其大小不一定相同。</li>
+</ol></li>
+<li><ol start="7" type="1">
+<li>从管道读数据是一次性操作，数据一旦被读走，它就从管道中被抛弃，释放空间以便写更多的数据。</li>
+</ol></li>
+<li><ol start="8" type="1">
+<li>管道没有名字，只能在具有公共祖先的进程（父进程与子进程，或者两个兄弟进程，具有亲缘关系）之间使用。</li>
+</ol></li>
+<li>9）可以确保在多进程中，当写入数据量不超过PIPE_BUF时，写入<code>write</code>为原子操作，否则可能不是。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/pipe.png" width="600"> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//举例：子进程通过无名管道给父进程传递一个字符串数据</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> fd_pipe[<span class="number">2</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">pid_t</span> pid;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">pipe</span>(fd_pipe)&lt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">perror</span>(<span class="string">&quot;create pipe failed..\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	pid=fork();</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>==pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">char</span> buf[]=<span class="string">&quot;I am son&quot;</span>;</span><br><span class="line">		<span class="built_in">write</span>(fd_pipe[<span class="number">1</span>],buf,strlen[buf]);</span><br><span class="line">		_exit(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">wait</span>(<span class="literal">NULL</span>);<span class="comment">//等待子进程结束，回收其资源</span></span><br><span class="line">		<span class="type">char</span> str[<span class="number">50</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">		<span class="built_in">read</span>(fd_pipe[<span class="number">0</span>],str,<span class="built_in">sizeof</span>(str));</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;str=[%s]\n&quot;</span>,str);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> <strong>读写特点:</strong></li>
+<li>读管道：
+<ul>
+<li>1、管道中有数据，read返回实际读到的字节数。</li>
+<li>2、 管道中无数据：
+<ul>
+<li>管道写端被全部关闭，read返回0 (相当于读到文件结尾)</li>
+<li>写端没有全部被关闭，read阻塞等待(不久的将来可能有数据递达，此时会让出cpu)</li>
+</ul></li>
+</ul></li>
+<li>写管道：
+<ul>
+<li>1、 管道读端全部被关闭， 进程异常终止(也可使用捕捉SIGPIPE信号，使进程终止)</li>
+<li>2、 管道读端没有全部关闭：
+<ul>
+<li>管道已满，write阻塞。</li>
+<li>管道未满，write将数据写入，并返回实际写入的字节数。</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><strong>设置非阻塞的方法：</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首先获取原来的flag</span></span><br><span class="line"><span class="type">int</span> flags=<span class="built_in">fcnlt</span>(fd[<span class="number">0</span>],F_GETFL);</span><br><span class="line"><span class="comment">//设置新的flags</span></span><br><span class="line">flags |=O_NONBLOCK;</span><br><span class="line"><span class="built_in">fcnlt</span>(fd[<span class="number">0</span>],F_SETFL,flags);</span><br></pre></td></tr></table></figure> 此时如果写端没有关闭，读端因为设置为非阻塞， 如果没有数据，直接返回-1</p>
+<p><strong>获取缓冲区大小函数/命令</strong>： <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/fpathconf.png" width="600"></p>
+<p>命令：可以使用ulimit -a 命令来查看当前系统中创建管道文件所对应的内核缓冲区大小。</p>
+<h6 id="有名管道fifo">3.2.2 有名管道FIFO</h6>
+<p>命名管道<code>FIFO</code>，也叫有名管道、FIFO文件。<strong>FIFO支持不相关的进程也可以进行通信。</strong>命名管道（FIFO)和无名管道（pipe）有一些特点是相同的，不一样的地方在于：</p>
+<ul>
+<li><ol type="1">
+<li>FIFO 在文件系统中作为一个特殊的文件而存在，但 FIFO 中的内容却存放在内存中。</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>当使用 FIFO 的进程退出后，FIFO 文件将继续保存在文件系统中以便以后使用。</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>FIFO 有名字，不相关的进程可以通过打开命名管道进行通信。</li>
+</ol></li>
+</ul>
+<p><strong>创建FIFO的函数<code>mkfifo()</code></strong>: <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/mkfifo.png" width="600"> 也可以通过命令<code>mkfifo</code>管道名，创建一个<code>fifo</code></p>
+<p><strong>读写操作</strong>： 一旦使用<code>mkfifo</code>创建了一个FIFO，就可以使用<code>open</code>打开它，常见的文件I/O函数都可用于fifo。如：<code>close、read、write</code>等。FIFO严格遵循先进先出（first in first out），对管道及FIFO的读总是从开始处返回数据，对它们的写则把数据添加到末尾。它们不支持诸如lseek()等文件定位操作。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//进程1，执行写</span></span><br><span class="line"><span class="type">int</span> fd=<span class="built_in">open</span>(<span class="string">&quot;my_fifo&quot;</span>,O_WRONLY);</span><br><span class="line"><span class="type">char</span> send[<span class="number">1000</span>]=<span class="string">&quot;HELLO WORLD&quot;</span>;</span><br><span class="line"><span class="built_in">write</span>(fd,send,<span class="built_in">strlen</span>(send));</span><br><span class="line"></span><br><span class="line"><span class="comment">//进程2，执行读</span></span><br><span class="line"><span class="type">int</span> fd=<span class="built_in">open</span>(<span class="string">&quot;my_fifo&quot;</span>,O_RDONLY);</span><br><span class="line"><span class="type">char</span> recv[<span class="number">1000</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="comment">//读数据时，命名管道没数据时会堵塞，有数据时就读出来</span></span><br><span class="line"><span class="built_in">read</span>(fd,recv,<span class="built_in">seziof</span>(recv));</span><br><span class="line"><span class="built_in">printf</span>(read from my_fifo buf=[%s]\n<span class="string">&quot;,recv);</span></span><br></pre></td></tr></table></figure> - 1) 一个为只读而打开一个管道的进程会阻塞直到另外一个进程为只写打开该管道 - 2）一个为只写而打开一个管道的进程会阻塞直到另外一个进程为只读打开该管道</p>
+<h5 id="system-v-ipc通信和posix-ipc通信概览">3.3 system V IPC通信和POSIX IPC通信概览</h5>
+<p>不管是system V IPC通信，还是POSIX IPC通信，两种形式的IPC通信都只适合在同一主机下进行进程通信。其中包含的消息队列、信号和共享内存三者作用是：</p>
+<ul>
+<li><strong>消息队列可以用来在进程间传递消息。</strong></li>
+<li><strong>信号量允许多个进程同步各自的动作。</strong></li>
+<li><strong>共享内存使得多个进程能够共享同一块内存区域</strong></li>
+</ul>
+<h6 id="system-v-ipc通信">3.3.1 System V IPC通信</h6>
+<p>System V IPC的接口如下所示 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/system v ipc.png" width="600"></p>
+<ul>
+<li>每钟system V IPC机制都要相关的<code>get</code>调用，其完成作用有（<strong>注意区分文件描述符和IPC标识符，文件描述符是一个进程特性，标识符则是对象的一个属性并且全局可见</strong> ）：
+<ul>
+<li>使用给的key创建一个新IPC对象并返回一个唯一标识符来标识该对象</li>
+<li>返回一个给定key的既有的IPC对象标识符</li>
+</ul></li>
+<li>System V 提供的进程间通信机制需要一个唯一 key 值，通过 key 值就可在系统内获得一个唯一标识符。key 值可以是人为指定的，也可以通过 <code>ftok()</code> 函数获得。key获得有两种方法：
+<ul>
+<li>使用IPC_PRIVATE产生一个唯一key：如<code>id=msgget(IPC_PRIVATE,S_IRUSR|S_IWUSR)</code>，此时，代码无需指定<code>IPC_CREAT</code>和<code>IPC_EXCL</code>标识</li>
+<li>使用<code>ftok()</code>产生一个唯一key：<code>ftok()</code>函数会返回一个适合在后续对某个System V IPC get系统调用进行调用时的key值 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">key_t</span> key;</span><br><span class="line"><span class="type">int</span> id;</span><br><span class="line">key=<span class="built_in">ftok</span>(<span class="string">&quot;/mydir/mylife&quot;</span>,<span class="string">&#x27;x&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="number">-1</span>==key)</span><br><span class="line">	<span class="built_in">errExit</span>(<span class="string">&quot;ftok&quot;</span>);</span><br><span class="line">id=<span class="built_in">msgget</span>(key,IPC_CREAT|S_IRUSR|S_IWUSR);</span><br><span class="line"><span class="keyword">if</span>(<span class="number">-1</span>==id)</span><br><span class="line">	<span class="built_in">errExiit</span>(<span class="string">&quot;msgget&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><code>ipcs</code>和<code>ipcrm</code>命令：<code>ipcs</code>和<code>ipcrm</code>命令是System v IPC领域中类似ls和rm文件命令，使用ipcs能够获取系统上的IPC对象信息,而ipcrm则删除一个ipc对象，主要有两种形式<code>ipcrm -X key</code>和<code>ipcrm -x id</code> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/ipcs.png" width="500"></li>
+</ul>
+<h6 id="posix-ipc通信">3.3.2 POSIX IPC通信</h6>
+<p>POSIX IPC的接口如下所示 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/POSIX.png" width="500"></p>
+<ul>
+<li>每种POSIX IPC机制都有一个关联的<code>open()</code>调用，其完成两个任务中的一个
+<ul>
+<li>使用给定名字创建一个新对象，打开该对象并返回该对象的一个<strong>文件描述符</strong>（与System V不同之处，这时候就可以使用I/O多路复用机制，如poll、select、epoll等）</li>
+<li>打开一个既有对象并返回该对象的一个句柄</li>
+</ul></li>
+<li>同样，与System V一样，创建时使用<code>O_CREAT</code>和<code>O_EXCL</code>标识,作用与<code>IPC_CREAT</code>和<code>IPC_EXCL</code>标识一样。
+<ul>
+<li><code>O_CREAT</code>：若对象不存在，就创建；若存在但未指定这个标记，则会返回错误<code>ENOENT</code></li>
+<li><code>O_EXCL</code>：只能与<code>O_CREAT</code>结合使用。若同时指定<code>O_CREAT</code>且对象存在，则会返回错误<code>EEXIST</code>，这个标识符检查&quot;是否存在和创建”是原子操作，</li>
+</ul></li>
+<li>所有<code>open()</code>至少接收三个参数——<code>name、oflag和mode</code>,如<code>fd=shm_open(&quot;/mymem&quot;,O_CREAT|O_RDWR,S_IRUSR|S_IWUSR);</code></li>
+</ul>
+<h6 id="区别">3.3.3 区别</h6>
+<p>system V是早期实践中弄出来的，posix是后来标准化之后的产物，因此：</p>
+<ul>
+<li>system V的移植性更强，几乎所有Unix实现都支持System V；而POSIX 移植性弱一些</li>
+<li>POSIX使用文件描述符，因此可以使用I/O多路复用技术，而System V使用标识符，不能使用</li>
+<li>因为创建的System V IPC使用标识符，因此内核不会维护引用System V的进程数，那么应用程序就不知道何时应该删除一个System V IPC通信方式；而POSIX IPC的对象是引用计数的，当所有进程都关闭该对象后计数为0，对象就会被销毁。</li>
+</ul>
+<p>就经验来说：在使用IPC的场景下，一般进程间的消息传递和同步上，使用POSIX较为普遍，而共享内存则是system V笔记多。</p>
+<h5 id="system-v消息队列">3.4 system V消息队列</h5>
+<h6 id="消息队列的特点">3.4.1 消息队列的特点</h6>
+<p>消息队列虽然在某些方面与FIFO类似，但也有不同：</p>
+<ul>
+<li><p>1）消息队列可以实现消息的随机查询。消息不一定要以先进先出的次序读取，编程时可以按消息的类型读取，即有优先级。</p></li>
+<li><p>2）消息队列允许一个或多个进程向它写入或者读取消息。</p></li>
+<li><p>3）与无名管道、命名管道一样，从消息队列中读出消息，消息队列中对应的数据都会被删除。</p></li>
+<li><p>4）不同的是消息队列是面向消息的，即接收和写入都是整条消息，读取一条消息的一部分而让剩余的遗留在队列中是不可能的。</p></li>
+<li><p>5）每个消息队列都有消息队列标识符，不是文件描述符，消息队列的标识符在整个系统中也是唯一的。</p></li>
+<li><p>6）消息队列是消息的链表，存放在内存中，由内核维护。<strong>只有内核重启或人工删除消息队列时，该消息队列才会被删除。</strong>若不人工删除消息队列，消息队列会一直存在于系统中。</p></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/msg.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/ipc.h&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">key_t</span> <span class="title">ftok</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">int</span> proj_id)</span></span>;  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">msgget</span><span class="params">(<span class="type">key_t</span> key, <span class="type">int</span> msgflg)</span></span>;  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">msgrcv</span><span class="params">(<span class="type">int</span> msqid, <span class="type">void</span> *msg_ptr, <span class="type">size_t</span> msg_sz, <span class="type">long</span> <span class="type">int</span> msgtype, <span class="type">int</span> msgflg)</span></span>;  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">msgsnd</span><span class="params">(<span class="type">int</span> msqid, <span class="type">const</span> <span class="type">void</span> *msg_ptr, <span class="type">size_t</span> msg_sz, <span class="type">int</span> msgflg)</span></span>;  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">msgctl</span><span class="params">(<span class="type">int</span> msqid, <span class="type">int</span> cmd, <span class="keyword">struct</span> msqid_ds *buf)</span></span>;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="创建或打开一个消息队列">3.4.2 创建或打开一个消息队列</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/msg.h&gt;</span></span></span><br><span class="line"><span class="comment">//创建一个新的或打开一个已经存在的消息队列。不同的进程调用此函数，只要用相同的 key 值就能得到同一个消息队列的标识符</span></span><br><span class="line"><span class="comment">//key: ftok() 返回的 key 值</span></span><br><span class="line"><span class="comment">//msgflg: 标识函数的行为及消息队列的权限，其取值如下：</span></span><br><span class="line"><span class="comment">//	IPC_CREAT：创建消息队列。</span></span><br><span class="line"><span class="comment">//	IPC_EXCL： 检测消息队列是否存在。</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">msgget</span><span class="params">(<span class="type">key_t</span> key, <span class="type">int</span> msgflg)</span></span>;</span><br></pre></td></tr></table></figure>
+<h6 id="交换消息">3.4.3 交换消息</h6>
+<p><code>msgsnd()</code>和<code>msgrcv()</code>系统调用执行消息队列上的I/O，这两个系统调用接收的第一个参数是队列标识符<code>msqid</code>。第二个参数是由调用者定义的结构体指针，该结构用来存放消息，结构可为： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">mymsg</span>&#123;</span><br><span class="line">	<span class="type">long</span> mtype;</span><br><span class="line">	<span class="type">char</span> mtext[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure> 发送信息：<code>msgsnd()</code>将新消息添加到消息队列。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">include &lt;sys/msg.h&gt;</span><br><span class="line"><span class="comment">//msqid： 消息队列的标识符。</span></span><br><span class="line"><span class="comment">//msgp：  待发送消息结构体的地址。</span></span><br><span class="line"><span class="comment">//msgsz： 消息正文的字节数。</span></span><br><span class="line"><span class="comment">//msgflg：函数的控制属性，其取值如下：</span></span><br><span class="line"><span class="comment">//0：msgsnd() 调用阻塞直到条件满足为止。</span></span><br><span class="line"><span class="comment">//IPC_NOWAIT: 若消息没有立即发送则调用该函数的进程会立即返回。</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">msgsnd</span><span class="params">(  <span class="type">int</span> msqid, <span class="type">const</span> <span class="type">void</span> *msgp, <span class="type">size_t</span> msgsz, <span class="type">int</span> msgflg)</span></span>;</span><br></pre></td></tr></table></figure> 接收信息：<code>msgrcv()</code>从消息队列中读取（以及删除）一条消息并将内容复制进<code>msgp</code>指向的缓冲区中 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/msg.h&gt;</span></span></span><br><span class="line"><span class="comment">//msqid：消息队列的标识符，代表要从哪个消息列中获取消息。</span></span><br><span class="line"><span class="comment">//msgp： 存放消息结构体的地址。</span></span><br><span class="line"><span class="comment">//msgsz：消息正文的字节数。</span></span><br><span class="line"><span class="comment">//msgtyp：消息的类型。可以有以下几种类型：</span></span><br><span class="line">	msgtyp = <span class="number">0</span>：返回队列中的第一个消息。</span><br><span class="line">	msgtyp &gt; <span class="number">0</span>：返回队列中消息类型为 msgtyp 的消息（常用）。</span><br><span class="line">	msgtyp &lt; <span class="number">0</span>：返回队列中消息类型值小于或等于 msgtyp 绝对值的消息，如果这种消息有若干个，则取类型值最小的消息。</span><br><span class="line"><span class="comment">//msgflg：函数的控制属性。其取值如下：</span></span><br><span class="line">	<span class="number">0</span>：<span class="built_in">msgrcv</span>() 调用阻塞直到接收消息成功为止。</span><br><span class="line">	MSG_NOERROR: 若返回的消息字节数比 nbytes 字节数多,则消息就会截短到 nbytes 字节，且不通知消息发送进程。</span><br><span class="line">	IPC_NOWAIT: 调用进程会立即返回。若没有收到消息则立即返回 <span class="number">-1</span>。</span><br><span class="line"></span><br><span class="line"><span class="type">ssize_t</span> <span class="built_in">msgrcv</span>( <span class="type">int</span> msqid, <span class="type">void</span> *msgp,  <span class="type">size_t</span> msgsz, <span class="type">long</span> msgtyp, <span class="type">int</span> msgflg );</span><br><span class="line"></span><br></pre></td></tr></table></figure> <strong><em>注意：在获取某类型消息的时候，若队列中有多条此类型的消息，则获取最先添加的消息，即先进先出原则。</em></strong></p>
+<ul>
+<li>成功：读取消息的长度</li>
+<li>失败：-1</li>
+</ul>
+<h6 id="消息队列的控制">3.4.4 消息队列的控制</h6>
+<p>对消息队列进行各种控制，如修改消息队列的属性，或删除消息消息队列。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/msg.h&gt;</span></span></span><br><span class="line"><span class="comment">//msqid：消息队列的标识符。</span></span><br><span class="line"><span class="comment">//cmd：函数功能的控制。其取值如下：</span></span><br><span class="line">	IPC_RMID：删除由 msqid 指示的消息队列，将它从系统中删除并破坏相关数据结构。</span><br><span class="line">	IPC_STAT：将 msqid 相关的数据结构中各个元素的当前值存入到由 buf 指向的结构中。相对于，把消息队列的属性备份到 buf </span><br><span class="line">	IPC_SET：将 msqid 相关的数据结构中的元素设置为由 buf 指向的结构中的对应值。相当于，消息队列原来的属性值清空，再由 buf 来替换。</span><br><span class="line"><span class="comment">//buf：msqid_ds 数据类型的地址，用来存放或更改消息队列的属性。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">msgctl</span><span class="params">(<span class="type">int</span> msqid, <span class="type">int</span> cmd, <span class="keyword">struct</span> msqid_ds *buf)</span></span>;</span><br></pre></td></tr></table></figure> <strong><em>注意：<code>struct msqid_ds</code>为消息队列的关联数据结构，具体内容其自行查询</em></strong></p>
+<h6 id="消息队列在服务器-客户端的应用">3.4.5 消息队列在服务器-客户端的应用</h6>
+<p>本节主要介绍System V消息队列的方式有很多种，这里介绍两种：</p>
+<ul>
+<li>在服务器和客户端之间使用单个消息队列进行双向的消息交换</li>
+<li>服务器和各个客户端使用单独的消息队列，服务端上的队列用来接收进入客户端请求，相应的响应则通过各个客户端队列来发送给客户端</li>
+</ul>
+<p><strong>1. 服务器和客户端使用一个消息队列</strong> 这种情况是可以的，但是要注意一下几点：</p>
+<ul>
+<li><p><strong>由于多个进程可能会同时读取消息，因此必须使用消息类型字段来让各个进程只选择那些发送给自己的消息</strong>。如服务器向客户端响应时，发送的信息中以客户端进程的ID号作为消息类型，这样各个客户端能在消息队列中找到自己的消息；同理客户端向服务器发生请求时，将服务器的ID作为消息类型。</p></li>
+<li>消息队列的容量是有限的，因此
+<ul>
+<li>问题一就是多个并行的客户端可能会填满消息队列，从而导致死锁发生，即所有客户端都无法提交请求，服务器在写入任何响应时都发生阻塞。（<strong>解决方法</strong>：使用两个队列，一个用于存放客户端发送给服务器的消息，另一个用于存放服务器发送给客户端的消息）</li>
+<li>问题二就是不良或恶意的客户端只发送请求而不读取服务器响应，从而导致队列充满未被读取的消息。（<strong>解决方法</strong>：一个客户端使用一个的消息队列）</li>
+</ul></li>
+</ul>
+<p><strong>2.一个客户端使用一个消息队列</strong> 一个客户端各自使用一个消息队列能够解决服务器和客户端使用一个消息队列所出现的问题，但是也需要注意：</p>
+<ul>
+<li>每个客户端要创建自己的消息队列并通知服务器队列的标识符。</li>
+<li>系统对消息队列的数量是有限制的(MSGMNI)，如果客户端数量多，要提高该限制值。</li>
+<li>服务器应该允许出现客户端的消息队列不再存在的情况</li>
+</ul>
+<h6 id="消息队列实现文件服务器应用程序一个客户端使用一个消息队列">3.4.6 消息队列实现文件服务器应用程序（一个客户端使用一个消息队列）</h6>
+<ul>
+<li>这是一个简单的文件服务器，首先客户端向服务器的消息队列发送一个请求，请求指定文件内容；然后服务器收到该请求后，将响应的文件内容作为一系列消息作为响应。</li>
+<li>由于服务器对客户端不做任何鉴权操作，因此所有客户端都能获得服务器的文件内容 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/onetoone.png" width="500"></li>
+</ul>
+<p><strong>1.公共头文件</strong></p>
+<ul>
+<li>该文件是客户端和服务器都需要用到的头文件，这个头文件为服务器消息队列定义了一个众所周知的<code>SERVER_KEY</code>。并且定义了客户端和服务器之间传递消息的格式</li>
+<li><code>requestMsg</code>结构定义了客户端发送给服务器的请求格式。<code>mtest</code>由两个字段构成，分别是客户端消息队列的标识符和客户端请求的文件的路径名。</li>
+<li><code>responseMsg</code>结构定义了服务器返回给客户端的响应消息格式。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//头文件名称svmg_file.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/msg.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stddef.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;limits.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;tlpi_hdr.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SERVER_KEY 0x1aaaaaa1	<span class="comment">//服务器消息队列标识符</span></span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">requsetMsg</span>&#123;				<span class="comment">//客户端到服务器的请求格式</span></span><br><span class="line">	<span class="type">long</span> mtype;					<span class="comment">//未使用</span></span><br><span class="line">	<span class="type">int</span> clientID;				<span class="comment">//客户端消息队列的标识符</span></span><br><span class="line">	<span class="type">char</span> pathname[PATH_MAX];	<span class="comment">//请求的文件</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> REQ_MSG_SIZE (offsetof(struct requestMsg,pathname)-\</span></span><br><span class="line"><span class="meta">					offsetof(struct requestMSg,clientID)+PATH_MAX)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RESP_MSG_SIZE 8192</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">responseMsg</span>&#123;				<span class="comment">//服务启的响应格式</span></span><br><span class="line">	<span class="type">long</span> mtype;					<span class="comment">//三种类型</span></span><br><span class="line">	<span class="type">char</span> data[RESP_MSG_SIZE];	<span class="comment">//文件内容</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RESP_MT_FAILURE 1  <span class="comment">//文件无法打开</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RESP_MT_DATA 2     <span class="comment">//可发送</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> RESP_MT_END 3	   <span class="comment">//文件传输完成</span></span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>2.服务器程序</strong> - 服务器能够并发处理请求 - 每个客户端请求都会创建一个子进程来执行相应的响应 - 要避免僵尸进程，父进程应该有回收，即为SIGCHLD建立一个处理器并在其中调用<code>wait/waitpid</code> - 父服务器进程中的<code>msgrcv</code>调用可能会阻塞，这样就可能会被SIGCHLD处理器中断。为解决该情况，需要使用循环来完成EINTR错误发生之后的重启操作(用到了信号的知识) - 服务器子进程执行<code>serveRequest()</code>函数，该函数向客户端返回三种信息（头文件中的宏<code>RESP_MT_FAILURE</code>等）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;svmg_file.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">grimReaper</span><span class="params">(<span class="type">int</span> sig)</span>		<span class="comment">//SIGCHLD 处理器</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> savedErrno;</span><br><span class="line">	savedError=errno</span><br><span class="line">	<span class="keyword">while</span>(<span class="built_in">waitpid</span>(<span class="number">-1</span>,<span class="literal">NULL</span>,WNOHANG)&gt;<span class="number">0</span>)	</span><br><span class="line">		<span class="keyword">continue</span>;</span><br><span class="line">	errno=savedErrno;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">serveRequest</span><span class="params">(<span class="type">const</span> <span class="keyword">struct</span> requestMsg* req)</span><span class="comment">//消息发送</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> fd;</span><br><span class="line">	<span class="type">ssize_t</span> numRead;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">responseMsg</span> resp;</span><br><span class="line">	fd=<span class="built_in">open</span>(req-&gt;pathname,O_RDONLY);</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">-1</span>==fd)&#123;</span><br><span class="line">		resp.mtype=RESP_MT_FAILUER;</span><br><span class="line">		<span class="built_in">snprintf</span>(resp.data,<span class="built_in">sizeof</span>(resp.data),<span class="string">&quot;%s&quot;</span>,<span class="string">&quot;Counldn&#x27;t open&quot;</span>);</span><br><span class="line">		msgsnd（req-&gt;clientID,&amp;resp,<span class="built_in">strlen</span>(resp.data)+<span class="number">1</span>,<span class="number">0</span>);</span><br><span class="line">		<span class="built_in">exit</span>(EXIT_FAILURE)</span><br><span class="line">	&#125;</span><br><span class="line">	resp.mtype=RESP_MT_DATA;</span><br><span class="line">	<span class="keyword">while</span>((numRead=<span class="built_in">read</span>(fd,resp.data,RESP_MSG_SIZE))&gt;<span class="number">0</span>)</span><br><span class="line">		<span class="keyword">if</span>(<span class="built_in">msgsnd</span>(req-&gt;clientID,&amp;resp,numRead,<span class="number">0</span>)==<span class="number">-1</span>)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	resp.mtype=RESP_MT_END;</span><br><span class="line">	<span class="built_in">msgsnd</span>(req-&gt;clientID,&amp;resp,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>*argv[])</span></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">requestMsg</span> req;</span><br><span class="line">	<span class="type">pid_t</span> pid;</span><br><span class="line">	<span class="type">ssize_t</span> msgLen;</span><br><span class="line">	<span class="type">int</span> serverId;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">sigaction</span> sa;</span><br><span class="line">	<span class="comment">//建立服务器消息队列</span></span><br><span class="line">	serverId=<span class="built_in">msgget</span>(SERVER_KEY,IPC_CREAT|IPC_EXCL|S_IRUSR|S_IWUSR|S_IWGRP);</span><br><span class="line">	<span class="keyword">if</span>(serverId==<span class="number">-1</span>)</span><br><span class="line">		<span class="built_in">errExit</span>(<span class="string">&quot;msgget&quot;</span>);</span><br><span class="line">	<span class="comment">//使用信号建立SIGCHLD的处理器</span></span><br><span class="line">	<span class="built_in">sigemptyset</span>(&amp;sa.sa_mask);</span><br><span class="line">	sa.sa_flags=SA_RESTART;</span><br><span class="line">	sa.sa_hanlder=grimReaper;</span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">sigaction</span>(SIGCHLD,&amp;sa,<span class="literal">NULL</span>)==<span class="number">-1</span>)</span><br><span class="line">		<span class="built_in">errExit</span>(<span class="string">&quot;sigcation&quot;</span>);</span><br><span class="line">	<span class="comment">//读取客户端请求，创建子进程取处理</span></span><br><span class="line">	<span class="keyword">for</span>(;;)&#123;</span><br><span class="line">		msgLen=<span class="built_in">msgrcv</span>(serverId,&amp;req,REQ_MSG_SIZE,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">if</span>(<span class="number">-1</span>==msgLen)&#123;</span><br><span class="line">			<span class="keyword">if</span>(errno==EINTR)</span><br><span class="line">				<span class="keyword">continue</span>;</span><br><span class="line">			<span class="built_in">errMsg</span>(<span class="string">&quot;msgrcv&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		pid=fork();</span><br><span class="line">		<span class="keyword">if</span>(pid==<span class="number">-1</span>)&#123;</span><br><span class="line">			<span class="built_in">errMsg</span>(<span class="string">&quot;fork&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(pid==<span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">serveRequest</span>(&amp;req);</span><br><span class="line">			_exit(EXIT_SUCCESS);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h6 id="system消息队列的缺点">3.4.6 System消息队列的缺点</h6>
+<p>消息队列一个最与众不同的特性就是能够为每个消息加上一个数字类型，这样读取进程就可以<strong>根据类型来选择消息，或者可以采用一种优先策略以便优先读取高优先级的消息</strong>。但，消息队列也有相应的缺点：</p>
+<ul>
+<li>消息队列通过标识符引用，而不像管道、FIFO、socket使用文件描述符，因此无法使用I/O多路复用技术。</li>
+<li>消息队列是无连接的，内核不会像对待管道、FIFO、socket那样维护引用队列的进程数。</li>
+<li>消息队列的总数、消息的大小以及单个队列的容量都是有限制的，虽然它们可配置，但需要做一些额外的工作取配置它们。</li>
+</ul>
+<p><strong>因此，一般避免使用System V消息队列，而使用POSIX消息队列，也应当考虑其他技术替代（如文件描述符类的）</strong></p>
+<p><strong><em>system v共享内存和信号量略（着重介绍POSIX系列）</em></strong></p>
+<h5 id="system-v共享内存">3.5 System V共享内存</h5>
+<p><strong>共享内存允许两个或多个进程共享物理内存的同一块区域(通常称为段)，由于一个共享内存段会成为一个进程用户空间内存的一部分，因此这种IPC无需内核介入</strong>，因此它有一下两点要注意：</p>
+<ul>
+<li><p>共享内存是进程间共享数据的一种最快的方法。 一个进程向共享的内存区域写入了数据，共享这个内存区域的所有进程就可以立刻看到其中的内容。</p></li>
+<li><p>不使用内核控制意味着使用共享内存时要注意的是多个进程之间对一个给定存储区访问的互斥。若一个进程正在向共享内存区写数据，则在它做完这一步操作前，别的进程不应当去读、写这些数据。</p></li>
+</ul>
+<p><img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sharedmemory.png" width="300"></p>
+<h6 id="共享内存段">3.5.1 共享内存段</h6>
+<p><strong>使用System V共享内存的步骤：</strong></p>
+<ul>
+<li><strong>调用<code>shmget()</code>创建一个新的共享内存段或取得一个既有共享内存段的标识符。</strong></li>
+<li>使用<code>shmat()</code>来附上贡献内存段，即使该段成为调用进程的虚拟内存的一部分</li>
+<li><strong>此刻在程序中就可以像对待其他可用内存那样对待这个共享内存段。为引用这块共享内存段，程序需要使用由<code>shmat()</code>调用返回的地址值<code>addr</code>，它是一个指向进程虚拟地址空间该共享内存段的起点指针</strong></li>
+<li>调用<code>shmdt()</code>来分离共享内存段，之后进程无法引用这块共享内存</li>
+<li>调用<code>shmctl()</code>来销毁共享内存段</li>
+</ul>
+<p>一般来说，其内存布局如下图所示，<strong>共享内存段被附加在向上增长的堆和向下增长的栈之间的未被分配的空间中</strong> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/location.png" width="500"></p>
+<h5 id="poxis的消息队列">3.6 POXIS的消息队列</h5>
+<p>POSIX消息队列与System消息队列的相似之处在于数据的交换单位都是整体消息。不同点是：</p>
+<ul>
+<li><p><strong>POSIX消息队列使用引用计数，所有使用该队列的进程关闭后队列就删除，而System消息队列则不确定</strong>。</p></li>
+<li><p><strong>POSIX消息队列使用文件描述符，因此可使用epoll等技术</strong></p></li>
+<li><p><strong>POSIX队列提供了一个<code>mq_notify()</code>函数允许队列中的一条消息可用时异步地通知进程</strong></p></li>
+<li><p><strong>System消息队列使用一个整数来标识优先级，而POSIX消息队列有一个关联的优先级，并且消息之间是严格按照优先级顺序排列的，灵活性不如System消息队列</strong>。</p></li>
+<li><p>POSIX的移植性不如System</p></li>
+</ul>
+<h6 id="接口概览">3.6.1 接口概览</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;fcnlt.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys.stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;mqueue.h&gt;</span> <span class="comment">//消息队列头文件</span></span></span><br><span class="line"><span class="built_in">mq_open</span>(<span class="type">const</span> <span class="type">char</span>* name,<span class="type">int</span> oflag,...); <span class="comment">//创建一个新消息队列或打开已有队列，返回其文件描述符。</span></span><br><span class="line"><span class="built_in">mq_send</span>(<span class="type">mqd_t</span> mqdes,<span class="type">const</span> <span class="type">char</span>* msg_ptr,<span class="type">size_t</span> msg_len,<span class="type">unsigned</span> <span class="type">int</span> msg_prio);       <span class="comment">//向队列写入一条消息</span></span><br><span class="line"><span class="built_in">mq_receive</span>(<span class="type">mqd_t</span> mqdes,<span class="type">const</span> <span class="type">char</span>* msg_ptr,<span class="type">size_t</span> msg_len,<span class="type">unsigned</span> <span class="type">int</span> msg_prio)	<span class="comment">//从队列读取一条消息,会阻塞</span></span><br><span class="line"><span class="built_in">mq_close</span>(<span class="type">mqd_t</span> mqdes)	<span class="comment">//关闭该进程之前打开的一个对应消息队列</span></span><br><span class="line"><span class="built_in">mq_unlink</span>(<span class="type">const</span> <span class="type">char</span>* name)		<span class="comment">//删除一个消息队列名并当所有进程关闭该队列时对队列进行标记以便删除</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mq_getattr</span>(<span class="type">mqd_t</span> mqdes,<span class="keyword">struct</span> mq_attr* attr)</span><br><span class="line"><span class="built_in">mq_setattr</span>(<span class="type">mqd_t</span> mqdes,<span class="keyword">struct</span> mq_attr* newattr,<span class="keyword">struct</span> mq_attr* oldattr)	<span class="comment">//每个消息队列都有一组关联特性，可通过这两个函数获取/设置</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">mq_notify</span>(<span class="type">mqd_t</span> mqdes,<span class="type">const</span> <span class="keyword">struct</span> sigevent* notification)    </span><br><span class="line"><span class="comment">//允许一个进程向一个队列注册接收消息通知。在注册之后，当一条消息可用时会通过发送一个信号或在一个单独的线程调用一个函数来通知进程。**</span></span><br></pre></td></tr></table></figure>
+<h6 id="消息队列的特性">3.6.2 消息队列的特性</h6>
+<p>该结构体也定义在<code>&lt;mqueue.h&gt;</code>中。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">mq_attr</span>&#123;</span><br><span class="line">	<span class="type">long</span> mq_flags;		<span class="comment">//消息队列描述</span></span><br><span class="line">	<span class="type">long</span> mq_msgsize;	</span><br><span class="line">	<span class="comment">//maxmsg和msgsize在mq_open阶段设置，指示消息队列添加消息的上限和每条消息的大小上限，不可更改</span></span><br><span class="line">	<span class="type">long</span> mq_maxmsg;</span><br><span class="line">	<span class="type">long</span> mq_curmsgs;	<span class="comment">//当前状态的相关信息</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h6 id="消息通知">3.5.3 消息通知</h6>
+<p><strong>允许一个进程向一个队列注册接收消息通知。在注册之后，当一条消息可用时会通过发送一个信号或在一个单独的线程调用一个函数来通知进程</strong>。这个特性意味着<strong><em>在接受消息时，该进程已经无需执行一个阻塞的<code>mq_receive()</code>调用，或者说该特性使得消息队列描述符能够标记为非阻塞并在队列上定期执行<code>mq_receive()</code>。</em></strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mq_notify</span>(<span class="type">mqd_t</span> mqdes,<span class="type">const</span> <span class="keyword">struct</span> sigevent* notification) </span><br></pre></td></tr></table></figure> notifcation参数指定了进程接收通知的机制。对应消息通知，其细节有：</p>
+<ul>
+<li><p>任何一个时刻，对于消息队列来说，有且只有一个进程（“注册进程”）能够注册接收通知，即同一时刻最多只有一个注册进程。</p></li>
+<li><p>只有当一条新消息进入之前为空的队列时注册进程才会收到通知。</p></li>
+<li><p><strong>当向注册进程发送一个通知后就会删除注册信息。因此，之后任一进程可公平竞争该消息队列的注册通知。话句话说，若一个进程想要持续的接收通知，那么它必须在每次接收通知后再次调用<code>mq_notify()</code>来注册自己</strong></p></li>
+<li><p>其他进程（非注册进程）在消息队列调用<code>mq_receive()</code>而阻塞（说明此时消息是被注册进程读取），那么注册进程会读取消息，而且还会保持注册状态。</p></li>
+<li><p>进程可将notifcation置为<code>NULL</code>来撤销注册信息</p></li>
+</ul>
+<h5 id="posix信号量">3.7 POSIX信号量</h5>
+<p>信号量不做进程间数据的通信，<strong>而是允许进程或线程同步对共享资源的访问</strong>。对于POSIX信号量有两种类型：</p>
+<ul>
+<li><p><strong>命名信号量</strong>：拥有名字。<strong>通过使用相同的名字调用<code>sem_open()</code>,不相关进程能够访问同一个信号量</strong></p></li>
+<li><strong>未命名信号量</strong>：没有名字。<strong>因此它位于内存中预先商定的位置处，未命名信号量可以在进程之间或一组线程之间共享</strong>。
+<ul>
+<li>当进程间共享时，必须位于一个共享区域（System V、POSIX或mmap())。</li>
+<li>当线程之间共享时，信号量可以位于被这些线程共享的内存区域，如堆或全局变量中。</li>
+</ul></li>
+</ul>
+<h6 id="命名信号量接口概览">3.7.1 命名信号量接口概览</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;fcnlt.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys.stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="built_in">sem_open</span>(<span class="type">const</span> <span class="type">char</span>* name,<span class="type">int</span> oflag,...);	<span class="comment">//创建或打开一个信号量并返回一个文件描述符</span></span><br><span class="line"><span class="built_in">sem_post</span>(<span class="type">sem_t</span>* sem);		<span class="comment">//递增sem引用的信号量的值</span></span><br><span class="line"><span class="built_in">sem_wait</span>(<span class="type">sem_t</span>* sem);		<span class="comment">//递减sem引用的信号量的值</span></span><br><span class="line"><span class="built_in">sem_close</span>(<span class="type">sem_t</span>* sem);		<span class="comment">//删除调用进程与它之前打开的一个信号量的关联关系</span></span><br><span class="line"><span class="built_in">sem_getvalue</span>(<span class="type">sem_t</span>* sem,<span class="type">int</span>* sval);				<span class="comment">//获取信号量的当前值</span></span><br><span class="line"><span class="built_in">sem_unlink</span>(<span class="type">const</span> <span class="type">char</span>* name)</span><br></pre></td></tr></table></figure>
+<h6 id="posix和system的信号量操作">3.7.2 POSIX和system的信号量操作</h6>
+<p>与System V信号量一样，<strong>一个POSIX信号量也是一个整数且系统不会允许其值小于0</strong>。</p>
+<ul>
+<li>修改信号量值的函数是<code>sem_post()</code>和<code>sem_wait()</code>,一次只操作一个信号量。而形成对比的是，System V的<code>semop()</code>能够操作一个集合中的多个信号量</li>
+<li><code>sem_post()</code>和<code>sem_wait()</code>只对信号量增1或减1；而形成对比的是，<code>semop()</code>能够加或减任一个数</li>
+<li>system V信号量没有提供一个<code>wait for zero</code>的操作（即将sops.sem_op字段指定为0的semop()调用）</li>
+</ul>
+<h6 id="信号量操作之sem_wait">3.7.3 信号量操作之sem_wait()</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sem_wait</span><span class="params">(<span class="type">sem_t</span>* sem)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行<code>sem_wait</code>函数会递减sem引用的信号量的值。</li>
+<li><strong>如果信号量值为0，则<code>sem_wait()</code>不会执行，阻塞直到信号量大于0。</strong></li>
+<li><strong>当信号量大于0时，<code>sem_wait()</code>会立即返回，并且递减信号量操作。</strong></li>
+<li>若一个阻塞的<code>sem_wait()</code>调用被一个信号处理器中断了，那么他会失败且返回EINTR错误</li>
+</ul>
+<p>该函数有两个变体，一个是<code>sem_trywait()</code>,另一个是<code>sem_timedwait()</code>:</p>
+<ul>
+<li><code>sem_trywait()</code>是非阻塞版本，如果递减操作无法立即执行，就会失败并返回EAGAIN错误</li>
+<li><code>sem_timedwait()</code>调用若在规定时间内无法递减，则会失败并返回ETIMEDOUT错误</li>
+</ul>
+<h6 id="信号操作之sem_post">3.7.4 信号操作之sem_post()</h6>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sem_post</span><span class="params">(<span class="type">sem_t</span> *sem)</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果在<code>sem_post</code>调用之前信号量值为0，并且其他某个进程或线程正在因等待递减这个信号量而阻塞，则该进程会被唤醒，它的<code>sem_wait()</code>调用会继续往前执行来递减这个信号量</li>
+</ul>
+<h6 id="未命名信号量">3.7.5 未命名信号量</h6>
+<p><strong>未命名信号量是类型<code>sem_t</code>并存储在应用程序分配的内存变量中。通过将这个信号量放在由几个进程或线程共享道的内存区域就能够使用</strong>。操作未命名信号量所使用的函数与命名信号量一样都是<code>sem_wait、sem_post、sem_getvalue</code>，只有两个不同：</p>
+<ul>
+<li><code>sem_init()</code>:对一个未命名信号量初始化并通知系统该信号量会在进程间共享还是单个进程中的线程共享</li>
+<li><code>sem_destroy()</code>:销毁一个未命名信号量</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sem_init</span><span class="params">(<span class="type">sem_t</span> *sem,<span class="type">int</span> pshared,<span class="type">unsigned</span> <span class="type">int</span> value)</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>pshared</code>指示这个信号量是在线程共享还是进程间共享
+<ul>
+<li>为0时，信号量会在调用进程的线程间共享。此时<code>sem</code>通常被指定为一个全局变量或分配到堆的一个地址</li>
+<li>为非0时，即为进程间共享，此时<code>sem</code>必须是（System V、POSIX或mmap())共享区域</li>
+</ul></li>
+</ul>
+<h5 id="内存映射">3.8 内存映射</h5>
+<p><code>mmap()</code>系统调用在调用进程的虚拟地址空间创建一个新内存映射，映射分为两种：</p>
+<ul>
+<li><strong>文件映射：文件映射将一个文件的一部分直接映射到调用进程的虚拟内存中。</strong>一旦一个文件被映射之后就可以通过在相应的内存区域中操作字节来访问文件内容，此时映射的分页会在需要的时候从文件加载。</li>
+<li><strong>匿名映射：匿名映射没有对应文件，因此这种映射的分页会被初始化为0</strong></li>
+</ul>
+<p>上面介绍中我们并没有看到进程间的通信作用，但是<strong>一个进程的映射中的内存可以与其他进程中的映射共享</strong>，此时就体现了进程间的通信作用：<strong>此时映射为共享模式时，多个进程共享相同分页时，每个进程都会看到其他进程对分页做出的改变。</strong></p>
+<ul>
+<li><strong>私有映射(<code>MAP_PRIVATE</code>):其变更不会影响到底层文件，因此映射内容上发送的变更对其他进程是不可见的。</strong></li>
+<li><strong>共享映射(<code>MAP_SHARED</code>):其变更会影响到底层文件，因此映射内容上发送的变更对其他进程是可见的</strong>。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/map.png" width="500"></li>
+</ul>
+<p><strong><em>注意：共享文件映射可用于不同进程通信，而共享匿名映射只能用于具有关系的进程通信</em></strong></p>
+<h6 id="原理详解共享文件为例">3.8.1 原理详解（共享文件为例）</h6>
+<p><strong>当多个进程创建了同一个文件区域的共享映射时，它们会共享同样的内存物理分页。此时，对映射内容所做出的变更都会自动反应到文件上。</strong></p>
+<p>此时，内存映射一个最大的优势就是<strong>可以简单通过访问内存中的映射内容就能实现文件I/O，依靠内核来确保对内存的变更会被传递到映射文件上</strong>。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/filemmap.png" width="500"> 内存映射I/O优势：</p>
+<ul>
+<li>正常的<code>read()</code>和<code>write()</code>需要两次I/O,一次时文件内核高速缓存区和之间，另一次是内核高速缓存区和用户空间缓冲区。而<code>mmap()</code>只需要一次，一旦将相应文件块映射进用户内存之后用户进程就能够使用它们，只进行一次I/O，节省了一次内核空间和用户空间的传输。</li>
+<li>同样，mmap跨过了内核态这个中间状态，文件内容不用存储在内核态，只需存储在用户内存空间中，节省了空间。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/cross.png" width="500"></li>
+</ul>
+<h6 id="映射函数mmap">3.8.2 映射函数mmap()</h6>
+<p><img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/mmap.png" width="600"></p>
+<p><strong><em>注意：关于mmap函数的使用总结：</em></strong> - 1) 第一个参数写成<code>NULL</code> - 2) 第二个参数要映射的文件大小<code>&gt; 0</code> - 3) 第三个参数：<code>PROT_READ 、PROT_WRITE</code> - 4) 第四个参数：<code>MAP_SHARED</code> 或者 <code>MAP_PRIVATE</code> - 5) 第五个参数：打开的文件对应的文件描述符 - 6) 第六个参数：4k的整数倍，通常为0</p>
+<h6 id="解除映射munmap">3.8.3 解除映射munmap</h6>
+<p><code>munmap()</code>系统调用执行<code>mmap()</code>相反的操作，即从调用进程虚拟地址空间中删除一个映射 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">munmap</span><span class="params">(<span class="type">void</span> *addr,<span class="type">size_t</span> length)</span></span>;</span><br><span class="line"><span class="comment">/*参数</span></span><br><span class="line"><span class="comment">addr：使用mmap函数创建的映射区首地址</span></span><br><span class="line"><span class="comment">length：映射区大小</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></p>
+<h6 id="举例以共享文件映射进行父子进程通信">3.8.4 举例：以共享文件映射进行父子进程通信</h6>
+<p>文件映射的缺陷是，每次创建映射区一定要依赖一个文件才能实现。使用MAP_ANONYMOUS (或MAP_ANON)可实现无需文件就可进行通信的匿名映射。<code>int *p = mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_SHARED|MAP_ANONYMOUS, -1, 0);</code></p>
+<ul>
+<li><code>MAP_ANONYMOUS</code>和<code>MAP_ANON</code>这两个宏是Linux操作系统特有的宏。在类Unix系统中如无该宏定义，可使用如下两步来完成匿名映射区的建立</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;fcnlt.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> fd=<span class="built_in">open</span>(<span class="string">&quot;trluper.txt&quot;</span>,O_RDWR);	</span><br><span class="line">	<span class="type">int</span> len=<span class="built_in">lseek</span>(fd,<span class="number">0</span>,SEEK_END);	<span class="comment">//文件大小</span></span><br><span class="line">	<span class="comment">//创建文件映射区</span></span><br><span class="line">	<span class="type">void</span>* ptr=<span class="built_in">mmap</span>(<span class="literal">NULL</span>,len,PROT_READ|PROT_WRITE,MAP_SHARED,<span class="number">0</span>);</span><br><span class="line">	<span class="comment">//void *ptr=mmap(NULL,len,PROT_READ|PORT_WRITE,MAP_SHARED,-1,0);	//匿名映射区</span></span><br><span class="line">	<span class="keyword">if</span>(ptr==MAP_FAILED)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">perror</span>(<span class="string">&quot;mmap error&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">clsoe</span>(fd);</span><br><span class="line">	<span class="comment">//创建子进程</span></span><br><span class="line">	<span class="type">pid_t</span> pid=fork();</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">0</span>==pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">		<span class="comment">//读数据</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,(<span class="type">char</span>*)ptr);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pid&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">strcpy</span>((<span class="type">char</span>*)ptr,<span class="string">&quot;i am u father!!&quot;</span>);</span><br><span class="line">		<span class="comment">//回收子进程资源</span></span><br><span class="line">		<span class="built_in">wait</span>(<span class="literal">NULL</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//释放内存映射区</span></span><br><span class="line">	<span class="type">int</span> ret=<span class="built_in">munmap</span>(ptr,len);</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">-1</span>==ret)&#123;</span><br><span class="line">		<span class="built_in">perror</span>(<span class="string">&quot;munmap failed&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="信号">3.9 信号</h5>
+<p><strong>信号是 Linux 进程间通信的最古老的方式。信号是软件中断。信号可以导致一个正在运行的进程被另一个正在运行的异步进程中断</strong>，转而处理某一个突发事件。信号可以直接进行用户空间进程和内核空间进程的交互，内核进程可以利用它来通知用户空间进程发生了哪些系统事件。在Linux中1-31为常规信号；34-64为实时信号，用户可自定义，默认动作是终止进程。</p>
+<p>信号的特点：</p>
+<ul>
+<li>简单</li>
+<li>不能携带大量信息</li>
+<li>满足某个特设条件才发送</li>
+</ul>
+<p>一个完整的信号周期包括三个部分：信号的产生，信号在进程中的注册，信号在进程中的注销，执行信号处理函数。如下图所示：（这里的产生、注册、注销是指系统的内部机制中信号的完整周期，而不是单指信号函数产生） <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signal.png" width="600"></p>
+<p>Linux 可使用命令：<code>kill -l</code>（&quot;l&quot; 为字母），查看相应的信号编号。（详情查看文件资料）</p>
+<h6 id="信号四要素及状态">3.9.1 信号四要素及状态</h6>
+<p>每个信号必备4要素，分别是：编号、名称 、事件 、默认处理动作。可通过<code>man 7 signal</code>查看帮助文档获取</p>
+<p>信号的状态：产生、未决状态（没有被处理）、递达状态（信号被处理了）。Linux内核的进程控制块PCB是一个结构体<code>task_struct</code>, 除了包含进程id，状态，工作目录，用户id，组id，文件描述符表，还包含了信号相关的信息，主要指<strong>阻塞信号集和未决信号集。</strong></p>
+<ul>
+<li>阻塞信号集(信号屏蔽字)：将某些信号加入集合，对他们设置屏蔽，当屏蔽x信号后，再收到该信号，该信号的处理将推后(处理发生在解除屏蔽后)。（类似黑名单）</li>
+<li>未决信号集：信号产生，未决信号集中描述该信号的位立刻翻转为1，表示信号处于未决状态。当信号被处理对应位翻转回为0。</li>
+</ul>
+<h6 id="信号相关函数">3.9.2 信号相关函数</h6>
+<ul>
+<li><p><strong>1.kill函数：信号产生函数</strong> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/kill.png" width="600"> <strong><em>注:super用户(root)可以发送信号给任意用户，普通用户是不能向系统用户发送信号的。用户只能向自己创建的进程发生信号。（父进程可向子进程发送信号，子进程也可向父进程发送信号） 例：</em></strong></p></li>
+<li><p>raise函数： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">raise</span><span class="params">(<span class="type">int</span> sig)</span></span>;</span><br><span class="line"><span class="comment">//功能：给当前进程发送指定信号，等价于kill(getpid(),sig)</span></span><br><span class="line"><span class="comment">//参数：sig为信号编号</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>abort函数： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">abort</span><span class="params">(<span class="type">void</span>)</span></span>;</span><br><span class="line"><span class="comment">//功能：给自己发送异常终止信号6）SIGABRT，并产生core文件，等价于kill(getpid(),SIGABRT)</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>alarm函数 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/alarm.png" width="600"> 定时，与进程状态无关(自然定时法)！就绪、运行、挂起(阻塞、暂停)、终止、僵尸……无论进程处于何种状态，alarm都计时。</p></li>
+<li><p>setitimer函数 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/setitimer.png" width="600"> <strong>实例：setitimer默认动作是终止进程，所有要加信号捕捉signal函数，实现周期定时。</strong> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">function</span><span class="params">(<span class="type">int</span> sig)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">itimerval</span> new_value;</span><br><span class="line">	<span class="comment">//触发周期</span></span><br><span class="line">	new_value.it_interval.tv_sec=<span class="number">1</span>;</span><br><span class="line">	new_value.it_interval.tv_usec=<span class="number">0</span>;</span><br><span class="line">	<span class="comment">//第一次触发时间</span></span><br><span class="line">	new_value.it_value.tv_sec=<span class="number">2</span>;</span><br><span class="line">	new_value.it_value.tv.usec=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">signal</span>(SIGALRM,function);</span><br><span class="line">	<span class="built_in">setitimer</span>(ITIMER_REAL,&amp;new_value,<span class="literal">NULL</span>);<span class="comment">//定时器设置</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h6 id="信号集">3.9.3 信号集</h6>
+<p>在PCB中有两个非常重要的信号集。<strong>一个为“阻塞信号集”，另一个为“未决信号集”</strong>。这两个信号集都是内核使用位图机制来实现的<strong>。但操作系统不允许我们直接对其进行位操作。而需自定义另外一个集合，借助信号集操作函数来对PCB中的这两个信号集进行修改。 </strong> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signalset.png" width="600"></p>
+<p>信号集是一个能表示多个信号的数据类型<code>sigset_t set</code>，<code>set</code>即一个信号集。既然是一个集合，就需要对集合进行添加/删除等操作。<strong>信号集主要作用是方便我们操作<code>sigprocmask</code>和<code>sigpending</code>函数对阻塞信号集和未决信号集的添加删除信号管理</strong>。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/operateset.png" width="600"></p>
+<ul>
+<li><p><code>sigprocmask</code>函数:信号阻塞集也称信号屏蔽集、信号掩码。每个进程都有一个阻塞集，创建子进程时子进程将继承父进程的阻塞集。信号阻塞集用来描述哪些信号递送到该进程的时候被阻塞。<strong>我们可以通过 sigprocmask() 修改当前的阻塞信号集中包含的信号（即设置要被阻塞的信号种类的添加、删除） </strong> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigprocmask.png" width="600"></p></li>
+<li><p>sigpending函数：读取未决信号集（未决由内核管理，用户只要读权限，没有写权限） <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sigpending</span><span class="params">(sigset* set)</span></span>;</span><br><span class="line"><span class="comment">//功能：读取当前进程的未决信号集</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>示例： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//自定义信号集</span></span><br><span class="line">	<span class="type">sigset_t</span> myset,old;</span><br><span class="line">	<span class="built_in">sigemptyset</span>(&amp;myset);	<span class="comment">//清空</span></span><br><span class="line">	<span class="comment">//添加阻塞信号</span></span><br><span class="line">	<span class="built_in">sigaddset</span>(&amp;myset,SIGINT);</span><br><span class="line">	<span class="built_in">sigaddset</span>(&amp;myset,SIGQUIT);</span><br><span class="line">	<span class="built_in">sigaddset</span>(&amp;myset,SIGKILL);</span><br><span class="line">	<span class="comment">//自定义信号集设置到内核中的阻塞信号集</span></span><br><span class="line">	<span class="built_in">sigprocmask</span>(SIG_BLOCK,&amp;myset,&amp;old);</span><br><span class="line">	<span class="type">sigset_t</span> pend; </span><br><span class="line">	<span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//读未决信号集的状态</span></span><br><span class="line">		<span class="built_in">sigpending</span>(&amp;pend);</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;<span class="number">32</span>;++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">sigismember</span>(&amp;pend,i))</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(<span class="built_in">sigusmember</span>(&amp;pend,i)==<span class="number">0</span>)</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">		i++;</span><br><span class="line">		<span class="comment">//10s后解除阻塞</span></span><br><span class="line">		<span class="keyword">if</span>(i&gt;<span class="number">10</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">sigprocmask</span>(SIG_SETMASK,&amp;old,<span class="literal">NULL</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h6 id="信号捕捉">3.9.4 信号捕捉</h6>
+<p>如上所示，一些函数的默认动作不是我们想要，而要改变这些动作，就必须依靠信号捕捉来实现自定义信号处理函数。 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/signalhunter.png" width="600"> <strong><em>【注意】：SIGKILL 和 SIGSTOP 不能更改信号的处理方式，因为它们向用户提供了一种使进程终止的可靠方法。</em></strong></p>
+<ul>
+<li><p>signal函数（了解） <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/func_signal.png" width="600"></p></li>
+<li>sigaction函数 <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigaction.png" width="600"> <strong><code>struct sigaction</code>结构体：</strong> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/sigas.png" width="600">
+<ul>
+<li><ol type="1">
+<li>sa_handler、sa_sigaction：信号处理函数指针，和 signal() 里的函数指针用法一样，应根据情况给sa_sigaction、sa_handler 两者之一赋值，其取值如下：</li>
+</ol>
+<ul>
+<li><ol type="a">
+<li>SIG_IGN：忽略该信号</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>SIG_DFL：执行系统默认动作</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>处理函数名：自定义信号处理函数</li>
+</ol></li>
+</ul></li>
+<li><ol start="2" type="1">
+<li>sa_mask：信号阻塞集，在信号处理函数执行过程中，临时屏蔽指定的信号。</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>sa_flags：用于指定信号处理的行为，通常设置为0，表使用默认属性。它可以是一下值的“按位或”组合：</li>
+</ol>
+<ul>
+<li>Ø SA_NOCLDSTOP：使父进程在它的子进程暂停或继续运行时不会收到 SIGCHLD 信号。</li>
+<li>Ø SA_NOCLDWAIT：使父进程在它的子进程退出时不会收到 SIGCHLD 信号，这时子进程如果退出也不会成为僵尸进程（因为由init进程回收）。</li>
+<li>Ø SA_NODEFER：使对信号的屏蔽无效，即在信号处理函数执行期间仍能发出这个信号。</li>
+<li>Ø SA_RESETHAND：信号处理之后重新设置为默认的处理方式。</li>
+<li>Ø SA_SIGINFO：使用 sa_sigaction 成员而不是 sa_handler 作为信号处理函数。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="进程组和守护进程">4 进程组和守护进程</h4>
+<h5 id="进程组">4.1 进程组</h5>
+<p>当父进程创建子进程的时候，默认子进程与父进程属于同一进程组。**进程组ID为第一个进程的ID(组长进程)。进程组的出现是为了方便管理多个进程： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill <span class="number">-9</span> -进程组ID    <span class="comment">//杀死整个进程组内的进程全部杀死</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>组长进程可以创建一个进程组，创建该进程组中的进程，然后终止。只要进程组中有一个进程存在，进程组就存在，与组长进程是否终止无关。一个进程可以为自己或子进程设置进程组ID。 </strong> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/gprocess.png" width="600"></p>
+<h5 id="会话">4.2 会话</h5>
+<p><strong>会话是一个或多个进程组的集合。一个会话可以有一个控制终端。这通常是终端设备或伪终端设备；</strong> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/hui.png" width="600"></p>
+<ul>
+<li><strong>建立与控制终端连接的会话首进程被称为控制进程；</strong></li>
+<li><strong>一个会话中的几个进程组可被分为一个前台进程组以及一个或多个后台进程组；</strong></li>
+<li><strong>如果一个会话有一个控制终端，则它有一个前台进程组，其它进程组为后台进程组</strong>；</li>
+<li><strong>如果终端接口检测到断开连接，则将挂断信号发送至控制进程（会话首进程）。</strong> <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/huihua.png" width="600"></li>
+</ul>
+<p><strong>创建会话的注意事项：</strong></p>
+<ul>
+<li><ol type="1">
+<li>调用进程不能是进程组组长，若调用进程是组长进程，则出错返回</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>调用进程会成为一个新进程组的组长进程，同时该进程变成新会话首进程(session header)既控制进程</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>需有root权限(ubuntu不需要)</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li><strong>新会话丢弃原有的控制终端，该会话没有控制终端（能成为守护进程的关键）</strong></li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>建立新会话时，先调用fork, 父进程终止，子进程调用setsid <img src="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/setsid.png" width="600"></li>
+</ol></li>
+</ul>
+<h5 id="守护进程">4.3 守护进程</h5>
+<p>守护进程（Daemon Process），也就是通常说的 Daemon 进程（精灵进程），是 Linux 中的后台服务进程。守护进程是个特殊的孤儿进程，<strong>这种进程脱离终端，以避免进程被任何终端所产生的信息所打断，其在执行过程中的信息也不在任何终端上显示。Linux 的大多数服务器就是用守护进程实现的</strong></p>
+<p><strong>守护进程的创建流程：</strong></p>
+<ul>
+<li><ol type="1">
+<li>创建子进程，父进程退出(必须)：所有工作在子进程中进行形式上脱离了控制终端</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>在子进程中创建新会话(必须)：<code>setsid()</code>函数，使子进程完全独立出来，脱离控制</li>
+</ol></li>
+<li><ol start="3" type="1">
+<li>改变当前目录为根目录(不是必须)---&gt;chdir(char *path)函数，防止占用可卸载的文件系统</li>
+</ol></li>
+<li><ol start="4" type="1">
+<li>重设文件权限掩码(不是必须)：umask()函数，防止继承的文件创建屏蔽字拒绝某些权限，增加守护进程灵活性</li>
+</ol></li>
+<li><ol start="5" type="1">
+<li>关闭文件描述符(不是必须)：继承的打开文件不会用到，浪费系统资源，无法卸载</li>
+</ol></li>
+<li><ol start="6" type="1">
+<li>开始执行守护进程核心工作(必须)：守护进程退出处理程序模型 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//创建子进程，父进程退出</span></span><br><span class="line">	<span class="type">pid_t</span> pid=fork();</span><br><span class="line">	<span class="keyword">if</span>(<span class="number">-1</span>==pid)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">perror</span>(<span class="string">&quot;fork&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(pid&gt;<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;父进程退\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(<span class="number">0</span>==pid)&#123;</span><br><span class="line">		<span class="comment">//在子进程创建会话，脱离终端</span></span><br><span class="line">		<span class="type">pid_t</span> hpid=<span class="built_in">setsid</span>();</span><br><span class="line">		<span class="keyword">if</span>(<span class="number">-1</span>==hpid)&#123;</span><br><span class="line">			<span class="built_in">perror</span>(<span class="string">&quot;setsid\n&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//改变工作目录</span></span><br><span class="line">		<span class="built_in">chdir</span>(<span class="string">&quot;/&quot;</span>)</span><br><span class="line">		<span class="comment">//改变权限掩码，0没有屏蔽任何权限</span></span><br><span class="line">		<span class="built_in">umask</span>(<span class="number">0</span>);</span><br><span class="line">		<span class="comment">//关闭文件描述符</span></span><br><span class="line">		<span class="built_in">close</span>(STDIN_FILENO);</span><br><span class="line">		<span class="built_in">close</span>(STDOUT_FILENO);</span><br><span class="line">		<span class="built_in">close</span>(STDERR_FILENO);</span><br><span class="line">		<span class="comment">//防止子进程退出，执行核心任务</span></span><br><span class="line">		<span class="built_in">task</span>();</span><br><span class="line">		<span class="comment">//每隔1s输出当前时间到temp/txt.log</span></span><br><span class="line">		<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="built_in">system</span>(<span class="string">&quot;date&gt;&gt;/temp/txt.log&quot;</span>);</span><br><span class="line">			<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux-coding/" rel="tag"># Linux coding</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/16/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-1/" rel="prev" title="Linux系统编程_基础函数">
+      <i class="fa fa-chevron-left"></i> Linux系统编程_基础函数
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/02/18/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BA%BF%E7%A8%8B/" rel="next" title="Linux系统编程_线程">
+      Linux系统编程_线程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">1 进程概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 进程和线程的区别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B9%B6%E8%A1%8C%E5%92%8C%E5%B9%B6%E5%8F%91"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 并行和并发</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 进程的状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%A4%E5%84%BF%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 孤儿进程和僵尸进程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%83%B5%E5%B0%B8%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 避免僵尸进程的方法</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 进程相关命令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#ps%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.1.</span> <span class="nav-text">1.5.1 ps命令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#top%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.2.</span> <span class="nav-text">1.5.2 top命令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#kill%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.3.</span> <span class="nav-text">1.5.3 kill命令</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#killall%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.4.</span> <span class="nav-text">1.5.4 killall命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">2 进程函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%8F%B7"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 进程号</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#getpid%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 getpid函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#getppid%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 getppid函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#getpgid%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 getpgid函数</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%88%9B%E5%BB%BA"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 进程创建</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 父子进程的关系</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8C%BA%E5%88%86%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 区分父子进程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 父子进程的地址空间</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%80%E5%87%BA"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 进程退出</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%80%E5%87%BA%E5%87%BD%E6%95%B0"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1 进程退出函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%AD%89%E5%BE%85%E5%AD%90%E8%BF%9B%E7%A8%8B%E9%80%80%E5%87%BA%E5%87%BD%E6%95%B0"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2 等待子进程退出函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E6%9B%BF%E6%8D%A2"><span class="nav-number">2.3.3.</span> <span class="nav-text">2.3.3 进程替换</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E9%87%8D%E8%A6%81"><span class="nav-number">3.</span> <span class="nav-text">3 进程间通信(重要)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 通信方式的选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%A1%E9%81%93"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 管道</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%97%A0%E5%90%8D%E7%AE%A1%E9%81%93pipe"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 无名管道PIPE</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%89%E5%90%8D%E7%AE%A1%E9%81%93fifo"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 有名管道FIFO</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#system-v-ipc%E9%80%9A%E4%BF%A1%E5%92%8Cposix-ipc%E9%80%9A%E4%BF%A1%E6%A6%82%E8%A7%88"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 system V IPC通信和POSIX IPC通信概览</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#system-v-ipc%E9%80%9A%E4%BF%A1"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 System V IPC通信</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#posix-ipc%E9%80%9A%E4%BF%A1"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 POSIX IPC通信</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.3.3 区别</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#system-v%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 system V消息队列</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 消息队列的特点</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%88%96%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AA%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 创建或打开一个消息队列</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%B6%88%E6%81%AF"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 交换消息</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E6%8E%A7%E5%88%B6"><span class="nav-number">3.4.4.</span> <span class="nav-text">3.4.4 消息队列的控制</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">3.4.5.</span> <span class="nav-text">3.4.5 消息队列在服务器-客户端的应用</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%80%E4%B8%AA%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">3.4.6.</span> <span class="nav-text">3.4.6 消息队列实现文件服务器应用程序（一个客户端使用一个消息队列）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#system%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="nav-number">3.4.7.</span> <span class="nav-text">3.4.6 System消息队列的缺点</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#system-v%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 System V共享内存</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E6%AE%B5"><span class="nav-number">3.5.1.</span> <span class="nav-text">3.5.1 共享内存段</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#poxis%E7%9A%84%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 POXIS的消息队列</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E6%A6%82%E8%A7%88"><span class="nav-number">3.6.1.</span> <span class="nav-text">3.6.1 接口概览</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E7%89%B9%E6%80%A7"><span class="nav-number">3.6.2.</span> <span class="nav-text">3.6.2 消息队列的特性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%80%9A%E7%9F%A5"><span class="nav-number">3.6.3.</span> <span class="nav-text">3.5.3 消息通知</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#posix%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 POSIX信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%8E%A5%E5%8F%A3%E6%A6%82%E8%A7%88"><span class="nav-number">3.7.1.</span> <span class="nav-text">3.7.1 命名信号量接口概览</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#posix%E5%92%8Csystem%E7%9A%84%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%93%8D%E4%BD%9C"><span class="nav-number">3.7.2.</span> <span class="nav-text">3.7.2 POSIX和system的信号量操作</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%93%8D%E4%BD%9C%E4%B9%8Bsem_wait"><span class="nav-number">3.7.3.</span> <span class="nav-text">3.7.3 信号量操作之sem_wait()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E6%93%8D%E4%BD%9C%E4%B9%8Bsem_post"><span class="nav-number">3.7.4.</span> <span class="nav-text">3.7.4 信号操作之sem_post()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9C%AA%E5%91%BD%E5%90%8D%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-number">3.7.5.</span> <span class="nav-text">3.7.5 未命名信号量</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 内存映射</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E4%B8%BA%E4%BE%8B"><span class="nav-number">3.8.1.</span> <span class="nav-text">3.8.1 原理详解（共享文件为例）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E5%87%BD%E6%95%B0mmap"><span class="nav-number">3.8.2.</span> <span class="nav-text">3.8.2 映射函数mmap()</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E8%A7%A3%E9%99%A4%E6%98%A0%E5%B0%84munmap"><span class="nav-number">3.8.3.</span> <span class="nav-text">3.8.3 解除映射munmap</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%B8%BE%E4%BE%8B%E4%BB%A5%E5%85%B1%E4%BA%AB%E6%96%87%E4%BB%B6%E6%98%A0%E5%B0%84%E8%BF%9B%E8%A1%8C%E7%88%B6%E5%AD%90%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="nav-number">3.8.4.</span> <span class="nav-text">3.8.4 举例：以共享文件映射进行父子进程通信</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7"><span class="nav-number">3.9.</span> <span class="nav-text">3.9 信号</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E5%9B%9B%E8%A6%81%E7%B4%A0%E5%8F%8A%E7%8A%B6%E6%80%81"><span class="nav-number">3.9.1.</span> <span class="nav-text">3.9.1 信号四要素及状态</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="nav-number">3.9.2.</span> <span class="nav-text">3.9.2 信号相关函数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%9B%86"><span class="nav-number">3.9.3.</span> <span class="nav-text">3.9.3 信号集</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E6%8D%95%E6%8D%89"><span class="nav-number">3.9.4.</span> <span class="nav-text">3.9.4 信号捕捉</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%BB%84%E5%92%8C%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">4 进程组和守护进程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%BB%84"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 进程组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 会话</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 守护进程</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">20:25</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

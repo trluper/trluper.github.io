@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1 存储技术 作为一名程序员，你必须了解存储器的层次结构，因为它对应用程序的性能有着巨大的影响。  如果你的数据是在cpu寄存器上，那么指令执行期间在0个周期就能访问到 如果是在高速缓存中，需要4-75个周期 如果在主存，需要上百个周期 如果是在磁盘，那么就需要大约几千万个周期，时间大概是毫秒级，比主存慢10万倍，比高速缓存慢100万倍  1.1 随机访问存储器 随机访问存储器(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统-存储器层次结构">
+<meta property="og:url" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:description" content="1 存储技术 作为一名程序员，你必须了解存储器的层次结构，因为它对应用程序的性能有着巨大的影响。  如果你的数据是在cpu寄存器上，那么指令执行期间在0个周期就能访问到 如果是在高速缓存中，需要4-75个周期 如果在主存，需要上百个周期 如果是在磁盘，那么就需要大约几千万个周期，时间大概是毫秒级，比主存慢10万倍，比高速缓存慢100万倍  1.1 随机访问存储器 随机访问存储器(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/bus.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/disk.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/rwirte.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/SSD.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/SSDspead.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/local.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/localbad.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/hierarchy.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cache.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/list.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cachelevel.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cacheWork.png">
+<meta property="og:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cachegroup.png">
+<meta property="article:published_time" content="2023-05-07T13:15:21.000Z">
+<meta property="article:modified_time" content="2023-05-09T03:10:41.511Z">
+<meta property="article:author" content="trluper">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/bus.png">
+
+<link rel="canonical" href="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深入理解计算机系统-存储器层次结构 | Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深入理解计算机系统-存储器层次结构
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-07 21:15:21" itemprop="dateCreated datePublished" datetime="2023-05-07T21:15:21+08:00">2023-05-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-09 11:10:41" itemprop="dateModified" datetime="2023-05-09T11:10:41+08:00">2023-05-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">深入理解计算机系统</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="存储技术">1 存储技术</h3>
+<p>作为一名程序员，你必须了解存储器的层次结构，因为它对应用程序的性能有着巨大的影响。</p>
+<ul>
+<li><strong>如果你的数据是在cpu寄存器上，那么指令执行期间在0个周期就能访问到</strong></li>
+<li>如果是在高速缓存中，需要4-75个周期</li>
+<li>如果在主存，需要上百个周期</li>
+<li><strong>如果是在磁盘，那么就需要大约几千万个周期，时间大概是毫秒级，比主存慢10万倍，比高速缓存慢100万倍</strong></li>
+</ul>
+<h4 id="随机访问存储器">1.1 随机访问存储器</h4>
+<p>随机访问存储器(RAM)有两类：静态和动态。静态RAM(SRAM)比动态DRAM(DRAM)更快，但也更贵，<strong>因此SRAM一般集成在CPU上作为高速缓存，DRAM则作为主存。</strong>断电以后，DRAM和SRAM都会丢失它们的信息</p>
+<p><strong>访问主存：</strong>每次CPU和主存之间的数据传送都是通过一系列的步骤来完成，这些步骤称为<strong>总线事务</strong>。<strong>读事务</strong>从主存传输数据到CPU，<strong>写事务</strong>从CPU传送数据到主存。总线是一组并行的导线，能携带地址、数据和控制信号。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/bus.png" width="600"></p>
+<span id="more"></span>
+<h4 id="磁盘">1.2 磁盘</h4>
+<p>磁盘由盘片构成，每个盘片有两面或者称为表面，表面覆盖着磁性记录材料。盘片中央有一个可以旋转的主轴，它使得盘片以固定的旋转速率旋转，通常在<code>5400-15000</code>转没分钟。</p>
+<p><strong>下图展示了一个典型的磁盘表面结构。每个表面都是由一组称为磁道的同心圆组成的。每个磁道被划分为一组扇区。每个扇区包含相等数量的数据位，通常是512个字节。扇区之间由一些间隙分隔开，这些间隙不存储数据位，它们用来存储标识扇区的格式化位</strong> <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/disk.png" width="700"></p>
+<ul>
+<li><strong>旋转磁盘</strong>：b图的整个装置被称为磁盘驱动器，也简称磁盘，为了与固态硬盘SSD区分，也叫旋转磁盘，SSD是没有移动结构的，也因为这种特性，SSD读取数据更快。</li>
+<li><strong>柱面</strong>：柱面是所有盘面上到主轴中心距离相等的磁道组合。</li>
+</ul>
+<h4 id="磁盘容量">1.3 磁盘容量</h4>
+<p>一个磁盘可记录的最大位数就是它的最大容量，它由记录密度、磁道密度和面密度所决定。磁盘容量的计算公式如下：</p>
+<p><span class="math display">\[
+磁盘容量=每个扇区字节数×每个磁道平均扇区数×每个面磁道数×每个磁盘表面数×磁盘数
+\]</span> 值得一提的是，我们在电脑或者手机中，会发现所显示的逻辑磁盘容量&lt;实际容量，这是因为由两个原因：</p>
+<ul>
+<li>一是厂商的磁盘容量计算不是按2进制的，即<span class="math inline">\(1GB=10^9字节\)</span>，而不是<span class="math inline">\(1GB=2^{30}字节\)</span>，明显<span class="math inline">\(2^{10}&gt;10^3\)</span></li>
+<li>二是在电脑或手机中不会把所有的磁盘都用上，它会保留一些柱面作为预留手段，当磁盘的一些存储区域出现损坏时，这些预留柱面能作为应对策略，将数据拷贝到这些预留柱面来使用 。这就是为什么逻辑容量要小于实际容量</li>
+</ul>
+<h4 id="磁盘操作-磁盘用读写头来读写存储在磁性表面的位读写头的另一端连接到一个传动臂">1.4 磁盘操作* 磁盘用读/写头来读写存储在磁性表面的位，读写头的另一端连接到一个传动臂。</h4>
+<ul>
+<li><strong>寻道：通过沿着半径轴前后移动这个传动臂，驱动可以将读写头定位在盘面的任何磁道上，</strong></li>
+<li><strong>旋转</strong>：一旦读写头完成寻道定位在某个磁道上，驱动器就会等待期望的扇区的第一位旋转到读写头下，这样就能够读写数据 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/rwirte.png" width="700"></li>
+</ul>
+<p>磁盘一扇区大小的块来读写数据，对扇区的访问时间由三个主要的部分：寻道时间、旋转时间和传送时间</p>
+<ul>
+<li><strong>寻道时间：</strong>位读取某个扇区的内容，传动臂首先将读写头定位到包含目标扇区的磁道上，移动传动臂所需要的时间称为<strong>寻道时间</strong>。其平均寻道时间是在<code>ms</code>级，大概为<code>3~ms</code>，一次寻道的最大时间为<code>20ms</code>s</li>
+<li><p><strong>x旋转时间</strong>：一旦读写头定位到了期望的磁道，驱动器等待目标扇区的一个位旋转到读写头下。最大的旋转延迟数以<code>ms</code>为单位，为<span class="math inline">\(1/RPM*1000ms\)</span>，其中RPM是转速</p></li>
+<li><p><strong>传送时间</strong>：当目标扇区的第一位位于读写头下时，驱动器就可以开始读写扇区内容，一个扇区的传送时间依赖与旋转速度和每条磁道的三区数目。</p></li>
+</ul>
+<p>值得一提的是，磁盘操作中消耗时间的主要是寻道时间和旋转时间，传送时间所占的延迟是可忽略的的</p>
+<h4 id="固态硬盘">1.5 固态硬盘</h4>
+<p>固态硬盘是一种基于闪存的存储技术，一个SSD封装由一个或多个闪存芯片和闪存翻译层组成，闪存芯片代替传统的旋转磁盘中的器械驱动器，而闪存翻译层是一个硬件设备，扮演与磁盘控制器相同的角色。将对逻辑块的请求翻译成对低层物理设备的访问。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/SSD.png" width="700"> <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/SSDspead.png" width="700"></p>
+<h3 id="局部性-一个编写良好的计算机程序常常具有良好的局部性即他们更加倾向于引用邻近于其他最近引用过的数据项的数据项或者最近引用或的数据项本身这种特性常常称为局部性原理局部性由两种不同的形式时间局部性和空间局部性">2 局部性* 一个编写良好的计算机程序常常具有良好的<strong>局部性</strong>，即他们更加倾向于引用邻近于其他最近引用过的数据项的数据项，或者最近引用或的数据项本身，这种特性，常常称为<strong>局部性原理</strong>。局部性由两种不同的形式：<strong>时间局部性和空间局部性</strong></h3>
+<ul>
+<li><strong>时间局部性</strong>：被引用过一次的内存位置很有可能在不久的将来再次被多次引用。</li>
+<li><strong>空间局部性</strong>：一个内存被引用过了，那么极有可能在不久的将来会引用器附近的内存位置。</li>
+</ul>
+<p>我们应该理解局部性原理，因为一般而言，一个良好局部性的程序比局部性差的程序运行得更快，这是由现代计算机系统得设计结构所决定得，在现代计算系统得各个层次之哦你给，都引入了局部性原理：</p>
+<ul>
+<li>在硬件层，计算机设计者通过引入称为<strong>高速缓存存储器</strong>这样小而快得快速存储器来保存最近引用得指令和数据项，从而提高对主存得访问速度。</li>
+<li>在操作系统中，系统使用主存作为<strong>虚拟地址空间</strong>，来存储最近被引用得数据项，来避免因从磁盘取数据过慢而导致CPU资源的浪费</li>
+<li>类似的，操作吸引还用主存来缓存磁盘文件中最近被使用的磁盘块。</li>
+<li>局部性原理在应用程序中也有应用，入<code>Web</code>浏览器将最近引用的文档放在本地磁盘上，利用的就是时间局部性。</li>
+</ul>
+<p>从上可以看出，局部性原理贯穿现代计算机系统的方方面面，因此设计局部性良好的程序是编程应该注意的事项。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/local.png" width="700"> <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/localbad.png" width="700"></p>
+<ul>
+<li><strong>原则</strong>：
+<ul>
+<li>1.重复引用相同变量的程序有良好的局部性</li>
+<li>对于具有步长位k的引用模式程序，步长越小，空间局部性越好。</li>
+<li>对于取指令，循环有好的时间和空间局部性，循环越小，循环迭代次数越多，局部性越好。</li>
+</ul></li>
+</ul>
+<h3 id="存储器的层次结构">3 存储器的层次结构</h3>
+<p>现代计算机系统都是使用了一种组织存储器系统的方法，称为<strong>存储器层次结构</strong>，从高层往低层走，存储设备变得更慢、更便宜和更大，在最高层，是少量的CPU寄存器，CPU可以在一个始终周期访问它们；接下啦是<code>L1~L3</code>的高速缓存。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/hierarchy.png" width="700"></p>
+<p>高速缓存<code>cache</code>是一个小而快速的存储设备，他作为存储在更大、也更慢的设备中的对象的缓冲区域。<strong>存储器层次结构的中心思想是，对于每个<code>K</code>，位于<code>K</code>层的更快更小的存储设备作为位于<code>K+1</code>层的更大更慢的存储设备的缓存。即层次结构的设计是为了每一层都缓存来自较低一层的数据对象</strong> <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cache.png" width="700"> 数据总是以块大小为传送单元在第<code>K</code>层和第<code>K+1</code>层之间来回复制，这不过这个<code>块大小</code>在各层是不一样的，在<code>L0</code>和<code>L1</code>是一个字大小，在<code>L1</code>和<code>L2</code>是几十个字节。一般而言，层次结构中较低层的设备访问时间较长，因此为了补偿这些较长的访问时间，倾向于使用更大的块。</p>
+<p><strong>命中和未命中</strong>：说到缓存层次结构就必须提到缓存命中和未命中的情况。</p>
+<ul>
+<li><strong>缓存命中：</strong>当程序需要第<code>K+1</code>层的某个数据对象<code>d</code>时，它首先会正在当前存储在<code>k</code>层之前的存储层次中查找<code>d</code>，如果<code>d</code>刚好缓存在<code>K</code>层中，那么就是我们所说的<strong>缓存命中</strong>。缓存命中读数据明显会快于缓存未命中时的情形。</li>
+<li><strong>缓存未命中</strong>：缓存未命中恰好是缓存命中相反的情况，这时就会去下层存储结构找到包含数据<code>d</code>的数据块。并且会将数据缓存至<code>K</code>层，如果<code>K</code>层已满，可能会覆盖现存在<code>K</code>层中的数据块
+<ul>
+<li><p><strong>冷不命中：冷不命中是由于冷缓存所导致，这是因为计算机刚启动时，缓存肯定是空的，这时候在高层存储结构肯定是没有数据被命中</strong>。冷不命中是短暂事件，因为反复访问存储器器会使得缓存暖身，直至缓存占满。冷不命中也称为<strong>强制性不命中</strong></p></li>
+<li><p><strong>冲突不命中：这时因为硬件缓存使用的是像哈希一样的缓存放置策略，就是第<code>k+1</code>的某个块被限制在放置在第<code>k</code>层的一个小子集里（甚至是某一个块），比如某些缓存放置策略使用<code>mod</code>，即<code>k+1</code>的数据块i，必须放置在<code>k</code>层<code>i mod len(k)</code>上。</strong>这样可能导致<code>k</code>层的缓存并不是满，但是也没有位置存储数据<code>d</code>，导致冲突未命中，这样就会在<code>k+1</code>层查找数据<code>d</code>，找到后放置在<code>k</code>层并覆盖原缓存数据</p></li>
+</ul></li>
+</ul>
+<p>缓存与局部性是浑然一体的，这时因为：</p>
+<ul>
+<li><strong>利用时间局部性原理</strong>：由于时间局部性，同一数据对象可能会被多次使用。一旦一个数据对象在第一次不命中是被复制到缓存中，我们期望后面对该目标有一系列的访问命中，因为缓存比低一层的存储设备更快，对后面的命中服务会比最开始的不命中快很多</li>
+<li><strong>利用空间局部性原理</strong>：块通常包含多个数据对象，。由于空间局部性，我们会期望后面对该块中其他对象的访问能够补偿不命中后复制该块的花费。 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/list.png" width="700"></li>
+</ul>
+<h3 id="高速缓存存储器">4.高速缓存存储器</h3>
+<p>高速缓存存储器因为可以缓存数据，那么这些数据是如何被寻址查找、替换的呢。在高速缓存存储器中存在四个参数：<code>S</code>标识有几组高速缓存存储器、<code>E</code>表示每组有多少行、<code>B</code>表示每行有<span class="math inline">\(2^B\)</span>字节数据块组成、m位标记位,即使用<span class="math inline">\((S,E,B,m)\)</span>： <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cachelevel.png" width="700"></p>
+<p>在寻址的过程中通过确定<strong>所在的组S、查看有效位是否有效和标记为是否对应，如果满足上面三个，那么就说明数据在这个缓存区域内，通过行偏移地址得到该数据块的指定数据</strong>，如下面所示： <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cacheWork.png" width="700"></p>
+<ul>
+<li>从上面的结构我们可以分析知道，造成冲突不命中的情况是源于每个缓存组只有一行,即<code>E=1</code>，那么为了减小冲突不命中情况，可以增加行，此时称为组相联高速缓存 <img src="/2023/05/07/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/cachegroup.png" width="700"></li>
+</ul>
+<h4 id="读写时情况">4.1 读写时情况</h4>
+<p><strong>高速缓存出现不命中时，由不命中带来的开销是很大的，为了弥补这种开销，计算机设计者们充分利用空间局部性，以数据块的形式进行缓存</strong>。</p>
+<p>同时在缓存未命中的清况下，高速缓存就必须从内存中取出包含这个数据的块，不过一旦高速缓存取出该块，该替换哪一行呢(直接映射高速缓存没有这种困扰，因为它就只有一行）。我们之前讲过不同的计算机使用不同的策略，有一些使用哈希所有它们的形式不尽相同。如果有一个空行可替换，那最好，但是如果没有空行，在组相联高速缓存中，替换哪一行是一个问题。</p>
+<p>在计算机中，有使用<strong>最不常使用(LFU)</strong>和<strong>最近最少使用(LRU)</strong></p>
+<ul>
+<li><p><strong>读</strong>：高速缓存的读非常简单，首先，在高速缓存查找所需数据，若命中，立即返回该数据给CPU；若未命中，从存储器层次结构的较低层中取出包含该数据的块，将这个块存储到某个高速缓存行中（可能会驱逐某一行），然后返回该数据给CPU.</p></li>
+<li><strong>写</strong>：写要复杂一些。
+<ul>
+<li>首先考虑写命中，加入我们写一个已经缓存的数据<code>W</code>之后，它会怎么来<strong>保持数据的一致性</strong>呢。有两种方法：
+<ul>
+<li><strong>直写（write-through)</strong>：直接将数据<code>w</code>写回紧接着缓存的低一层。这种方法简单，但是每次写都会引起总线流量</li>
+<li><strong>写回(write-back)</strong>：尽可能的推迟这种更新，只有当替换算法要驱逐这个更新过的块时，才将它写到紧接着的下一层。由于局部性，这种放松明显减少了总线流量，但是缺点是在缓存的硬件中要额外维护一个修改标志位，这样才能识别是否被修改过。<br>
+</li>
+</ul></li>
+<li>写不命中时，也有两种情况：
+<ul>
+<li><strong>写分配（write-allocate)</strong>：加载相应低一层的数据块到高速缓存中，然后更新这个高速缓存块。利用空间局部性来弥补未命中情况</li>
+<li><strong>写不分配(not write-allocate)</strong>：避开高速缓存，直接把这个字写到低一层中，</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="高速缓存参数的性能影响">4.2 高速缓存参数的性能影响</h4>
+<ul>
+<li>未命中率：在一个程序执行或程序的一部分执行期间，内存引入不命中的比率<code>不命中数量/引用数量</code></li>
+<li>命中率：<code>1-未命中率</code></li>
+<li>命中时间：从高速缓存传送一个字节到CPU的时间，包括<strong>组选择、行确认和字选择的时间</strong>。L1只需几个时钟周期</li>
+<li>未命中时间：由于不命中需要额外的时间。L1不命中需要从L2得到服务的惩罚，通常为数十个周期；L2不命中从L3得到服务的惩罚，50个周期；从主存得到服务的惩罚，200个周期。</li>
+</ul>
+<p><strong>高速缓存大小、块大小和相联度的影响：</strong></p>
+<ul>
+<li><strong>高速缓存的大小：</strong>较大的高速缓存能够提升命中率，然后却会增加命中时间，这时因为缓存越多，要<strong>组、行和字偏移</strong>就越复杂，那么寻址中的<strong>组选择、行确认和字选择的时间</strong>越多。</li>
+<li><strong>块大小</strong>：大的数据块充分利用空间局部性，帮助提高命中率；但是，由于给定的高速缓存大小，块越大说明行越少，会损害时间局部性。同样较大的块也会对未命中惩罚造成负面影响，因为块越大，传送的时间就越多，</li>
+<li><strong>相联度</strong>：<code>E</code>较高可以降低高速缓存的冲突不命中情况；但较高的相联度，造价昂贵，也增加了命中时间。</li>
+</ul>
+<h4 id="高速缓存友好的代码特点">4.3 高速缓存友好的代码特点</h4>
+<ul>
+<li><p>让最常见的情况运行得快。程序通常把大部分时间都花在少量的核心函数上，而这些函数通常把大部分时间都花在了少量的循环上。所以要把注意力集中在核心函数的循环上，而忽略其他部分。</p></li>
+<li><p>在每个循环内部使缓存不命中数量最小。在其他条件，例如加载和存储的总次数相同的情况下，不命中率低的程序运行得更快。</p></li>
+</ul>
+<blockquote>
+<p>注意：编译器将局部变量存储到寄存器中，因此循环内对局部变量的引用不需要任何加载或存储指令。</p>
+</blockquote>
+<p><strong>高速缓存对程序性能的影响</strong></p>
+<ul>
+<li><p>通过重新排列循环以提高空间局部性：降低高速缓冲的不命中率。例子（求两个矩阵的乘积）</p></li>
+<li><p>使用分块来提高时间局部性。</p></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="trluper 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="trluper 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag"># 深入理解计算机系统</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/06/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/" rel="prev" title="深入理解计算机系统-优化程序性能">
+      <i class="fa fa-chevron-left"></i> 深入理解计算机系统-优化程序性能
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/09/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E9%93%BE%E6%8E%A5/" rel="next" title="深入理解计算机系统-链接">
+      深入理解计算机系统-链接 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">1.</span> <span class="nav-text">1 存储技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 随机访问存储器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A3%81%E7%9B%98"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 磁盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%AE%B9%E9%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 磁盘容量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%93%8D%E4%BD%9C-%E7%A3%81%E7%9B%98%E7%94%A8%E8%AF%BB%E5%86%99%E5%A4%B4%E6%9D%A5%E8%AF%BB%E5%86%99%E5%AD%98%E5%82%A8%E5%9C%A8%E7%A3%81%E6%80%A7%E8%A1%A8%E9%9D%A2%E7%9A%84%E4%BD%8D%E8%AF%BB%E5%86%99%E5%A4%B4%E7%9A%84%E5%8F%A6%E4%B8%80%E7%AB%AF%E8%BF%9E%E6%8E%A5%E5%88%B0%E4%B8%80%E4%B8%AA%E4%BC%A0%E5%8A%A8%E8%87%82"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 磁盘操作* 磁盘用读&#x2F;写头来读写存储在磁性表面的位，读写头的另一端连接到一个传动臂。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 固态硬盘</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7-%E4%B8%80%E4%B8%AA%E7%BC%96%E5%86%99%E8%89%AF%E5%A5%BD%E7%9A%84%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E5%B8%B8%E5%B8%B8%E5%85%B7%E6%9C%89%E8%89%AF%E5%A5%BD%E7%9A%84%E5%B1%80%E9%83%A8%E6%80%A7%E5%8D%B3%E4%BB%96%E4%BB%AC%E6%9B%B4%E5%8A%A0%E5%80%BE%E5%90%91%E4%BA%8E%E5%BC%95%E7%94%A8%E9%82%BB%E8%BF%91%E4%BA%8E%E5%85%B6%E4%BB%96%E6%9C%80%E8%BF%91%E5%BC%95%E7%94%A8%E8%BF%87%E7%9A%84%E6%95%B0%E6%8D%AE%E9%A1%B9%E7%9A%84%E6%95%B0%E6%8D%AE%E9%A1%B9%E6%88%96%E8%80%85%E6%9C%80%E8%BF%91%E5%BC%95%E7%94%A8%E6%88%96%E7%9A%84%E6%95%B0%E6%8D%AE%E9%A1%B9%E6%9C%AC%E8%BA%AB%E8%BF%99%E7%A7%8D%E7%89%B9%E6%80%A7%E5%B8%B8%E5%B8%B8%E7%A7%B0%E4%B8%BA%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86%E5%B1%80%E9%83%A8%E6%80%A7%E7%94%B1%E4%B8%A4%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%9A%84%E5%BD%A2%E5%BC%8F%E6%97%B6%E9%97%B4%E5%B1%80%E9%83%A8%E6%80%A7%E5%92%8C%E7%A9%BA%E9%97%B4%E5%B1%80%E9%83%A8%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">2 局部性* 一个编写良好的计算机程序常常具有良好的局部性，即他们更加倾向于引用邻近于其他最近引用过的数据项的数据项，或者最近引用或的数据项本身，这种特性，常常称为局部性原理。局部性由两种不同的形式：时间局部性和空间局部性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">3 存储器的层次结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">4.高速缓存存储器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%BB%E5%86%99%E6%97%B6%E6%83%85%E5%86%B5"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 读写时情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%8F%82%E6%95%B0%E7%9A%84%E6%80%A7%E8%83%BD%E5%BD%B1%E5%93%8D"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 高速缓存参数的性能影响</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%8F%8B%E5%A5%BD%E7%9A%84%E4%BB%A3%E7%A0%81%E7%89%B9%E7%82%B9"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 高速缓存友好的代码特点</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">20:25</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+      <script type="text/javascript">
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: '',
+            repo: '',
+            clientID: '123fe329fdbb06b0f1d1',
+            clientSecret: '40add829107b6e69f43274d3545ae71c988de8eb',
+            admin: '',
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
+      </script>
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

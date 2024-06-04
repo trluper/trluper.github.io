@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Trluper">
+<meta property="og:url" content="https://example.com/page/2/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="trluper">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://example.com/page/2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="post-title-link" itemprop="url">并查集</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-10-09 17:38:05" itemprop="dateCreated datePublished" datetime="2023-10-09T17:38:05+08:00">2023-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-10 00:34:30" itemprop="dateModified" datetime="2023-10-10T00:34:30+08:00">2023-10-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="并查集">并查集</h1>
+<p>在计算机科学中，并查集是一种树型的数据结构，用于处理一些不交集（Disjoint Sets）的合并及查询问题。有一个联合-查找算法（union-find algorithm）定义了两个用于此数据结构的操作：</p>
+<ul>
+<li><p><code>Find</code>：确定元素属于哪一个子集。这个确定方法就是不断向上查找找到它的根节点，它可以被用来确定两个元素是否属于同一子集。</p></li>
+<li><p><code>Union</code>：将两个子集合并成同一个集合。</p></li>
+</ul>
+<p><img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/isunion.png" width="600"></p>
+<p>由于支持这两种操作，一个不相交集也常被称为联合-查找数据结构（union-find data structure）或合并-查找集合（merge-find set）。其他的重要方法如<code>MakeSet</code>，用于建立单元素集合。有了这些方法，<strong>许多经典的划分问题可以被解决。</strong></p>
+<h1 id="并查集的引入">并查集的引入</h1>
+<p>并查集的重要思想在于，用集合中的一个元素代表集合。我曾看过一个有趣的比喻，把集合比喻成<strong>帮派</strong>，而代表元素则是<strong>帮主</strong>。接下来我们利用这个比喻，看看并查集是如何运作的。</p>
+<p>最开始，所有大侠各自为战。他们各自的帮主自然就是自己。（对于只有一个元素的集合，代表元素自然是唯一的那个元素） <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic1.png" width="600"></p>
+<p>现在1号和3号比武，假设1号赢了（这里具体谁赢暂时不重要），那么3号就认1号作帮主（合并1号和3号所在的集合，1号为代表元素）。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic2.png" width="600"></p>
+<p>现在2号想和3号比武（合并3号和2号所在的集合），但3号表示，别跟我打，让我帮主来收拾你（合并代表元素）。不妨设这次又是1号赢了，那么2号也认1号做帮主。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic3.png" width="600"></p>
+<p>现在我们假设4、5、6号也进行了一番帮派合并，江湖局势变成下面这样： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic4.png" width="600"></p>
+<p>现在假设2号想与6号比，跟刚刚说的一样，喊帮主1号和4号出来打一架（帮主真辛苦啊）。1号胜利后，4号认1号为帮主，当然他的手下也都是跟着投降了。好了，比喻结束了。如果你有一点图论基础，相信你已经觉察到，这是一个树状的结构，要寻找集合的代表元素，只需要一层一层往上访问父节点（图中箭头所指的圆），直达树的根节点（图中橙色的圆）即可。根节点的父节点是它自己。我们可以直接把它画成一棵树： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic5.png" width="500"></p>
+<p>用这种方法，我们可以写出最简单版本的并查集代码。</p>
+<h2 id="初始化">初始化</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">fa</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n; ++i)&#123;</span><br><span class="line">		fa[i]=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假如有编号为1, 2, 3, ..., n的n个元素，我们用一个数组fa[]来存储每个元素的父节点（因为每个元素有且只有一个父节点，所以这是可行的）。一开始，我们先将它们的父节点设为自己。</p>
+<h2 id="查询">查询</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span>&amp; x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(fa[x] == x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">find</span>(fa[x]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们用递归的写法实现对代表元素的查询：一层一层访问父节点，直至根节点（根节点的标志就是父节点是本身）。要判断两个元素是否属于同一个集合，只需要看它们的根节点是否相同即可。</p>
+<h2 id="合并">合并</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> i, <span class="type">int</span> j)</span> </span>&#123;</span><br><span class="line">    fa[<span class="built_in">find</span>(i)] = <span class="built_in">find</span>(j); <span class="comment">// 修改的是根节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合并操作也是很简单的，先找到两个集合的代表元素，然后将前者的父节点设为后者即可。当然也可以将后者的父节点设为前者，这里暂时不重要。本文末尾会给出一个更合理的比较方法。</p>
+<h1 id="路径压缩发生在查询时">路径压缩（发生在查询时）</h1>
+<p>随着merge次数的增加，形成的并查集可能会成为一条长长的链，随着链越来越长，我们想要从底部找到根节点的时间复杂度会成为线性。</p>
+<p>怎么解决呢？我们可以使用<strong>路径压缩</strong>的方法。既然我们只关心一个元素对应的<strong>根节点</strong>，那我们希望每个元素到根节点的路径尽可能短，最好只需要一步，那么这就是我们的<strong>路径压缩</strong>：</p>
+<p>思想是：在<strong>查询</strong>的过程中，把沿途的的每个节点的父节点都设为根节点，下一次查询时就可以以<span class="math inline">\(O(1)\)</span>获得根节点</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span>&amp; x)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(fa[x]==x) <span class="keyword">return</span> x;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		fa[x] = <span class="built_in">find</span>(fa[x]);</span><br><span class="line">		<span class="keyword">return</span> fa[x];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="按秩合并">按秩合并</h1>
+<p>有些人可能有一个误解，以为<strong>路径压缩</strong>优化后，并查集始终都是一个 菊花图 （只有两层的树的俗称）。但其实，由于路径压缩只在 <strong>查询</strong> 时进行，也只压缩 <strong>一条路径</strong>，所以并查集最终的结构仍然可能是比较复杂的。例如，现在我们有一棵较复杂的树需要与一个单元素的集合合并： <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic6.png" width="500"> 假如这时我们要merge(7,8)，如果我们可以选择的话，是把7的父节点设为8好，还是把8的父节点设为7好呢？</p>
+<p>当然是后者。因为如果把7的父节点设为8，会使树的 深度（树中最长链的长度）加深，原来的树中每个元素到根节点的距离都变长了，之后我们寻找根节点的路径也就会相应变长。虽然我们有路径压缩，但路径压缩也是会消耗时间的。而把8的父节点设为7，则不会有这个问题，因为它没有影响到不相关的节点。 <img src="/2023/10/09/%E5%B9%B6%E6%9F%A5%E9%9B%86/pic7.png" width="500"></p>
+<p>这启发我们：<strong>我们应该把简单的树往复杂的树上合并，而不是相反。因为这样合并后，到根节点距离变长的节点个数比较少。</strong></p>
+<p>我们用一个数组<code>rank[]</code>记录每个根节点对应的树的深度（如果不是根节点，其rank相当于以它作为根节点的<strong>子树</strong>的深度）。一开始，把所有元素的rank（<strong>秩</strong>）设为1。合并时比较两个根节点，把rank较小者往较大者上合并。路径压缩和按秩合并如果一起使用，时间复杂度接近<code>O(n)</code>，但是会破坏rank的准确性。</p>
+<h2 id="初始化按秩合并">初始化（按秩合并）</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">(<span class="type">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">fa</span><span class="params">(n+<span class="number">1</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">	<span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">rank</span><span class="params">(n+<span class="number">1</span>,<span class="number">1</span>)</span></span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>;i&lt;=n:==i)&#123;</span><br><span class="line">		fa[i]=i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="合并-1">合并</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">merge</span><span class="params">(<span class="type">int</span> i,<span class="type">int</span> j)</span></span>&#123;</span><br><span class="line">	<span class="type">int</span> x=<span class="built_in">find</span>(i),y=<span class="built_in">find</span>(j);</span><br><span class="line">	<span class="keyword">if</span>(rank[x]&lt;=rank[y])&#123;</span><br><span class="line">		fa[x] = y;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		fa[y] = x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(rank[x]==rank[y]&amp;&amp;x!=y)&#123;</span><br><span class="line">		rank[y]++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="总结">总结</h1>
+<ol type="1">
+<li>并查集主要解决的<strong>分组管理</strong>一类的问题，<strong>如果问题能抽象成组与组之间的问题，一般情况下可考虑并查集</strong>，并查集的常见思路</li>
+</ol>
+<blockquote>
+<p>是否在一个组； 在一个组的条件； 路径和组在图中都属于连通域，上述<code>组</code>均可替换为<code>路径</code>，问题不变；</p>
+</blockquote>
+<ol start="2" type="1">
+<li>并查集的主要难点：</li>
+</ol>
+<blockquote>
+<p><strong>Union</strong>时，有的问题已经告诉了分组的信息，有的问题则需要自行挖掘； 一般情况下，并查集底层为一个1d数组，有的问题需要对元素进行编号或者转化与之对应； 在不清楚并查集中到底会存放多少数据时，底层也可以<strong>map</strong>；</p>
+</blockquote>
+<ol start="3" type="1">
+<li><p>并查集功能是<strong>Union</strong>也就是将两个组合并成一个组，对于拆分的情况，可以逆序思考问题，例如<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/bricks-falling-when-hit/description/">leetcode803 打砖块</a></p></li>
+<li><p>根据问题，也可在并查集底层使用其他数据结构，帮助解决问题；</p></li>
+</ol>
+<h1 id="例题">例题</h1>
+<h2 id="等式方程的可满足性">等式方程的可满足性</h2>
+<h3 id="题目">题目</h3>
+<p>给定一个由表示变量之间关系的字符串方程组成的数组，每个字符串方程 <code>equations[i]</code> 的长度为<code>4</code>，并采用两种不同的形式之一：<code>&quot;a==b&quot;</code> 或 <code>&quot;a!=b&quot;</code>。在这里，<code>a</code> 和 <code>b</code> 是小写字母（不一定不同），表示单字母变量名。</p>
+<p>只有当可以将整数分配给变量名，以便满足所有给定的方程时才返回<code>true</code>，否则返回 <code>false</code>。</p>
+<h3 id="分析">分析</h3>
+<p>分析题目可知，可组等式方程或有关系或无关系，那么因此对所有的方程进行管理，该背景下可考虑使用并查集解决：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">lass UnionFind &#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">parent</span><span class="params">(<span class="number">26</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">UnionFind</span>() &#123;</span><br><span class="line">		parent.<span class="built_in">resize</span>(<span class="number">26</span>);</span><br><span class="line">        <span class="comment">//对范围内的赋值0</span></span><br><span class="line">        <span class="built_in">iota</span>(parent.<span class="built_in">begin</span>(), parent.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">find</span><span class="params">(<span class="type">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (index == parent[index]) &#123;</span><br><span class="line">            <span class="keyword">return</span> index;</span><br><span class="line">        &#125;</span><br><span class="line">        parent[index] = <span class="built_in">find</span>(parent[index]);</span><br><span class="line">        <span class="keyword">return</span> parent[index];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">unite</span><span class="params">(<span class="type">int</span> index1, <span class="type">int</span> index2)</span> </span>&#123;</span><br><span class="line">        parent[<span class="built_in">find</span>(index1)] = <span class="built_in">find</span>(index2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">equationsPossible</span><span class="params">(vector&lt;string&gt;&amp; equations)</span> </span>&#123;</span><br><span class="line">        UnionFind uf;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> string&amp; str: equations) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[<span class="number">1</span>] == <span class="string">&#x27;=&#x27;</span>) &#123;</span><br><span class="line">                <span class="type">int</span> index1 = str[<span class="number">0</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="type">int</span> index2 = str[<span class="number">3</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                uf.<span class="built_in">unite</span>(index1, index2);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> string&amp; str: equations) &#123;</span><br><span class="line">            <span class="keyword">if</span> (str[<span class="number">1</span>] == <span class="string">&#x27;!&#x27;</span>) &#123;</span><br><span class="line">                <span class="type">int</span> index1 = str[<span class="number">0</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="type">int</span> index2 = str[<span class="number">3</span>] - <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">                <span class="keyword">if</span> (uf.<span class="built_in">find</span>(index1) == uf.<span class="built_in">find</span>(index2)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>参考文献： &gt;<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/433996968">并查集</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/" class="post-title-link" itemprop="url">Trluper框架</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-09 19:52:16" itemprop="dateCreated datePublished" datetime="2023-09-09T19:52:16+08:00">2023-09-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-22 21:29:28" itemprop="dateModified" datetime="2023-09-22T21:29:28+08:00">2023-09-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE/" itemprop="url" rel="index"><span itemprop="name">项目</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>39k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>35 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="框架需求分析">1 框架需求分析</h1>
+<p>本框架主要为适用于IO密集类型的服务器开发而设计，<strong>同时作为框架，一是对于开发者而言应该是简单容易上手层次分明，二是框架本身而言容易扩展，能够依据开发人员的需求添加业务处理。</strong></p>
+<p>为了保证框架能够实现基本的要求，其总体需求如下：</p>
+<ul>
+<li>框架能够较好的应对并发场景。</li>
+<li>开发人员基于该框架能够轻松的实现自己的业务处理逻辑。</li>
+</ul>
+<p>接下来我们会一步一步的构建起这个框架，告诉大家这个框架是怎么实现的，而不是一下子出来一个完整的框架，让大家不知道怎么入手，同时也在这个过程中提出一些问题，让大家对框架更加熟悉，面试中能够回答出来一些关键点。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/09/Trluper%E6%A1%86%E6%9E%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/09/01/epoll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/01/epoll/" class="post-title-link" itemprop="url">epoll</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-01 18:10:43" itemprop="dateCreated datePublished" datetime="2023-09-01T18:10:43+08:00">2023-09-01</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/08/12/RabbitMQ/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/12/RabbitMQ/" class="post-title-link" itemprop="url">RabbitMQ</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-12 22:56:31" itemprop="dateCreated datePublished" datetime="2023-08-12T22:56:31+08:00">2023-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-13 16:14:38" itemprop="dateModified" datetime="2024-03-13T16:14:38+08:00">2024-03-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" itemprop="url" rel="index"><span itemprop="name">消息队列</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="安装">1 安装</h2>
+<ul>
+<li><p>1.在ubuntu上直接使用<code>apt-get install</code>安装 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install rabbitmq-server</span><br></pre></td></tr></table></figure></p></li>
+<li><p>2.启用RabbitMQ管理插件（可选）： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rabbitmq-plugins enable rabbitmq_management</span><br></pre></td></tr></table></figure> 启用后，可以通过浏览器访问http://<服务器IP>:15672来管理RabbitMQ（默认用户名和密码都是guest）。</服务器IP></p></li>
+<li><p>3.安装<code>C++</code>客户端库,为了使用<code>C++</code>与RabbitMQ进行交互,需要安装一个第三方库，这里用<code>SimpleAmqpClient</code>作为例子(如果你要<code>C++</code>程序要连接RabbitServer必须做的步骤) <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/alanxz/SimpleAmqpClient.git</span></span><br><span class="line">mkdir simpleamqpclient-build</span><br><span class="line">cd simpleamqpclient-build</span><br><span class="line">cmake ..</span><br></pre></td></tr></table></figure> 在cmake过程中如果报缺失什么依赖，直接安装就好，需要<code>Boost</code>库,<code>librabbitmq-dev</code>等等，<code>cmake..</code>成功后执行一下命令安装: <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p></li>
+<li><p>4.启动Rabbit服务器 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service rabbitmq-server start</span><br></pre></td></tr></table></figure> 之后，我们可以从<code>localhost:5672</code>访问，用户名密码都默认是<code>guest</code> <img src="/2023/08/12/RabbitMQ/RabbitMQ_locahost.png" width="600"></p></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/12/RabbitMQ/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/08/11/Manacher%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/11/Manacher%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">Manacher算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-11 14:36:31" itemprop="dateCreated datePublished" datetime="2023-08-11T14:36:31+08:00">2023-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-12 00:00:27" itemprop="dateModified" datetime="2023-08-12T00:00:27+08:00">2023-08-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="什么是manacher算法马拉车算法">什么是Manacher算法(马拉车算法)</h2>
+<p>Manachar算法主要是处理字符串中关于回文串的问题的，<strong>它本质上是对枚举中心法确定回文串的优化，使得算法可以在 <code>O（n）</code> 的时间处理出以字符串中每一个字符为中心的回文串半径。</strong></p>
+<p>由于回文字符串以其长度来分，可以分为奇回文（其长度为奇数）、偶回文（其长度为偶数），一般情况下需要分两种情况来寻找回文，<strong>马拉车算法为了简化这一步，对原始字符串进行了处理，在每一个字符的左右两边都加上特殊字符（肯定不存在于原字符串中的字符），让字符串变成一个奇回文简化算法</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/11/Manacher%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/08/06/KMP%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/08/06/KMP%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">KMP算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-06 14:57:48" itemprop="dateCreated datePublished" datetime="2023-08-06T14:57:48+08:00">2023-08-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-15 09:47:29" itemprop="dateModified" datetime="2024-01-15T09:47:29+08:00">2024-01-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="什么是kmp算法">什么是KMP算法</h2>
+<p>KMP算法一种改进的模式匹配算法，是D.E.Knuth、J.H.Morris、V.R.Pratt于1977年联合 发表。<strong>KMP算法的作用是在一个已知字符串中查找子串的位置,也叫做串的模式匹配，后文主串和模式串匹配， 子串和模板串匹配。先在开头约定，本文用<code>pat</code>表示模式串，长度为 <code>M</code>，<code>txt</code> 表示文本串，长度为<code>N</code>。KMP 算法是在 <code>txt</code> 中查找子串 <code>pat</code>，如果存在，返回这个子串的起始索引，否则返回 <code>-1</code>。</strong></p>
+<p><strong>几个最基本的概念：</strong></p>
+<ul>
+<li>字符串的前缀：<strong>从主串下标0开始的子串称为主串的前缀</strong></li>
+<li>字符串的后缀：<strong>从主串下标大于0的位置到结尾的子串称为主串的后缀</strong></li>
+<li>目标串：也就是主串，简单说就是那条比较长的串<code>txt</code></li>
+<li>模式串：也就是那条短的，用来匹配的串<code>pat</code></li>
+<li>kmp算法的目的：在<span class="math inline">\(O(m+n)\)</span>的时间复杂度的内进行串匹配，也就是在目标串中找到模式串，并返回目标串中模式串的第一个字符下标</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/06/KMP%E7%AE%97%E6%B3%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/07/13/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/07/13/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="post-title-link" itemprop="url">消息队列</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-07-13 16:18:14" itemprop="dateCreated datePublished" datetime="2023-07-13T16:18:14+08:00">2023-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-17 17:23:37" itemprop="dateModified" datetime="2024-03-17T17:23:37+08:00">2024-03-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="消息队列的优缺点">1. 消息队列的优缺点？</h3>
+<ul>
+<li><strong>异步处理</strong> - 相比于传统的串行、并行方式，消息队列使服务端能够异步处理请求，提高了系统吞吐量。</li>
+<li><strong>应用解耦</strong> - 系统间通过消息通信，不用关心其他系统的处理。</li>
+<li><strong>流量削锋</strong> - 可以通过消息队列长度控制请求量；可以缓解短时间内的高并发请求。</li>
+<li>日志处理 - 解决大量日志传输。</li>
+<li>消息通讯 - 消息队列一般都内置了高效的通信机制，因此也可以用在纯的消息通讯。比如实现点对点消息队列，或者聊天室等。</li>
+</ul>
+<h4 id="解耦异步削峰是什么">解耦、异步、削峰是什么？</h4>
+<ul>
+<li><strong>解耦：</strong>A 系统发送数据到 BCD 三个系统，通过接口调用发送。如果 E 系统也要这个数据呢？那如果 C 系统现在不需要了呢？A 系统负责人几乎崩溃…A 系统跟其它各种乱七八糟的系统严重耦合，A 系统产生一条比较关键的数据，很多系统都需要 A 系统将这个数据发送过来。如果使用 MQ，A 系统产生一条数据，发送到 MQ 里面去，哪个系统需要数据自己去 MQ 里面消费。如果新系统需要数据，直接从 MQ 里消费即可；如果某个系统不需要这条数据了，就取消对 MQ 消息的消费即可。这样下来，A 系统压根儿不需要去考虑要给谁发送数据，不需要维护这个代码，也不需要考虑人家是否调用成功、失败超时等情况。</li>
+</ul>
+<p>-** 异步：**A 系统接收一个请求，需要在自己本地写库，还需要在 BCD 三个系统写库，自己本地写库要 3ms，BCD 三个系统分别写库要 300ms、450ms、200ms。最终请求总延时是 3 + 300 + 450 + 200 = 953ms，接近 1s，用户感觉搞个什么东西，慢死了慢死了。用户通过浏览器发起请求。如果使用 MQ，那么 A 系统连续发送 3 条消息到 MQ 队列中，假如耗时 5ms，A 系统从接受一个请求到返回响应给用户，总时长是 3 + 5 = 8ms</p>
+<ul>
+<li><strong>削峰：</strong>将请求统统放到消息队列里去，服务器从消息队列中取任务，这样可以减少高峰时期对服务器压力。</li>
+</ul>
+<h4 id="缺点">缺点</h4>
+<ul>
+<li><strong>系统可用性降低：</strong>加入个消息队列进去，那消息队列宕机了了，你的系统也就无法使用。因此，系统可用性会降低；</li>
+<li><strong>系统复杂度提高：</strong>加入了消息队列，要多考虑很多方面的问题，比如如何保证消息不被重复消费、如何保证消息可靠性传输等。因此，需要考虑的东西更多，复杂性增大。</li>
+</ul>
+<h3 id="rabbitmq怎么保证消息的可靠性">2. RabbitMQ怎么保证消息的可靠性？</h3>
+<p>RabbitMQ消息的传输会经过三个阶段从生成者到Rabbit服务器的队列再到消费者，因此我们在三个阶段采取来保证消息的可靠性：</p>
+<ul>
+<li><p><strong>生产者丢失数据：</strong>在消息还未到达RabbitMQ服务器上时，未防止RabbitMQ服务器宕机导致的消息丢失，我们可以将信道设置成 confirm 模式（发送方确认模式）一旦channel进入confirm模式，所有在该信道上发布的消息都将会被指派一个唯一的ID（从1开始），一旦消息被投递到所有匹配的队列之后；rabbitMQ就会发送一个ACK给生产者（包含消息的唯一ID），这就使得生产者知道消息已经正确到达目的队列了；如果rabbitMQ没能处理该消息，则会发送一个Nack消息给你，你可以进行重试操作。 &gt;- 另外一个方案是走事务机制，送消息前，开启事务（channel.txSelect()）,然后发送消息，如果发送过程中出现什么异常，事务就会回滚（channel.txRollback()）,如果发送成功则提交事务（channel.txCommit()）。然而，这种方式有个缺点：吞吐量下降；</p></li>
+<li><p><strong>消息队列丢数据</strong>：开启RabbitMQ的持久化策略，将消息持久化进磁盘。和confirm机制配合使用，你可以在消息持久化磁盘后，再给生产者发送一个Ack信号。这样，如果消息持久化磁盘之前，rabbitMQ阵亡了，那么生产者收不到Ack信号，生产者会自动重发。 &gt;操作和简单：1、将queue的持久化标识durable设置为true,则代表是一个持久的队列；2、 发送消息的时候将deliveryMode=2</p></li>
+<li><p><strong>消费者丢失数据</strong>：消费者丢数据一般是因为采用了自动确认消息模式，我们将它改为手动确认即可</p></li>
+</ul>
+<h3 id="交换机exchange有哪些模式">3. 交换机Exchange有哪些模式</h3>
+<ul>
+<li><strong>fanout交换器：</strong>它会把所有发送到该交换器的消息路由到所有与该交换器绑定的队列中；</li>
+<li><strong>direct交换器：</strong>direct类型的交换器路由规则很简单，它会把消息路由到那些Routing_Key完全匹配的队列中；</li>
+<li><strong>topic交换器：</strong>匹配规则比direct更灵活。</li>
+<li><strong>headers交换器：</strong>根据发送消息内容的headers属性进⾏匹配（由于性能很差，不实⽤）</li>
+</ul>
+<h3 id="消息基于什么传输">3. 消息基于什么传输？</h3>
+<p>由于TCP连接的创建和销毁开销较大，且并发数受系统资源限制，会造成性能瓶颈。 RabbitMQ使⽤信道的方式来传输数据。信道是建⽴在真实的TCP连接内的虚拟连接，且每条 TCP连接上的信道数量没有限制。</p>
+<ul>
+<li>RabbitMQ采用类似非阻塞IO（Non-blocking I/O）做法，选择TCP连接复⽤，不仅可以减少性能开销，同时也便于管理。</li>
+<li>每个线程把持一个信道，所以信道复用了Connection的TCP连接。同时RabbitMQ可以确保每个线程的私密性，就像拥有独立的连接一样。</li>
+</ul>
+<h3 id="如何避免消息重复投递或重复消费">4. 如何避免消息重复投递或重复消费？</h3>
+<p>消费端处理消息的业务逻辑保持幂等性。只要保持幂等性，不管来多少条重复消息，最后处理的结果都一样。<strong>如保证每条消息都有唯一编号且保证消息处理成功与去重表的日志同时出现。利用一张日志表来记录已经处理成功的消息的 ID，如果新到的消息 ID 已经在日志表中，那么就不再处理这条消息。</strong></p>
+<h3 id="如何保证消息的顺序">5. 如何保证消息的顺序</h3>
+<ul>
+<li>（1）保证生产者 - MQServer - 消费者是一对一对一的关系。 缺陷：
+<ul>
+<li>并行度就会成为消息系统的瓶颈（吞吐量不够）</li>
+<li>更多的异常处理，比如：只要消费端出现问题，就会导致整个处理流程阻塞，我们不得不花费更多的精力来解决阻塞的问题。</li>
+</ul></li>
+<li><strong>（2）通过合理的设计或者将问题分解来规避。</strong>
+<ul>
+<li>不关注乱序的应用实际大量存在</li>
+<li>队列无序并不意味着消息无序 所以从业务层面来保证消息的顺序而不仅仅是依赖于消息系统，是一种更合理的方式。</li>
+</ul></li>
+</ul>
+<h3 id="如果有一个消息一直得不到消费比如客户端宕机且设置手动确认然后一直未手动确认此时怎么办">6. 如果有一个消息一直得不到消费，比如客户端宕机且设置手动确认，然后一直未手动确认，此时怎么办？</h3>
+<p>在RabbitMQ中，当消费者未正常消费消息，由于未收到来自消费者的确认，就会进行重试策略，但重试策略必须有一个次数，不然一直有这样的消息得不到消费，一直占用队列资源就造成吞吐量的低下。</p>
+<p>因此当一个消息在队列中达到一定的重试次数后仍然无法被成功处理，或者因为某些原因（如TTL过期、队列达到最大长度等）被队列拒绝返回<code>nack</code>时，RabbitMQ可以将这些消息发送到另一个交换机（Dead Letter Exchange），进而路由到一个专门的队列（Dead Letter Queue, DLQ），即<strong>死信队列</strong>。</p>
+<p><strong>DLQ中的消息代表了那些经过多次尝试仍无法被成功处理的消息。你可以有一个专门的消费者来监听DLQ，并对这些消息进行进一步的处理，例如记录日志、发送告警或者进行人工干预。</strong></p>
+<h3 id="rabbitmq基本概念">7. RabbitMQ基本概念</h3>
+<ul>
+<li>Broker： 简单来说就是消息队列服务器实体</li>
+<li>Exchange： 消息交换机，它指定消息按什么规则，路由到哪个队列</li>
+<li>Queue： 消息队列载体，每个消息都会被投入到一个或多个队列</li>
+<li>Binding： 绑定，它的作用就是把exchange和queue按照路由规则绑定起来</li>
+<li>Routing Key： 路由关键字，exchange根据这个关键字进行消息投递</li>
+<li>VHost： vhost 可以理解为虚拟 broker ，即 mini-RabbitMQ server。其内部均含有独立的 queue、exchange 和 binding 等，但最最重要的是，其拥有独立的权限系统，可以做到 vhost 范围的用户控制。当然，从 RabbitMQ 的全局角度，vhost 可以作为不同权限隔离的手段（一个典型的例子就是不同的应用可以跑在不同的 vhost 中）。</li>
+<li>Producer： 消息生产者，就是投递消息的程序</li>
+<li>Consumer： 消息消费者，就是接受消息的程序</li>
+<li>Channel： 消息通道，在客户端的每个连接里，可建立多个channel，每个channel代表一个会话任务</li>
+</ul>
+<h3 id="什么原因会导致-mq-消息积压">8. 什么原因会导致 MQ 消息积压?</h3>
+<p>MQ消息积压是指生产者发送的消息在Broker端大量堆积，无法被消费者及时消费，导致业务功能无法正常使用。以下是一些导致MQ消息积压的常见原因：</p>
+<p>-** 流量变大而服务器配置偏低<strong>：当消息的产生速度大于消费速度时，如果RabbitMQ服务器配置较低，就可能导致消息积压。 - </strong>消费者故障<strong>：如果消费者出现宕机或网络问题，导致无法及时消费消息，消息会持续堆积。 - </strong>程序逻辑设计问题<strong>：如果生产者持续生产消息，但消费者由于某种原因（如处理逻辑耗时过长）消费能力不足，也会造成消息积压。 - </strong>新上线的消费者功能存在BUG<strong>：新上线的消费者功能如果有缺陷，可能导致消息无法被正常消费，从而引发消息堆积。 - </strong>配置不合理：<strong>消息队列的容量设置过小或消费者的线程数设置过少，都可能导致消息积压。 - </strong>生产者推送大量消息**：在特定场景下，如大促活动，生产者可能短时间内推送大量消息至Broker，如果消费者的消费能力不足以应对这种突发流量，也会导致消息堆积。</p>
+<p>了解决MQ消息积压问题，可以采取以下策略：</p>
+<ul>
+<li>扩容：纵向扩容，增加服务器资源，如内存和CPU；横向扩容，将单机改为集群模式，增加集群节点，并增加消费者数量。</li>
+<li>优化程序逻辑：确保生产者和消费者的逻辑设计合理，避免生产者过快生产消息或消费者处理消息过慢。</li>
+<li>监控和报警：建立有效的监控和报警机制，及时发现并解决消息积压问题。</li>
+</ul>
+<h3 id="有几百万消息持续积压几小时怎么办">8. 有几百万消息持续积压几小时，怎么办？</h3>
+<p>消息积压处理办法：<strong>临时紧急扩容</strong></p>
+<ul>
+<li>1.先修复 consumer 的问题，确保其恢复消费速度，然后将现有 cnosumer 都停掉。</li>
+<li>2.新建一个<code>topic</code>,临时建立好原先 10 倍的 queue 数量。</li>
+<li>3.然后写一个临时的分发数据的 consumer 程序，这个程序部署上去消费积压的数据，消费之后不做耗时的处理，直接均匀轮询写入临时建立好的 10 倍数量的 queue。</li>
+<li>4.接着临时征用 10 倍的机器来部署 consumer，每一批 consumer 消费一个临时 queue 的数据。这种做法相当于是临时将 queue 资源和 consumer 资源扩大 10 倍，以正常的 10 倍速度来消费数据</li>
+<li>5.等快速消费完积压数据之后，得恢复原先部署的架构，重新用原先的 consumer 机器来消费消息。</li>
+</ul>
+<h3 id="与其他消息队列的区别比较">9 与其他消息队列的区别比较？</h3>
+<p><strong>ctiveMQ：</strong>的社区算是比较成熟，但是较目前来说，ActiveMQ 的性能比较差，而且版本迭代很慢，不推荐使用。</p>
+<p><strong>RabbitMQ：</strong>在吞吐量方面虽然稍逊于 Kafka 和 RocketMQ ，但是由于它基于 erlang 开发，所以并发能力很强，性能极其好，延时很低，达到微秒级。但是也因为 RabbitMQ 基于 erlang 开发，所以国内很少有公司有实力做erlang源码级别的研究和定制。如果业务场景对并发量要求不是太高（十万级、百万级），那这四种消息队列中，RabbitMQ 一定是你的首选。如果是大数据领域的实时计算、日志采集等场景，用 Kafka 是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。</p>
+<p><strong>RocketMQ</strong>：阿里出品，Java 系开源项目，源代码我们可以直接阅读，然后可以定制自己公司的 MQ，并且 RocketMQ 有阿里巴巴的实际业务场景的实战考验。RocketMQ 社区活跃度相对较为一般，不过也还可以，文档相对来说简单一些，然后接口这块不是按照标准 JMS 规范走的有些系统要迁移需要修改大量代码。还有就是阿里出台的技术，你得做好这个技术万一被抛弃，社区黄掉的风险，那如果你们公司有技术实力我觉得用RocketMQ 挺好的。</p>
+<p><strong>kafka：</strong>特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms 级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时 kafka 最好是支撑较少的 topic 数量即可，保证其超高吞吐量。kafka 唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。</p>
+<h3 id="rabbitmq-上的个-queue-中存放的-message-是否有数量限制">10 RabbitMQ 上的⼀个 queue 中存放的 message 是否有数量限制？</h3>
+<p>可以认为是没有限制，因为限制取决于机器的内存，但是消息过多会导致处理效率的下降。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/" class="post-title-link" itemprop="url">Redis数据库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-25 16:16:51" itemprop="dateCreated datePublished" datetime="2023-06-25T16:16:51+08:00">2023-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-24 10:39:10" itemprop="dateModified" datetime="2024-03-24T10:39:10+08:00">2024-03-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>64k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>58 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="概述一下你认识的redis">0概述一下你认识的Redis？</h2>
+<p>Redis本质上是一个Key-Value类型的内存数据库，很像memcached，整个数据库统统加载 在内存当中进行操作，定期通过异步操作把数据库数据flush到硬盘上进行保存。 因为是纯内存操作，Redis的性能非常出色，每秒可以处理超过 10万次读写操作，是已知性能 最快的Key-Value DB。 Redis的出色之处不仅仅是性能，Redis最大的魅力是支持保存多种数据结构，此外单个value 的最大限制是1GB，不像 memcached只能保存1MB的数据，因此Redis可以用来实现很多有用的功能。比方说用他的List来做FIFO双向链表，实现一个轻量级的高性 能消息队列服务，用他的Set可 以做高性能的tag系统等等。 另外Redis也可以对存入的Key-Value设置expire时间，因此也可以被当作一 个功能加强版的 memcached来用。 Redis的主要缺点是数据库容量受到物理内存的限制，不能用作海量数据 的高性能读写，因此Redis适合的场景主要局限在较小数据量的高性能操作和运算上。</p>
+<h3 id="redis-与其他-key---value-缓存产品有以下三个特点">0.1 Redis 与其他 key - value 缓存产品有以下三个特点</h3>
+<ul>
+<li><strong>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</strong></li>
+<li><strong>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</strong></li>
+<li><strong>Redis支持数据的备份，即master-slave模式的数据备份。</strong></li>
+</ul>
+<h3 id="redis-优势">0.2 Redis 优势</h3>
+<ul>
+<li><strong>性能极高 。Redis能读的速度是110000次/s,写的速度是81000次/s 。</strong></li>
+<li><strong>丰富的数据类型。 Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets数据类型操作。</strong></li>
+<li><strong>操作的原子性。 Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。</strong></li>
+<li><strong>丰富的特性。Redis还支持 publish/subscribe, 通知, key 过期等等特性</strong></li>
+</ul>
+<h2 id="redis数据类型">1. Redis数据类型</h2>
+<p>Redis提供了<code>String,Hash,List,Set,Zset</code>五种数据类型。</p>
+<h3 id="string">1.1 String</h3>
+<p><code>String</code>数据结构是最简单的<code>key-value</code>类型，<code>value</code>不仅可以是<code>String</code>,也可以是数字，包括整数，浮点数和二进制数。</p>
+<p><code>string</code> 数据结构是简单的 <code>key-value</code> 类型。虽然 Redis 是用 C 语言写的，但是 Redis 并没有使用 C 的字符串表示，而是自己构建了一种 <strong>简单动态字符串（simple dynamic string，SDS）</strong>。相比于 C 的原生字符串：</p>
+<ul>
+<li><strong>Redis 的 SDS 不光可以保存文本数据还可以保存二进制数据</strong></li>
+<li><strong>并且获取字符串长度复杂度为 O(1)（C 字符串为 O(N)）</strong></li>
+<li><strong>除此之外，Redis 的 SDS API 是安全的，不会造成缓冲区溢出。因为 SDS 在拼接字符串之前会检查 SDS 空间是否满足要求，如果空间不够会自动扩容，所以不会导致缓冲区溢出的问题</strong></li>
+</ul>
+<p>主要的应用有：缓存，计数（比如用户的访问次数、热点文章的点赞转发数量等等），共享session和限速。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/06/10/Redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/10/Redis/" class="post-title-link" itemprop="url">Redis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-10 12:18:36" itemprop="dateCreated datePublished" datetime="2023-06-10T12:18:36+08:00">2023-06-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-20 14:50:03" itemprop="dateModified" datetime="2024-02-20T14:50:03+08:00">2024-02-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>13k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>12 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="准备工作">准备工作</h2>
+<h3 id="安装redis">安装Redis</h3>
+<ol type="1">
+<li>在ubuntu安装Redis <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install redis-server</span><br></pre></td></tr></table></figure></li>
+<li>Redis服务器连接默认没有密码，可通过更改<code>/etc/redis/redis.conf</code>内的<code># requirepass foobared</code>来指定登录密码,比如去掉注释后更改密码为<code>requirepass 123456</code>，指定了密码为<code>123456</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/redis/redis.conf</span><br><span class="line">#修改密码</span><br><span class="line">requirepass <span class="number">123456</span></span><br></pre></td></tr></table></figure></li>
+<li>运行远程连接redis，redis默认只允许本地连接，你可以通过注释掉<code>bind 127.0.0.1::1</code>来支持远程登录。</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/06/10/Redis/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/22/CMU15-445-FALL2023-PROJECT-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/" class="post-title-link" itemprop="url">CMU15-445-FALL2022-PROJECT_0</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-22 08:47:02" itemprop="dateCreated datePublished" datetime="2023-05-22T08:47:02+08:00">2023-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-06 15:25:52" itemprop="dateModified" datetime="2023-06-06T15:25:52+08:00">2023-06-06</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="介绍">1 介绍</h3>
+<p>此次project0项目是实现一个键值对存储，数据结构由<strong>写时复制的字典树</strong>构成。实现的键-值存储可以存储映射到任何类型值的字符串键。键的值存储在表示该键的最后一个字符的节点中(又称终端节点)。例如，考虑在trie中插入kv对(&quot;ab&quot;， 1)和(&quot;ac&quot;， &quot;val&quot;)。 <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/keyvalue.png" width="500"></p>
+<h3 id="task1copy-on-write-trie">2 Task1:Copy-On-Write trie</h3>
+<ul>
+<li><p>在本任务中，只需要修改<code>trie .h</code>和<code>trie .cpp</code>来实现写时复制(copy-on-write) tree。<strong>在写即复制tree中，操作不会直接修改原始tree中的节点。相反，将为修改后的数据创建新节点，并为新修改的trie返回一个新根</strong>。写时复制(Copy-on-write)使我们能够在每次操作之后随时以最小的开销访问该树。考虑在上面的例子中插入<code>(&quot;ad&quot;， 2)</code>。我们通过重用原始树中的两个子节点来创建一个新的Node2，并创建一个新的值节点2。(见下图) <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new1.png" width="700"></p></li>
+<li><p>插入<code>(&quot;b&quot;， 3)</code>，我们将创建一个新的根，一个新的节点，并重用以前的节点。通过这种方式，我们可以在每次插入操作之前和之后获得树的内容。只要我们有根对象(Trie类)，我们就可以访问当时Trie中的数据。(见下图) <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new2.png" width="700"></p></li>
+<li><p>插入<code>(“a”，“abc”)</code>并删除<code>(“ab”，1)</code>，我们可以得到下面的trie。注意，父节点可以有值，并且在删除后需要清除所有不必要的节点。 <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new3.png" width="700"></p></li>
+</ul>
+<p>因此，在这里你需要实现三个函数：</p>
+<ul>
+<li><p><code>Get(key)</code>:获取键对应的值。</p></li>
+<li><p><code>Put(key, value)</code>:设置键对应的值。如果键已经存在，则覆盖现有值。注意，值的类型可能是不可复制的(即<code>std::unique_ptr&lt;int&gt;</code>)。这个方法返回一个新的树。</p></li>
+<li><p><code>Delete(key)</code>:删除键的值。这个方法返回一个新的树。</p></li>
+</ul>
+<blockquote>
+<p>这些操作都不应该直接在trie本身上执行。您应该创建新的树节点，并尽可能重用现有的树节点。 要创建一个新节点，您应该使用<code>TrieNode</code>类上的<code>Clone</code>函数。要重用新树中的现有节点，可以复制<code>std::shared_pt&lt;TrieNode&gt;</code>复制共享指针不会复制底层数据。您不应该在此项目中通过使用<code>new</code>和<code>delete</code>手动分配内存。当没有人有对底层对象的引用时，<code>std::shared_ptr</code>将释放对象。</p>
+</blockquote>
+<p>分析：</p>
+<ul>
+<li><strong>节点类<code>TrieNode</code>使用<code>map&lt;char, std::shared_ptr&lt;const TrieNode&gt;&gt;</code>来存储这种键值结构，</strong>，在这里另一个重要的函数是<code>Clone</code>函数（使用了C++类的构造函数的隐式转换)，<code>Clone</code>函数实现新建树中现有节点</li>
+<li><strong>叶子类<code>TrieNodeWithValue</code></strong>，继承于<code>TrieNode</code>，增加了叶子节点存值功能</li>
+<li><code>Trie</code>类，内部声明了<code>root</code>（初始为NULL),三个上述待实现的功能</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">20:25</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

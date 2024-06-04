@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo_1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo_1.png">
+  <link rel="mask-icon" href="/images/logo_1.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-pace-theme-center-circle.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"buttons","active":"valine","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Trluper">
+<meta property="og:url" content="https://example.com/index.html">
+<meta property="og:site_name" content="Trluper">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="trluper">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://example.com/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Trluper</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Trluper</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/trluper" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/27/%E5%89%8D%E7%AB%AF%E5%88%9D%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/27/%E5%89%8D%E7%AB%AF%E5%88%9D%E8%AF%86/" class="post-title-link" itemprop="url">前端初识</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-27 18:58:49" itemprop="dateCreated datePublished" datetime="2024-05-27T18:58:49+08:00">2024-05-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-03 23:26:56" itemprop="dateModified" datetime="2024-06-03T23:26:56+08:00">2024-06-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="css">1 CSS</h1>
+<p>css是一种用来为结构化文档（如 HTML 文档或 XML 应用）添加样式（字体、间距和颜色等）的计算机语言，CSS 文件扩展名为 <code>.css</code>。通过使用 CSS 我们可以大大提升网页开发的工作效率！其语法如下： <img src="/2024/05/27/%E5%89%8D%E7%AB%AF%E5%88%9D%E8%AF%86/2.png" width="500"></p>
+<ul>
+<li>选择器通常是需要改变样式的 <strong>HTML 元素</strong>。</li>
+<li>每条声明由一个<strong>属性和一个值</strong>组成。</li>
+<li>CSS声明总是以分号 <code>;</code> 结束，声明总以大括号 <code>&#123;&#125;</code> 括起来</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE <span class="selector-tag">html</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">html</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;utf-<span class="number">8</span>&quot;&gt; </span><br><span class="line">&lt;title&gt;菜鸟教程(runoob<span class="selector-class">.com</span>)&lt;/title&gt; </span><br><span class="line">&lt;style&gt;</span><br><span class="line"><span class="selector-tag">p</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="attribute">color</span>:red;</span><br><span class="line">	<span class="attribute">text-align</span>:center;</span><br><span class="line">&#125; </span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">p</span>&gt;Hello World!&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;<span class="selector-tag">p</span>&gt;这个段落采用CSS样式化。&lt;/<span class="selector-tag">p</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">html</span>&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>css的注释是同c++的<code>/* */</code></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/05/27/%E5%89%8D%E7%AB%AF%E5%88%9D%E8%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/26/vue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/26/vue/" class="post-title-link" itemprop="url">vue</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-26 16:01:45" itemprop="dateCreated datePublished" datetime="2024-05-26T16:01:45+08:00">2024-05-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-04 23:40:29" itemprop="dateModified" datetime="2024-06-04T23:40:29+08:00">2024-06-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index"><span itemprop="name">vue</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="vue简介">1 vue简介</h1>
+<p>Vue (发音为 /vjuː/，类似 view) 是一款用于构建用户界面的 JavaScript 框架。它基于标准 HTML、CSS 和 JavaScript 构建，并提供了一套声明式的、组件化的编程模型，帮助你高效地开发用户界面</p>
+<p>Vue 是一个框架，也是一个生态。其功能覆盖了大部分前端开发常见的需求。但 Web 世界是十分多样化的，不同的开发者在 Web 上构建的东西可能在形式和规模上会有很大的不同。考虑到这一点，Vue 的设计非常注重灵活性和“可以被逐步集成”这个特点。根据你的需求场景，你可以用不同的方式使用 Vue：</p>
+<ul>
+<li>无需构建步骤，渐进式增强静态的 HTML</li>
+<li>在任何页面中作为 Web Components 嵌入</li>
+<li>单页应用 (SPA)</li>
+<li>全栈 / 服务端渲染 (SSR)</li>
+<li>Jamstack / 静态站点生成 (SSG)</li>
+<li>开发桌面端、移动端、WebGL，甚至是命令行终端中的界面</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/05/26/vue/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/22/django/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/22/django/" class="post-title-link" itemprop="url">django</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-22 21:11:32" itemprop="dateCreated datePublished" datetime="2024-05-22T21:11:32+08:00">2024-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-04 17:40:08" itemprop="dateModified" datetime="2024-06-04T17:40:08+08:00">2024-06-04</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>20k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>18 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="django-简介">1 Django 简介</h1>
+<h2 id="基本介绍">1.1 基本介绍</h2>
+<p>Django 是一个高级的 Python Web 框架，用于快速开发可维护和可扩展的 Web 应用程序。</p>
+<p>使用 Django，<strong>只要很少的代码</strong>，Python 的程序开发人员就可以轻松地完成一个正式网站所需要的大部分内容，并进一步开发出全功能的 Web 服务。</p>
+<p>Django 本身基于 <strong>MVC 模型</strong>，即 <strong>Model（模型）</strong>+ <strong>View（视图）</strong>+ <strong>Controller（控制器）</strong>设计模式，MVC 模式使后续对程序的修改和扩展简化，并且使程序某一部分的重复利用成为可能。</p>
+<p>Django想要理解，首先要明白的就是Django的大致组成，它大致由四部分组成，也就是提到的MTV模型：</p>
+<ul>
+<li><p><strong>Model（模型</strong>）：负责业务对象与数据库的对象（orm）</p></li>
+<li><p><strong>Template（模板）</strong>：负责把数据展示给用户（前端的东西）</p></li>
+<li><p><strong>View（视图）</strong>：负责业务逻辑，并在适当的时候会调用Model和Template</p></li>
+<li><p><strong>URL分发器</strong>：通过前台请求的url，来分配调到相应的函数操作，类似于网络中的路由表，控制网络的下一跳的地址。</p></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/05/22/django/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/05/17/openTelemtry/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/17/openTelemtry/" class="post-title-link" itemprop="url">openTelemtry</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-17 14:57:25" itemprop="dateCreated datePublished" datetime="2024-05-17T14:57:25+08:00">2024-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-23 20:49:41" itemprop="dateModified" datetime="2024-05-23T20:49:41+08:00">2024-05-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/opentelemtry/" itemprop="url" rel="index"><span itemprop="name">opentelemtry</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="什么是opentelemtry">1 什么是OpenTelemtry</h1>
+<p>OpenTelemetry，也称为 OTel，是一个供应商中立的开源可观测性框架 用于检测、生成、收集和导出遥测数据，例如<strong>跟踪（trace)、指标(metric)和日志(log)等signal（信号）</strong>。OpenTelemetry 是一个<strong>可观测性</strong>框架和工具包，旨在创建和管理遥测数据，例如跟踪、指标和日志。至关重要的是，OpenTelemetry 是供应商和 与工具无关，这意味着它可以与各种可观测性一起使用</p>
+<h2 id="什么是可观测性">1.1 什么是可观测性？</h2>
+<p><strong>可观测性</strong>是指通过检查系统的内部输出来了解系统内部状态的能力。在软件的上下文中，这意味着能够理解 通过检查系统的遥测数据来检查系统的内部状态，其中遥测数据包括<strong>跟踪、指标和日志</strong>。</p>
+<p>要使系统可观察，必须对其进行检测。也就是说，代码必须发出跟踪、指标或日志。然后，必须将检测的数据发送到可观测性后端</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/05/17/openTelemtry/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/04/16/%E8%99%9A%E6%8B%9F%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/16/%E8%99%9A%E6%8B%9F%E5%8C%96/" class="post-title-link" itemprop="url">虚拟化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-16 12:53:40 / 修改时间：13:06:14" itemprop="dateCreated datePublished" datetime="2024-04-16T12:53:40+08:00">2024-04-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%99%9A%E6%8B%9F%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">虚拟化</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>904</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="什么是虚拟化vmvare的实现原理是什么为什么能够在一个系统上虚拟化实现另一个系统">什么是虚拟化（VMVARE的实现原理是什么，为什么能够在一个系统上虚拟化实现另一个系统？）</h3>
+<p>VMware是一款强大的虚拟化软件，它能够在一个物理服务器上创建并运行多个虚拟机，每个虚拟机都像是独立的计算机系统，拥有自己的操作系统和应用程序。VMware实现虚拟化的原理主要基于以下几个关键组件和技术：</p>
+<ul>
+<li><p><strong>虚拟机监视器（Hypervisor）</strong>：VMware通过在物理服务器上安装虚拟机监视器（也被称为VMM或Hypervisor）来实现虚拟化。VMM是一个软件层，位于物理服务器和虚拟机之间，负责管理虚拟机的创建、启动、停止和运行。VMM能够抽象物理服务器的硬件资源，为虚拟机提供一个隔离的、安全的运行环境。</p></li>
+<li><p><strong>资源隔离</strong>：VMM通过创建逻辑分区来将物理服务器的计算资源（如处理器、内存、存储等）分配给不同的虚拟机。每个虚拟机都在自己的逻辑环境中运行，与其他虚拟机相互隔离。这种隔离性确保了每个虚拟机都能够独立运行，互不影响，从而提供了更高的安全性和可靠性。</p></li>
+<li><p><strong>资源共享</strong>：虚拟化平台利用资源池的概念，将物理服务器上的处理能力和存储容量整合在一起，然后动态地按需分配给虚拟机。这意味着物理资源可以根据虚拟机的需求进行灵活分配和调整，提高了资源的利用率和系统的灵活性。</p></li>
+<li><p><strong>虚拟硬件</strong>：VMware虚拟化可以模拟多种虚拟硬件设备，包括处理器、内存、磁盘、网络接口等。每个虚拟机都认为自己拥有独立的硬件资源，可以在其内部安装操作系统和应用程序。这种模拟使得虚拟机能够像真实计算机一样运行各种软件和服务。</p></li>
+<li><p><strong>内存和存储虚拟化</strong>：VMware使用内存分页技术将虚拟机的内存分成固定大小的页面，并映射到物理服务器的内存中。同时，它也将物理服务器的存储资源虚拟化为多个独立的虚拟存储设备，供虚拟机使用。</p></li>
+<li><p>** 迁移和克隆**：VMware还支持虚拟机的迁移和克隆操作，这意味着虚拟机可以在不同的物理服务器之间轻松迁移，或者创建虚拟机的副本以进行备份或扩展。</p></li>
+</ul>
+<p>通过上述技术和组件的协同工作，VMware能够在单一系统上实现多个虚拟系统的运行。这种虚拟化技术不仅提高了硬件资源的利用率，还简化了系统的管理和维护，使得用户可以更加灵活和高效地部署和管理应用程序和服务。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/04/02/go%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/02/go%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">go基础</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-02 22:47:56" itemprop="dateCreated datePublished" datetime="2024-04-02T22:47:56+08:00">2024-04-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-04 11:48:51" itemprop="dateModified" datetime="2024-04-04T11:48:51+08:00">2024-04-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index"><span itemprop="name">go</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="go简述">1. go简述</h1>
+<h2 id="为什么要创造一门编程语言">1.1 为什么要创造一门编程语言</h2>
+<ul>
+<li>C/C++ 的发展速度无法跟上计算机发展的脚步，十多年来也没有出现一门与时代相符的主流系统编程语言，因此人们需要一门新的系统编程语言来弥补这个空缺，尤其是在计算机信息时代。</li>
+<li>相比计算机性能的提升，软件开发领域不被认为发展得足够快或者比硬件发展得更加成功（有许多项目均以失败告终），同时应用程序的体积始终在不断地扩大，这就迫切地需要一门具备更高层次概念的低级语言来突破现状。</li>
+<li>在 Go 语言出现之前，开发者们总是面临非常艰难的抉择，<strong>究竟是使用执行速度快但是编译速度并不理想的语</strong>言（如：C++），<strong>还是使用编译速度较快但执行效率不佳的语言</strong>（如：.NET、Java），或者说开发难度较低但执行速度一般的动态语言呢？显然，<strong>Go 语言在这 3 个条件之间做到了最佳的平衡：快速编译，高效执行，易于开发。</strong></li>
+</ul>
+<h2 id="go语言的发展目标">1.2 Go语言的发展目标</h2>
+<ul>
+<li>Go 语言的主要目标是将<strong>静态语言的安全性和高效性(C++)与动态语言的易开发性(python)</strong>进行有机结合，达到完美平衡，从而使编程变得更加有乐趣，而不是在艰难抉择中痛苦前行。</li>
+</ul>
+<p>因此<strong>，Go 语言是一门类型安全和内存安全的编程语言。虽然 Go 语言中仍有指针的存在，但并不允许进行指针运算。</strong></p>
+<ul>
+<li>Go 语言的另一个目标是对于<strong>网络通信、并发和并行编程的极佳支持</strong>，从而更好地利用大量的分布式和多核的计算机，这一点对于谷歌内部的使用来说就非常重要了。设计者通过** goroutine** 这种轻量级线程的概念来实现这个目标，然后通过** channel **来实现各个 goroutine 之间的通信。他们实现了分段栈增长和 goroutine 在线程基础上多路复用技术的自动化。</li>
+</ul>
+<p>这个特性显然是 Go 语言最强有力的部分，不仅支持了日益重要的多核与多处理器计算机，也弥补了现存编程语言在这方面所存在的不足。</p>
+<ul>
+<li>Go 语言中另一个非常重要的特性就是它的<strong>构建速度</strong>（编译和链接到机器代码的速度），一般情况下构建一个程序的时间只需要数百毫秒到几秒。作为大量使用<code>C++</code> 来构建基础设施的谷歌来说，无疑从根本上摆脱了 C++ 在构建速度上非常不理想的噩梦。这不仅极大地提升了开发者的生产力，同时也使得软件开发过程中的代码测试环节更加紧凑，而不必浪费大量的时间在等待程序的构建上。</li>
+</ul>
+<p>依赖管理是现今软件开发的一个重要组成部分，但是 C 语言中“头文件”的概念却导致越来越多因为依赖关系而使得构建一个大型的项目需要长达几个小时的时间。人们越来越需要一门具有严格的、简洁的依赖关系分析系统从而能够快速编译的编程语言。这正是 Go 语言采用<strong>包模型</strong>的根本原因，这个模型通过严格的依赖关系检查机制来加快程序构建的速度，提供了非常好的可量测性。</p>
+<p>整个 Go 语言标准库的编译时间一般都在** 20 **秒以内，其它的常规项目也只需要半秒钟的时间来完成编译工作。这种闪电般的编译速度甚至比编译 C 语言或者 Fortran 更加快，使得编译这一环节不再成为在软件开发中困扰开发人员的问题。在这之前，动态语言将快速编译作为自身的一大亮点，像<code>C++</code>那样的静态语言一般都有非常漫长的编译和链接工作。而同样作为静态语言的 Go 语言，通过自身优良的构建机制，成功地去除了这个弊端，使得程序的构建过程变得微不足道，拥有了像脚本语言和动态语言那样的高效开发的能力。</p>
+<ul>
+<li><p>另外<strong>，Go 语言在执行速度方面也可以与 C/C++ 相提并论。</strong></p></li>
+<li><p>由于<strong>内存问题</strong>（通常称为内存泄漏）长期以来一直伴随着 C++ 的开发者们，Go 语言的设计者们认为内存管理不应该是开发人员所需要考虑的问题。因此尽管 Go 语言像其它静态语言一样执行本地代码，但它依旧运行在某种意义上的<strong>虚拟机</strong>，以此来实现高效快速的<strong>垃圾回收</strong>（使用了一个简单的标记-清除算法）。</p></li>
+</ul>
+<p>尽管垃圾回收并不容易实现，但考虑这将是未来并发应用程序发展的一个重要组成部分，Go 语言的设计者们还是完成了这项艰难的任务。</p>
+<ul>
+<li><p>Go 语言还能够在运行时进行<strong>反射</strong>相关的操作。</p></li>
+<li><p>使用 <strong>go install </strong>能够很轻松地对第三方包进行部署。</p></li>
+<li><p>此外，Go 语言还支持调用由 C 语言编写的海量库文件（第 3.9 节），从而能够将过去开发的软件进行快速迁移。</p></li>
+</ul>
+<h2 id="语言的特性">1.3 语言的特性</h2>
+<p>Go 语言从本质上（程序和结构方面）来实现并发编程。</p>
+<p><strong>因为 Go 语言没有类和继承的概念</strong>，所以它和 Java 或 C++ 看起来并不相同。但是它通过<strong>接口 (interface) 的概念来实现多态性</strong>。Go 语言有一个清晰易懂的轻量级类型系统，在类型之间也没有层级之说。因此可以说这是一门混合型的语言。</p>
+<p>Go 语言使用<strong>静态类型</strong>，所以它是类型安全的一门语言，加上通过构建到本地代码，程序的执行速度也非常快。</p>
+<p>作为<strong>强类型语言</strong>，<strong>隐式的类型转换是不被允许的</strong>，记住一条原则：让所有的东西都是<strong>显式</strong>的。</p>
+<p>Go 语言其实也有一些<strong>动态语言的特性（通过关键字 var）</strong>，所以它对那些逃离 Java 和 .Net 世界而使用 Python、Ruby、PHP 和 JavaScript 的开发者们也具有很大的吸引力。</p>
+<p>Go 语言支持交叉编译，比如说你可以在运行 Linux 系统的计算机上开发运行 Windows 下运行的应用程序。这是第一门完全支持 UTF-8 的编程语言，这不仅体现在它可以处理使用 UTF-8 编码的字符串，就连它的源码文件格式都是使用的 UTF-8 编码。Go 语言做到了真正的国际化！</p>
+<h2 id="相关特性的缺失">1.4 相关特性的缺失</h2>
+<p>许多能够在大多数面向对象语言中使用的特性 Go 语言都没有支持，但其中的一部分可能会在未来被支持。</p>
+<ul>
+<li>为了简化设计，<strong>不支持函数重载和操作符重载</strong></li>
+<li>为了避免在 C/C++ 开发中的一些 Bug 和混乱，<strong>不支持隐式转换</strong></li>
+<li>Go 语言通过另一种途径实现面向对象设计（第 10-11 章）来放弃类和类型的继承</li>
+<li>尽管在接口的使用方面（第 11 章）可以实现类似变体类型的功能，但本身不支持变体类型</li>
+<li>不支持动态加载代码</li>
+<li>不支持动态链接库</li>
+<li>不支持泛型</li>
+<li>通过 recover() 和 panic() 来替代异常机制（第 13.2-13.3 节）</li>
+<li><strong>不支持静态变量</strong></li>
+</ul>
+<h2 id="linux上安装go">1.5 Linux上安装go</h2>
+<ul>
+<li>首先进入<a target="_blank" rel="noopener" href="https://golang.google.cn/dl/">go官网</a>下载指定的已编译好的源码包（ps:这里我的电脑是x86-64架构所以选择了`go1.22.1.linux-amd64.tar.gz，将其下载下来 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https:<span class="comment">//golang.google.cn/dl/go1.22.1.linux-amd64.tar.gz</span></span><br></pre></td></tr></table></figure></li>
+<li>解压缩到指定路径 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar  -C /usr/lib/go/ -xvf go1<span class="number">.22</span><span class="number">.1</span>.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure></li>
+<li><p>建立软连接（可选) <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/lib/go/bin/go /usr/bin/go</span><br></pre></td></tr></table></figure></p></li>
+<li><p>之后我们需要能够让Linux能够找到<code>go</code>这个编译器，所以需要配置<code>~/.bashrc</code>文件 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> GOROOT=/usr/lib/go</span><br><span class="line"><span class="keyword">export</span> GOPATH=$PATH:$GOROOT/bin</span><br><span class="line"><span class="keyword">export</span> PATH=$PATH:/usr/bin</span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<h1 id="go项目搭建先识">2 Go项目搭建先识</h1>
+<h2 id="go的25个关键字和36个预定义标识符">2.1 Go的25个关键字和36个预定义标识符</h2>
+<p>Go语言的关键字保留很少，只有25个，之所以刻意地将 Go 代码中的关键字保持的这么少，是为了简化在编译过程第一步中的代码解：</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>break</td>
+<td>default</td>
+<td>func</td>
+<td>interface</td>
+<td>select</td>
+</tr>
+<tr class="even">
+<td>case</td>
+<td>defer</td>
+<td>go</td>
+<td>map</td>
+<td>struct</td>
+</tr>
+<tr class="odd">
+<td>chan</td>
+<td>else</td>
+<td>goto</td>
+<td>package</td>
+<td>switch</td>
+</tr>
+<tr class="even">
+<td>const</td>
+<td>fallthrough</td>
+<td>if</td>
+<td>range</td>
+<td>type</td>
+</tr>
+<tr class="odd">
+<td>continue</td>
+<td>for</td>
+<td>import</td>
+<td>return</td>
+<td>var</td>
+</tr>
+</tbody>
+</table>
+<p>除了以上介绍的这些关键字，Go 语言还有 36 个预定义标识符，其中包含了基本类型的名称和一些基本的内置函数（第 6.5 节），它们的作用都将在接下来的章节中进行进一步地讲解。</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>append</td>
+<td>bool</td>
+<td>byte</td>
+<td>cap</td>
+<td>close</td>
+<td>complex</td>
+<td>complex64</td>
+<td>complex128</td>
+<td>uint16</td>
+</tr>
+<tr class="even">
+<td>copy</td>
+<td>false</td>
+<td>float32</td>
+<td>float64</td>
+<td>imag</td>
+<td>int</td>
+<td>int8</td>
+<td>int16</td>
+<td>uint32</td>
+</tr>
+<tr class="odd">
+<td>int32</td>
+<td>int64</td>
+<td>iota</td>
+<td>len</td>
+<td>make</td>
+<td>new</td>
+<td>nil</td>
+<td>panic</td>
+<td>uint64</td>
+</tr>
+<tr class="even">
+<td>print</td>
+<td>println</td>
+<td>real</td>
+<td>recover</td>
+<td>string</td>
+<td>true</td>
+<td>uint</td>
+<td>uint8</td>
+<td>uintptr</td>
+</tr>
+</tbody>
+</table>
+<h2 id="包的概念导入与可见性">2.2 包的概念、导入与可见性</h2>
+<p><strong>包</strong>是结构化代码的一种方式：每个程序都由包（通常简称为 pkg）的概念组成，<strong>可以使用自身的包或者从其它包中导入内容。</strong></p>
+<p><strong>一个包可以由许多以 .go 为扩展名的源文件组成</strong>，因此文件名和包名一般来说都是不相同的。<strong>必须</strong>源文件中非注释的第一行指明这个文件属于哪个<strong>包</strong>： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br></pre></td></tr></table></figure> 一个应用程序可以包含不同的包，而且即使你只使用 main 包也不必把所有的代码都写在一个巨大的文件里：你可以用一些较小的文件，并且在每个文件非注释的第一行都使用 package main 来指明这些文件都属于 main 包。<strong>如果你打算编译包名不是为 main 的源文件，如 pack1，编译后产生的对象文件将会是 pack1.a 而不是可执行程序</strong>。另外要注意的是，所有的包名都应该使用小写字母。</p>
+<p>如果想要构建一个程序，则包和包内的文件都必须以<strong>正确的顺序</strong>进行编译。包的依赖关系决定了其构建顺序。</p>
+<p><strong>属于同一个包的源文件必须全部被一起编译</strong>，一个包即是编译时的一个<strong>单元</strong>，因此根据惯例，<strong>项目的每个目录都建议只包含一个包。</strong></p>
+<p>如果对一个包进行更改或重新编译，所有引用了这个包的客户端程序都必须全部重新编译。</p>
+<p>Go 中的包模型采用了<strong>显式依赖关系</strong>的机制来达到快速编译的目的，<strong>编译器</strong>会从后缀名为 <strong>.o</strong> 的对象文件（需要且只需要这个文件）中<strong>提取传递依赖类型</strong>的信息。</p>
+<p>如果 <code>A.go</code> 依赖 <code>B.go</code>，而<code>B.go</code>又依赖 <code>C.go</code>：</p>
+<ul>
+<li>编译 C.go, B.go, 然后是 A.go.</li>
+<li>为了编译 A.go, 编译器读取的是 B.o 而不是 C.o.</li>
+</ul>
+<p>这种机制对于编译大型的项目时可以显著地提升编译速度。每一段代码只会被编译一次</p>
+<h3 id="包的导入">2.2.1 包的导入</h3>
+<p>包的导入使用<code>import</code>,下面使用因式分解关键字导入包 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">   <span class="string">&quot;fmt&quot;</span></span><br><span class="line">   <span class="string">&quot;os&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure> &gt;当你导入多个包时，最好按照<strong>字母顺序排列包名</strong>，这样做更加清晰易读。</p>
+<h3 id="可见性规则">2.2.2 可见性规则</h3>
+<p>当标识符（包括常量、变量、类型、函数名、结构字段等等）以<strong>一个大写字母开头</strong>，如：Group1，那么使用这种形式的标识符的对象就可以被<strong>外部包</strong>的代码所使用（客户端程序需要先导入这个包），这被称为<strong>导出</strong>（像面向对象语言中的 <code>public</code>）；标识符如果以<strong>小写字母</strong>开头，则对包外是不可见的，但是它们在整个包的内部是可见并且可用的（像面向对象语言中的 private ）。</p>
+<p>因此，在<strong>导入</strong>一个外部包后，<strong>能够且只能够访问该包中导出的对象。</strong></p>
+<p>假设在包 <code>pack1</code> 中我们有一个变量或函数叫做<code>Thing</code>（以 T 开头，所以它能够被导出），那么在当前包中导入<code>pack1</code>包，<code>Thing</code> 就可以像面向对象语言那样使用点标记来调用：<code>pack1.Thing</code>（pack1 在这里是不可以省略的）。 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pack1</span><br><span class="line"></span><br><span class="line">pack1.Thing()</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>如果你导入了一个包却没有使用它，则会在构建程序时引发错误，如<code>imported and not used: xx</code>，这正是遵循了 Go 的格言：“没有不必要的代码！”。</p>
+</blockquote>
+<h2 id="函数">2.3 函数</h2>
+<ul>
+<li><p>这是定义一个函数<strong>最简单的格式</strong>： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">functionName</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure> 你可以在括号 () 中写入 0 个或多个函数的参数（使用逗号 , 分隔），每个参数的名称后面必须紧跟着该参数的类型。</p></li>
+<li><p><strong><code>main()</code></strong> 函数是每一个可执行程序所<strong>必须包含</strong>的，一般来说都是在启动后<strong>第一个执行</strong>的函数（如果有 init() 函数则会先执行该函数）。如果你的 main 包的源代码没有包含 main() 函数，则会引发<strong>构建错误</strong> <code>undefined: main.main</code></p>
+<p>go中的main() 函数既没<strong>有参数，也没有返回类型</strong>（与 C 家族中的其它语言恰好相反）。如果你不小心为 main() 函数添加了参数或者返回类型，将会引发构建错误： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span> <span class="title">must</span> <span class="title">have</span> <span class="title">no</span> <span class="title">arguments</span> <span class="title">and</span> <span class="title">no</span> <span class="title">return</span> <span class="title">values</span> <span class="title">results</span>.</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p><strong>go的函数体必须使用大括号 {} 括起来。</strong>，而且左大括号<code>&#123;</code> <strong>必须</strong>与方法的声明放在同一行，这是编译器的强制规定，否则你在使用 gofmt 时就会出现错误提示： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build-<span class="type">error</span>: syntax <span class="type">error</span>: unexpected semicolon or newline before &#123;</span><br></pre></td></tr></table></figure> &gt;（这是因为编译器会产生 func main() ; 这样的结果，很明显这是错误的） &gt; &gt;究其原因是因为：<strong>Go 语言虽然看起来不使用分号作为语句的结束，但实际上这一过程是由编译器自动完成，因此才会引发像上面这样的错误</strong></p></li>
+<li>符合规范的函数一般写成如下的形式： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">functionName</span><span class="params">(parameter_list)</span></span> (return_value_list) &#123;</span><br><span class="line">   …</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>parameter_list</code> 的形式为 <code>(param1 type1, param2 type2, …)</code></li>
+<li><code>return_value_list</code> 的形式为 <code>(ret1 type1, ret2 type2, …)</code></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>一个函数可以拥有多返回值，返回类型之间需要使用逗号分割，并使用小括号 () 将它们括起来，如：</p>
+</blockquote>
+<h2 id="注释">2.4 注释</h2>
+<p>go中的注释沿用了<code>c/c++</code>的注释风格，并且在此基础上提供了一个命令<code>godoc</code>,该命令从** Go 程序和包文件中提取顶级声明的首行注释以及每个对象的相关注释，并生成相关文档。**</p>
+<p>一般用法</p>
+<ul>
+<li><code>go doc package</code> 获取包的文档注释，例如：go doc fmt 会显示使用 godoc 生成的 fmt 包的文档注释。</li>
+<li><code>go doc package/subpackage</code> 获取子包的文档注释，例如：go doc container/list。</li>
+<li><code>go doc package function</code> 获取某个函数在某个包中的文档注释，例如：go doc fmt Printf 会显示有关 fmt.Printf() 的使用说明。</li>
+</ul>
+<p>这个工具只能获取在 Go 安装目录下 ../go/src 中的注释内容。此外，它还可以作为一个本地文档浏览 web 服务器。在命令行输入 godoc -http=:6060，然后使用浏览器打开 http://localhost:6060 后，你就可以看到本地文档浏览服务器提供的页面。</p>
+<h2 id="类型">2.5 类型</h2>
+<p>使用 <code>var</code> 声明的变量的值会<strong>自动初始化为该类型的零值</strong>。类型定义了某个变量的值的集合与可对其进行操作的集合。</p>
+<ul>
+<li>类型可以是基本类型，如：int、float、bool、string；</li>
+<li>结构化的（复合的），如：struct、array、切片 (slice)、map、通道 (channel)；</li>
+<li>只描述类型的行为的，如：interface。</li>
+</ul>
+<p>结构化的类型没有真正的值，它使用 <code>nil</code>作为默认值（在 Objective-C 中是 nil，在 Java 中是 null，在 C 和 C++ 中是 NULL 或 0）。值得注意的是，Go 语言中<strong>不存在类型继承</strong>。</p>
+<p>函数也可以是一个确定的类型，就是以函数作为返回类型。这种类型的声明要写在函数名和可选的参数列表之后 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回一个typeFunc类型的函数类型</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">FunctionName</span> <span class="params">(a typea, b typeb)</span></span> typeFunc</span><br></pre></td></tr></table></figure> 你可以在函数体中的某处返回使用类型为 typeFunc 的变量 <code>ret</code>返回： <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> var</span><br></pre></td></tr></table></figure></p>
+<p>使用 type 关键字可以定义你自己的类型，你可能想要定义一个结构体（第 10 章），但是也可以定义一个已经存在的类型的别名，如： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> IZ <span class="type">int</span></span><br></pre></td></tr></table></figure> 如果你有多个类型需要定义，可以使用因式分解关键字的方式，例如： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> (</span><br><span class="line">   IZ <span class="type">int</span></span><br><span class="line">   FZ <span class="type">float64</span></span><br><span class="line">   STR <span class="type">string</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h2 id="go-程序的一般结构">2.6 Go 程序的一般结构</h2>
+<p>go的编写结构：</p>
+<ul>
+<li>在完成包的 <code>import</code> 之后，开始对常量、变量和类型的定义或声明。</li>
+<li>如果存在 <code>init()</code> 函数的话，则对该函数进行定义（这是一个特殊的函数，每个含有该函数的包都会首先执行这个函数）。</li>
+<li>如果当前包是 <code>main</code> 包，则定义 <code>main()</code> 函数。</li>
+<li>然后定义其余的函数，首先是类型的方法，接着是按照<code>main()</code>函数中先后调用的顺序来定义相关函数，如果有很多函数，则可以按照字母顺序来进行排序。</li>
+</ul>
+<p><strong>Go 程序的执行（程序启动）顺序如下：</strong></p>
+<ul>
+<li>按顺序导入所有被 main 包引用的其它包，然后在每个包中执行如下流程：</li>
+<li>如果该包又导入了其它的包，则从第一步开始递归执行，但是每个包只会被导入一次。</li>
+<li>然后以相反的顺序在每个包中初始化常量和变量，如果该包含有 init() 函数的话，则调用该函数。</li>
+<li>在完成这一切之后，main 也执行同样的过程，最后调用 main() 函数开始执行程序。</li>
+</ul>
+<h2 id="类型转换">2.7 类型转换</h2>
+<p>在必要以及可行的情况下，一个类型的值可以被转换成另一种类型的值。由于 Go 语言<strong>不存在隐式类型转换</strong>，因此所有的转换都必须<strong>显式</strong>说明，就像调用一个函数一样（类型在这里的作用可以看作是一种函数）： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">valueOfTypeB = typeB(valueOfTypeA)</span><br></pre></td></tr></table></figure> 当编译器捕捉到非法的类型转换时会引发编译时错误，否则将引发运行时错误。同样的一个取值范围较大的转换到取值范围较小的类型时会产生<strong>精度丢失</strong>问题</p>
+<h2 id="常量">2.8 常量</h2>
+<p>常量使用关键字 const 定义，用于存储不会改变的数据。存储在常量中的数据类型<strong>只可以</strong>是布尔型、数字型（整数型、浮点型和复数）和字符串型。常量的定义格式：<code>const identifier [type] = value</code>，例如： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Pi = <span class="number">3.14159</span></span><br></pre></td></tr></table></figure> 在 Go 语言中，你可以省略类型说明符 [type]，因为编译器可以根据变量的值来推断其类型。</p>
+<ul>
+<li>显式类型定义： const b string = &quot;abc&quot;</li>
+<li>隐式类型定义： const b = &quot;abc&quot;</li>
+</ul>
+<p>但是这种隐式定义必须是能够在编译时就能够确定的；你可以在其赋值表达式中涉及计算过程，但是所有用于计算的值必须在编<strong>译期间</strong>就能获得，否则就会出错 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">正确的做法：</span><br><span class="line"><span class="keyword">const</span> c1 = <span class="number">2</span>/<span class="number">3</span></span><br><span class="line">错误的做法：</span><br><span class="line"><span class="keyword">const</span> c2 = getNumber() <span class="comment">// 引发构建错误: getNumber() used as value</span></span><br></pre></td></tr></table></figure> 因为在编译期间<strong>自定义</strong>函数均属于未知，因此无法用于常量的赋值，但内置函数可以使用，如：len()。</p>
+<ul>
+<li>常量可以并行赋值 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> beef, two, c = <span class="string">&quot;eat&quot;</span>, <span class="number">2</span>, <span class="string">&quot;veg&quot;</span></span><br><span class="line"><span class="keyword">const</span> Monday, Tuesday, Wednesday, Thursday, Friday, Saturday = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	Monday, Tuesday, Wednesday = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></span><br><span class="line">	Thursday, Friday, Saturday = <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+<li>常量还可以用作<strong>枚举</strong>： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	Unknown = <span class="number">0</span></span><br><span class="line">	Female = <span class="number">1</span></span><br><span class="line">	Male = <span class="number">2</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="变量">2.9 变量</h2>
+<p>声明变量的一般形式是使用<code>var</code>关键字：<code>var identifier type</code></p>
+<p>Go 和许多编程语言不同，它在声明变量时将变量的类型放在变量的名称之后。Go 为什么要选择这么做呢？</p>
+<ul>
+<li><p>首先，它是为了避免像 C 语言中那样含糊不清的声明形式，例如：<code>int* a, b;</code>。在这个例子中，只有 a 是指针而 b 不是。如果你想要这两个变量都是指针，则需要将它们分开书写。而在 Go 中，则可以很轻松地将它们都声明为指针类型 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a, b *<span class="type">int</span></span><br></pre></td></tr></table></figure></p></li>
+<li><p>其次，这种语法能够按照从左至右的顺序阅读，使得代码更加容易理解。 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="type">int</span></span><br><span class="line"><span class="keyword">var</span> b <span class="type">bool</span></span><br><span class="line"><span class="keyword">var</span> str <span class="type">string</span></span><br></pre></td></tr></table></figure></p></li>
+</ul>
+<p>Go 编译器的智商已经高到可以根据变量的值来自动推断其类型，这有点像 Ruby 和 Python 这类动态语言，只不过它们是在运行时进行推断，<strong>而 Go 是在编译时就已经完成推断过程</strong>。因此，你还可以省略type使用下面的这些形式来声明及初始化变量： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">15</span></span><br><span class="line"><span class="keyword">var</span> b = <span class="literal">false</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">&quot;Go says hello to the world!&quot;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="值类型和引用类型">2.9.1 值类型和引用类型</h3>
+<p>在go中的引用类型不同于<code>C++</code>中的引用定义，在 Go 语言中，<strong>指针</strong>属于引用类型，其它的引用类型还包括 <strong>slices</strong>（第 7 章），<strong>maps</strong>（第 8 章）和 <strong>channel</strong>（第 13 章）。被引用的变量会存储在<strong>堆中，以便进行垃圾回收，且比栈拥有更大的内存空间</strong>。。另一方面：</p>
+<ul>
+<li>像值类型的变量，go将它们存储在栈中</li>
+<li>对于引用类型，其存储在堆中，以便进行垃圾回收</li>
+</ul>
+<h3 id="初始化声明操作符">2.9.2 :=初始化声明操作符</h3>
+<p>我们知道可以在变量的初始化时省略变量的类型而由系统自动推断，因此有什么我们对一个变量直接做初始化，此时<code>var</code>关键句就显得多余了。所以当我么声明初始化一个变量的时候可以使用<code>:=</code>初始化声明操作符 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a,b:=<span class="number">50</span>,<span class="literal">false</span></span><br></pre></td></tr></table></figure> - <code>:=</code>不允许对以及声明过的变量使用，换一句话就是说<code>:=</code>只允许声明事初始化 - <code>:=</code>只允许对局部变量使用，不允许对全局变量进行声明赋值</p>
+<h2 id="init函数">2.10 init()函数</h2>
+<p>变量除了可以在全局声明中初始化，也可以在 init() 函数中初始化。这是一类非常特殊的函数，它不能够被人为调用，而是在每个包完成初始化后自动执行，并且执行优先级比 main() 函数高。</p>
+<p>每个源文件可以包含多个 init() 函数，同一个源文件中的 init() 函数会按照从上到下的顺序执行，如果一个包有多个源文件包含 init() 函数的话，则官方鼓励但不保证以文件名的顺序调用。初始化总是以单线程并且按照包的依赖关系顺序执行。</p>
+<p>一个可能的用途是在开始执行程序之前对数据进行检验或修复，以保证程序状态的正确性。</p>
+<h1 id="基本类型和运算符">3. 基本类型和运算符</h1>
+<p>go中的基本类型与C++差不多，都有布尔型bool、数字型(int和float32/64)和字符型(byte)。Go 语言支持整型和浮点型数字，并且原生支持复数，其中位的运算采用补码。</p>
+<p>Go 也有基于架构的类型，例如：int、uint 和 uintptr。这些类型的长度都是根据运行程序所在的操作系统类型所决定的：</p>
+<ul>
+<li>int 和 uint 在 32 位操作系统上，它们均使用 32 位（4 个字节），在 64 位操作系统上，它们均使用 64 位（8 个字节）。</li>
+<li>uintptr 的长度被设定为足够存放一个指针即可。</li>
+</ul>
+<p>Go 语言中<strong>没有 float 类型</strong>。（Go语言中只有 float32 和 float64）没有 double 类型。</p>
+<h2 id="复数类型">3.1 复数类型</h2>
+<p>这里值得一提的是go引入的复数<code>complex</code>。Go 拥有以下复数类型 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">complex64</span> (<span class="number">32</span> 位实数和虚数)</span><br><span class="line"><span class="type">complex128</span> (<span class="number">64</span> 位实数和虚数)</span><br></pre></td></tr></table></figure> 复数使用 re+imI 来表示，其中 re 代表实数部分，im 代表虚数部分，I 代表根号负 1。 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fvar c1 <span class="type">complex64</span> = <span class="number">5</span> + <span class="number">10i</span></span><br><span class="line"><span class="comment">//在使用格式化说明符时，可以使用 %v 来表示复数，但当你希望只表示其中的一个部分的时候需要使用 %f</span></span><br><span class="line">fmt.Printf(<span class="string">&quot;The value is: %v&quot;</span>, c1)</span><br><span class="line"><span class="comment">// 输出： 5 + 10i</span></span><br></pre></td></tr></table></figure> 如果 re 和 im 的类型均为 float32，那么类型为 complex64 的复数 c 可以通过以下方式来获得： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c = <span class="built_in">complex</span>(re, im)</span><br></pre></td></tr></table></figure> 此外，函数 <code>real(c)</code> 和 <code>imag(c)</code> 可以分别获得相应的实数和虚数部分。</p>
+<blockquote>
+<p>复数支持和其它数字类型一样的运算。当你使用等号 == 或者不等号 != 对复数进行比较运算时，注意对精确度的把握。cmath 包中包含了一些操作复数的公共方法。如果你对内存的要求不是特别高，最好使用 complex128 作为计算类型，因为相关函数都使用这个类型的参数。</p>
+</blockquote>
+<h2 id="随机数">3.2 随机数</h2>
+<p>一些像游戏或者统计学类的应用需要用到随机数。<code>math/rand</code> 包实现了伪随机数的生成。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">package main</span></span><br><span class="line"><span class="function"><span class="title">import</span> <span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">	<span class="string">&quot;fmt&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">	<span class="string">&quot;math/rand&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">	<span class="string">&quot;time&quot;</span></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">func <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		a := rand.<span class="built_in">Int</span>()	<span class="comment">//随机生成Int范围随机数</span></span><br><span class="line">		fmt.<span class="built_in">Printf</span>(<span class="string">&quot;%d / &quot;</span>, a)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">5</span>; i++ &#123;</span><br><span class="line">		r := rand.<span class="built_in">Intn</span>(<span class="number">8</span>)	<span class="comment">//随机生成[0,8)随机数</span></span><br><span class="line">		fmt.<span class="built_in">Printf</span>(<span class="string">&quot;%d / &quot;</span>, r)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.<span class="built_in">Println</span>()</span><br><span class="line">	timens := <span class="built_in">int64</span>(time.<span class="built_in">Now</span>().<span class="built_in">Nanosecond</span>())</span><br><span class="line">	rand.<span class="built_in">Seed</span>(timens)	<span class="comment">//随机数种子</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		fmt.<span class="built_in">Printf</span>(<span class="string">&quot;%2.2f / &quot;</span>, <span class="number">100</span>*rand.<span class="built_in">Float32</span>())</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 函数 rand.Float32 和 rand.Float64 返回介于[0.0,1.0)之间的伪随机数，其中包括 0.0 但不包括 1.0。函数 rand.Intn 返回介于[0,n)之间的伪随机数。</p>
+<p>你可以使用 <strong>rand.Seed(value)</strong> 函数来提供伪随机数的生成种子，一般情况下都会使用当前时间的纳秒级数字</p>
+<h2 id="字符类型">3.3 字符类型</h2>
+<p>严格来说，字符类型并不是 Go 语言的一个类型，字符只是整数的特殊用例。<strong>byte 类型是 uint8 的别名</strong>，对于只占用 1 个字节的传统 ASCII 编码的字符来说，完全没有问题。例如：<code>var ch byte = 'A'</code>；字符使用单引号括起来。</p>
+<p>在 ASCII 码表中，'A' 的值是 65，而使用 16 进制表示则为 41，所以下面的写法是等效的： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//`\x`是十六进制表示法</span></span><br><span class="line"><span class="keyword">var</span> ch <span class="type">byte</span> = <span class="number">65</span> 或 <span class="keyword">var</span> ch <span class="type">byte</span> = <span class="string">&#x27;\x41&#x27;</span></span><br></pre></td></tr></table></figure> 另外一种可能的写法是<code>\</code>后面紧跟着<strong>长度</strong>为 3 的 <strong>八进制数</strong>，例如：\377。</p>
+<p>不过 Go 同样支持 Unicode（UTF-8），因此字符同样称为 Unicode 代码点或者 runes，并在内存中使用 int 来表示。在文档中，一般使用格式 <strong>U+hhhh</strong> 来表示，其中 h 表示一个 16 进制数。其实 <strong>rune </strong>也是 Go 当中的一个类型，并且是 <strong>int32</strong> 的别名。</p>
+在书写 Unicode 字符时，需要在 16 进制数之前加上前缀 
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/03/10/%E5%88%86%E5%B8%83%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/10/%E5%88%86%E5%B8%83%E5%BC%8F/" class="post-title-link" itemprop="url">分布式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-10 10:25:32" itemprop="dateCreated datePublished" datetime="2024-03-10T10:25:32+08:00">2024-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-24 15:43:23" itemprop="dateModified" datetime="2024-03-24T15:43:23+08:00">2024-03-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>31k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>28 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="分布式和集群的区别是什么">1. 分布式和集群的区别是什么？</h2>
+<ul>
+<li><strong>分布式</strong>：侧重于将任务分拆多个子任务，部署在不同的服务器上，解决计算能力的问题</li>
+<li><strong>集群</strong>：侧重同一个业务，部署在多个服务器上，提高系统可用性和性能。</li>
+</ul>
+<p><strong>分布式是一个为了解决单个物理服务器容量和性能瓶颈问题而采用的优化手段。它的核心概念是将一个业务拆分成不同的子业务，并部署在不同的机器上执行，服务之间通过远程调用协同工作，对外提供服务。这种拆分和部署的方式可以大大提高系统的可扩展性、可靠性和性能。</strong></p>
+<blockquote>
+<p>分布式涉及多个技术领域，包括但不限于分布式计算、分布式存储、分布式数据库、分布式文件系统等。这些技术各自有不同的应用场景和优势，如分布式计算可以处理巨量的数据和复杂的计算任务，分布式存储可以实现数据的高可用性和容错性，分布式数据库可以支持大规模并发访问和数据处理等。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/03/10/%E5%88%86%E5%B8%83%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2024/01/20/Trluper%E6%A1%86%E6%9E%B6%E9%9D%A2%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/20/Trluper%E6%A1%86%E6%9E%B6%E9%9D%A2%E8%AF%95/" class="post-title-link" itemprop="url">Trluper框架面试</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-20 19:12:13" itemprop="dateCreated datePublished" datetime="2024-01-20T19:12:13+08:00">2024-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-10 10:13:07" itemprop="dateModified" datetime="2024-04-10T10:13:07+08:00">2024-04-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>18k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>16 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          Here's something encrypted, password is required to continue reading.
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/01/20/Trluper%E6%A1%86%E6%9E%B6%E9%9D%A2%E8%AF%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/12/01/Cmake/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/01/Cmake/" class="post-title-link" itemprop="url">Cmake</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-01 16:06:24" itemprop="dateCreated datePublished" datetime="2023-12-01T16:06:24+08:00">2023-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-12-02 20:25:46" itemprop="dateModified" datetime="2023-12-02T20:25:46+08:00">2023-12-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cmake/" itemprop="url" rel="index"><span itemprop="name">Cmake</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="cmake">Cmake</h1>
+<p>CMake是很多项目首选的项目构建工具。其次，目前很多开发工具，比如VSCode，Clion都支持使用CMake构建项目。使用Cmake能够更加方便的用一个文件实现对C/C++项目的维护管理。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/12/01/Cmake/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/10/25/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E4%B8%8E%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/25/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E4%B8%8E%E6%A8%A1%E5%9E%8B/" class="post-title-link" itemprop="url">数学建模方法与模型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-10-25 17:48:56 / 修改时间：18:28:37" itemprop="dateCreated datePublished" datetime="2023-10-25T17:48:56+08:00">2023-10-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/" itemprop="url" rel="index"><span itemprop="name">数学建模</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>659</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="数学建模模型分类">1 数学建模模型分类</h1>
+<p>数学建模竞赛常用模型有：<strong>评价模型、预测模型、优化模型和数理统计模型</strong>。 <img src="/2023/10/25/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E6%96%B9%E6%B3%95%E4%B8%8E%E6%A8%A1%E5%9E%8B/模型分类.png" width="700"></p>
+<h2 id="评价模型">评价模型</h2>
+<p><strong>评价模型用于对某个系统、方案或决策进行评估</strong>。通过构建合适的<strong>指标</strong>和<strong>评价</strong>方法，评价模型能够对不同方案的优劣进行比较和分析。在数学建模比赛中，评价模型通常适用于这类问题：<strong>根据问题的特点和需求，设计合适的评价标准和指标，对不同方案或模型的性能进行评估和比较，以帮助做出决策。</strong></p>
+<p>问题示例：</p>
+<ul>
+<li>国赛长江水质的综合评价、</li>
+<li>上海世博会影响力的定量评估问题、</li>
+<li>美赛“最好大学教练“问题。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/564302492">评价模型简介总览</a></p>
+<h2 id="预测模型">预测模型</h2>
+<p>预测模型能够根据过去的数据和观察结果，对未来的趋势、行为或结果进行预测和推断，<strong>适用于对趋势做预测或者规划类题目</strong>。预测模型常用于分析时间序列数据、趋势预测、行为模式预测等问题。在数学建模比赛中，预测模型可以根据给定的数据集或者特定规律，构建合适的数学模型，进行未来趋势预测，从而帮助做出决策或规划。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/599455922">预测模型介绍总览</a></p>
+<h2 id="数理统计模型">数理统计模型</h2>
+<p>数理统计模型用于对数据进行分析、总结和推断。它能够通过建立概率模型和统计分布，对数据的特征、关系和不确定性进行描述和推断。在数学建模比赛中，<strong>数理统计模型可以通过对给定数据集的统计分析，推断出数据的分布规律、相关性、假设检验等，为问题提供支持和解决方案</strong></p>
+<h2 id="优化模型">优化模型</h2>
+<p>优化模型旨在找到使某个目标函数取得最大或最小值的最优解。优化模型适用于求解最佳决策、资源分配、排产安排等问题。在数学建模比赛中，优化模型可以通过建立数学规划模型，确定决策变量、约束条件和目标函数，利用求解方法寻找最优解或次优解，以优化问题的方案或决策。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/443155921?utm_id=0">模型总览</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="trluper"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">trluper</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/trluper" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;trluper" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Trluper</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">1.3m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">20:25</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
+ 
+    
+ 
+
+
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
