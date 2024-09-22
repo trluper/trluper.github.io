@@ -69,7 +69,7 @@
 <meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/ziplist结构图.png">
 <meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/跳跃表结构.png">
 <meta property="article:published_time" content="2023-06-25T08:16:51.000Z">
-<meta property="article:modified_time" content="2024-09-21T16:48:37.486Z">
+<meta property="article:modified_time" content="2024-09-22T02:51:46.516Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="Redis">
@@ -271,7 +271,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-22 00:48:37" itemprop="dateModified" datetime="2024-09-22T00:48:37+08:00">2024-09-22</time>
+                <time title="修改时间：2024-09-22 10:51:46" itemprop="dateModified" datetime="2024-09-22T10:51:46+08:00">2024-09-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1477,7 +1477,7 @@
 <p>致性哈希算法通过将哈希空间映射到一个环状空间，并将数据和节点都映射到该环上，比如说IPV4是32位的，我们可以，我们可以将这<span class="math inline">\(2^32\)</span>个值抽象成一个圆环，圆环的正上方的点代表0，顺时针排列，那么通过一致性哈希固定值<span class="math inline">\(2^32\)</span>取模就能确定它在圆环何处，如果圆环上有多个服务器，<strong>如果计算到的hash不是精确落在节点服务器上（NODE A),那么从此位置沿环顺时针“行走”，遇到的第一个 master 节点就是 key 所在位置</strong> <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/hash.png" width="700"> <strong>换一句话说：一致性Hash就是：将原本单个点的Hash映射，转变为了在一个环上的某个片段上的映射！</strong></p>
 <p>一致性哈希的解决方案：</p>
 <ul>
-<li>节点容错：一致性哈希可以通过虚拟节点（Virtual Nodes）的方式增加容错性。<strong>虚拟节点将一个物理节点映射到多个位置上，如果某个物理节点失效，其责任范围内的数据可以由其他虚拟节点承担，从而提高系统的容错能力</strong>。</li>
+<li>节点容错：一致性哈希可以通过虚拟节点（Virtual Nodes）的方式增加容错性。<strong>虚拟节点将一个物理节点映射到多个位置上，如果某个物理节点失效，其责任范围内的数据可以由下一个其他物理节点承担，从而提高系统的容错能力</strong>。</li>
 <li><p>负载均衡：一致性哈希通过虚拟节点的方式，也能让每个物理节点承载均匀的数据量。通过分配多个虚拟节点，能有效地平衡数据在各节点之间的分布，避免某些节点承担过多负载的问题，<strong>解决了热点key问题</strong></p></li>
 <li>减少数据重分布
 <ul>
@@ -1494,6 +1494,11 @@
 <blockquote>
 <p>节点A不再是唯一处理该key的节点，可能映射了节点A、B、C的多个虚拟节点，它们共同处理该key的请求。 这样一来，即使这个key的访问量很大，负载会分散到多个物理节点，缓解热点压力。</p>
 </blockquote>
+<p>总结：</p>
+<ul>
+<li><strong>所有的key哈希映射成一个环，然后物理节点哈希映射在环上某个节点，那么按顺时针顺序得到的第一个物理节点就是key所在的物理节点。但上面只映射一个物理节点，可能会导致有的物理节点负载的key多，有的少，所以用虚拟节点（不同哈希规则）在环上更加均匀分布，达到每个节点负载的数据尽量均衡一些，已达到负载均衡的目的</strong></li>
+<li><strong>某个物理节点挂了(虚拟节点挂了也意味着对应的物理节点挂了)。那么对于一致性哈希环来说，其不用为所有key重新哈希，而是只用将该物理节点（虚拟节点）的key顺时针给下一个物理节点（虚拟节点）即可，这样就解决了分布式系统中节点动态变化时数据重分布过多</strong></li>
+</ul>
 <h2 id="sorted-set即-zset-实现原理">34 Sorted Set（即 ZSet 实现原理）</h2>
 <h3 id="zset-内部编码实现">ZSet 内部编码实现：</h3>
 <ul>
