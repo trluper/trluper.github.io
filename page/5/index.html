@@ -194,6 +194,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/06/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/06/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/" class="post-title-link" itemprop="url">C++动态内存</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-03-06 19:13:26 / 修改时间：19:23:21" itemprop="dateCreated datePublished" datetime="2023-03-06T19:13:26+08:00">2023-03-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>14k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="动态内存">10.动态内存</h3>
+<h4 id="生命周期">10.1 生命周期</h4>
+<p><strong>目前的我们接触到的对象或者静态static都有着严格的生命周期：</strong></p>
+<ul>
+<li><strong>全局：</strong>程序启动时自动分配，程序结束时销毁</li>
+<li><strong>局部对象：</strong>进入其所定义的程序时被创建，离开块时销毁</li>
+<li><strong>静态：</strong>第一次使用前分配，程序结束时销毁</li>
+</ul>
+<p>上述中的变量只使用了静态内存和栈内存。它们会自动创建和销毁。静态内存保存局部static、类static成员以及定义在任何函数之外的变量。栈内存保存定义在函数内的非static对象</p>
+<p>除了上述的自动分配外，<strong>c++还支持动态分配对象</strong>。（其生命周期与它们在哪创建无关，只有显式的被释放时，这些对象才会被销毁）。<strong>它们被分配在内存池，称作自由空间或堆。程序用堆来存储动态分配</strong>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/06/%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/04/C-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%89-%E5%90%8C%E6%AD%A5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1103,108 +1201,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/02/19/C-%E5%B9%B6%E5%8F%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/02/19/C-%E5%B9%B6%E5%8F%91/" class="post-title-link" itemprop="url">C++并发编程(一):简介与线程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-02-19 09:57:24" itemprop="dateCreated datePublished" datetime="2023-02-19T09:57:24+08:00">2023-02-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-03-04 20:23:59" itemprop="dateModified" datetime="2023-03-04T20:23:59+08:00">2023-03-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>读者注意：本博客是关于C++11新标准下的并发和多线程编程(C++多线程有C++11、Boost线程库和POSIX多线程三大版本) </strong></p>
-<ul>
-<li>POSIX的线程相关更多的是函数形式，这也理所当然，因此底层是C</li>
-<li>C++标准多线程和Boost线程是类形式，这点要注意。</li>
-</ul>
-<h3 id="概览">1 概览</h3>
-<h4 id="认识并发">1.1 认识并发</h4>
-<p>如下图，<strong>在单核处理器中我们可看到AB两任务是以“这个任务做一会，再切换到别的任务，再做一会儿”的方式，让任务看起来是并行执行的</strong>。这种方式称为“任务切换(task switching)”。但是，实际上是并发形式的，因为任务切换得太快，以至于无法感觉到任务在何时会被暂时挂起 <img src="/2023/02/19/C-%E5%B9%B6%E5%8F%91/computer.png" width="500"> 系统每次从一个任务切换到另一个时都需要切换一次上下文(context switch)，任务切换也有时间开销。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/19/C-%E5%B9%B6%E5%8F%91/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1276,7 +1272,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1289,7 +1285,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1330,12 +1326,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.4m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:25</span>
+    <span title="站点阅读时长">20:31</span>
 </div>
 
         

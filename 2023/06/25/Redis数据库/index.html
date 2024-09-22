@@ -69,7 +69,7 @@
 <meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/ziplist结构图.png">
 <meta property="og:image" content="https://example.com/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/跳跃表结构.png">
 <meta property="article:published_time" content="2023-06-25T08:16:51.000Z">
-<meta property="article:modified_time" content="2024-03-24T02:39:10.182Z">
+<meta property="article:modified_time" content="2024-09-21T16:48:37.486Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="Redis">
@@ -271,7 +271,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-24 10:39:10" itemprop="dateModified" datetime="2024-03-24T10:39:10+08:00">2024-03-24</time>
+                <time title="修改时间：2024-09-22 00:48:37" itemprop="dateModified" datetime="2024-09-22T00:48:37+08:00">2024-09-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -300,14 +300,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>64k</span>
+              <span>65k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>58 分钟</span>
+              <span>59 分钟</span>
             </span>
 
         </div>
@@ -1472,10 +1472,27 @@
 <p>在上面的扩容完成后，集群中共有四个节点：6379、6380、6381、6385，我们以下线 6381 为例介绍下线的流程。下线 6381 节点首先需要把其上负责 slots 的数据分别迁移到三个节点上，然后通知所有集群中的节点忘记 6381 节点，最后 6381 节点关闭下线。</p>
 <p>Redis 的元数据在每个节点中都有一份，即每个 Redis 节点维护者从它的视角看过去集群中所有其他节点的状态。那么当集群中的所有其他节点接收到 CLUSTER FORGET <NODE id> 命令时会删除自己保存的 NODE_ID 对应的节点的状态，同时把 NODE_ID 对应的节点加入到黑名单中 60s。把一个节点放入黑名单意味着其他节点不会再去更新自己维护的该节点的信息，也就意味着当我们向集群中的所有节点发送CLUSTER FORGET 6381 后，6381节点 60s 内不能再次加入集群中。至此就完成了集群的缩容。</NODE></p>
 <h2 id="一致性哈希算法">34 一致性哈希算法</h2>
-<p>一致性哈希算法是解决分布式缓存中的节点动态加入和移除对数据分布的影响问题。在分布式系统中，节点的增减可能会导致数据重新分布，这不仅增加了数据迁移的开销，还可能影响系统的性能和稳定性。一致性哈希算法通过特定的映射和算法设计，尽可能地减少了节点变化时数据的迁移量。</p>
+<p>使用一致性哈希可以做到解决分布式系统中节点动态变化时数据重分布过多、负载不均衡等问题</p>
+<p>一致性哈希算法是<strong>解决分布式缓存中的节点动态加入和移除对数据分布的影响问题</strong>。在分布式系统中，节点的增减可能会导致数据重新分布，这不仅增加了数据迁移的开销，还可能影响系统的性能和稳定性。一致性哈希算法通过特定的映射和算法设计，尽可能地减少了节点变化时数据的迁移量。</p>
 <p>致性哈希算法通过将哈希空间映射到一个环状空间，并将数据和节点都映射到该环上，比如说IPV4是32位的，我们可以，我们可以将这<span class="math inline">\(2^32\)</span>个值抽象成一个圆环，圆环的正上方的点代表0，顺时针排列，那么通过一致性哈希固定值<span class="math inline">\(2^32\)</span>取模就能确定它在圆环何处，如果圆环上有多个服务器，<strong>如果计算到的hash不是精确落在节点服务器上（NODE A),那么从此位置沿环顺时针“行走”，遇到的第一个 master 节点就是 key 所在位置</strong> <img src="/2023/06/25/Redis%E6%95%B0%E6%8D%AE%E5%BA%93/hash.png" width="700"> <strong>换一句话说：一致性Hash就是：将原本单个点的Hash映射，转变为了在一个环上的某个片段上的映射！</strong></p>
+<p>一致性哈希的解决方案：</p>
+<ul>
+<li>节点容错：一致性哈希可以通过虚拟节点（Virtual Nodes）的方式增加容错性。<strong>虚拟节点将一个物理节点映射到多个位置上，如果某个物理节点失效，其责任范围内的数据可以由其他虚拟节点承担，从而提高系统的容错能力</strong>。</li>
+<li><p>负载均衡：一致性哈希通过虚拟节点的方式，也能让每个物理节点承载均匀的数据量。通过分配多个虚拟节点，能有效地平衡数据在各节点之间的分布，避免某些节点承担过多负载的问题，<strong>解决了热点key问题</strong></p></li>
+<li>减少数据重分布
+<ul>
+<li>问题背景：在传统哈希算法中，当节点发生变化（增加或减少）时，数据需要重新分配到不同的节点上。由于哈希值会根据节点总数发生显著变化，导致大量的数据需要重新映射，这样会导致大量数据迁移，影响系统性能和可用性。</li>
+<li>一致性哈希的解决方案：一致性哈希算法在节点变化时，只会影响很少一部分数据，即当一个节点加入或退出集群时，只有相邻的一小部分数据需要重新分配，而不是全部数据迁移。这样大大降低了节点变化时的数据重分布量，提升了系统的稳定性和效率。</li>
+</ul></li>
+</ul>
 <blockquote>
-<p>存在问题，当节点太少的话，可能很多请求都会落在一个节点上，这个节点的负载会很高，其他节点反而轻，怎么解决？ - 一致性哈希通过引入<strong>虚拟节点</strong>解决这个问题，就是一个真实物理节点会被虚拟成多个节点分布在这个圆环上（即多个hash计算），这样就尽可能实现数据的均匀分布，负载均衡。</p>
+<p>设有一个分布式缓存系统（如Redis集群），由节点A、B、C组成，某个key（如热门商品ID）对应的哈希值落在节点A上。如果没有虚拟节点，节点A会承担所有对该key的请求，成为热点。</p>
+</blockquote>
+<blockquote>
+<p>引入虚拟节点后：</p>
+</blockquote>
+<blockquote>
+<p>节点A不再是唯一处理该key的节点，可能映射了节点A、B、C的多个虚拟节点，它们共同处理该key的请求。 这样一来，即使这个key的访问量很大，负载会分散到多个物理节点，缓解热点压力。</p>
 </blockquote>
 <h2 id="sorted-set即-zset-实现原理">34 Sorted Set（即 ZSet 实现原理）</h2>
 <h3 id="zset-内部编码实现">ZSet 内部编码实现：</h3>
@@ -1751,7 +1768,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1764,7 +1781,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1805,12 +1822,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.4m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:25</span>
+    <span title="站点阅读时长">20:31</span>
 </div>
 
         

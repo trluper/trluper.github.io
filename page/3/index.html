@@ -194,6 +194,107 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/22/CMU15-445-FALL2023-PROJECT-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="trluper">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Trluper">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/" class="post-title-link" itemprop="url">CMU15-445-FALL2022-PROJECT_0</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-22 08:47:02" itemprop="dateCreated datePublished" datetime="2023-05-22T08:47:02+08:00">2023-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-06 15:25:52" itemprop="dateModified" datetime="2023-06-06T15:25:52+08:00">2023-06-06</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="介绍">1 介绍</h3>
+<p>此次project0项目是实现一个键值对存储，数据结构由<strong>写时复制的字典树</strong>构成。实现的键-值存储可以存储映射到任何类型值的字符串键。键的值存储在表示该键的最后一个字符的节点中(又称终端节点)。例如，考虑在trie中插入kv对(&quot;ab&quot;， 1)和(&quot;ac&quot;， &quot;val&quot;)。 <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/keyvalue.png" width="500"></p>
+<h3 id="task1copy-on-write-trie">2 Task1:Copy-On-Write trie</h3>
+<ul>
+<li><p>在本任务中，只需要修改<code>trie .h</code>和<code>trie .cpp</code>来实现写时复制(copy-on-write) tree。<strong>在写即复制tree中，操作不会直接修改原始tree中的节点。相反，将为修改后的数据创建新节点，并为新修改的trie返回一个新根</strong>。写时复制(Copy-on-write)使我们能够在每次操作之后随时以最小的开销访问该树。考虑在上面的例子中插入<code>(&quot;ad&quot;， 2)</code>。我们通过重用原始树中的两个子节点来创建一个新的Node2，并创建一个新的值节点2。(见下图) <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new1.png" width="700"></p></li>
+<li><p>插入<code>(&quot;b&quot;， 3)</code>，我们将创建一个新的根，一个新的节点，并重用以前的节点。通过这种方式，我们可以在每次插入操作之前和之后获得树的内容。只要我们有根对象(Trie类)，我们就可以访问当时Trie中的数据。(见下图) <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new2.png" width="700"></p></li>
+<li><p>插入<code>(“a”，“abc”)</code>并删除<code>(“ab”，1)</code>，我们可以得到下面的trie。注意，父节点可以有值，并且在删除后需要清除所有不必要的节点。 <img src="/2023/05/22/CMU15-445-FALL2023-PROJECT-0/new3.png" width="700"></p></li>
+</ul>
+<p>因此，在这里你需要实现三个函数：</p>
+<ul>
+<li><p><code>Get(key)</code>:获取键对应的值。</p></li>
+<li><p><code>Put(key, value)</code>:设置键对应的值。如果键已经存在，则覆盖现有值。注意，值的类型可能是不可复制的(即<code>std::unique_ptr&lt;int&gt;</code>)。这个方法返回一个新的树。</p></li>
+<li><p><code>Delete(key)</code>:删除键的值。这个方法返回一个新的树。</p></li>
+</ul>
+<blockquote>
+<p>这些操作都不应该直接在trie本身上执行。您应该创建新的树节点，并尽可能重用现有的树节点。 要创建一个新节点，您应该使用<code>TrieNode</code>类上的<code>Clone</code>函数。要重用新树中的现有节点，可以复制<code>std::shared_pt&lt;TrieNode&gt;</code>复制共享指针不会复制底层数据。您不应该在此项目中通过使用<code>new</code>和<code>delete</code>手动分配内存。当没有人有对底层对象的引用时，<code>std::shared_ptr</code>将释放对象。</p>
+</blockquote>
+<p>分析：</p>
+<ul>
+<li><strong>节点类<code>TrieNode</code>使用<code>map&lt;char, std::shared_ptr&lt;const TrieNode&gt;&gt;</code>来存储这种键值结构，</strong>，在这里另一个重要的函数是<code>Clone</code>函数（使用了C++类的构造函数的隐式转换)，<code>Clone</code>函数实现新建树中现有节点</li>
+<li><strong>叶子类<code>TrieNodeWithValue</code></strong>，继承于<code>TrieNode</code>，增加了叶子节点存值功能</li>
+<li><code>Trie</code>类，内部声明了<code>root</code>（初始为NULL),三个上述待实现的功能</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://example.com/2023/05/21/CMU15-445-FALL2023-HOMEWORK1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1273,103 +1374,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/03/31/Personal-Q-A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="trluper">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Trluper">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/31/Personal-Q-A/" class="post-title-link" itemprop="url">Personal Q&A</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-03-31 16:50:28" itemprop="dateCreated datePublished" datetime="2023-03-31T16:50:28+08:00">2023-03-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-02 22:48:32" itemprop="dateModified" datetime="2024-04-02T22:48:32+08:00">2024-04-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="说一说你大学期间最难忘的一件事">1 说一说你大学期间最难忘的一件事？</h2>
-<p>大学期间最难忘的事大概就是第一次与我的同学们参加数学建模类的比赛吧。因为面试官您也知道，数学建模比赛就是给你一个实际应用问题，需要你在三天的时间内要建立合适的模型解决、对所提模型进行验证分析、然后分析结果OK的话进入论文书写的三个过程组成。</p>
-<p>因此，数学建模的过程是比较艰辛、压力值拉满的过程，但是最终还是为自己能够成功提交作品感到满意，也不枉费自己在这个竞赛过程中所付出的汗水和努力，而且最终也获奖，内心成就感也就油然而生，因此我认为这个竞赛的过程和结果是让我回味难忘的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/03/31/Personal-Q-A/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1441,7 +1445,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">83</span>
+          <span class="site-state-item-count">84</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1454,7 +1458,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1495,12 +1499,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">1.3m</span>
+    <span title="站点总字数">1.4m</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:25</span>
+    <span title="站点阅读时长">20:31</span>
 </div>
 
         
