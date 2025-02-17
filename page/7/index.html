@@ -1013,7 +1013,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-22 00:24:48" itemprop="dateModified" datetime="2024-09-22T00:24:48+08:00">2024-09-22</time>
+                <time title="修改时间：2025-02-17 20:25:06" itemprop="dateModified" datetime="2025-02-17T20:25:06+08:00">2025-02-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1031,14 +1031,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>28k</span>
+              <span>30k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>26 分钟</span>
+              <span>27 分钟</span>
             </span>
 
         </div>
@@ -1051,13 +1051,23 @@
 
       
           <h4 id="get请求和post请求的区别">1. get请求和post请求的区别</h4>
-<p><code>GET</code>和<code>POST</code>是 HTTP 协议中两种常用的请求方法，使用它们都可以跟服务器进行通讯，它们区别有以下几点：</p>
 <ul>
-<li>一般来说GET主要用来请求资源，而POST一般用于提交数据到服务器。因此对于GET来说如果有参数传递的话，会将参数直接拼接到URL（资源定位符）上；而对于POST来说，这些参数会写在请求消息体中。因此对于要传输一些敏感信息的话，get方法不是安全的，这种情况使用POST更好。</li>
-<li>此外，由于URL有长度限制，因此对于GET来说，其传递的数据长度会受到浏览器的限制（2048），而POST将数据放在消息体中，因此通常没有数据长度限制。</li>
-<li>还有就是GET方法得到常见如HTML、JS或者CSS这些资源会被浏览器缓存，如果下次传输的数据相同，那么他们就会返回缓存中的内容，以求更快的展示所需要的数据；而对于POST来说，Post请求不会进行缓存操作。</li>
-<li>另外呢GET产生一个TCP数据包，而POST可能会产生两个数据包（<strong>不是必然）</strong>，浏览器回先发送header，服务器响应100 continue后再发送data数据包，因此，Post在时间上的消耗一般会被Get要大</li>
-<li>Get请求可以直接进行回退和刷新，不会对用户和程序产生影响，但POST请求如果直接回滚和刷新的将会重新把数据提交。(缓存)</li>
+<li>GET请求
+<ul>
+<li>主要用途：用于从服务器获取资源或数据。GET请求是安全的和幂等的，意味着重复发送相同的GET请求，不会产生副作用（不会改变服务器状态）。</li>
+<li>数据传递：GET请求将数据附加在URL中，通过查询字符串（query string）传递，格式为<code>?key1=value1&amp;key2=value2</code>。</li>
+<li>数据大小限制：由于数据是附加在URL中的，浏览器对URL的长度有限制（通常是2048字符左右），因此GET请求适合传递少量数据。</li>
+<li>缓存：GET请求通常可以被浏览器缓存。</li>
+<li>安全性：由于数据在URL中显示，GET请求不适合传递敏感信息，如密码。</li>
+</ul></li>
+<li>POST请求
+<ul>
+<li>主要用途：用于向服务器发送数据，通常用于提交表单或上传文件，目的是提交数据以便进行处理（如数据库存储、数据更新等）。</li>
+<li>数据传递：POST请求通过请求体（body）传递数据，数据不会显示在URL中，因此可以传输大量数据。</li>
+<li>数据大小限制：POST请求数据量没有像GET那样的长度限制，理论上可以传输更大的数据。</li>
+<li>缓存：POST请求通常不会被缓存。</li>
+<li>安全性：相较于GET，POST请求在数据传输中更安全，因为数据不显示在URL中，但仍然建议通过HTTPS加密传输敏感信息。</li>
+</ul></li>
 </ul>
           <!--noindex-->
             <div class="post-button">
@@ -1116,7 +1126,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-25 16:22:18" itemprop="dateModified" datetime="2024-09-25T16:22:18+08:00">2024-09-25</time>
+                <time title="修改时间：2025-02-12 14:29:24" itemprop="dateModified" datetime="2025-02-12T14:29:24+08:00">2025-02-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1138,14 +1148,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>55k</span>
+              <span>56k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>50 分钟</span>
+              <span>51 分钟</span>
             </span>
 
         </div>
@@ -1304,7 +1314,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1318,7 +1328,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:37</span>
+    <span title="站点阅读时长">20:38</span>
 </div>
 
         
