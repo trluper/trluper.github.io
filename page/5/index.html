@@ -1101,7 +1101,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://example.com/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/">
+    <link itemprop="mainEntityOfPage" href="https://example.com/2023/02/20/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9B%B8%E5%85%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -1115,7 +1115,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/" class="post-title-link" itemprop="url">Linux系统编程_网络</a>
+            <a href="/2023/02/20/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9B%B8%E5%85%B3/" class="post-title-link" itemprop="url">场景题</a>
         </h2>
 
         <div class="post-meta">
@@ -1125,14 +1125,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-02-19 14:26:39" itemprop="dateCreated datePublished" datetime="2023-02-19T14:26:39+08:00">2023-02-19</time>
+              <time title="创建时间：2023-02-20 20:21:35" itemprop="dateCreated datePublished" datetime="2023-02-20T20:21:35+08:00">2023-02-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-09 21:21:34" itemprop="dateModified" datetime="2023-09-09T21:21:34+08:00">2023-09-09</time>
+                <time title="修改时间：2025-02-23 11:16:16" itemprop="dateModified" datetime="2025-02-23T11:16:16+08:00">2025-02-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1140,7 +1140,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux-coding/" itemprop="url" rel="index"><span itemprop="name">Linux coding</span></a>
+                  <a href="/categories/%E5%9C%BA%E6%99%AF%E9%A2%98/" itemprop="url" rel="index"><span itemprop="name">场景题</span></a>
                 </span>
             </span>
 
@@ -1150,14 +1150,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>23k</span>
+              <span>5.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>21 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -1169,24 +1169,123 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="tcpip协议">1 TCP/IP协议</h4>
-<p>TCP/IP协议套件是一个分层联网协议，它包括因特网协议(ip)和位于其上层的各个协议层。</p>
-<h5 id="osi七层模型和tcpip模型">1.1 OSI七层模型和TCP/IP模型</h5>
-<p><img src="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/osi.png" width="500"> 各层协议主要有：</p>
+          <h3 id="秒杀系统的设计">1.秒杀系统的设计</h3>
+<p>秒杀一般出现在商城的<strong>促销活动</strong>中，指定了一定数量（比如：10个）的商品（比如：手机），以极低的价格（比如：0.1元），让大量用户参与活动，但只有极少数用户能够购买成功。这类活动商家绝大部分是不赚钱的，说白了是找个噱头宣传自己。</p>
+<p>像这种瞬时高并发的场景，传统的系统很难应对，我们需要设计一套全新的系统。可以从以下几个方面入手：</p>
 <ul>
-<li>应用层协议: FTP（文件传输协议）<strong>、HTTP（超文本传输协议）</strong>、NFS（网络文件系统）</li>
-<li><strong>传输层协议： TCP （传输控制协议）、UDP（用户数据报协议）</strong></li>
-<li>网络层：<strong>IP（英特网互联协议）</strong>、<strong>ICMP（英特网控制报文协议ping）</strong> 、IGMP（英特网组管理协议）</li>
-<li>链路层协议：ARP（地址解析协议 通过ip找mac地址）、RARP:（反向地址解析协议 通过mac找ip）</li>
+<li>页面静态化</li>
+<li>CDN（content delivery Network）加速</li>
+<li>缓存</li>
+<li>mq异步处理</li>
+<li>限流</li>
+<li>分布式锁</li>
 </ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/02/19/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B-%E7%BD%91%E7%BB%9C/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>思路：</p>
+<ol type="1">
+<li>首先，对于秒杀系统中的活动页面一般是固定的，比如：商品名称、商品描述、图片等。为了减少不必要的服务端请求，因此要对活动页面做静态化处理。用户浏览商品等常规操作，并不会请求到服务端。只有到了秒杀时间点，并且用户主动点了秒杀按钮才允许访问服务端。</li>
+<li>但只做页面静态化还不够，因为用户分布在全国各地，有些人在北京，有些人在成都，有些人在深圳，地域相差很远，网速各不相同。为了让用户最快访问到活动页面，这就需要使用CDN，它的全称是Content Delivery Network，即内容分发网络。<strong>使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。</strong></li>
+<li>秒杀是一个<strong>读多写少</strong>的场景（因为在秒杀过程中，每一个请求一般都会检查库存是否充足，足够了才允许修改库存下单，由于大量用户抢少量商品，只有极少部分用户能够抢成功，所以绝大部分用户在秒杀时，库存其实是不足的，系统会直接返回该商品已经抢完。这是非常典型的：<strong>读多写少 </strong>的场景）。</li>
+<li><strong>如果直接使用MYSQL，这么高的并发数据库极有可能挂点，因此应该对库存信息使用redis缓存，，在秒杀活动开始前，将库存信息预缓存倒redis中，同时采用分布式锁防止缓存击穿，并且为了提高系统可用性可以使用集群的方式部署多个节点。</strong></li>
+<li><p>为防止<strong>超买超卖（query查询操作非原子操作）</strong>，扣减库存操作中，使用redis扣减库存。<strong>redis的<code>incr</code>方法是原子性的</strong>，可以用该方法扣减库存,：</p>
+<ul>
+<li>1)先判断该用户有没有秒杀过该商品，如果已经秒杀过，则直接返回-1。2)扣减库存，判断返回值是否小于0，如果小于0，则直接返回0，表示库存不足。3)如果扣减库存后，返回值大于或等于0，则将本次秒杀记录保存起来。然后返回1，表示成功。(<strong>下述代码不足点：由于预先执行incrby，导致库存变负数，后面有回退库存时，会导致库存不准</strong>) <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> exist = redisClient.<span class="built_in">query</span>(productId,userId);</span><br><span class="line"><span class="keyword">if</span>(exist) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(redisClient.<span class="built_in">incrby</span>(productId, <span class="number">-1</span>)&lt;<span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">redisClient.<span class="built_in">add</span>(productId,userId);</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure></li>
+<li>因此，<strong>最好的策略：我们都知道lua脚本，是能够保证原子性的，而redis支持lua脚本，它跟redis一起配合使用，能够完美解决上面的问题</strong> <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">  StringBuilder lua = new StringBuilder();</span><br><span class="line">  lua.append(<span class="string">&quot;if (redis.call(&#x27;exists&#x27;, KEYS[1]) == 1) then&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;    local stock = tonumber(redis.call(&#x27;get&#x27;, KEYS[1]));&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;    if (stock == -1) then&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;        return 1;&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;    end;&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;    if (stock &gt; 0) then&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;        redis.call(&#x27;incrby&#x27;, KEYS[1], -1);&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;        return stock;&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;    end;&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;    return 0;&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;end;&quot;</span>);</span><br><span class="line">  lua.append(<span class="string">&quot;return -1;&quot;</span>);</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li>同时，为了防止redis因为宕机导致的最后数据的不一致性，需要开启redis的持久化机制。</li>
+<li>真实的秒杀场景中，有三个核心流程：<strong><code>秒杀--&gt;生成订单--&gt;支付</code></strong>。真正并发量大的是秒杀功能，下单和支付功能实际并发量很小。所以，我们在设计秒杀系统时，有必要把下单和支付功能从秒杀的主流程中拆分出来，特别是<strong>下单功能要做成mq异步处理</strong>的。而支付功能，比如支付宝支付，是业务场景本身保证的异步。 <img src="/2023/02/20/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9B%B8%E5%85%B3/秒杀mq.png" width="500">
+<ul>
+<li>往mq发送下单消息的时候，有可能会失败。原因有很多，比如：网络问题、broker挂了、mq服务端磁盘问题等。这些情况，都可能会造成消息丢失。<strong>那么，如何防止消息丢失呢？</strong> <img src="/2023/02/20/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9B%B8%E5%85%B3/秒杀mq_1.png" width="500"></li>
+<li>方法1：在生产者发送mq消息之前，先把该条消息写入消息发送表，初始状态是待处理，然后再发送mq消息。消费者消费消息时，处理完业务逻辑之后，再回调生产者的一个接口，修改消息状态为已处理。</li>
+<li>防范2：借助mq的消息的持久化</li>
+</ul></li>
+<li><p><strong>回退库存：</strong> 如果用户秒杀成功了，下单之后，在15分钟之内还未完成支付的话，该订单会该被自动取消，库存+1，这种场景可以使用<strong>延时队列</strong>，<strong>下单时消息生产者会先生成订单，此时状态为待支付，然后会向延迟队列中发一条消息。达到了延迟时间，消息消费者读取消息之后，会查询该订单的状态是否为待支付。如果是待支付状态，则会更新订单状态为取消状态。如果不是待支付状态，说明该订单已经支付过了，则直接返回。</strong> <img src="/2023/02/20/%E5%88%86%E5%B8%83%E5%BC%8F%E7%9B%B8%E5%85%B3/秒杀mq_2.png" width="500"></p></li>
+</ol>
+<ul>
+<li><strong>限流：</strong>
+<ul>
+<li>基于nginx的限流：针对整体而言
+<ul>
+<li>基于请求速率的限流：通过<code>ngx_http_limit_req_module</code>模块来实现，该模块支持基于固定窗口算法和令牌桶算法的限流。</li>
+<li>固定窗口算法：
+<ul>
+<li>允许定义一个请求速率（如每秒允许的请求数量）和一个时间窗口。</li>
+<li>当请求到达时，Nginx会检查在当前的时间窗口内是否已经达到了设置的速率限制。</li>
+<li>如果请求超出了速率限制，Nginx可以配置为返回错误状态码（如503 Service Temporarily Unavailable）或者延迟处理请求。</li>
+</ul></li>
+<li>令牌桶算法：
+<ul>
+<li>通过固定速率向桶中添加令牌。</li>
+<li>每个请求都需要消耗一个令牌才能被处理。</li>
+<li>如果桶中有足够的令牌，请求将立即被处理；如果没有令牌，则请求可以被延迟处理或拒绝。</li>
+<li>这种算法允许一定程度的突发流量，因为桶中可以积累令牌以应对短时间内的请求峰值。</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>针对科技限流： - <strong>对同一用户限流:</strong>了防止某个用户，请求接口次数过于频繁，可以只针对该用户做限制。比如某个id,每分钟只能请求5次接口。 - <strong>对同一ip限流</strong>：有时候只对某个用户限流是不够的，有些高手可以模拟多个用户请求，这种nginx就没法识别了。这时需要加同一ip限流功能。 - <strong>对接口限流</strong>：别以为限制了用户和ip就万事大吉，有些高手甚至可以使用代理，每次都请求都换一个ip。<strong>这时可以限制请求的接口总次数</strong>。这种限制对于系统的稳定性是非常有必要的。但可能由于有些非法请求次数太多，达到了该接口的请求上限，而影响其他的正常用户访问该接口。看起来有点得不偿失。 - <strong>加验证码</strong>：相对于上面三种方式，加验证码的方式可能更精准一些，同样能限制用户的访问频次，但好处是不会存在误杀的情况。</p>
+</blockquote>
+<h3 id="sql的优化">2. SQL的优化</h3>
+<p>在平常中我是通过这样去优化慢查询的：</p>
+<ul>
+<li>首先通过慢查询日志去定位慢SQL语句，使用mysqldumplow工具分析慢查询日志，找到慢SQL <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldumpslow -s t -t <span class="number">10</span> /var/log/mysql/slow.log</span><br></pre></td></tr></table></figure></li>
+<li>使用EXPLAIN分析SQL语句，主要看这条查询语句当中的<code>TYPE</code>、<code>key</code>、<code>rows</code>、<code>extra</code>字段，其中<code>type</code>观察该SQL语句的访问类型，是否使用索引，好坏层级为<code>system &gt; const &gt; eq_ref &gt; ref &gt; range &gt; index &gt;ALL</code>，如果是<code>all</code>或<code>index</code>的话，说明走了全表扫描，没有走索引或者索引失效，导致查询慢，尝试使用走索引优化，比如建立复合索引，最少优化到<code>range</code>范围，更好的则尽量<code>ref\const</code></li>
+<li>接着通过<code>key</code>得到实际实际的索引，观察返回的记录数<code>rows</code>是否过多，如果过多则限制返回记录数，比如去除不必要的记录或者将查询分割成小范围查询</li>
+<li><p>另外一点的话，如果是index，看是否能直接使用索引覆盖，即<code>using index</code> <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">+----+-------------+--------+------+---------------+------+---------+------+--------+-------------+</span><br><span class="line">| id | select_type | table  | type | key           | rows | Extra   |</span><br><span class="line">+----+-------------+--------+------+---------------+------+---------+------+--------+-------------+</span><br><span class="line">| <span class="number">1</span>  | SIMPLE      | orders | ALL  | <span class="literal">NULL</span>          | <span class="number">10000</span>| Using where |</span><br><span class="line">+----+-------------+--------+------+---------------+------+---------+------+--------+-------------+</span><br></pre></td></tr></table></figure></p></li>
+<li><p>SQL的重新可以从减少查询数据量、减少返回的记录数、拆分复杂查询出发</p></li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 减少数据量</span></span><br><span class="line">优化前：</span><br><span class="line">SELECT * FROM logs WHERE create_time&gt;<span class="string">&#x27;2023-01-01&#x27;</span>;</span><br><span class="line">优化后</span><br><span class="line">SELECT id,message FROM logs WHERE create_time&gt;<span class="string">&#x27;2023-01-01&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//拆分复杂查询</span></span><br><span class="line">优化前(有嵌套子查询)</span><br><span class="line"><span class="function">SELECT * FROM users WHERE id <span class="title">IN</span> <span class="params">(SELECT user_id FROM orders WHERE amount&gt;<span class="number">1000</span>)</span></span>;</span><br><span class="line">优化后（使用联合查询）</span><br><span class="line">SELECT u.* FROM users u JOIN orders o ON u.id=o.user_id WHERE o.amount&gt;<span class="number">1000</span>;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>为什么大多数场景下连接查询比嵌套子查询好</p>
+<ul>
+<li>嵌套子查询可能导致内部查询重复执行，并且零时表的生成和管理增加了额外的开销</li>
+<li>联合查询通过JOIN一次性将两个表的数据关联合并，生成中间结果集，避免了重复执行。</li>
+</ul>
+</blockquote>
+<h3 id="索引的优化">3. 索引的优化</h3>
+<h3 id="mysql死锁的排查">4. mysql死锁的排查</h3>
+<ul>
+<li>开启mysql的死锁日志 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL innodb_print_all_deadlock=ON;</span><br></pre></td></tr></table></figure></li>
+<li>分析死锁日志
+<ul>
+<li>检查SQL的执行顺序，观察事务是否因不同顺序访问相同资源导致 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">事务<span class="number">1</span>：</span><br><span class="line">BEGIN;</span><br><span class="line">UPDATE accounts SET banlance=banlance<span class="number">-100</span> WHERE Id=<span class="number">1</span>; 锁住了id=<span class="number">1</span></span><br><span class="line">UPDATE accounts SET banlance=banlance+<span class="number">100</span> WHERE Id=<span class="number">2</span>; 尝试锁住id=<span class="number">2</span></span><br><span class="line">事务<span class="number">2</span></span><br><span class="line">UPDATE accounts SET banlance=banlance<span class="number">-100</span> WHERE Id=<span class="number">2</span>; 锁住了id=<span class="number">2</span></span><br><span class="line">UPDATE accounts SET banlance=banlance+<span class="number">100</span> WHERE Id=<span class="number">2</span>; 尝试锁住id=<span class="number">1</span></span><br></pre></td></tr></table></figure></li>
+<li>检查是是否走索引，无索引或索引不当会导致锁升级为表锁或间隙锁，增大死锁概率</li>
+</ul></li>
+</ul>
+<p>在MySQL种有这样的机制，线程发现死锁后，会主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。可将参数<code>innodb_deadlock_detect</code>设置为<code>on</code>，表示开启这个逻辑。但是它有额外负担的。每当一个事务被锁的时候，就要看看它所依赖的线程有没有被别人锁住，如此循环，消耗大。</p>
+<h3 id="数据库如果突然掉电数据写入失败redo-log也来不及落盘undo-log-也没办法这种情况怎么办">5. 数据库，如果突然掉电数据写入失败，redo log也来不及落盘，undo log 也没办法，这种情况怎么办？</h3>
+<p>针对该问题，我想到有事前的预防措施、事中的高可用架构以及事后的业务层补偿三个方面来解决：</p>
+<ul>
+<li>预防措施：避免极端情况的发生：
+<ul>
+<li>比如使用UPS不间断电源，防止突然断电，提供零时电力完成未提交事物</li>
+<li>BBU电池后备缓存，确保存储设备的缓存数据在断电后仍能写入磁盘</li>
+</ul></li>
+<li><p>高可用架构设计：考虑容灾和冗余，比如使用MySQL group replication.通过同步或半同步复制，确保事务在多个节点提交后才返回成功，这样即使一个节点宕机了也不影响整体的服务，从节点可以快速接管并恢复服务，</p></li>
+<li><p>业务层补偿机制：为所有事务生成一个全局的UUID，并在业务层维护一个日志，定时扫描未完成的事务，通过比对数据库的状态与操作日志，触发补偿，达到最终一致性。</p></li>
+</ul>
+<blockquote>
+<p>MySQL Group Replication基于组复制的概念，并参考了MariaDB Galera Cluster和Percona XtraDB Cluster的设计。<strong>它允许数据库服务器组织成一个组，在组内的所有成员之间进行数据复制和同步，以确保数据的一致性和可用性。</strong></p>
+<ul>
+<li><strong>多主复制：</strong>
+<ul>
+<li>MGR支持多主复制模式，即允许多个节点同时处理读写请求，从而提高系统的吞吐量和可靠性。</li>
+<li>当某个成员执行写操作时，该操作会被记录并复制到组内的其他所有成员。</li>
+</ul></li>
+<li><strong>事务一致性：</strong>
+<ul>
+<li>事务的提交必须经过半数以上节点同意方可提交，以确保数据的一致性。</li>
+<li>MGR使用Paxos算法（通过XCom基础设施实现）来确保数据库状态机在节点间的事务一致性。</li>
+</ul></li>
+<li><strong>故障检测与自动故障转移：</strong>
+<ul>
+<li>MGR具有故障检测机制，当某个成员出现故障时，系统会自动调整组的成员关系。</li>
+<li>当某个节点发生故障时，Group Replication会自动重新配置集群，确保服务的连续性</li>
+</ul></li>
+</ul>
+</blockquote>
+<h3 id="布隆过滤器说一下">6. 布隆过滤器说一下</h3>
+
       
     </div>
 
@@ -1272,20 +1371,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">84</span>
+          <span class="site-state-item-count">85</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">43</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1331,7 +1430,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:38</span>
+    <span title="站点阅读时长">20:46</span>
 </div>
 
         
