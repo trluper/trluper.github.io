@@ -65,7 +65,7 @@
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/mysql查询流程.png">
 <meta property="og:image" content="https://example.com/2022/08/04/%E9%AB%98%E6%80%A7%E8%83%BDMySQL/condition.png">
 <meta property="article:published_time" content="2022-08-04T13:34:03.000Z">
-<meta property="article:modified_time" content="2025-02-23T10:21:56.546Z">
+<meta property="article:modified_time" content="2025-03-12T03:13:18.174Z">
 <meta property="article:author" content="trluper">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="MySQL">
@@ -267,7 +267,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-02-23 18:21:56" itemprop="dateModified" datetime="2025-02-23T18:21:56+08:00">2025-02-23</time>
+                <time title="修改时间：2025-03-12 11:13:18" itemprop="dateModified" datetime="2025-03-12T11:13:18+08:00">2025-03-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1602,24 +1602,31 @@
 </blockquote>
 <h4 id="exist-和-in-区别">9.44 exist 和 in 区别</h4>
 <ul>
-<li><p><code>in</code>的实例SQL <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from tabA where tabA.<span class="function">x <span class="title">in</span> <span class="params">(select x from tabB where y&gt;<span class="number">0</span> )</span></span>;</span><br></pre></td></tr></table></figure> 执行过程：</p>
+<li><strong>IN 的执行逻辑</strong>:
 <ul>
-<li>（1）执行tabB表的子查询，得到结果集B，可以使用到 tabB 表的索引 y；</li>
-<li>（2）执行tabA表的查询，查询条件是tabA.x在结果集B里面，可以使用到tabA表的索引 x。 &gt;in查询是将子查询的结果集作为主查询的验证，根据验证结果是true或false来决定主查询数据结果是否得以保存。</li>
+<li>IN 先执行子查询，把所有符合条件的数据存入临时结果集。</li>
+<li>然后对外层查询表的每一行，检查该行是否在子查询的结果集中。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">SELECT * FROM users WHERE id <span class="title">IN</span> <span class="params">(SELECT user_id FROM orders)</span></span>;</span><br></pre></td></tr></table></figure></li>
+<li>问题：
+<ul>
+<li><strong>一是子查询结果存入内存，数据量大时会消耗大量资源。</strong></li>
+<li>二是如果 orders.user_id 结果集过大，查询可能会退化成全表扫描，导致索引失效。</li>
 </ul></li>
-<li><p><code>exists</code>的示例SQL <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">select from tabA where <span class="title">exists</span> <span class="params">(select from tabB where y&gt;<span class="number">0</span>)</span></span>;</span><br></pre></td></tr></table></figure> 执行过程：</p>
+</ul></li>
+<li><strong>EXISTS 的执行逻辑</strong>
 <ul>
-<li>（1）先将tabA表所有记录取到。</li>
-<li>（2）逐行针对 tabA 表的记录，去关联 tabB 表，判断 tabB 表的子查询是否有返回数据，(5.5之后的版本) 使用Block Nested Loop(Block 嵌套循环)。</li>
-<li>（3）如果子查询有返回数据，则将tabA当前记录返回到结果集。 tabA相当于取全表数据遍历，tabB可以使用到索引。 &gt;EXISTS()查询是将主查询的结果集放到子查询中做验证，根据验证结果是true或false来决定主查询数据结果是否得以保存。</li>
+<li>EXISTS 先执行外层查询，然后对每一行数据，执行子查询检查是否存在匹配项。</li>
+<li>一旦找到匹配数据，就立即返回 TRUE，无需扫描完整的子查询结果集。 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">SELECT * FROM users u WHERE <span class="title">EXISTS</span> <span class="params">(SELECT <span class="number">1</span> FROM orders o WHERE o.user_id = u.id)</span></span>;</span><br></pre></td></tr></table></figure></li>
+<li><strong>优势</strong>：
+<ul>
+<li><strong>不需要存储子查询结果，查询更高效。</strong></li>
+<li><strong>一旦找到匹配项立即返回，不必扫描完整的子查询数据，适合大表查询。</strong></li>
+</ul></li>
 </ul></li>
 </ul>
-<p>总结来说有 4 点：</p>
+<p><strong>性能对比：</strong></p>
 <ul>
-<li>in 查询时首先查询子查询的表，然后将内表和外表做一个笛卡尔积，然后按照条件进行筛选。</li>
-<li>子查询使用 exists，会先进行主查询，将查询到的每行数据循环带入子查询校验是否存在，过滤出整体的返回数据。</li>
-<li>两表大小相当，in 和 exists 差别不大。<strong>内表大，用 exists 效率较高；内表小，用 in 效率较高。</strong></li>
-<li><strong>查询用 not in 那么内外表都进行全表扫描，没有用到索引；而not extsts 的子查询依然能用到表上的索引。not exists 都比 not in 要快。</strong></li>
+<li><strong>数据量较小时，IN 和 EXISTS 差距不大</strong>，如果 orders 表数据量较小（如几千行），IN 和 EXISTS 的执行效率相近。数据库优化器可能会优化 IN 使其类似 JOIN 方式执行。</li>
+<li><strong>数据量较大时，EXISTS 更优</strong>。IN 需要构建临时结果集，数据量大时内存消耗高，且可能导致索引失效进行全表扫描。EXISTS 逐行检查，一旦匹配即返回，避免多余计算，索引利用效果更好。</li>
 </ul>
 <h4 id="什么是深分页如何解决">9.45 什么是深分页，如何解决？</h4>
 <p><strong>深分页</strong>指的是在分页查询中，当用户需要访问数据集的 <strong>靠后页码</strong>（如第 1000 页）时，数据库需要跳过大量前置数据（如前 999 页）才能获取目标结果。这种场景下，如传统 <code>LIMIT offset, size</code> 分页方式性能会急剧下降，甚至导致超时或资源耗尽。： <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> orders <span class="keyword">ORDER</span> <span class="keyword">BY</span> id LIMIT <span class="number">1000000</span>, <span class="number">20</span>;</span><br></pre></td></tr></table></figure> - <strong>执行过程</strong>： 1. 扫描全表或索引，找到前 <code>offset + size</code> 条数据（本例扫描 1,000,020 行）。 2. 丢弃前 <code>offset</code> 条（1,000,000 行），仅返回最后 20 条。 - <strong>问题</strong>：大量无效数据的扫描和排序导致 CPU、I/O 资源浪费。</p>
@@ -1861,7 +1868,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">20:47</span>
+    <span title="站点阅读时长">20:46</span>
 </div>
 
         
